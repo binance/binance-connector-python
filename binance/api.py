@@ -17,15 +17,45 @@ class API(object):
         })
         if self.key is not None:
             self.session.headers.update({'X-MBX-APIKEY': self.key})
-        print(self.session.headers)
         self.response = None
         return
 
+    def ping(self):
+        """ Test Connectivity
+        Test connectivity to the Rest API.
+
+        GET /api/v3/ping
+
+        https://binance-docs.github.io/apidocs/spot/en/#test-connectivity
+
+        """
+
+        urlPath = '/api/v3/ping'
+        return self._query(urlPath)
+
     def time(self):
+        """ Check Server Time
+        Test connectivity to the Rest API and get the current server time.
+
+        GET /api/v3/time
+
+        https://binance-docs.github.io/apidocs/spot/en/#check-server-time
+
+        """
+
         urlPath = '/api/v3/time'
         return self._query(urlPath)
 
     def exchange_info(self):
+        """ Exchange Information
+        Current exchange trading rules and symbol information
+
+        GET /api/v3/exchangeinfo
+
+        https://binance-docs.github.io/apidocs/spot/en/#exchange-information
+
+        """
+
         urlPath = '/api/v3/exchangeInfo'
         return self._query(urlPath)
 
@@ -52,21 +82,50 @@ class API(object):
         return self._query('/api/v3/depth', self._prepare_params(params))
 
     def trades(self, symbol: str, limit: int = 500):
+        """ Recent Trades List
+        Get recent trades (up to last 500).
+
+        GET /api/v3/trades
+
+        https://binance-docs.github.io/apidocs/spot/en/#recent-trades-list
+
+        Parameteres:
+        symbol -- mandatory/string -- the trading pair
+        limit -- optional/integer -- limit the results
+                                     Default 500
+                                     max 1000
+        """
+        check_required_parameter(symbol, 'symbol')
         params = {
             'symbol': symbol,
             'limit': limit
         }
         return self._query('/api/v3/trades', self._prepare_params(params))
 
-    def historical_trades(self, symbol:str, limit:int=500, fromId=None) -> any:
+    def historical_trades(self, symbol: str, limit: int = 500, fromId: int = None):
+        """ Old Trade Lookup
+        Get older market trades.
+
+        GET /api/v3/historicalTrades
+
+        https://binance-docs.github.io/apidocs/spot/en/#old-trade-lookup
+
+        Parameteres:
+        symbol -- mandatory/string -- the trading pair
+        limit -- optional/integer -- limit the results
+                                     Default 500
+                                     max 1000
+        formId -- optional/integer -- trade id to fetch from. Default gets most recent trades.
+        """
+        check_required_parameter(symbol, 'symbol')
         params = {
             'symbol': symbol,
-            'limit': limit,
+            'limit':  limit,
             'fromId': fromId
         }
         return self._query('/api/v3/historicalTrades', self._prepare_params(params))
 
-    def agg_trades(self, symbol:str, limit:int=500, fromId=None, startTime=None, endTime=None) -> any:
+    def agg_trades(self, symbol:str, limit:int=500, fromId=None, startTime=None, endTime=None):
         params = {
             'symbol': symbol,
             'limit': limit,
