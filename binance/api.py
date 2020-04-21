@@ -4,6 +4,7 @@ from binance.lib.utils import check_required_parameter
 from . import version
 import requests
 
+
 class API(object):
 
     def __init__(self, key=None, secrect=None):
@@ -11,8 +12,8 @@ class API(object):
         self.secret = secrect
         self.baseUrl = 'https://api.binance.com'
         self.session = requests.Session()
-        self.session.headers.update({'Content-Type': 'application/json;charset=utf-8'})
         self.session.headers.update({
+            'Content-Type': 'application/json;charset=utf-8',
             'User-Agent': 'binance-python/' + version.__version__
         })
         if self.key is not None:
@@ -125,17 +126,33 @@ class API(object):
         }
         return self._query('/api/v3/historicalTrades', self._prepare_params(params))
 
-    def agg_trades(self, symbol:str, limit:int=500, fromId=None, startTime=None, endTime=None):
+    def agg_trades(self, symbol: str, limit: int = 500, fromId=None, startTime=None, endTime=None):
+        """ Compressed/Aggregate Trades List
+
+        GET /api/v3/aggTrades
+
+        https://binance-docs.github.io/apidocs/spot/en/#compressed-aggregate-trades-list
+
+        Parameteres:
+        symbol -- mandatory/string -- the trading pair
+        limit -- optional/integer -- limit the results
+                                     Default 500
+                                     max 1000
+        formId -- optional/integer -- id to get aggregate trades from INCLUSIVE.
+        startTime -- optional/timestamp -- Timestamp in ms to get aggregate trades from INCLUSIVE.
+        endTime -- optional/timestamp -- Timestamp in ms to get aggregate trades until INCLUSIVE.
+        """
+        check_required_parameter(symbol, 'symbol')
         params = {
-            'symbol': symbol,
-            'limit': limit,
-            'fromId': fromId,
+            'symbol':    symbol,
+            'limit':     limit,
+            'fromId':    fromId,
             'startTime': startTime,
-            'endTime': endTime
+            'endTime':   endTime
         }
         return self._query('/api/v3/aggTrades', self._prepare_params(params))
 
-    def klines(self, symbol:str, interval:str, limit:int=500, startTime=None, endTime=None) -> any:
+    def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None) -> any:
         params = {
             'symbol':    symbol,
             'interval':  interval,
