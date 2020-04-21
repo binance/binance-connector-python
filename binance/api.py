@@ -182,7 +182,7 @@ class API(object):
         }
         return self._query('/api/v3/klines', self._prepare_params(params))
 
-    def avg_price(self, symbol):
+    def avg_price(self, symbol: str):
         """ Current Average Price
 
         GET /api/v3/avgPrice
@@ -199,7 +199,17 @@ class API(object):
         }
         return self._query('/api/v3/avgPrice', self._prepare_params(params))
 
-    def ticker_24hr(self, symbol):
+    def ticker_24hr(self, symbol: str = None):
+        """ 24hr Ticker Price Change Statistics
+
+        GET /api/v3/ticker/24hr
+
+        https://binance-docs.github.io/apidocs/spot/en/#24hr-ticker-price-change-statistics
+
+        Parameteres:
+        symbol -- optional/string -- the trading pair
+        """
+
         params = {
             'symbol': symbol,
         }
