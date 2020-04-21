@@ -1,6 +1,7 @@
 from urllib.parse import urlencode
 from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import check_required_parameter
+from binance.lib.utils import check_required_parameters
 from . import version
 import requests
 
@@ -142,6 +143,7 @@ class API(object):
         startTime -- optional/timestamp -- Timestamp in ms to get aggregate trades from INCLUSIVE.
         endTime -- optional/timestamp -- Timestamp in ms to get aggregate trades until INCLUSIVE.
         """
+
         check_required_parameter(symbol, 'symbol')
         params = {
             'symbol':    symbol,
@@ -152,7 +154,25 @@ class API(object):
         }
         return self._query('/api/v3/aggTrades', self._prepare_params(params))
 
-    def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None) -> any:
+    def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None):
+        """ Kline/Candlestick Data
+
+        GET /api/v3/klines
+
+        https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data
+
+        Parameteres:
+        symbol -- mandatory/string -- the trading pair
+        interval -- mandatory/string -- the interval of kline
+                                        e.g 1m, 5m, 1h, 1d, etc
+        limit -- optional/integer -- limit the results
+                                     Default 500
+                                     max 1000
+        startTime -- optional/timestamp
+        endTime -- optional/timestamp
+        """
+        check_required_parameters([[symbol, 'symbol'], [interval, 'interval']])
+
         params = {
             'symbol':    symbol,
             'interval':  interval,
