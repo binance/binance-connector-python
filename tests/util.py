@@ -22,8 +22,8 @@ def mock_http_response(method, uri, response_data, http_status=200):
 def random_id() -> int:
     return random.randint(1, 10000)
 
-def current_timestamp():
+def current_timestamp() -> int:
     return int(round(time.time() * 1000))
 
-def timestamp(in_future: int = 0):
+def timestamp(in_future: int = 0) -> int:
     return current_timestamp() + in_future

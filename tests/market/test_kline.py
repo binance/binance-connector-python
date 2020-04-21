@@ -1,4 +1,5 @@
 import sure
+import pytest
 import binance
 import responses
 
@@ -11,31 +12,28 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 fromId = random_id()
 startTime = timestamp()
 endTime = startTime + random_id()
+client = binance.API()
 
 def test_kline_without_symbol():
     """ Tests the API endpoint to get kline without symbol """
 
-    api =  binance.API()
-    api.klines.when.called_with(symbol='', interval='1m').should.throw(ParameterRequiredError)
+    client.klines.when.called_with(symbol='', interval='1m').should.throw(ParameterRequiredError)
 
 def test_kline_without_interval():
     """ Tests the API endpoint to get kline without interval """
 
-    api =  binance.API()
-    api.klines.when.called_with(symbol='BTCUSDT', interval='').should.throw(ParameterRequiredError)
+    client.klines.when.called_with(symbol='BTCUSDT', interval='').should.throw(ParameterRequiredError)
 
 @mock_http_response(responses.GET, '/api/v3/klines\\?symbol=BTCUSDT&interval=1h&limit=500', mock_item, 200)
 def test_kline_with_default_limit():
     """ Tests the API endpoint to get kline with default limit """
 
-    api =  binance.API()
-    response = api.klines(symbol='BTCUSDT', interval='1h')
+    response = client.klines(symbol='BTCUSDT', interval='1h')
     response.json().should.equal(mock_item)
 
 @mock_http_response(responses.GET, '/api/v3/klines\\?symbol=BTCUSDT&interval=1h&limit=10&startTime=' + str(startTime) +'&endTime=' + str(endTime), mock_item, 200)
 def test_kline_with_given_params():
     """ Tests the API endpoint to get kline with given parametes """
 
-    api =  binance.API()
-    response = api.klines(symbol='BTCUSDT', interval='1h', limit=10, startTime=startTime, endTime=endTime)
+    response = client.klines(symbol='BTCUSDT', interval='1h', limit=10, startTime=startTime, endTime=endTime)
     response.json().should.equal(mock_item)
