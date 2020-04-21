@@ -1,0 +1,15 @@
+import sure
+import binance
+import responses
+
+from tests.util import mock_http_response
+
+mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
+
+@mock_http_response(responses.GET, '/api/v3/exchangeInfo', mock_item, 200)
+def test_exchange_info():
+    """ Tests the API endpoint to get exchange info """
+
+    api =  binance.API()
+    response = api.exchange_info()
+    response.json().should.equal(mock_item)
