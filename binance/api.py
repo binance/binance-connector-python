@@ -231,7 +231,17 @@ class API(object):
         }
         return self._query('/api/v3/ticker/price', self._prepare_params(params))
 
-    def book_ticker(self, symbol):
+    def book_ticker(self, symbol: str = None):
+        """ Symbol Order Book Ticker
+
+        GET /api/v3/ticker/bookTicker
+
+        https://binance-docs.github.io/apidocs/spot/en/#symbol-order-book-ticker
+
+        Parameteres:
+        symbol -- optional/string -- the trading pair
+        """
+
         params = {
             'symbol': symbol,
         }
