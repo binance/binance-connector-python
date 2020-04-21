@@ -183,6 +183,17 @@ class API(object):
         return self._query('/api/v3/klines', self._prepare_params(params))
 
     def avg_price(self, symbol):
+        """ Current Average Price
+
+        GET /api/v3/avgPrice
+
+        https://binance-docs.github.io/apidocs/spot/en/#current-average-price
+
+        Parameteres:
+        symbol -- mandatory/string -- the trading pair
+        """
+
+        check_required_parameter(symbol, 'symbol')
         params = {
             'symbol': symbol,
         }
