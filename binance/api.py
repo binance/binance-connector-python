@@ -215,7 +215,17 @@ class API(object):
         }
         return self._query('/api/v3/ticker/24hr', self._prepare_params(params))
 
-    def ticker_price(self, symbol):
+    def ticker_price(self, symbol: str = None):
+        """ Symbol Price Ticker
+
+        GET /api/v3/ticker/price
+
+        https://binance-docs.github.io/apidocs/spot/en/#symbol-price-ticker
+
+        Parameteres:
+        symbol -- optional/string -- the trading pair
+        """
+
         params = {
             'symbol': symbol,
         }
