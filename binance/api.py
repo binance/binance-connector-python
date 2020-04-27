@@ -35,18 +35,20 @@ class API(object):
     def _query(self, urlPath, payload={}):
         url = self.baseUrl + urlPath
         response = self.session.get(url, params=payload)
+        data = response.json()
         result = {}
         if (self.show_weight_usage):
             weight_usage = {}
             for key in response.headers.keys():
                 if key.startswith('X-MBX-USED-WEIGHT'):
                     weight_usage[key] = response.headers[key]
-                    result = {'data': response.json(), 'weight_usage': weight_usage }
+                    result['weight_usage'] = weight_usage
 
         if (self.show_header):
             result['header'] = response.headers
 
         if (len(result) != 0):
+            result['data'] = data
             return result
 
-        return response.json()
+        return data
