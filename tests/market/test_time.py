@@ -10,6 +10,6 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 def test_time():
     """ Tests the API endpoint to get exchange time """
 
-    api =  binance.API()
+    api =  binance.Market()
     response = api.time()
-    response.json().should.equal(mock_item)
+    response.should.equal(mock_item)
