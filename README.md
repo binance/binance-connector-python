@@ -25,7 +25,7 @@ print(client.time())
 
 the returns will be like:
 
-```json
+```python
 
 {'data': {'serverTime': 1587990847650}, 'weight_usage': {'X-MBX-USED-WEIGHT': '31', 'X-MBX-USED-WEIGHT-1M': '31'}}
 
@@ -40,7 +40,7 @@ print(client.time())
 
 the returns will be like:
 
-```json
+```python
 
 {'data': {'serverTime': 1587990847650}, 'header': {'Context-Type': 'application/json;charset=utf-8', ...}}
 
