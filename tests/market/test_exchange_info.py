@@ -10,6 +10,6 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 def test_exchange_info():
     """ Tests the API endpoint to get exchange info """
 
-    api =  binance.API()
+    api =  binance.Market()
     response = api.exchange_info()
-    response.json().should.equal(mock_item)
+    response.should.equal(mock_item)
