@@ -32,7 +32,7 @@ class API(object):
     def _prepare_params(self, params):
         return urlencode(cleanNoneValue(params))
 
-    def _query(self, urlPath, payload={}):
+    def query(self, urlPath, payload={}):
         url = self.baseUrl + urlPath
         response = self.session.get(url, params=payload)
         data = response.json()
