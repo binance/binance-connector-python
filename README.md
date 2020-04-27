@@ -13,7 +13,7 @@ print(client.time())
 ```
 
 
-## How meta info
+## display meta info
 
 Binance API server returns weight usage in the header of each response. This is very useful to indentify the current usage.
 To reveal this value, simpily intial the client with `show_weight_usage=True` as:
