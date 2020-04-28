@@ -1,4 +1,13 @@
-# Binance Python Library
+# Binance Public API connector Python
+
+This is a thin library that working as a connector to the Binance public API. 
+
+## Todo list (for dev only)
+
+- [ ] all api endpoints
+- [ ] better logging
+- [ ] more examples
+- [ ] better readme
 
 ## How to use
 
