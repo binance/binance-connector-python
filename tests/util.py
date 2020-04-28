@@ -12,7 +12,7 @@ def mock_http_response(method, uri, response_data, http_status=200):
         def wrapper(*args, **kwargs):
             responses.add(
                 method,
-                re.compile('.*' + uri + '$'),
+                re.compile('.*' + uri),
                 json=response_data,
                 status=http_status
             )
