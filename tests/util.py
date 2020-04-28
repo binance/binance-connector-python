@@ -1,4 +1,5 @@
 import re
+import uuid
 import time
 import random
 import responses
@@ -21,6 +22,9 @@ def mock_http_response(method, uri, response_data, http_status=200):
 
 def random_id() -> int:
     return random.randint(1, 10000)
+
+def random_str() -> str:
+    return uuid.uuid4().hex
 
 def current_timestamp() -> int:
     return int(round(time.time() * 1000))

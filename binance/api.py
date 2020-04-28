@@ -1,23 +1,30 @@
+import hmac
+import hashlib
 import requests
 from . import version
 from urllib.parse import urlencode
+from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 
+
 class API(object):
-    def __init__(self, key=None, secrect=None, **kwargs):
+    def __init__(self, key=None, secret=None, **kwargs):
         self.key = key
-        self.secret = secrect
-        self.baseUrl = 'https://api.binance.com'
+        self.secret = secret
         self.session = requests.Session()
         self.session.headers.update({
             'Content-Type': 'application/json;charset=utf-8',
-            'User-Agent': 'binance-python/' + version.__version__
+            'User-Agent': 'binance-connector-python/' + version.__version__,
+            'X-MBX-APIKEY': secret
         })
-        if self.key is not None:
-            self.session.headers.update({'X-MBX-APIKEY': self.key})
+        self.session.headers.update({'X-MBX-APIKEY': self.key})
         self.response = None
+
+        self.base_url = 'https://api.binance.com'
+        if 'base_url' in kwargs:
+            self.base_url = kwargs['base_url']
 
         self.show_weight_usage = False
         if 'show_weight_usage' in kwargs:
@@ -26,14 +33,11 @@ class API(object):
         self.show_header = False
         if 'show_header' in kwargs:
             self.show_header = kwargs['show_header'] and kwargs['show_header'] == True
-
         return
 
-    def _prepare_params(self, params):
-        return urlencode(cleanNoneValue(params))
 
     def query(self, urlPath, payload={}):
-        url = self.baseUrl + urlPath
+        url = self.base_url + urlPath
         response = self.session.get(url, params=payload)
         data = response.json()
         result = {}
@@ -52,3 +56,26 @@ class API(object):
             return result
 
         return data
+
+    def sign_request(self, http_method, urlPath, payload={}):
+        ts = get_timestamp()
+        payload['timestamp'] = ts
+        query_string = self._prepare_params(payload)
+        signature = self._get_sign(query_string)
+        payload['signature'] = signature
+        query_string = query_string + '&signature=' + signature
+        final_url = urlPath + '?' + query_string
+
+        return self._dispatch_request(http_method, final_url)
+
+    def _prepare_params(self, params):
+        return urlencode(cleanNoneValue(params))
+
+    def _get_sign(self, data):
+        m = hmac.new(self.secret.encode('utf-8'), data.encode('utf-8'), hashlib.sha256)
+        return m.hexdigest()
+
+    def _dispatch_request(self, http_method, url):
+        return {
+            'GET': self.query(url)
+        }.get(http_method, 'GET')
