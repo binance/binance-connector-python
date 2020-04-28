@@ -26,3 +26,5 @@ def check_required_parameters(params):
 def get_timestamp():
     return int(time.time() * 1000)
 
+def config_logging(logging, logging_devel, log_file=None):
+    logging.basicConfig(level=logging_devel, filename=log_file)
