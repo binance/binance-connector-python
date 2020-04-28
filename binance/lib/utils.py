@@ -1,3 +1,4 @@
+import time
 from binance.error import ParameterRequiredError
 
 def cleanNoneValue(d) -> dict:
@@ -21,3 +22,7 @@ def check_required_parameters(params):
     """
     for p in params:
         check_required_parameter(p[0], p[1])
+
+def get_timestamp():
+    return int(time.time() * 1000)
+

@@ -7,4 +7,4 @@ class Trade(API):
 
     def account(self):
         urlPath = '/api/v3/account'
-        return self.sign_query(urlPath)
+        return self.sign_request('GET', urlPath)
