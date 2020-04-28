@@ -1,4 +1,5 @@
 from binance.api import API
+from binance.lib.utils import check_required_parameter
 
 class Trade(API):
 
@@ -23,4 +24,18 @@ class Trade(API):
         urlPath = '/api/v3/account'
         return self.sign_request('GET', urlPath)
 
-    #  def my_trades(self, symbol: str, **kargs):
+    def my_trades(self, symbol: str, **kwargs):
+        """ Account Trade List (USER_DATA)
+
+        Get trades for a specific account and symbol.
+
+        GET /api/v3/myTrades
+
+        https://binance-docs.github.io/apidocs/spot/en/#account-trade-list-user_data
+        """
+
+        check_required_parameter(symbol, 'symbol')
+
+        urlPath = '/api/v3/myTrades'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('GET', urlPath, payload)

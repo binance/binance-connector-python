@@ -14,6 +14,6 @@ secret = random_str()
 def test_account():
     """ Tests the API endpoint to account information  """
 
-    api =  binance.Trade(key, secret)
-    response = api.account()
+    client = binance.Trade(key, secret)
+    response = client.account()
     response.should.equal(mock_item)
