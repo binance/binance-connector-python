@@ -8,6 +8,7 @@ This is a thin library that working as a connector to the Binance public API.
 - [ ] better logging
 - [ ] more examples
 - [ ] better readme
+- [ ] pipeline, Actions or travis-ci?
 
 ## How to use
 
