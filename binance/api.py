@@ -79,7 +79,6 @@ class API(object):
 
     def _dispatch_request(self, http_method):
 
-        print(http_method)
         return {
             'GET': self.session.get,
             'DELETE': self.session.delete
