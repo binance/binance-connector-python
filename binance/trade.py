@@ -86,6 +86,19 @@ class Trade(API):
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('GET', url_path, payload)
 
+    def get_oco_order(self, **kwargs):
+        """ Query OCO (USER_DATA)
+
+       Retrieves a specific OCO based on provided optional parameters
+
+        GET /api/v3/orderList
+
+        https://binance-docs.github.io/apidocs/spot/en/#query-oco-user_data
+        """
+        url_path = '/api/v3/orderList'
+        payload = {**kwargs}
+        return self.sign_request('GET', url_path, payload)
+
     def account(self):
         """ Account Information (USER_DATA)
 
