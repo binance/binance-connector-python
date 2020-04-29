@@ -1,8 +1,19 @@
-class BinanceError(Exception):
+class BinanceException(Exception):
     pass
 
-class ParameterRequiredError(BinanceError):
+class APIException(BinanceException):
+    def __init__(self, status_code, code, message):
+        self.status_code = status_code
+        self.code = code
+        self.message = message
 
+class ServerException(BinanceException):
+    def __init__(self, status_code, message):
+        self.status_code = status_code
+        self.code = None
+        self.message = message
+
+class ParameterRequiredError(BinanceException):
     def __init__(self, params):
         self.params = params
 
