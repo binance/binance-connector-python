@@ -13,7 +13,7 @@ secret = ''
 client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
 
 try:
-    response = client.cancel_order('BTCUSDT', orderId='')
+    response = client.get_order('BTCUSDT', orderId='')
     logging.info(response)
 except APIException as error:
     logging.error('error happens, status: {}, code: {}, message: {}'.format(error.status_code, error.code, error.message))

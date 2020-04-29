@@ -2,6 +2,7 @@ import hmac
 import hashlib
 import requests
 from . import version
+from json.decoder import JSONDecodeError
 from urllib.parse import urlencode
 from binance.error import APIException, ServerException
 from binance.lib.utils import get_timestamp
@@ -87,12 +88,15 @@ class API(object):
 
     def _handle_exception(self, response):
         status_code = response.status_code
-        data = response.json()
         if (status_code == 200):
             return
 
         if (status_code >= 400 and status_code < 500):
-            raise APIException(status_code, data['code'], data['msg'])
+            try:
+                data = response.json()
+                raise APIException(status_code, data['code'], data['msg'])
+            except JSONDecodeError:
+                raise APIException(status_code, None, response.text)
 
-        raise ServerException(status_code, data)
+        raise ServerException(status_code, response.text)
 
