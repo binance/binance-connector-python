@@ -12,9 +12,33 @@ class Trade(API):
         super(Trade, self).__init__(key, secret, **kwargs)
 
     def cancel_order(self, symbol, **kwargs):
+        """ Cancel Order (TRADE)
+
+        Cancel an active order.
+
+        DELETE /api/v3/order
+
+        https://binance-docs.github.io/apidocs/spot/en/#cancel-order-trade
+        """
         check_required_parameter(symbol, 'symbol')
 
         url_path = '/api/v3/order'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('DELETE', url_path, payload)
+
+    def cancel_open_orders(self, symbol, **kwargs):
+        """ Cancel all Open Orders on a Symbol (TRADE)
+
+        Cancels all active orders on a symbol.
+        This includes OCO orders.
+
+        DELETE api/v3/openOrders
+
+        https://binance-docs.github.io/apidocs/spot/en/#cancel-all-open-orders-on-a-symbol-trade
+        """
+        check_required_parameter(symbol, 'symbol')
+
+        url_path = '/api/v3/openOrders'
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('DELETE', url_path, payload)
 
