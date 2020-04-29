@@ -3,6 +3,7 @@ import hashlib
 import requests
 from . import version
 from urllib.parse import urlencode
+from binance.error import APIException, ServerException
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import check_required_parameter
@@ -20,7 +21,6 @@ class API(object):
             'X-MBX-APIKEY': secret
         })
         self.session.headers.update({'X-MBX-APIKEY': self.key})
-        self.response = None
 
         self.base_url = 'https://api.binance.com'
         if 'base_url' in kwargs:
@@ -49,8 +49,9 @@ class API(object):
 
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
-
         response = self._dispatch_request(http_method)(url, params=payload)
+
+        self._handle_exception(response)
 
         data = response.json()
         result = {}
@@ -83,3 +84,15 @@ class API(object):
             'GET': self.session.get,
             'DELETE': self.session.delete
         }.get(http_method, 'GET')
+
+    def _handle_exception(self, response):
+        status_code = response.status_code
+        data = response.json()
+        if (status_code == 200):
+            return
+
+        if (status_code >= 400 and status_code < 500):
+            raise APIException(status_code, data['code'], data['msg'])
+
+        raise ServerException(status_code, data)
+
