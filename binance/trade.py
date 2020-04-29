@@ -57,6 +57,20 @@ class Trade(API):
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('GET', url_path, payload)
 
+    def get_open_orders(self, symbol=None, **kwargs):
+        """ Current Open Orders (USER_DATA)
+
+        Get all open orders on a symbol.
+
+        GET /api/v3/openOrders
+
+        https://binance-docs.github.io/apidocs/spot/en/#current-open-orders-user_data
+        """
+
+        url_path = '/api/v3/openOrders'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('GET', url_path, payload)
+
     def account(self):
         """ Account Information (USER_DATA)
 
