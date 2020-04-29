@@ -42,6 +42,21 @@ class Trade(API):
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('DELETE', url_path, payload)
 
+    def get_order(self, symbol, **kwargs):
+        """ Query Order (USER_DATA)
+
+        Check an order's status.
+
+        GET /api/v3/order
+
+        https://binance-docs.github.io/apidocs/spot/en/#query-order-user_data
+        """
+        check_required_parameter(symbol, 'symbol')
+
+        url_path = '/api/v3/order'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('GET', url_path, payload)
+
     def account(self):
         """ Account Information (USER_DATA)
 
