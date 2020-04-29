@@ -16,8 +16,8 @@ class Market(API):
 
         """
 
-        urlPath = '/api/v3/ping'
-        return self.query(urlPath)
+        url_path = '/api/v3/ping'
+        return self.query(url_path)
 
     def time(self):
         """ Check Server Time
@@ -29,8 +29,8 @@ class Market(API):
 
         """
 
-        urlPath = '/api/v3/time'
-        return self.query(urlPath)
+        url_path = '/api/v3/time'
+        return self.query(url_path)
 
     def exchange_info(self):
         """ Exchange Information
@@ -42,8 +42,8 @@ class Market(API):
 
         """
 
-        urlPath = '/api/v3/exchangeInfo'
-        return self.query(urlPath)
+        url_path = '/api/v3/exchangeInfo'
+        return self.query(url_path)
 
     def depth(self, symbol: str, limit: int = 100):
         """ get orderbook.
@@ -65,7 +65,7 @@ class Market(API):
             'symbol': symbol,
             'limit': limit
         }
-        return self.query('/api/v3/depth', self._prepare_params(params))
+        return self.query('/api/v3/depth', params)
 
     def trades(self, symbol: str, limit: int = 500):
         """ Recent Trades List
@@ -86,7 +86,7 @@ class Market(API):
             'symbol': symbol,
             'limit': limit
         }
-        return self.query('/api/v3/trades', self._prepare_params(params))
+        return self.query('/api/v3/trades', params)
 
     def historical_trades(self, symbol: str, limit: int = 500, fromId: int = None):
         """ Old Trade Lookup
@@ -109,7 +109,7 @@ class Market(API):
             'limit':  limit,
             'fromId': fromId
         }
-        return self.query('/api/v3/historicalTrades', self._prepare_params(params))
+        return self.query('/api/v3/historicalTrades', params)
 
     def agg_trades(self, symbol: str, limit: int = 500, fromId=None, startTime=None, endTime=None):
         """ Compressed/Aggregate Trades List
@@ -136,7 +136,7 @@ class Market(API):
             'startTime': startTime,
             'endTime':   endTime
         }
-        return self.query('/api/v3/aggTrades', self._prepare_params(params))
+        return self.query('/api/v3/aggTrades', params)
 
     def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None):
         """ Kline/Candlestick Data
@@ -164,7 +164,7 @@ class Market(API):
             'startTime': startTime,
             'endTime':   endTime
         }
-        return self.query('/api/v3/klines', self._prepare_params(params))
+        return self.query('/api/v3/klines', params)
 
     def avg_price(self, symbol: str):
         """ Current Average Price
@@ -181,7 +181,7 @@ class Market(API):
         params = {
             'symbol': symbol,
         }
-        return self.query('/api/v3/avgPrice', self._prepare_params(params))
+        return self.query('/api/v3/avgPrice', params)
 
     def ticker_24hr(self, symbol: str = None):
         """ 24hr Ticker Price Change Statistics
@@ -197,7 +197,7 @@ class Market(API):
         params = {
             'symbol': symbol,
         }
-        return self.query('/api/v3/ticker/24hr', self._prepare_params(params))
+        return self.query('/api/v3/ticker/24hr', params)
 
     def ticker_price(self, symbol: str = None):
         """ Symbol Price Ticker
@@ -213,7 +213,7 @@ class Market(API):
         params = {
             'symbol': symbol,
         }
-        return self.query('/api/v3/ticker/price', self._prepare_params(params))
+        return self.query('/api/v3/ticker/price', params)
 
     def book_ticker(self, symbol: str = None):
         """ Symbol Order Book Ticker
@@ -229,4 +229,4 @@ class Market(API):
         params = {
             'symbol': symbol,
         }
-        return self.query('/api/v3/ticker/bookTicker', self._prepare_params(params))
+        return self.query('/api/v3/ticker/bookTicker', params)

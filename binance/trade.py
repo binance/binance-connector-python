@@ -11,6 +11,13 @@ class Trade(API):
     def __init__(self, key, secret, **kwargs):
         super(Trade, self).__init__(key, secret, **kwargs)
 
+    def cancel_order(self, symbol, **kwargs):
+        check_required_parameter(symbol, 'symbol')
+
+        url_path = '/api/v3/order'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('DELETE', url_path, payload)
+
     def account(self):
         """ Account Information (USER_DATA)
 
@@ -21,8 +28,8 @@ class Trade(API):
         https://binance-docs.github.io/apidocs/spot/en/#account-information-user_data
         """
 
-        urlPath = '/api/v3/account'
-        return self.sign_request('GET', urlPath)
+        url_path = '/api/v3/account'
+        return self.sign_request('GET', url_path)
 
     def my_trades(self, symbol: str, **kwargs):
         """ Account Trade List (USER_DATA)
@@ -36,6 +43,6 @@ class Trade(API):
 
         check_required_parameter(symbol, 'symbol')
 
-        urlPath = '/api/v3/myTrades'
+        url_path = '/api/v3/myTrades'
         payload = {'symbol': symbol, **kwargs}
-        return self.sign_request('GET', urlPath, payload)
+        return self.sign_request('GET', url_path, payload)

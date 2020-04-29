@@ -35,10 +35,23 @@ class API(object):
             self.show_header = kwargs['show_header'] and kwargs['show_header'] == True
         return
 
+    def query(self, url_path, payload={}):
+        return self.send_request('GET', url_path, payload=payload)
 
-    def query(self, urlPath, payload={}):
-        url = self.base_url + urlPath
-        response = self.session.get(url, params=payload)
+    def sign_request(self, http_method, url_path, payload={}):
+        payload['timestamp'] = get_timestamp()
+        query_string = self._prepare_params(payload)
+        signature = self._get_sign(query_string)
+        payload['signature'] = signature
+        query_string = query_string + '&signature=' + signature
+
+        return self.send_request(http_method, url_path, payload)
+
+    def send_request(self, http_method, url_path, payload={}):
+        url = self.base_url + url_path
+
+        response = self._dispatch_request(http_method)(url, params=payload)
+
         data = response.json()
         result = {}
         if (self.show_weight_usage):
@@ -57,17 +70,6 @@ class API(object):
 
         return data
 
-    def sign_request(self, http_method, urlPath, payload={}):
-        ts = get_timestamp()
-        payload['timestamp'] = ts
-        query_string = self._prepare_params(payload)
-        signature = self._get_sign(query_string)
-        payload['signature'] = signature
-        query_string = query_string + '&signature=' + signature
-        final_url = urlPath + '?' + query_string
-
-        return self._dispatch_request(http_method, final_url)
-
     def _prepare_params(self, params):
         return urlencode(cleanNoneValue(params))
 
@@ -75,7 +77,9 @@ class API(object):
         m = hmac.new(self.secret.encode('utf-8'), data.encode('utf-8'), hashlib.sha256)
         return m.hexdigest()
 
-    def _dispatch_request(self, http_method, url):
+    def _dispatch_request(self, http_method):
+
         return {
-            'GET': self.query(url)
+            'GET': self.session.get,
+            'DELETE': self.session.delete
         }.get(http_method, 'GET')
