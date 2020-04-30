@@ -83,8 +83,9 @@ class API(object):
 
         return {
             'GET': self.session.get,
+            'DELETE': self.session.delete,
+            'PUT': self.session.put,
             'POST': self.session.post,
-            'DELETE': self.session.delete
         }.get(http_method, 'GET')
 
     def _handle_exception(self, response):
@@ -100,4 +101,3 @@ class API(object):
                 raise APIException(status_code, None, response.text)
 
         raise ServerException(status_code, response.text)
-
