@@ -99,6 +99,21 @@ class Trade(API):
         url_path = '/api/v3/order/oco'
         return self.sign_request('POST', url_path, { **kwargs })
 
+    def cancel_oco_order(self, symbol, **kwargs):
+        """ Cancel OCO (TRADE)
+
+        Cancel an entire Order List
+
+        DELETE /api/v3/orderList
+
+        https://binance-docs.github.io/apidocs/spot/en/#cancel-oco-trade
+        """
+        check_required_parameter(symbol, 'symbol')
+
+        url_path = '/api/v3/orderList'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('DELETE', url_path, payload)
+
     def get_oco_order(self, **kwargs):
         """ Query OCO (USER_DATA)
 
