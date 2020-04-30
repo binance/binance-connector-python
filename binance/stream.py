@@ -32,3 +32,15 @@ class Stream(API):
 
         url_path = '/api/v3/userDataStream'
         return self.send_request('PUT', url_path, {'listenKey': listenKey})
+
+    def close_listen_key(self, listenKey: str):
+        """ Close a ListenKey (USER_STREAM)
+
+        DELETE /api/v3/userDataStream
+
+        https://binance-docs.github.io/apidocs/spot/en/#listen-key-spot
+        """
+        check_required_parameter(listenKey, 'listenKey')
+
+        url_path = '/api/v3/userDataStream'
+        return self.send_request('DELETE', url_path, {'listenKey': listenKey})
