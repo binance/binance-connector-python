@@ -16,24 +16,23 @@ secret = random_str()
 params = {
     'symbol': 'BTCUSDT',
     'side': 'SELL',
+    'type': 'LIMIT',
+    'timeInForce': 'GTC',
     'quantity': 0.002,
-    'price': 9500,
-    'stopPrice': 7500,
-    'stopLimitPrice': 7000,
-    'stopLimitTimeInForce': 'GTC'
+    'price': 9500
 }
 
-@mock_http_response(responses.POST, '/api/v3/order', mock_exception, 400)
-def test_post_oct_order_without_param():
-    """ Tests the API endpoint to post a new oco order without parameters """
+@mock_http_response(responses.POST, '/api/v3/order/oco', mock_exception, 400)
+def test_post_order_without_param():
+    """ Tests the API endpoint to post a new order without param """
 
     client =  binance.Trade(key, secret)
-    client.new_order.when.called_with().should.throw(APIException)
+    client.new_oco_order.when.called_with().should.throw(APIException)
 
-@mock_http_response(responses.POST, '/api/v3/order\\?' + urlencode(params), mock_item, 200)
-def test_post_oct_order():
+@mock_http_response(responses.POST, '/api/v3/order/oco\\?' + urlencode(params), mock_item, 200)
+def test_get_oct_order():
     """ Tests the API endpoint to post a new order """
 
     client =  binance.Trade(key, secret)
-    response = client.new_order(**params)
+    response = client.new_oco_order(**params)
     response.should.equal(mock_item)

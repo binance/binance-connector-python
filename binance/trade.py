@@ -11,6 +11,19 @@ class Trade(API):
     def __init__(self, key, secret, **kwargs):
         super(Trade, self).__init__(key, secret, **kwargs)
 
+    def new_order(self, **kwargs):
+        """ New OCO (TRADE)
+
+        Post a new order
+
+        POST /api/v3/order
+
+        https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
+        """
+
+        url_path = '/api/v3/order'
+        return self.sign_request('POST', url_path, { **kwargs })
+
     def cancel_order(self, symbol, **kwargs):
         """ Cancel Order (TRADE)
 
