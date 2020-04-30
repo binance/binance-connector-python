@@ -11,6 +11,19 @@ class Trade(API):
     def __init__(self, key, secret, **kwargs):
         super(Trade, self).__init__(key, secret, **kwargs)
 
+    def new_order_test(self, **kwargs):
+        """ Test New Order (TRADE)
+
+        Test new order creation and signature/recvWindow long. Creates and validates a new order but does not send it into the matching engine.
+
+        POST /api/v3/order/test
+
+        https://binance-docs.github.io/apidocs/spot/en/#test-new-order-trade
+        """
+
+        url_path = '/api/v3/order/test'
+        return self.sign_request('POST', url_path, { **kwargs })
+
     def new_order(self, **kwargs):
         """ New OCO (TRADE)
 

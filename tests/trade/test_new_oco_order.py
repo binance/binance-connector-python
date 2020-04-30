@@ -23,17 +23,17 @@ params = {
     'stopLimitTimeInForce': 'GTC'
 }
 
-@mock_http_response(responses.POST, '/api/v3/order', mock_exception, 400)
-def test_post_oct_order_without_param():
+@mock_http_response(responses.POST, '/api/v3/order/oco', mock_exception, 400)
+def test_post_an_oct_order_without_param():
     """ Tests the API endpoint to post a new oco order without parameters """
 
     client =  binance.Trade(key, secret)
-    client.new_order.when.called_with().should.throw(APIException)
+    client.new_oco_order.when.called_with().should.throw(APIException)
 
-@mock_http_response(responses.POST, '/api/v3/order\\?' + urlencode(params), mock_item, 200)
-def test_post_oct_order():
-    """ Tests the API endpoint to post a new order """
+@mock_http_response(responses.POST, '/api/v3/order/oco\\?' + urlencode(params), mock_item, 200)
+def test_post_an_oct_order():
+    """ Tests the API endpoint to post a new oco order """
 
     client =  binance.Trade(key, secret)
-    response = client.new_order(**params)
+    response = client.new_oco_order(**params)
     response.should.equal(mock_item)
