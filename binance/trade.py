@@ -111,6 +111,17 @@ class Trade(API):
         url_path = '/api/v3/allOrderList'
         return self.sign_request('GET', url_path, { **kwargs })
 
+    def get_oco_open_orders(self, **kwargs):
+        """ Query Open OCO (USER_DATA)
+
+        GET /api/v3/openOrderList
+
+        https://binance-docs.github.io/apidocs/spot/en/#query-open-oco-user_data
+        """
+
+        url_path = '/api/v3/openOrderList'
+        return self.sign_request('GET', url_path, { **kwargs })
+
     def account(self):
         """ Account Information (USER_DATA)
 
