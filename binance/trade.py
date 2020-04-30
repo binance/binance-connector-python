@@ -96,8 +96,20 @@ class Trade(API):
         https://binance-docs.github.io/apidocs/spot/en/#query-oco-user_data
         """
         url_path = '/api/v3/orderList'
-        payload = {**kwargs}
-        return self.sign_request('GET', url_path, payload)
+        return self.sign_request('GET', url_path, { **kwargs })
+
+    def get_oco_orders(self, **kwargs):
+        """ Query all OCO (USER_DATA)
+
+        Retrieves all OCO based on provided optional parameters
+
+        GET /api/v3/allOrderList
+
+        https://binance-docs.github.io/apidocs/spot/en/#query-all-oco-user_data
+        """
+
+        url_path = '/api/v3/allOrderList'
+        return self.sign_request('GET', url_path, { **kwargs })
 
     def account(self):
         """ Account Information (USER_DATA)
