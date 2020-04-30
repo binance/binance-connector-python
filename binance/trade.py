@@ -86,6 +86,19 @@ class Trade(API):
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('GET', url_path, payload)
 
+    def new_oco_order(self, **kwargs):
+        """ New OCO (TRADE)
+
+        Post a new oco order
+
+        POST /api/v3/order/oco
+
+        https://binance-docs.github.io/apidocs/spot/en/#new-oco-trade
+        """
+
+        url_path = '/api/v3/order/oco'
+        return self.sign_request('POST', url_path, { **kwargs })
+
     def get_oco_order(self, **kwargs):
         """ Query OCO (USER_DATA)
 

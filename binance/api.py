@@ -83,6 +83,7 @@ class API(object):
 
         return {
             'GET': self.session.get,
+            'POST': self.session.post,
             'DELETE': self.session.delete
         }.get(http_method, 'GET')
 
