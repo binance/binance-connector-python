@@ -11,6 +11,32 @@ class Trade(API):
     def __init__(self, key, secret, **kwargs):
         super(Trade, self).__init__(key, secret, **kwargs)
 
+    def new_order_test(self, **kwargs):
+        """ Test New Order (TRADE)
+
+        Test new order creation and signature/recvWindow long. Creates and validates a new order but does not send it into the matching engine.
+
+        POST /api/v3/order/test
+
+        https://binance-docs.github.io/apidocs/spot/en/#test-new-order-trade
+        """
+
+        url_path = '/api/v3/order/test'
+        return self.sign_request('POST', url_path, { **kwargs })
+
+    def new_order(self, **kwargs):
+        """ New OCO (TRADE)
+
+        Post a new order
+
+        POST /api/v3/order
+
+        https://binance-docs.github.io/apidocs/spot/en/#new-order-trade
+        """
+
+        url_path = '/api/v3/order'
+        return self.sign_request('POST', url_path, { **kwargs })
+
     def cancel_order(self, symbol, **kwargs):
         """ Cancel Order (TRADE)
 
@@ -85,6 +111,34 @@ class Trade(API):
         url_path = '/api/v3/allOrders'
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('GET', url_path, payload)
+
+    def new_oco_order(self, **kwargs):
+        """ New OCO (TRADE)
+
+        Post a new oco order
+
+        POST /api/v3/order/oco
+
+        https://binance-docs.github.io/apidocs/spot/en/#new-oco-trade
+        """
+
+        url_path = '/api/v3/order/oco'
+        return self.sign_request('POST', url_path, { **kwargs })
+
+    def cancel_oco_order(self, symbol, **kwargs):
+        """ Cancel OCO (TRADE)
+
+        Cancel an entire Order List
+
+        DELETE /api/v3/orderList
+
+        https://binance-docs.github.io/apidocs/spot/en/#cancel-oco-trade
+        """
+        check_required_parameter(symbol, 'symbol')
+
+        url_path = '/api/v3/orderList'
+        payload = {'symbol': symbol, **kwargs}
+        return self.sign_request('DELETE', url_path, payload)
 
     def get_oco_order(self, **kwargs):
         """ Query OCO (USER_DATA)
