@@ -13,9 +13,9 @@ def test_depth_without_symbol():
     api =  binance.Market()
     api.depth.when.called_with('').should.throw(ParameterRequiredError)
 
-@mock_http_response(responses.GET, '/api/v3/depth\\?symbol=BTCUSDT&limit=100', mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/depth\\?symbol=BTCUSDT', mock_item, 200)
 def test_depth():
-    """ Tests the API endpoint to get exchange order book depth with default limit 100 """
+    """ Tests the API endpoint to get exchange order book depth with default parameters """
 
     api =  binance.Market()
     response = api.depth('BTCUSDT')

@@ -39,6 +39,12 @@ class API(object):
     def query(self, url_path, payload={}):
         return self.send_request('GET', url_path, payload=payload)
 
+    def limit_request(self, http_method, url_path, payload={}):
+        """ limit request is for those endpoints require API key in the header"""
+
+        check_required_parameter(self.key, 'apiKey')
+        return self.send_request(http_method, url_path, payload=payload)
+
     def sign_request(self, http_method, url_path, payload={}):
         payload['timestamp'] = get_timestamp()
         query_string = self._prepare_params(payload)

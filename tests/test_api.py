@@ -1,8 +1,9 @@
 import sure
+import requests
 from tests.util import random_str
 from binance.version import __version__
 from binance.api import API
-import requests
+from binance.error import ParameterRequiredError
 
 def test_API_initial():
     """ Tests the API initialization """
@@ -36,3 +37,11 @@ def test_API_with_extra_parametes():
     client.show_weight_usage.should.be.true
     client.show_header.should.be.true
     client.session.headers.should.have.key('X-MBX-APIKEY').which.should.equal(key)
+
+def test_limit_request_without_api_key():
+    """ Tests the limit_request without api key """
+
+    url = random_str()
+    client = API()
+    client.limit_request.when.called_with('GET', url).should.throw(ParameterRequiredError)
+

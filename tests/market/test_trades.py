@@ -13,7 +13,7 @@ def test_trades_without_symbol():
     api =  binance.Market()
     api.trades.when.called_with('').should.throw(ParameterRequiredError)
 
-@mock_http_response(responses.GET, '/api/v3/trades\\?symbol=BTCUSDT&limit=500', mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/trades\\?symbol=BTCUSDT', mock_item, 200)
 def test_trades_with_default_limit():
     """ Tests the API endpoint to get recent trades with default limit """
 
