@@ -1,14 +1,12 @@
 # Binance Public API connector Python
 
-This is a thin library that working as a connector to the Binance public API. 
+This is a thin library that working as a connector to the Binance public API.
 
-## Todo list (for dev only)
-
-- [x] all api endpoints
-- [x] better logging
-- [x] more examples
-- [ ] better readme
-- [ ] pipeline, Actions or travis-ci?
+- aiming to support all endpoints
+- thin layer, easy to use
+- test cases included
+- enable to change base url
+- display weight usage or whole response header
 
 ## How to use
 
@@ -52,7 +50,7 @@ print(market_client.time())
 
 ```
 
-Without providing the base url, this connector works on `api.binance.com`.<br/>
+Without providing the base url, this connector works on `api.binance.com` by default.<br/>
 
 It's recommended to allow changing the base url even in production.<br/>
 In some rare case, Binance may offer a backup base url.
