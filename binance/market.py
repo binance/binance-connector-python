@@ -104,7 +104,7 @@ class Market(API):
         params = { 'symbol': symbol, **kwargs }
         return self.limit_request('GET', '/api/v3/historicalTrades', params)
 
-    def agg_trades(self, symbol: str, limit: int = 500, fromId=None, startTime=None, endTime=None):
+    def agg_trades(self, symbol: str, **kwargs):
         """ Compressed/Aggregate Trades List
 
         GET /api/v3/aggTrades
@@ -122,16 +122,10 @@ class Market(API):
         """
 
         check_required_parameter(symbol, 'symbol')
-        params = {
-            'symbol':    symbol,
-            'limit':     limit,
-            'fromId':    fromId,
-            'startTime': startTime,
-            'endTime':   endTime
-        }
+        params = { 'symbol': symbol, **kwargs }
         return self.query('/api/v3/aggTrades', params)
 
-    def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None):
+    def klines(self, symbol: str, interval: str, **kwargs):
         """ Kline/Candlestick Data
 
         GET /api/v3/klines
@@ -153,9 +147,7 @@ class Market(API):
         params = {
             'symbol':    symbol,
             'interval':  interval,
-            'limit':     limit,
-            'startTime': startTime,
-            'endTime':   endTime
+            **kwargs
         }
         return self.query('/api/v3/klines', params)
 
