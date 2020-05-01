@@ -1,4 +1,6 @@
 import hmac
+import json
+import logging
 import hashlib
 import requests
 from . import version
@@ -10,6 +12,7 @@ from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 
+logger = logging.getLogger(__name__)
 
 class API(object):
     def __init__(self, key=None, secret=None, **kwargs):
@@ -56,7 +59,13 @@ class API(object):
 
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
+
+        logger.debug('url: '+ url)
+        logger.debug('payload: ' + json.dumps(payload))
+
         response = self._dispatch_request(http_method)(url, params=payload)
+
+        logger.debug('raw response from server:' + response.text)
 
         self._handle_exception(response)
 
