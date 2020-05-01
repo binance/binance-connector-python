@@ -82,7 +82,9 @@ response = client.cancel_oco_order('BTCUSDT', order_list_id=1)
 
 PEP8 suggest method name as "lowercase with words separated by underscores", but not here. Let's follow the document, copy the name from there.
 
-## Display meta info
+
+
+### Display meta info
 
 Binance API server returns weight usage in the header of each response. This is very useful to indentify the current usage.
 To reveal this value, simpily intial the client with `show_weight_usage=True` as:
@@ -115,9 +117,19 @@ the returns will be like:
 
 ```
 
-## Display logs
+### Display logs
 Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
 Known what parameters and the values sending to server is essential during debug.
+
+## Test case
+
+```python
+
+# if you haven't installed the packages yet
+pip install -r requirements.txt
+
+pytest
+```
 
 ## Python version
 3.5+
