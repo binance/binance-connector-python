@@ -4,6 +4,7 @@ from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 from binance.api import API
 
+
 class Market(API):
 
     def __init__(self, key=None, **kwargs):
@@ -64,7 +65,7 @@ class Market(API):
         """
 
         check_required_parameter(symbol, 'symbol')
-        params = { 'symbol': symbol, **kwargs }
+        params = {'symbol': symbol, **kwargs}
         return self.query('/api/v3/depth', params)
 
     def trades(self, symbol: str, **kwargs):
@@ -82,7 +83,7 @@ class Market(API):
                                      max 1000
         """
         check_required_parameter(symbol, 'symbol')
-        params = { 'symbol': symbol, **kwargs }
+        params = {'symbol': symbol, **kwargs}
         return self.query('/api/v3/trades', params)
 
     def historical_trades(self, symbol: str, **kwargs):
@@ -101,7 +102,7 @@ class Market(API):
         formId -- optional/integer -- trade id to fetch from. Default gets most recent trades.
         """
         check_required_parameter(symbol, 'symbol')
-        params = { 'symbol': symbol, **kwargs }
+        params = {'symbol': symbol, **kwargs}
         return self.limit_request('GET', '/api/v3/historicalTrades', params)
 
     def agg_trades(self, symbol: str, **kwargs):
@@ -122,7 +123,7 @@ class Market(API):
         """
 
         check_required_parameter(symbol, 'symbol')
-        params = { 'symbol': symbol, **kwargs }
+        params = {'symbol': symbol, **kwargs}
         return self.query('/api/v3/aggTrades', params)
 
     def klines(self, symbol: str, interval: str, **kwargs):
@@ -145,8 +146,8 @@ class Market(API):
         check_required_parameters([[symbol, 'symbol'], [interval, 'interval']])
 
         params = {
-            'symbol':    symbol,
-            'interval':  interval,
+            'symbol': symbol,
+            'interval': interval,
             **kwargs
         }
         return self.query('/api/v3/klines', params)

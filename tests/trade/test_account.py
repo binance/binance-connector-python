@@ -10,6 +10,7 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 key = random_str()
 secret = random_str()
 
+
 @mock_http_response(responses.GET, '/api/v3/account', mock_item, 200)
 def test_account():
     """ Tests the API endpoint to account information  """
@@ -17,6 +18,7 @@ def test_account():
     client = binance.Trade(key, secret)
     response = client.account()
     response.should.equal(mock_item)
+
 
 @mock_http_response(responses.GET, '/api/v3/account\\?recvWindow=10000', mock_item, 200)
 def test_account():

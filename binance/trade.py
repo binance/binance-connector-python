@@ -1,6 +1,7 @@
 from binance.api import API
 from binance.lib.utils import check_required_parameter
 
+
 class Trade(API):
 
     """ class Trade for Order, Trade, Account endpoints that require signature
@@ -22,7 +23,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/order/test'
-        return self.sign_request('POST', url_path, { **kwargs })
+        return self.sign_request('POST', url_path, {**kwargs})
 
     def new_order(self, **kwargs):
         """ New OCO (TRADE)
@@ -35,7 +36,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/order'
-        return self.sign_request('POST', url_path, { **kwargs })
+        return self.sign_request('POST', url_path, {**kwargs})
 
     def cancel_order(self, symbol: str, **kwargs):
         """ Cancel Order (TRADE)
@@ -123,7 +124,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/order/oco'
-        return self.sign_request('POST', url_path, { **kwargs })
+        return self.sign_request('POST', url_path, {**kwargs})
 
     def cancel_oco_order(self, symbol, **kwargs):
         """ Cancel OCO (TRADE)
@@ -150,7 +151,7 @@ class Trade(API):
         https://binance-docs.github.io/apidocs/spot/en/#query-oco-user_data
         """
         url_path = '/api/v3/orderList'
-        return self.sign_request('GET', url_path, { **kwargs })
+        return self.sign_request('GET', url_path, {**kwargs})
 
     def get_oco_orders(self, **kwargs):
         """ Query all OCO (USER_DATA)
@@ -163,7 +164,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/allOrderList'
-        return self.sign_request('GET', url_path, { **kwargs })
+        return self.sign_request('GET', url_path, {**kwargs})
 
     def get_oco_open_orders(self, **kwargs):
         """ Query Open OCO (USER_DATA)
@@ -174,7 +175,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/openOrderList'
-        return self.sign_request('GET', url_path, { **kwargs })
+        return self.sign_request('GET', url_path, {**kwargs})
 
     def account(self, **kwargs):
         """ Account Information (USER_DATA)
@@ -187,7 +188,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/account'
-        return self.sign_request('GET', url_path, { **kwargs })
+        return self.sign_request('GET', url_path, {**kwargs})
 
     def my_trades(self, symbol: str, **kwargs):
         """ Account Trade List (USER_DATA)

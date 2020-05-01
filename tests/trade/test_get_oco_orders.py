@@ -21,6 +21,7 @@ params = {
     'recvWindow': 1000
 }
 
+
 @mock_http_response(responses.GET, '/api/v3/allOrderList', mock_item, 200)
 def test_get_oco_orders_without_parameters():
     """ Tests the API endpoint to get oco orders without parameters """
@@ -28,6 +29,7 @@ def test_get_oco_orders_without_parameters():
     client = binance.Trade(key, secret)
     response = client.get_oco_orders()
     response.should.equal(mock_item)
+
 
 @mock_http_response(responses.GET, '/api/v3/allOrderList\\?' + urlencode(params), mock_item, 200)
 def test_get_oco_orders_with_parameters():

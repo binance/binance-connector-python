@@ -5,6 +5,7 @@ from binance.version import __version__
 from binance.api import API
 from binance.error import ParameterRequiredError
 
+
 def test_API_initial():
     """ Tests the API initialization """
 
@@ -17,9 +18,12 @@ def test_API_initial():
     client.show_weight_usage.should.be.false
     client.show_header.should.be.false
     client.session.should.be.a(requests.Session)
-    client.session.headers.should.have.key('Content-Type').which.should.equal('application/json;charset=utf-8')
-    client.session.headers.should.have.key('User-Agent').which.should.equal('binance-connector-python/' + __version__)
+    client.session.headers.should.have.key(
+        'Content-Type').which.should.equal('application/json;charset=utf-8')
+    client.session.headers.should.have.key(
+        'User-Agent').which.should.equal('binance-connector-python/' + __version__)
     client.session.headers.should.have.key('X-MBX-APIKEY').which.should.be.none
+
 
 def test_API_with_extra_parametes():
     """ Tests the API initialization with extra parameters"""
@@ -28,7 +32,8 @@ def test_API_with_extra_parametes():
     secret = random_str()
     base_url = random_str()
 
-    client = API(key, secret, base_url=base_url, show_weight_usage=True, show_header=True)
+    client = API(key, secret, base_url=base_url,
+                 show_weight_usage=True, show_header=True)
 
     client.should.be.a(API)
     client.key.should.equal(key)
@@ -36,12 +41,14 @@ def test_API_with_extra_parametes():
     client.base_url.should.equal(base_url)
     client.show_weight_usage.should.be.true
     client.show_header.should.be.true
-    client.session.headers.should.have.key('X-MBX-APIKEY').which.should.equal(key)
+    client.session.headers.should.have.key(
+        'X-MBX-APIKEY').which.should.equal(key)
+
 
 def test_limit_request_without_api_key():
     """ Tests the limit_request without api key """
 
     url = random_str()
     client = API()
-    client.limit_request.when.called_with('GET', url).should.throw(ParameterRequiredError)
-
+    client.limit_request.when.called_with(
+        'GET', url).should.throw(ParameterRequiredError)
