@@ -84,7 +84,7 @@ PEP8 suggest method name as "lowercase with words separated by underscores", but
 
 ### Timeout
 
-`timeout` is support and recommend to set a proper time as in second. Be sure you know this value as "no bytes have been received on the underlying socket for timeout seconds".
+`timeout` is supported and recommend to set a proper time as in second. Be sure you know this value as "no bytes have been received on the underlying socket for timeout seconds".
 if not set, request do not time out.
 
 ```python
