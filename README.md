@@ -116,7 +116,6 @@ the returns will be like:
 ```
 
 ## Display logs
-
 Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
 Known what parameters and the values sending to server is essential during debug.
 
@@ -124,8 +123,13 @@ Known what parameters and the values sending to server is essential during debug
 3.5+
 
 ## Limitation
-
 - support `/api/*` only now, but will add more endpoints
+
+## Found :bug:
+Please open an issue
+
+## Found API issue
+Open a topic at [Binance Developer Community](https://dev.binance.vision)
 
 ## Contribution
 
