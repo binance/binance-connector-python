@@ -2,6 +2,7 @@ import sure
 import binance
 import responses
 
+from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
 from tests.util import current_timestamp
@@ -11,9 +12,14 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 key = random_str()
 secret = random_str()
 
-fromId = '1234567'
-startTime = current_timestamp()
-endTime = current_timestamp()
+params = {
+    'symbol': 'BTCUSDT',
+    'startTime': current_timestamp(),
+    'endTime': current_timestamp(),
+    'fromId': '1234567',
+    'limit': 500,
+    'recvWindow': 1000
+}
 
 def test_get_my_trades_without_symbol():
     """ Tests the API endpoint to get my trades without symbol """
@@ -29,10 +35,10 @@ def test_get_my_trades():
     response = client.my_trades('ETHBTC')
     response.should.equal(mock_item)
 
-@mock_http_response(responses.GET, '/api/v3/myTrades\\?symbol=ETHBTC&limit=5&startTime={}&endTime={}&fromId={}'.format(startTime, endTime, fromId), mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/myTrades\\?' + urlencode(params), mock_item, 200)
 def test_get_my_trades_with_parameters():
     """ Tests the API endpoint to get my trades with extra parameters """
 
     client =  binance.Trade(key, secret)
-    response = client.my_trades('ETHBTC', limit=5, startTime=startTime, endTime=endTime, fromId=fromId)
+    response = client.my_trades(**params)
     response.should.equal(mock_item)
