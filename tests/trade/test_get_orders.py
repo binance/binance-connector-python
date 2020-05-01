@@ -21,23 +21,26 @@ params = {
     'endTime': timestamp()
 }
 
+
 def test_get_orders_without_symbol():
     """ Tests the API endpoint to get all orders without symbol """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     client.get_orders.when.called_with('').should.throw(ParameterRequiredError)
+
 
 @mock_http_response(responses.GET, '/api/v3/allOrders\\?symbol=ETHBTC', mock_item, 200)
 def test_get_orders():
     """ Tests the API endpoint to get orders """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.get_orders('ETHBTC')
+
 
 @mock_http_response(responses.GET, '/api/v3/allOrders\\?' + urlencode(params), mock_item, 200)
 def test_get_orders_with_available_params():
     """ Tests the API endpoint to get orders based on parameters """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.get_orders(**params)
     response.should.equal(mock_item)

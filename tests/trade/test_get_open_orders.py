@@ -17,18 +17,20 @@ params = {
     'recvWindow': 1000
 }
 
+
 @mock_http_response(responses.GET, '/api/v3/openOrders', mock_item, 200)
 def test_get_open_orders_for_all_pairs():
     """ Tests the API endpoint to get all open orders """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.get_open_orders()
     response.should.equal(mock_item)
+
 
 @mock_http_response(responses.GET, '/api/v3/openOrders\\?' + urlencode(params), mock_item, 200)
 def test_get_open_orders_for_one_pair():
     """ Tests the API endpoint to get open orders for one pair """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.get_open_orders(**params)
     response.should.equal(mock_item)

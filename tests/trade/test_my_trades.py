@@ -21,24 +21,27 @@ params = {
     'recvWindow': 1000
 }
 
+
 def test_get_my_trades_without_symbol():
     """ Tests the API endpoint to get my trades without symbol """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     client.my_trades.when.called_with('').should.throw(ParameterRequiredError)
+
 
 @mock_http_response(responses.GET, '/api/v3/myTrades\\?symbol=ETHBTC', mock_item, 200)
 def test_get_my_trades():
     """ Tests the API endpoint to get my trades """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.my_trades('ETHBTC')
     response.should.equal(mock_item)
+
 
 @mock_http_response(responses.GET, '/api/v3/myTrades\\?' + urlencode(params), mock_item, 200)
 def test_get_my_trades_with_parameters():
     """ Tests the API endpoint to get my trades with extra parameters """
 
-    client =  binance.Trade(key, secret)
+    client = binance.Trade(key, secret)
     response = client.my_trades(**params)
     response.should.equal(mock_item)
