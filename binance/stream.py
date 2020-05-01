@@ -1,6 +1,7 @@
 from binance.api import API
 from binance.lib.utils import check_required_parameter
 
+
 class Stream(API):
 
     """ Steam class is used for managing user data stream related restful APIs.

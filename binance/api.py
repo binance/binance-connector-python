@@ -14,6 +14,7 @@ from binance.lib.utils import check_required_parameters
 
 logger = logging.getLogger(__name__)
 
+
 class API(object):
     def __init__(self, key=None, secret=None, **kwargs):
         self.key = key
@@ -60,7 +61,7 @@ class API(object):
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
 
-        logger.debug('url: '+ url)
+        logger.debug('url: ' + url)
         logger.debug('payload: ' + json.dumps(payload))
 
         response = self._dispatch_request(http_method)(url, params=payload)
@@ -91,7 +92,8 @@ class API(object):
         return urlencode(cleanNoneValue(params))
 
     def _get_sign(self, data):
-        m = hmac.new(self.secret.encode('utf-8'), data.encode('utf-8'), hashlib.sha256)
+        m = hmac.new(self.secret.encode('utf-8'),
+                     data.encode('utf-8'), hashlib.sha256)
         return m.hexdigest()
 
     def _dispatch_request(self, http_method):
