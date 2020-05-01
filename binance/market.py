@@ -6,6 +6,9 @@ from binance.api import API
 
 class Market(API):
 
+    def __init__(self, key=None, **kwargs):
+        super(Market, self).__init__(key, **kwargs)
+
     def ping(self):
         """ Test Connectivity
         Test connectivity to the Rest API.
@@ -45,7 +48,7 @@ class Market(API):
         url_path = '/api/v3/exchangeInfo'
         return self.query(url_path)
 
-    def depth(self, symbol: str, limit: int = 100):
+    def depth(self, symbol: str, **kwargs):
         """ get orderbook.
 
         GET /api/v3/depth
@@ -61,13 +64,10 @@ class Market(API):
         """
 
         check_required_parameter(symbol, 'symbol')
-        params = {
-            'symbol': symbol,
-            'limit': limit
-        }
+        params = { 'symbol': symbol, **kwargs }
         return self.query('/api/v3/depth', params)
 
-    def trades(self, symbol: str, limit: int = 500):
+    def trades(self, symbol: str, **kwargs):
         """ Recent Trades List
         Get recent trades (up to last 500).
 
@@ -82,13 +82,10 @@ class Market(API):
                                      max 1000
         """
         check_required_parameter(symbol, 'symbol')
-        params = {
-            'symbol': symbol,
-            'limit': limit
-        }
+        params = { 'symbol': symbol, **kwargs }
         return self.query('/api/v3/trades', params)
 
-    def historical_trades(self, symbol: str, limit: int = 500, fromId: int = None):
+    def historical_trades(self, symbol: str, **kwargs):
         """ Old Trade Lookup
         Get older market trades.
 
@@ -104,14 +101,10 @@ class Market(API):
         formId -- optional/integer -- trade id to fetch from. Default gets most recent trades.
         """
         check_required_parameter(symbol, 'symbol')
-        params = {
-            'symbol': symbol,
-            'limit':  limit,
-            'fromId': fromId
-        }
-        return self.query('/api/v3/historicalTrades', params)
+        params = { 'symbol': symbol, **kwargs }
+        return self.limit_request('GET', '/api/v3/historicalTrades', params)
 
-    def agg_trades(self, symbol: str, limit: int = 500, fromId=None, startTime=None, endTime=None):
+    def agg_trades(self, symbol: str, **kwargs):
         """ Compressed/Aggregate Trades List
 
         GET /api/v3/aggTrades
@@ -129,16 +122,10 @@ class Market(API):
         """
 
         check_required_parameter(symbol, 'symbol')
-        params = {
-            'symbol':    symbol,
-            'limit':     limit,
-            'fromId':    fromId,
-            'startTime': startTime,
-            'endTime':   endTime
-        }
+        params = { 'symbol': symbol, **kwargs }
         return self.query('/api/v3/aggTrades', params)
 
-    def klines(self, symbol: str, interval: str, limit: int = 500, startTime=None, endTime=None):
+    def klines(self, symbol: str, interval: str, **kwargs):
         """ Kline/Candlestick Data
 
         GET /api/v3/klines
@@ -160,9 +147,7 @@ class Market(API):
         params = {
             'symbol':    symbol,
             'interval':  interval,
-            'limit':     limit,
-            'startTime': startTime,
-            'endTime':   endTime
+            **kwargs
         }
         return self.query('/api/v3/klines', params)
 

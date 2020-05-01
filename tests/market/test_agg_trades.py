@@ -18,7 +18,7 @@ def test_agg_trades_without_symbol():
     api =  binance.Market()
     api.agg_trades.when.called_with('').should.throw(ParameterRequiredError)
 
-@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&limit=500', mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT', mock_item, 200)
 def test_agg_trades_with_default_limit():
     """ Tests the API endpoint to get agg trades by default limit """
 
@@ -33,7 +33,7 @@ def test_agg_trades_with_limit_1000():
     api =  binance.Market()
     response = api.agg_trades('BTCUSDT', limit=1000)
 
-@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&limit=500&fromId=' + str(fromId), mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&fromId=' + str(fromId), mock_item, 200)
 def test_agg_trades_with_formId():
     """ Tests the API endpoint to get agg trades with fromId """
 
@@ -41,7 +41,7 @@ def test_agg_trades_with_formId():
     response = api.agg_trades('BTCUSDT', fromId=fromId)
     response.should.equal(mock_item)
 
-@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&limit=500&startTime=' + str(startTime) + '&endTime=' + str(endTime), mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&startTime=' + str(startTime) + '&endTime=' + str(endTime), mock_item, 200)
 def test_agg_trades_with_timestamp():
     """ Tests the API endpoint to get agg trades with specific timestamp """
 

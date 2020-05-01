@@ -24,7 +24,7 @@ def test_kline_without_interval():
 
     client.klines.when.called_with(symbol='BTCUSDT', interval='').should.throw(ParameterRequiredError)
 
-@mock_http_response(responses.GET, '/api/v3/klines\\?symbol=BTCUSDT&interval=1h&limit=500', mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/klines\\?symbol=BTCUSDT&interval=1h', mock_item, 200)
 def test_kline_with_default_limit():
     """ Tests the API endpoint to get kline with default limit """
 
