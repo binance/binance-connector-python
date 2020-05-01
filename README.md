@@ -25,7 +25,6 @@ client = binance.Trade(key='xxx', secret='xxxxx')
 print(client.account())
 
 # post a new order
-
 params = {
     'symbol': 'BTCUSDT',
     'side': 'SELL',
@@ -55,8 +54,35 @@ print(market_client.time())
 
 Without providing the base url, this connector works on `api.binance.com`.<br/>
 
-It's recommended to allow changing the base url even in production <br/>
+It's recommended to allow changing the base url even in production.<br/>
 In some rare case, Binance may offer a backup base url.
+
+### RecvWindow
+
+From Binance API, `recvWindow` is available for all endpoints require signature. By default, it's 5000ms.
+You are allowed to set this parameter to any value less than 60000, number beyond this limit will receive error from Binance server.
+
+```python
+
+client = binance.Trade(key, secret)
+response = client.get_order('BTCUSDT', orderId='11', recvWindow=10000)
+
+```
+
+### Optional parameters
+
+For the optional parameters in the endpoint, pass exactly the field name from API document into method. e.g
+
+```python
+
+# correct
+response = client.cancel_oco_order('BTCUSDT', orderListId=1)
+
+# this is incorrect
+response = client.cancel_oco_order('BTCUSDT', order_list_id=1)
+```
+
+PEP8 suggest method name as "lowercase with words separated by underscores", but not here. Let's follow the document, copy the name from there.
 
 ## Display meta info
 
@@ -98,3 +124,16 @@ Known what parameters and the values sending to server is essential during debug
 
 ## Python version
 3.5+
+
+## Limitation
+
+- support `/api/*` only now, but will add more endpoints
+
+## Contribution
+
+contribution is welcome, support endpoints from:
+
+https://binance-docs.github.io/apidocs/spot/en/#general-info
+
+## License
+MIT

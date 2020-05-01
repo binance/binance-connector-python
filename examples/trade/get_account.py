@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
-logging.info(client.account())
+logging.info(client.account(recvWindow=6000))
