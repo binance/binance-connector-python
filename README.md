@@ -149,5 +149,8 @@ contribution is welcome, support endpoints from:
 
 https://binance-docs.github.io/apidocs/spot/en/#general-info
 
+- should pass all test cases
+- run `autopep8 <filename>`
+
 ## License
 MIT
