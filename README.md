@@ -4,9 +4,9 @@ This is a thin library that working as a connector to the Binance public API.
 
 ## Todo list (for dev only)
 
-- [ ] all api endpoints
-- [ ] better logging
-- [ ] more examples
+- [x] all api endpoints
+- [x] better logging
+- [x] more examples
 - [ ] better readme
 - [ ] pipeline, Actions or travis-ci?
 
@@ -56,6 +56,10 @@ the returns will be like:
 
 ```
 
+## Display logs
+
+Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
+Known what parameters and the values sending to server is essential during debug.
 
 ## Python version
 3.5+
