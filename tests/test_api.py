@@ -13,6 +13,7 @@ def test_API_initial():
 
     client.should.be.a(API)
     client.key.should.be.none
+    client.timeout.should.be.none
     client.secret.should.be.none
     client.base_url.should.equal('https://api.binance.com')
     client.show_weight_usage.should.be.false
@@ -33,10 +34,11 @@ def test_API_with_extra_parametes():
     base_url = random_str()
 
     client = API(key, secret, base_url=base_url,
-                 show_weight_usage=True, show_header=True)
+                 show_weight_usage=True, show_header=True, timeout=0.1)
 
     client.should.be.a(API)
     client.key.should.equal(key)
+    client.timeout.should.equal(0.1)
     client.secret.should.equal(secret)
     client.base_url.should.equal(base_url)
     client.show_weight_usage.should.be.true

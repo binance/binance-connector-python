@@ -7,6 +7,10 @@ from binance.api import API
 
 class Market(API):
 
+    """ Market Class includes methods to get market data
+
+    """
+
     def __init__(self, key=None, **kwargs):
         super(Market, self).__init__(key, **kwargs)
 

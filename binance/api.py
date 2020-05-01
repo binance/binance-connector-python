@@ -4,8 +4,8 @@ import logging
 import hashlib
 import requests
 from . import version
-from json.decoder import JSONDecodeError
 from urllib.parse import urlencode
+from json.decoder import JSONDecodeError
 from binance.error import APIException, ServerException
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
@@ -16,9 +16,20 @@ logger = logging.getLogger(__name__)
 
 
 class API(object):
+    """ API base class
+
+    supported arguments:
+    - base_url: the API base url, useful to switch to testnet, etc. By default it's api.binance.com
+    - timeout: the time waiting for server response.
+    - show_weight_usage: whether return request weight usage
+    - show_header: whether return the whole response header
+
+    """
+
     def __init__(self, key=None, secret=None, **kwargs):
         self.key = key
         self.secret = secret
+        self.timeout = None
         self.session = requests.Session()
         self.session.headers.update({
             'Content-Type': 'application/json;charset=utf-8',
@@ -38,6 +49,9 @@ class API(object):
         self.show_header = False
         if 'show_header' in kwargs:
             self.show_header = kwargs['show_header'] and kwargs['show_header'] == True
+
+        if 'timeout' in kwargs:
+            self.timeout = kwargs['timeout']
         return
 
     def query(self, url_path, payload={}):
@@ -64,7 +78,9 @@ class API(object):
         logger.debug('url: ' + url)
         logger.debug('payload: ' + json.dumps(payload))
 
-        response = self._dispatch_request(http_method)(url, params=payload)
+        params = cleanNoneValue({'url': url,'params': payload,'timeout': self.timeout})
+
+        response = self._dispatch_request(http_method)(**params)
 
         logger.debug('raw response from server:' + response.text)
 

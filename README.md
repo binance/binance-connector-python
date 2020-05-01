@@ -82,6 +82,16 @@ response = client.cancel_oco_order('BTCUSDT', order_list_id=1)
 
 PEP8 suggest method name as "lowercase with words separated by underscores", but not here. Let's follow the document, copy the name from there.
 
+### Timeout
+
+`timeout` is support and recommend to set a proper time as in second. Be sure you know this value as "no bytes have been received on the underlying socket for timeout seconds".
+if not set, request do not time out.
+
+```python
+
+market_client= binance.Market(timeout=1)
+
+```
 
 
 ### Display meta info
