@@ -14,6 +14,7 @@ secret = random_str()
 
 orderId= '1234567'
 
+
 @mock_http_response(responses.GET, '/api/v3/orderList', mock_exception, 400)
 def test_get_oct_order_without_id():
     """ Tests the API endpoint to get oco order without given order id """

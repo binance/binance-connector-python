@@ -17,3 +17,11 @@ def test_account():
     client = binance.Trade(key, secret)
     response = client.account()
     response.should.equal(mock_item)
+
+@mock_http_response(responses.GET, '/api/v3/account\\?recvWindow=10000', mock_item, 200)
+def test_account():
+    """ Tests the API endpoint to account information with recvWindow  """
+
+    client = binance.Trade(key, secret)
+    response = client.account(recvWindow=10000)
+    response.should.equal(mock_item)

@@ -19,7 +19,8 @@ params = {
     'type': 'LIMIT',
     'timeInForce': 'GTC',
     'quantity': 0.002,
-    'price': 9500
+    'price': 9500,
+    'recvWindow': 1000
 }
 
 @mock_http_response(responses.POST, '/api/v3/order/test', mock_exception, 400)
