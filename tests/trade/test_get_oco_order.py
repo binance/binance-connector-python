@@ -12,7 +12,12 @@ mock_exception = {'code': -1,'msg': 'error message'}
 key = random_str()
 secret = random_str()
 
-orderId= '1234567'
+params = {
+    'symbol': 'BTCUSDT',
+    'orderListId': random_str(),
+    'origClientOrderId': random_str(),
+    'recvWindow': 1000
+}
 
 @mock_http_response(responses.GET, '/api/v3/orderList', mock_exception, 400)
 def test_get_oct_order_without_id():
@@ -28,10 +33,10 @@ def test_get_oct_order_with_empty_id():
     client =  binance.Trade(key, secret)
     client.get_oco_order.when.called_with(orderListId='').should.throw(APIException)
 
-@mock_http_response(responses.GET, '/api/v3/orderList\\?orderListId='+orderId, mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/orderList\\?', mock_item, 200)
 def test_get_order_with_order_id():
     """ Tests the API endpoint to get order """
 
     client =  binance.Trade(key, secret)
-    response = client.get_oco_order(orderListId=orderId)
+    response = client.get_oco_order(**params)
     response.should.equal(mock_item)
