@@ -5,7 +5,6 @@ import responses
 from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
-from tests.util import current_timestamp
 from binance.error import ParameterRequiredError, APIException
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
@@ -20,7 +19,8 @@ params = {
     'symbol': 'BTCUSDT',
     'orderListId': 1,
     'listClientOrderId': 2,
-    'newClientOrderId': 3
+    'newClientOrderId': 3,
+    'recvWindow': 1000
 }
 
 def test_cancel_oco_order_without_symbol():

@@ -37,7 +37,7 @@ class Trade(API):
         url_path = '/api/v3/order'
         return self.sign_request('POST', url_path, { **kwargs })
 
-    def cancel_order(self, symbol, **kwargs):
+    def cancel_order(self, symbol: str, **kwargs):
         """ Cancel Order (TRADE)
 
         Cancel an active order.
@@ -97,7 +97,7 @@ class Trade(API):
         payload = {'symbol': symbol, **kwargs}
         return self.sign_request('GET', url_path, payload)
 
-    def get_orders(self, symbol=None, **kwargs):
+    def get_orders(self, symbol: str, **kwargs):
         """ All Orders (USER_DATA)
 
         Get all account orders; active, canceled, or filled.
@@ -176,7 +176,7 @@ class Trade(API):
         url_path = '/api/v3/openOrderList'
         return self.sign_request('GET', url_path, { **kwargs })
 
-    def account(self):
+    def account(self, **kwargs):
         """ Account Information (USER_DATA)
 
         Get current account information
@@ -187,7 +187,7 @@ class Trade(API):
         """
 
         url_path = '/api/v3/account'
-        return self.sign_request('GET', url_path)
+        return self.sign_request('GET', url_path, { **kwargs })
 
     def my_trades(self, symbol: str, **kwargs):
         """ Account Trade List (USER_DATA)

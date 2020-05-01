@@ -20,7 +20,8 @@ params = {
     'price': 9500,
     'stopPrice': 7500,
     'stopLimitPrice': 7000,
-    'stopLimitTimeInForce': 'GTC'
+    'stopLimitTimeInForce': 'GTC',
+    'recvWindow': 1000
 }
 
 @mock_http_response(responses.POST, '/api/v3/order/oco', mock_exception, 400)
