@@ -136,7 +136,7 @@ Known what parameters and the values sending to server is essential during debug
 ```python
 
 # if you haven't installed the packages yet
-pip install -r requirements.txt
+pip install -r requirements-test.txt
 
 pytest
 ```

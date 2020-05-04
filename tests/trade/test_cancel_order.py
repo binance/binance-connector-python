@@ -41,7 +41,7 @@ def test_cancel_order_without_order_id():
         'ETHBTC', orderId='').should.throw(APIException)
 
 
-@mock_http_response(responses.DELETE, '/api/v3/order\\?symbol=ETHBTC&orderId='+orderId, mock_item, 200)
+@mock_http_response(responses.DELETE, '/api/v3/order\\?symbol=ETHBTC&orderId=' + orderId, mock_item, 200)
 def test_cancel_order_with_order_id():
     """ Tests the API endpoint to cancel order """
 
