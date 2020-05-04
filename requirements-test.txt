@@ -5,3 +5,4 @@ sure==1.4.11
 responses==0.10.12
 pytest-pep8==1.0.6
 tox
+tox-pyenv
