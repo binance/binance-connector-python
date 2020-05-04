@@ -37,7 +37,7 @@ def test_historical_trades_with_default_params():
     response.should.equal(mock_item)
 
 
-@mock_http_response(responses.GET, '/api/v3/historicalTrades\\?symbol=BTCUSDT&limit=1000&fromId='+fromId, mock_item, 200)
+@mock_http_response(responses.GET, '/api/v3/historicalTrades\\?symbol=BTCUSDT&limit=1000&fromId=' + fromId, mock_item, 200)
 def test_historical_trades_with_provide_params():
     """ Tests the API endpoint to get recent trades with given limit """
 
