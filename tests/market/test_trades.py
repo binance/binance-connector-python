@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
@@ -11,7 +11,7 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 def test_trades_without_symbol():
     """ Tests the API endpoint to get recent trade list without symbol """
 
-    api = binance.Market()
+    api = Market()
     api.trades.when.called_with('').should.throw(ParameterRequiredError)
 
 
@@ -19,7 +19,7 @@ def test_trades_without_symbol():
 def test_trades_with_default_limit():
     """ Tests the API endpoint to get recent trades with default limit """
 
-    api = binance.Market()
+    api = Market()
     response = api.trades('BTCUSDT')
     response.should.equal(mock_item)
 
@@ -28,6 +28,6 @@ def test_trades_with_default_limit():
 def test_trades_with_limit_1000():
     """ Tests the API endpoint to get recent trades with given limit """
 
-    api = binance.Market()
+    api = Market()
     response = api.trades('BTCUSDT', limit=1000)
     response.should.equal(mock_item)

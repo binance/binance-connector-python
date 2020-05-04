@@ -1,7 +1,8 @@
-import sure
 import pytest
 import binance
 import responses
+
+from binance.market import Market
 
 from tests.util import mock_http_response
 from tests.util import random_id
@@ -12,7 +13,7 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 fromId = random_id()
 startTime = timestamp()
 endTime = startTime + random_id()
-client = binance.Market()
+client = Market()
 
 
 def test_kline_without_symbol():

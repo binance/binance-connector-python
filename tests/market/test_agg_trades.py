@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
@@ -16,7 +16,7 @@ endTime = startTime + random_id()
 def test_agg_trades_without_symbol():
     """ Tests the API endpoint to get old trades without symbol """
 
-    api = binance.Market()
+    api = Market()
     api.agg_trades.when.called_with('').should.throw(ParameterRequiredError)
 
 
@@ -24,7 +24,7 @@ def test_agg_trades_without_symbol():
 def test_agg_trades_with_default_limit():
     """ Tests the API endpoint to get agg trades by default limit """
 
-    api = binance.Market()
+    api = Market()
     response = api.agg_trades('BTCUSDT')
     response.should.equal(mock_item)
 
@@ -33,7 +33,7 @@ def test_agg_trades_with_default_limit():
 def test_agg_trades_with_limit_1000():
     """ Tests the API endpoint to get agg trades with given limit """
 
-    api = binance.Market()
+    api = Market()
     response = api.agg_trades('BTCUSDT', limit=1000)
 
 
@@ -41,7 +41,7 @@ def test_agg_trades_with_limit_1000():
 def test_agg_trades_with_formId():
     """ Tests the API endpoint to get agg trades with fromId """
 
-    api = binance.Market()
+    api = Market()
     response = api.agg_trades('BTCUSDT', fromId=fromId)
     response.should.equal(mock_item)
 
@@ -50,6 +50,6 @@ def test_agg_trades_with_formId():
 def test_agg_trades_with_timestamp():
     """ Tests the API endpoint to get agg trades with specific timestamp """
 
-    api = binance.Market()
+    api = Market()
     response = api.agg_trades('BTCUSDT', startTime=startTime, endTime=endTime)
     response.should.equal(mock_item)
