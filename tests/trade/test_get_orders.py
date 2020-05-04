@@ -1,12 +1,11 @@
-import sure
-from binance.trade import Trade
 import responses
 
 from urllib.parse import urlencode
 from tests.util import timestamp
 from tests.util import random_str
 from tests.util import mock_http_response
-from binance.error import ParameterRequiredError, APIException
+from binance.trade import Trade
+from binance.error import ParameterRequiredError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 
@@ -35,6 +34,7 @@ def test_get_orders():
 
     client = Trade(key, secret)
     response = client.get_orders('ETHBTC')
+    response.should.equal(mock_item)
 
 
 @mock_http_response(responses.GET, '/api/v3/allOrders\\?' + urlencode(params), mock_item, 200)

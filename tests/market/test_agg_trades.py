@@ -1,10 +1,9 @@
-import sure
-from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
 from tests.util import random_id
 from tests.util import timestamp
+from binance.market import Market
 from binance.error import ParameterRequiredError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
@@ -35,6 +34,7 @@ def test_agg_trades_with_limit_1000():
 
     api = Market()
     response = api.agg_trades('BTCUSDT', limit=1000)
+    response.should.equal(mock_item)
 
 
 @mock_http_response(responses.GET, '/api/v3/aggTrades\\?symbol=BTCUSDT&fromId=' + str(fromId), mock_item, 200)

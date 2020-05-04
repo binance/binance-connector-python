@@ -1,5 +1,3 @@
-import pytest
-import binance
 import responses
 
 from binance.market import Market

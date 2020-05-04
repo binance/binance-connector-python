@@ -9,4 +9,4 @@ config_logging(logging, logging.DEBUG)
 market_client = Market(base_url='https://testnet.binance.vision')
 
 logging.info(market_client.klines('BTCUSDT', '1m'))
-logging.info(market_client.klines('BTCUSDT', '1h',  limit=10))
+logging.info(market_client.klines('BTCUSDT', '1h', limit=10))

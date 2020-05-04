@@ -1,4 +1,3 @@
-import sure
 from binance.market import Market
 import responses
 

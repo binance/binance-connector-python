@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import logging
-import binance
+from binance.trade import Trade
 from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)

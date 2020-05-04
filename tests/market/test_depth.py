@@ -1,8 +1,7 @@
-import sure
-from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
+from binance.market import Market
 from binance.error import ParameterRequiredError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}

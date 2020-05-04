@@ -1,10 +1,8 @@
-import sure
-from binance.trade import Trade
 import responses
 
+from binance.trade import Trade
 from tests.util import random_str
 from tests.util import mock_http_response
-from binance.error import ParameterRequiredError, APIException
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 

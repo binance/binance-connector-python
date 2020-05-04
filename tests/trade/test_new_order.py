@@ -1,7 +1,6 @@
-import sure
-from binance.trade import Trade
 import responses
 
+from binance.trade import Trade
 from tests.util import random_str
 from urllib.parse import urlencode
 from tests.util import mock_http_response
