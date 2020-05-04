@@ -122,7 +122,7 @@ class API(object):
 
     def _handle_exception(self, response):
         status_code = response.status_code
-        if (status_code == 200):
+        if (status_code < 400):
             return
 
         if (status_code >= 400 and status_code < 500):
