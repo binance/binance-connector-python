@@ -1,10 +1,8 @@
-import sure
-import binance
 import responses
 
+from binance.trade import Trade
 from tests.util import random_str
 from tests.util import mock_http_response
-from binance.error import ParameterRequiredError, APIException
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 
@@ -16,6 +14,6 @@ secret = random_str()
 def test_get_oco_open_orders():
     """ Tests the API endpoint to get all oco open orders """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_open_orders(recvWindow=1000)
     response.should.equal(mock_item)

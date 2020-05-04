@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import logging
-import binance
+from binance.trade import Trade
 from binance.lib.utils import config_logging
-from binance.error import APIException, BinanceException
+from binance.error import APIException
 
 config_logging(logging, logging.DEBUG)
 
@@ -19,7 +19,7 @@ params = {
     'price': 9500
 }
 
-client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
+client = Trade(key, secret, base_url='https://testnet.binance.vision')
 
 try:
     response = client.new_order(**params)

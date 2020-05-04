@@ -1,7 +1,6 @@
-import sure
-import binance
 import responses
 
+from binance.trade import Trade
 from tests.util import random_str
 from tests.util import mock_http_response
 from binance.error import APIException
@@ -24,7 +23,7 @@ params = {
 def test_get_oct_order_without_id():
     """ Tests the API endpoint to get oco order without given order id """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.get_oco_order.when.called_with().should.throw(APIException)
 
 
@@ -32,7 +31,7 @@ def test_get_oct_order_without_id():
 def test_get_oct_order_with_empty_id():
     """ Tests the API endpoint to get order with empty order id """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.get_oco_order.when.called_with(
         orderListId='').should.throw(APIException)
 
@@ -41,6 +40,6 @@ def test_get_oct_order_with_empty_id():
 def test_get_order_with_order_id():
     """ Tests the API endpoint to get order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_order(**params)
     response.should.equal(mock_item)
