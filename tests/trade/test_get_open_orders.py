@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from tests.util import random_str
@@ -22,7 +22,7 @@ params = {
 def test_get_open_orders_for_all_pairs():
     """ Tests the API endpoint to get all open orders """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_open_orders()
     response.should.equal(mock_item)
 
@@ -31,6 +31,6 @@ def test_get_open_orders_for_all_pairs():
 def test_get_open_orders_for_one_pair():
     """ Tests the API endpoint to get open orders for one pair """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_open_orders(**params)
     response.should.equal(mock_item)

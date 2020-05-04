@@ -1,7 +1,7 @@
 import sure
-import binance
 import responses
 
+from binance.stream import Stream
 from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
@@ -21,6 +21,6 @@ orderListId = '1234567'
 def test_new_listen_key():
     """ Tests the API endpoint to create a new listen key """
 
-    client = binance.Stream(key)
+    client = Stream(key)
     response = client.new_listen_key()
     response.should.equal(mock_item)

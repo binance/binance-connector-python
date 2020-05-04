@@ -19,7 +19,7 @@ params = {
     'price': 9500
 }
 
-client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
+client = Trade(key, secret, base_url='https://testnet.binance.vision')
 
 try:
     response = client.new_order(**params)

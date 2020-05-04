@@ -20,7 +20,7 @@ params = {
     'stopLimitTimeInForce': 'GTC'
 }
 
-client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
+client = Trade(key, secret, base_url='https://testnet.binance.vision')
 
 try:
     response = client.new_oco_order(**params)

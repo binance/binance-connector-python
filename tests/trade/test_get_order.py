@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from tests.util import random_str
@@ -27,7 +27,7 @@ params = {
 def test_get_order_without_symbol():
     """ Tests the API endpoint to get order without symbol """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.get_order.when.called_with('').should.throw(ParameterRequiredError)
 
 
@@ -35,7 +35,7 @@ def test_get_order_without_symbol():
 def test_get_order_without_order_id():
     """ Tests the API endpoint to get order without provide order id """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.get_order.when.called_with(
         'ETHBTC', orderId='').should.throw(APIException)
 
@@ -44,6 +44,6 @@ def test_get_order_without_order_id():
 def test_get_order():
     """ Tests the API endpoint to get order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_order(**params)
     response.should.equal(mock_item)

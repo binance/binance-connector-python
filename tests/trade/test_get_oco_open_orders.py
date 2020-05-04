@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from tests.util import random_str
@@ -16,6 +16,6 @@ secret = random_str()
 def test_get_oco_open_orders():
     """ Tests the API endpoint to get all oco open orders """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_open_orders(recvWindow=1000)
     response.should.equal(mock_item)

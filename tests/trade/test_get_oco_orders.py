@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from urllib.parse import urlencode
@@ -26,7 +26,7 @@ params = {
 def test_get_oco_orders_without_parameters():
     """ Tests the API endpoint to get oco orders without parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_orders()
     response.should.equal(mock_item)
 
@@ -35,6 +35,6 @@ def test_get_oco_orders_without_parameters():
 def test_get_oco_orders_with_parameters():
     """ Tests the API endpoint to get oco orders with provided parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_orders(**params)
     response.should.equal(mock_item)

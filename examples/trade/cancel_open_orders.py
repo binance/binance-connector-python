@@ -10,7 +10,7 @@ config_logging(logging, logging.DEBUG)
 key = ''
 secret = ''
 
-client = binance.Trade(key, secret, base_url='https://testnet.binance.vision')
+client = Trade(key, secret, base_url='https://testnet.binance.vision')
 
 try:
     response = client.cancel_open_orders('BTCUSDT')

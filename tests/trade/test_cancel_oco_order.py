@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from urllib.parse import urlencode
@@ -27,7 +27,7 @@ params = {
 def test_cancel_oco_order_without_symbol():
     """ Tests the API endpoint to cancel oco order without symbol """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.cancel_oco_order.when.called_with(
         '').should.throw(ParameterRequiredError)
 
@@ -36,7 +36,7 @@ def test_cancel_oco_order_without_symbol():
 def test_cancel_oco_order_without_orderListId():
     """ Tests the API endpoint to cancel order without provide orderListId """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.cancel_oco_order.when.called_with(
         'ETHBTC', orderListId='').should.throw(APIException)
 
@@ -45,6 +45,6 @@ def test_cancel_oco_order_without_orderListId():
 def test_cancel_order_with_order_id():
     """ Tests the API endpoint to cancel order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.cancel_oco_order(**params)
     response.should.equal(mock_item)

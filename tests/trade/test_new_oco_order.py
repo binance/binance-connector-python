@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from tests.util import random_str
@@ -29,7 +29,7 @@ params = {
 def test_post_an_oct_order_without_param():
     """ Tests the API endpoint to post a new oco order without parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.new_oco_order.when.called_with().should.throw(APIException)
 
 
@@ -37,6 +37,6 @@ def test_post_an_oct_order_without_param():
 def test_post_an_oct_order():
     """ Tests the API endpoint to post a new oco order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.new_oco_order(**params)
     response.should.equal(mock_item)

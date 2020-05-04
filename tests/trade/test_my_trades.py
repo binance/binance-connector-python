@@ -1,5 +1,5 @@
 import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from urllib.parse import urlencode
@@ -25,7 +25,7 @@ params = {
 def test_get_my_trades_without_symbol():
     """ Tests the API endpoint to get my trades without symbol """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.my_trades.when.called_with('').should.throw(ParameterRequiredError)
 
 
@@ -33,7 +33,7 @@ def test_get_my_trades_without_symbol():
 def test_get_my_trades():
     """ Tests the API endpoint to get my trades """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.my_trades('ETHBTC')
     response.should.equal(mock_item)
 
@@ -42,6 +42,6 @@ def test_get_my_trades():
 def test_get_my_trades_with_parameters():
     """ Tests the API endpoint to get my trades with extra parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.my_trades(**params)
     response.should.equal(mock_item)
