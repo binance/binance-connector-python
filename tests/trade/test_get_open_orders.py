@@ -1,11 +1,9 @@
-import sure
-import binance
+from binance.trade import Trade
 import responses
 
 from tests.util import random_str
 from tests.util import mock_http_response
 from urllib.parse import urlencode
-from binance.error import ParameterRequiredError, APIException
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 
@@ -22,7 +20,7 @@ params = {
 def test_get_open_orders_for_all_pairs():
     """ Tests the API endpoint to get all open orders """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_open_orders()
     response.should.equal(mock_item)
 
@@ -31,6 +29,6 @@ def test_get_open_orders_for_all_pairs():
 def test_get_open_orders_for_one_pair():
     """ Tests the API endpoint to get open orders for one pair """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_open_orders(**params)
     response.should.equal(mock_item)

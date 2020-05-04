@@ -1,5 +1,4 @@
-import sure
-import binance
+from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
@@ -11,7 +10,7 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 def test_book_ticker_without_pair():
     """ Tests the API endpoint to get book ticker from all pairs """
 
-    api = binance.Market()
+    api = Market()
     response = api.book_ticker()
     response.should.equal(mock_item)
 
@@ -20,6 +19,6 @@ def test_book_ticker_without_pair():
 def test_book_ticker():
     """ Tests the API endpoint to get book ticker from one pair """
 
-    api = binance.Market()
+    api = Market()
     response = api.book_ticker('BTCUSDT')
     response.should.equal(mock_item)

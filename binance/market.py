@@ -1,8 +1,6 @@
-from urllib.parse import urlencode
-from binance.lib.utils import cleanNoneValue
+from binance.api import API
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
-from binance.api import API
 
 
 class Market(API):

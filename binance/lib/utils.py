@@ -11,7 +11,7 @@ def cleanNoneValue(d) -> dict:
 
 
 def check_required_parameter(value, name):
-    if value is None or value is '':
+    if not value:
         raise ParameterRequiredError([name])
 
 

@@ -10,7 +10,6 @@ from binance.error import APIException, ServerException
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import check_required_parameter
-from binance.lib.utils import check_required_parameters
 
 logger = logging.getLogger(__name__)
 
@@ -43,12 +42,12 @@ class API(object):
             self.base_url = kwargs['base_url']
 
         self.show_weight_usage = False
-        if 'show_weight_usage' in kwargs:
-            self.show_weight_usage = kwargs['show_weight_usage'] and kwargs['show_weight_usage'] == True
+        if 'show_weight_usage' in kwargs and kwargs['show_weight_usage']:
+            self.show_weight_usage = True
 
         self.show_header = False
-        if 'show_header' in kwargs:
-            self.show_header = kwargs['show_header'] and kwargs['show_header'] == True
+        if 'show_header' in kwargs and kwargs['show_header']:
+            self.show_header = True
 
         if 'timeout' in kwargs:
             self.timeout = kwargs['timeout']
@@ -78,7 +77,7 @@ class API(object):
         logger.debug('url: ' + url)
         logger.debug('payload: ' + json.dumps(payload))
 
-        params = cleanNoneValue({'url': url,'params': payload,'timeout': self.timeout})
+        params = cleanNoneValue({'url': url, 'params': payload, 'timeout': self.timeout})
 
         response = self._dispatch_request(http_method)(**params)
 

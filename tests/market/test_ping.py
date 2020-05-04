@@ -1,5 +1,4 @@
-import sure
-import binance
+from binance.market import Market
 import responses
 
 from tests.util import mock_http_response
@@ -9,6 +8,6 @@ from tests.util import mock_http_response
 def test_ping():
     """ Tests the API endpoint to get conectivity """
 
-    api = binance.Market()
+    api = Market()
     response = api.ping()
     response.should.equal({})

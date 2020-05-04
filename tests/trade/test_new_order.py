@@ -1,7 +1,6 @@
-import sure
-import binance
 import responses
 
+from binance.trade import Trade
 from tests.util import random_str
 from urllib.parse import urlencode
 from tests.util import mock_http_response
@@ -28,7 +27,7 @@ params = {
 def test_post_an_order_without_param():
     """ Tests the API endpoint to post a new order without parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.new_order.when.called_with().should.throw(APIException)
 
 
@@ -36,6 +35,6 @@ def test_post_an_order_without_param():
 def test_post_an_order():
     """ Tests the API endpoint to post a new order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.new_order(**params)
     response.should.equal(mock_item)
