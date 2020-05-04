@@ -12,12 +12,13 @@ This is a thin library that working as a connector to the Binance public API.
 
 ```python
 
-import binance
+from binance.market import Market
+from binance.trade import Trade
 
-client = binance.Market()
+client = Market()
 print(client.time())
 
-client = binance.Trade(key='xxx', secret='xxxxx')
+client = Trade(key='xxx', secret='xxxxx')
 
 # get account information
 print(client.account())
@@ -45,7 +46,9 @@ The [spot testnet](https://testnet.binance.vision/) is available. In order to te
 
 ```python
 
-market_client= binance.Market(base_url='https://testnet.binance.vision')
+from binance.market import Market
+
+market_client= Market(base_url='https://testnet.binance.vision')
 print(market_client.time())
 
 ```
@@ -62,7 +65,9 @@ You are allowed to set this parameter to any value less than 60000, number beyon
 
 ```python
 
-client = binance.Trade(key, secret)
+from binance.trade import Trade
+
+client = Trade(key, secret)
 response = client.get_order('BTCUSDT', orderId='11', recvWindow=10000)
 
 ```
@@ -89,7 +94,9 @@ if not set, request do not time out.
 
 ```python
 
-market_client= binance.Market(timeout=1)
+from binance.market import Market
+
+market_client= Market(timeout=1)
 
 ```
 
@@ -100,7 +107,9 @@ Binance API server returns weight usage in the header of each response. This is 
 To reveal this value, simpily intial the client with `show_weight_usage=True` as:
 
 ```python
-client = binance.Market(show_weight_usage=True)
+from binance.market import Market
+
+client = Market(show_weight_usage=True)
 print(client.time())
 ```
 
@@ -115,7 +124,7 @@ the returns will be like:
 It's also able to print out all headers, which may be very helpful for debug:
 
 ```python
-client = binance.Market(show_header=True)
+client = Market(show_header=True)
 print(client.time())
 ```
 
@@ -157,7 +166,7 @@ Open a topic at [Binance Developer Community](https://dev.binance.vision)
 
 contribution is welcome, support endpoints from:
 
-https://binance-docs.github.io/apidocs/spot/en/#general-info
+https://binance-docs.github.io/apidocs/spot/en
 
 - should pass all test cases
 - pass pep8 check, ignore E501
