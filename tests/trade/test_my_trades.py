@@ -1,11 +1,9 @@
-import sure
-import binance
 import responses
-
 from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
 from tests.util import current_timestamp
+from binance.trade import Trade
 from binance.error import ParameterRequiredError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
@@ -25,7 +23,7 @@ params = {
 def test_get_my_trades_without_symbol():
     """ Tests the API endpoint to get my trades without symbol """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.my_trades.when.called_with('').should.throw(ParameterRequiredError)
 
 
@@ -33,7 +31,7 @@ def test_get_my_trades_without_symbol():
 def test_get_my_trades():
     """ Tests the API endpoint to get my trades """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.my_trades('ETHBTC')
     response.should.equal(mock_item)
 
@@ -42,6 +40,6 @@ def test_get_my_trades():
 def test_get_my_trades_with_parameters():
     """ Tests the API endpoint to get my trades with extra parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.my_trades(**params)
     response.should.equal(mock_item)

@@ -1,10 +1,9 @@
-import sure
-import binance
 import responses
 
 from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
+from binance.trade import Trade
 from binance.error import ParameterRequiredError, APIException
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
@@ -27,7 +26,7 @@ params = {
 def test_cancel_order_without_symbol():
     """ Tests the API endpoint to cancel order without symbol """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.cancel_order.when.called_with(
         '').should.throw(ParameterRequiredError)
 
@@ -36,7 +35,7 @@ def test_cancel_order_without_symbol():
 def test_cancel_order_without_order_id():
     """ Tests the API endpoint to cancel order without provide order id """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     client.cancel_order.when.called_with(
         'ETHBTC', orderId='').should.throw(APIException)
 
@@ -45,7 +44,7 @@ def test_cancel_order_without_order_id():
 def test_cancel_order_with_order_id():
     """ Tests the API endpoint to cancel order """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.cancel_order('ETHBTC', orderId=orderId)
     response.should.equal(mock_item)
 
@@ -54,6 +53,6 @@ def test_cancel_order_with_order_id():
 def test_cancel_order_with_more_params():
     """ Tests the API endpoint to cancel order with other parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.cancel_order(**params)
     response.should.equal(mock_item)

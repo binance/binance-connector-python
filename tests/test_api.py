@@ -1,4 +1,3 @@
-import sure
 import requests
 from tests.util import random_str
 from binance.version import __version__

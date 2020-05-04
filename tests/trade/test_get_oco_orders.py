@@ -1,12 +1,10 @@
-import sure
-import binance
 import responses
 
 from urllib.parse import urlencode
 from tests.util import timestamp
 from tests.util import random_str
 from tests.util import mock_http_response
-from binance.error import ParameterRequiredError, APIException
+from binance.trade import Trade
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 
@@ -26,7 +24,7 @@ params = {
 def test_get_oco_orders_without_parameters():
     """ Tests the API endpoint to get oco orders without parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_orders()
     response.should.equal(mock_item)
 
@@ -35,6 +33,6 @@ def test_get_oco_orders_without_parameters():
 def test_get_oco_orders_with_parameters():
     """ Tests the API endpoint to get oco orders with provided parameters """
 
-    client = binance.Trade(key, secret)
+    client = Trade(key, secret)
     response = client.get_oco_orders(**params)
     response.should.equal(mock_item)

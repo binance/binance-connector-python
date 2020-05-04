@@ -1,18 +1,18 @@
 from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
-        long_description = fh.read()
+    long_description = fh.read()
 
 setup(
-    name = 'binance-connector-python',
-    version = '0.1.3',
+    name='binance-connector-python',
+    version='0.1.4',
     license='MIT',
-    description = 'This is a thin library that working as a connector to the Binance public API.',
+    description='This is a thin library that working as a connector to the Binance public API.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author = 'Jeremy',
-    url = 'https://github.com/binance-exchange/binance-connector-python',
-    keywords = ['Binance', 'Public API'],
+    author='Jeremy',
+    url='https://github.com/binance-exchange/binance-connector-python',
+    keywords=['Binance', 'Public API'],
     install_requires=[
         'requests'
     ],
