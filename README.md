@@ -151,7 +151,7 @@ pytest
 ```
 
 ## Python version
-3.5+
+3.6+
 
 ## Limitation
 - support `/api/*` only now, but will add more endpoints
