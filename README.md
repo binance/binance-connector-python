@@ -12,13 +12,12 @@ This is a thin library that working as a connector to the Binance public API.
 
 ```python
 
-from binance.market import Market
-from binance.trade import Trade
+from binance.spot import Spot
 
-client = Market()
+client = Spot()
 print(client.time())
 
-client = Trade(key='xxx', secret='xxxxx')
+client = Spot(key='xxx', secret='xxxxx')
 
 # get account information
 print(client.account())
@@ -46,10 +45,10 @@ The [spot testnet](https://testnet.binance.vision/) is available. In order to te
 
 ```python
 
-from binance.market import Market
+from binance.spot import Spot as Client
 
-market_client= Market(base_url='https://testnet.binance.vision')
-print(market_client.time())
+client = Client(base_url='https://testnet.binance.vision')
+print(client.time())
 
 ```
 
@@ -65,9 +64,9 @@ You are allowed to set this parameter to any value less than 60000, number beyon
 
 ```python
 
-from binance.trade import Trade
+from binance.spot import Spot as Client
 
-client = Trade(key, secret)
+client = Client(key, secret)
 response = client.get_order('BTCUSDT', orderId='11', recvWindow=10000)
 
 ```
@@ -94,9 +93,9 @@ if not set, request do not time out.
 
 ```python
 
-from binance.market import Market
+from binance.spot import Spot as Client
 
-market_client= Market(timeout=1)
+client= Client(timeout=1)
 
 ```
 
@@ -107,9 +106,9 @@ Binance API server returns weight usage in the header of each response. This is 
 To reveal this value, simpily intial the client with `show_weight_usage=True` as:
 
 ```python
-from binance.market import Market
+from binance.spot import Spot as Client
 
-client = Market(show_weight_usage=True)
+client = Client(show_weight_usage=True)
 print(client.time())
 ```
 
@@ -124,7 +123,7 @@ the returns will be like:
 It's also able to print out all headers, which may be very helpful for debug:
 
 ```python
-client = Market(show_header=True)
+client = Client(show_header=True)
 print(client.time())
 ```
 
