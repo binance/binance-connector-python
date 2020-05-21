@@ -1,0 +1,7 @@
+build
+dist
+binance_connector_python.egg-info
+__pycache__
+*.pyc
+.tox
+.python-version
