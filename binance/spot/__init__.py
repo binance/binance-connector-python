@@ -36,3 +36,6 @@ class Spot(API):
     from binance.spot.apis import new_listen_key
     from binance.spot.apis import renew_listen_key
     from binance.spot.apis import close_listen_key
+
+    # MARGIN
+    from binance.spot.margin import margin_transfer

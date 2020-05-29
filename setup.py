@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='binance-connector-python',
-    version='0.1.6',
+    version='0.1.7',
     license='MIT',
     description='This is a thin library that working as a connector to the Binance public API.',
     long_description=long_description,
