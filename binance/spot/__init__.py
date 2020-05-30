@@ -39,3 +39,4 @@ class Spot(API):
 
     # MARGIN
     from binance.spot.margin import margin_transfer
+    from binance.spot.margin import margin_borrow

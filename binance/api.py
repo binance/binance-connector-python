@@ -128,7 +128,7 @@ class API(object):
         if (status_code >= 400 and status_code < 500):
             try:
                 data = response.json()
-                raise ClientError(status_code, data['code'], data['msg'])
+                raise ClientError(status_code, data)
             except JSONDecodeError:
                 raise ClientError(status_code, None, response.text)
 
