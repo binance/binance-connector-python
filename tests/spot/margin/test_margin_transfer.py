@@ -7,7 +7,6 @@ from binance.spot import Spot as Client
 from binance.error import ParameterRequiredError, ClientError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
-mock_exception = {'code': -2011, 'msg': 'unknown order sent'}
 
 key = random_str()
 secret = random_str()

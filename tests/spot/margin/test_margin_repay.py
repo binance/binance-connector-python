@@ -20,26 +20,26 @@ params = {
 }
 
 
-def test_margin_borrow_without_asset():
-    """ Tests the API endpoint to margin borrow without asset """
+def test_margin_repay_without_asset():
+    """ Tests the API endpoint to margin repay without asset """
 
     client = Client(key, secret)
-    client.margin_borrow.when.called_with(
+    client.margin_repay.when.called_with(
         '', amount).should.throw(ParameterRequiredError)
 
 
-def test_margin_borrow_without_amount():
-    """ Tests the API endpoint to margin borrow without amount """
+def test_margin_repay_without_amount():
+    """ Tests the API endpoint to margin repay without amount """
 
     client = Client(key, secret)
-    client.margin_borrow.when.called_with(
+    client.margin_repay.when.called_with(
         asset, '').should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.POST, '/sapi/v1/margin/loan\\?' + urlencode(params), mock_item, 200)
-def test_margin_borrow():
-    """ Tests the API endpoint to margin borrow"""
+@mock_http_response(responses.POST, '/sapi/v1/margin/repay\\?' + urlencode(params), mock_item, 200)
+def test_margin_repay():
+    """ Tests the API endpoint to margin repay"""
 
     client = Client(key, secret)
-    response = client.margin_borrow(**params)
+    response = client.margin_repay(**params)
     response.should.equal(mock_item)
