@@ -14,7 +14,6 @@ def test_API_initial():
     client.key.should.be.none
     client.timeout.should.be.none
     client.secret.should.be.none
-    client.base_url.should.equal('https://api.binance.com')
     client.show_weight_usage.should.be.false
     client.show_header.should.be.false
     client.session.should.be.a(requests.Session)

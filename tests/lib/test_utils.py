@@ -1,6 +1,7 @@
 from binance.error import ParameterRequiredError
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
+from binance.lib.utils import encoded_string
 
 
 def test_pass_check_required_parameter():
@@ -37,3 +38,11 @@ def test_fail_check_required_parameters_multi_params():
         [['btcusdt', 'symbol'], [None, 'price']]).should.throw(ParameterRequiredError)
     check_required_parameters.when.called_with(
         [['', 'symbol'], [10, 'price']]).should.throw(ParameterRequiredError)
+
+
+def test_encode_query_string():
+    encoded_string({'foo': 'bar', 'foo2': 'bar2'}).should.equal('foo=bar&foo2=bar2')
+
+
+def test_encode_query_without_email_symbol():
+    encoded_string({'email': 'alice@test.com'}).should.equal('email=alice@test.com')

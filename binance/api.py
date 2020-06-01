@@ -9,9 +9,8 @@ from json.decoder import JSONDecodeError
 from binance.error import ClientError, ServerError
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
+from binance.lib.utils import encoded_string
 from binance.lib.utils import check_required_parameter
-
-logger = logging.getLogger(__name__)
 
 
 class API(object):
@@ -37,7 +36,6 @@ class API(object):
         })
         self.session.headers.update({'X-MBX-APIKEY': self.key})
 
-        self.base_url = 'https://api.binance.com'
         if 'base_url' in kwargs:
             self.base_url = kwargs['base_url']
 
@@ -67,25 +65,38 @@ class API(object):
         query_string = self._prepare_params(payload)
         signature = self._get_sign(query_string)
         payload['signature'] = signature
-        query_string = query_string + '&signature=' + signature
-
         return self.send_request(http_method, url_path, payload)
+
+    def limited_encoded_sign_request(self, http_method, url_path, payload={}):
+        """ This is used for some endpoints has special symbol in the url.
+        we don't know why some symbols are not encoded in the server side, but in some endpoints these symbols should not encoded
+        - @
+        - [
+        - ]
+
+        so we have to append those parameters in the url
+        """
+        payload['timestamp'] = get_timestamp()
+        query_string = self._prepare_params(payload)
+        signature = self._get_sign(query_string)
+        url_path = url_path + '?' + query_string + '&signature=' + signature
+        return self.send_request(http_method, url_path)
 
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
 
-        logger.debug('url: ' + url)
-        logger.debug('payload: ' + json.dumps(payload))
+        logging.debug('url: ' + url)
+        logging.debug('payload: ' + json.dumps(payload))
 
         params = cleanNoneValue({'url': url, 'params': payload, 'timeout': self.timeout})
-
         response = self._dispatch_request(http_method)(**params)
-
-        logger.debug('raw response from server:' + response.text)
-
+        logging.debug('raw response from server:' + response.text)
         self._handle_exception(response)
 
-        data = response.json()
+        try:
+            data = response.json()
+        except JSONDecodeError:
+            data = response.text
         result = {}
         if (self.show_weight_usage):
             weight_usage = {}
@@ -104,7 +115,7 @@ class API(object):
         return data
 
     def _prepare_params(self, params):
-        return urlencode(cleanNoneValue(params))
+        return encoded_string(cleanNoneValue(params))
 
     def _get_sign(self, data):
         m = hmac.new(self.secret.encode('utf-8'),
@@ -126,10 +137,5 @@ class API(object):
             return
 
         if (status_code >= 400 and status_code < 500):
-            try:
-                data = response.json()
-                raise ClientError(status_code, data['code'], data['msg'])
-            except JSONDecodeError:
-                raise ClientError(status_code, None, response.text)
-
+            raise ClientError(status_code, response.text)
         raise ServerError(status_code, response.text)

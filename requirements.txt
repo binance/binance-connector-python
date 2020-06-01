@@ -1,1 +1,5 @@
+autobahn==20.4.3
+Twisted==20.3.0
 requests==2.23.0
+pyOpenSSL==19.0.0
+service-identity==18.1.0
