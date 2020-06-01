@@ -42,3 +42,21 @@ class Spot(API):
     from binance.spot.margin import margin_borrow
     from binance.spot.margin import margin_repay
     from binance.spot.margin import margin_asset
+    from binance.spot.margin import margin_pair
+    from binance.spot.margin import margin_all_assets
+    from binance.spot.margin import margin_all_pairs
+    from binance.spot.margin import margin_pair_index
+    from binance.spot.margin import new_margin_order
+    from binance.spot.margin import cancel_margin_order
+    from binance.spot.margin import margin_transfer_history
+    from binance.spot.margin import margin_load_record
+    from binance.spot.margin import margin_repay_record
+    from binance.spot.margin import margin_interest_history
+    from binance.spot.margin import margin_force_liquidation_record
+    from binance.spot.margin import margin_account
+    from binance.spot.margin import margin_order
+    from binance.spot.margin import margin_open_orders
+    from binance.spot.margin import margin_all_orders
+    from binance.spot.margin import margin_my_trades
+    from binance.spot.margin import margin_max_borrowable
+    from binance.spot.margin import margin_max_transferable
