@@ -61,3 +61,18 @@ class Spot(API):
     from binance.spot.margin import margin_my_trades
     from binance.spot.margin import margin_max_borrowable
     from binance.spot.margin import margin_max_transferable
+
+    # SAVINGS
+    from binance.spot.savings import savings_flexible_products
+    from binance.spot.savings import savings_flexible_user_left_quota
+    from binance.spot.savings import savings_purchase_flexible_product
+    from binance.spot.savings import savings_flexible_user_redemption_quota
+    from binance.spot.savings import savings_flexible_redeem
+    from binance.spot.savings import savings_flexible_product_position
+    from binance.spot.savings import savings_product_list
+    from binance.spot.savings import savings_purchase_customized_project
+    from binance.spot.savings import savings_customized_position
+    from binance.spot.savings import savings_account
+    from binance.spot.savings import savings_purchase_record
+    from binance.spot.savings import savings_redemption_record
+    from binance.spot.savings import savings_interest_history
