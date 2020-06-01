@@ -54,6 +54,7 @@ def test_post_an_margin_order_without_quantity():
     client = Client(key, secret)
     client.new_margin_order.when.called_with(symbol='BTCUSDT', side='SELL', type='LIMIT', quantity='').should.throw(ParameterRequiredError)
 
+
 @mock_http_response(responses.POST, '/sapi/v1/margin/order\\?' + urlencode(params), mock_item, 200)
 def test_post_an_margin_order():
     """ Tests the API endpoint to post a new margin order """

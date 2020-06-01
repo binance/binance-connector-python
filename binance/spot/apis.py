@@ -1,6 +1,7 @@
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 
+
 def ping(self):
     """ Test Connectivity
     Test connectivity to the Rest API.
@@ -13,6 +14,7 @@ def ping(self):
 
     url_path = '/api/v3/ping'
     return self.query(url_path)
+
 
 def time(self):
     """ Check Server Time
@@ -27,6 +29,7 @@ def time(self):
     url_path = '/api/v3/time'
     return self.query(url_path)
 
+
 def exchange_info(self):
     """ Exchange Information
     Current exchange trading rules and symbol information
@@ -39,6 +42,7 @@ def exchange_info(self):
 
     url_path = '/api/v3/exchangeInfo'
     return self.query(url_path)
+
 
 def depth(self, symbol: str, **kwargs):
     """ get orderbook.
@@ -59,6 +63,7 @@ def depth(self, symbol: str, **kwargs):
     params = {'symbol': symbol, **kwargs}
     return self.query('/api/v3/depth', params)
 
+
 def trades(self, symbol: str, **kwargs):
     """ Recent Trades List
     Get recent trades (up to last 500).
@@ -76,6 +81,7 @@ def trades(self, symbol: str, **kwargs):
     check_required_parameter(symbol, 'symbol')
     params = {'symbol': symbol, **kwargs}
     return self.query('/api/v3/trades', params)
+
 
 def historical_trades(self, symbol: str, **kwargs):
     """ Old Trade Lookup
@@ -95,6 +101,7 @@ def historical_trades(self, symbol: str, **kwargs):
     check_required_parameter(symbol, 'symbol')
     params = {'symbol': symbol, **kwargs}
     return self.limit_request('GET', '/api/v3/historicalTrades', params)
+
 
 def agg_trades(self, symbol: str, **kwargs):
     """ Compressed/Aggregate Trades List
@@ -116,6 +123,7 @@ def agg_trades(self, symbol: str, **kwargs):
     check_required_parameter(symbol, 'symbol')
     params = {'symbol': symbol, **kwargs}
     return self.query('/api/v3/aggTrades', params)
+
 
 def klines(self, symbol: str, interval: str, **kwargs):
     """ Kline/Candlestick Data
@@ -143,6 +151,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
     }
     return self.query('/api/v3/klines', params)
 
+
 def avg_price(self, symbol: str):
     """ Current Average Price
 
@@ -160,6 +169,7 @@ def avg_price(self, symbol: str):
     }
     return self.query('/api/v3/avgPrice', params)
 
+
 def ticker_24hr(self, symbol: str = None):
     """ 24hr Ticker Price Change Statistics
 
@@ -175,6 +185,7 @@ def ticker_24hr(self, symbol: str = None):
         'symbol': symbol,
     }
     return self.query('/api/v3/ticker/24hr', params)
+
 
 def ticker_price(self, symbol: str = None):
     """ Symbol Price Ticker
@@ -192,6 +203,7 @@ def ticker_price(self, symbol: str = None):
     }
     return self.query('/api/v3/ticker/price', params)
 
+
 def book_ticker(self, symbol: str = None):
     """ Symbol Order Book Ticker
 
@@ -208,6 +220,7 @@ def book_ticker(self, symbol: str = None):
     }
     return self.query('/api/v3/ticker/bookTicker', params)
 
+
 def new_order_test(self, **kwargs):
     """ Test New Order (TRADE)
 
@@ -221,6 +234,7 @@ def new_order_test(self, **kwargs):
     url_path = '/api/v3/order/test'
     return self.sign_request('POST', url_path, {**kwargs})
 
+
 def new_order(self, **kwargs):
     """ New OCO (TRADE)
 
@@ -233,6 +247,7 @@ def new_order(self, **kwargs):
 
     url_path = '/api/v3/order'
     return self.sign_request('POST', url_path, {**kwargs})
+
 
 def cancel_order(self, symbol: str, **kwargs):
     """ Cancel Order (TRADE)
@@ -248,6 +263,7 @@ def cancel_order(self, symbol: str, **kwargs):
     url_path = '/api/v3/order'
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('DELETE', url_path, payload)
+
 
 def cancel_open_orders(self, symbol, **kwargs):
     """ Cancel all Open Orders on a Symbol (TRADE)
@@ -265,6 +281,7 @@ def cancel_open_orders(self, symbol, **kwargs):
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('DELETE', url_path, payload)
 
+
 def get_order(self, symbol, **kwargs):
     """ Query Order (USER_DATA)
 
@@ -280,6 +297,7 @@ def get_order(self, symbol, **kwargs):
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('GET', url_path, payload)
 
+
 def get_open_orders(self, symbol=None, **kwargs):
     """ Current Open Orders (USER_DATA)
 
@@ -293,6 +311,7 @@ def get_open_orders(self, symbol=None, **kwargs):
     url_path = '/api/v3/openOrders'
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('GET', url_path, payload)
+
 
 def get_orders(self, symbol: str, **kwargs):
     """ All Orders (USER_DATA)
@@ -309,6 +328,7 @@ def get_orders(self, symbol: str, **kwargs):
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('GET', url_path, payload)
 
+
 def new_oco_order(self, **kwargs):
     """ New OCO (TRADE)
 
@@ -321,6 +341,7 @@ def new_oco_order(self, **kwargs):
 
     url_path = '/api/v3/order/oco'
     return self.sign_request('POST', url_path, {**kwargs})
+
 
 def cancel_oco_order(self, symbol, **kwargs):
     """ Cancel OCO (TRADE)
@@ -337,6 +358,7 @@ def cancel_oco_order(self, symbol, **kwargs):
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('DELETE', url_path, payload)
 
+
 def get_oco_order(self, **kwargs):
     """ Query OCO (USER_DATA)
 
@@ -348,6 +370,7 @@ def get_oco_order(self, **kwargs):
     """
     url_path = '/api/v3/orderList'
     return self.sign_request('GET', url_path, {**kwargs})
+
 
 def get_oco_orders(self, **kwargs):
     """ Query all OCO (USER_DATA)
@@ -362,6 +385,7 @@ def get_oco_orders(self, **kwargs):
     url_path = '/api/v3/allOrderList'
     return self.sign_request('GET', url_path, {**kwargs})
 
+
 def get_oco_open_orders(self, **kwargs):
     """ Query Open OCO (USER_DATA)
 
@@ -372,6 +396,7 @@ def get_oco_open_orders(self, **kwargs):
 
     url_path = '/api/v3/openOrderList'
     return self.sign_request('GET', url_path, {**kwargs})
+
 
 def account(self, **kwargs):
     """ Account Information (USER_DATA)
@@ -385,6 +410,7 @@ def account(self, **kwargs):
 
     url_path = '/api/v3/account'
     return self.sign_request('GET', url_path, {**kwargs})
+
 
 def my_trades(self, symbol: str, **kwargs):
     """ Account Trade List (USER_DATA)
@@ -402,6 +428,7 @@ def my_trades(self, symbol: str, **kwargs):
     payload = {'symbol': symbol, **kwargs}
     return self.sign_request('GET', url_path, payload)
 
+
 def new_listen_key(self):
     """ Create a ListenKey (USER_STREAM)
 
@@ -412,6 +439,7 @@ def new_listen_key(self):
 
     url_path = '/api/v3/userDataStream'
     return self.send_request('POST', url_path)
+
 
 def renew_listen_key(self, listenKey: str):
     """ Create a ListenKey (USER_STREAM)
@@ -424,6 +452,7 @@ def renew_listen_key(self, listenKey: str):
 
     url_path = '/api/v3/userDataStream'
     return self.send_request('PUT', url_path, {'listenKey': listenKey})
+
 
 def close_listen_key(self, listenKey: str):
     """ Close a ListenKey (USER_STREAM)

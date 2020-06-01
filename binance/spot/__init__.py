@@ -1,5 +1,6 @@
 from binance.api import API
 
+
 class Spot(API):
 
     # MARKETS

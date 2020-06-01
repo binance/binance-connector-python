@@ -53,7 +53,7 @@ def margin_repay(self, asset: str, amount, **kwargs):
 def margin_asset(self, asset: str, **kwargs):
     """ Query Margin Asset (MARKET_DATA)
 
-    GET /sapi/v1/margin/asset 
+    GET /sapi/v1/margin/asset
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-asset-market_data
 
@@ -68,7 +68,7 @@ def margin_asset(self, asset: str, **kwargs):
 def margin_pair(self, symbol: str, **kwargs):
     """ Query Margin Pair (MARKET_DATA)
 
-    GET /sapi/v1/margin/pair 
+    GET /sapi/v1/margin/pair
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-pair-market_data
 
@@ -85,7 +85,7 @@ def margin_pair(self, symbol: str, **kwargs):
 def margin_all_assets(self, **kwargs):
     """ Get All Margin Assets (MARKET_DATA)
 
-    GET /sapi/v1/margin/allAssets 
+    GET /sapi/v1/margin/allAssets
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-assets-market_data
 
@@ -97,7 +97,7 @@ def margin_all_assets(self, **kwargs):
 def margin_all_pairs(self, **kwargs):
     """ Get All Margin Pairs (MARKET_DATA)
 
-    GET /sapi/v1/margin/allPairs 
+    GET /sapi/v1/margin/allPairs
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-pairs-market_data
 
@@ -109,7 +109,7 @@ def margin_all_pairs(self, **kwargs):
 def margin_pair_index(self, symbol: str, **kwargs):
     """ Query Margin PriceIndex (MARKET_DATA)
 
-    GET /sapi/v1/margin/priceIndex 
+    GET /sapi/v1/margin/priceIndex
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-priceindex-market_data
 
@@ -122,7 +122,7 @@ def margin_pair_index(self, symbol: str, **kwargs):
     return self.limit_request('GET', '/sapi/v1/margin/priceIndex', payload)
 
 
-def new_margin_order(self, symbol: str, side:str, type:str, quantity:str, **kwargs):
+def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **kwargs):
     """ Margin Account New Order (TRADE)
 
     Post a new order for margin account.
@@ -139,7 +139,7 @@ def new_margin_order(self, symbol: str, side:str, type:str, quantity:str, **kwar
     """
 
     check_required_parameters([
-        [symbol, 'symbol'], 
+        [symbol, 'symbol'],
         [side, 'side'],
         [type, 'type'],
         [quantity, 'quantity']
@@ -149,7 +149,7 @@ def new_margin_order(self, symbol: str, side:str, type:str, quantity:str, **kwar
         'symbol': symbol,
         'side': side,
         'type': type,
-        'quantity': quantity, 
+        'quantity': quantity,
         **kwargs
     }
     return self.sign_request('POST', '/sapi/v1/margin/order', payload)
@@ -325,7 +325,7 @@ def margin_max_borrowable(self, asset: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/maxBorrowable', payload)
 
 
-def margin_max_transferable (self, asset: str, **kwargs):
+def margin_max_transferable(self, asset: str, **kwargs):
     """ Query Max Transfer-Out Amount (USER_DATA)
 
     GET /sapi/v1/margin/maxTransferable

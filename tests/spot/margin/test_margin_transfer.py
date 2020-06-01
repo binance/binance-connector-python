@@ -29,12 +29,14 @@ def test_margin_transfer_without_asset():
     client.margin_transfer.when.called_with(
         '', amount, type).should.throw(ParameterRequiredError)
 
+
 def test_margin_transfer_without_amount():
     """ Tests the API endpoint to margin tranfer without amount """
 
     client = Client(key, secret)
     client.margin_transfer.when.called_with(
         '', amount, type).should.throw(ParameterRequiredError)
+
 
 def test_margin_transfer_without_type():
     """ Tests the API endpoint to margin tranfer without type """
