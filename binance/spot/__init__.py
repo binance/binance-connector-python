@@ -94,3 +94,12 @@ class Spot(API):
     from binance.spot.wallet import asset_dividen_record
     from binance.spot.wallet import asset_detail
     from binance.spot.wallet import trade_fee
+
+    # MINGING
+    from binance.spot.minging import minging_algo_list
+    from binance.spot.minging import minging_coin_list
+    from binance.spot.minging import minging_worker
+    from binance.spot.minging import minging_worker_list
+    from binance.spot.minging import minging_revenue_list
+    from binance.spot.minging import minging_statistics_list
+    from binance.spot.minging import minging_account_list
