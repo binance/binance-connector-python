@@ -1,4 +1,6 @@
 import time
+
+from urllib.parse import urlencode
 from binance.error import ParameterRequiredError
 
 
@@ -30,6 +32,8 @@ def check_required_parameters(params):
 def get_timestamp():
     return int(time.time() * 1000)
 
+def encoded_string(query):
+    return urlencode(query, True).replace('%40', '@');
 
 def config_logging(logging, logging_devel, log_file=None):
     logging.basicConfig(level=logging_devel, filename=log_file)

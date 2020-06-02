@@ -103,3 +103,24 @@ class Spot(API):
     from binance.spot.minging import minging_revenue_list
     from binance.spot.minging import minging_statistics_list
     from binance.spot.minging import minging_account_list
+
+    # SUB-ACCOUNT
+    from binance.spot.corporate import sub_account_list
+    from binance.spot.corporate import sub_account_transfer_history
+    from binance.spot.corporate import sub_account_transfer
+    from binance.spot.corporate import sub_account_asset
+    from binance.spot.corporate import sub_account_deposit_address
+    from binance.spot.corporate import sub_account_deposit_history
+    from binance.spot.corporate import sub_account_status
+    from binance.spot.corporate import sub_account_enable_margin
+    from binance.spot.corporate import sub_account_margin_account
+    from binance.spot.corporate import sub_account_margin_account_summary
+    from binance.spot.corporate import sub_account_enable_futures
+    from binance.spot.corporate import sub_account_futures_account
+    from binance.spot.corporate import sub_account_futures_account_summary
+    from binance.spot.corporate import sub_account_futures_position_risk
+    from binance.spot.corporate import sub_account_futures_transfer
+    from binance.spot.corporate import sub_account_margin_transfer
+    from binance.spot.corporate import sub_account_transfer_to_sub
+    from binance.spot.corporate import sub_account_transfer_to_master
+    from binance.spot.corporate import sub_account_transfer_history
