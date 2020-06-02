@@ -76,3 +76,21 @@ class Spot(API):
     from binance.spot.savings import savings_purchase_record
     from binance.spot.savings import savings_redemption_record
     from binance.spot.savings import savings_interest_history
+
+    # WALLET
+    from binance.spot.wallet import system_status
+    from binance.spot.wallet import coin_info
+    from binance.spot.wallet import account_snapshot
+    from binance.spot.wallet import disable_fast_withdraw
+    from binance.spot.wallet import enable_fast_withdraw
+    from binance.spot.wallet import withdraw
+    from binance.spot.wallet import deposit_history
+    from binance.spot.wallet import withdraw_history
+    from binance.spot.wallet import deposit_address
+    from binance.spot.wallet import account_status
+    from binance.spot.wallet import api_trading_status
+    from binance.spot.wallet import dust_log
+    from binance.spot.wallet import transfer_dust
+    from binance.spot.wallet import asset_dividen_record
+    from binance.spot.wallet import asset_detail
+    from binance.spot.wallet import trade_fee

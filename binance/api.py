@@ -67,8 +67,6 @@ class API(object):
         query_string = self._prepare_params(payload)
         signature = self._get_sign(query_string)
         payload['signature'] = signature
-        query_string = query_string + '&signature=' + signature
-
         return self.send_request(http_method, url_path, payload)
 
     def send_request(self, http_method, url_path, payload={}):
@@ -85,7 +83,10 @@ class API(object):
 
         self._handle_exception(response)
 
-        data = response.json()
+        try:
+            data = response.json()
+        except JSONDecodeError as error:
+            data = response.text
         result = {}
         if (self.show_weight_usage):
             weight_usage = {}
@@ -104,7 +105,7 @@ class API(object):
         return data
 
     def _prepare_params(self, params):
-        return urlencode(cleanNoneValue(params))
+        return urlencode(cleanNoneValue(params), True)
 
     def _get_sign(self, data):
         m = hmac.new(self.secret.encode('utf-8'),
