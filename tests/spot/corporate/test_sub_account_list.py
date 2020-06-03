@@ -16,7 +16,6 @@ orderId = '1234567'
 origClientOrderId = '2345678'
 
 params = {
-    # 'email': 'alice@test.com',
     'status': 'enabled',
     'page': 1,
     'limit': 100,

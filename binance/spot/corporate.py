@@ -15,7 +15,7 @@ def sub_account_list(self, **kwargs):
     return self.limited_encoded_sign_request('GET', '/wapi/v3/sub-account/list.html', kwargs)
 
 
-def sub_account_transfer_history(self, email: str,  **kwargs):
+def sub_account_transfer_history(self, email: str, **kwargs):
     """ Query Sub-account Transfer History(For Master Account)
     Fetch transfer history list
 
@@ -31,7 +31,7 @@ def sub_account_transfer_history(self, email: str,  **kwargs):
     return self.limited_encoded_sign_request('GET', '/wapi/v3/sub-account/transfer/history.html', payload)
 
 
-def sub_account_transfer(self, fromEmail: str, toEmail: str,  **kwargs):
+def sub_account_transfer(self, fromEmail: str, toEmail: str, asset: str, amount, **kwargs):
     """ Sub-account Transfer(For Master Account)
     Execute sub-account transfer
 
@@ -40,9 +40,20 @@ def sub_account_transfer(self, fromEmail: str, toEmail: str,  **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#sub-account-transfer-for-master-account
 
     """
-    
-    check_required_parameters([[fromEmail, 'fromEmail'], [toEmail, 'toEmail']])
-    payload = {'fromEmail': fromEmail, 'toEmail':toEmail,  **kwargs}
+
+    check_required_parameters([
+        [fromEmail, 'fromEmail'],
+        [toEmail, 'toEmail'],
+        [asset, 'asset'],
+        [amount, 'amount']
+    ])
+    payload = {
+        'fromEmail': fromEmail,
+        'toEmail': toEmail,
+        'asset': asset,
+        'amount': amount,
+        **kwargs
+    }
     return self.limited_encoded_sign_request('POST', '/wapi/v3/sub-account/transfer.html', payload)
 
 
@@ -72,7 +83,7 @@ def sub_account_deposit_address(self, email: str, coin: str, **kwargs):
     """
 
     check_required_parameters([[email, 'email'], [coin, 'coin']])
-    payload = {'email': email, 'coin':coin,  **kwargs}
+    payload = {'email': email, 'coin': coin, **kwargs}
     return self.limited_encoded_sign_request('GET', '/sapi/v1/capital/deposit/subAddress', payload)
 
 
@@ -91,7 +102,7 @@ def sub_account_deposit_history(self, email: str, **kwargs):
     return self.limited_encoded_sign_request('GET', '/sapi/v1/capital/deposit/subHisrec', payload)
 
 
-def sub_account_status(self, email: str, **kwargs):
+def sub_account_status(self, **kwargs):
     """ Get Sub-account's Status on Margin/Futures(For Master Account)
 
     GET /sapi/v1/capital/status
@@ -100,9 +111,7 @@ def sub_account_status(self, email: str, **kwargs):
 
     """
 
-    check_required_parameter(email, 'email')
-    payload = {'email': email, **kwargs}
-    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/status', payload)
+    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/status', kwargs)
 
 
 def sub_account_enable_margin(self, email: str, **kwargs):
@@ -165,7 +174,7 @@ def sub_account_futures_account(self, email: str, **kwargs):
     GET /sapi/v1/sub-account/futures/account
 
     https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-for-master-account
-    
+
     """
 
     check_required_parameter(email, 'email')
@@ -179,7 +188,7 @@ def sub_account_futures_account_summary(self, **kwargs):
     GET /sapi/v1/sub-account/futures/accountSummary
 
     https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-for-master-account
-    
+
     """
 
     return self.sign_request('GET', '/sapi/v1/sub-account/futures/accountSummary', kwargs)
@@ -191,7 +200,7 @@ def sub_account_futures_position_risk(self, email: str, **kwargs):
     GET /sapi/v1/sub-account/futures/positionRisk
 
     https://binance-docs.github.io/apidocs/spot/en/#get-futures-postion-risk-of-sub-account-for-master-account
-    
+
     """
 
     check_required_parameter(email, 'email')
@@ -206,16 +215,16 @@ def sub_account_futures_transfer(self, email: str, asset: str, amount, type: int
     GET /sapi/v1/sub-account/futures/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#get-futures-postion-risk-of-sub-account-for-master-account
-    
+
     """
 
     check_required_parameters([
-        [email, 'email'], 
+        [email, 'email'],
         [asset, 'asset'],
-        [amount, 'amount'], 
+        [amount, 'amount'],
         [type, 'type']
     ])
-    payload = {'email': email, 'asset':asset, 'amount': amount, 'type': type,  **kwargs}
+    payload = {'email': email, 'asset': asset, 'amount': amount, 'type': type, **kwargs}
     return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/futures/transfer', payload)
 
 
@@ -225,16 +234,16 @@ def sub_account_margin_transfer(self, email: str, asset: str, amount, type: int,
     GET /sapi/v1/sub-account/margin/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-transfer-for-sub-account-for-master-account
-    
+
     """
 
     check_required_parameters([
-        [email, 'email'], 
+        [email, 'email'],
         [asset, 'asset'],
-        [amount, 'amount'], 
+        [amount, 'amount'],
         [type, 'type']
     ])
-    payload = {'email': email, 'asset':asset, 'amount': amount, 'type': type,  **kwargs}
+    payload = {'email': email, 'asset': asset, 'amount': amount, 'type': type, **kwargs}
     return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/margin/transfer', payload)
 
 
@@ -244,15 +253,15 @@ def sub_account_transfer_to_sub(self, toEmail: str, asset: str, amount, **kwargs
     POST /sapi/v1/sub-account/transfer/subToSub
 
     https://binance-docs.github.io/apidocs/spot/en/#transfer-to-sub-account-of-same-master-for-sub-account
-    
+
     """
 
     check_required_parameters([
-        [toEmail, 'toEmail'], 
+        [toEmail, 'toEmail'],
         [asset, 'asset'],
         [amount, 'amount']
     ])
-    payload = {'toEmail': toEmail, 'asset':asset, 'amount': amount, **kwargs}
+    payload = {'toEmail': toEmail, 'asset': asset, 'amount': amount, **kwargs}
     return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/transfer/subToSub', payload)
 
 
@@ -262,14 +271,14 @@ def sub_account_transfer_to_master(self, asset: str, amount, **kwargs):
     POST /sapi/v1/sub-account/transfer/subToMaster
 
     https://binance-docs.github.io/apidocs/spot/en/#transfer-to-master-for-sub-account
-    
+
     """
 
     check_required_parameters([
         [asset, 'asset'],
         [amount, 'amount']
     ])
-    payload = {'asset':asset, 'amount': amount, **kwargs}
+    payload = {'asset': asset, 'amount': amount, **kwargs}
     return self.sign_request('POST', '/sapi/v1/sub-account/transfer/subToMaster', payload)
 
 
@@ -279,7 +288,7 @@ def sub_account_transfer_sub_account_history(self, **kwargs):
     POST /sapi/v1/sub-account/transfer/subUserHistory
 
     https://binance-docs.github.io/apidocs/spot/en/#transfer-to-master-for-sub-account
-    
+
     """
 
     return self.sign_request('GET', '/sapi/v1/sub-account/transfer/subUserHistory', kwargs)

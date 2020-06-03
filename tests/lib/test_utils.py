@@ -39,8 +39,10 @@ def test_fail_check_required_parameters_multi_params():
     check_required_parameters.when.called_with(
         [['', 'symbol'], [10, 'price']]).should.throw(ParameterRequiredError)
 
+
 def test_encode_query_string():
     encoded_string({'foo': 'bar', 'foo2': 'bar2'}).should.equal('foo=bar&foo2=bar2')
+
 
 def test_encode_query_without_email_symbol():
     encoded_string({'email': 'alice@test.com'}).should.equal('email=alice@test.com')

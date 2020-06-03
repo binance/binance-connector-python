@@ -85,7 +85,6 @@ class API(object):
         url_path = url_path + '?' + query_string + '&signature=' + signature
         return self.send_request(http_method, url_path)
 
-
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
 

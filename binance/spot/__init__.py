@@ -124,3 +124,4 @@ class Spot(API):
     from binance.spot.corporate import sub_account_transfer_to_sub
     from binance.spot.corporate import sub_account_transfer_to_master
     from binance.spot.corporate import sub_account_transfer_history
+    from binance.spot.corporate import sub_account_transfer_sub_account_history
