@@ -12,8 +12,6 @@ from binance.lib.utils import cleanNoneValue
 from binance.lib.utils import encoded_string
 from binance.lib.utils import check_required_parameter
 
-logger = logging.getLogger(__name__)
-
 
 class API(object):
     """ API base class
@@ -88,17 +86,17 @@ class API(object):
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
 
-        logger.debug('url: ' + url)
-        logger.debug('payload: ' + json.dumps(payload))
+        logging.debug('url: ' + url)
+        logging.debug('payload: ' + json.dumps(payload))
 
         params = cleanNoneValue({'url': url, 'params': payload, 'timeout': self.timeout})
         response = self._dispatch_request(http_method)(**params)
-        logger.debug('raw response from server:' + response.text)
+        logging.debug('raw response from server:' + response.text)
         self._handle_exception(response)
 
         try:
             data = response.json()
-        except JSONDecodeError as error:
+        except JSONDecodeError:
             data = response.text
         result = {}
         if (self.show_weight_usage):
