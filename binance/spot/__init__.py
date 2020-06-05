@@ -34,9 +34,12 @@ class Spot(API):
     from binance.spot.apis import my_trades
 
     # STREAMS
-    from binance.spot.apis import new_listen_key
-    from binance.spot.apis import renew_listen_key
-    from binance.spot.apis import close_listen_key
+    from binance.spot.data_stream import new_listen_key
+    from binance.spot.data_stream import renew_listen_key
+    from binance.spot.data_stream import close_listen_key
+    from binance.spot.data_stream import new_margin_listen_key
+    from binance.spot.data_stream import renew_margin_listen_key
+    from binance.spot.data_stream import close_margin_listen_key
 
     # MARGIN
     from binance.spot.margin import margin_transfer
