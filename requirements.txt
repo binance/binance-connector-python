@@ -1,1 +1,3 @@
+autobahn==20.4.3
+Twisted==20.3.0
 requests==2.23.0

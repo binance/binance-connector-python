@@ -8,7 +8,7 @@ This is a thin library that working as a connector to the Binance public API.
 - enable to change base url
 - display weight usage or whole response header
 
-## How to use
+## RESTful APIs
 
 ```python
 
@@ -138,6 +138,46 @@ the returns will be like:
 ### Display logs
 Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
 Known what parameters and the values sending to server is essential during debug.
+
+
+## Websocket
+
+```python
+from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+
+def message_handler(message):
+    print(message)
+
+ws_client = WebsocketClient()
+ws_client.start()
+
+ws_client.mini_ticker(
+    symbol='bnbusdt',
+    id=1,
+    callback=message_handler,
+)
+
+# combine selected streams
+ws_client.instant_subscribe(
+    stream=['bnbusdt@bookTicker', 'ethusdt@bookTicker'],
+    callback=message_handler,
+)
+
+ws_client.stop()
+```
+
+please find `examples` folder for more websocket usages.
+
+### Heartbeat
+Server send ping frame every 3 minutes and require to response pong within 10 minutes. This package response automatically.
+
+### Testnet
+```python
+from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+
+ws_client = WebsocketClient(stream_url='wss://testnet.binance.vision')
+
+```
 
 ## Test case
 
