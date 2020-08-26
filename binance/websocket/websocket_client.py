@@ -20,7 +20,7 @@ class BinanceWebsocketClient(BinanceSocketManager):
         Connect to the server
         - SPOT: wss://stream.binance.com:9443/ws
         - SPOT testnet : wss://testnet.binance.vision/ws
-        
+
         and sending the subscribe message, e.g.
 
         {"method": "SUBSCRIBE","params":["btcusdt@miniTicker"],"id": 100}

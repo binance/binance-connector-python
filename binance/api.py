@@ -18,9 +18,10 @@ class API(object):
 
     supported arguments:
     - base_url: the API base url, useful to switch to testnet, etc. By default it's api.binance.com
-    - timeout: the time waiting for server response.
-    - show_weight_usage: whether return request weight usage
-    - show_header: whether return the whole response header
+    - timeout: (optional) the time waiting for server response.
+    - proxies: (optional) Dictionary mapping protocol to the URL of the proxy.
+    - show_weight_usage: (optional) whether return request weight usage
+    - show_header: (optional) whether return the whole response header
 
     """
 
@@ -28,6 +29,7 @@ class API(object):
         self.key = key
         self.secret = secret
         self.timeout = None
+        self.proxies = {}
         self.session = requests.Session()
         self.session.headers.update({
             'Content-Type': 'application/json;charset=utf-8',
@@ -49,6 +51,9 @@ class API(object):
 
         if 'timeout' in kwargs:
             self.timeout = kwargs['timeout']
+
+        if 'proxies' in kwargs:
+            self.proxies = kwargs['proxies']
         return
 
     def query(self, url_path, payload={}):
@@ -84,18 +89,20 @@ class API(object):
 
     def send_request(self, http_method, url_path, payload={}):
         url = self.base_url + url_path
-
         logging.debug('url: ' + url)
-        logging.debug('payload: ' + json.dumps(payload))
-
-        params = cleanNoneValue({'url': url, 'params': payload, 'timeout': self.timeout})
+        params = cleanNoneValue({
+            'url': url,
+            'params': payload,
+            'timeout': self.timeout,
+            'proxies': self.proxies
+        })
         response = self._dispatch_request(http_method)(**params)
         logging.debug('raw response from server:' + response.text)
         self._handle_exception(response)
 
         try:
             data = response.json()
-        except JSONDecodeError:
+        except ValueError:
             data = response.text
         result = {}
         if (self.show_weight_usage):

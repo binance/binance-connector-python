@@ -99,6 +99,23 @@ client= Client(timeout=1)
 
 ```
 
+### Proxy
+
+Proxy is supported.
+
+```python
+
+from binance.spot import Spot as Client
+
+proxies = {
+    'http': 'http://1.2.3.4:8080',
+    'https': 'http://1.2.3.4:8080'
+}
+
+client= Client(proxies=proxies)
+
+```
+
 
 ### Display meta info
 

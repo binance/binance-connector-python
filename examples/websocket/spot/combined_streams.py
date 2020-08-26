@@ -22,7 +22,7 @@ my_client.instant_subscribe(
     callback=message_handler,
 )
 
-time.sleep(3);
+time.sleep(3)
 
 # subscribe multiple streams
 my_client.instant_subscribe(
@@ -30,7 +30,7 @@ my_client.instant_subscribe(
     callback=message_handler,
 )
 
-time.sleep(30);
+time.sleep(30)
 
 logging.debug("cloing ws connection")
 my_client.stop()
