@@ -31,7 +31,7 @@ class BinanceSocketManager(threading.Thread):
 
         if not is_live:
             payload_obj = json.loads(payload.decode('utf8'))
-            
+
             if is_combined:
                 factory_url = factory_url + '?streams=' + payload_obj['params']
             else:
