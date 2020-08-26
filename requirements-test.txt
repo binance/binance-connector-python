@@ -11,3 +11,4 @@ service-identity==18.1.0
 flake8
 tox
 tox-pyenv
+wheel
