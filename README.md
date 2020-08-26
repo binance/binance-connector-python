@@ -133,7 +133,7 @@ the returns will be like:
 
 ```python
 
-{'data': {'serverTime': 1587990847650}, 'weight_usage': {'X-MBX-USED-WEIGHT': '31', 'X-MBX-USED-WEIGHT-1M': '31'}}
+{'data': {'serverTime': 1587990847650}, 'weight_usage': {'x-mbx-used-weight': '31', 'x-mbx-used-weight-1m': '31'}}
 
 ```
 

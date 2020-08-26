@@ -105,10 +105,12 @@ class API(object):
         except ValueError:
             data = response.text
         result = {}
+
         if (self.show_weight_usage):
             weight_usage = {}
             for key in response.headers.keys():
-                if key.startswith('X-MBX-USED-WEIGHT'):
+                key = key.lower()
+                if key.startswith('x-mbx-used-weight'):
                     weight_usage[key] = response.headers[key]
                     result['weight_usage'] = weight_usage
 
