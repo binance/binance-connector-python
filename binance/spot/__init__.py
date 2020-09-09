@@ -45,6 +45,9 @@ class Spot(API):
     from binance.spot.data_stream import new_margin_listen_key
     from binance.spot.data_stream import renew_margin_listen_key
     from binance.spot.data_stream import close_margin_listen_key
+    from binance.spot.data_stream import new_isolated_margin_listen_key
+    from binance.spot.data_stream import renew_isolated_margin_listen_key
+    from binance.spot.data_stream import close_isolated_margin_listen_key
 
     # MARGIN
     from binance.spot.margin import margin_transfer
@@ -132,3 +135,6 @@ class Spot(API):
     from binance.spot.corporate import sub_account_transfer_to_sub
     from binance.spot.corporate import sub_account_transfer_to_master
     from binance.spot.corporate import sub_account_transfer_sub_account_history
+    from binance.spot.corporate import sub_account_futures_asset_transfer_history
+    from binance.spot.corporate import sub_account_futures_asset_transfer
+    from binance.spot.corporate import sub_account_spot_summary
