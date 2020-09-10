@@ -9,30 +9,19 @@ mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
 mock_exception = {'code': -1, 'msg': 'error message'}
 
 key = random_str()
-
 listen_key = random_str()
 
 
 def test_close_margin_listen_key_without_key():
-    """ Tests the API endpoint to close margin listenkey but without the key """
+    """ Tests the API endpoint to delete a margin listenkey without the key """
 
     client = Client(key)
-    client.close_margin_listen_key.when.called_with(
-        '').should.throw(ParameterRequiredError)
-
-
-@mock_http_response(responses.DELETE, '/sapi/v1/userDataStream\\?listenKey=' + listen_key, mock_exception, 400)
-def test_rewnew_listen_key_with_wrong_key():
-    """ Tests the API endpoint to renew margin listekn key with wrong key """
-
-    client = Client(key)
-    client.close_margin_listen_key.when.called_with(
-        listen_key).should.throw(ClientError)
+    client.close_margin_listen_key.when.called_with('').should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.DELETE, '/sapi/v1/userDataStream\\?listenKey=' + listen_key, mock_item, 200)
-def test_rewnew_listen_key():
-    """ Tests the API endpoint to renew an existing margin listen key """
+def test_close_margin_listen_key():
+    """ Tests the API endpoint to delete an existing listen key """
 
     client = Client(key)
     response = client.close_margin_listen_key(listen_key)

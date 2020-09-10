@@ -92,7 +92,7 @@ class API(object):
         logging.debug('url: ' + url)
         params = cleanNoneValue({
             'url': url,
-            'params': payload,
+            'params': self._prepare_params(payload),
             'timeout': self.timeout,
             'proxies': self.proxies
         })
