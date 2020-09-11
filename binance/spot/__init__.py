@@ -145,3 +145,19 @@ class Spot(API):
     from binance.spot.corporate import sub_account_futures_asset_transfer_history
     from binance.spot.corporate import sub_account_futures_asset_transfer
     from binance.spot.corporate import sub_account_spot_summary
+
+
+    # Futures
+    from binance.spot.futures import futures_transfer
+    from binance.spot.futures import futures_transfer_history
+    from binance.spot.futures import futures_loan_borrow
+    from binance.spot.futures import futures_loan_borrow_history
+    from binance.spot.futures import futures_loan_repay
+    from binance.spot.futures import futures_loan_repay_history
+    from binance.spot.futures import futures_loan_wallet
+    from binance.spot.futures import futures_loan_configs
+    from binance.spot.futures import futures_loan_calc_adjust_level
+    from binance.spot.futures import futures_loan_calc_max_adjust_amount
+    from binance.spot.futures import futures_loan_adjust_collateral
+    from binance.spot.futures import futures_loan_adjust_collateral_history
+    from binance.spot.futures import futures_loan_liquidation_history
