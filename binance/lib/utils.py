@@ -18,7 +18,7 @@ def check_required_parameter(value, name):
 
 
 def check_required_parameters(params):
-    """ validate multipul parameters
+    """ validate multiple parameters
         params = [
             ['btcusdt', 'symbol'],
             [10, 'price']
