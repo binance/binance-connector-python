@@ -10,7 +10,6 @@ def blvt_info(self, **kwargs):
 
     Parameters:
     | tokenName  | optional  | string | BTCDOWN, BTCUP          |
-
     """
 
     return self.sign_request('GET', '/sapi/v1/blvt/tokenInfo', kwargs)
@@ -25,7 +24,7 @@ def subscribe_blvt(self, tokenName: str, cost, **kwargs):
 
     Parameters:
     | tokenName  | mandatory  | string | BTCDOWN, BTCUP          |
-    | cost       | mandatory | string |                         |
+    | cost       | mandatory  | string |  spot balance           |
     | recvWindow | optional  | int    |                         |
     """
 
