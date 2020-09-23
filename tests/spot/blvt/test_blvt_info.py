@@ -10,8 +10,17 @@ secret = random_str()
 
 @mock_http_response(responses.GET, '/sapi/v1/blvt/tokenInfo', mock_item, 200)
 def test_blvt_info():
-    """ Tests the API endpoint to check coin info """
+    """ Tests the API endpoint to get BLVT Info """
 
     client = Client(key, secret)
     response = client.blvt_info()
+    response.should.equal(mock_item)
+
+
+@mock_http_response(responses.GET, '/sapi/v1/blvt/tokenInfo', mock_item, 200)
+def test_blvt_info_with_tokenName():
+    """ Tests the API endpoint to get BLVT Info with tokenName"""
+
+    client = Client(key, secret)
+    response = client.blvt_info('LINKUP')
     response.should.equal(mock_item)

@@ -1,7 +1,7 @@
 from binance.lib.utils import check_required_parameters
 
 
-def blvt_info(self, **kwargs):
+def blvt_info(self, tokenName: str = None):
     """ Get BLVT Info (MARKET_DATA)
 
     GET /sapi/v1/blvt/tokenInfo
@@ -11,8 +11,11 @@ def blvt_info(self, **kwargs):
     Parameters:
     | tokenName  | optional  | string | BTCDOWN, BTCUP          |
     """
+    payload = {
+        'symbol': tokenName,
+    }
 
-    return self.sign_request('GET', '/sapi/v1/blvt/tokenInfo', kwargs)
+    return self.limit_request('GET', '/sapi/v1/blvt/tokenInfo', payload)
 
 
 def subscribe_blvt(self, tokenName: str, cost, **kwargs):
