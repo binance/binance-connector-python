@@ -17,7 +17,7 @@ def test_blvt_info():
     response.should.equal(mock_item)
 
 
-@mock_http_response(responses.GET, '/sapi/v1/blvt/tokenInfo', mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/blvt/tokenInfo\\?tokenName=LINKUP', mock_item, 200)
 def test_blvt_info_with_tokenName():
     """ Tests the API endpoint to get BLVT Info with tokenName"""
 
