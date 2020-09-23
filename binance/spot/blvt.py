@@ -12,7 +12,7 @@ def blvt_info(self, tokenName: str = None):
     | tokenName  | optional  | string | BTCDOWN, BTCUP          |
     """
     payload = {
-        'symbol': tokenName,
+        'tokenName': tokenName
     }
 
     return self.limit_request('GET', '/sapi/v1/blvt/tokenInfo', payload)
