@@ -146,7 +146,6 @@ class Spot(API):
     from binance.spot.corporate import sub_account_futures_asset_transfer
     from binance.spot.corporate import sub_account_spot_summary
 
-
     # Futures
     from binance.spot.futures import futures_transfer
     from binance.spot.futures import futures_transfer_history
@@ -161,3 +160,11 @@ class Spot(API):
     from binance.spot.futures import futures_loan_adjust_collateral
     from binance.spot.futures import futures_loan_adjust_collateral_history
     from binance.spot.futures import futures_loan_liquidation_history
+
+    # BLVTs
+    from binance.spot.blvt import blvt_info
+    from binance.spot.blvt import subscribe_blvt
+    from binance.spot.blvt import subscription_record
+    from binance.spot.blvt import redeem_blvt
+    from binance.spot.blvt import redemption_record
+
