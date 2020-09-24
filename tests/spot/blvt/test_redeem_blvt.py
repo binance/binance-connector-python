@@ -9,7 +9,6 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.POST, '/sapi/v1/blvt/redeem\\?amount=1', mock_item, 200)
 def test_redeem_blvt_without_tokenName():
     """ Tests the API endpoint to Redeem BLVT without tokenName """
 
@@ -17,7 +16,6 @@ def test_redeem_blvt_without_tokenName():
     client.redeem_blvt.when.called_with('', '1').should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.POST, '/sapi/v1/blvt/redeem\\?tokenName=BTCUP', mock_item, 200)
 def test_redeem_blvt_without_amount():
     """ Tests the API endpoint to Redeem BLVT without amount """
 

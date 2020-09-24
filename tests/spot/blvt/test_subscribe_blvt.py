@@ -9,7 +9,6 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.POST, '/sapi/v1/blvt/subscribe\\?cost=10', mock_item, 200)
 def test_subscribe_blvt_without_tokenName():
     """ Tests the API endpoint to subscribe BLVT without tokenName """
 
@@ -17,7 +16,6 @@ def test_subscribe_blvt_without_tokenName():
     client.subscribe_blvt.when.called_with('', '10').should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.POST, '/sapi/v1/blvt/subscribe\\?tokenName=BTCUP', mock_item, 200)
 def test_subscribe_blvt_without_cost():
     """ Tests the API endpoint to subscribe BLVT without cost """
 
