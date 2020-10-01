@@ -12,26 +12,18 @@ key = random_str()
 secret = random_str()
 
 
-def test_savings_purchase_flexible_product_without_productId():
-    """ Tests the API endpoint to purchase flexible product without productId """
+def test_savings_flexible_user_left_quota_without_productId():
+    """ Tests the API endpoint to get left daily purchase quota of flexible product without productId """
 
     client = Client(key, secret)
-    client.savings_purchase_flexible_product.when.called_with(
-        '', 10).should.throw(ParameterRequiredError)
+    client.savings_flexible_user_left_quota.when.called_with(
+        '').should.throw(ParameterRequiredError)
 
 
-def test_savings_purchase_flexible_product_without_amount():
-    """ Tests the API endpoint to purchase flexible product without amount """
-
-    client = Client(key, secret)
-    client.savings_purchase_flexible_product.when.called_with(
-        '1', '').should.throw(ParameterRequiredError)
-
-
-@mock_http_response(responses.POST, '/sapi/v1/lending/daily/purchase\\?productId=1&amount=10', mock_item, 200)
-def test_savings_purchase_flexible_product():
-    """ Tests the API endpoint to purchase flexible product list """
+@mock_http_response(responses.GET, '/sapi/v1/lending/daily/userLeftQuota\\?productId=1', mock_item, 200)
+def test_savings_flexible_user_left_quota():
+    """ Tests the API endpoint to get left daily purchase quota of flexible product """
 
     client = Client(key, secret)
-    response = client.savings_purchase_flexible_product(productId=1, amount=10)
+    response = client.savings_flexible_user_left_quota(productId=1)
     response.should.equal(mock_item)

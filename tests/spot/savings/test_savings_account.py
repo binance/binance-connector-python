@@ -13,7 +13,7 @@ secret = random_str()
 
 
 @mock_http_response(responses.GET, '/sapi/v1/lending/union/account', mock_item, 200)
-def test_savings_customized_position():
+def test_savings_account():
     """ Tests the API endpoint to get lending account """
 
     client = Client(key, secret)

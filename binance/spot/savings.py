@@ -98,7 +98,7 @@ def savings_project_list(self, type: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/project/list', payload)
 
 
-def savings_purchase_customized_project(self, type: str, **kwargs):
+def savings_purchase_customized_project(self, projectId: str, lot, **kwargs):
     """ Purchase Customized Fixed Project (USER_DATA)
 
     POST /sapi/v1/lending/customizedFixed/purchase
@@ -107,8 +107,8 @@ def savings_purchase_customized_project(self, type: str, **kwargs):
 
     """
 
-    check_required_parameter(type, 'type')
-    payload = {'type': type, **kwargs}
+    check_required_parameters([[projectId, 'projectId'], [lot, 'lot']])
+    payload = {'projectId': projectId, 'lot': lot, **kwargs}
     return self.sign_request('POST', '/sapi/v1/lending/customizedFixed/purchase', payload)
 
 

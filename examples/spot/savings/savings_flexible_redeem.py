@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.savings_flexible_product_position(productId='BTC001', amount='0.01', type='NORMAL'))
+logging.info(client.savings_flexible_redeem(productId='BTC001', amount='0.01', type='NORMAL'))

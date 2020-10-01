@@ -21,8 +21,8 @@ def test_savings_flexible_product_position_without_asset():
 
 
 @mock_http_response(responses.GET, '/sapi/v1/lending/daily/token/position\\?asset=1', mock_item, 200)
-def test_savings_flexible_user_redemption_quota():
-    """ Tests the API endpoint to get flexible redemption quota """
+def test_savings_flexible_product_position():
+    """ Tests the API endpoint to get flexible product position """
 
     client = Client(key, secret)
     response = client.savings_flexible_product_position(asset=1)

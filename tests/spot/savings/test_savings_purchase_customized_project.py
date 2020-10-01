@@ -12,18 +12,26 @@ key = random_str()
 secret = random_str()
 
 
-def test_savings_purchase_customized_project_without_type():
-    """ Tests the API endpoint to post customized fixed project without type """
+def test_savings_purchase_customized_project_without_projectId():
+    """ Tests the API endpoint to purchase customized fixed project without projectId """
 
     client = Client(key, secret)
     client.savings_purchase_customized_project.when.called_with(
-        '').should.throw(ParameterRequiredError)
+        '', 1).should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.POST, '/sapi/v1/lending/customizedFixed/purchase\\?type=1', mock_item, 200)
-def test_savings_purchase_customized_project():
-    """ Tests the API endpoint to post customized fixed project """
+def test_savings_purchase_customized_project_without_lot():
+    """ Tests the API endpoint to purchase customized fixed project without without lot """
 
     client = Client(key, secret)
-    response = client.savings_purchase_customized_project(type=1)
+    client.savings_purchase_customized_project.when.called_with(
+        'CUSDT14DAYSS001', None).should.throw(ParameterRequiredError)
+
+
+@mock_http_response(responses.POST, '/sapi/v1/lending/customizedFixed/purchase\\?projectId=CUSDT14DAYSS001&lot=1', mock_item, 200)
+def test_savings_purchase_customized_project():
+    """ Tests the API endpoint to purchase customized fixed project without """
+
+    client = Client(key, secret)
+    response = client.savings_purchase_customized_project(projectId='CUSDT14DAYSS001', lot=1)
     response.should.equal(mock_item)

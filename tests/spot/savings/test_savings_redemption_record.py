@@ -21,7 +21,7 @@ def test_savings_redemption_record_without_lendingType():
 
 
 @mock_http_response(responses.GET, '/sapi/v1/lending/union/redemptionRecord\\?lendingType=1', mock_item, 200)
-def test_savings_customized_position():
+def test_savings_redemption_record():
     """ Tests the API endpoint to get redemption record """
 
     client = Client(key, secret)
