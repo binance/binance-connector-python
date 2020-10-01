@@ -87,7 +87,7 @@ class Spot(API):
     from binance.spot.savings import savings_flexible_user_redemption_quota
     from binance.spot.savings import savings_flexible_redeem
     from binance.spot.savings import savings_flexible_product_position
-    from binance.spot.savings import savings_product_list
+    from binance.spot.savings import savings_project_list
     from binance.spot.savings import savings_purchase_customized_project
     from binance.spot.savings import savings_customized_position
     from binance.spot.savings import savings_account

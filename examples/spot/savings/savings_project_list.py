@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.savings_product_list(type='REGULAR'))
+logging.info(client.savings_project_list(type='REGULAR'))

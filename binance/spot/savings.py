@@ -29,11 +29,11 @@ def savings_flexible_user_left_quota(self, productId: str, **kwargs):
 
 
 def savings_purchase_flexible_product(self, productId: str, amount, **kwargs):
-    """ POST Left Daily Purchase Quota of Flexible Product (USER_DATA)
+    """ POST Purchase Flexible Product (USER_DATA)
 
     POST /sapi/v1/lending/daily/purchase
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-left-daily-purchase-quota-of-flexible-product-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#purchase-flexible-product-user_data
 
     """
 
@@ -47,7 +47,7 @@ def savings_flexible_user_redemption_quota(self, productId: str, type: str, **kw
 
     GET /sapi/v1/lending/daily/userRedemptionQuota
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-left-daily-purchase-quota-of-flexible-product-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-left-daily-redemption-quota-of-flexible-product-user_data
 
     """
 
@@ -84,7 +84,7 @@ def savings_flexible_product_position(self, asset: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/daily/token/position', payload)
 
 
-def savings_product_list(self, type: str, **kwargs):
+def savings_project_list(self, type: str, **kwargs):
     """ Get Fixed and Customized Fixed Project List(USER_DATA)
 
     GET /sapi/v1/lending/project/list
