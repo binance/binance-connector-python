@@ -180,7 +180,7 @@ def savings_interest_history(self, lendingType: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/union/interestHistory', payload)
 
 
-def savings_fixed_activity_position_to_daily_position(self, projectId: str, lot, **kwargs ):
+def savings_change_fixed_activity_position_to_daily_position(self, projectId: str, lot, **kwargs):
     """ Change Fixed/Activity Position to Daily Position(USER_DATA)
 
     POST /sapi/v1/lending/positionChanged
@@ -188,6 +188,6 @@ def savings_fixed_activity_position_to_daily_position(self, projectId: str, lot,
     https://binance-docs.github.io/apidocs/spot/en/#change-fixed-activity-position-to-daily-position-user_data
     """
 
-    check_required_parameter(projectId, lot)
-    payload = {'projectId': projectId, lot: lot, **kwargs}
-    return self.sign_request('POST', '//sapi/v1/lending/positionChanged', payload)
+    check_required_parameters([[projectId, 'projectId'], [lot, 'lot']])
+    payload = {'projectId': projectId, 'lot': lot, **kwargs}
+    return self.sign_request('POST', '/sapi/v1/lending/positionChanged', payload)

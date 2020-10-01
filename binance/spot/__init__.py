@@ -78,7 +78,6 @@ class Spot(API):
     from binance.spot.margin import isolate_margin_account
     from binance.spot.margin import isolate_margin_pair
     from binance.spot.margin import isolate_margin_all_pairs
-       
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -94,6 +93,7 @@ class Spot(API):
     from binance.spot.savings import savings_purchase_record
     from binance.spot.savings import savings_redemption_record
     from binance.spot.savings import savings_interest_history
+    from binance.spot.savings import savings_change_fixed_activity_position_to_daily_position
 
     # WALLET
     from binance.spot.wallet import system_status
