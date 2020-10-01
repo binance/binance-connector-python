@@ -13,7 +13,7 @@ secret = random_str()
 
 
 def test_savings_project_list_without_type():
-    """ Tests the API endpoint to get get fixed and customized fixed project list without type """
+    """ Tests the API endpoint to get Fixed and Activity Project without type """
 
     client = Client(key, secret)
     client.savings_project_list.when.called_with(
@@ -22,7 +22,7 @@ def test_savings_project_list_without_type():
 
 @mock_http_response(responses.GET, '/sapi/v1/lending/project/list\\?type=1', mock_item, 200)
 def test_savings_project_list():
-    """ Tests the API endpoint to get get fixed and customized fixed project list """
+    """ Tests the API endpoint to get Fixed and Activity Project"""
 
     client = Client(key, secret)
     response = client.savings_project_list(type=1)

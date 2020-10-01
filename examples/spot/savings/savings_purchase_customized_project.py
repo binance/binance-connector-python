@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.savings_purchase_customized_project(projectId='USDT14DAYSS001', lot=1))
+logging.info(client.savings_purchase_fixed_activity_project(projectId='USDT14DAYSS001', lot=1))

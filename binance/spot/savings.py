@@ -85,11 +85,11 @@ def savings_flexible_product_position(self, asset: str, **kwargs):
 
 
 def savings_project_list(self, type: str, **kwargs):
-    """ Get Fixed and Customized Fixed Project List(USER_DATA)
+    """ Get Fixed and Activity Project List(USER_DATA)
 
     GET /sapi/v1/lending/project/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-fixed-and-customized-fixed-project-list-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-fixed-and-activity-project-list-user_data
 
     """
 
@@ -98,12 +98,12 @@ def savings_project_list(self, type: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/project/list', payload)
 
 
-def savings_purchase_customized_project(self, projectId: str, lot, **kwargs):
-    """ Purchase Customized Fixed Project (USER_DATA)
+def savings_purchase_fixed_activity_project(self, projectId: str, lot, **kwargs):
+    """ Purchase Fixed/Activity Project (USER_DATA)
 
     POST /sapi/v1/lending/customizedFixed/purchase
 
-    https://binance-docs.github.io/apidocs/spot/en/#purchase-customized-fixed-project-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#purchase-fixed-activity-project-user_data
 
     """
 
@@ -112,12 +112,12 @@ def savings_purchase_customized_project(self, projectId: str, lot, **kwargs):
     return self.sign_request('POST', '/sapi/v1/lending/customizedFixed/purchase', payload)
 
 
-def savings_customized_position(self, asset: str, **kwargs):
-    """ Get Customized Fixed Project Position (USER_DATA)
+def savings_fixed_activity_project_position(self, asset: str, **kwargs):
+    """ Get Fixed/Activity Project Position  (USER_DATA)
 
     GET /sapi/v1/lending/project/position/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#purchase-customized-fixed-project-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-fixed-activity-project-position-user_data
 
     """
 
@@ -178,3 +178,16 @@ def savings_interest_history(self, lendingType: str, **kwargs):
     check_required_parameter(lendingType, 'lendingType')
     payload = {'lendingType': lendingType, **kwargs}
     return self.sign_request('GET', '/sapi/v1/lending/union/interestHistory', payload)
+
+
+def savings_fixed_activity_position_to_daily_position(self, projectId: str, lot, **kwargs ):
+    """ Change Fixed/Activity Position to Daily Position(USER_DATA)
+
+    POST /sapi/v1/lending/positionChanged
+
+    https://binance-docs.github.io/apidocs/spot/en/#change-fixed-activity-position-to-daily-position-user_data
+    """
+
+    check_required_parameter(projectId, lot)
+    payload = {'projectId': projectId, lot: lot, **kwargs}
+    return self.sign_request('POST', '//sapi/v1/lending/positionChanged', payload)
