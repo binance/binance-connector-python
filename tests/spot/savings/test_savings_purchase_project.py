@@ -16,7 +16,7 @@ def test_savings_purchase_fixed_activity_project_without_projectId():
     """ Tests the API endpoint to purchase Fixed/Activity Project without projectId """
 
     client = Client(key, secret)
-    client.savings_purchase_fixed_activity_project.when.called_with(
+    client.savings_purchase_project.when.called_with(
         '', 1).should.throw(ParameterRequiredError)
 
 
@@ -24,7 +24,7 @@ def test_savings_purchase_fixed_activity_project_without_lot():
     """ Tests the API endpoint to purchase Fixed/Activity Project without without lot """
 
     client = Client(key, secret)
-    client.savings_purchase_fixed_activity_project.when.called_with(
+    client.savings_purchase_project.when.called_with(
         'CUSDT14DAYSS001', None).should.throw(ParameterRequiredError)
 
 
@@ -33,5 +33,5 @@ def test_savings_purchase_fixed_activity_project():
     """ Tests the API endpoint to purchase Fixed/Activity Project """
 
     client = Client(key, secret)
-    response = client.savings_purchase_fixed_activity_project(projectId='CUSDT14DAYSS001', lot=1)
+    response = client.savings_purchase_project(projectId='CUSDT14DAYSS001', lot=1)
     response.should.equal(mock_item)

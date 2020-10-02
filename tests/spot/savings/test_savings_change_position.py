@@ -15,7 +15,7 @@ def test_change_fixed_activity_position_to_daily_position_without_projectId():
     """ Tests the API endpoint to change Fixed/Activity Position to Daily Position without projectId"""
 
     client = Client(key, secret)
-    client.savings_change_fixed_activity_position_to_daily_position.when.called_with(
+    client.savings_change_position.when.called_with(
         '', '1').should.throw(ParameterRequiredError)
 
 
@@ -23,7 +23,7 @@ def test_change_fixed_activity_position_to_daily_position_without_lot():
     """ Tests the API endpoint to change Fixed/Activity Position to Daily Position without lot"""
 
     client = Client(key, secret)
-    client.savings_change_fixed_activity_position_to_daily_position.when.called_with(
+    client.savings_change_position.when.called_with(
         'USDT001', None).should.throw(ParameterRequiredError)
 
 
@@ -32,5 +32,5 @@ def test_change_fixed_activity_position_to_daily_position():
     """ Tests the API endpoint to change Fixed/Activity Position to Daily Position """
 
     client = Client(key, secret)
-    response = client.savings_change_fixed_activity_position_to_daily_position(projectId='USDT001', lot='1')
+    response = client.savings_change_position(projectId='USDT001', lot='1')
     response.should.equal(mock_item)

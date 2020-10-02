@@ -16,7 +16,7 @@ def test_savings_fixed_activity_project_position_without_asset():
     """ Tests the API endpoint to purchase Fixed/Activity project position without asset """
 
     client = Client(key, secret)
-    client.savings_fixed_activity_project_position.when.called_with(
+    client.savings_project_position.when.called_with(
         '').should.throw(ParameterRequiredError)
 
 
@@ -25,5 +25,5 @@ def test_savings_fixed_activity_project():
     """ Tests the API endpoint to purchase Fixed/Activity project position """
 
     client = Client(key, secret)
-    response = client.savings_fixed_activity_project_position(asset=1)
+    response = client.savings_project_position(asset=1)
     response.should.equal(mock_item)

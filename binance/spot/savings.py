@@ -98,7 +98,7 @@ def savings_project_list(self, type: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/project/list', payload)
 
 
-def savings_purchase_fixed_activity_project(self, projectId: str, lot, **kwargs):
+def savings_purchase_project(self, projectId: str, lot, **kwargs):
     """ Purchase Fixed/Activity Project (USER_DATA)
 
     POST /sapi/v1/lending/customizedFixed/purchase
@@ -112,7 +112,7 @@ def savings_purchase_fixed_activity_project(self, projectId: str, lot, **kwargs)
     return self.sign_request('POST', '/sapi/v1/lending/customizedFixed/purchase', payload)
 
 
-def savings_fixed_activity_project_position(self, asset: str, **kwargs):
+def savings_project_position(self, asset: str, **kwargs):
     """ Get Fixed/Activity Project Position  (USER_DATA)
 
     GET /sapi/v1/lending/project/position/list
@@ -180,7 +180,7 @@ def savings_interest_history(self, lendingType: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/lending/union/interestHistory', payload)
 
 
-def savings_change_fixed_activity_position_to_daily_position(self, projectId: str, lot, **kwargs):
+def savings_change_position(self, projectId: str, lot, **kwargs):
     """ Change Fixed/Activity Position to Daily Position(USER_DATA)
 
     POST /sapi/v1/lending/positionChanged

@@ -87,13 +87,13 @@ class Spot(API):
     from binance.spot.savings import savings_flexible_redeem
     from binance.spot.savings import savings_flexible_product_position
     from binance.spot.savings import savings_project_list
-    from binance.spot.savings import savings_purchase_fixed_activity_project
-    from binance.spot.savings import savings_fixed_activity_project_position
+    from binance.spot.savings import savings_purchase_project
+    from binance.spot.savings import savings_project_position
     from binance.spot.savings import savings_account
     from binance.spot.savings import savings_purchase_record
     from binance.spot.savings import savings_redemption_record
     from binance.spot.savings import savings_interest_history
-    from binance.spot.savings import savings_change_fixed_activity_position_to_daily_position
+    from binance.spot.savings import savings_change_position
 
     # WALLET
     from binance.spot.wallet import system_status
