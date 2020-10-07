@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.savings_customized_position(asset='BTC'))
+logging.info(client.bswap_swap_history())

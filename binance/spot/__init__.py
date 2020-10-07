@@ -78,7 +78,6 @@ class Spot(API):
     from binance.spot.margin import isolate_margin_account
     from binance.spot.margin import isolate_margin_pair
     from binance.spot.margin import isolate_margin_all_pairs
-       
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -87,13 +86,14 @@ class Spot(API):
     from binance.spot.savings import savings_flexible_user_redemption_quota
     from binance.spot.savings import savings_flexible_redeem
     from binance.spot.savings import savings_flexible_product_position
-    from binance.spot.savings import savings_product_list
-    from binance.spot.savings import savings_purchase_customized_project
-    from binance.spot.savings import savings_customized_position
+    from binance.spot.savings import savings_project_list
+    from binance.spot.savings import savings_purchase_project
+    from binance.spot.savings import savings_project_position
     from binance.spot.savings import savings_account
     from binance.spot.savings import savings_purchase_record
     from binance.spot.savings import savings_redemption_record
     from binance.spot.savings import savings_interest_history
+    from binance.spot.savings import savings_change_position
 
     # WALLET
     from binance.spot.wallet import system_status
@@ -168,3 +168,12 @@ class Spot(API):
     from binance.spot.blvt import redeem_blvt
     from binance.spot.blvt import redemption_record
 
+    # BSwap
+    from binance.spot.bswap import bswap_pools
+    from binance.spot.bswap import bswap_liquidity
+    from binance.spot.bswap import bswap_liquidity_add
+    from binance.spot.bswap import bswap_remove_liquidity
+    from binance.spot.bswap import bswap_liquidity_operation_record
+    from binance.spot.bswap import bswap_request_quote
+    from binance.spot.bswap import bswap_swap
+    from binance.spot.bswap import bswap_swap_history

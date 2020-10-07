@@ -9,5 +9,6 @@ config_logging(logging, logging.DEBUG)
 key = ''
 secret = ''
 
+
 client = Client(key, secret)
-logging.info(client.savings_flexible_products())
+logging.info(client.bswap_request_quote('USDT', 'BUSD', '30000'))
