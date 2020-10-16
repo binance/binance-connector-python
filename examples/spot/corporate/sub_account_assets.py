@@ -10,6 +10,6 @@ key = ''
 secret = ''
 
 spot_client = Client(key, secret)
-logging.info(spot_client.sub_account_asset(
+logging.info(spot_client.sub_account_assets(
     email='alice@test.com'
 ))

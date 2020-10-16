@@ -57,7 +57,7 @@ def sub_account_transfer(self, fromEmail: str, toEmail: str, asset: str, amount,
     return self.limited_encoded_sign_request('POST', '/wapi/v3/sub-account/transfer.html', payload)
 
 
-def sub_account_asset(self, email: str, **kwargs):
+def sub_account_assets(self, email: str, **kwargs):
     """ Query Sub-account Assets(For Master Account)
     Fetch sub-account assets
 

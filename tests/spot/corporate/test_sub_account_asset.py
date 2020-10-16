@@ -12,18 +12,18 @@ key = random_str()
 secret = random_str()
 
 
-def test_sub_account_asset_without_email():
+def test_sub_account_assets_without_email():
     """ Tests the API endpoint to get sub account asset without email """
 
     client = Client(key, secret)
-    client.sub_account_asset.when.called_with(
+    client.sub_account_assets.when.called_with(
         '').should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/wapi/v3/sub-account/assets.html\\?email=alice@test.com', mock_item, 200)
-def test_sub_account_asset():
+def test_sub_account_assets():
     """ Tests the API endpoint to  get sub account asset """
 
     client = Client(key, secret)
-    response = client.sub_account_asset(email='alice@test.com')
+    response = client.sub_account_assets(email='alice@test.com')
     response.should.equal(mock_item)
