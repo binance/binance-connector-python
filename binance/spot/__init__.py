@@ -126,7 +126,7 @@ class Spot(API):
     from binance.spot.corporate import sub_account_list
     from binance.spot.corporate import sub_account_transfer_history
     from binance.spot.corporate import sub_account_transfer
-    from binance.spot.corporate import sub_account_asset
+    from binance.spot.corporate import sub_account_assets
     from binance.spot.corporate import sub_account_deposit_address
     from binance.spot.corporate import sub_account_deposit_history
     from binance.spot.corporate import sub_account_status
