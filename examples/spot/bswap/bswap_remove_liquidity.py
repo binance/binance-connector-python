@@ -12,5 +12,5 @@ secret = ''
 
 
 client = Client(key, secret)
-logging.info(client.bswap_remove_liquidity('2', 'SINGLE', ['BUSD'], '12415'))
-logging.info(client.bswap_remove_liquidity('2', 'COMBINATION', ['BUSD', 'USDT'], '12415'))
+logging.info(client.bswap_liquidity_remove('2', 'SINGLE', ['BUSD'], '12415'))
+logging.info(client.bswap_liquidity_remove('2', 'COMBINATION', ['BUSD', 'USDT'], '12415'))

@@ -41,7 +41,7 @@ def bswap_liquidity_add(self, poolId: str, asset: str, quantity, **kwargs):
     return self.sign_request('POST', '/sapi/v1/bswap/liquidityAdd', payload)
 
 
-def bswap_remove_liquidity(self, poolId: str, type: str, asset: list, shareAmount, **kwargs):
+def bswap_liquidity_remove(self, poolId: str, type: str, asset: list, shareAmount, **kwargs):
     """Remove Liquidity (TRADE)
     Remove liquidity from a pool, type include SINGLE and COMBINATION, asset is mandatory for single asset removal
 
