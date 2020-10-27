@@ -172,7 +172,7 @@ class Spot(API):
     from binance.spot.bswap import bswap_pools
     from binance.spot.bswap import bswap_liquidity
     from binance.spot.bswap import bswap_liquidity_add
-    from binance.spot.bswap import bswap_remove_liquidity
+    from binance.spot.bswap import bswap_liquidity_remove
     from binance.spot.bswap import bswap_liquidity_operation_record
     from binance.spot.bswap import bswap_request_quote
     from binance.spot.bswap import bswap_swap

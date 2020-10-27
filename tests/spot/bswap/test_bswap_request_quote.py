@@ -35,7 +35,7 @@ def test_bswap_request_quote_without_quoteQty():
 
 
 @mock_http_response(responses.GET, '/sapi/v1/bswap/quote\\?quoteAsset=USDT&baseAsset=BUSD&quoteQty=30000', mock_item, 200)
-def test_bswap_remove_liquidity():
+def test_bswap_liquidity_remove():
     """ Tests the API endpoint to Request a quote for swap quote asset (selling asset) for base asset (buying asset),
      essentially price/exchange rates"""
 
