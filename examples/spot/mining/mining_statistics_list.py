@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.minging_account_list(algo='sha256', userName='a'))
+logging.info(client.mining_statistics_list(algo='sha256', userName='a'))

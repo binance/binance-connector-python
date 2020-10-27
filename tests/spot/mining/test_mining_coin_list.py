@@ -12,9 +12,9 @@ secret = random_str()
 
 
 @mock_http_response(responses.GET, '/sapi/v1/mining/pub/coinList', mock_item, 200)
-def test_minging_coin_list():
+def test_mining_coin_list():
     """ Tests the API endpoint to get coin list """
 
     client = Client(key, secret)
-    response = client.minging_coin_list()
+    response = client.mining_coin_list()
     response.should.equal(mock_item)

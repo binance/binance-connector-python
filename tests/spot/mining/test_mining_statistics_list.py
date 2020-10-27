@@ -12,26 +12,26 @@ key = random_str()
 secret = random_str()
 
 
-def test_minging_statistics_list_without_algo():
+def test_mining_statistics_list_without_algo():
     """ Tests the API endpoint to get statistics list without algo """
 
     client = Client(key, secret)
-    client.minging_statistics_list.when.called_with(
+    client.mining_statistics_list.when.called_with(
         '', 'test_name').should.throw(ParameterRequiredError)
 
 
-def test_minging_statistics_list_without_username():
+def test_mining_statistics_list_without_username():
     """ Tests the API endpoint to get statistics list without username """
 
     client = Client(key, secret)
-    client.minging_statistics_list.when.called_with(
+    client.mining_statistics_list.when.called_with(
         'sha256', '').should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/sapi/v1/mining/statistics/user/status\\?algo=sha256&userName=user_name', mock_item, 200)
-def test_minging_statistics():
+def test_mining_statistics():
     """ Tests the API endpoint to get statistics list """
 
     client = Client(key, secret)
-    response = client.minging_statistics_list('sha256', 'user_name')
+    response = client.mining_statistics_list('sha256', 'user_name')
     response.should.equal(mock_item)
