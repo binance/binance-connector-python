@@ -12,9 +12,9 @@ secret = random_str()
 
 
 @mock_http_response(responses.GET, '/sapi/v1/mining/pub/algoList', mock_item, 200)
-def test_minging_algo_list():
+def test_mining_algo_list():
     """ Tests the API endpoint to get algo list """
 
     client = Client(key, secret)
-    response = client.minging_algo_list()
+    response = client.mining_algo_list()
     response.should.equal(mock_item)

@@ -12,26 +12,26 @@ key = random_str()
 secret = random_str()
 
 
-def test_minging_revenue_list_without_algo():
+def test_mining_revenue_list_without_algo():
     """ Tests the API endpoint to get revenue list without algo """
 
     client = Client(key, secret)
-    client.minging_revenue_list.when.called_with(
+    client.mining_revenue_list.when.called_with(
         '', 'test_name').should.throw(ParameterRequiredError)
 
 
-def test_minging_revenue_list_without_username():
+def test_mining_revenue_list_without_username():
     """ Tests the API endpoint to get revenue list without username """
 
     client = Client(key, secret)
-    client.minging_revenue_list.when.called_with(
+    client.mining_revenue_list.when.called_with(
         'sha256', '').should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/sapi/v1/mining/payment/list\\?algo=sha256&userName=user_name', mock_item, 200)
-def test_minging_revenue():
+def test_mining_revenue():
     """ Tests the API endpoint to get revenue list """
 
     client = Client(key, secret)
-    response = client.minging_revenue_list('sha256', 'user_name')
+    response = client.mining_revenue_list('sha256', 'user_name')
     response.should.equal(mock_item)

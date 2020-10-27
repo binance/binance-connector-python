@@ -7,7 +7,6 @@ from binance.lib.utils import config_logging
 config_logging(logging, logging.DEBUG)
 
 key = ''
-secret = ''
 
-client = Client(key, secret)
-logging.info(client.minging_statistics_list(algo='sha256', userName='a'))
+client = Client(key)
+logging.info(client.mining_coin_list())
