@@ -7,6 +7,7 @@ from binance.lib.utils import check_required_parameters
 
 """
 
+
 def futures_transfer(self, asset: str, amount, type: int, **kwargs):
     """ New Future Account Transfer (FUTURES)
     Execute transfer between spot account and futures account.
@@ -15,7 +16,7 @@ def futures_transfer(self, asset: str, amount, type: int, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#new-future-account-transfer-futures
 
-    Parameteres:
+    Parameters:
     | asset      | mandatory | string | The asset being transferred, e.g., USDT |
     | symbol     | mandatory | float  | The amount to be transferred            |
     | type       | mandatory | int    |                                         |
@@ -50,7 +51,7 @@ def futures_transfer_history(self, asset: str, startTime, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-future-account-transaction-history-list-user_data
 
-    Parameteres:
+    Parameters:
     | asset      | mandatory | string | The asset being transferred, e.g., USDT          |
     | startTime  | mandatory | int    |                                                  |
     | endTime    | optional  | int    |                                                  |
@@ -79,7 +80,7 @@ def futures_loan_borrow(self, coin: str, collateralCoin: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#borrow-for-cross-collateral-trade
 
-    Parameteres:
+    Parameters:
     | coin             | mandatory | string |                                          |
     | amount           | -         | float  | mandatory when collateralAmount is empty |
     | collateralCoin   | mandatory | string |                                          |
@@ -107,7 +108,7 @@ def futures_loan_borrow_history(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-borrow-history-user_data
 
-    Parameteres:
+    Parameters:
     | coin       | optional | string |                       |
     | startTime  | optional | int    |                       |
     | endTime    | optional | int    |                       |
@@ -125,7 +126,7 @@ def futures_loan_repay(self, coin: str, collateralCoin: str, amount, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#repay-for-cross-collateral-trade
 
-    Parameteres:
+    Parameters:
     | coin           | mandatory | string |
     | collateralCoin | mandatory | string |
     | amount         | mandatory | float  |
@@ -154,7 +155,7 @@ def futures_loan_repay_history(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-repayment-history-user_data
 
-    Parameteres:
+    Parameters:
     | coin       | optional | string |                       |
     | startTime  | optional | int    |                       |
     | endTime    | optional | int    |                       |
@@ -172,7 +173,7 @@ def futures_loan_wallet(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-wallet-user_data
 
-    Parameteres:
+    Parameters:
     | recvWindow | optional | int    |                       |
     """
 
@@ -186,7 +187,7 @@ def futures_loan_configs(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-information-user_data
 
-    Parameteres:
+    Parameters:
     | collateralCoin | optional | string |
     | recvWindow     | optional | int    |
     """
@@ -201,7 +202,7 @@ def futures_loan_calc_adjust_level(self, collateralCoin: str, amount, direction:
 
     https://binance-docs.github.io/apidocs/spot/en/#calculate-rate-after-adjust-cross-collateral-ltv-user_data
 
-    Parameteres:
+    Parameters:
     | collateralCoin | mandatory | string |                         |
     | amount         | mandatory | string |                         |
     | direction      | mandatory | string | "ADDITIONAL", "REDUCED" |
@@ -231,7 +232,7 @@ def futures_loan_calc_max_adjust_amount(self, collateralCoin: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-max-amount-for-adjust-cross-collateral-ltv-user_data
 
-    Parameteres:
+    Parameters:
     | collateralCoin | mandatory | string |                         |
     | recvWindow     | optional  | int    |                         |
     """
@@ -253,7 +254,7 @@ def futures_loan_adjust_collateral(self, collateralCoin: str, amount, direction:
 
     https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-collateral-ltv-trade
 
-    Parameteres:
+    Parameters:
     | collateralCoin | mandatory | string |                         |
     | amount         | mandatory | string |                         |
     | direction      | mandatory | string | "ADDITIONAL", "REDUCED" |
@@ -283,7 +284,7 @@ def futures_loan_adjust_collateral_history(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-collateral-ltv-history-user_data
 
-    Parameteres:
+    Parameters:
     | collateralCoin | optional | string |                       |
     | startTime      | optional | int    |                       |
     | endTime        | optional | int    |                       |
@@ -301,7 +302,7 @@ def futures_loan_liquidation_history(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-liquidation-history-user_data
 
-    Parameteres:
+    Parameters:
     | collateralCoin | optional | string |                       |
     | startTime      | optional | int    |                       |
     | endTime        | optional | int    |                       |
