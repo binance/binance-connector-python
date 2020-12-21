@@ -29,12 +29,11 @@ def test_futures_loan_adjust_collateral_without_collateralCoin():
     }
 
     client = Client(key, secret)
-    client.futures_loan_adjust_collateral.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_adjust_collateral.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_adjust_collateral_without_amount():
-    """ TTests the API endpoint to Adjust Cross-Collateral LTV without collateralCoin """
+    """ TTests the API endpoint to Adjust Cross-Collateral LTV without amount """
 
     params = {
         'collateralCoin': 'BNB',
@@ -42,12 +41,11 @@ def test_futures_loan_adjust_collateral_without_amount():
         'direction': 'ADDITIONAL'
     }
     client = Client(key, secret)
-    client.futures_loan_adjust_collateral.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_adjust_collateral.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_adjust_collateral_without_direction():
-    """ TTests the API endpoint to Adjust Cross-Collateral LTV without collateralCoin """
+    """ TTests the API endpoint to Adjust Cross-Collateral LTV without direction """
 
     params = {
         'collateralCoin': 'BNB',
@@ -55,8 +53,7 @@ def test_futures_loan_adjust_collateral_without_direction():
         'direction': ''
     }
     client = Client(key, secret)
-    client.futures_loan_adjust_collateral.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_adjust_collateral.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/futures/loan/adjustCollateral\\?' + urlencode(params), mock_item, 200)

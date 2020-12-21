@@ -17,15 +17,14 @@ params = {
 }
 
 
-def test_futures_loan_calc_max_adjust_amount_without_collateral_coin():
+def test_futures_loan_calc_max_adjust_amount_without_collateralCoin():
     """ Tests the API endpoint to Adjust Cross-Collateral LTV without collateralCoin """
 
     params = {
         'collateralCoin': '',
     }
     client = Client(key, secret)
-    client.futures_loan_calc_max_adjust_amount.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_calc_max_adjust_amount.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/sapi/v1/futures/loan/calcMaxAdjustAmount\\?' + urlencode(params), mock_item, 200)

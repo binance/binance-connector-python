@@ -18,6 +18,7 @@ params = {
     'amount': '1'
 }
 
+
 def test_futures_loan_borrow_without_coin():
     """ Tests the API endpoint to borrow cross funds without coin """
 
@@ -27,8 +28,7 @@ def test_futures_loan_borrow_without_coin():
     }
 
     client = Client(key, secret)
-    client.futures_loan_borrow.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_borrow.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_borrow_without_collateralCoin():
@@ -40,8 +40,7 @@ def test_futures_loan_borrow_without_collateralCoin():
     }
 
     client = Client(key, secret)
-    client.futures_loan_borrow.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_borrow.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/futures/loan/borrow\\?' + urlencode(params), mock_item, 200)

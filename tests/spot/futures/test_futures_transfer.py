@@ -28,8 +28,7 @@ def test_futures_transfer_without_asset():
         'type': 1
     }
     client = Client(key, secret)
-    client.futures_transfer.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_transfer.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_transfer_without_amount():
@@ -41,8 +40,7 @@ def test_futures_transfer_without_amount():
         'type': 1
     }
     client = Client(key, secret)
-    client.futures_transfer.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_transfer.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_transfer_without_type():
@@ -54,8 +52,7 @@ def test_futures_transfer_without_type():
         'type': ''
     }
     client = Client(key, secret)
-    client.futures_transfer.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_transfer.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/futures/transfer\\?' + urlencode(params), mock_item, 200)
