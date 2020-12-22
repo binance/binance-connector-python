@@ -28,8 +28,7 @@ def test_futures_loan_repay_without_coin():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.futures_loan_repay.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_repay.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_repay_without_collateralCoin():
@@ -41,8 +40,7 @@ def test_futures_loan_repay_without_collateralCoin():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.futures_loan_repay.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_repay.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_repay_without_amount():
@@ -54,8 +52,7 @@ def test_futures_loan_repay_without_amount():
         'amount': ''
     }
     client = Client(key, secret)
-    client.futures_loan_repay.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_repay.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/futures/loan/repay\\?' + urlencode(params), mock_item, 200)

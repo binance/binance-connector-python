@@ -162,6 +162,11 @@ class Spot(API):
     from binance.spot.futures import futures_loan_adjust_collateral
     from binance.spot.futures import futures_loan_adjust_collateral_history
     from binance.spot.futures import futures_loan_liquidation_history
+    from binance.spot.futures import futures_loan_collateral_repay_limit
+    from binance.spot.futures import futures_loan_collateral_repay_quote
+    from binance.spot.futures import futures_loan_collateral_repay
+    from binance.spot.futures import futures_loan_collateral_repay_result
+    from binance.spot.futures import futures_loan_interest_history
 
     # BLVTs
     from binance.spot.blvt import blvt_info
