@@ -13,7 +13,7 @@ key = random_str()
 secret = random_str()
 
 
-def test_new_isolate_margin_account_without_base():
+def test_new_isolated_margin_account_without_base():
     """ Tests the API endpoint to create isolated margin account without base """
 
     param = {
@@ -21,11 +21,11 @@ def test_new_isolate_margin_account_without_base():
         'quote': 'USDT'
     }
     client = Client(key, secret)
-    client.new_isolate_margin_account.when.called_with(
+    client.new_isolated_margin_account.when.called_with(
         **param).should.throw(ParameterRequiredError)
 
 
-def test_new_isolate_margin_account_without_quote():
+def test_new_isolated_margin_account_without_quote():
     """ Tests the API endpoint to create isolated margin account without quote """
 
     param = {
@@ -33,12 +33,12 @@ def test_new_isolate_margin_account_without_quote():
         'quote': ''
     }
     client = Client(key, secret)
-    client.new_isolate_margin_account.when.called_with(
+    client.new_isolated_margin_account.when.called_with(
         **param).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/margin/isolated/create\\?base=BTC&quote=USDT', mock_item, 200)
-def test_new_isolate_margin_account():
+def test_new_isolated_margin_account():
     """ Tests the API endpoint to create isolated margin account """
 
     param = {
@@ -46,5 +46,5 @@ def test_new_isolate_margin_account():
         'quote': 'USDT'
     }
     client = Client(key, secret)
-    response = client.new_isolate_margin_account(**param)
+    response = client.new_isolated_margin_account(**param)
     response.should.equal(mock_item)

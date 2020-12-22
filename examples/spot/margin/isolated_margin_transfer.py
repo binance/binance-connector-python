@@ -10,9 +10,10 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.isolate_margin_transfer_history(
+logging.info(client.isolated_margin_transfer(
   asset='USDT', 
   symbol='BTCUSDT',
   transFrom='SPOT',
-  transTo='ISOLATED_MARGIN'
+  transTo='ISOLATED_MARGIN',
+  amount=1
 ))

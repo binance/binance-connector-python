@@ -13,10 +13,10 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.GET, '/sapi/v1/margin/isolated/account\\?' + urlencode({'symbols': 'BTCUSDT,BNBUSDT'}), mock_item, 200)
-def test_isolate_margin_transfer_history():
-    """ Tests the API endpoint to get isolated margin account info """
+@mock_http_response(responses.GET, '/sapi/v1/margin/isolated/allPairs', mock_item, 200)
+def test_isolated_margin_all_pairs():
+    """ Tests the API endpoint to query isolated margin all pairs """
 
     client = Client(key, secret)
-    response = client.isolate_margin_account(symbols='BTCUSDT,BNBUSDT')
+    response = client.isolated_margin_all_pairs()
     response.should.equal(mock_item)

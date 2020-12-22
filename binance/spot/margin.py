@@ -339,7 +339,7 @@ def margin_max_transferable(self, asset: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/maxBorrowable', payload)
 
 
-def new_isolate_margin_account(self, base: str, quote: str, **kwargs):
+def new_isolated_margin_account(self, base: str, quote: str, **kwargs):
     """ Create Isolated Margin Account (MARGIN)
 
     POST /sapi/v1/margin/isolated/create
@@ -365,7 +365,7 @@ def new_isolate_margin_account(self, base: str, quote: str, **kwargs):
     return self.sign_request('POST', '/sapi/v1/margin/isolated/create', payload)
 
 
-def isolate_margin_transfer(self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs):
+def isolated_margin_transfer(self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs):
     """ Isolated Margin Account Transfer (MARGIN)
 
     POST /sapi/v1/margin/isolated/transfer
@@ -400,7 +400,7 @@ def isolate_margin_transfer(self, asset: str, symbol: str, transFrom: str, trans
     return self.sign_request('POST', '/sapi/v1/margin/isolated/transfer', payload)
 
 
-def isolate_margin_transfer_history(self, symbol: str, **kwargs):
+def isolated_margin_transfer_history(self, symbol: str, **kwargs):
     """ Get Isolated Margin Transfer History (USER_DATA)
 
     GET /sapi/v1/margin/isolated/transfer
@@ -428,7 +428,7 @@ def isolate_margin_transfer_history(self, symbol: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/transfer', payload)
 
 
-def isolate_margin_account(self, **kwargs):
+def isolated_margin_account(self, **kwargs):
     """ Query Isolated Margin Account Info (USER_DATA)
 
     GET /sapi/v1/margin/isolated/account
@@ -443,7 +443,7 @@ def isolate_margin_account(self, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/account', kwargs)
 
 
-def isolate_margin_pair(self, symbol: str, **kwargs):
+def isolated_margin_pair(self, symbol: str, **kwargs):
     """ Query Isolated Margin Symbol (USER_DATA)
 
     GET /sapi/v1/margin/isolated/pair
@@ -465,7 +465,7 @@ def isolate_margin_pair(self, symbol: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/pair', payload)
 
 
-def isolate_margin_all_pairs(self, **kwargs):
+def isolated_margin_all_pairs(self, **kwargs):
     """ Get All Isolated Margin Symbol(USER_DATA)
 
     GET /sapi/v1/margin/isolated/allPairs
