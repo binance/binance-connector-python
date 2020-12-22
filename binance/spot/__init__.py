@@ -78,6 +78,8 @@ class Spot(API):
     from binance.spot.margin import isolated_margin_account
     from binance.spot.margin import isolated_margin_pair
     from binance.spot.margin import isolated_margin_all_pairs
+    from binance.spot.margin import toggle_bnbBurn
+    from binance.spot.margin import bnbBurn_status
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products

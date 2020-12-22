@@ -477,3 +477,33 @@ def isolated_margin_all_pairs(self, **kwargs):
     """
     
     return self.sign_request('GET', '/sapi/v1/margin/isolated/allPairs', kwargs)
+
+
+def toggle_bnbBurn(self, **kwargs):
+    """ Toggle BNB Burn On Spot Trade And Margin Interest (USER_DATA)
+
+    POST /sapi/v1/bnbBurn
+
+    https://binance-docs.github.io/apidocs/spot/en/#toggle-bnb-burn-on-spot-trade-and-margin-interest-user_data
+
+    Parameters:
+    | spotBNBBurn      | optional | string | "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
+    | interestBNBBurn  | optional | string | "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
+    | recvWindow       | optional | int    |
+    """
+
+    return self.sign_request('POST', '/sapi/v1/bnbBurn', kwargs)
+
+
+def bnbBurn_status(self, **kwargs):
+    """ Get BNB Burn Status (USER_DATA)
+
+    GET /sapi/v1/bnbBurn
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-bnb-burn-status-user_data
+
+    Parameters:
+    | recvWindow       | optional | int    |
+    """
+
+    return self.sign_request('GET', '/sapi/v1/bnbBurn', kwargs)
