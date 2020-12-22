@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.isolate_margin_pair(symbol='BTCUSDT'))
+logging.info(client.new_isolated_margin_account(base='BTC', quote='USDT'))

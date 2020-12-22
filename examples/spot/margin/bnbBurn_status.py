@@ -10,4 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.new_isolate_margin_account(base='BTC', quote='USDT'))
+logging.info(client.bnbBurn_status())

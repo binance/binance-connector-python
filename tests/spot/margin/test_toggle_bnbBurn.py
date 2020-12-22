@@ -7,16 +7,15 @@ from binance.spot import Spot as Client
 from binance.error import ParameterRequiredError, ClientError
 
 mock_item = {'key_1': 'value_1', 'key_2': 'value_2'}
-mock_exception = {'code': -1105, 'msg': 'Parameter "orderId" was empty.'}
 
 key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.GET, '/sapi/v1/margin/isolated/allPairs', mock_item, 200)
-def test_isolate_margin_all_pairs():
-    """ Tests the API endpoint to query isolated margin all pairs """
+@mock_http_response(responses.POST, '/sapi/v1/bnbBurn', mock_item, 200)
+def test_toggle_bnbBurn():
+    """ Tests the API endpoint to Toggle BNBBurn On Spot Trade And Margin Interest"""
 
     client = Client(key, secret)
-    response = client.isolate_margin_all_pairs()
+    response = client.toggle_bnbBurn()
     response.should.equal(mock_item)

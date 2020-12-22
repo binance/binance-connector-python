@@ -10,10 +10,4 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.isolate_margin_transfer(
-  asset='USDT', 
-  symbol='BTCUSDT',
-  transFrom='SPOT',
-  transTo='ISOLATED_MARGIN',
-  amount=1
-))
+logging.info(client.toggle_bnbBurn(spotBNBBurn='true', interestBNBBurn='false'))

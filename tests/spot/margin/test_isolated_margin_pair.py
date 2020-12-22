@@ -12,17 +12,19 @@ mock_exception = {'code': -1105, 'msg': 'Parameter "orderId" was empty.'}
 key = random_str()
 secret = random_str()
 
-def test_isolate_margin_pair_without_symbol():
+
+def test_isolated_margin_pair_without_symbol():
     """ Tests the API endpoint to query isolated margin pair without symbol """
 
     client = Client(key, secret)
-    client.isolate_margin_pair.when.called_with(
+    client.isolated_margin_pair.when.called_with(
         '').should.throw(ParameterRequiredError)
 
+
 @mock_http_response(responses.GET, '/sapi/v1/margin/isolated/pair\\?' + urlencode({'symbol': 'BTCUSDT'}), mock_item, 200)
-def test_isolate_margin_pair():
+def test_isolated_margin_pair():
     """ Tests the API endpoint to query isolated margin pair """
 
     client = Client(key, secret)
-    response = client.isolate_margin_pair('BTCUSDT')
+    response = client.isolated_margin_pair('BTCUSDT')
     response.should.equal(mock_item)

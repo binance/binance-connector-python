@@ -20,17 +20,18 @@ param = {
 }
 
 
-def test_isolate_margin_transfer_history_without_symbol():
+def test_isolated_margin_transfer_history_without_symbol():
     """ Tests the API endpoint to transfer isolated margin history without asset """
 
     client = Client(key, secret)
-    client.isolate_margin_transfer_history.when.called_with(
+    client.isolated_margin_transfer_history.when.called_with(
         '').should.throw(ParameterRequiredError)
 
+
 @mock_http_response(responses.GET, '/sapi/v1/margin/isolated/transfer\\?' + urlencode(param), mock_item, 200)
-def test_isolate_margin_transfer_history():
+def test_isolated_margin_transfer_history():
     """ Tests the API endpoint to transfer isolated margin history """
 
     client = Client(key, secret)
-    response = client.isolate_margin_transfer_history(**param)
+    response = client.isolated_margin_transfer_history(**param)
     response.should.equal(mock_item)

@@ -51,7 +51,7 @@ def depth(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#order-book
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     limit -- optional/integer -- limit the results
                                     Default 100
@@ -72,7 +72,7 @@ def trades(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#recent-trades-list
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     limit -- optional/integer -- limit the results
                                     Default 500
@@ -91,7 +91,7 @@ def historical_trades(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#old-trade-lookup
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     limit -- optional/integer -- limit the results
                                     Default 500
@@ -110,7 +110,7 @@ def agg_trades(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#compressed-aggregate-trades-list
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     limit -- optional/integer -- limit the results
                                     Default 500
@@ -132,7 +132,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     interval -- mandatory/string -- the interval of kline
                                     e.g 1m, 5m, 1h, 1d, etc
@@ -159,7 +159,7 @@ def avg_price(self, symbol: str):
 
     https://binance-docs.github.io/apidocs/spot/en/#current-average-price
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     """
 
@@ -177,7 +177,7 @@ def ticker_24hr(self, symbol: str = None):
 
     https://binance-docs.github.io/apidocs/spot/en/#24hr-ticker-price-change-statistics
 
-    Parameteres:
+    Parameters:
     symbol -- optional/string -- the trading pair
     """
 
@@ -194,7 +194,7 @@ def ticker_price(self, symbol: str = None):
 
     https://binance-docs.github.io/apidocs/spot/en/#symbol-price-ticker
 
-    Parameteres:
+    Parameters:
     symbol -- optional/string -- the trading pair
     """
 
@@ -211,7 +211,7 @@ def book_ticker(self, symbol: str = None):
 
     https://binance-docs.github.io/apidocs/spot/en/#symbol-order-book-ticker
 
-    Parameteres:
+    Parameters:
     symbol -- optional/string -- the trading pair
     """
 

@@ -72,7 +72,7 @@ def margin_pair(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-pair-market_data
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     """
 
@@ -131,7 +131,7 @@ def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **k
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-order-trade
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     side -- mandatory/string
     type -- mandatory/string
@@ -164,7 +164,7 @@ def cancel_margin_order(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-order-trade
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     """
     check_required_parameter(symbol, 'symbol')
@@ -179,7 +179,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-transfer-history-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
     check_required_parameter(asset, 'asset')
@@ -194,7 +194,7 @@ def margin_load_record(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-loan-record-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
 
@@ -210,7 +210,7 @@ def margin_repay_record(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-repay-record-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
 
@@ -338,14 +338,15 @@ def margin_max_transferable(self, asset: str, **kwargs):
     payload = {'asset': asset, **kwargs}
     return self.sign_request('GET', '/sapi/v1/margin/maxBorrowable', payload)
 
-def new_isolate_margin_account(self, base: str, quote: str, **kwargs):
+
+def new_isolated_margin_account(self, base: str, quote: str, **kwargs):
     """ Create Isolated Margin Account (MARGIN)
 
     POST /sapi/v1/margin/isolated/create
 
     https://binance-docs.github.io/apidocs/spot/en/#query-max-transfer-out-amount-user_data
 
-    Parameteres:
+    Parameters:
     | base       | mandatory | string | Base aseet of symbol  |
     | quote      | mandatory | string | Quote asset of symbol |
     | recvWindow | optional  | int    |                       |
@@ -364,14 +365,14 @@ def new_isolate_margin_account(self, base: str, quote: str, **kwargs):
     return self.sign_request('POST', '/sapi/v1/margin/isolated/create', payload)
 
 
-def isolate_margin_transfer(self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs):
+def isolated_margin_transfer(self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs):
     """ Isolated Margin Account Transfer (MARGIN)
 
     POST /sapi/v1/margin/isolated/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#isolated-margin-account-transfer-margin
 
-    Parameteres:
+    Parameters:
     | asset      | mandatory | string | asset,such as BTC         |
     | symbol     | mandatory | string |                           |
     | transFrom  | mandatory | string | "SPOT", "ISOLATED_MARGIN" |
@@ -398,14 +399,15 @@ def isolate_margin_transfer(self, asset: str, symbol: str, transFrom: str, trans
     }
     return self.sign_request('POST', '/sapi/v1/margin/isolated/transfer', payload)
 
-def isolate_margin_transfer_history(self, symbol: str, **kwargs):
+
+def isolated_margin_transfer_history(self, symbol: str, **kwargs):
     """ Get Isolated Margin Transfer History (USER_DATA)
 
     GET /sapi/v1/margin/isolated/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#get-isolated-margin-transfer-history-user_data
 
-    Parameteres:
+    Parameters:
     | asset      | optional  | string | asset,such as BTC         |
     | symbol     | mandatory | string |                           |
     | transFrom  | optional  | string | "SPOT", "ISOLATED_MARGIN" |
@@ -426,14 +428,14 @@ def isolate_margin_transfer_history(self, symbol: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/transfer', payload)
 
 
-def isolate_margin_account(self, **kwargs):
+def isolated_margin_account(self, **kwargs):
     """ Query Isolated Margin Account Info (USER_DATA)
 
     GET /sapi/v1/margin/isolated/account
 
     https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
 
-    Parameteres:
+    Parameters:
     | symbols    | optional | string | Max 5 symbols can be sent; separated by ",". e.g. "BTCUSDT,BNBUSDT,ADAUSDT" |
     | recvWindow | optional | int    |                                                                             |
     """
@@ -441,14 +443,14 @@ def isolate_margin_account(self, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/account', kwargs)
 
 
-def isolate_margin_pair(self, symbol: str, **kwargs):
+def isolated_margin_pair(self, symbol: str, **kwargs):
     """ Query Isolated Margin Symbol (USER_DATA)
 
     GET /sapi/v1/margin/isolated/pair
 
     https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
 
-    Parameteres:
+    Parameters:
     | symbol     | mandatory | string |
     | recvWindow | optional  | int    |
     """
@@ -463,37 +465,45 @@ def isolate_margin_pair(self, symbol: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/isolated/pair', payload)
 
 
-def isolate_margin_pair(self, symbol: str, **kwargs):
-    """ Query Isolated Margin Symbol (USER_DATA)
-
-    GET /sapi/v1/margin/isolated/pair
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
-
-    Parameteres:
-    | symbol     | mandatory | string |
-    | recvWindow | optional  | int    |
-    """
-
-    check_required_parameter(symbol, 'symbol')
-
-    payload = {
-        'symbol': symbol,
-        **kwargs
-    }
-    
-    return self.sign_request('GET', '/sapi/v1/margin/isolated/pair', payload)
-
-
-def isolate_margin_all_pairs(self, **kwargs):
+def isolated_margin_all_pairs(self, **kwargs):
     """ Get All Isolated Margin Symbol(USER_DATA)
 
     GET /sapi/v1/margin/isolated/allPairs
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-user_data
 
-    Parameteres:
-    | recvWindow | optional | int    |                                                                             |
+    Parameters:
+    | recvWindow | optional | int    |
     """
     
     return self.sign_request('GET', '/sapi/v1/margin/isolated/allPairs', kwargs)
+
+
+def toggle_bnbBurn(self, **kwargs):
+    """ Toggle BNB Burn On Spot Trade And Margin Interest (USER_DATA)
+
+    POST /sapi/v1/bnbBurn
+
+    https://binance-docs.github.io/apidocs/spot/en/#toggle-bnb-burn-on-spot-trade-and-margin-interest-user_data
+
+    Parameters:
+    | spotBNBBurn      | optional | string | "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
+    | interestBNBBurn  | optional | string | "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
+    | recvWindow       | optional | int    |
+    """
+
+    return self.sign_request('POST', '/sapi/v1/bnbBurn', kwargs)
+
+
+def bnbBurn_status(self, **kwargs):
+    """ Get BNB Burn Status (USER_DATA)
+
+    GET /sapi/v1/bnbBurn
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-bnb-burn-status-user_data
+
+    Parameters:
+    | recvWindow       | optional | int    |
+    """
+
+    return self.sign_request('GET', '/sapi/v1/bnbBurn', kwargs)

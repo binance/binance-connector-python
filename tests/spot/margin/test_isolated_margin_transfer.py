@@ -20,7 +20,8 @@ param = {
     'amount': '1'
 }
 
-def test_isolate_margin_transfer_without_asset():
+
+def test_isolated_margin_transfer_without_asset():
     """ Tests the API endpoint to transfer isolated margin without asset """
 
     params = {
@@ -31,10 +32,11 @@ def test_isolate_margin_transfer_without_asset():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.isolate_margin_transfer.when.called_with(
+    client.isolated_margin_transfer.when.called_with(
         **params).should.throw(ParameterRequiredError)
 
-def test_isolate_margin_transfer_without_symbol():
+
+def test_isolated_margin_transfer_without_symbol():
     """ Tests the API endpoint to transfer isolated margin without symbol """
 
     params = {
@@ -45,11 +47,11 @@ def test_isolate_margin_transfer_without_symbol():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.isolate_margin_transfer.when.called_with(
+    client.isolated_margin_transfer.when.called_with(
         **params).should.throw(ParameterRequiredError)
 
 
-def test_isolate_margin_transfer_without_transForm():
+def test_isolated_margin_transfer_without_transForm():
     """ Tests the API endpoint to transfer isolated margin without transForm """
 
     params = {
@@ -60,11 +62,11 @@ def test_isolate_margin_transfer_without_transForm():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.isolate_margin_transfer.when.called_with(
+    client.isolated_margin_transfer.when.called_with(
         **params).should.throw(ParameterRequiredError)
 
 
-def test_isolate_margin_transfer_without_transTo():
+def test_isolated_margin_transfer_without_transTo():
     """ Tests the API endpoint to transfer isolated margin without transTo """
 
     params = {
@@ -75,11 +77,11 @@ def test_isolate_margin_transfer_without_transTo():
         'amount': '1'
     }
     client = Client(key, secret)
-    client.isolate_margin_transfer.when.called_with(
+    client.isolated_margin_transfer.when.called_with(
         **params).should.throw(ParameterRequiredError)
 
 
-def test_isolate_margin_transfer_without_amount():
+def test_isolated_margin_transfer_without_amount():
     """ Tests the API endpoint to transfer isolated margin without amount """
 
     params = {
@@ -90,14 +92,14 @@ def test_isolate_margin_transfer_without_amount():
         'amount': ''
     }
     client = Client(key, secret)
-    client.isolate_margin_transfer.when.called_with(
+    client.isolated_margin_transfer.when.called_with(
         **params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.POST, '/sapi/v1/margin/isolated/transfer\\?' + urlencode(param), mock_item, 200)
-def test_isolate_margin_transfer():
+def test_isolated_margin_transfer():
     """ Tests the API endpoint to transfer isolated margin """
 
     client = Client(key, secret)
-    response = client.isolate_margin_transfer(**param)
+    response = client.isolated_margin_transfer(**param)
     response.should.equal(mock_item)
