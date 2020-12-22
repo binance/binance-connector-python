@@ -72,7 +72,7 @@ def margin_pair(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-pair-market_data
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     """
 
@@ -131,7 +131,7 @@ def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **k
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-order-trade
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     side -- mandatory/string
     type -- mandatory/string
@@ -164,7 +164,7 @@ def cancel_margin_order(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-order-trade
 
-    Parameteres:
+    Parameters:
     symbol -- mandatory/string -- the trading pair
     """
     check_required_parameter(symbol, 'symbol')
@@ -179,7 +179,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-transfer-history-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
     check_required_parameter(asset, 'asset')
@@ -194,7 +194,7 @@ def margin_load_record(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-loan-record-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
 
@@ -210,7 +210,7 @@ def margin_repay_record(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-repay-record-user_data
 
-    Parameteres:
+    Parameters:
     asset -- mandatory/string
     """
 
@@ -346,7 +346,7 @@ def new_isolated_margin_account(self, base: str, quote: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-max-transfer-out-amount-user_data
 
-    Parameteres:
+    Parameters:
     | base       | mandatory | string | Base aseet of symbol  |
     | quote      | mandatory | string | Quote asset of symbol |
     | recvWindow | optional  | int    |                       |
@@ -372,7 +372,7 @@ def isolated_margin_transfer(self, asset: str, symbol: str, transFrom: str, tran
 
     https://binance-docs.github.io/apidocs/spot/en/#isolated-margin-account-transfer-margin
 
-    Parameteres:
+    Parameters:
     | asset      | mandatory | string | asset,such as BTC         |
     | symbol     | mandatory | string |                           |
     | transFrom  | mandatory | string | "SPOT", "ISOLATED_MARGIN" |
@@ -407,7 +407,7 @@ def isolated_margin_transfer_history(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-isolated-margin-transfer-history-user_data
 
-    Parameteres:
+    Parameters:
     | asset      | optional  | string | asset,such as BTC         |
     | symbol     | mandatory | string |                           |
     | transFrom  | optional  | string | "SPOT", "ISOLATED_MARGIN" |
@@ -435,7 +435,7 @@ def isolated_margin_account(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
 
-    Parameteres:
+    Parameters:
     | symbols    | optional | string | Max 5 symbols can be sent; separated by ",". e.g. "BTCUSDT,BNBUSDT,ADAUSDT" |
     | recvWindow | optional | int    |                                                                             |
     """
@@ -450,7 +450,7 @@ def isolated_margin_pair(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
 
-    Parameteres:
+    Parameters:
     | symbol     | mandatory | string |
     | recvWindow | optional  | int    |
     """
@@ -472,7 +472,7 @@ def isolated_margin_all_pairs(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-user_data
 
-    Parameteres:
+    Parameters:
     | recvWindow | optional | int    |
     """
     
