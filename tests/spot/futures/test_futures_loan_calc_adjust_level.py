@@ -19,7 +19,7 @@ params = {
 }
 
 
-def test_futures_loan_calc_adjust_level_without_collateral_coin():
+def test_futures_loan_calc_adjust_level_without_collateralCoin():
     """ Tests the API endpoint to get adjust level without collateralCoin """
 
     params = {
@@ -28,34 +28,31 @@ def test_futures_loan_calc_adjust_level_without_collateral_coin():
         'direction': 'ADDITIONAL',
     }
     client = Client(key, secret)
-    client.futures_loan_calc_adjust_level.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_calc_adjust_level.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_calc_adjust_level_without_amount():
-    """ Tests the API endpoint to get adjust level without collateralCoin """
+    """ Tests the API endpoint to get adjust level without amount """
 
     params = {
-        'collateralCoin': '',
+        'collateralCoin': 'BTC',
         'amount': '',
         'direction': 'ADDITIONAL',
     }
     client = Client(key, secret)
-    client.futures_loan_calc_adjust_level.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_calc_adjust_level.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_loan_calc_adjust_level_without_direction():
     """ Tests the API endpoint to get adjust level without direction """
 
     params = {
-        'collateralCoin': '',
+        'collateralCoin': 'BTC',
         'amount': '1',
         'direction': '',
     }
     client = Client(key, secret)
-    client.futures_loan_calc_adjust_level.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_loan_calc_adjust_level.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/sapi/v1/futures/loan/calcAdjustLevel\\?' + urlencode(params), mock_item, 200)

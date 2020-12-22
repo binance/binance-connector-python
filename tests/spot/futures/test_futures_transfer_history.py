@@ -26,8 +26,7 @@ def test_futures_transfer_history_without_asset():
         'startTime': '1597130241000'
     }
     client = Client(key, secret)
-    client.futures_transfer_history.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_transfer_history.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 def test_futures_transfer_history_without_startTime():
@@ -38,8 +37,7 @@ def test_futures_transfer_history_without_startTime():
         'startTime': '1597130241000'
     }
     client = Client(key, secret)
-    client.futures_transfer_history.when.called_with(
-        **params).should.throw(ParameterRequiredError)
+    client.futures_transfer_history.when.called_with(**params).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(responses.GET, '/sapi/v1/futures/transfer\\?' + urlencode(params), mock_item, 200)
