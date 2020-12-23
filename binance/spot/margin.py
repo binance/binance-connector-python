@@ -132,10 +132,20 @@ def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **k
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-order-trade
 
     Parameters:
-    symbol -- mandatory/string -- the trading pair
-    side -- mandatory/string
-    type -- mandatory/string
-    quantity -- mandatory/string
+    | asset           | mandatory | string |
+    | isIsolated      | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE".
+    | side            | mandatory | string | BUY or SELL
+    | type            | mandatory | string |
+    | quantity        | optional  | float  |
+    | quoteOrderQty   | optional  | float  |
+    | price           | optional  | float  |
+    | stopPrice       | optional  | float  | Used with STOP_LOSS,STOP_LOSS_LIMIT,TAKE_PROFIT and TAKE_PROFIT_LIMIT orders.
+    | newClientOrderId| optional  | string | A unique id among open orders. Automatically generated if not sent.
+    | icebergQty      | optional  | float  | Used with LIMIT, STOP_LOSS_LIMIT and TAKE_PROFIT_LIMIT to create an iceberg order.
+    | newOrderRespType| optional  | string | Set the response JSON. ACK, RESULT or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
+    | sideEffectType  | optional  | string | NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
+    | timeInForce     | optional  | string | GTC,IOC,FOK
+    | recvWindow      | optional  | float  | The value cannot be greater than 60000
     """
 
     check_required_parameters([
@@ -195,7 +205,15 @@ def margin_load_record(self, asset: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-loan-record-user_data
 
     Parameters:
-    asset -- mandatory/string
+    | asset          | mandatory | string |                                                                 |
+    | isolatedSymbol | optional  | string | isolated symbol                                                 |
+    | txId           | optional  | int    | the tranId in POST /sapi/v1/margin/loan                         |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
+    | size           | optional  | int    | Default:10 Max:100                                              |
+    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                 |
     """
 
     check_required_parameter(asset, 'asset')
@@ -211,7 +229,15 @@ def margin_repay_record(self, asset: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-repay-record-user_data
 
     Parameters:
-    asset -- mandatory/string
+    | asset          | mandatory | string |                                                                 |
+    | isolatedSymbol | optional  | string | isolated symbol                                                 |
+    | txId           | optional  | int    | return of /sapi/v1/margin/repay                                 |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
+    | size           | optional  | int    | Default:10 Max:100                                              |
+    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                 |
     """
 
     check_required_parameter(asset, 'asset')
@@ -226,6 +252,15 @@ def margin_interest_history(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-interest-history-user_data
 
+    Parameters:
+    | asset          | optional  | string |                                                                 |
+    | isolatedSymbol | optional  | string | isolated symbol                                                 |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
+    | size           | optional  | int    | Default:10 Max:100                                              |
+    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                 |
     """
 
     return self.sign_request('GET', '/sapi/v1/margin/interestHistory', kwargs)
@@ -487,9 +522,9 @@ def toggle_bnbBurn(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#toggle-bnb-burn-on-spot-trade-and-margin-interest-user_data
 
     Parameters:
-    | spotBNBBurn      | optional | string | "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
-    | interestBNBBurn  | optional | string | "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
-    | recvWindow       | optional | int    |
+    | spotBNBBurn      | optional | string | "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT   |
+    | interestBNBBurn  | optional | string | "true" or "false"; Determines whether to use BNB to pay for margin loan's interest |
+    | recvWindow       | optional | int    |                                                                                    |
     """
 
     return self.sign_request('POST', '/sapi/v1/bnbBurn', kwargs)
