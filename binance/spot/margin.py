@@ -10,6 +10,12 @@ def margin_transfer(self, asset: str, amount, type: int, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-transfer-margin
 
+    Parameters:
+    | asset      | mandatory | string | The asset being transferred, e.g., BTC.               |
+    | amount     | mandatory | float  | The amount to be transferred                          |
+    | type       | mandatory | int    | 1: transfer from main account to cross margin account |
+                                        2: transfer from cross margin account to main account |
+    | recvWindow | optional  | int    | The value cannot be greater than 60000                |
     """
 
     check_required_parameters([[asset, 'asset'], [amount, 'amount'], [type, 'type']])
@@ -26,6 +32,12 @@ def margin_borrow(self, asset: str, amount, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-borrow-margin
 
+    Parameters:
+    | asset      | mandatory | string |                                                             |
+    | isIsolated | optional  | string | for isolated margin or not,"TRUE", "FALSE"，default "FALSE" |
+    | symbol     | optional  | string | isolated symbol                                             |
+    | amount     | mandatory | float  |                                                             |
+    | recvWindow | optional  | int    | The value cannot be greater than 60000                      |
     """
 
     check_required_parameters([[asset, 'asset'], [amount, 'amount']])
@@ -42,6 +54,13 @@ def margin_repay(self, asset: str, amount, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-repay-margin
 
+    Parameters:
+    | asset      | mandatory | string |                                                             |
+    | isIsolated | optional  | string | for isolated margin or not,"TRUE", "FALSE"，default "FALSE" |
+    | symbol     | optional  | string | isolated symbol                                             |
+    | amount     | mandatory | float  |                                                             |
+    | recvWindow | optional  | int    | The value cannot be greater than 60000                      |
+
     """
 
     check_required_parameters([[asset, 'asset'], [amount, 'amount']])
@@ -56,6 +75,9 @@ def margin_asset(self, asset: str, **kwargs):
     GET /sapi/v1/margin/asset
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-asset-market_data
+
+    Parameters:
+    | asset      | mandatory | string |                                                             |
 
     """
 
@@ -73,7 +95,7 @@ def margin_pair(self, symbol: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-pair-market_data
 
     Parameters:
-    symbol -- mandatory/string -- the trading pair
+    | symbol      | mandatory | string |                                                             |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -113,8 +135,8 @@ def margin_pair_index(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-priceindex-market_data
 
-    Parameteres:
-    symbol -- mandatory/string -- the trading pair
+    Parameters:
+    | symbol      | mandatory | string |                                                             |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -132,7 +154,7 @@ def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **k
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-order-trade
 
     Parameters:
-    | asset           | mandatory | string |
+    | symbol          | mandatory | string |
     | isIsolated      | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE".
     | side            | mandatory | string | BUY or SELL
     | type            | mandatory | string |
@@ -142,7 +164,8 @@ def new_margin_order(self, symbol: str, side: str, type: str, quantity: str, **k
     | stopPrice       | optional  | float  | Used with STOP_LOSS,STOP_LOSS_LIMIT,TAKE_PROFIT and TAKE_PROFIT_LIMIT orders.
     | newClientOrderId| optional  | string | A unique id among open orders. Automatically generated if not sent.
     | icebergQty      | optional  | float  | Used with LIMIT, STOP_LOSS_LIMIT and TAKE_PROFIT_LIMIT to create an iceberg order.
-    | newOrderRespType| optional  | string | Set the response JSON. ACK, RESULT or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
+    | newOrderRespType| optional  | string | Set the response JSON. ACK, RESULT or FULL;
+                                             MARKET and LIMIT order types default to FULL, all other orders default to ACK.
     | sideEffectType  | optional  | string | NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
     | timeInForce     | optional  | string | GTC,IOC,FOK
     | recvWindow      | optional  | float  | The value cannot be greater than 60000
@@ -175,7 +198,12 @@ def cancel_margin_order(self, symbol: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-order-trade
 
     Parameters:
-    symbol -- mandatory/string -- the trading pair
+    | symbol           | mandatory | string |                                                                          |
+    | isIsolated       | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE".            |
+    | orderId          | optional  | int    |                                                                          |
+    | origClientOrderId| optional  | string |                                                                          |
+    | newClientOrderId | optional  | string | Used to uniquely identify this cancel. Automatically generated by default|
+    | recvWindow       | optional  | float  | The value cannot be greater than 60000                                   |
     """
     check_required_parameter(symbol, 'symbol')
     payload = {'symbol': symbol, **kwargs}
@@ -190,7 +218,14 @@ def margin_transfer_history(self, asset: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-transfer-history-user_data
 
     Parameters:
-    asset -- mandatory/string
+    | asset          | mandatory | string |                                                                 |
+    | type           | optional  | string | Transfer Type: ROLL_IN, ROLL_OUT                                |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
+    | size           | optional  | int    | Default:10 Max:100                                              |
+    | archived       | optional  | string | Default: false. Set to true for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                 |
     """
     check_required_parameter(asset, 'asset')
     payload = {'asset': asset, **kwargs}
@@ -205,15 +240,15 @@ def margin_load_record(self, asset: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-loan-record-user_data
 
     Parameters:
-    | asset          | mandatory | string |                                                                 |
-    | isolatedSymbol | optional  | string | isolated symbol                                                 |
-    | txId           | optional  | int    | the tranId in POST /sapi/v1/margin/loan                         |
-    | startTime      | optional  | int    |                                                                 |
-    | endTime        | optional  | int    |                                                                 |
-    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
-    | size           | optional  | int    | Default:10 Max:100                                              |
-    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
-    | recvWindow     | optional  | int    |                                                                 |
+    | asset          | mandatory | string |                                                                     |
+    | isolatedSymbol | optional  | string | isolated symbol                                                     |
+    | txId           | optional  | int    | the tranId in POST /sapi/v1/margin/loan                             |
+    | startTime      | optional  | int    |                                                                     |
+    | endTime        | optional  | int    |                                                                     |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                    |
+    | size           | optional  | int    | Default:10 Max:100                                                  |
+    | archived       | optional  | string | Default: "false". Set to "true" for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                     |
     """
 
     check_required_parameter(asset, 'asset')
@@ -229,15 +264,15 @@ def margin_repay_record(self, asset: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-repay-record-user_data
 
     Parameters:
-    | asset          | mandatory | string |                                                                 |
-    | isolatedSymbol | optional  | string | isolated symbol                                                 |
-    | txId           | optional  | int    | return of /sapi/v1/margin/repay                                 |
-    | startTime      | optional  | int    |                                                                 |
-    | endTime        | optional  | int    |                                                                 |
-    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
-    | size           | optional  | int    | Default:10 Max:100                                              |
-    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
-    | recvWindow     | optional  | int    |                                                                 |
+    | asset          | mandatory | string |                                                                     |
+    | isolatedSymbol | optional  | string | isolated symbol                                                     |
+    | txId           | optional  | int    | return of /sapi/v1/margin/repay                                     |
+    | startTime      | optional  | int    |                                                                     |
+    | endTime        | optional  | int    |                                                                     |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                    |
+    | size           | optional  | int    | Default:10 Max:100                                                  |
+    | archived       | optional  | string | Default: "false". Set to "true" for archived data from 6 months ago |
+    | recvWindow     | optional  | int    |                                                                     |
     """
 
     check_required_parameter(asset, 'asset')
@@ -259,8 +294,8 @@ def margin_interest_history(self, **kwargs):
     | endTime        | optional  | int    |                                                                 |
     | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
     | size           | optional  | int    | Default:10 Max:100                                              |
-    | archived       | optional  | int    | Default: false. Set to true for archived data from 6 months ago |
-    | recvWindow     | optional  | int    |                                                                 |
+    | archived       | optional  | string | Default: false. Set to true for archived data from 6 months ago |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     return self.sign_request('GET', '/sapi/v1/margin/interestHistory', kwargs)
@@ -273,18 +308,27 @@ def margin_force_liquidation_record(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#get-force-liquidation-record-user_data
 
+    Parameters:
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | isolatedSymbol | optional  | string |                                                                 |
+    | current        | optional  | int    | Currently querying page. Start from 1. Default:1                |
+    | size           | optional  | int    | Default:10 Max:100                                              |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     return self.sign_request('GET', '/sapi/v1/margin/forceLiquidationRec', kwargs)
 
 
 def margin_account(self, **kwargs):
-    """ Query Margin Account Details (USER_DATA)
+    """ Query Cross Margin Account Details (USER_DATA)
 
     GET /sapi/v1/margin/account
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-details-user_data
 
+    Parameters:
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     return self.sign_request('GET', '/sapi/v1/margin/account', kwargs)
@@ -297,6 +341,12 @@ def margin_order(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-order-user_data
 
+    Parameters:
+    | symbol           | mandatory | string |                                                               |
+    | isIsolated       | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE". |
+    | orderId          | optional  | string |                                                               |
+    | origClientOrderId| optional  | string |                                                               |
+    | recvWindow       | optional  | int    | The value cannot be greater than 60000                        |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -311,6 +361,10 @@ def margin_open_orders(self, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-order-user_data
 
+    Parameters:
+    | symbol           | optional  | string |                                                               |
+    | isIsolated       | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE". |
+    | recvWindow       | optional  | float  | The value cannot be greater than 60000                        |
     """
 
     return self.sign_request('GET', '/sapi/v1/margin/openOrders', kwargs)
@@ -322,6 +376,16 @@ def margin_all_orders(self, symbol: str, **kwargs):
     GET /sapi/v1/margin/allOrders
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-all-order-user_data
+
+    Parameters:
+    | symbol         | mandatory | string |                                                                 |
+    | isIsolated     | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE".   |
+    | orderId        | optional  | int    |                                                                 |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | limit          | optional  | int    | Default 500; max 500.                                           |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
+
 
     """
 
@@ -337,6 +401,14 @@ def margin_my_trades(self, symbol: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-trade-list-user_data
 
+    Parameters:
+    | symbol         | mandatory | string |                                                                 |
+    | isIsolated     | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE".   |
+    | startTime      | optional  | int    |                                                                 |
+    | endTime        | optional  | int    |                                                                 |
+    | fromID         | optional  | int    | TradeId to fetch from. Default gets most recent trades.         |
+    | limit          | optional  | int    | Default 500; max 500.                                           |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -353,6 +425,10 @@ def margin_max_borrowable(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-max-borrow-user_data
 
+    Parameters:
+    | asset          | optional  | string |                                                                 |
+    | isolatedSymbol | optional  | string | isolated symbol                                                 |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     check_required_parameter(asset, 'asset')
@@ -367,6 +443,10 @@ def margin_max_transferable(self, asset: str, **kwargs):
 
     https://binance-docs.github.io/apidocs/spot/en/#query-max-transfer-out-amount-user_data
 
+    Parameters:
+    | asset          | optional  | string |                                                                 |
+    | isolatedSymbol | optional  | string | isolated symbol                                                 |
+    | recvWindow     | optional  | int    | The value cannot be greater than 60000                          |
     """
 
     check_required_parameter(asset, 'asset')
@@ -486,8 +566,8 @@ def isolated_margin_pair(self, symbol: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
 
     Parameters:
-    | symbol     | mandatory | string |
-    | recvWindow | optional  | int    |
+    | symbol     | mandatory | string |       |
+    | recvWindow | optional  | int    |       |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -508,7 +588,7 @@ def isolated_margin_all_pairs(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-user_data
 
     Parameters:
-    | recvWindow | optional | int    |
+    | recvWindow | optional | int | No more than 60000 |
     """
     
     return self.sign_request('GET', '/sapi/v1/margin/isolated/allPairs', kwargs)
@@ -522,9 +602,11 @@ def toggle_bnbBurn(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#toggle-bnb-burn-on-spot-trade-and-margin-interest-user_data
 
     Parameters:
-    | spotBNBBurn      | optional | string | "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT   |
-    | interestBNBBurn  | optional | string | "true" or "false"; Determines whether to use BNB to pay for margin loan's interest |
-    | recvWindow       | optional | int    |                                                                                    |
+    | spotBNBBurn     | optional | string | "true" or "false";                                              |
+                                            Determines whether to use BNB to pay for trading fees on SPOT   |
+    | interestBNBBurn | optional | string | "true" or "false";                                              |
+                                            Determines whether to use BNB to pay for margin loan's interest |
+    | recvWindow      | optional | int    |                                                                 |
     """
 
     return self.sign_request('POST', '/sapi/v1/bnbBurn', kwargs)
@@ -538,7 +620,7 @@ def bnbBurn_status(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-bnb-burn-status-user_data
 
     Parameters:
-    | recvWindow       | optional | int    |
+    | recvWindow      | optional  | float  | The value cannot be greater than 60000                         |
     """
 
     return self.sign_request('GET', '/sapi/v1/bnbBurn', kwargs)
