@@ -620,7 +620,7 @@ def bnbBurn_status(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-bnb-burn-status-user_data
 
     Parameters:
-    | recvWindow      | optional  | float  | The value cannot be greater than 60000                         |
+    | recvWindow      | optional  | int  | The value cannot be greater than 60000                         |
     """
 
     return self.sign_request('GET', '/sapi/v1/bnbBurn', kwargs)
