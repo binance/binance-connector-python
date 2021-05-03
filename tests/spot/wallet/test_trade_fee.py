@@ -8,7 +8,7 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.GET, '/wapi/v3/tradeFee.html', mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/asset/tradeFee', mock_item, 200)
 def test_trade_fee():
     """ Tests the API endpoint to get trading fee  """
 

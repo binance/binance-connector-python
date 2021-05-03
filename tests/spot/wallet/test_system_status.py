@@ -8,7 +8,7 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.GET, '/wapi/v3/systemStatus.html', mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/system/status', mock_item, 200)
 def test_system_status():
     """ Tests the API endpoint to check system status  """
 
