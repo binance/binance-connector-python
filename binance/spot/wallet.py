@@ -1,5 +1,7 @@
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
+from binance.lib.utils import check_enum_parameter
+from binance.lib.enums import TransferType
 
 
 def system_status(self):
@@ -161,6 +163,46 @@ def dust_log(self, **kwargs):
     """
 
     return self.sign_request('GET', '/sapi/v1/asset/dribblet', kwargs)
+
+
+def user_universal_transfer(self, type: str, asset: int, amount: str, **kwargs):
+    """ User Universal Transfer
+
+    POST /sapi/v1/asset/transfer
+
+    https://binance-docs.github.io/apidocs/spot/en/#user-universal-transfer
+
+    Parameters:
+    | type       | mandatory  | string |               |
+    | asset      | mandatory  | string |               |
+    | amount     | mandatory  | string |               |
+    | recvWindow | optional   | long   |               |
+    """
+    check_required_parameters([[type, 'type'], [asset, 'asset'], [amount, 'amount']])
+    check_enum_parameter(type, TransferType)
+    payload = {'type': type, 'asset': asset, 'amount': amount, **kwargs}
+    return self.sign_request('POST', '/sapi/v1/asset/transfer', payload)
+
+
+def user_universal_transfer_history(self, type: str, **kwargs):
+    """ Query User Universal Transfer History
+
+    GET /sapi/v1/asset/transfer
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-user-universal-transfer-history
+
+    Parameters:
+    | type       | mandatory  | string |                     |
+    | startTime  | optional   | long   |                     |
+    | endTime    | optional   | long   |                     |
+    | current    | optional   | int    | Default 1           |
+    | size       | optional   | int    | Default 10, Max 100 |
+    | recvWindow | optional   | long   |                     |
+    """
+    check_required_parameter(type, 'type')
+    check_enum_parameter(type, TransferType)
+    payload = {'type': type, **kwargs}
+    return self.sign_request('GET', '/sapi/v1/asset/transfer', payload)
 
 
 def transfer_dust(self, asset, **kwargs):

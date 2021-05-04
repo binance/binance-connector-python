@@ -112,6 +112,8 @@ class Spot(API):
     from binance.spot.wallet import account_status
     from binance.spot.wallet import api_trading_status
     from binance.spot.wallet import dust_log
+    from binance.spot.wallet import user_universal_transfer
+    from binance.spot.wallet import user_universal_transfer_history
     from binance.spot.wallet import transfer_dust
     from binance.spot.wallet import asset_dividen_record
     from binance.spot.wallet import asset_detail

@@ -1,7 +1,10 @@
 from binance.error import ParameterRequiredError
+from binance.error import ParameterValueError
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
+from binance.lib.utils import check_enum_parameter
 from binance.lib.utils import encoded_string
+from binance.lib.enums import TransferType
 
 
 def test_pass_check_required_parameter():
@@ -38,6 +41,15 @@ def test_fail_check_required_parameters_multi_params():
         [['btcusdt', 'symbol'], [None, 'price']]).should.throw(ParameterRequiredError)
     check_required_parameters.when.called_with(
         [['', 'symbol'], [10, 'price']]).should.throw(ParameterRequiredError)
+
+
+def test_pass_check_enum_parameter():
+    check_enum_parameter('MAIN_MARGIN', TransferType)
+
+
+def test_fail_check_enum_parameter():
+    check_enum_parameter.when.called_with(
+        'INVALID_ENUM_STRING', TransferType).should.throw(ParameterValueError)
 
 
 def test_encode_query_string():

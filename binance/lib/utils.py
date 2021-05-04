@@ -1,7 +1,7 @@
 import time
 
 from urllib.parse import urlencode
-from binance.error import ParameterRequiredError
+from binance.error import ParameterRequiredError, ParameterValueError
 
 
 def cleanNoneValue(d) -> dict:
@@ -27,6 +27,11 @@ def check_required_parameters(params):
     """
     for p in params:
         check_required_parameter(p[0], p[1])
+
+
+def check_enum_parameter(value, enum_class):
+    if value not in set(item.value for item in enum_class):
+        raise ParameterValueError([value])
 
 
 def get_timestamp():
