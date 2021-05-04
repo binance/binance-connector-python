@@ -123,8 +123,13 @@ class Spot(API):
     from binance.spot.mining import mining_worker
     from binance.spot.mining import mining_worker_list
     from binance.spot.mining import mining_revenue_list
+    from binance.spot.mining import mining_bonus_list
     from binance.spot.mining import mining_statistics_list
     from binance.spot.mining import mining_account_list
+    from binance.spot.mining import mining_hashrate_resale_request
+    from binance.spot.mining import mining_hashrate_resale_cancellation
+    from binance.spot.mining import mining_hashrate_resale_list
+    from binance.spot.mining import mining_hashrate_resale_details
 
     # SUB-ACCOUNT
     from binance.spot.corporate import sub_account_create
