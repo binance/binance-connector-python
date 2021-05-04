@@ -370,6 +370,24 @@ def margin_open_orders(self, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/openOrders', kwargs)
 
 
+def margin_open_orders_deletion(self, symbol: str, **kwargs):
+    """ Margin Account Cancel all Open Orders on a Symbol (USER_DATA)
+
+    DELETE /sapi/v1/margin/openOrders
+
+    https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-all-open-orders-on-a-symbol-trade
+
+    Parameters:
+    | symbol           | mandatory | string |                                                               |
+    | isIsolated       | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE". |
+    | recvWindow       | optional  | long   | The value cannot be greater than 60000                        |
+    """
+
+    check_required_parameter(symbol, 'symbol')
+    payload = {'symbol': symbol, **kwargs}
+    return self.sign_request('DELETE', '/sapi/v1/margin/openOrders', payload)
+
+
 def margin_all_orders(self, symbol: str, **kwargs):
     """ Query Margin Account's All Orders (USER_DATA)
 
@@ -624,3 +642,27 @@ def bnbBurn_status(self, **kwargs):
     """
 
     return self.sign_request('GET', '/sapi/v1/bnbBurn', kwargs)
+
+
+def margin_interest_rate_history(self, asset: str, **kwargs):
+    """ Get Margin Interest Rate History (USER_DATA)
+
+    GET /sapi/v1/margin/interestRateHistory
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-margin-interest-rate-history-user_data
+
+    Parameters:
+    | asset      | optional  | string |                                           |
+    | vipLevel   | optional  | string | Default: user's vip level                 |
+    | startTime  | optional  | int    | Default: 7 days ago                       |
+    | endTime    | optional  | int    | Default: present. Maximum range: 3 months |
+    | limit      | optional  | int    | Default: 20. Maximum: 100                 |
+    | recvWindow | optional  | long   | The value cannot be greater than 60000    |
+    """
+
+    check_required_parameter(asset, 'asset')
+    payload = {
+        'asset': asset,
+        **kwargs
+    }
+    return self.sign_request('GET', '/sapi/v1/margin/interestRateHistory', payload)
