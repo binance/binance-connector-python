@@ -5,3 +5,14 @@ __pycache__
 *.pyc
 .tox
 .python-version
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+.idea/

@@ -24,7 +24,7 @@ def test_API_initial():
     client.session.headers.should.have.key('X-MBX-APIKEY').which.should.be.none
 
 
-def test_API_with_extra_parametes():
+def test_API_with_extra_parameters():
     """ Tests the API initialization with extra parameters"""
 
     key = random_str()
