@@ -8,4 +8,4 @@ config_logging(logging, logging.DEBUG)
 
 spot_client = Client()
 
-logging.info(spot_client.coin_info())
+logging.info(spot_client.system_status())
