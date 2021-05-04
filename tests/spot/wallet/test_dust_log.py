@@ -8,7 +8,7 @@ key = random_str()
 secret = random_str()
 
 
-@mock_http_response(responses.GET, '/wapi/v3/userAssetDribbletLog.html', mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/asset/dribblet', mock_item, 200)
 def test_dust_log():
     """ Tests the API endpoint to check dust log  """
 

@@ -6,13 +6,13 @@ def system_status(self):
     """ System Status (System)
     Fetch system status.
 
-    GET /wapi/v3/systemStatus.html
+    GET /sapi/v1/system/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#wallet-endpoints
+    https://binance-docs.github.io/apidocs/spot/en/#system-status-sapi-system
 
     """
 
-    return self.query('/wapi/v3/systemStatus.html')
+    return self.query('/sapi/v1/system/status')
 
 
 def coin_info(self, **kwargs):
@@ -128,39 +128,39 @@ def account_status(self, **kwargs):
     """ Account Status (USER_DATA)
     Fetch account status detail.
 
-    GET /wapi/v3/accountStatus.html
+    GET /sapi/v1/account/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#account-status-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#account-status-sapi-user_data
 
     """
 
-    return self.sign_request('GET', '/wapi/v3/accountStatus.html', kwargs)
+    return self.sign_request('GET', '/sapi/v1/account/status', kwargs)
 
 
 def api_trading_status(self, **kwargs):
     """ Account API Trading Status (USER_DATA)
     Fetch account api trading status detail.
 
-    GET /wapi/v3/apiTradingStatus.html
+    GET /sapi/v1/account/apiTradingStatus
 
-    https://binance-docs.github.io/apidocs/spot/en/#account-api-trading-status-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#account-api-trading-status-sapi-user_data
 
     """
 
-    return self.sign_request('GET', '/wapi/v3/apiTradingStatus.html', kwargs)
+    return self.sign_request('GET', '/sapi/v1/account/apiTradingStatus', kwargs)
 
 
 def dust_log(self, **kwargs):
     """ DustLog (USER_DATA)
     Fetch small amounts of assets exchanged BNB records.
 
-    GET /wapi/v3/userAssetDribbletLog.html
+    GET /sapi/v1/asset/dribblet
 
-    https://binance-docs.github.io/apidocs/spot/en/#dustlog-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#dustlog-sapi-user_data
 
     """
 
-    return self.sign_request('GET', '/wapi/v3/userAssetDribbletLog.html', kwargs)
+    return self.sign_request('GET', '/sapi/v1/asset/dribblet', kwargs)
 
 
 def transfer_dust(self, asset, **kwargs):
@@ -196,23 +196,23 @@ def asset_detail(self, **kwargs):
     """ Asset Detail (USER_DATA)
     Fetch details of assets supported on Binance.
 
-    GET /wapi/v3/assetDetail.html
+    GET /sapi/v1/asset/assetDetail
 
-    https://binance-docs.github.io/apidocs/spot/en/#asset-detail-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#asset-detail-sapi-user_data
 
     """
 
-    return self.sign_request('GET', '/wapi/v3/assetDetail.html', kwargs)
+    return self.sign_request('GET', '/sapi/v1/asset/assetDetail', kwargs)
 
 
 def trade_fee(self, **kwargs):
     """ Trade Fee (USER_DATA)
     Fetch trade fee, values in percentage.
 
-    GET /wapi/v3/tradeFee.html
+    GET /sapi/v1/asset/tradeFee
 
-    https://binance-docs.github.io/apidocs/spot/en/#trade-fee-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#trade-fee-sapi-user_data
 
     """
 
-    return self.sign_request('GET', '/wapi/v3/tradeFee.html', kwargs)
+    return self.sign_request('GET', '/sapi/v1/asset/tradeFee', kwargs)
