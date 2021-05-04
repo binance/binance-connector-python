@@ -297,7 +297,11 @@ def sub_account_transfer_sub_account_history(self, **kwargs):
 def sub_account_futures_asset_transfer_history(self, email: str, futuresType: int, **kwargs):
     """ Query Sub-account Futures Asset Transfer History(For Master Account)
 
-    Parameteres:
+    GET /sapi/v1/sub-account/futures/internalTransfer
+    
+    https://binance-docs.github.io/apidocs/spot/en/#sub-account-spot-asset-transfer-for-master-account
+
+    Parameters:
     | email       | mandatory | string | Sub-account email                                   |
     | futuresType | mandatory | int    | 1  : USDT-maringed Futues，2: Coin-margined Futures |
     | startTime   | optional  | int    | Default return the history with in 100 days         |
@@ -305,11 +309,6 @@ def sub_account_futures_asset_transfer_history(self, email: str, futuresType: in
     | page        | optional  | int    | Default value: 1                                    |
     | limit       | optional  | int    | Default value: 50, Max value: 500                   |
     | recvWindow  | optional  | int    |                                                     |
-
-
-    GET /sapi/v1/sub-account/futures/internalTransfer
-    
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-spot-asset-transfer-for-master-account
 
     """
     check_required_parameters([
@@ -323,18 +322,17 @@ def sub_account_futures_asset_transfer_history(self, email: str, futuresType: in
 def sub_account_futures_asset_transfer(self, fromEmail: str, toEmail: str, futuresType: int, asset: str, amount, **kwargs):
     """ Query Sub-account Futures Asset Transfer History(For Master Account)
 
-    Parameteres:
+    POST /sapi/v1/sub-account/futures/internalTransfer
+
+    https://binance-docs.github.io/apidocs/spot/en/#sub-account-futures-asset-transfer-for-master-account
+
+    Parameters:
     | fromEmail   | mandatory | string | Sender email                                     |
     | toEmail     | mandatory | string | Recipient email                                  |
     | futuresType | mandatory | int    | 1:USDT-margined Futues，2: Coin-margined Futures |
     | asset       | mandatory | string |                                                  |
     | amount      | mandatory | float  |                                                  |
     | recvWindow  | optional  | int    |                                                  |
-
-
-    POST /sapi/v1/sub-account/futures/internalTransfer
-
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-futures-asset-transfer-for-master-account
 
     """
     check_required_parameters([
@@ -358,17 +356,15 @@ def sub_account_futures_asset_transfer(self, fromEmail: str, toEmail: str, futur
 def sub_account_spot_summary(self, **kwargs):
     """ Query Sub-account Spot Assets Summary (For Master Account)
 
-    Parameteres:
-    | email      | optional | string | Sub account email  | 
-    | page       | optional | int    | default 1          | 
-    | size       | optional | int    | default 10, max 20 |
-    | recvWindow | optional | int    |                    | 
-
-
     GET /sapi/v1/sub-account/spotSummary
 
     https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account
 
+    Parameters:
+    | email      | optional | string | Sub account email  |
+    | page       | optional | int    | default 1          |
+    | size       | optional | int    | default 10, max 20 |
+    | recvWindow | optional | int    |                    |
     """
     
     return self.sign_request('GET', '/sapi/v1/sub-account/spotSummary', kwargs)
