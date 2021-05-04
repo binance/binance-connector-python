@@ -125,6 +125,7 @@ class Spot(API):
     from binance.spot.mining import mining_account_list
 
     # SUB-ACCOUNT
+    from binance.spot.corporate import sub_account_create
     from binance.spot.corporate import sub_account_list
     from binance.spot.corporate import sub_account_transfer_history
     from binance.spot.corporate import sub_account_transfer
@@ -150,6 +151,7 @@ class Spot(API):
     from binance.spot.corporate import sub_account_futures_account_summary
     from binance.spot.corporate import sub_account_futures_position_risk
     from binance.spot.corporate import sub_account_spot_transfer_history
+    from binance.spot.corporate import sub_account_enable_leverage_token
 
     # Futures
     from binance.spot.futures import futures_transfer
