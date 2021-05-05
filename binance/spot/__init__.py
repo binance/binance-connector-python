@@ -136,9 +136,6 @@ class Spot(API):
     from binance.spot.corporate import sub_account_margin_account
     from binance.spot.corporate import sub_account_margin_account_summary
     from binance.spot.corporate import sub_account_enable_futures
-    from binance.spot.corporate import sub_account_futures_account
-    from binance.spot.corporate import sub_account_futures_account_summary
-    from binance.spot.corporate import sub_account_futures_position_risk
     from binance.spot.corporate import sub_account_futures_transfer
     from binance.spot.corporate import sub_account_margin_transfer
     from binance.spot.corporate import sub_account_transfer_to_sub
@@ -147,6 +144,12 @@ class Spot(API):
     from binance.spot.corporate import sub_account_futures_asset_transfer_history
     from binance.spot.corporate import sub_account_futures_asset_transfer
     from binance.spot.corporate import sub_account_spot_summary
+    from binance.spot.corporate import sub_account_universal_transfer
+    from binance.spot.corporate import sub_account_universal_transfer_history
+    from binance.spot.corporate import sub_account_futures_account
+    from binance.spot.corporate import sub_account_futures_account_summary
+    from binance.spot.corporate import sub_account_futures_position_risk
+    from binance.spot.corporate import sub_account_spot_transfer_history
 
     # Futures
     from binance.spot.futures import futures_transfer

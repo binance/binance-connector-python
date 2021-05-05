@@ -10,4 +10,5 @@ key = ''
 secret = ''
 
 spot_client = Client(key, secret)
-logging.info(spot_client.sub_account_futures_account_summary(futuresType=1))
+
+logging.info(spot_client.sub_account_universal_transfer_history())

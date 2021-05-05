@@ -23,6 +23,7 @@ def test_sub_account_futures_asset_transfer_history_without_email():
     client.sub_account_futures_asset_transfer_history.when.called_with(
         **param).should.throw(ParameterRequiredError)
 
+
 def test_sub_account_futures_asset_transfer_history_without_futurestype():
     """ Tests the API endpoint to  query sub account futures asset transfer history without email """
 
@@ -33,6 +34,7 @@ def test_sub_account_futures_asset_transfer_history_without_futurestype():
     client = Client(key, secret)
     client.sub_account_futures_asset_transfer_history.when.called_with(
         **param).should.throw(ParameterRequiredError)
+
 
 @mock_http_response(responses.GET, '/sapi/v1/sub-account/futures/internalTransfer\\?email=alice@test.com&futuresType=1', mock_item, 200)
 def test_sub_account_futures_asset_transfer_history():

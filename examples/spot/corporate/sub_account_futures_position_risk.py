@@ -11,5 +11,6 @@ secret = ''
 
 spot_client = Client(key, secret)
 logging.info(spot_client.sub_account_futures_position_risk(
-    email='alice@test.com'
+    email='alice@test.com',
+    futuresType=1
 ))
