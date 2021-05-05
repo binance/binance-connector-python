@@ -9,5 +9,5 @@ config_logging(logging, logging.DEBUG)
 key = ''
 secret = ''
 
-client = Client(key, secret)
-logging.info(client.futures_loan_calc_max_adjust_amount(loanCoin='BNB', collateralCoin='BTC'))
+spot_client = Client(key, secret)
+logging.info(spot_client.sub_account_create(subAccountString="test.account"))

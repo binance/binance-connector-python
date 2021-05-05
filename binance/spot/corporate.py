@@ -2,17 +2,44 @@ from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 
 
+def sub_account_create(self, subAccountString: str, **kwargs):
+    """ Create a Virtual Sub-account(For Master Account)
+    Generate a virtual sub account under the master account
+
+    Parameteres:
+    | subAccountString | mandatory | string | Sub-account string |
+    | recvWindow       | optional  | long   |                    |
+
+    POST /sapi/v1/sub-account/virtualSubAccount
+
+    https://binance-docs.github.io/apidocs/spot/en/#create-a-virtual-sub-account-for-master-account
+
+    """
+
+    check_required_parameter(subAccountString, 'subAccountString')
+    payload = {'subAccountString': subAccountString, **kwargs}
+
+    return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/virtualSubAccount', payload)
+
+
 def sub_account_list(self, **kwargs):
     """ Query Sub-account List(For Master Account)
     Fetch sub account list.
 
-    GET /wapi/v3/sub-account/list.html
+    Parameteres:
+    | email      | optional | string | Sub-account email   |
+    | isFreeze   | optional | string | true or false       |
+    | page       | optional | int    | default 1           |
+    | limit      | optional | int    | default 10, max 200 |
+    | recvWindow | optional | long   |                     |
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-list-for-master-account
+    GET /sapi/v1/sub-account/list
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-list-sapi-for-master-account
 
     """
 
-    return self.limited_encoded_sign_request('GET', '/wapi/v3/sub-account/list.html', kwargs)
+    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/list', kwargs)
 
 
 def sub_account_transfer_history(self, email: str, **kwargs):
@@ -61,15 +88,15 @@ def sub_account_assets(self, email: str, **kwargs):
     """ Query Sub-account Assets(For Master Account)
     Fetch sub-account assets
 
-    GET /wapi/v3/sub-account/assets.html
+    GET /sapi/v3/sub-account/assets
 
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-transfer-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-sapi-for-master-account
 
     """
 
     check_required_parameter(email, 'email')
     payload = {'email': email, **kwargs}
-    return self.limited_encoded_sign_request('GET', '/wapi/v3/sub-account/assets.html', payload)
+    return self.limited_encoded_sign_request('GET', '/sapi/v3/sub-account/assets', payload)
 
 
 def sub_account_deposit_address(self, email: str, coin: str, **kwargs):
@@ -490,3 +517,24 @@ def sub_account_spot_transfer_history(self, **kwargs):
     """
 
     return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/sub/transfer/history', kwargs)
+
+
+def sub_account_enable_leverage_token(self, email: str, enableBlvt: bool, **kwargs):
+    """ Enable Leverage Token for Sub-account(For Master Account)
+    Enable leverage token for sub-account
+
+    Parameteres:
+    | email      | mandatory | string | Sub-account email |
+    | enableBlvt | mandatory | bool   | Only true for now |
+    | recvWindow | optional  | long   |                   |
+
+    POST /sapi/v1/sub-account/blvt/enable
+
+    https://binance-docs.github.io/apidocs/spot/en/#enable-leverage-token-for-sub-account-for-master-account
+
+    """
+
+    check_required_parameters([[email, 'email'], [enableBlvt, 'enableBlvt']])
+    payload = {'email': email, 'enableBlvt': enableBlvt, **kwargs}
+
+    return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/blvt/enable', payload)

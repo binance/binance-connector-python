@@ -169,92 +169,99 @@ def futures_loan_repay_history(self, **kwargs):
 def futures_loan_wallet(self, **kwargs):
     """ Cross-Collateral Wallet (USER_DATA)
 
-    GET /sapi/v1/futures/loan/wallet
+    GET /sapi/v2/futures/loan/wallet
 
-    https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-wallet-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-wallet-v2-user_data
 
     Parameters:
-    | recvWindow | optional | int    |                       |
+    | recvWindow | optional | long   |                       |
     """
 
-    return self.sign_request('GET', '/sapi/v1/futures/loan/wallet', kwargs)
+    return self.sign_request('GET', '/sapi/v2/futures/loan/wallet', kwargs)
 
 
 def futures_loan_configs(self, **kwargs):
     """ Cross-Collateral Information (USER_DATA)
 
-    GET /sapi/v1/futures/loan/configs
+    GET /sapi/v2/futures/loan/configs
 
-    https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-information-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-information-v2-user_data
 
     Parameters:
+    | loanCoin       | optional | string |
     | collateralCoin | optional | string |
-    | recvWindow     | optional | int    |
+    | recvWindow     | optional | long   |
     """
 
-    return self.sign_request('GET', '/sapi/v1/futures/loan/configs', kwargs)
+    return self.sign_request('GET', '/sapi/v2/futures/loan/configs', kwargs)
 
 
-def futures_loan_calc_adjust_level(self, collateralCoin: str, amount, direction: str, **kwargs):
+def futures_loan_calc_adjust_level(self, loanCoin: str, collateralCoin: str, amount: int, direction: str, **kwargs):
     """ Calculate Rate After Adjust Cross-Collateral LTV (USER_DATA)
 
-    GET /sapi/v1/futures/loan/calcAdjustLevel
+    GET /sapi/v2/futures/loan/calcAdjustLevel
 
     https://binance-docs.github.io/apidocs/spot/en/#calculate-rate-after-adjust-cross-collateral-ltv-user_data
 
     Parameters:
+    | loanCoin       | mandatory | string |                         |
     | collateralCoin | mandatory | string |                         |
-    | amount         | mandatory | string |                         |
+    | amount         | mandatory | int    |                         |
     | direction      | mandatory | string | "ADDITIONAL", "REDUCED" |
-    | recvWindow     | optional  | int    |                         |
+    | recvWindow     | optional  | long   |                         |
     """
 
     check_required_parameters([
-      [collateralCoin, 'collateralCoin'],
-      [amount, 'amount'],
-      [direction, 'direction']
+        [loanCoin, 'loanCoin'],
+        [collateralCoin, 'collateralCoin'],
+        [amount, 'amount'],
+        [direction, 'direction']
     ])
 
     payload = {
+        'loanCoin': loanCoin,
         'collateralCoin': collateralCoin,
         'amount': amount,
         'direction': direction,
         **kwargs
     }
 
-    return self.sign_request('GET', '/sapi/v1/futures/loan/calcAdjustLevel', payload)
+    return self.sign_request('GET', '/sapi/v2/futures/loan/calcAdjustLevel', payload)
 
 
-def futures_loan_calc_max_adjust_amount(self, collateralCoin: str, **kwargs):
+def futures_loan_calc_max_adjust_amount(self, loanCoin: str, collateralCoin: str, **kwargs):
     """ Get Max Amount for Adjust Cross-Collateral LTV (USER_DATA)
 
-    GET /sapi/v1/futures/loan/calcMaxAdjustAmount
+    GET /sapi/v2/futures/loan/calcMaxAdjustAmount
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-max-amount-for-adjust-cross-collateral-ltv-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-max-amount-for-adjust-cross-collateral-ltv-v2-user_data
 
     Parameters:
+    | loanCoin       | mandatory | string |                         |
     | collateralCoin | mandatory | string |                         |
     | recvWindow     | optional  | int    |                         |
     """
 
-    check_required_parameter(collateralCoin, 'collateralCoin')
+    check_required_parameters([[loanCoin, 'loanCoin'], [collateralCoin, 'collateralCoin']])
 
     payload = {
+        'loanCoin': loanCoin,
         'collateralCoin': collateralCoin,
         **kwargs
     }
 
-    return self.sign_request('GET', '/sapi/v1/futures/loan/calcMaxAdjustAmount', payload)
+    return self.sign_request('GET', '/sapi/v2/futures/loan/calcMaxAdjustAmount', payload)
 
 
-def futures_loan_adjust_collateral(self, collateralCoin: str, amount, direction: str, **kwargs):
+def futures_loan_adjust_collateral(self, loanCoin: str, collateralCoin: str, amount, direction: str, **kwargs):
     """ Adjust Cross-Collateral LTV (TRADE)
 
-    POST /sapi/v1/futures/loan/adjustCollateral
+    POST /sapi/v2/futures/loan/adjustCollateral
 
-    https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-collateral-ltv-trade
+    https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-collateral-ltv-v2-trade
 
     Parameters:
+    | loanCoin       | mandatory | string |                         |
     | collateralCoin | mandatory | string |                         |
     | amount         | mandatory | string |                         |
     | direction      | mandatory | string | "ADDITIONAL", "REDUCED" |
@@ -262,19 +269,21 @@ def futures_loan_adjust_collateral(self, collateralCoin: str, amount, direction:
     """
 
     check_required_parameters([
-      [collateralCoin, 'collateralCoin'],
-      [amount, 'amount'],
-      [direction, 'direction']
+        [loanCoin, 'loanCoin'],
+        [collateralCoin, 'collateralCoin'],
+        [amount, 'amount'],
+        [direction, 'direction']
     ])
 
     payload = {
+        'loanCoin': loanCoin,
         'collateralCoin': collateralCoin,
         'amount': amount,
         'direction': direction,
         **kwargs
     }
 
-    return self.sign_request('POST', '/sapi/v1/futures/loan/adjustCollateral', payload)
+    return self.sign_request('POST', '/sapi/v2/futures/loan/adjustCollateral', payload)
 
 
 def futures_loan_adjust_collateral_history(self, **kwargs):
@@ -285,6 +294,7 @@ def futures_loan_adjust_collateral_history(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-collateral-ltv-history-user_data
 
     Parameters:
+    | loanCoin       | optional | string |                       |
     | collateralCoin | optional | string |                       |
     | startTime      | optional | int    |                       |
     | endTime        | optional | int    |                       |
@@ -303,6 +313,7 @@ def futures_loan_liquidation_history(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-liquidation-history-user_data
 
     Parameters:
+    | loanCoin       | optional | string |                       |
     | collateralCoin | optional | string |                       |
     | startTime      | optional | int    |                       |
     | endTime        | optional | int    |                       |
