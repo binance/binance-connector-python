@@ -168,47 +168,6 @@ def sub_account_enable_futures(self, email: str, **kwargs):
     return self.limited_encoded_sign_request('POST', '/sapi/v1/sub-account/futures/enable', payload)
 
 
-def sub_account_futures_account(self, email: str, **kwargs):
-    """ Get Detail on Sub-account's Futures Account (For Master Account)
-
-    GET /sapi/v1/sub-account/futures/account
-
-    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-for-master-account
-
-    """
-
-    check_required_parameter(email, 'email')
-    payload = {'email': email, **kwargs}
-    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/futures/account', payload)
-
-
-def sub_account_futures_account_summary(self, **kwargs):
-    """ Get Summary of Sub-account's Futures Account (For Master Account)
-
-    GET /sapi/v1/sub-account/futures/accountSummary
-
-    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-for-master-account
-
-    """
-
-    return self.sign_request('GET', '/sapi/v1/sub-account/futures/accountSummary', kwargs)
-
-
-def sub_account_futures_position_risk(self, email: str, **kwargs):
-    """ Get Futures Postion-Risk of Sub-account (For Master Account)
-
-    GET /sapi/v1/sub-account/futures/positionRisk
-
-    https://binance-docs.github.io/apidocs/spot/en/#get-futures-postion-risk-of-sub-account-for-master-account
-
-    """
-
-    check_required_parameter(email, 'email')
-    payload = {'email': email, **kwargs}
-
-    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/futures/positionRisk', payload)
-
-
 def sub_account_futures_transfer(self, email: str, asset: str, amount, type: int, **kwargs):
     """ Futures Transfer for Sub-account（For Master Account）
 
@@ -434,7 +393,7 @@ def sub_account_universal_transfer_history(self, **kwargs):
     return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/universalTransfer', kwargs)
 
 
-def sub_account_futures_account_v2(self, email: str, futuresType: int, **kwargs):
+def sub_account_futures_account(self, email: str, futuresType: int, **kwargs):
     """ Get Detail on Sub-account's Futures Account V2 (For Master Account)
 
     GET /sapi/v2/sub-account/futures/account
@@ -461,7 +420,7 @@ def sub_account_futures_account_v2(self, email: str, futuresType: int, **kwargs)
     return self.limited_encoded_sign_request('GET', '/sapi/v2/sub-account/futures/account', payload)
 
 
-def sub_account_futures_account_summary_v2(self, futuresType: int,  **kwargs):
+def sub_account_futures_account_summary(self, futuresType: int, **kwargs):
     """ Get Summary of Sub-account's Futures Account V2 (For Master Account)
 
     GET /sapi/v2/sub-account/futures/accountSummary
@@ -485,7 +444,7 @@ def sub_account_futures_account_summary_v2(self, futuresType: int,  **kwargs):
     return self.sign_request('GET', '/sapi/v2/sub-account/futures/accountSummary', payload)
 
 
-def sub_account_futures_position_risk_v2(self, email: str, futuresType: str, **kwargs):
+def sub_account_futures_position_risk(self, email: str, futuresType: str, **kwargs):
     """ Get Futures Position-Risk of Sub-account V2 (For Master Account)
 
     GET /sapi/v2/sub-account/futures/positionRisk
