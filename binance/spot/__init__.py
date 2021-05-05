@@ -68,7 +68,7 @@ class Spot(API):
     from binance.spot.margin import margin_account
     from binance.spot.margin import margin_order
     from binance.spot.margin import margin_open_orders
-    from binance.spot.margin import margin_open_orders_deletion
+    from binance.spot.margin import margin_open_orders_cancellation
     from binance.spot.margin import margin_all_orders
     from binance.spot.margin import margin_my_trades
     from binance.spot.margin import margin_max_borrowable

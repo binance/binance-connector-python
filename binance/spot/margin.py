@@ -370,7 +370,7 @@ def margin_open_orders(self, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/openOrders', kwargs)
 
 
-def margin_open_orders_deletion(self, symbol: str, **kwargs):
+def margin_open_orders_cancellation(self, symbol: str, **kwargs):
     """ Margin Account Cancel all Open Orders on a Symbol (USER_DATA)
 
     DELETE /sapi/v1/margin/openOrders

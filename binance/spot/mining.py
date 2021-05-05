@@ -85,13 +85,13 @@ def mining_bonus_list(self, algo: str, userName: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#extra-bonus-list-user_data
 
     Parameters:
-    | algo       | mandatory | string | Transfer algorithm(sha256)                                |                                                                 |
+    | algo       | mandatory | string | Transfer algorithm(sha256)                                |
     | userName   | mandatory | string | Mining account                                            |
     | coin       | optional  | string | Coin Name                                                 |
     | startDate  | optional  | long   | Search date, millisecond timestamp, while empty query all |
     | endDate    | optional  | long   | Search date, millisecond timestamp, while empty query all |
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1    |
-    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	              |                              |
+    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	              |
     | recvWindow | optional  | long   |                                                           |
     """
     check_required_parameters([
@@ -211,7 +211,7 @@ def mining_hashrate_resale_list(self, **kwargs):
 
     Parameters:
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1 |
-    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |                              |
+    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |
     | recvWindow | optional  | long   |                                                        |
     """
 
@@ -229,7 +229,7 @@ def mining_hashrate_resale_details(self, configId: int, userName: str, **kwargs)
     | configId   | mandatory | int    | Mining ID                                              |
     | userName   | mandatory | string | Mining Account                                         |
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1 |
-    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |                              |
+    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |
     | recvWindow | optional  | long   |                                                        |
     """
     check_required_parameters([

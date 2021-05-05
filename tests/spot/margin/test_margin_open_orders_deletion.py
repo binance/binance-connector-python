@@ -21,7 +21,7 @@ def test_margin_open_orders_deletion_without_symbol():
     """ Tests the API endpoint to cancel margin open orders without symbol """
 
     client = Client(key, secret)
-    client.margin_open_orders_deletion.when.called_with(
+    client.margin_open_orders_cancellation.when.called_with(
         '').should.throw(ParameterRequiredError)
 
 
@@ -30,5 +30,5 @@ def test_margin_open_orders_deletion():
     """ Tests the API endpoint to cancel margin open orders """
 
     client = Client(key, secret)
-    response = client.margin_open_orders_deletion(**params)
+    response = client.margin_open_orders_cancellation(**params)
     response.should.equal(mock_item)
