@@ -8,7 +8,7 @@ def sub_account_create(self, subAccountString: str, **kwargs):
 
     Parameteres:
     | subAccountString | mandatory | string | Sub-account string |
-    | recvWindow       | optional  | long   |                    |
+    | recvWindow       | optional  | int    |                    |
 
     POST /sapi/v1/sub-account/virtualSubAccount
 
@@ -31,7 +31,7 @@ def sub_account_list(self, **kwargs):
     | isFreeze   | optional | string | true or false       |
     | page       | optional | int    | default 1           |
     | limit      | optional | int    | default 10, max 200 |
-    | recvWindow | optional | long   |                     |
+    | recvWindow | optional | int    |                     |
 
     GET /sapi/v1/sub-account/list
 
@@ -526,7 +526,7 @@ def sub_account_enable_leverage_token(self, email: str, enableBlvt: bool, **kwar
     Parameteres:
     | email      | mandatory | string | Sub-account email |
     | enableBlvt | mandatory | bool   | Only true for now |
-    | recvWindow | optional  | long   |                   |
+    | recvWindow | optional  | int    |                   |
 
     POST /sapi/v1/sub-account/blvt/enable
 

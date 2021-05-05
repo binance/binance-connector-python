@@ -88,11 +88,11 @@ def mining_bonus_list(self, algo: str, userName: str, **kwargs):
     | algo       | mandatory | string | Transfer algorithm(sha256)                                |
     | userName   | mandatory | string | Mining account                                            |
     | coin       | optional  | string | Coin Name                                                 |
-    | startDate  | optional  | long   | Search date, millisecond timestamp, while empty query all |
-    | endDate    | optional  | long   | Search date, millisecond timestamp, while empty query all |
+    | startDate  | optional  | int    | Search date, millisecond timestamp, while empty query all |
+    | endDate    | optional  | int    | Search date, millisecond timestamp, while empty query all |
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1    |
     | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	              |
-    | recvWindow | optional  | long   |                                                           |
+    | recvWindow | optional  | int    |                                                           |
     """
     check_required_parameters([
         [algo, 'algo'],
@@ -148,11 +148,11 @@ def mining_hashrate_resale_request(self, algo: str, userName: str, startDate: in
     Parameters:
     | algo       | mandatory | string | Transfer algorithm(sha256)               |
     | userName   | mandatory | string | Mining account                           |
-    | startDate  | mandatory | long   | Resale Start Time(Millisecond timestamp) |
-    | endDate    | mandatory | long   | Resale End Time (Millisecond timestamp)  |
+    | startDate  | mandatory | int    | Resale Start Time(Millisecond timestamp) |
+    | endDate    | mandatory | int    | Resale End Time (Millisecond timestamp)  |
     | toPoolUser | mandatory | string | Mining Account                           |
     | hashRate   | mandatory | string | Resale hashrate h/s must be transferred  |
-    | recvWindow | optional  | long   |                                          |
+    | recvWindow | optional  | int    |                                          |
     """
 
     check_required_parameters([
@@ -186,7 +186,7 @@ def mining_hashrate_resale_cancellation(self, configId: int, userName: str, **kw
     Parameters:
     | configId   | mandatory | int    | Mining ID      |
     | userName   | mandatory | string | Mining account |
-    | recvWindow | optional  | long   |                |
+    | recvWindow | optional  | int    |                |
     """
 
     check_required_parameters([
@@ -212,7 +212,7 @@ def mining_hashrate_resale_list(self, **kwargs):
     Parameters:
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1 |
     | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |
-    | recvWindow | optional  | long   |                                                        |
+    | recvWindow | optional  | int    |                                                        |
     """
 
     return self.sign_request('GET', '/sapi/v1/mining/hash-transfer/config/details/list', kwargs)
@@ -230,7 +230,7 @@ def mining_hashrate_resale_details(self, configId: int, userName: str, **kwargs)
     | userName   | mandatory | string | Mining Account                                         |
     | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1 |
     | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	           |
-    | recvWindow | optional  | long   |                                                        |
+    | recvWindow | optional  | int    |                                                        |
     """
     check_required_parameters([
         [configId, 'configId'],

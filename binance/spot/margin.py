@@ -380,7 +380,7 @@ def margin_open_orders_cancellation(self, symbol: str, **kwargs):
     Parameters:
     | symbol           | mandatory | string |                                                               |
     | isIsolated       | optional  | string | for isolated margin or not, "TRUE", "FALSE"，default "FALSE". |
-    | recvWindow       | optional  | long   | The value cannot be greater than 60000                        |
+    | recvWindow       | optional  | int    | The value cannot be greater than 60000                        |
     """
 
     check_required_parameter(symbol, 'symbol')
@@ -657,7 +657,7 @@ def margin_interest_rate_history(self, asset: str, **kwargs):
     | startTime  | optional  | int    | Default: 7 days ago                       |
     | endTime    | optional  | int    | Default: present. Maximum range: 3 months |
     | limit      | optional  | int    | Default: 20. Maximum: 100                 |
-    | recvWindow | optional  | long   | The value cannot be greater than 60000    |
+    | recvWindow | optional  | int    | The value cannot be greater than 60000    |
     """
 
     check_required_parameter(asset, 'asset')

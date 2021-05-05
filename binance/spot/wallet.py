@@ -176,7 +176,7 @@ def user_universal_transfer(self, type: str, asset: int, amount: str, **kwargs):
     | type       | mandatory  | string |               |
     | asset      | mandatory  | string |               |
     | amount     | mandatory  | string |               |
-    | recvWindow | optional   | long   |               |
+    | recvWindow | optional   | int    |               |
     """
     check_required_parameters([[type, 'type'], [asset, 'asset'], [amount, 'amount']])
     check_enum_parameter(type, TransferType)
@@ -193,11 +193,11 @@ def user_universal_transfer_history(self, type: str, **kwargs):
 
     Parameters:
     | type       | mandatory  | string |                     |
-    | startTime  | optional   | long   |                     |
-    | endTime    | optional   | long   |                     |
+    | startTime  | optional   | int    |                     |
+    | endTime    | optional   | int    |                     |
     | current    | optional   | int    | Default 1           |
     | size       | optional   | int    | Default 10, Max 100 |
-    | recvWindow | optional   | long   |                     |
+    | recvWindow | optional   | int    |                     |
     """
     check_required_parameter(type, 'type')
     check_enum_parameter(type, TransferType)
