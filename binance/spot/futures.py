@@ -174,7 +174,7 @@ def futures_loan_wallet(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#cross-collateral-wallet-v2-user_data
 
     Parameters:
-    | recvWindow | optional | long   |                       |
+    | recvWindow | optional | int    |                       |
     """
 
     return self.sign_request('GET', '/sapi/v2/futures/loan/wallet', kwargs)
@@ -190,7 +190,7 @@ def futures_loan_configs(self, **kwargs):
     Parameters:
     | loanCoin       | optional | string |
     | collateralCoin | optional | string |
-    | recvWindow     | optional | long   |
+    | recvWindow     | optional | int    |
     """
 
     return self.sign_request('GET', '/sapi/v2/futures/loan/configs', kwargs)
@@ -208,7 +208,7 @@ def futures_loan_calc_adjust_level(self, loanCoin: str, collateralCoin: str, amo
     | collateralCoin | mandatory | string |                         |
     | amount         | mandatory | int    |                         |
     | direction      | mandatory | string | "ADDITIONAL", "REDUCED" |
-    | recvWindow     | optional  | long   |                         |
+    | recvWindow     | optional  | int    |                         |
     """
 
     check_required_parameters([

@@ -12,25 +12,25 @@ secret = random_str()
 
 
 def test_mining_revenue_list_without_algo():
-    """ Tests the API endpoint to get revenue list without algo """
+    """ Tests the API endpoint to get extra bonus list without algo """
 
     client = Client(key, secret)
-    client.mining_revenue_list.when.called_with(
+    client.mining_bonus_list.when.called_with(
         '', 'test_name').should.throw(ParameterRequiredError)
 
 
 def test_mining_revenue_list_without_username():
-    """ Tests the API endpoint to get revenue list without username """
+    """ Tests the API endpoint to get extra bonus list without username """
 
     client = Client(key, secret)
-    client.mining_revenue_list.when.called_with(
+    client.mining_bonus_list.when.called_with(
         'sha256', '').should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.GET, '/sapi/v1/mining/payment/list\\?algo=sha256&userName=user_name', mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/mining/payment/other\\?algo=sha256&userName=user_name', mock_item, 200)
 def test_mining_revenue():
-    """ Tests the API endpoint to get revenue list """
+    """ Tests the API endpoint to get extra bonus list """
 
     client = Client(key, secret)
-    response = client.mining_revenue_list('sha256', 'user_name')
+    response = client.mining_bonus_list('sha256', 'user_name')
     response.should.equal(mock_item)

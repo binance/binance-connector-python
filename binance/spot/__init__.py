@@ -68,6 +68,7 @@ class Spot(API):
     from binance.spot.margin import margin_account
     from binance.spot.margin import margin_order
     from binance.spot.margin import margin_open_orders
+    from binance.spot.margin import margin_open_orders_cancellation
     from binance.spot.margin import margin_all_orders
     from binance.spot.margin import margin_my_trades
     from binance.spot.margin import margin_max_borrowable
@@ -80,6 +81,7 @@ class Spot(API):
     from binance.spot.margin import isolated_margin_all_pairs
     from binance.spot.margin import toggle_bnbBurn
     from binance.spot.margin import bnbBurn_status
+    from binance.spot.margin import margin_interest_rate_history
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -110,6 +112,8 @@ class Spot(API):
     from binance.spot.wallet import account_status
     from binance.spot.wallet import api_trading_status
     from binance.spot.wallet import dust_log
+    from binance.spot.wallet import user_universal_transfer
+    from binance.spot.wallet import user_universal_transfer_history
     from binance.spot.wallet import transfer_dust
     from binance.spot.wallet import asset_dividen_record
     from binance.spot.wallet import asset_detail
@@ -121,8 +125,13 @@ class Spot(API):
     from binance.spot.mining import mining_worker
     from binance.spot.mining import mining_worker_list
     from binance.spot.mining import mining_revenue_list
+    from binance.spot.mining import mining_bonus_list
     from binance.spot.mining import mining_statistics_list
     from binance.spot.mining import mining_account_list
+    from binance.spot.mining import mining_hashrate_resale_request
+    from binance.spot.mining import mining_hashrate_resale_cancellation
+    from binance.spot.mining import mining_hashrate_resale_list
+    from binance.spot.mining import mining_hashrate_resale_details
 
     # SUB-ACCOUNT
     from binance.spot.corporate import sub_account_create
