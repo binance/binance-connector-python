@@ -10,4 +10,5 @@ key = ''
 secret = ''
 
 client = Client(key, secret)
-logging.info(client.futures_loan_adjust_collateral(collateralCoin='BTC', amount=1, direction='ADDITIONAL'))
+logging.info(client.futures_loan_adjust_collateral(loanCoin='BNB', collateralCoin='BTC',
+                                                   amount=1, direction='ADDITIONAL'))
