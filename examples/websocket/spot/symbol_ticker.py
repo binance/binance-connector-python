@@ -15,15 +15,17 @@ def message_handler(message):
 my_client = Client(stream_url='wss://testnet.binance.vision')
 my_client.start()
 
+# Live subscription
 my_client.ticker(
     symbol='bnbusdt',
     id=1,
     callback=message_handler,
 )
 
-my_client.request(['bnbusdt@ticker', 'ethusdt@ticker'], callback=message_handler)
+# Combined subscription
+my_client.instant_subscribe(['bnbusdt@ticker', 'ethusdt@ticker'], callback=message_handler)
 
 time.sleep(2000)
 
-logging.debug("cloing ws connection")
+logging.debug("closing ws connection")
 my_client.stop()
