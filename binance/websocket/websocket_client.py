@@ -1,5 +1,4 @@
 import json
-import logging
 from twisted.internet import reactor
 from binance.websocket.binance_socket_manager import BinanceSocketManager
 
@@ -52,17 +51,10 @@ class BinanceWebsocketClient(BinanceSocketManager):
     def _subscribe(self, stream, id, callback, **kwargs):
 
         combined = False
-        if (self._single_stream(stream)):
+        if self._single_stream(stream):
             stream = [stream]
         else:
             combined = True
-
-        if (isinstance(stream, str)):
-            stream = [stream]
-        elif (isinstance(stream, list)):
-            combined = True
-        else:
-            raise ValueError("Invalid stream name, expect string or array")
 
         data = {
             'method': 'SUBSCRIBE',
@@ -76,9 +68,9 @@ class BinanceWebsocketClient(BinanceSocketManager):
         return self._start_socket(stream_name, payload, callback, is_combined=combined, is_live=True)
 
     def _single_stream(self, stream):
-        if (isinstance(stream, str)):
+        if isinstance(stream, str):
             return True
-        elif (isinstance(stream, list)):
+        elif isinstance(stream, list):
             return False
         else:
             raise ValueError("Invalid stream name, expect string or array")
