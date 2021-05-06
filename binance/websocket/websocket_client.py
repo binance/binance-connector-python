@@ -15,7 +15,7 @@ class BinanceWebsocketClient(BinanceSocketManager):
         finally:
             reactor.stop()
 
-    def live_subscribe(self, stream, callback, **kwargs):
+    def live_subscribe(self, stream, id, callback, **kwargs):
         """ live subscribe websocket
         Connect to the server
         - SPOT: wss://stream.binance.com:9443/ws
@@ -26,7 +26,7 @@ class BinanceWebsocketClient(BinanceSocketManager):
         {"method": "SUBSCRIBE","params":["btcusdt@miniTicker"],"id": 100}
 
         """
-        self._subscribe(stream, callback, **kwargs)
+        self._subscribe(stream, id, callback, **kwargs)
 
     def instant_subscribe(self, stream, callback, **kwargs):
         """ Instant subscribe, e.g.
@@ -49,7 +49,7 @@ class BinanceWebsocketClient(BinanceSocketManager):
         stream_name = "-".join(stream)
         return self._start_socket(stream_name, payload, callback, is_combined=combined, is_live=False)
 
-    def _subscribe(self, stream, callback, **kwargs):
+    def _subscribe(self, stream, id, callback, **kwargs):
 
         combined = False
         if (self._single_stream(stream)):
@@ -66,7 +66,8 @@ class BinanceWebsocketClient(BinanceSocketManager):
 
         data = {
             'method': 'SUBSCRIBE',
-            "params": stream
+            'params': stream,
+            'id': id
         }
 
         data.update(**kwargs)
