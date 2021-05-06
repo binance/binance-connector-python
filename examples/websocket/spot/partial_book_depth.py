@@ -35,5 +35,5 @@ my_client.partial_book_depth(
 
 time.sleep(30)
 
-logging.debug("cloing ws connection")
+logging.debug("closing ws connection")
 my_client.stop()

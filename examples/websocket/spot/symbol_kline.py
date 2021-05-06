@@ -33,4 +33,5 @@ my_client.kline(
 
 time.sleep(10)
 
+logging.debug("closing ws connection")
 my_client.stop()

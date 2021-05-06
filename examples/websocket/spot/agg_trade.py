@@ -31,4 +31,5 @@ my_client.agg_trade(
 
 time.sleep(5)
 
+logging.debug("closing ws connection")
 my_client.stop()

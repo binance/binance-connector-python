@@ -32,5 +32,5 @@ ws_client.user_data(
 
 time.sleep(30)
 
-logging.debug("cloing ws connection")
+logging.debug("closing ws connection")
 ws_client.stop()

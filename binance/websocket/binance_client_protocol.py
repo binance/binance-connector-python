@@ -36,7 +36,7 @@ class BinanceClientProtocol(WebSocketClientProtocol):
     def onPing(self, payload):
         logging.info('Received Ping from server')
         self.sendPong()
-        logging.info('Reponsed Pong to server')
+        logging.info('Responded Pong to server')
 
     def onPong(self, payload):
         logging.info('Received Pong from server')

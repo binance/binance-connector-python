@@ -81,7 +81,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
     def ticker(self, id: int, callback, symbol=None, **kwargs):
         """ Individual symbol or all symbols ticker
 
-        24hr rollwing window ticker statistics for a single symbol.
+        24hr rolling window ticker statistics for a single symbol.
         These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs.
 
         Stream Name: <symbol>@ticker or
