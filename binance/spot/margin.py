@@ -472,32 +472,6 @@ def margin_max_transferable(self, asset: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/margin/maxBorrowable', payload)
 
 
-def new_isolated_margin_account(self, base: str, quote: str, **kwargs):
-    """ Create Isolated Margin Account (MARGIN)
-
-    POST /sapi/v1/margin/isolated/create
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-max-transfer-out-amount-user_data
-
-    Parameters:
-    | base       | mandatory | string | Base aseet of symbol  |
-    | quote      | mandatory | string | Quote asset of symbol |
-    | recvWindow | optional  | int    |                       |
-    """
-
-    check_required_parameters([
-        [base, 'base'],
-        [quote, 'quote']
-    ])
-
-    payload = {
-        'base': base,
-        'quote': quote,
-        **kwargs
-    }
-    return self.sign_request('POST', '/sapi/v1/margin/isolated/create', payload)
-
-
 def isolated_margin_transfer(self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs):
     """ Isolated Margin Account Transfer (MARGIN)
 

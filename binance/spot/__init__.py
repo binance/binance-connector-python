@@ -73,7 +73,6 @@ class Spot(API):
     from binance.spot.margin import margin_my_trades
     from binance.spot.margin import margin_max_borrowable
     from binance.spot.margin import margin_max_transferable
-    from binance.spot.margin import new_isolated_margin_account
     from binance.spot.margin import isolated_margin_transfer
     from binance.spot.margin import isolated_margin_transfer_history
     from binance.spot.margin import isolated_margin_account
