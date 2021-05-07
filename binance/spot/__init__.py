@@ -123,7 +123,7 @@ class Spot(API):
     from binance.spot.mining import mining_coin_list
     from binance.spot.mining import mining_worker
     from binance.spot.mining import mining_worker_list
-    from binance.spot.mining import mining_revenue_list
+    from binance.spot.mining import mining_earnings_list
     from binance.spot.mining import mining_bonus_list
     from binance.spot.mining import mining_statistics_list
     from binance.spot.mining import mining_account_list

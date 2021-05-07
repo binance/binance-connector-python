@@ -60,13 +60,22 @@ def mining_worker_list(self, algo: str, userName: str, **kwargs):
     return self.sign_request('GET', '/sapi/v1/mining/worker/list', payload)
 
 
-def mining_revenue_list(self, algo: str, userName: str, **kwargs):
+def mining_earnings_list(self, algo: str, userName: str, **kwargs):
     """ Revenue List (USER_DATA)
 
     GET /sapi/v1/mining/payment/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#revenue-list-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#earnings-list-user_data
 
+    Parameters:
+    | algo       | mandatory | string | Transfer algorithm(sha256)                                |
+    | userName   | mandatory | string | Mining account                                            |
+    | coin       | optional  | string | Coin Name                                                 |
+    | startDate  | optional  | int    | Search date, millisecond timestamp, while empty query all |
+    | endDate    | optional  | int    | Search date, millisecond timestamp, while empty query all |
+    | pageIndex  | optional  | int    | Page number, empty default first page, starting from 1    |
+    | pageSize   | optional  | int    | Number of pages, minimum 10, maximum 200	              |
+    | recvWindow | optional  | int    |                                                           |
     """
     check_required_parameters([
         [algo, 'algo'],
