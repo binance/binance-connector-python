@@ -187,6 +187,7 @@ class Spot(API):
     from binance.spot.blvt import subscription_record
     from binance.spot.blvt import redeem_blvt
     from binance.spot.blvt import redemption_record
+    from binance.spot.blvt import user_limit_info
 
     # BSwap
     from binance.spot.bswap import bswap_pools
