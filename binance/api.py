@@ -1,11 +1,8 @@
 import hmac
-import json
 import logging
 import hashlib
 import requests
 from . import version
-from urllib.parse import urlencode
-from json.decoder import JSONDecodeError
 from binance.error import ClientError, ServerError
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue

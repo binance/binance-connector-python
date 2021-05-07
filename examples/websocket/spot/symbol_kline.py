@@ -15,23 +15,23 @@ def message_handler(message):
 my_client = Client()
 my_client.start()
 
-my_client.trade(
-    symbol='bnbusdt',
-    interval='1m',
+my_client.kline(
+    symbol='btcusdt',
     id=1,
-    callback=message_handler,
-)
-
-time.sleep(2)
-
-my_client.trade(
-    symbol='eosusdt',
     interval='1m',
-    id=2,
-    callback=message_handler,
+    callback=message_handler
 )
 
-time.sleep(30)
+time.sleep(5)
+
+my_client.kline(
+    symbol='bnbusdt',
+    id=2,
+    interval='3m',
+    callback=message_handler
+)
+
+time.sleep(10)
 
 logging.debug("closing ws connection")
 my_client.stop()
