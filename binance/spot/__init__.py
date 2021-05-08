@@ -73,7 +73,6 @@ class Spot(API):
     from binance.spot.margin import margin_my_trades
     from binance.spot.margin import margin_max_borrowable
     from binance.spot.margin import margin_max_transferable
-    from binance.spot.margin import new_isolated_margin_account
     from binance.spot.margin import isolated_margin_transfer
     from binance.spot.margin import isolated_margin_transfer_history
     from binance.spot.margin import isolated_margin_account
@@ -124,7 +123,7 @@ class Spot(API):
     from binance.spot.mining import mining_coin_list
     from binance.spot.mining import mining_worker
     from binance.spot.mining import mining_worker_list
-    from binance.spot.mining import mining_revenue_list
+    from binance.spot.mining import mining_earnings_list
     from binance.spot.mining import mining_bonus_list
     from binance.spot.mining import mining_statistics_list
     from binance.spot.mining import mining_account_list
@@ -188,6 +187,7 @@ class Spot(API):
     from binance.spot.blvt import subscription_record
     from binance.spot.blvt import redeem_blvt
     from binance.spot.blvt import redemption_record
+    from binance.spot.blvt import user_limit_info
 
     # BSwap
     from binance.spot.bswap import bswap_pools

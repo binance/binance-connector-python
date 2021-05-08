@@ -108,3 +108,16 @@ def redemption_record(self, **kwargs):
     return self.sign_request('GET', '/sapi/v1/blvt/redeem/record', kwargs)
 
 
+def user_limit_info(self, **kwargs):
+    """Get BLVT User Limit Info
+
+    GET /sapi/v1/blvt/userLimit
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-blvt-user-limit-info
+
+    Parameters:
+    | tokenName  | optional  | string | BTCDOWN, BTCUP         |
+    | recvWindow | optional  | int    |                        |
+    """
+
+    return self.sign_request('GET', '/sapi/v1/blvt/userLimit', kwargs)
