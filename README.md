@@ -151,7 +151,7 @@ the returns will be like:
 
 ```
 
-When server returns ClientError, which include the whole header information. The weight usage can be extract from it.
+When server returns `ClientError`, which include the whole header information. The weight usage can be extract from it.
 
 ### Display logs
 Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
