@@ -42,22 +42,6 @@ def sub_account_list(self, **kwargs):
     return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/list', kwargs)
 
 
-def sub_account_transfer_history(self, email: str, **kwargs):
-    """ Query Sub-account Transfer History(For Master Account)
-    Fetch transfer history list
-
-    GET /sapi/v1/sub-account/sub/transfer/history
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-spot-asset-transfer-history-for-master-account
-
-    """
-
-    check_required_parameter(email, 'email')
-    payload = {'email': email, **kwargs}
-
-    return self.limited_encoded_sign_request('GET', '/sapi/v1/sub-account/sub/transfer/history', payload)
-
-
 def sub_account_assets(self, email: str, **kwargs):
     """ Query Sub-account Assets(For Master Account)
     Fetch sub-account assets
