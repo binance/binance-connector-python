@@ -15,7 +15,7 @@ def message_handler(message):
     print(message)
 
 
-api_key = ''
+api_key = 'ZF11MFDtNqATV0jJQ7LlM3ERfMa9mCEemeKYYKJXG0IhGQw4PHYcLXzMbPeSTaXh'
 client = Client(api_key, base_url='https://testnet.binance.vision')
 response = client.new_listen_key()
 
@@ -26,7 +26,7 @@ ws_client.start()
 
 ws_client.user_data(
     listen_key=response['listenKey'],
-    id=1,
+    # id=1,
     callback=message_handler,
 )
 
