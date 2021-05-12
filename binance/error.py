@@ -3,7 +3,8 @@ class Error(Exception):
 
 
 class ClientError(Error):
-    def __init__(self, status_code, message):
+    def __init__(self, header, status_code, message):
+        self.header = header
         self.status_code = status_code
         self.message = message
 
