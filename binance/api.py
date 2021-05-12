@@ -139,9 +139,8 @@ class API(object):
 
     def _handle_exception(self, response):
         status_code = response.status_code
-        if (status_code < 400):
+        if status_code < 400:
             return
-
-        if (status_code >= 400 and status_code < 500):
-            raise ClientError(status_code, response.text)
+        if 400 <= status_code < 500:
+            raise ClientError(status_code, response.text, response.headers)
         raise ServerError(status_code, response.text)
