@@ -29,7 +29,7 @@ def test_sub_account_transfer_history_without_email():
         '').should.throw(ParameterRequiredError)
 
 
-@mock_http_response(responses.GET, '/wapi/v3/sub-account/transfer/history.html\\?email=alice@test.com&' + urlencode(params), mock_item, 200)
+@mock_http_response(responses.GET, '/sapi/v1/sub-account/sub/transfer/history\\?email=alice@test.com&' + urlencode(params), mock_item, 200)
 def test_sub_account_transfer_history():
     """ Tests the API endpoint to get transfer history """
 
