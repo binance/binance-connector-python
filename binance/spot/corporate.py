@@ -6,7 +6,7 @@ def sub_account_create(self, subAccountString: str, **kwargs):
     """ Create a Virtual Sub-account(For Master Account)
     Generate a virtual sub account under the master account
 
-    Parameteres:
+    Parameters:
     | subAccountString | mandatory | string | Sub-account string |
     | recvWindow       | optional  | int    |                    |
 
@@ -26,7 +26,7 @@ def sub_account_list(self, **kwargs):
     """ Query Sub-account List(For Master Account)
     Fetch sub account list.
 
-    Parameteres:
+    Parameters:
     | email      | optional | string | Sub-account email   |
     | isFreeze   | optional | string | true or false       |
     | page       | optional | int    | default 1           |
