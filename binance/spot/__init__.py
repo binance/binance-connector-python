@@ -133,33 +133,33 @@ class Spot(API):
     from binance.spot.mining import mining_hashrate_resale_details
 
     # SUB-ACCOUNT
-    from binance.spot.corporate import sub_account_create
-    from binance.spot.corporate import sub_account_list
-    from binance.spot.corporate import sub_account_transfer_history
-    from binance.spot.corporate import sub_account_transfer
-    from binance.spot.corporate import sub_account_assets
-    from binance.spot.corporate import sub_account_deposit_address
-    from binance.spot.corporate import sub_account_deposit_history
-    from binance.spot.corporate import sub_account_status
-    from binance.spot.corporate import sub_account_enable_margin
-    from binance.spot.corporate import sub_account_margin_account
-    from binance.spot.corporate import sub_account_margin_account_summary
-    from binance.spot.corporate import sub_account_enable_futures
-    from binance.spot.corporate import sub_account_futures_transfer
-    from binance.spot.corporate import sub_account_margin_transfer
-    from binance.spot.corporate import sub_account_transfer_to_sub
-    from binance.spot.corporate import sub_account_transfer_to_master
-    from binance.spot.corporate import sub_account_transfer_sub_account_history
-    from binance.spot.corporate import sub_account_futures_asset_transfer_history
-    from binance.spot.corporate import sub_account_futures_asset_transfer
-    from binance.spot.corporate import sub_account_spot_summary
-    from binance.spot.corporate import sub_account_universal_transfer
-    from binance.spot.corporate import sub_account_universal_transfer_history
-    from binance.spot.corporate import sub_account_futures_account
-    from binance.spot.corporate import sub_account_futures_account_summary
-    from binance.spot.corporate import sub_account_futures_position_risk
-    from binance.spot.corporate import sub_account_spot_transfer_history
-    from binance.spot.corporate import sub_account_enable_leverage_token
+    from binance.spot.sub_account import sub_account_create
+    from binance.spot.sub_account import sub_account_list
+    from binance.spot.sub_account import sub_account_transfer_history
+    from binance.spot.sub_account import sub_account_transfer
+    from binance.spot.sub_account import sub_account_assets
+    from binance.spot.sub_account import sub_account_deposit_address
+    from binance.spot.sub_account import sub_account_deposit_history
+    from binance.spot.sub_account import sub_account_status
+    from binance.spot.sub_account import sub_account_enable_margin
+    from binance.spot.sub_account import sub_account_margin_account
+    from binance.spot.sub_account import sub_account_margin_account_summary
+    from binance.spot.sub_account import sub_account_enable_futures
+    from binance.spot.sub_account import sub_account_futures_transfer
+    from binance.spot.sub_account import sub_account_margin_transfer
+    from binance.spot.sub_account import sub_account_transfer_to_sub
+    from binance.spot.sub_account import sub_account_transfer_to_master
+    from binance.spot.sub_account import sub_account_transfer_sub_account_history
+    from binance.spot.sub_account import sub_account_futures_asset_transfer_history
+    from binance.spot.sub_account import sub_account_futures_asset_transfer
+    from binance.spot.sub_account import sub_account_spot_summary
+    from binance.spot.sub_account import sub_account_universal_transfer
+    from binance.spot.sub_account import sub_account_universal_transfer_history
+    from binance.spot.sub_account import sub_account_futures_account
+    from binance.spot.sub_account import sub_account_futures_account_summary
+    from binance.spot.sub_account import sub_account_futures_position_risk
+    from binance.spot.sub_account import sub_account_spot_transfer_history
+    from binance.spot.sub_account import sub_account_enable_leverage_token
 
     # Futures
     from binance.spot.futures import futures_transfer
