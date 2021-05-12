@@ -142,5 +142,5 @@ class API(object):
         if status_code < 400:
             return
         if 400 <= status_code < 500:
-            raise ClientError(response.headers, status_code, response.text)
+            raise ClientError(status_code, response.text, response.headers)
         raise ServerError(status_code, response.text)
