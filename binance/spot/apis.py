@@ -224,7 +224,8 @@ def book_ticker(self, symbol: str = None):
 def new_order_test(self, **kwargs):
     """ Test New Order (TRADE)
 
-    Test new order creation and signature/recvWindow long. Creates and validates a new order but does not send it into the matching engine.
+    Test new order creation and signature/recvWindow long. Creates and validates a new order but does not send it into
+    the matching engine.
 
     POST /api/v3/order/test
 

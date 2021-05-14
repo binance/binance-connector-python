@@ -14,7 +14,7 @@ listen_key = random_str()
 
 
 def test_close_listen_key_without_key():
-    """ Tests the API endpoint to close listenkey without the key """
+    """ Tests the API endpoint to close listen key without the key """
 
     client = Client(key)
     client.close_listen_key.when.called_with(
@@ -22,8 +22,8 @@ def test_close_listen_key_without_key():
 
 
 @mock_http_response(responses.DELETE, '/api/v3/userDataStream\\?listenKey=' + listen_key, mock_exception, 400)
-def test_rewnew_listen_key_with_wrong_key():
-    """ Tests the API endpoint to renew listekn key with wrong key """
+def test_renew_listen_key_with_wrong_key():
+    """ Tests the API endpoint to renew listen key with wrong key """
 
     client = Client(key)
     client.close_listen_key.when.called_with(
@@ -31,8 +31,8 @@ def test_rewnew_listen_key_with_wrong_key():
 
 
 @mock_http_response(responses.DELETE, '/api/v3/userDataStream\\?listenKey=' + listen_key, mock_item, 200)
-def test_rewnew_listen_key():
-    """ Tests the API endpoint to renew an existing  listen key """
+def test_renew_listen_key():
+    """ Tests the API endpoint to renew an existing listen key """
 
     client = Client(key)
     response = client.close_listen_key(listen_key)
