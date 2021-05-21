@@ -25,4 +25,4 @@ try:
     response = client.test_new_order(**params)
     logging.info(response)
 except ClientError as error:
-    logging.error('error happens, status: {}, code: {}, message: {}'.format(error.status_code, error.code, error.message))
+    logging.error('Found error. status: {}, error code: {}, error message: {}'.format(error.status_code, error.error_code, error.error_message))

@@ -1,4 +1,5 @@
 import hmac
+import json
 import logging
 import hashlib
 import requests
@@ -71,7 +72,7 @@ class API(object):
 
     def limited_encoded_sign_request(self, http_method, url_path, payload={}):
         """ This is used for some endpoints has special symbol in the url.
-        we don't know why some symbols are not encoded in the server side, but in some endpoints these symbols should not encoded
+        In some endpoints these symbols should not encoded
         - @
         - [
         - ]
@@ -129,7 +130,6 @@ class API(object):
         return m.hexdigest()
 
     def _dispatch_request(self, http_method):
-
         return {
             'GET': self.session.get,
             'DELETE': self.session.delete,
@@ -142,5 +142,9 @@ class API(object):
         if status_code < 400:
             return
         if 400 <= status_code < 500:
-            raise ClientError(status_code, response.text, response.headers)
+            try:
+                err = json.loads(response.text)
+            except TypeError:
+                raise ClientError(status_code, None, response.text, response.headers)
+            raise ClientError(status_code, err['code'], err['msg'], response.headers)
         raise ServerError(status_code, response.text)

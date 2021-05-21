@@ -2,11 +2,13 @@
 
 This is a thin library that working as a connector to the Binance public API.
 
-- aiming to support all endpoints
+- supported endpoints includes:
+    - `/api/*`
+    - `/sapi/*`
 - thin layer, easy to use
-- test cases included
 - enable to change base url
 - display weight usage or whole response header
+- test cases included
 
 ## RESTful APIs
 
@@ -157,6 +159,17 @@ When server returns `ClientError`, which include the whole header information. T
 Set log level to `DEBUG`, it will show request url and payload, also the response text will be logged.
 Known what parameters and the values sending to server is essential during debug.
 
+### Error
+There are 2 types of error returned from the library:
+- `binance.error.ClientError`
+    - This is thrown when server return `4XX`, it's an issue from client side.
+    - It has 4 properties
+        - `status_code` the http status code
+        - `error_code` the error code returned from server, e.g. `-1102`
+        - `error_message` the error message returned from server, e.g. `Unknown order sent.`
+        - `header` the whole response header. 
+- `binance.error.ServerError`
+    - This is thrown when server return `5XX`, it's an issue from server side.
 
 ## Websocket
 
