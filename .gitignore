@@ -1,0 +1,19 @@
+build
+dist
+binance_connector.egg-info/
+__pycache__
+*.pyc
+.tox
+.python-version
+.DS_Store
+
+# Environments
+.env
+.venv
+
+# IDE
+.idea/
+.vscode/
+
+# document build
+docs/build/
