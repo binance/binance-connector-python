@@ -5,9 +5,12 @@ name: Python package
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
   pull_request:
-    branches: [ master ]
+    branches: 
+      - master
+      - rc-**
 
 jobs:
   build:

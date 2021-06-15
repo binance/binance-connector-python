@@ -3,12 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. include:: README.rst
+.. include:: intro.rst
 
+Contents
+=========
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
+   CHANGELOG
+   getting_started
    binance.spot
    binance.websocket.spot
 

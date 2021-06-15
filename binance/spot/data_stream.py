@@ -14,7 +14,7 @@ def new_listen_key(self):
 
 
 def renew_listen_key(self, listenKey: str):
-    """Create a ListenKey (USER_STREAM)
+    """Ping/Keep-alive a ListenKey (USER_STREAM)
 
     PUT /api/v3/userDataStream
 

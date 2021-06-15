@@ -54,3 +54,5 @@ html_static_path = ["_static"]
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
+
+add_module_names = False
