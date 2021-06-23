@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 - 2021-06-24
+
+### Change
+- Upgrade the dependency packages
 ## 1.1.0 - 2021-06-23
 ### Added
 - A link to the document on `README.md`
