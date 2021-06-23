@@ -8,7 +8,7 @@ from binance.lib.utils import check_required_parameters
 
 
 def futures_transfer(self, asset: str, amount: float, type: int, **kwargs):
-    """New Future Account Transfer (FUTURES)
+    """New Future Account Transfer (USER_DATA)
     Execute transfer between spot account and futures account.
 
     POST /sapi/v1/futures/transfer

@@ -157,6 +157,9 @@ class Spot(API):
     from binance.spot.sub_account import sub_account_futures_position_risk
     from binance.spot.sub_account import sub_account_spot_transfer_history
     from binance.spot.sub_account import sub_account_enable_leverage_token
+    from binance.spot.sub_account import managed_sub_account_deposit
+    from binance.spot.sub_account import managed_sub_account_assets
+    from binance.spot.sub_account import managed_sub_account_withdraw
 
     # Futures
     from binance.spot.futures import futures_transfer

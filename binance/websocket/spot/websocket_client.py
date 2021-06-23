@@ -1,5 +1,3 @@
-import json
-from twisted.internet import reactor
 from binance.websocket.websocket_client import BinanceWebsocketClient
 
 

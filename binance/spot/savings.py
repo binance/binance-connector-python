@@ -12,6 +12,8 @@ def savings_flexible_products(self, **kwargs):
     Keyword Args:
         status (str, optional): "ALL", "SUBSCRIBABLE", "UNSUBSCRIBABLE"; default "ALL"
         featured (str, optional): "ALL", "true"; default "ALL"
+        current (int, optional): Current query page. Default: 1, Min: 1
+        size (int, optional): Default: 50, Max: 100
         recvWindow (int, optional): The value cannot be greater than 60000
 
     """

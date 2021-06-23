@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 NAME = "binance-connector"
 DESCRIPTION = (
-    "This is a thin library that works as a connector to the Binance public API."
+    "This is a lightweight library that works as a connector to Binance public API."
 )
 AUTHOR = "Binance"
 URL = "https://github.com/binance/binance-connector-python"
