@@ -1,4 +1,4 @@
-autobahn==20.4.3
+autobahn==20.12.3
 Twisted==21.2.0
 requests==2.23.0
 pyOpenSSL==19.0.0
