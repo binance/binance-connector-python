@@ -595,3 +595,74 @@ def sub_account_enable_leverage_token(self, email: str, enableBlvt: bool, **kwar
     return self.limited_encoded_sign_request(
         "POST", "/sapi/v1/sub-account/blvt/enable", payload
     )
+
+
+def managed_sub_account_deposit(
+    self, toEmail: str, asset: str, amount: float, **kwargs
+):
+    """Deposit assets into the managed sub-account（For Investor Master Account）
+
+    POST /sapi/v1/managed-subaccount/deposit
+
+    https://binance-docs.github.io/apidocs/spot/en/#deposit-assets-into-the-managed-sub-account-for-investor-master-account
+
+    Args:
+        toEmail (str): Sub-account email
+        asset (str)
+        amount (float)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [[toEmail, "toEmail"], [asset, "asset"], [amount, "amount"]]
+    )
+    payload = {"toEmail": toEmail, "asset": asset, "amount": amount, **kwargs}
+    return self.limited_encoded_sign_request(
+        "POST", "/sapi/v1/managed-subaccount/deposit", payload
+    )
+
+
+def managed_sub_account_assets(self, email: str, **kwargs):
+    """Query managed sub-account asset details（For Investor Master Account）
+
+    GET /sapi/v1/managed-subaccount/asset
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-asset-details-for-investor-master-account
+
+    Args:
+        email (str): Sub-account email
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters([[email, "email"]])
+    payload = {"email": email, **kwargs}
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/managed-subaccount/asset", payload
+    )
+
+
+def managed_sub_account_withdraw(
+    self, fromEmail: str, asset: str, amount: float, **kwargs
+):
+    """Withdrawl assets from the managed sub-account（For Investor Master Account）
+
+    POST /sapi/v1/managed-subaccount/withdraw
+
+    https://binance-docs.github.io/apidocs/spot/en/#withdrawl-assets-from-the-managed-sub-account-for-investor-master-account
+
+    Args:
+        fromEmail (str): Sub-account email
+        asset (str)
+        amount (float)
+    Keyword Args:
+        transferDate (int, optional): Withdrawals is automatically occur on the transfer date(UTC0).
+        If a date is not selected, the withdrawal occurs right now
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [[fromEmail, "fromEmail"], [asset, "asset"], [amount, "amount"]]
+    )
+    payload = {"fromEmail": fromEmail, "asset": asset, "amount": amount, **kwargs}
+    return self.limited_encoded_sign_request(
+        "POST", "/sapi/v1/managed-subaccount/withdraw", payload
+    )
