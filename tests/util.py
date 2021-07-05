@@ -6,8 +6,11 @@ import responses
 
 
 def mock_http_response(
-    method, uri, response_data, http_status=200, headers={}, body_data=""
+    method, uri, response_data, http_status=200, headers=None, body_data=""
 ):
+    if headers is None:
+        headers = {}
+
     def decorator(fn):
         @responses.activate
         def wrapper(*args, **kwargs):
