@@ -10,7 +10,6 @@ Installation
 
 .. code-block:: bash
 
-   cd <your_project_directory>
    pip install binance-connector
 
 How to Generate the API key

@@ -2,11 +2,20 @@
 Changelog
 =========
 
+1.2.0 - 2021-07-09
+------------------
+
+Changed
+^^^^^
+
+* Remove default value in the parameters
+
+
 1.1.1 - 2021-06-24
 ------------------
 
 Changed
-
+^^^^^
 
 * Upgrade the dependency packages
 
