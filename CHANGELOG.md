@@ -1,4 +1,8 @@
 # Changelog
+## 1.2.0 - 2021-07-09
+
+### Change
+- Remove default value in the parameters
 
 ## 1.1.1 - 2021-06-24
 
