@@ -63,23 +63,25 @@ class API(object):
 
         return
 
-    def query(self, url_path, payload={}):
+    def query(self, url_path, payload=None):
         return self.send_request("GET", url_path, payload=payload)
 
-    def limit_request(self, http_method, url_path, payload={}):
+    def limit_request(self, http_method, url_path, payload=None):
         """limit request is for those endpoints require API key in the header"""
 
         check_required_parameter(self.key, "apiKey")
         return self.send_request(http_method, url_path, payload=payload)
 
-    def sign_request(self, http_method, url_path, payload={}):
+    def sign_request(self, http_method, url_path, payload=None):
+        if payload is None:
+            payload = {}
         payload["timestamp"] = get_timestamp()
         query_string = self._prepare_params(payload)
         signature = self._get_sign(query_string)
         payload["signature"] = signature
         return self.send_request(http_method, url_path, payload)
 
-    def limited_encoded_sign_request(self, http_method, url_path, payload={}):
+    def limited_encoded_sign_request(self, http_method, url_path, payload=None):
         """This is used for some endpoints has special symbol in the url.
         In some endpoints these symbols should not encoded
         - @
@@ -88,13 +90,17 @@ class API(object):
 
         so we have to append those parameters in the url
         """
+        if payload is None:
+            payload = {}
         payload["timestamp"] = get_timestamp()
         query_string = self._prepare_params(payload)
         signature = self._get_sign(query_string)
         url_path = url_path + "?" + query_string + "&signature=" + signature
         return self.send_request(http_method, url_path)
 
-    def send_request(self, http_method, url_path, payload={}):
+    def send_request(self, http_method, url_path, payload=None):
+        if payload is None:
+            payload = {}
         url = self.base_url + url_path
         logging.debug("url: " + url)
         params = cleanNoneValue(
