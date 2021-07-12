@@ -1,5 +1,5 @@
 # Changelog
-## 1.2.0 - 2021-07-09
+## 1.2.0 - 2021-07-12
 
 ### Change
 - Remove default value in the parameters
