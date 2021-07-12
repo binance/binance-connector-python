@@ -6,7 +6,7 @@ Changelog
 ------------------
 
 Changed
-^^^^^
+^^^^^^^
 
 * Remove default value in the parameters
 
@@ -15,7 +15,7 @@ Changed
 ------------------
 
 Changed
-^^^^^
+^^^^^^^
 
 * Upgrade the dependency packages
 
