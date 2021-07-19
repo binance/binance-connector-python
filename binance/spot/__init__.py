@@ -116,6 +116,8 @@ class Spot(API):
     from binance.spot.wallet import asset_dividend_record
     from binance.spot.wallet import asset_detail
     from binance.spot.wallet import trade_fee
+    from binance.spot.wallet import funding_wallet
+    from binance.spot.wallet import api_key_permissions
 
     # mining
     from binance.spot.mining import mining_algo_list
