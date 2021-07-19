@@ -2,6 +2,18 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+Added
+^^^^^
+
+* New endpoint for Wallet:
+
+  * ``POST /sapi/v1/asset/get-funding-asset`` to query funding wallet, includes Binance Pay, Binance Card, Binance Gift Card, Stock Token
+  * ``GET /sapi/v1/account/apiRestrictions`` to query user API Key permission
+
+
 1.2.0 - 2021-07-12
 ------------------
 
@@ -26,7 +38,6 @@ Changed
 Added
 ^^^^^
 
-
 * A link to the document on ``README.md``
 * Enabled the sub menu on document nav bar.
 * ``GET /sapi/v1/lending/daily/product/list`` includes new parameters, current and size.
@@ -36,11 +47,11 @@ Added
   * ``GET /sapi/v1/managed-subaccount/asset`` to query managed sub-account asset details (only for investor master account)
   * ``POST /sapi/v1/managed-subaccount/withdraw`` to withdrawal assets from the managed sub-account (only for investor master account)
 
+
 1.0.0 - 2021-06-15
 ------------------
 
 Added
 ^^^^^
-
 
 * First release, please find details from ``README.md``
