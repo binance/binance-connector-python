@@ -1,6 +1,6 @@
-Before submitting a new issue, please check if a similar issue have already been filed.
+Before submitting a new issue, please check if a similar issue has already been filed.
 
-### Subject of the issue
+### Issue subject
 Briefly describe your issue here.
 
 
@@ -9,14 +9,14 @@ Describe what should happen.
 
 
 ### Actual behaviour
-Describe what happens instead. Please include complete failure message.
+Describe what happens instead. Please include the complete failure message.
 
 
-### Steps to Reproduce
-Give detailed steps to let us know how we can reproduce the issue.
+### Steps to reproduce
+Provide steps to let us know how we can reproduce this issue.
 
 
 ### Environment
 Provide any relevant information about your setup, such as:
-* binance-connector-python version
+* Version of binance-connector-python
 * Operating system
