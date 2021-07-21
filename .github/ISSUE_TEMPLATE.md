@@ -19,4 +19,5 @@ Provide steps to let us know how we can reproduce this issue.
 ### Environment
 Provide any relevant information about your setup, such as:
 * Version of binance-connector-python
+* Python version
 * Operating system
