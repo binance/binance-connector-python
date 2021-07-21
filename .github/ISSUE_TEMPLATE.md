@@ -1,7 +1,7 @@
 Before submitting a new issue, please check if a similar issue has already been filed.
 
 ### Issue subject
-Briefly describe your issue here.
+Briefly describe the issue here.
 
 
 ### Expected behaviour
