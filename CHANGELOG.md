@@ -1,4 +1,12 @@
 # Changelog
+
+## Unreleased
+
+### Added
+- New endpoints for Wallet:
+    - `POST /sapi/v1/asset/get-funding-asset` to query funding wallet, includes Binance Pay, Binance Card, Binance Gift Card, Stock Token
+    - `GET /sapi/v1/account/apiRestrictions` to query user API Key permission
+    
 ## 1.2.0 - 2021-07-12
 
 ### Change
@@ -10,6 +18,7 @@
 - Upgrade the dependency packages
 
 ## 1.1.0 - 2021-06-23
+
 ### Added
 - A link to the document on `README.md`
 - Enabled the sub menu on document nav bar.

@@ -330,3 +330,33 @@ def trade_fee(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/asset/tradeFee", kwargs)
+
+
+def funding_wallet(self, **kwargs):
+    """Funding Wallet (USER_DATA)
+
+    POST /sapi/v1/asset/get-funding-asset
+
+    https://binance-docs.github.io/apidocs/spot/en/#funding-wallet-user_data
+
+    Keyword Args:
+        asset (str, optional)
+        needBtcValuation (str, optional): true or false
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("POST", "/sapi/v1/asset/get-funding-asset", kwargs)
+
+
+def api_key_permissions(self, **kwargs):
+    """Get API Key Permission (USER_DATA)
+
+    GET /sapi/v1/account/apiRestrictions
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-api-key-permission-user_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/account/apiRestrictions", kwargs)

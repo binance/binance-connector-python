@@ -72,3 +72,11 @@ Asset Detail (USER_DATA)
 Trade Fee (USER_DATA)
 ---------------------
 .. autofunction:: binance.spot.wallet.trade_fee
+
+Funding Wallet (USER_DATA)
+--------------------------
+.. autofunction:: binance.spot.wallet.funding_wallet
+
+API Key Permission (USER_DATA)
+------------------------------
+.. autofunction:: binance.spot.wallet.api_key_permissions
