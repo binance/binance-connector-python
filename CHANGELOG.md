@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+## 1.3.0 - 2021-07-22
 ### Added
 - New endpoints for Wallet:
     - `POST /sapi/v1/asset/get-funding-asset` to query funding wallet, includes Binance Pay, Binance Card, Binance Gift Card, Stock Token
