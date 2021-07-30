@@ -21,7 +21,7 @@ pip install binance-connector
 
 ## Documentation
 
-[https://binance-connector.readthedocs.io/en/latest/](https://binance-connector.readthedocs.io/en/latest/)
+[https://binance-connector.readthedocs.io](https://binance-connector.readthedocs.io)
 
 ## RESTful APIs
 
