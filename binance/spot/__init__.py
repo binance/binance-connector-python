@@ -200,3 +200,7 @@ class Spot(API):
     from binance.spot.bswap import bswap_request_quote
     from binance.spot.bswap import bswap_swap
     from binance.spot.bswap import bswap_swap_history
+
+    # Fiat
+    from binance.spot.fiat import fiat_order_history
+    from binance.spot.fiat import fiat_payment_history

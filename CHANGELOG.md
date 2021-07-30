@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+- New Fiat endpoints
+    - `GET /sapi/v1/fiat/orders` to query user fiat deposit and withdraw history 
+    - `GET /sapi/v1/fiat/payments` to query user fiat payments history 
+
 ## 1.3.0 - 2021-07-22
 ### Added
 - New endpoints for Wallet:
