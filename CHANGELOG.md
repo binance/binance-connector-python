@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.4.0 - 2021-07-30
+
 ### Added
 - New Fiat endpoints
     - `GET /sapi/v1/fiat/orders` to query user fiat deposit and withdraw history 
