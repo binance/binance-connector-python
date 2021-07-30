@@ -29,7 +29,7 @@ def test_margin_max_transferable_without_asset():
 
 @mock_http_response(
     responses.GET,
-    "/sapi/v1/margin/maxBorrowable\\?" + urlencode(params),
+    "/sapi/v1/margin/maxTransferable\\?" + urlencode(params),
     mock_item,
     200,
 )

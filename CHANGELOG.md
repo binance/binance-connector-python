@@ -7,6 +7,9 @@
     - `GET /sapi/v1/fiat/orders` to query user fiat deposit and withdraw history 
     - `GET /sapi/v1/fiat/payments` to query user fiat payments history 
 
+### Fixed
+ - Typo in `margin_max_transferable`
+
 ## 1.3.0 - 2021-07-22
 ### Added
 - New endpoints for Wallet:

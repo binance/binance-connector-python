@@ -475,7 +475,7 @@ def margin_max_transferable(self, asset: str, **kwargs):
 
     check_required_parameter(asset, "asset")
     payload = {"asset": asset, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/margin/maxBorrowable", payload)
+    return self.sign_request("GET", "/sapi/v1/margin/maxTransferable", payload)
 
 
 def isolated_margin_transfer(
