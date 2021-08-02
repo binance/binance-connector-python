@@ -1,6 +1,10 @@
 import os
 from setuptools import setup, find_packages
 
+with open(
+    os.path.join(os.path.dirname(__file__), "requirements/common.txt"), "r"
+) as fh:
+    requirements = fh.readlines()
 
 NAME = "binance-connector"
 DESCRIPTION = (
@@ -33,13 +37,7 @@ setup(
     AUTHOR=AUTHOR,
     url=URL,
     keywords=["Binance", "Public API"],
-    install_requires=[
-        "autobahn",
-        "pyOpenSSL",
-        "requests",
-        "service-identity",
-        "Twisted",
-    ],
+    install_requires=[req for req in requirements],
     packages=find_packages(exclude=("tests",)),
     classifiers=[
         "Intended Audience :: Developers",
