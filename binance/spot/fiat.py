@@ -1,3 +1,6 @@
+from binance.lib.utils import check_required_parameter
+
+
 def fiat_order_history(self, transactionType: int, **kwargs):
     """Get Fiat Deposit/Withdraw History (USER_DATA)
 
@@ -15,6 +18,7 @@ def fiat_order_history(self, transactionType: int, **kwargs):
       recvWindow (int, optional): The value cannot be greater than 60000
     """
 
+    check_required_parameter(transactionType, "transactionType")
     payload = {"transactionType": transactionType, **kwargs}
     return self.sign_request("GET", "/sapi/v1/fiat/orders", payload)
 
@@ -36,5 +40,6 @@ def fiat_payment_history(self, transactionType: int, **kwargs):
       recvWindow (int, optional): The value cannot be greater than 60000
     """
 
+    check_required_parameter(transactionType, "transactionType")
     payload = {"transactionType": transactionType, **kwargs}
     return self.sign_request("GET", "/sapi/v1/fiat/payments", payload)
