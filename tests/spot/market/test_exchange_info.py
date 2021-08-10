@@ -41,6 +41,4 @@ def test_exchange_info_invalid_type_symbols():
 
     api = Client()
     symbols = {"symbol1", "symbol2", "symbol3"}
-    api.exchange_info.when.called_with(
-        symbols=symbols
-    ).should.throw(ParameterTypeError)
+    api.exchange_info.when.called_with(symbols=symbols).should.throw(ParameterTypeError)
