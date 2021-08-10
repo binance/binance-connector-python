@@ -5,8 +5,8 @@ Changelog
 Unreleased
 ----------
 
-Change
-^^^^^^
+Changed
+^^^^^^^
 
 
 * GET api/v3/exchangeInfo now supports single or multi-symbol query
@@ -44,8 +44,8 @@ Added
 1.2.0 - 2021-07-12
 ------------------
 
-Change
-^^^^^^
+Changed
+^^^^^^^
 
 
 * Remove default value in the parameters
@@ -53,8 +53,8 @@ Change
 1.1.1 - 2021-06-24
 ------------------
 
-Change
-^^^^^^
+Changed
+^^^^^^^
 
 
 * Upgrade the dependency packages

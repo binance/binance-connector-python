@@ -48,6 +48,8 @@ def exchange_info(self, symbol: str = None, symbols: list = None):
     """
 
     url_path = "/api/v3/exchangeInfo"
+    if symbol and symbols:
+        raise ValueError("symbol and symbols cannot be sent together")
     if symbols is not None:
         check_type_parameter(symbols, "symbols", list)
     params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
