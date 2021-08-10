@@ -1,6 +1,10 @@
 from binance.error import ParameterRequiredError, ParameterTypeError
 from binance.error import ParameterValueError
-from binance.lib.utils import check_required_parameter, check_type_parameter, convert_list_to_json_array
+from binance.lib.utils import (
+    check_required_parameter,
+    check_type_parameter,
+    convert_list_to_json_array,
+)
 from binance.lib.utils import check_required_parameters
 from binance.lib.utils import check_enum_parameter
 from binance.lib.utils import encoded_string
@@ -66,9 +70,9 @@ def test_pass_check_type_parameter():
 
 def test_fail_check_type_parameter():
     value = []
-    check_type_parameter.when.called_with(
-        value, "value", dict
-    ).should.throw(ParameterTypeError)
+    check_type_parameter.when.called_with(value, "value", dict).should.throw(
+        ParameterTypeError
+    )
 
 
 def test_encode_query_string():
@@ -80,4 +84,4 @@ def test_encode_query_without_email_symbol():
 
 
 def test_convert_list_to_json_array():
-    convert_list_to_json_array(["symbol"]).should.equal("[\"symbol\"]")
+    convert_list_to_json_array(["symbol"]).should.equal('["symbol"]')
