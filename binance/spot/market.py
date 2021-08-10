@@ -1,4 +1,8 @@
-from binance.lib.utils import check_required_parameter
+from binance.lib.utils import (
+    check_required_parameter,
+    check_type_parameter,
+    convert_list_to_json_array,
+)
 from binance.lib.utils import check_required_parameters
 
 
@@ -30,7 +34,7 @@ def time(self):
     return self.query(url_path)
 
 
-def exchange_info(self):
+def exchange_info(self, symbol: str = None, symbols: list = None):
     """Exchange Information
     Current exchange trading rules and symbol information
 
@@ -38,10 +42,16 @@ def exchange_info(self):
 
     https://binance-docs.github.io/apidocs/spot/en/#exchange-information
 
+     Args:
+        symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
     """
 
     url_path = "/api/v3/exchangeInfo"
-    return self.query(url_path)
+    if symbols is not None:
+        check_type_parameter(symbols, "symbols", list)
+    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
+    return self.query(url_path, params)
 
 
 def depth(self, symbol: str, **kwargs):

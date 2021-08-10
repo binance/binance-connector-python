@@ -1,7 +1,12 @@
+import json
 import time
 
 from urllib.parse import urlencode
-from binance.error import ParameterRequiredError, ParameterValueError
+from binance.error import (
+    ParameterRequiredError,
+    ParameterValueError,
+    ParameterTypeError,
+)
 
 
 def cleanNoneValue(d) -> dict:
@@ -34,12 +39,22 @@ def check_enum_parameter(value, enum_class):
         raise ParameterValueError([value])
 
 
+def check_type_parameter(value, name, data_type):
+    if type(value) != data_type:
+        raise ParameterTypeError([name, data_type])
+
+
 def get_timestamp():
     return int(time.time() * 1000)
 
 
 def encoded_string(query):
     return urlencode(query, True).replace("%40", "@")
+
+
+def convert_list_to_json_array(symbols):
+    res = json.dumps(symbols)
+    return res.replace(" ", "")
 
 
 def config_logging(logging, logging_devel, log_file=None):

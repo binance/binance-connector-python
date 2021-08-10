@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Change
+- GET api/v3/exchangeInfo now supports single or multi-symbol query
+
 ## 1.4.0 - 2021-07-30
 
 ### Added
