@@ -45,8 +45,8 @@ class ParameterTypeError(Error):
 
 
 class ParameterArgumentError(Error):
-    def __init__(self, params):
-        self.params = params
+    def __init__(self, error_message):
+        self.error_message = error_message
 
     def __str__(self):
-        return f"{self.params[0]} and {self.params[1]} cannot be sent together."
+        return self.error_message

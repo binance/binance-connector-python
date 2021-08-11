@@ -50,7 +50,7 @@ def exchange_info(self, symbol: str = None, symbols: list = None):
 
     url_path = "/api/v3/exchangeInfo"
     if symbol and symbols:
-        raise ParameterArgumentError(["symbol", "symbols"])
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
     check_type_parameter(symbols, "symbols", list)
     params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query(url_path, params)
