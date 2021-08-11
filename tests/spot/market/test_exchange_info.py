@@ -55,7 +55,7 @@ def test_exchange_info_with_double_parameter():
 
     api = Client()
     symbol = "symbol"
-    symbols = {"symbol1", "symbol2", "symbol3"}
+    symbols = ["symbol1", "symbol2", "symbol3"]
     api.exchange_info.when.called_with(symbol=symbol, symbols=symbols).should.throw(
         ValueError
     )
