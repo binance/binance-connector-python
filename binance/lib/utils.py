@@ -40,7 +40,7 @@ def check_enum_parameter(value, enum_class):
 
 
 def check_type_parameter(value, name, data_type):
-    if type(value) != data_type:
+    if value is not None and type(value) != data_type:
         raise ParameterTypeError([name, data_type])
 
 
@@ -53,6 +53,8 @@ def encoded_string(query):
 
 
 def convert_list_to_json_array(symbols):
+    if symbols is None:
+        return symbols
     res = json.dumps(symbols)
     return res.replace(" ", "")
 

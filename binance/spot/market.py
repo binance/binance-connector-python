@@ -1,3 +1,4 @@
+from binance.error import ParameterArgumentError
 from binance.lib.utils import (
     check_required_parameter,
     check_type_parameter,
@@ -49,9 +50,8 @@ def exchange_info(self, symbol: str = None, symbols: list = None):
 
     url_path = "/api/v3/exchangeInfo"
     if symbol and symbols:
-        raise ValueError("symbol and symbols cannot be sent together")
-    if symbols is not None:
-        check_type_parameter(symbols, "symbols", list)
+        raise ParameterArgumentError(["symbol", "symbols"])
+    check_type_parameter(symbols, "symbols", list)
     params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query(url_path, params)
 

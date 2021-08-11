@@ -1,6 +1,6 @@
 import responses
 
-from binance.error import ParameterTypeError
+from binance.error import ParameterTypeError, ParameterArgumentError
 from tests.util import mock_http_response
 from binance.spot import Spot as Client
 from urllib.parse import urlencode
@@ -57,5 +57,5 @@ def test_exchange_info_with_double_parameter():
     symbol = "symbol"
     symbols = ["symbol1", "symbol2", "symbol3"]
     api.exchange_info.when.called_with(symbol=symbol, symbols=symbols).should.throw(
-        ValueError
+        ParameterArgumentError
     )

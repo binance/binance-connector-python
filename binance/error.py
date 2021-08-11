@@ -41,4 +41,12 @@ class ParameterTypeError(Error):
         self.params = params
 
     def __str__(self):
-        return f"{self.params[0]} data type has to be {self.params[1]} "
+        return f"{self.params[0]} data type has to be {self.params[1]}"
+
+
+class ParameterArgumentError(Error):
+    def __init__(self, params):
+        self.params = params
+
+    def __str__(self):
+        return f"{self.params[0]} and {self.params[1]} cannot be sent together."
