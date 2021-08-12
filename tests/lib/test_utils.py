@@ -35,6 +35,14 @@ def test_pass_check_required_parameters():
     ).should_not.throw(ParameterRequiredError)
 
 
+def test_pass_check_required_parameter_value_0():
+    check_required_parameters([[0, "transactionType"]])
+
+
+def test_pass_check_required_parameter_value_1():
+    check_required_parameters([[1, "transactionType"]])
+
+
 def test_pass_check_required_parameters_multi_params():
     check_required_parameters.when.called_with(
         [["btcusdt", "symbol"], [10, "price"]]
