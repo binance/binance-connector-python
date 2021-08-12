@@ -4,7 +4,6 @@ from tests.util import random_str, timestamp
 from tests.util import mock_http_response
 from urllib.parse import urlencode
 from binance.spot import Spot as Client
-from binance.error import ParameterRequiredError, ClientError
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 
@@ -32,3 +31,4 @@ def test_fiat_order_history():
 
     client = Client(key, secret)
     response = client.fiat_order_history(transactionType, **params)
+    response.should.equal(mock_item)
