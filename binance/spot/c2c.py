@@ -1,4 +1,7 @@
-def c2c_trade_history(self, tradeType: int, **kwargs):
+from binance.lib.utils import check_required_parameter
+
+
+def c2c_trade_history(self, tradeType: str, **kwargs):
     """Get C2C Trade History (USER_DATA)
 
     GET /sapi/v1/c2c/orderMatch/listUserOrderHistory
@@ -14,6 +17,8 @@ def c2c_trade_history(self, tradeType: int, **kwargs):
       rows (int, optional): default 100, max 100
       recvWindow (int, optional): The value cannot be greater than 60000
     """
+
+    check_required_parameter(tradeType, "tradeType")
 
     payload = {"tradeType": tradeType, **kwargs}
     return self.sign_request(

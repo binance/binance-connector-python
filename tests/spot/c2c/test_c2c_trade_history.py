@@ -20,6 +20,20 @@ params = {
 }
 
 
+def test_c2c_trade_history_without_trade_type():
+    """Tests the API endpoint of c2c trade history without trade type"""
+
+    params = {
+        "startTimestamp": timestamp(),
+        "endTimestamp": timestamp(),
+        "page": 1,
+        "rows": 100,
+    }
+
+    client = Client(key, secret)
+    client.c2c_trade_history.when.called_with("").should.throw(ParameterRequiredError)
+
+
 @mock_http_response(
     responses.GET,
     "/sapi/v1/c2c/orderMatch/listUserOrderHistory\\?" + urlencode(params),
