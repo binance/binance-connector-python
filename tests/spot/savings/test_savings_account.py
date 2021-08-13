@@ -1,10 +1,8 @@
 import responses
 
-from urllib.parse import urlencode
 from tests.util import random_str
 from tests.util import mock_http_response
 from binance.spot import Spot as Client
-from binance.error import ParameterRequiredError, ClientError
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 

@@ -1,13 +1,9 @@
-requests==2.25.1
-autobahn==21.2.1
-Twisted==21.2.0
+-r common.txt
 pytest-cov==2.8.1
 pytest==5.4.1
 sure==1.4.11
 responses==0.10.12
 pytest-pep8==1.0.6
-pyOpenSSL==19.0.0
-service-identity==21.1.0
 black
 flake8
 tox

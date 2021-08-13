@@ -1,1 +1,1 @@
-import sure
+import sure  # noqa: F401

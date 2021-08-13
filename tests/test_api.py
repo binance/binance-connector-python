@@ -1,7 +1,7 @@
 import responses
 
 import requests
-from tests.util import random_str, mock_http_response, random_id
+from tests.util import random_str, mock_http_response
 from binance.__version__ import __version__
 from binance.api import API
 from binance.error import ParameterRequiredError, ServerError

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import time
-import json
 import logging
 from binance.lib.utils import config_logging
 from binance.spot import Spot as Client
