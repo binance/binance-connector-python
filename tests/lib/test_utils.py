@@ -36,11 +36,15 @@ def test_pass_check_required_parameters():
 
 
 def test_pass_check_required_parameter_value_0():
-    check_required_parameters([[0, "transactionType"]])
+    check_required_parameters.when.called_with(
+        [[0, "transactionType"]]
+    ).should_not.throw(ParameterRequiredError)
 
 
 def test_pass_check_required_parameter_value_1():
-    check_required_parameters([[1, "transactionType"]])
+    check_required_parameters.when.called_with(
+        [[1, "transactionType"]]
+    ).should_not.throw(ParameterRequiredError)
 
 
 def test_pass_check_required_parameters_multi_params():
