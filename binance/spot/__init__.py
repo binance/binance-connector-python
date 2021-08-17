@@ -204,3 +204,6 @@ class Spot(API):
     # Fiat
     from binance.spot.fiat import fiat_order_history
     from binance.spot.fiat import fiat_payment_history
+
+    # C2C
+    from binance.spot.c2c import c2c_trade_history

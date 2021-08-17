@@ -8,8 +8,13 @@ Unreleased
 Changed
 ^^^^^^^
 
+* ``GET api/v3/exchangeInfo`` now supports single or multi-symbol query
 
-* GET api/v3/exchangeInfo now supports single or multi-symbol query
+Added
+^^^^^
+
+* ``GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`` to query user C2C trade history
+
 
 1.4.0 - 2021-07-30
 ------------------
