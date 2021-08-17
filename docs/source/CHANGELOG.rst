@@ -9,6 +9,7 @@ Changed
 ^^^^^^^
 
 * ``GET api/v3/exchangeInfo`` now supports single or multi-symbol query
+* ``GET api/v3/myTrades`` has a new optional field ``orderId``
 
 Added
 ^^^^^
