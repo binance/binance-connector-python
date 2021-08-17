@@ -343,6 +343,7 @@ def my_trades(self, symbol: str, **kwargs):
         symbol (str)
     Keyword Args:
         fromId (int, optional): TradeId to fetch from. Default gets most recent trades.
+        orderId (int, optional): This can only be used in combination with symbol
         startTime (int, optional)
         endTime (int, optional)
         limit (int, optional): Default Value: 500; Max Value: 1000
