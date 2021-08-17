@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.5.0 - 2021-08-17
+
 ### Changed
 -  `GET api/v3/exchangeInfo` now supports single or multi-symbol query
 -  `GET api/v3/myTrades` has a new optional field `orderId`
