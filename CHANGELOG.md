@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 1.5.0 - 2021-08-17
+
+### Changed
+-  `GET api/v3/exchangeInfo` now supports single or multi-symbol query
+-  `GET api/v3/myTrades` has a new optional field `orderId`
+
+### Added
+- `GET /sapi/v1/c2c/orderMatch/listUserOrderHistory` to query user C2C trade history
+
 ## 1.4.0 - 2021-07-30
 
 ### Added
@@ -20,12 +29,12 @@
     
 ## 1.2.0 - 2021-07-12
 
-### Change
+### Changed
 - Remove default value in the parameters
 
 ## 1.1.1 - 2021-06-24
 
-### Change
+### Changed
 - Upgrade the dependency packages
 
 ## 1.1.0 - 2021-06-23

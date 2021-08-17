@@ -12,32 +12,29 @@ key = random_str()
 secret = random_str()
 
 params = {
-    "transactionType": 0,
-    "beginTime": timestamp(),
-    "endTime": timestamp(),
+    "tradeType": "BUY",
+    "startTimestamp": timestamp(),
+    "endTimestamp": timestamp(),
     "page": 1,
     "rows": 100,
 }
 
 
-def test_fiat_payment_history_without_type():
-    """Tests the API endpoint to get fiat order history"""
-
+def test_c2c_trade_history_without_trade_type():
+    """Tests the API endpoint of c2c trade history without trade type"""
     client = Client(key, secret)
-    client.fiat_payment_history.when.called_with("").should.throw(
-        ParameterRequiredError
-    )
+    client.c2c_trade_history.when.called_with("").should.throw(ParameterRequiredError)
 
 
 @mock_http_response(
     responses.GET,
-    "/sapi/v1/fiat/payments\\?" + urlencode(params),
+    "/sapi/v1/c2c/orderMatch/listUserOrderHistory\\?" + urlencode(params),
     mock_item,
     200,
 )
-def test_fiat_payment_history():
-    """Tests the API endpoint to get fiat payments history"""
+def test_c2c_trade_history():
+    """Tests the API endpoint to get c2c trade history"""
 
     client = Client(key, secret)
-    response = client.fiat_payment_history(**params)
+    response = client.c2c_trade_history(**params)
     response.should.equal(mock_item)
