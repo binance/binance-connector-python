@@ -45,7 +45,8 @@ def exchange_info(self):
 
 
 def depth(self, symbol: str, **kwargs):
-    """Get order book.
+    """Order Book
+    Get order book.
 
     GET /fapi/v1/depth
 
@@ -81,8 +82,8 @@ def trades(self, symbol: str, **kwargs):
 
 
 def historical_trades(self, symbol: str, **kwargs):
-    """Old Trade Lookup
-    Get older market historical trades..
+    """Old Trades Lookup (MARKET_DATA)
+    Get older market historical trades.
 
     GET /fapi/v1/historicalTrades
 
@@ -100,8 +101,9 @@ def historical_trades(self, symbol: str, **kwargs):
 
 
 def agg_trades(self, symbol: str, **kwargs):
-    """Get compressed, aggregate market trades. Market trades that fill at the time, from the same order,
-       with the same price will have the quantity aggregated.
+    """Compressed/Aggregate Trades List
+    Get compressed, aggregate market trades. Market trades that fill at the time, from the same order,
+    with the same price will have the quantity aggregated.
 
     GET /fapi/v1/aggTrades
 
@@ -122,7 +124,8 @@ def agg_trades(self, symbol: str, **kwargs):
 
 
 def klines(self, symbol: str, interval: str, **kwargs):
-    """Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.
+    """Kline/Candlestick Data
+    Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.
 
     GET /fapi/v1/klines
 
@@ -143,7 +146,8 @@ def klines(self, symbol: str, interval: str, **kwargs):
 
 
 def continuous_klines(self, pair: str, contract_type: str, interval: str, **kwargs):
-    """Continuous Kline/candlestick bars for a specific contract type.
+    """Continuous Contract Kline/Candlestick Data
+    Continuous Kline/candlestick bars for a specific contract type.
 
     GET /fapi/v1/continuousKlines
 
@@ -164,7 +168,8 @@ def continuous_klines(self, pair: str, contract_type: str, interval: str, **kwar
 
 
 def index_price_klines(self, pair: str, interval: str, **kwargs):
-    """Kline/candlestick bars for the index price of a pair.
+    """Index Price Kline/Candlestick Data
+    Kline/candlestick bars for the index price of a pair.
 
     GET /fapi/v1/indexPriceKlines
 
@@ -184,7 +189,8 @@ def index_price_klines(self, pair: str, interval: str, **kwargs):
 
 
 def mark_price_klines(self, symbol: str, interval: str, **kwargs):
-    """Kline/candlestick bars for the mark price of a symbol.
+    """Mark Price Kline/Candlestick Data
+    Kline/candlestick bars for the mark price of a symbol.
 
     GET /fapi/v1/markPriceKlines
 
@@ -204,7 +210,8 @@ def mark_price_klines(self, symbol: str, interval: str, **kwargs):
 
 
 def mark_price(self, symbol: str = None):
-    """Mark Price and Funding Rate.
+    """Mark Price
+    Mark Price and Funding Rate.
 
     GET /fapi/v1/premiumIndex
 
@@ -218,7 +225,8 @@ def mark_price(self, symbol: str = None):
 
 
 def funding_rate_history(self, symbol: str = None, **kwargs):
-    """Funding rate history
+    """Get Funding Rate History
+    Funding rate history
 
     GET /fapi/v1/fundingRate
 
@@ -229,7 +237,7 @@ def funding_rate_history(self, symbol: str = None, **kwargs):
        If the number of data between startTime and endTime is larger than limit, return as startTime + limit.
        In ascending order.
     Keyword Args:
-        symbol (str): the trading pair
+        symbol (str, optional): the trading pair
         startTime (int, optional): Timestamp in ms to get funding rate from INCLUSIVE.
         endTime (int, optional): Timestamp in ms to get funding rate until INCLUSIVE.
         limit (int, optional): limit the results. Default 100; max 1000.
@@ -239,8 +247,9 @@ def funding_rate_history(self, symbol: str = None, **kwargs):
 
 
 def ticker_24hr(self, symbol: str = None):
-    """24 hour rolling window price change statistics.
-       Careful when accessing this with no symbol.
+    """24hr Ticker Price Change Statistics
+    24 hour rolling window price change statistics.
+    Careful when accessing this with no symbol.
 
     GET /fapi/v1/ticker/24hr
 
@@ -256,7 +265,8 @@ def ticker_24hr(self, symbol: str = None):
 
 
 def ticker_price(self, symbol: str = None):
-    """Latest price for a symbol or symbols.
+    """Symbol Price Ticker
+    Latest price for a symbol or symbols.
 
 
     GET /fapi/v1/ticker/price
@@ -273,7 +283,8 @@ def ticker_price(self, symbol: str = None):
 
 
 def book_ticker(self, symbol: str = None):
-    """Best price/qty on the order book for a symbol or symbols.
+    """Symbol Order Book Ticker
+    Best price/qty on the order book for a symbol or symbols.
 
 
     GET /fapi/v1/ticker/bookTicker
@@ -290,7 +301,8 @@ def book_ticker(self, symbol: str = None):
 
 
 def open_interest(self, symbol: str):
-    """Get present open interest of a specific symbol.
+    """Open Interest
+    Get present open interest of a specific symbol.
 
 
     GET /fapi/v1/openInterest
@@ -300,13 +312,14 @@ def open_interest(self, symbol: str):
     Args:
        symbol (str): the trading pair.
     """
-    check_required_parameters([[symbol, "symbol"]])
+    check_required_parameter(symbol, "symbol")
     params = {"symbol": symbol}
     return self.query("/fapi/v1/openInterest", params)
 
 
 def open_interest_statistics(self, symbol: str, period: str, **kwargs):
-    """Get present open interest statistics of a specific symbol.
+    """Open Interest Statistics
+    Get present open interest statistics of a specific symbol.
 
 
     GET /futures/data/openInterestHist
@@ -316,6 +329,10 @@ def open_interest_statistics(self, symbol: str, period: str, **kwargs):
     Args:
        symbol (str): the trading pair.
        period (str): "5m","15m","30m","1h","2h","4h","6h","12h","1d".
+    Keyword Args:
+        limit (int, optional)
+        startTime (int, optional)
+        endTime (int, optional)
     """
     check_required_parameters([[symbol, "symbol"], [period, "period"]])
     params = {"symbol": symbol, "period": period, **kwargs}
@@ -323,7 +340,7 @@ def open_interest_statistics(self, symbol: str, period: str, **kwargs):
 
 
 def top_trader_accounts(self, symbol: str, period: str, **kwargs):
-    """
+    """Top Trader Long/Short Ratio (Accounts) (MARKET_DATA)
     GET /futures/data/topLongShortAccountRatio
 
     https://binance-docs.github.io/apidocs/futures/en/#top-trader-long-short-ratio-accounts-market_data
@@ -343,7 +360,8 @@ def top_trader_accounts(self, symbol: str, period: str, **kwargs):
 
 
 def top_trader_positions(self, symbol: str, period: str, **kwargs):
-    """
+    """Top Trader Long/Short Ratio (Accounts) (MARKET_DATA)
+
     GET /futures/data/topLongShortPositionRatio
 
     https://binance-docs.github.io/apidocs/futures/en/#top-trader-long-short-ratio-positions
@@ -363,7 +381,8 @@ def top_trader_positions(self, symbol: str, period: str, **kwargs):
 
 
 def ratio(self, symbol: str, period: str, **kwargs):
-    """
+    """Top Trader Long/Short Ratio (Positions)
+
     GET /futures/data/globalLongShortAccountRatio
 
     https://binance-docs.github.io/apidocs/futures/en/#long-short-ratio
@@ -383,7 +402,7 @@ def ratio(self, symbol: str, period: str, **kwargs):
 
 
 def taker_volume(self, symbol: str, period: str, **kwargs):
-    """
+    """Taker Buy/Sell Volume
     GET /futures/data/takerlongshortRatio
 
     https://binance-docs.github.io/apidocs/futures/en/#taker-buy-sell-volume
@@ -403,7 +422,7 @@ def taker_volume(self, symbol: str, period: str, **kwargs):
 
 
 def historical_blvt_nav_kline(self, symbol: str, interval: str, **kwargs):
-    """
+    """Historical BLVT NAV Kline/Candlestick
     The BLVT NAV system is based on Binance Futures, so the endpoint is based on fapi
 
 
@@ -426,9 +445,8 @@ def historical_blvt_nav_kline(self, symbol: str, interval: str, **kwargs):
 
 
 def composite_index(self, symbol: str = None):
-    """
+    """Composite Index Symbol Information
     Only for composite index symbols
-
 
     GET /fapi/v1/indexInfo
 
@@ -440,4 +458,3 @@ def composite_index(self, symbol: str = None):
     """
     params = {"symbol": symbol}
     return self.query("/fapi/v1/indexInfo", params)
-
