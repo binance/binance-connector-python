@@ -33,3 +33,33 @@ class Futures(API):
     from binance.futures.market import historical_blvt_nav_kline
     from binance.futures.market import composite_index
 
+    # ACCOUNT(including orders and trades)
+    from binance.futures.account import change_position_side
+    from binance.futures.account import position_side
+    from binance.futures.account import change_multi_assets_margin
+    from binance.futures.account import get_multi_assets_margin
+    from binance.futures.account import new_order
+    from binance.futures.account import new_batch_orders
+    from binance.futures.account import get_order
+    from binance.futures.account import cancel_order
+    from binance.futures.account import cancel_all_orders
+    from binance.futures.account import cancel_batch_orders
+    from binance.futures.account import auto_cancel_all
+    from binance.futures.account import get_open_order
+    from binance.futures.account import get_open_orders
+    from binance.futures.account import get_all_orders
+    from binance.futures.account import balance
+    from binance.futures.account import account
+    from binance.futures.account import change_leverage
+    from binance.futures.account import change_margin
+    from binance.futures.account import change_position_margin
+    from binance.futures.account import margin_position_history
+    from binance.futures.account import risk
+    from binance.futures.account import trades
+    from binance.futures.account import income
+    from binance.futures.account import brackets
+    from binance.futures.account import adl_quantile
+    from binance.futures.account import force_orders
+    from binance.futures.account import status
+    from binance.futures.account import commission
+

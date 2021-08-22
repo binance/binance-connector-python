@@ -1,8 +1,10 @@
+import json
+
 from binance.lib.utils import check_required_parameter
 from binance.lib.utils import check_required_parameters
 
 
-def set_position_side(self, dual_side_position: str, **kwargs):
+def change_position_side(self, dual_side_position: str, **kwargs):
     """Change Position Mode(TRADE)
 
     Change user's position mode (Hedge Mode or One-way Mode ) on EVERY symbol
@@ -39,7 +41,7 @@ def position_side(self, **kwargs):
     return self.sign_request("GET", url_path, params)
 
 
-def set_multi_assets_margin(self, multi_assets_margin: str, **kwargs):
+def change_multi_assets_margin(self, multi_assets_margin: str, **kwargs):
     """Change Multi-Assets Mode (TRADE)
 
     Change user's Multi-Assets mode (Multi-Assets Mode or Single-Asset Mode) on Every symbol
@@ -77,7 +79,7 @@ def get_multi_assets_margin(self, **kwargs):
     return self.sign_request("GET", url_path, params)
 
 
-def new_order(self, symbol: str, side: str, order_type: str, **kwargs):
+def new_order(self, symbol: str, side: str, type: str, **kwargs):
     """New Order (TRADE)
 
     Send in a new order.
@@ -89,7 +91,7 @@ def new_order(self, symbol: str, side: str, order_type: str, **kwargs):
     Args:
         symbol (str): the trading pair
         side (str): the trading side eg. BUY
-        order_type (str): eg. TRAILING_STOP_MARKET
+        type (str): eg. TRAILING_STOP_MARKET
     Keyword Args:
         positionSide (str, optional) : Default BOTH for One-way Mode ; LONG or SHORT for Hedge Mode. It must be sent in
                                        Hedge Mode.
@@ -116,8 +118,8 @@ def new_order(self, symbol: str, side: str, order_type: str, **kwargs):
         STOP_MARKET/TAKE_PROFIT_MARKET: stopPrice
         TRAILING_STOP_MARKET: callbackRate
     """
-    check_required_parameters([[symbol, "symbol"], [side, "side"], [order_type, "type"]])
-    params = {"symbol": symbol, "side": side, "type": order_type, **kwargs}
+    check_required_parameters([[symbol, "symbol"], [side, "side"], [type, "type"]])
+    params = {"symbol": symbol, "side": side, "type": type, **kwargs}
     url_path = "/fapi/v1/order"
     return self.sign_request("POST", url_path, params)
 
@@ -162,7 +164,7 @@ def new_batch_orders(self, batch_orders: list, **kwargs):
             The order of returned contents for batch orders is the same as the order of the order list.
     """
     check_required_parameter(batch_orders, "batchOrders")
-    params = {"batchOrders": batch_orders, **kwargs}
+    params = {"batchOrders": json.dumps(batch_orders), **kwargs}
     url_path = "/fapi/v1/batchOrders"
     return self.sign_request("POST", url_path, params)
 
@@ -269,7 +271,7 @@ def cancel_batch_orders(self, symbol: str,  **kwargs):
     return self.sign_request("DELETE", url_path, payload)
 
 
-def countdown_cancel_all(self, symbol: str, count_down_time: int,  **kwargs):
+def auto_cancel_all(self, symbol: str, count_down_time: int,  **kwargs):
     """Auto-Cancel All Open Orders (TRADE)
 
     Cancel all open orders of the specified symbol at the end of the specified countdown.
@@ -307,7 +309,6 @@ def countdown_cancel_all(self, symbol: str, count_down_time: int,  **kwargs):
 
 def get_open_order(self, symbol: str,  **kwargs):
     """Query Current Open Order (USER_DATA)
-
 
     GET /fapi/v1/openOrder (HMAC SHA256)
 
@@ -420,7 +421,7 @@ def account(self, **kwargs):
     return self.sign_request("GET", url_path, payload)
 
 
-def set_leverage(self, symbol: str, leverage: int, **kwargs):
+def change_leverage(self, symbol: str, leverage: int, **kwargs):
     """Change Initial Leverage (TRADE)
 
     Change user's initial leverage of specific symbol market.
@@ -442,7 +443,7 @@ def set_leverage(self, symbol: str, leverage: int, **kwargs):
     return self.sign_request("POST", url_path, payload)
 
 
-def set_margin(self, symbol: str, margin_type: int, **kwargs):
+def change_margin(self, symbol: str, margin_type: int, **kwargs):
     """Change Margin Type (TRADE)
 
     POST /fapi/v1/marginType (HMAC SHA256)
@@ -462,7 +463,7 @@ def set_margin(self, symbol: str, margin_type: int, **kwargs):
     return self.sign_request("POST", url_path, payload)
 
 
-def set_position_margin(self, symbol: str, amount: float, type: int, **kwargs):
+def change_position_margin(self, symbol: str, amount: float, type: int, **kwargs):
     """Modify Isolated Position Margin (TRADE)
        Only for isolated symbol
 
