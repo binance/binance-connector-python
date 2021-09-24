@@ -80,6 +80,14 @@ class Spot(API):
     from binance.spot.margin import toggle_bnbBurn
     from binance.spot.margin import bnbBurn_status
     from binance.spot.margin import margin_interest_rate_history
+    from binance.spot.margin import new_margin_oco_order
+    from binance.spot.margin import cancel_margin_oco_order
+    from binance.spot.margin import get_margin_oco_order
+    from binance.spot.margin import get_margin_oco_orders
+    from binance.spot.margin import get_margin_open_oco_orders
+    from binance.spot.margin import cancel_isolated_margin_account
+    from binance.spot.margin import enable_isolated_margin_account
+    from binance.spot.margin import isolated_margin_account_limit
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -119,7 +127,7 @@ class Spot(API):
     from binance.spot.wallet import funding_wallet
     from binance.spot.wallet import api_key_permissions
 
-    # mining
+    # Mining
     from binance.spot.mining import mining_algo_list
     from binance.spot.mining import mining_coin_list
     from binance.spot.mining import mining_worker
@@ -200,6 +208,9 @@ class Spot(API):
     from binance.spot.bswap import bswap_request_quote
     from binance.spot.bswap import bswap_swap
     from binance.spot.bswap import bswap_swap_history
+    from binance.spot.bswap import bswap_pool_configure
+    from binance.spot.bswap import bswap_add_liquidity_preview
+    from binance.spot.bswap import bswap_remove_liquidity_preview
 
     # Fiat
     from binance.spot.fiat import fiat_order_history

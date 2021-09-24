@@ -52,7 +52,7 @@ Usage example:
    response = client.new_order(**params)
    print(response)
 
-Please find ``examples`` folder to check for more endpoints.
+Please find `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder to check for more endpoints.
 
 Base URL
 """"""""
@@ -132,7 +132,7 @@ Usage example:
    ws_client.stop()
 
 The ``stream_url`` defaults to ``wss://stream.binance.com:9443``.
-More websocket examples are available in the ``examples`` folder.
+More websocket examples are available in the `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder.
 
 Heartbeat
 """""""""

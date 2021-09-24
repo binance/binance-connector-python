@@ -10,8 +10,4 @@ key = ""
 secret = ""
 
 spot_client = Client(key, secret)
-logging.info(
-    spot_client.sub_account_transfer_to_sub(
-        toEmail="alice@test.com", asset="USDT", amount=0.01
-    )
-)
+logging.info(spot_client.sub_account_transfer_sub_account_history())

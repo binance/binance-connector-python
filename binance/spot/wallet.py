@@ -100,11 +100,11 @@ def withdraw(self, coin: str, amount: float, address: str, **kwargs):
         amount (float)
         address (str)
     Keyword Args:
-        withdrawOrderId (str, optional)
+        withdrawOrderId (str, optional): Client id for withdraw
         network (str, optional)
-        addressTag (str, optional)
-        transactionFeeFlag (bool, optional)
-        name (str, optional)
+        addressTag (str, optional): Secondary address identifier for coins like XRP,XMR etc.
+        transactionFeeFlag (bool, optional): When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
+        name (str, optional): Description of the address. Space in name should be encoded into %20.
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -129,7 +129,7 @@ def deposit_history(self, **kwargs):
         startTime (int, optional): Default: 90 days from current timestamp
         endTime (int, optional): Default: present timestamp
         offset (int, optional): Default value: 0
-        limit (int, optional)
+        limit (int, optional): Default:1000, Max:1000
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -145,9 +145,12 @@ def withdraw_history(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#deposit-history-user_data
 
     Keyword Args:
-        asset (str, optional)
+        coin (str, optional)
+        withdrawOrderId (str, optional)
         status (int, optional): Default 0 (0:Email Sent,1:Cancelled, 2:Awaiting Approval,
                 3:Rejected, 4:Processing, 5:Failure, 6:Completed)
+        offset (int, optional)
+        limit (int, optional): Default: 1000, Max: 1000
         startTime (int, optional): Default: 90 days from current timestamp
         endTime (int, optional): Default: present timestamp
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -232,6 +235,8 @@ def user_universal_transfer(self, type: str, asset: str, amount: str, **kwargs):
         asset (str)
         amount (str)
     Keyword Args:
+        fromSymbol (str, optional): Must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+        toSymbol (str, optional): Must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters([[type, "type"], [asset, "asset"], [amount, "amount"]])
@@ -254,6 +259,8 @@ def user_universal_transfer_history(self, type: str, **kwargs):
         endTime (int, optional)
         current (int, optional): Default 1
         size (int, optional): Default 10, Max 100
+        fromSymbol (str, optional): Must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
+        toSymbol (str, optional): Must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameter(type, "type")
@@ -294,7 +301,7 @@ def asset_dividend_record(self, **kwargs):
         asset (str, optional)
         startTime (int, optional)
         endTime (int, optional)
-        limit (int, optional)
+        limit (int, optional): Default 20, max 500
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 

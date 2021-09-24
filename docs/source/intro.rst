@@ -97,7 +97,7 @@ RESTful APIs
    response = client.new_order(**params)
    print(response)
 
-Please find ``examples`` folder to check for more endpoints.
+Please find `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder to check for more endpoints.
 
 
 Websocket
@@ -127,4 +127,4 @@ Websocket
 
    ws_client.stop()
 
-More websocket examples are available in the ``examples`` folder
+More websocket examples are available in the `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder

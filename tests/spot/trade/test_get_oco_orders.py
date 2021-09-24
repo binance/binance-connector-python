@@ -1,7 +1,6 @@
 import responses
 
 from urllib.parse import urlencode
-from tests.util import timestamp
 from tests.util import random_str
 from tests.util import mock_http_response
 from binance.spot import Spot as Client
@@ -12,9 +11,7 @@ key = random_str()
 secret = random_str()
 
 params = {
-    "fromId": "1234567",
-    "startTime": timestamp(),
-    "endTime": timestamp(),
+    "fromId": "1234567",  # If supplied, neither startTime or endTime can be provided
     "limit": 10,
     "recvWindow": 1000,
 }

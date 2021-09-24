@@ -191,3 +191,89 @@ def bswap_swap_history(self, **kwargs):
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     return self.sign_request("GET", "/sapi/v1/bswap/swap", kwargs)
+
+
+def bswap_pool_configure(self, **kwargs):
+    """Get Pool Configure (USER_DATA)
+
+    GET /sapi/v1/bswap/poolConfigure
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-pool-configure-user_data
+
+    Keyword Args:
+        poolId (int, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    return self.sign_request("GET", "/sapi/v1/bswap/poolConfigure", kwargs)
+
+
+def bswap_add_liquidity_preview(
+    self, poolId: int, type: str, quoteAsset: str, quoteQty: float, **kwargs
+):
+    """Add Liquidity Preview (USER_DATA)
+    Calculate expected share amount for adding liquidity in single or dual token.
+
+    GET /sapi/v1/bswap/addLiquidityPreview
+
+    https://binance-docs.github.io/apidocs/spot/en/#add-liquidity-preview-user_data
+
+    Args:
+        poolId (int)
+        type (str): "SINGLE" for adding a single token;"COMBINATION" for adding dual tokens
+        quoteAsset (str)
+        quoteQty (float)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [
+            [poolId, "poolId"],
+            [type, "type"],
+            [quoteAsset, "quoteAsset"],
+            [quoteQty, "quoteQty"],
+        ]
+    )
+    payload = {
+        "poolId": poolId,
+        "type": type,
+        "quoteAsset": quoteAsset,
+        "quoteQty": quoteQty,
+        **kwargs,
+    }
+    return self.sign_request("GET", "/sapi/v1/bswap/addLiquidityPreview", payload)
+
+
+def bswap_remove_liquidity_preview(
+    self, poolId: int, type: str, quoteAsset: str, shareAmount: float, **kwargs
+):
+    """Remove Liquidity Preview (USER_DATA)
+    Calculate the expected asset amount of single token redemption or dual token redemption.
+
+    GET /sapi/v1/bswap/removeLiquidityPreview
+
+    https://binance-docs.github.io/apidocs/spot/en/#remove-liquidity-preview-user_data
+
+    Args:
+        poolId (int)
+        type (str): Type is "SINGLE", remove and obtain a single token;Type is "COMBINATION", remove and obtain dual token
+        quoteAsset (str)
+        shareAmount (float)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [
+            [poolId, "poolId"],
+            [type, "type"],
+            [quoteAsset, "quoteAsset"],
+            [shareAmount, "shareAmount"],
+        ]
+    )
+    payload = {
+        "poolId": poolId,
+        "type": type,
+        "quoteAsset": quoteAsset,
+        "shareAmount": shareAmount,
+        **kwargs,
+    }
+    return self.sign_request("GET", "/sapi/v1/bswap/removeLiquidityPreview", payload)

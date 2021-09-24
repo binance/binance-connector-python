@@ -287,6 +287,7 @@ def get_oco_orders(self, **kwargs):
     GET /api/v3/allOrderList
 
     https://binance-docs.github.io/apidocs/spot/en/#query-all-oco-user_data
+
     Keyword Args:
         fromId (int, optional): If supplied, neither startTime or endTime can be provided
         startTime (int, optional)
@@ -305,6 +306,7 @@ def get_oco_open_orders(self, **kwargs):
     GET /api/v3/openOrderList
 
     https://binance-docs.github.io/apidocs/spot/en/#query-open-oco-user_data
+
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
     """
