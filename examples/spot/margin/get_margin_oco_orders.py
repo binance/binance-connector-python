@@ -10,19 +10,14 @@ config_logging(logging, logging.DEBUG)
 key = ""
 secret = ""
 
-client = Client(key, secret, base_url="https://testnet.binance.vision")
+client = Client(key, secret)
 
 try:
-    # get oco orders with default parameters
-    response = client.get_oco_orders()
+    response = client.get_margin_oco_orders(
+        isIsolated="TRUE", symbol="BNBUSDT", fromId=10
+    )
     logging.info(response)
 
-    # provide parameters
-    response = client.get_oco_orders(fromId=1, limit=10)
-    logging.info(response)
-
-    response = client.get_oco_orders(startTime=1588160817647, limit=10)
-    logging.info(response)
 except ClientError as error:
     logging.error(
         "Found error. status: {}, error code: {}, error message: {}".format(

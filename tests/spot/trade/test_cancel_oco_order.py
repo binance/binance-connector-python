@@ -11,8 +11,6 @@ mock_exception = {"code": -1, "msg": "error message"}
 key = random_str()
 secret = random_str()
 
-orderListId = "1234567"
-
 params = {
     "symbol": "BTCUSDT",
     "orderListId": 1,
@@ -36,7 +34,7 @@ def test_cancel_oco_order_without_symbol():
     400,
 )
 def test_cancel_oco_order_without_orderListId():
-    """Tests the API endpoint to cancel order without provide orderListId"""
+    """Tests the API endpoint to cancel order without value for orderListId"""
 
     client = Client(key, secret)
     client.cancel_oco_order.when.called_with("ETHBTC", orderListId="").should.throw(

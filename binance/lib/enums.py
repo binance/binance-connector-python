@@ -30,3 +30,8 @@ class TransferType(AutoName):
     MINING_UMFUTURE = auto()
     MINING_C2C = auto()
     MINING_MARGIN = auto()
+    MAIN_PAY = auto()
+    PAY_MAIN = auto()
+    ISOLATEDMARGIN_MARGIN = auto()
+    MARGIN_ISOLATEDMARGIN = auto()
+    ISOLATEDMARGIN_ISOLATEDMARGIN = auto()

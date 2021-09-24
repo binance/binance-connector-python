@@ -2,8 +2,34 @@
 Changelog
 =========
 
-Unreleased
-----------
+1.6.0 - 2021-09-24
+------------------
+
+Added
+^^^^^
+
+* Universal transfer types ``MAIN_PAY``, ``PAY_MAIN``, ``ISOLATEDMARGIN_MARGIN``，``MARGIN_ISOLATEDMARGIN``，``ISOLATEDMARGIN_ISOLATEDMARGIN``
+
+* New endpoints for Margin OCO orders:
+
+  * ``POST /sapi/v1/margin/order/oco`` to send new margin OCO order
+  * ``DELETE /sapi/v1/margin/orderList`` to cancel margin OCO order
+  * ``GET /sapi/v1/margin/orderList`` to query a margin OCO order
+  * ``GET /sapi/v1/margin/allOrderList`` to query all margin OCO orders
+  * ``GET /sapi/v1/margin/openOrderList`` to query open margin OCO orders
+
+* New endpoints for Isolated Margin:
+
+  * ``DELETE /sapi/v1/margin/isolated/account`` to disable isolated margin account for a specific symbol
+  * ``POST /sapi/v1/margin/isolated/account`` to enable isolated margin account for a specific symbol
+  * ``GET /sapi/v1/margin/isolated/accountLimit`` to query num of enabled isolated margin accounts and its max limit
+
+* New endpoints for BSwap:
+
+  * ``GET /sapi/v1/bswap/poolConfigure`` to get pool configure
+  * ``GET /sapi/v1/bswap/addLiquidityPreview`` to calculate expected share amount for adding liquidity in single or dual token
+  * ``GET /sapi/v1/bswap/removeLiquidityPreview`` to calculate expected asset amount of single token redemption or dual token redemption
+
 
 1.5.0 - 2021-08-17
 ------------------
@@ -27,7 +53,7 @@ Added
 ^^^^^
 
 
-* New Fiat endpoints
+* New Fiat endpoints:
 
   * ``GET /sapi/v1/fiat/orders`` to query user fiat deposit and withdraw history 
   * ``GET /sapi/v1/fiat/payments`` to query user fiat payments history 

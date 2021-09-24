@@ -32,3 +32,15 @@ Swap (TRADE)
 Get Swap History (USER_DATA)
 ----------------------------
 .. autofunction:: binance.spot.bswap.bswap_swap_history
+
+Get Pool Configure (USER_DATA)
+------------------------------
+.. autofunction:: binance.spot.bswap.bswap_pool_configure
+
+Add Liquidity Preview (USER_DATA)
+---------------------------------
+.. autofunction:: binance.spot.bswap.bswap_add_liquidity_preview
+
+Remove Liquidity Preview (USER_DATA)
+------------------------------------
+.. autofunction:: binance.spot.bswap.bswap_remove_liquidity_preview

@@ -9,9 +9,9 @@ config_logging(logging, logging.DEBUG)
 key = ""
 secret = ""
 
-spot_client = Client(key, secret)
+client = Client(key, secret)
 logging.info(
-    spot_client.sub_account_transfer_to_sub(
-        toEmail="alice@test.com", asset="USDT", amount=0.01
+    client.bswap_remove_liquidity_preview(
+        poolId=2, type="SINGLE", quoteAsset="USDT", shareAmount=0.01
     )
 )

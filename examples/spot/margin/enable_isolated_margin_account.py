@@ -9,9 +9,5 @@ config_logging(logging, logging.DEBUG)
 key = ""
 secret = ""
 
-spot_client = Client(key, secret)
-logging.info(
-    spot_client.sub_account_transfer_to_sub(
-        toEmail="alice@test.com", asset="USDT", amount=0.01
-    )
-)
+client = Client(key, secret)
+logging.info(client.enable_isolated_margin_account(symbol="BNBUSDT"))

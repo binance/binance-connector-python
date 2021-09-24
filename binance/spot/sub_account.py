@@ -11,7 +11,7 @@ def sub_account_create(self, subAccountString: str, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#create-a-virtual-sub-account-for-master-account
 
     Args:
-        subAccountString (str)
+        subAccountString (str): Please input a string. We will create a virtual email using that string for you to register
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
     """
@@ -214,7 +214,7 @@ def sub_account_futures_transfer(
 
     GET /sapi/v1/sub-account/futures/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-futures-postion-risk-of-sub-account-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#futures-transfer-for-sub-account-for-master-account
 
     Args:
         email (str)
@@ -309,7 +309,7 @@ def sub_account_transfer_sub_account_history(self, **kwargs):
 
     POST /sapi/v1/sub-account/transfer/subUserHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#transfer-to-master-for-sub-account
+    https://binance-docs.github.io/apidocs/spot/en/#sub-account-transfer-history-for-sub-account
 
     Keyword Args:
         asset (str, optional): If not sent, result of all assets will be returned
@@ -332,7 +332,7 @@ def sub_account_futures_asset_transfer_history(
 
     GET /sapi/v1/sub-account/futures/internalTransfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-spot-asset-transfer-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-futures-asset-transfer-history-for-master-account
 
     Args:
         email (str): Sub-account email
@@ -402,7 +402,7 @@ def sub_account_spot_summary(self, **kwargs):
 
     GET /sapi/v1/sub-account/spotSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-spot-assets-summary-for-master-account
 
     Keyword Args:
         email (str, optional): Sub account email

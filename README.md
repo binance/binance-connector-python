@@ -54,9 +54,13 @@ Please find `examples` folder to check for more endpoints.
 
 ### Testnet
 
-While `/sapi/*` endpoints don't have testnet environment yet, `/api/*` endpoints can be tested in 
-[Spot Testnet](https://testnet.binance.vision/). You can use it by changing the base URL:
+[Spot Testnet](https://testnet.binance.vision/) is available, it can be used to test `/api/*` endpoints.
 
+- `/sapi/*` endpoints are not available.
+- No UI.
+- Steps to setup testnet API key.  [https://dev.binance.vision/t/99](https://dev.binance.vision/t/99)
+
+To use testnet:
 ```python
 from binance.spot import Spot as Client
 
@@ -216,7 +220,7 @@ ws_client = WebsocketClient(stream_url='wss://testnet.binance.vision')
 
 ```python
 # In case packages are not installed yet
-pip install -r requirements-test.txt
+pip install -r requirements/requirements-test.txt
 
 pytest
 ```

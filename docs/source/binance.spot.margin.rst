@@ -124,3 +124,35 @@ Get BNB Burn Status (USER_DATA)
 Get Margin Interest Rate History (USER_DATA)
 --------------------------------------------
 .. autofunction:: binance.spot.margin.margin_interest_rate_history
+
+Margin Account New OCO (TRADE)
+------------------------------
+.. autofunction:: binance.spot.margin.new_margin_oco_order
+
+Margin Account Cancel OCO (TRADE)
+---------------------------------
+.. autofunction:: binance.spot.margin.cancel_margin_oco_order
+
+Query Margin Account's OCO (USER_DATA)
+--------------------------------------
+.. autofunction:: binance.spot.margin.get_margin_oco_order
+
+Query Margin Account's all OCO (USER_DATA)
+------------------------------------------
+.. autofunction:: binance.spot.margin.get_margin_oco_orders
+
+Query Margin Account's Open OCO (USER_DATA)
+-------------------------------------------
+.. autofunction:: binance.spot.margin.get_margin_open_oco_orders
+
+Disable Isolated Margin Account (TRADE)
+---------------------------------------
+.. autofunction:: binance.spot.margin.cancel_isolated_margin_account
+
+Enable Isolated Margin Account (TRADE)
+--------------------------------------
+.. autofunction:: binance.spot.margin.enable_isolated_margin_account
+
+Query Enabled Isolated Margin Account Limit (USER_DATA)
+-------------------------------------------------------
+.. autofunction:: binance.spot.margin.isolated_margin_account_limit

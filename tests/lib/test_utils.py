@@ -1,5 +1,8 @@
-from binance.error import ParameterRequiredError, ParameterTypeError
-from binance.error import ParameterValueError
+from binance.error import (
+    ParameterRequiredError,
+    ParameterTypeError,
+    ParameterValueError,
+)
 from binance.lib.utils import (
     check_required_parameter,
     check_type_parameter,
