@@ -17,14 +17,15 @@ class BinanceClientFactory(WebSocketClientFactory, BinanceReconnectingClientFact
         self.protocol_instance = None
         self.base_client = None
         self.payload = payload
+        self._logger = logging.getLogger(__name__)
 
     _reconnect_error_payload = {"e": "error", "m": "Max reconnect retries reached"}
 
     def startedConnecting(self, connector):
-        logging.info("Start to connect....")
+        self._logger.info("Start to connect....")
 
     def clientConnectionFailed(self, connector, reason):
-        logging.error(
+        self._logger.error(
             "Can't connect to server. Reason: {}. Retrying: {}".format(
                 reason, self.retries + 1
             )
@@ -34,7 +35,7 @@ class BinanceClientFactory(WebSocketClientFactory, BinanceReconnectingClientFact
             self.callback(self._reconnect_error_payload)
 
     def clientConnectionLost(self, connector, reason):
-        logging.error(
+        self._logger.error(
             "Lost connection to Server. Reason: {}. Retrying: {}".format(
                 reason, self.retries + 1
             )

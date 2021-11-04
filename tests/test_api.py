@@ -6,6 +6,7 @@ from binance.__version__ import __version__
 from binance.api import API
 from binance.error import ParameterRequiredError, ServerError
 from binance.error import ClientError
+import logging
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 mock_error_body = "<HTML><HEAD><META HTTP-EQUIV></HEAD></HTML>"
@@ -39,6 +40,7 @@ def test_API_initial():
         "binance-connector/" + __version__
     )
     client.session.headers.should.have.key("X-MBX-APIKEY").which.should.be.none
+    client._logger.should.be(logging.getLogger("binance.api"))
 
 
 def test_API_with_extra_parameters():

@@ -36,6 +36,7 @@ class Spot(API):
     from binance.spot.account import get_oco_open_orders
     from binance.spot.account import account
     from binance.spot.account import my_trades
+    from binance.spot.account import get_order_rate_limit
 
     # STREAMS
     from binance.spot.data_stream import new_listen_key
