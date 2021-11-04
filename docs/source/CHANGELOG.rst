@@ -2,6 +2,22 @@
 Changelog
 =========
 
+
+1.7.0 - 2021-11-04
+------------------
+
+Updated
+^^^^^^^
+* Universal transfer types:
+  * Added ``MAIN_FUNDING``, ``FUNDING_MAIN``, ``FUNDING_UMFUTURE``, ``UMFUTURE_FUNDING``, ``MARGIN_FUNDING``, ``FUNDING_MARGIN``, ``FUNDING_CMFUTURE`` and ``CMFUTURE_FUNDING`` to support transfer assets among funding account and other accounts
+  * Deleted ``MAIN_C2C``, ``C2C_MAIN``, ``C2C_UMFUTURE``, ``C2C_MINING``, ``UMFUTURE_C2C``, ``MINING_C2C``, ``MARGIN_C2C``, ``C2C_MARGIN``, ``MAIN_PAY`` and ``PAY_MAIN`` as C2C account, Binance Payment, Binance Card and other business accounts are merged into a Funding account and they'll be discontinued on November 04, 2021 08:00 AM UTC
+* Util method ``config_logging`` can now provide date time in UTC and epoch time
+
+Added
+^^^^^
+* New endpoint ``GET api/v3/rateLimit/order`` to display the user's current order count usage for all intervals
+
+
 1.6.0 - 2021-09-24
 ------------------
 

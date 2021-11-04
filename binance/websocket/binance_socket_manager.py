@@ -18,6 +18,7 @@ class BinanceSocketManager(threading.Thread):
         self.stream_url = stream_url
         self._conns = {}
         self._user_callback = None
+        self._logger = logging.getLogger(__name__)
 
     def _start_socket(
         self, stream_name, payload, callback, is_combined=False, is_live=True
@@ -39,7 +40,7 @@ class BinanceSocketManager(threading.Thread):
                 factory_url = factory_url + "/" + payload_obj["params"]
             payload = None
 
-        logging.info("Connection with URL: {}".format(factory_url))
+        self._logger.info("Connection with URL: {}".format(factory_url))
 
         factory = BinanceClientFactory(factory_url, payload=payload)
         factory.base_client = self

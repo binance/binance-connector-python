@@ -357,3 +357,20 @@ def my_trades(self, symbol: str, **kwargs):
     url_path = "/api/v3/myTrades"
     payload = {"symbol": symbol, **kwargs}
     return self.sign_request("GET", url_path, payload)
+
+
+def get_order_rate_limit(self, **kwargs):
+    """Query Current Order Count Usage (TRADE)
+
+    Displays the user's current order count usage for all intervals.
+
+    GET /api/v3/rateLimit/order
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-current-order-count-usage-trade
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/api/v3/rateLimit/order"
+    return self.sign_request("GET", url_path, {**kwargs})

@@ -16,13 +16,13 @@ params = {
     "type": "LIMIT",
     "timeInForce": "GTC",
     "quantity": 0.002,
-    "price": 9500,
+    "price": 49500,
 }
 
 client = Client(key, secret, base_url="https://testnet.binance.vision")
 
 try:
-    response = client.test_new_order(**params)
+    response = client.new_order_test(**params)
     logging.info(response)
 except ClientError as error:
     logging.error(

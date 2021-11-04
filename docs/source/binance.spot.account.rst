@@ -57,3 +57,7 @@ Account Information (USER_DATA)
 Account Trade List (USER_DATA)
 ------------------------------
 .. autofunction:: binance.spot.account.my_trades
+
+Query Current Order Count Usage (TRADE)
+---------------------------------------
+.. autofunction:: binance.spot.account.get_order_rate_limit

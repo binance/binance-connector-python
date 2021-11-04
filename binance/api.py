@@ -61,6 +61,7 @@ class API(object):
         if type(proxies) is dict:
             self.proxies = proxies
 
+        self._logger = logging.getLogger(__name__)
         return
 
     def query(self, url_path, payload=None):
@@ -102,7 +103,7 @@ class API(object):
         if payload is None:
             payload = {}
         url = self.base_url + url_path
-        logging.debug("url: " + url)
+        self._logger.debug("url: " + url)
         params = cleanNoneValue(
             {
                 "url": url,
@@ -112,7 +113,7 @@ class API(object):
             }
         )
         response = self._dispatch_request(http_method)(**params)
-        logging.debug("raw response from server:" + response.text)
+        self._logger.debug("raw response from server:" + response.text)
         self._handle_exception(response)
 
         try:
