@@ -101,14 +101,30 @@ Enable Leverage Token for Sub-account(For Master Account)
 ---------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.sub_account_enable_leverage_token
 
-Deposit assets into the managed sub-account（For Investor Master Account）
---------------------------------------------------------------------------
+Deposit assets into the managed sub-account (For Investor Master Account)
+-------------------------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.managed_sub_account_deposit
 
-Query managed sub-account asset details（For Investor Master Account）
-----------------------------------------------------------------------
+Query managed sub-account asset details (For Investor Master Account)
+---------------------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.managed_sub_account_assets
 
-Withdrawl assets from the managed sub-account（For Investor Master Account）
-----------------------------------------------------------------------------
+Withdrawl assets from the managed sub-account (For Investor Master Account)
+---------------------------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.managed_sub_account_withdraw
+
+Enable or Disable IP Restriction for a Sub-account API Key (For Master Account)
+-------------------------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.sub_account_api_toggle_ip_restriction
+
+Add IP List for a Sub-account API Key (For Master Account)
+----------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.sub_account_api_add_ip
+
+Get IP Restriction for a Sub-account API Key (For Master Account)
+-----------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.sub_account_api_get_ip_restriction
+
+Delete IP List for a Sub-account API Key (For Master Account)
+-------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.sub_account_api_delete_ip

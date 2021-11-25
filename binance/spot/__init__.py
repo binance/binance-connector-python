@@ -21,7 +21,7 @@ class Spot(API):
     from binance.spot.market import ticker_price
     from binance.spot.market import book_ticker
 
-    # ACCOUNT(including orders and trades)
+    # ACCOUNT (including orders and trades)
     from binance.spot.account import new_order_test
     from binance.spot.account import new_order
     from binance.spot.account import cancel_order
@@ -128,7 +128,7 @@ class Spot(API):
     from binance.spot.wallet import funding_wallet
     from binance.spot.wallet import api_key_permissions
 
-    # Mining
+    # MINING
     from binance.spot.mining import mining_algo_list
     from binance.spot.mining import mining_coin_list
     from binance.spot.mining import mining_worker
@@ -171,8 +171,12 @@ class Spot(API):
     from binance.spot.sub_account import managed_sub_account_deposit
     from binance.spot.sub_account import managed_sub_account_assets
     from binance.spot.sub_account import managed_sub_account_withdraw
+    from binance.spot.sub_account import sub_account_api_toggle_ip_restriction
+    from binance.spot.sub_account import sub_account_api_add_ip
+    from binance.spot.sub_account import sub_account_api_get_ip_restriction
+    from binance.spot.sub_account import sub_account_api_delete_ip
 
-    # Futures
+    # FUTURES
     from binance.spot.futures import futures_transfer
     from binance.spot.futures import futures_transfer_history
     from binance.spot.futures import futures_loan_borrow
@@ -213,9 +217,15 @@ class Spot(API):
     from binance.spot.bswap import bswap_add_liquidity_preview
     from binance.spot.bswap import bswap_remove_liquidity_preview
 
-    # Fiat
+    # FIAT
     from binance.spot.fiat import fiat_order_history
     from binance.spot.fiat import fiat_payment_history
 
     # C2C
     from binance.spot.c2c import c2c_trade_history
+
+    # CRYPTO LOANS
+    from binance.spot.loan import loan_history
+
+    # PAY
+    from binance.spot.pay import pay_history

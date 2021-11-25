@@ -33,8 +33,8 @@ def test_margin_all_orders_without_asset():
 @mock_http_response(
     responses.GET, "/sapi/v1/margin/allOrders\\?" + urlencode(params), mock_item, 200
 )
-def test_margin_open_orders():
-    """Tests the API endpoint to query margin open orders"""
+def test_margin_all_orders():
+    """Tests the API endpoint to query margin all orders"""
 
     client = Client(key, secret)
     response = client.margin_all_orders(**params)

@@ -19,7 +19,7 @@ params = {
 client = Client(key, secret)
 
 
-def test_cancel_isolated_margin_account():
+def test_cancel_isolated_margin_account_without_symbol():
     """Tests the API endpoint to cancel an isolated margin account without symbol"""
 
     client.cancel_isolated_margin_account.when.called_with("").should.throw(
@@ -33,7 +33,7 @@ def test_cancel_isolated_margin_account():
     mock_item,
     200,
 )
-def test_cancel_order_with_order_id():
+def test_cancel_isolated_margin_account():
     """Tests the API endpoint to cancel an isolated margin account"""
 
     response = client.cancel_isolated_margin_account(**params)

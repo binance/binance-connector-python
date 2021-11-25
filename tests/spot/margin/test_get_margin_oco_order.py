@@ -30,9 +30,9 @@ client = Client(key, secret)
 def test_get_margin_oco_order_with_isIsolated_but_no_symbol():
     """Tests the API endpoint to get margin oco order without symbol when having isIsolated"""
 
-    client.get_margin_oco_order.when.called_with(124, isIsolated="TRUE").should.throw(
-        ParameterRequiredError
-    )
+    client.get_margin_oco_order.when.called_with(
+        orderListId=124, isIsolated="TRUE"
+    ).should.throw(ParameterRequiredError)
 
 
 @mock_http_response(
@@ -42,7 +42,7 @@ def test_get_margin_oco_order_with_isIsolated_but_no_symbol():
     200,
 )
 def test_get_margin_oco_order_with_order_id():
-    """Tests the API endpoint to get margin oco order"""
+    """Tests the API endpoint to get cross margin oco order"""
 
     response = client.get_margin_oco_order(**cross_params)
     response.should.equal(mock_item)

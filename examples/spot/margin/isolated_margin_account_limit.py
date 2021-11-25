@@ -10,4 +10,4 @@ key = ""
 secret = ""
 
 client = Client(key, secret)
-logging.info(client.isolated_margin_account_limit())
+logging.info(client.isolated_margin_account_limit(recvWindow=6000))

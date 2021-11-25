@@ -827,7 +827,7 @@ def cancel_isolated_margin_account(self, symbol: str, **kwargs):
 
 def enable_isolated_margin_account(self, symbol: str, **kwargs):
     """Enable Isolated Margin Account (TRADE)
-    Enable isolated margin account for a specific symbol.
+    Enable isolated margin account for a specific symbol (Only supports activation of previously disabled accounts).
 
     POST /sapi/v1/margin/isolated/account
 
@@ -854,4 +854,4 @@ def isolated_margin_account_limit(self, **kwargs):
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
     """
-    return self.sign_request("GET", "/sapi/v1/margin/isolated/accountLimit", **kwargs)
+    return self.sign_request("GET", "/sapi/v1/margin/isolated/accountLimit", kwargs)

@@ -21,8 +21,8 @@ Enable Fast Withdraw Switch (USER_DATA)
 ---------------------------------------
 .. autofunction:: binance.spot.wallet.enable_fast_withdraw
 
-Withdraw
---------
+Withdraw (USER_DATA)
+--------------------
 .. autofunction:: binance.spot.wallet.withdraw
 
 Deposit History（supporting network） (USER_DATA)
