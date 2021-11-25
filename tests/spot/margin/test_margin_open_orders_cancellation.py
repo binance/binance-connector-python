@@ -14,7 +14,7 @@ secret = random_str()
 params = {"symbol": "BNBUSDT", "recvWindow": 1000}
 
 
-def test_margin_open_orders_deletion_without_symbol():
+def test_margin_open_orders_cancellation_without_symbol():
     """Tests the API endpoint to cancel margin open orders without symbol"""
 
     client = Client(key, secret)
@@ -29,7 +29,7 @@ def test_margin_open_orders_deletion_without_symbol():
     mock_item,
     200,
 )
-def test_margin_open_orders_deletion():
+def test_margin_open_orders_cancellation():
     """Tests the API endpoint to cancel margin open orders"""
 
     client = Client(key, secret)

@@ -1,11 +1,28 @@
 # Changelog
 
+## 1.8.0 - 2021-11-25
+
+### Added
+- New endpoint for Crypto Loans:
+    - `GET /sapi/v1/loan/income` to query an asset's loan history
+- New endpoints for Sub-Account:
+    - `POST /sapi/v1/sub-account/subAccountApi/ipRestriction` to support master account enable and disable IP restriction for a sub-account API Key
+    - `POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList` to support master account add IP list for a sub-account API Key
+    - `GET /sapi/v1/sub-account/subAccountApi/ipRestriction` to support master account query IP restriction for a sub-account API Key
+    - `DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList` to support master account delete IP list for a sub-account API Key
+- New endpoint for Pay:
+    - `GET /sapi/v1/pay/transactions` to support user query Pay trade history
+
+### Fixed
+- Removed epoch time in util method `config_logging` to provide compatibility with Windows OS
+- Allow optional parameter for method `isolated_margin_account_limit`
+
 ## 1.7.0 - 2021-11-4
 
 ### Updated
 - Universal transfer types:
-  - Added `MAIN_FUNDING`, `FUNDING_MAIN`, `FUNDING_UMFUTURE`, `UMFUTURE_FUNDING`, `MARGIN_FUNDING`, `FUNDING_MARGIN`, `FUNDING_CMFUTURE` and `CMFUTURE_FUNDING` to support transfer assets among funding account and other accounts
-  - Deleted `MAIN_C2C`, `C2C_MAIN`, `C2C_UMFUTURE`, `C2C_MINING`, `UMFUTURE_C2C`, `MINING_C2C`, `MARGIN_C2C`, `C2C_MARGIN`, `MAIN_PAY` and `PAY_MAIN` as C2C account, Binance Payment, Binance Card and other business accounts are merged into a Funding account and they'll be discontinued on November 04, 2021 08:00 AM UTC
+    - Added `MAIN_FUNDING`, `FUNDING_MAIN`, `FUNDING_UMFUTURE`, `UMFUTURE_FUNDING`, `MARGIN_FUNDING`, `FUNDING_MARGIN`, `FUNDING_CMFUTURE` and `CMFUTURE_FUNDING` to support transfer assets among funding account and other accounts
+    - Deleted `MAIN_C2C`, `C2C_MAIN`, `C2C_UMFUTURE`, `C2C_MINING`, `UMFUTURE_C2C`, `MINING_C2C`, `MARGIN_C2C`, `C2C_MARGIN`, `MAIN_PAY` and `PAY_MAIN` as C2C account, Binance Payment, Binance Card and other business accounts are merged into a Funding account and they'll be discontinued on November 04, 2021 08:00 AM UTC
 - Util method `config_logging` can now provide date time in UTC and epoch time
 
 ### Added

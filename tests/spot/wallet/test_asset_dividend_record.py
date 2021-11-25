@@ -19,7 +19,7 @@ params = {
 @mock_http_response(
     responses.GET, "/sapi/v1/asset/assetDividend\\?" + urlencode(params), mock_item, 200
 )
-def test_asset_dividen_record():
+def test_asset_dividend_record():
     """Tests the API endpoint to get asset dividen record"""
 
     client = Client(key, secret)

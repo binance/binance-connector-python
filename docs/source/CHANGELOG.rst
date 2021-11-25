@@ -3,6 +3,26 @@ Changelog
 =========
 
 
+1.8.0 - 2021-11-25
+------------------
+
+Added
+^^^^^
+* New endpoint for Crypto Loans:
+  * ``GET /sapi/v1/loan/income`` to query an asset's loan history
+* New endpoints for Sub-Account:
+  * ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction`` to support master account enable and disable IP restriction for a sub-account API Key
+  * ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList`` to support master account add IP list for a sub-account API Key
+  * ``GET /sapi/v1/sub-account/subAccountApi/ipRestriction`` to support master account query IP restriction for a sub-account API Key
+  * ``DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList`` to support master account delete IP list for a sub-account API Key
+* New endpoint for Pay:
+  * ``GET /sapi/v1/pay/transactions`` to support user query Pay trade history
+
+Fixed
+^^^^^
+* Removed epoch time from util method ``config_logging`` to provide compatibility with Windows OS
+* Allow optional parameter for method ``isolated_margin_account_limit``
+
 1.7.0 - 2021-11-04
 ------------------
 

@@ -88,12 +88,12 @@ def enable_fast_withdraw(self, **kwargs):
 
 
 def withdraw(self, coin: str, amount: float, address: str, **kwargs):
-    """Withdraw
+    """Withdraw (USER_DATA)
     Submit a withdraw request.
 
     POST /sapi/v1/capital/withdraw/apply
 
-    https://binance-docs.github.io/apidocs/spot/en/#withdraw-sapi
+    https://binance-docs.github.io/apidocs/spot/en/#withdraw-user_data
 
     Args:
         coin (str)
@@ -105,6 +105,7 @@ def withdraw(self, coin: str, amount: float, address: str, **kwargs):
         addressTag (str, optional): Secondary address identifier for coins like XRP,XMR etc.
         transactionFeeFlag (bool, optional): When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
         name (str, optional): Description of the address. Space in name should be encoded into %20.
+        walletType (int, optional): The wallet type for withdraw，0-spot wallet，1-funding wallet. Default is spot wallet
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 

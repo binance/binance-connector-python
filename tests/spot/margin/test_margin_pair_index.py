@@ -27,7 +27,7 @@ def test_margin_pair_index_without_asset():
 @mock_http_response(
     responses.GET, "/sapi/v1/margin/priceIndex\\?" + urlencode(params), mock_item, 200
 )
-def test_margin_pair():
+def test_margin_pair_index():
     """Tests the API endpoint to margin pair index"""
 
     client = Client(key, secret)

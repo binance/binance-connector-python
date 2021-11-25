@@ -33,7 +33,7 @@ def test_cancel_margin_oco_order_without_symbol():
 @mock_http_response(
     responses.DELETE, "/sapi/v1/margin/orderList\\?" + urlencode(params), mock_item, 200
 )
-def test_cancel_order_with_order_id():
+def test_cancel_margin_oco_order():
     """Tests the API endpoint to cancel oco order"""
 
     response = client.cancel_margin_oco_order(**params)

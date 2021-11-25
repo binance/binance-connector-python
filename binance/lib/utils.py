@@ -60,8 +60,8 @@ def convert_list_to_json_array(symbols):
 
 
 def config_logging(logging, logging_level, log_file: str = None):
-    """Configures logging to provide a more detailed log format, which includes date time in UTC and an epoch timestamp in msec
-    Example: 2021-11-02 19:42:04 UTC 1635882124165 <logging_level> <log_name>: <log_message>
+    """Configures logging to provide a more detailed log format, which includes date time in UTC
+    Example: 2021-11-02 19:42:04.849 UTC <logging_level> <log_name>: <log_message>
 
     Args:
         logging: python logging
@@ -75,6 +75,6 @@ def config_logging(logging, logging_level, log_file: str = None):
     logging.basicConfig(
         level=logging_level,
         filename=log_file,
-        format="%(asctime)s%(msecs)03d %(levelname)s %(name)s: %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S UTC %s",
+        format="%(asctime)s.%(msecs)03d UTC %(levelname)s %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
     )

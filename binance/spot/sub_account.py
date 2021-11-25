@@ -666,3 +666,142 @@ def managed_sub_account_withdraw(
     return self.limited_encoded_sign_request(
         "POST", "/sapi/v1/managed-subaccount/withdraw", payload
     )
+
+
+def sub_account_api_toggle_ip_restriction(
+    self, email: str, subAccountApiKey: str, ipRestrict: bool, **kwargs
+):
+    """Enable or Disable IP Restriction for a Sub-account API Key (For Master Account)
+
+    POST /sapi/v1/sub-account/subAccountApi/ipRestriction
+
+    https://binance-docs.github.io/apidocs/spot/en/#enable-or-disable-ip-restriction-for-a-sub-account-api-key-for-master-account
+
+    Args:
+        email (str): Sub-account email
+        subAccountApiKey (str)
+        ipRestrict (bool): True or False
+    Keyword Args:
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [subAccountApiKey, "subAccountApiKey"],
+            [ipRestrict, "ipRestrict"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "subAccountApiKey": subAccountApiKey,
+        "ipRestrict": ipRestrict,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "POST", "/sapi/v1/sub-account/subAccountApi/ipRestriction", payload
+    )
+
+
+def sub_account_api_add_ip(
+    self, email: str, subAccountApiKey: str, ipAddress: str, **kwargs
+):
+    """Add IP List for a Sub-account API Key (For Master Account)
+
+    Before the usage of this endpoint, please ensure POST /sapi/v1/sub-account/subAccountApi/ipRestriction was used to enable the IP restriction.
+
+    POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList
+
+    https://binance-docs.github.io/apidocs/spot/en/#add-ip-list-for-a-sub-account-api-key-for-master-account
+
+    Args:
+        email (str): Sub-account email
+        subAccountApiKey (str)
+        ipAddress (str): Can be added in batches, separated by commas
+    Keyword Args:
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [subAccountApiKey, "subAccountApiKey"],
+            [ipAddress, "ipAddress"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "subAccountApiKey": subAccountApiKey,
+        "ipAddress": ipAddress,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "POST", "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", payload
+    )
+
+
+def sub_account_api_get_ip_restriction(
+    self, email: str, subAccountApiKey: str, **kwargs
+):
+    """Get IP Restriction for a Sub-account API Key (For Master Account)
+
+    GET /sapi/v1/sub-account/subAccountApi/ipRestriction
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-ip-restriction-for-a-sub-account-api-key-for-master-account
+
+    Args:
+        email (str): Sub-account email
+        subAccountApiKey (str)
+    Keyword Args:
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [subAccountApiKey, "subAccountApiKey"],
+        ]
+    )
+    payload = {"email": email, "subAccountApiKey": subAccountApiKey, **kwargs}
+
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/sub-account/subAccountApi/ipRestriction", payload
+    )
+
+
+def sub_account_api_delete_ip(
+    self, email: str, subAccountApiKey: str, ipAddress: str, **kwargs
+):
+    """Delete IP List for a Sub-account API Key (For Master Account)
+
+    DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList
+
+    https://binance-docs.github.io/apidocs/spot/en/#delete-ip-list-for-a-sub-account-api-key-for-master-account
+
+    Args:
+        email (str): Sub-account email
+        subAccountApiKey (str)
+        ipAddress (str): Can be added in batches, separated by commas
+    Keyword Args:
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [subAccountApiKey, "subAccountApiKey"],
+            [ipAddress, "ipAddress"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "subAccountApiKey": subAccountApiKey,
+        "ipAddress": ipAddress,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "DELETE", "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", payload
+    )

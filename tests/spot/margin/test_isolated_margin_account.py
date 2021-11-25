@@ -18,7 +18,7 @@ secret = random_str()
     mock_item,
     200,
 )
-def test_isolated_margin_transfer_history():
+def test_isolated_margin_account():
     """Tests the API endpoint to get isolated margin account info"""
 
     client = Client(key, secret)

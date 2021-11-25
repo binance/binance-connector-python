@@ -11,13 +11,14 @@ secret = random_str()
 
 params = {
     "coin": "BNB",
-    "amount": "1",
+    "amount": 1,
     "address": random_str(),
     "withdrawOrderId": "1234567",
     "network": "BNB",
     "addressTag": random_str(),
     "transactionFeeFlag": "true",
     "name": "test_address",
+    "walletType": 0,
 }
 
 

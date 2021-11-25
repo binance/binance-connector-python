@@ -59,8 +59,8 @@ def mining_worker_list(self, algo: str, userName: str, **kwargs):
         userName (str): Mining account
     Keyword Args:
         pageIndex (int, optional): Page number，default is first page，start form 1
-        sort (int, optional): sort sequence(default=0)0 positive sequence，1 negative sequence
-        sortColumn (int, optional): Sort by( default 1):
+        sort (int, optional): sort sequence (default=0)0 positive sequence，1 negative sequence
+        sortColumn (int, optional): Sort by (default 1):
                 1: miner name, 2: real-time computing power, 3: daily average computing power,
                 4: real-time rejection rate, 5: last submission time
         workerStatus (int, optional): miners status (default = 0) 0 all, 1 valid, 2 invalid, 3 failure
