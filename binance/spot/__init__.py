@@ -231,4 +231,4 @@ class Spot(API):
     from binance.spot.pay import pay_history
 
     # CONVERT
-    from binance.spot.convert import my_converts
+    from binance.spot.convert import convert_trade_history

@@ -17,6 +17,6 @@ spot_client = Spot(key, secret, base_url="https://testnet.binance.vision")
 start = int(datetime(2021, 11, 15, 23, 59, 59).timestamp() * 1000)
 end = int(datetime(2021, 12, 7, 23, 59, 59).timestamp() * 1000)
 
-converts = spot_client.my_converts(startTime=start, endTime=end)
+converts = spot_client.convert_trade_history(startTime=start, endTime=end)
 
 logging.info(converts)
