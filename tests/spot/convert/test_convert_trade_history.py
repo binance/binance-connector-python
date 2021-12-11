@@ -18,21 +18,19 @@ params = {
 
 
 def test_convert_trade_history_without_startTime():
-    """Tests the API endpoint to retreive convert trade history without startTime"""
+    """Tests the API endpoint to retrieve convert trade history without startTime"""
 
-    params = {"startTime": "", "endTime": "1597130241000"}
     client = Client(key, secret)
-    client.convert_trade_history.when.called_with(**params).should.throw(
+    client.convert_trade_history.when.called_with(endTime=1597130241000).should.throw(
         ParameterRequiredError
     )
 
 
 def test_convert_trade_history_without_endTime():
-    """Tests the API endpoint to retreive convert trade history without endTime"""
+    """Tests the API endpoint to retrieve convert trade history without endTime"""
 
-    params = {"startTime": "1597130241000", "endTime": ""}
     client = Client(key, secret)
-    client.convert_trade_history.when.called_with(**params).should.throw(
+    client.convert_trade_history.when.called_with(startTime=1597130241000).should.throw(
         ParameterRequiredError
     )
 
@@ -41,7 +39,7 @@ def test_convert_trade_history_without_endTime():
     responses.GET, "/sapi/v1/convert/tradeFlow\\?" + urlencode(params), mock_item, 200
 )
 def test_futures_transfer_history():
-    """Tests the API endpoint to retreive convert trade history"""
+    """Tests the API endpoint to retrieve convert trade history"""
 
     client = Client(key, secret)
     response = client.futures_transfer_history(**params)

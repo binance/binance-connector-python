@@ -14,15 +14,10 @@ def convert_trade_history(self, startTime, endTime, **kwargs):
         startTime (int)
         endTime (int)
     Keyword Args:
-        limit (int, optional): Default Value: 500; Max Value: 1000
+        limit (int, optional): Default Value: 100; Max Value: 1000
         recvWindow (int, optional)
     """
-    check_required_parameters(
-        [
-            [startTime, "startTime"],
-            [endTime, "endTime"]
-        ]
-    )
+    check_required_parameters([[startTime, "startTime"], [endTime, "endTime"]])
 
     url_path = "/sapi/v1/convert/tradeFlow"
     payload = {"startTime": startTime, "endTime": endTime, **kwargs}

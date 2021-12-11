@@ -4,7 +4,7 @@
 
 ### Added
 - New endpoint for Convert:
-   - GET /sapi/v1/convert/tradeFlow to support user query convert trade history records
+    - `GET /sapi/v1/convert/tradeFlow` to support user query convert trade history records
 
 ## 1.8.0 - 2021-11-25
 
