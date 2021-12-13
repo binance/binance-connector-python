@@ -38,7 +38,7 @@ def test_convert_trade_history_without_endTime():
 @mock_http_response(
     responses.GET, "/sapi/v1/convert/tradeFlow\\?" + urlencode(params), mock_item, 200
 )
-def test_futures_transfer_history():
+def test_convert_trade_history():
     """Tests the API endpoint to retrieve convert trade history"""
 
     client = Client(key, secret)
