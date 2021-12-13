@@ -21,7 +21,7 @@ def test_convert_trade_history_without_startTime():
     """Tests the API endpoint to retrieve convert trade history without startTime"""
 
     client = Client(key, secret)
-    client.convert_trade_history.when.called_with(endTime=1597130241000).should.throw(
+    client.convert_trade_history.when.called_with(startTime="", endTime=1597130241000).should.throw(
         ParameterRequiredError
     )
 
@@ -30,7 +30,7 @@ def test_convert_trade_history_without_endTime():
     """Tests the API endpoint to retrieve convert trade history without endTime"""
 
     client = Client(key, secret)
-    client.convert_trade_history.when.called_with(startTime=1597130241000).should.throw(
+    client.convert_trade_history.when.called_with(startTime=1597130241000, endTime="").should.throw(
         ParameterRequiredError
     )
 
