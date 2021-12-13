@@ -2,6 +2,13 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+Added
+^^^^^
+* New endpoint for Convert:
+   * ``GET /sapi/v1/convert/tradeFlow`` to support user query convert trade history records
 
 1.8.0 - 2021-11-25
 ------------------
@@ -91,8 +98,8 @@ Added
 
 * New Fiat endpoints:
 
-  * ``GET /sapi/v1/fiat/orders`` to query user fiat deposit and withdraw history 
-  * ``GET /sapi/v1/fiat/payments`` to query user fiat payments history 
+  * ``GET /sapi/v1/fiat/orders`` to query user fiat deposit and withdraw history
+  * ``GET /sapi/v1/fiat/payments`` to query user fiat payments history
 
 Fixed
 ^^^^^
