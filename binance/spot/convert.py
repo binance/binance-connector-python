@@ -1,7 +1,7 @@
 from binance.lib.utils import check_required_parameters
 
 
-def convert_trade_history(self, startTime, endTime, **kwargs):
+def convert_trade_history(self, startTime: int, endTime: int, **kwargs):
     """Convert Trade History (USER_DATA)
 
     Get convert history for a specific account.
