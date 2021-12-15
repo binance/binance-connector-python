@@ -42,5 +42,5 @@ def test_convert_trade_history():
     """Tests the API endpoint to retrieve convert trade history"""
 
     client = Client(key, secret)
-    response = client.futures_transfer_history(**params)
+    response = client.convert_trade_history(**params)
     response.should.equal(mock_item)
