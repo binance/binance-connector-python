@@ -855,3 +855,54 @@ def isolated_margin_account_limit(self, **kwargs):
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     return self.sign_request("GET", "/sapi/v1/margin/isolated/accountLimit", kwargs)
+
+
+def margin_fee(self, **kwargs):
+    """Query Cross Margin Fee Data (USER_DATA)
+    Get cross margin fee data collection with any vip level or user's current specific data as https://www.binance.com/en/margin-fee
+
+    GET /sapi/v1/margin/crossMarginData
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-cross-margin-fee-data-user_data
+
+    Keyword Args:
+        vipLevel (int, optional): User's current specific margin data will be returned if vipLevel is omitted
+        coin (str, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    return self.sign_request("GET", "/sapi/v1/margin/crossMarginData", kwargs)
+
+
+def isolated_margin_fee(self, **kwargs):
+    """Query Isolated Margin Fee Data (USER_DATA)
+    Get isolated margin fee data collection with any vip level or user's current specific data as https://www.binance.com/en/margin-fee
+
+    GET /sapi/v1/margin/isolatedMarginData
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-fee-data-user_data
+
+    Keyword Args:
+        vipLevel (int, optional): User's current specific margin data will be returned if vipLevel is omitted
+        symbol (str, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    return self.sign_request("GET", "/sapi/v1/margin/isolatedMarginData", kwargs)
+
+
+def isolated_margin_tier(self, symbol: str, **kwargs):
+    """Query Isolated Margin Tier Data (USER_DATA)
+    Get isolated margin tier data collection with any tier as https://www.binance.com/en/margin-data
+
+    GET /sapi/v1/margin/isolatedMarginTier
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-tier-data-user_data
+
+    Args:
+        symbol (str)
+    Keyword Args:
+        tier (int, optional): All margin tier data will be returned if tier is omitted
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(symbol, "symbol")
+    payload = {"symbol": symbol, **kwargs}
+    return self.sign_request("GET", "/sapi/v1/margin/isolatedMarginTier", payload)

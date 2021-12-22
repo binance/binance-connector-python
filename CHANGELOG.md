@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.9.0 - 2021-12-22
+
+### Added
+- New endpoint for Convert:
+    - `GET /sapi/v1/convert/tradeFlow` to support user query convert trade history records
+- New endpoint for Rebate:
+    - `GET /sapi/v1/rebate/taxQuery` to support user query spot rebate history records
+- New endpoints for Margin:
+    - `GET /sapi/v1/margin/crossMarginData` to get cross margin fee data collection
+    - `GET /sapi/v1/margin/isolatedMarginData` to get isolated margin fee data collection
+    - `GET /sapi/v1/margin/isolatedMarginTier` to get isolated margin tier data collection
+- New endpoints for NFT:
+    - `GET /sapi/v1/nft/history/transactions` to get NFT transaction history
+    - `GET /sapi/v1/nft/history/deposit` to get NFT deposit history
+    - `GET /sapi/v1/nft/history/withdraw` to get NFT withdraw history
+    - `GET /sapi/v1/nft/user/getAsset` to get NFT asset
+
 ## 1.8.0 - 2021-11-25
 
 ### Added
@@ -46,7 +63,7 @@
     - `GET /sapi/v1/bswap/poolConfigure` to get pool configure
     - `GET /sapi/v1/bswap/addLiquidityPreview` to calculate expected share amount for adding liquidity in single or dual token
     - `GET /sapi/v1/bswap/removeLiquidityPreview` to calculate expected asset amount of single token redemption or dual token redemption
-    
+
 ## 1.5.0 - 2021-08-17
 
 ### Changed
@@ -60,8 +77,8 @@
 
 ### Added
 - New Fiat endpoints:
-    - `GET /sapi/v1/fiat/orders` to query user fiat deposit and withdraw history 
-    - `GET /sapi/v1/fiat/payments` to query user fiat payments history 
+    - `GET /sapi/v1/fiat/orders` to query user fiat deposit and withdraw history
+    - `GET /sapi/v1/fiat/payments` to query user fiat payments history
 
 ### Fixed
  - Typo in `margin_max_transferable`
@@ -71,7 +88,7 @@
 - New endpoints for Wallet:
     - `POST /sapi/v1/asset/get-funding-asset` to query funding wallet, includes Binance Pay, Binance Card, Binance Gift Card, Stock Token
     - `GET /sapi/v1/account/apiRestrictions` to query user API Key permission
-    
+
 ## 1.2.0 - 2021-07-12
 
 ### Changed

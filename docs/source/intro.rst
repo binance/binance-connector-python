@@ -6,9 +6,24 @@ Binance Public API Connector Python
 ===================================
 
 
-.. image:: https://img.shields.io/badge/python-3.6+-blue.svg
-   :target: https://www.python.org/downloads/release/python-360/
-   :alt: Python 3.6
+.. image:: https://img.shields.io/pypi/v/binance-connector.svg
+   :target: https://pypi.org/project/binance-connector/
+   :alt: PyPI version
+
+
+.. image:: https://img.shields.io/pypi/pyversions/binance-connector
+   :target: https://www.python.org/downloads/
+   :alt: Python version
+
+
+.. image:: https://img.shields.io/badge/docs-latest-blue
+   :target: https://binance-connector.readthedocs.io/en/stable/)
+   :alt: Documentation
+
+
+.. image:: https://img.shields.io/badge/code_style-black-black
+   :target: https://black.readthedocs.io/en/stable/
+   :alt: Code Style
 
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
