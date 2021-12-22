@@ -89,6 +89,9 @@ class Spot(API):
     from binance.spot.margin import cancel_isolated_margin_account
     from binance.spot.margin import enable_isolated_margin_account
     from binance.spot.margin import isolated_margin_account_limit
+    from binance.spot.margin import margin_fee
+    from binance.spot.margin import isolated_margin_fee
+    from binance.spot.margin import isolated_margin_tier
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -232,3 +235,12 @@ class Spot(API):
 
     # CONVERT
     from binance.spot.convert import convert_trade_history
+
+    # REBATE
+    from binance.spot.rebate import rebate_spot_history
+
+    # NFT
+    from binance.spot.nft import nft_transaction_history
+    from binance.spot.nft import nft_deposit_history
+    from binance.spot.nft import nft_withdraw_history
+    from binance.spot.nft import nft_asset

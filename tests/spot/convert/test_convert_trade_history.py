@@ -16,11 +16,12 @@ params = {
     "endTime": current_timestamp(),
 }
 
+client = Client(key, secret)
+
 
 def test_convert_trade_history_without_startTime():
     """Tests the API endpoint to retrieve convert trade history without startTime"""
 
-    client = Client(key, secret)
     client.convert_trade_history.when.called_with(
         startTime="", endTime=1597130241000
     ).should.throw(ParameterRequiredError)
@@ -29,7 +30,6 @@ def test_convert_trade_history_without_startTime():
 def test_convert_trade_history_without_endTime():
     """Tests the API endpoint to retrieve convert trade history without endTime"""
 
-    client = Client(key, secret)
     client.convert_trade_history.when.called_with(
         startTime=1597130241000, endTime=""
     ).should.throw(ParameterRequiredError)
@@ -41,6 +41,5 @@ def test_convert_trade_history_without_endTime():
 def test_convert_trade_history():
     """Tests the API endpoint to retrieve convert trade history"""
 
-    client = Client(key, secret)
     response = client.convert_trade_history(**params)
     response.should.equal(mock_item)

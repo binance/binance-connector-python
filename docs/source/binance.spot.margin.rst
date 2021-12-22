@@ -156,3 +156,15 @@ Enable Isolated Margin Account (TRADE)
 Query Enabled Isolated Margin Account Limit (USER_DATA)
 -------------------------------------------------------
 .. autofunction:: binance.spot.margin.isolated_margin_account_limit
+
+Query Cross Margin Fee Data (USER_DATA)
+---------------------------------------
+.. autofunction:: binance.spot.margin.margin_fee
+
+Query Isolated Margin Fee Data (USER_DATA)
+------------------------------------------
+.. autofunction:: binance.spot.margin.isolated_margin_fee
+
+Query Isolated Margin Tier Data (USER_DATA)
+-------------------------------------------
+.. autofunction:: binance.spot.margin.isolated_margin_tier
