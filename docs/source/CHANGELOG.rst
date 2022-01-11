@@ -2,21 +2,52 @@
 Changelog
 =========
 
+1.10.0 - 2022-01-11
+-------------------
+
+Added
+^^^^^
+
+
+* New endpoint for Mining:
+
+  * ``GET /sapi/v1/mining/payment/uid`` to get Mining account earning
+
+* New endpoint for BSwap:
+
+  * ``GET /sapi/v1/bswap/unclaimedRewards`` to get unclaimed rewards record
+  * ``POST /sapi/v1/bswap/claimRewards`` to claim swap rewards or liquidity rewards
+  * ``GET /sapi/v1/bswap/claimedHistory`` to get history of claimed rewards
+
+Removed
+^^^^^^^
+
+
+* Transfer types ``MAIN_MINING``\ , ``MINING_MAIN``\ , ``MINING_UMFUTURE``\ , ``MARGIN_MINING``\ , and ``MINING_MARGIN`` as they are discontinued in Universal Transfer endpoint ``POST /sapi/v1/asset/transfer`` from January 05, 2022 08:00 AM UTC
 
 1.9.0 - 2021-12-22
 ------------------
 
 Added
 ^^^^^
+
+
 * New endpoint for Convert:
-  * ``GET /sapi/v1/convert/tradeFlow`` to support user query convert trade history records* New endpoint for Rebate:
+
+  * ``GET /sapi/v1/convert/tradeFlow`` to support user query convert trade history records
+
 * New endpoint for Rebate:
+
   * ``GET /sapi/v1/rebate/taxQuery`` to support user query spot rebate history records
+
 * New endpoints for Margin:
+
   * ``GET /sapi/v1/margin/crossMarginData`` to get cross margin fee data collection
   * ``GET /sapi/v1/margin/isolatedMarginData`` to get isolated margin fee data collection
   * ``GET /sapi/v1/margin/isolatedMarginTier`` to get isolated margin tier data collection
+
 * New endpoints for NFT:
+
   * ``GET /sapi/v1/nft/history/transactions`` to get NFT transaction history
   * ``GET /sapi/v1/nft/history/deposit`` to get NFT deposit history
   * ``GET /sapi/v1/nft/history/withdraw`` to get NFT withdraw history
@@ -27,19 +58,28 @@ Added
 
 Added
 ^^^^^
+
+
 * New endpoint for Crypto Loans:
+
   * ``GET /sapi/v1/loan/income`` to query an asset's loan history
+
 * New endpoints for Sub-Account:
+
   * ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction`` to support master account enable and disable IP restriction for a sub-account API Key
   * ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList`` to support master account add IP list for a sub-account API Key
   * ``GET /sapi/v1/sub-account/subAccountApi/ipRestriction`` to support master account query IP restriction for a sub-account API Key
   * ``DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList`` to support master account delete IP list for a sub-account API Key
+
 * New endpoint for Pay:
+
   * ``GET /sapi/v1/pay/transactions`` to support user query Pay trade history
 
 Fixed
 ^^^^^
-* Removed epoch time from util method ``config_logging`` to provide compatibility with Windows OS
+
+
+* Removed epoch time in util method ``config_logging`` to provide compatibility with Windows OS
 * Allow optional parameter for method ``isolated_margin_account_limit``
 
 1.7.0 - 2021-11-04
@@ -47,15 +87,20 @@ Fixed
 
 Updated
 ^^^^^^^
+
+
 * Universal transfer types:
-  * Added ``MAIN_FUNDING``, ``FUNDING_MAIN``, ``FUNDING_UMFUTURE``, ``UMFUTURE_FUNDING``, ``MARGIN_FUNDING``, ``FUNDING_MARGIN``, ``FUNDING_CMFUTURE`` and ``CMFUTURE_FUNDING`` to support transfer assets among funding account and other accounts
-  * Deleted ``MAIN_C2C``, ``C2C_MAIN``, ``C2C_UMFUTURE``, ``C2C_MINING``, ``UMFUTURE_C2C``, ``MINING_C2C``, ``MARGIN_C2C``, ``C2C_MARGIN``, ``MAIN_PAY`` and ``PAY_MAIN`` as C2C account, Binance Payment, Binance Card and other business accounts are merged into a Funding account and they'll be discontinued on November 04, 2021 08:00 AM UTC
+
+  * Added ``MAIN_FUNDING``\ , ``FUNDING_MAIN``\ , ``FUNDING_UMFUTURE``\ , ``UMFUTURE_FUNDING``\ , ``MARGIN_FUNDING``\ , ``FUNDING_MARGIN``\ , ``FUNDING_CMFUTURE`` and ``CMFUTURE_FUNDING`` to support transfer assets among funding account and other accounts
+  * Deleted ``MAIN_C2C``\ , ``C2C_MAIN``\ , ``C2C_UMFUTURE``\ , ``C2C_MINING``\ , ``UMFUTURE_C2C``\ , ``MINING_C2C``\ , ``MARGIN_C2C``\ , ``C2C_MARGIN``\ , ``MAIN_PAY`` and ``PAY_MAIN`` as C2C account, Binance Payment, Binance Card and other business accounts are merged into a Funding account and they'll be discontinued on November 04, 2021 08:00 AM UTC
+
 * Util method ``config_logging`` can now provide date time in UTC and epoch time
 
 Added
 ^^^^^
-* New endpoint ``GET api/v3/rateLimit/order`` to display the user's current order count usage for all intervals
 
+
+* New endpoint ``GET api/v3/rateLimit/order`` to display the user's current order count usage for all intervals
 
 1.6.0 - 2021-09-24
 ------------------
@@ -63,8 +108,8 @@ Added
 Added
 ^^^^^
 
-* Universal transfer types ``MAIN_PAY``, ``PAY_MAIN``, ``ISOLATEDMARGIN_MARGIN``，``MARGIN_ISOLATEDMARGIN``，``ISOLATEDMARGIN_ISOLATEDMARGIN``
 
+* Universal transfer types ``MAIN_PAY``\ , ``PAY_MAIN``\ , ``ISOLATEDMARGIN_MARGIN``\ ，\ ``MARGIN_ISOLATEDMARGIN``\ ，\ ``ISOLATEDMARGIN_ISOLATEDMARGIN``
 * New endpoints for Margin OCO orders:
 
   * ``POST /sapi/v1/margin/order/oco`` to send new margin OCO order
@@ -85,12 +130,12 @@ Added
   * ``GET /sapi/v1/bswap/addLiquidityPreview`` to calculate expected share amount for adding liquidity in single or dual token
   * ``GET /sapi/v1/bswap/removeLiquidityPreview`` to calculate expected asset amount of single token redemption or dual token redemption
 
-
 1.5.0 - 2021-08-17
 ------------------
 
 Changed
 ^^^^^^^
+
 
 * ``GET api/v3/exchangeInfo`` now supports single or multi-symbol query
 * ``GET api/v3/myTrades`` has a new optional field ``orderId``
@@ -98,8 +143,8 @@ Changed
 Added
 ^^^^^
 
-* ``GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`` to query user C2C trade history
 
+* ``GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`` to query user C2C trade history
 
 1.4.0 - 2021-07-30
 ------------------

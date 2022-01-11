@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.10.0 - 2022-01-11
+
+### Added
+- New endpoint for Mining:
+    - `GET /sapi/v1/mining/payment/uid` to get Mining account earning
+- New endpoint for BSwap:
+    - `GET /sapi/v1/bswap/unclaimedRewards` to get unclaimed rewards record
+    - `POST /sapi/v1/bswap/claimRewards` to claim swap rewards or liquidity rewards
+    - `GET /sapi/v1/bswap/claimedHistory` to get history of claimed rewards
+
+### Removed
+- Transfer types `MAIN_MINING`, `MINING_MAIN`, `MINING_UMFUTURE`, `MARGIN_MINING`, and `MINING_MARGIN` as they are discontinued in Universal Transfer endpoint `POST /sapi/v1/asset/transfer` from January 05, 2022 08:00 AM UTC
+
 ## 1.9.0 - 2021-12-22
 
 ### Added

@@ -48,3 +48,7 @@ Hashrate Resale List (USER_DATA)
 Hashrate Resale Detail (USER_DATA)
 ----------------------------------
 .. autofunction:: binance.spot.mining.mining_hashrate_resale_details
+
+Mining Account Earning (USER_DATA)
+----------------------------------
+.. autofunction:: binance.spot.mining.mining_account_earning

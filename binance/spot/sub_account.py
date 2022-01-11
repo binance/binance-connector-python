@@ -436,6 +436,7 @@ def sub_account_universal_transfer(
     Keyword Args:
         fromEmail (str, optional)
         toEmail (str, optional)
+        clientTranId (str, optional): Must be unique
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters(
@@ -473,6 +474,7 @@ def sub_account_universal_transfer_history(self, **kwargs):
     Keyword Args:
         fromEmail (str, optional)
         toEmail (str, optional)
+        clientTranId (str, optional)
         startTime (int, optional)
         endTime (int, optional)
         page (int, optional)

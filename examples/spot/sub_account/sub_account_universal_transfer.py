@@ -19,5 +19,6 @@ logging.info(
         toAccountType="USDT_FUTURE",
         asset="USDT",
         amount=1,
+        clientTranId="test",
     )
 )

@@ -9,6 +9,6 @@ config_logging(logging, logging.DEBUG)
 key = ""
 secret = ""
 
-spot_client = Client(key, secret)
 
-logging.info(spot_client.sub_account_universal_transfer_history(clientTranId="test"))
+client = Client(key, secret)
+logging.info(client.bswap_claim_rewards(type=0))
