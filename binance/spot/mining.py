@@ -1,4 +1,5 @@
 from binance.lib.utils import check_required_parameters
+from binance.lib.utils import check_required_parameter
 
 
 def mining_algo_list(self):
@@ -271,3 +272,25 @@ def mining_hashrate_resale_details(self, configId: int, userName: str, **kwargs)
     return self.sign_request(
         "GET", "/sapi/v1/mining/hash-transfer/profit/details", payload
     )
+
+
+def mining_account_earning(self, algo: str, **kwargs):
+    """Mining Account Earning (USER_DATA)
+
+    GET /sapi/v1/mining/payment/uid
+
+    https://binance-docs.github.io/apidocs/spot/en/#mining-account-earning-user_data
+
+    Args:
+        algo (str): Algorithm(sha256)
+    Keyword Args:
+        startDate (int, optional): Millisecond timestamp
+        endDate (int, optional): Millisecond timestamp
+        pageIndex (int, optional): Default 1
+        pageSize (int, optional): Min 10,Max 200
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(algo, "algo")
+
+    payload = {"algo": algo, **kwargs}
+    return self.sign_request("GET", "/sapi/v1/mining/payment/uid", payload)

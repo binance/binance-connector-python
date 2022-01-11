@@ -11,11 +11,14 @@ mock_item = {"key_1": "value_1", "key_2": "value_2"}
 key = random_str()
 secret = random_str()
 
+client = Client(key, secret)
+
 params = {
     "fromAccountType": "SPOT",
     "toAccountType": "COIN_FUTURE",
     "asset": "BNB",
     "amount": 10.1,
+    "clientTranId": "test",
     "recvWindow": 1000,
 }
 
@@ -28,9 +31,9 @@ def test_sub_account_universal_transfer_without_fromAccountType():
         "toAccountType": "COIN_FUTURE",
         "asset": "BNB",
         "amount": 10.1,
+        "clientTranId": "test",
         "recvWindow": 1000,
     }
-    client = Client(key, secret)
     client.sub_account_universal_transfer.when.called_with(**params).should.throw(
         ParameterRequiredError
     )
@@ -44,9 +47,9 @@ def test_sub_account_universal_transfer_without_toAccountType():
         "toAccountType": "",
         "asset": "BNB",
         "amount": 10.1,
+        "clientTranId": "test",
         "recvWindow": 1000,
     }
-    client = Client(key, secret)
     client.sub_account_universal_transfer.when.called_with(**params).should.throw(
         ParameterRequiredError
     )
@@ -60,9 +63,9 @@ def test_sub_account_universal_transfer_without_asset():
         "toAccountType": "COIN_FUTURE",
         "asset": "",
         "amount": 10.1,
+        "clientTranId": "test",
         "recvWindow": 1000,
     }
-    client = Client(key, secret)
     client.sub_account_universal_transfer.when.called_with(**params).should.throw(
         ParameterRequiredError
     )
@@ -76,9 +79,9 @@ def test_sub_account_universal_transfer_without_amount():
         "toAccountType": "COIN_FUTURE",
         "asset": "BNB",
         "amount": "",
+        "clientTranId": "test",
         "recvWindow": 1000,
     }
-    client = Client(key, secret)
     client.sub_account_universal_transfer.when.called_with(**params).should.throw(
         ParameterRequiredError
     )
@@ -93,6 +96,5 @@ def test_sub_account_universal_transfer_without_amount():
 def test_sub_account_universal_transfer():
     """Tests the API endpoint to transfer asset within master account"""
 
-    client = Client(key, secret)
     response = client.sub_account_universal_transfer(**params)
     response.should.equal(mock_item)

@@ -636,8 +636,7 @@ def margin_interest_rate_history(self, asset: str, **kwargs):
     Keyword Args:
         vipLevel (str, optional): Default: user's vip level
         startTime (int, optional): Default: 7 days ago.
-        endTime (int, optional): Default: present. Maximum range: 3 months.
-        limit (int, optional): Default: 20. Maximum: 100.
+        endTime (int, optional): Default: present. Maximum range: 1 month.
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 

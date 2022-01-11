@@ -277,3 +277,56 @@ def bswap_remove_liquidity_preview(
         **kwargs,
     }
     return self.sign_request("GET", "/sapi/v1/bswap/removeLiquidityPreview", payload)
+
+
+def bswap_unclaimed_rewards(self, **kwargs):
+    """Get Unclaimed Rewards Record (USER_DATA)
+    Get unclaimed rewards record.
+
+    GET /sapi/v1/bswap/unclaimedRewards
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-unclaimed-rewards-record-user_data
+
+    Keyword Args:
+        type (int, optional): 0: Swap rewards,1:Liquidity rewards, default to 0
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/bswap/unclaimedRewards", kwargs)
+
+
+def bswap_claim_rewards(self, **kwargs):
+    """Claim rewards (TRADE)
+    Claim swap rewards or liquidity rewards
+
+    POST /sapi/v1/bswap/claimRewards
+
+    https://binance-docs.github.io/apidocs/spot/en/#claim-rewards-trade
+
+    Keyword Args:
+        type (int, optional): 0: Swap rewards,1:Liquidity rewards, default to 0
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("POST", "/sapi/v1/bswap/claimRewards", kwargs)
+
+
+def bswap_claimed_rewards(self, **kwargs):
+    """Get Claimed History (USER_DATA)
+    Get history of claimed rewards.
+
+    GET /sapi/v1/bswap/claimedHistory
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-claimed-history-user_data
+
+    Keyword Args:
+        poolId (int, optional)
+        assetRewards (str, optional)
+        type (int, optional): 0: Swap rewards,1:Liquidity rewards, default to 0
+        startTime (int, optional)
+        endTime (int, optional)
+        limit (int, optional): default 3, max 100
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/bswap/claimedHistory", kwargs)

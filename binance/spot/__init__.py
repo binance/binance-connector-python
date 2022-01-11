@@ -144,6 +144,7 @@ class Spot(API):
     from binance.spot.mining import mining_hashrate_resale_cancellation
     from binance.spot.mining import mining_hashrate_resale_list
     from binance.spot.mining import mining_hashrate_resale_details
+    from binance.spot.mining import mining_account_earning
 
     # SUB-ACCOUNT
     from binance.spot.sub_account import sub_account_create
@@ -219,6 +220,9 @@ class Spot(API):
     from binance.spot.bswap import bswap_pool_configure
     from binance.spot.bswap import bswap_add_liquidity_preview
     from binance.spot.bswap import bswap_remove_liquidity_preview
+    from binance.spot.bswap import bswap_unclaimed_rewards
+    from binance.spot.bswap import bswap_claim_rewards
+    from binance.spot.bswap import bswap_claimed_rewards
 
     # FIAT
     from binance.spot.fiat import fiat_order_history
