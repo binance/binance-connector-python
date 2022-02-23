@@ -80,3 +80,7 @@ Funding Wallet (USER_DATA)
 API Key Permission (USER_DATA)
 ------------------------------
 .. autofunction:: binance.spot.wallet.api_key_permissions
+
+Get Assets That Can Be Converted Into BNB (USER_DATA)
+-----------------------------------------------------
+.. autofunction:: binance.spot.wallet.bnb_convertible_assets

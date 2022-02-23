@@ -2,6 +2,23 @@
 Changelog
 =========
 
+1.11.0 - 2022-02-23
+-------------------
+
+Added
+^^^^^
+
+
+* New endpoints for Gift Card (Binance Code in the API Documentation):
+
+  * ``POST /sapi/v1/giftcard/createCode`` to create a Binance Code
+  * ``POST /sapi/v1/giftcard/redeemCode`` to redeem a Binance Code
+  * ``GET /sapi/v1/giftcard/verify`` to verify a Binance Code
+
+* New endpoint for Wallet:
+
+  * ``POST /sapi/v1/asset/dust-btc`` to get assets that can be converted into BNB
+
 1.10.0 - 2022-01-11
 -------------------
 

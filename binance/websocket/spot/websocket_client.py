@@ -150,5 +150,5 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         )
 
     def user_data(self, listen_key: str, id: int, callback, **kwargs):
-        """listen to user data by provided listenkey"""
+        """Listen to user data by using the provided listen_key"""
         self.live_subscribe(listen_key, id, callback, **kwargs)
