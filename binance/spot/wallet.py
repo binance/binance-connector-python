@@ -46,7 +46,7 @@ def account_snapshot(self, type: str, **kwargs):
     Keyword Args:
         startTime (int, optional)
         endTime (int, optional)
-        limit (int, optional): min 5, max 30, default 5
+        limit (int, optional): min 7, max 30, default 7
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -368,3 +368,17 @@ def api_key_permissions(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/account/apiRestrictions", kwargs)
+
+
+def bnb_convertible_assets(self, **kwargs):
+    """Get Assets That Can Be Converted Into BNB (USER_DATA)
+
+    POST /sapi/v1/asset/dust-btc
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-assets-that-can-be-converted-into-bnb-user_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("POST", "/sapi/v1/asset/dust-btc", kwargs)

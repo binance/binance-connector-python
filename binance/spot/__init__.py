@@ -130,6 +130,7 @@ class Spot(API):
     from binance.spot.wallet import trade_fee
     from binance.spot.wallet import funding_wallet
     from binance.spot.wallet import api_key_permissions
+    from binance.spot.wallet import bnb_convertible_assets
 
     # MINING
     from binance.spot.mining import mining_algo_list
@@ -248,3 +249,8 @@ class Spot(API):
     from binance.spot.nft import nft_deposit_history
     from binance.spot.nft import nft_withdraw_history
     from binance.spot.nft import nft_asset
+
+    # Gift Card (Binance Code in the API documentation)
+    from binance.spot.gift_card import gift_card_create_code
+    from binance.spot.gift_card import gift_card_redeem_code
+    from binance.spot.gift_card import gift_card_verify_code

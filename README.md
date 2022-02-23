@@ -1,5 +1,5 @@
 # Binance Public API Connector Python
-[![PyPI version](https://img.shields.io/pypi/v/binance-connector.svg)](https://pypi.python.org/pypi/binance-connector.svg)
+[![PyPI version](https://img.shields.io/pypi/v/binance-connector)](https://pypi.python.org/pypi/binance-connector)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Documentation](https://img.shields.io/badge/docs-latest-blue)](https://binance-connector.readthedocs.io/en/stable/)
 [![Code Style](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
@@ -33,11 +33,18 @@ Usage examples:
 from binance.spot import Spot 
 
 client = Spot()
-print(client.time())
 
+# Get server timestamp
+print(client.time())
+# Get klines of BTCUSDT at 1m interval
+print(client.klines("BTCUSDT", "1m"))
+# Get last 10 klines of BNBUSDT at 1h interval
+print(client.klines("BNBUSDT", "1h", limit=10))
+
+# api key/secret are required for user data endpoints
 client = Spot(key='<api_key>', secret='<api_secret>')
 
-# Get account information
+# Get account and balance information
 print(client.account())
 
 # Post a new order
