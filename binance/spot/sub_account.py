@@ -426,17 +426,21 @@ def sub_account_universal_transfer(
     You need to enable "internal transfer" option for the api key which requests this endpoint.
     Transfer from master account by default if fromEmail is not sent.
     Transfer to master account by default if toEmail is not sent.
-    Transfer between futures accounts is not supported.
+    Supported transfer scenarios:
+    - Master account SPOT transfer to sub-account SPOT, USDT_FUTURE, COIN_FUTURE, MARGIN(Cross), ISOLATED_MARGIN
+    - Sub-account SPOT, USDT_FUTURE, COIN_FUTURE, MARGIN(Cross), ISOLATED_MARGIN transfer to master account SPOT
+    - Transfer between two SPOT sub-accounts
 
     Args:
-        fromAccountType (str): "SPOT","USDT_FUTURE","COIN_FUTURE"
-        toAccountType (str): "SPOT","USDT_FUTURE","COIN_FUTURE"
+        fromAccountType (str): "SPOT", "USDT_FUTURE", "COIN_FUTURE", "MARGIN"(Cross), "ISOLATED_MARGIN"
+        toAccountType (str): "SPOT", "USDT_FUTURE", "COIN_FUTURE", "MARGIN"(Cross), "ISOLATED_MARGIN"
         asset (str)
         amount (float)
     Keyword Args:
         fromEmail (str, optional)
         toEmail (str, optional)
         clientTranId (str, optional): Must be unique
+        symbol (str, optional): Only supported under ISOLATED_MARGIN type
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters(
@@ -806,4 +810,38 @@ def sub_account_api_delete_ip(
 
     return self.limited_encoded_sign_request(
         "DELETE", "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", payload
+    )
+
+
+def managed_sub_account_get_snapshot(self, email: str, type: str, **kwargs):
+    """Query Managed Sub-account Snapshot（For Investor Master Account）
+
+    GET /sapi/v1/managed-subaccount/accountSnapshot (HMAC SHA256)
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-snapshot-for-investor-master-account
+
+    Args:
+        email (str): email
+        type (str): "SPOT", "MARGIN"（cross）, "FUTURES"（UM）
+    Keyword Args:
+        startTime (int, optional)
+        endTime (int, optional)
+        limit (int, optional): min 7, max 30, default 7
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [type, "type"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "type": type,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/managed-subaccount/accountSnapshot", payload
     )

@@ -22,21 +22,21 @@ class Spot(API):
     from binance.spot.market import book_ticker
 
     # ACCOUNT (including orders and trades)
-    from binance.spot.account import new_order_test
-    from binance.spot.account import new_order
-    from binance.spot.account import cancel_order
-    from binance.spot.account import cancel_open_orders
-    from binance.spot.account import get_order
-    from binance.spot.account import get_open_orders
-    from binance.spot.account import get_orders
-    from binance.spot.account import new_oco_order
-    from binance.spot.account import cancel_oco_order
-    from binance.spot.account import get_oco_order
-    from binance.spot.account import get_oco_orders
-    from binance.spot.account import get_oco_open_orders
-    from binance.spot.account import account
-    from binance.spot.account import my_trades
-    from binance.spot.account import get_order_rate_limit
+    from binance.spot.trade import new_order_test
+    from binance.spot.trade import new_order
+    from binance.spot.trade import cancel_order
+    from binance.spot.trade import cancel_open_orders
+    from binance.spot.trade import get_order
+    from binance.spot.trade import get_open_orders
+    from binance.spot.trade import get_orders
+    from binance.spot.trade import new_oco_order
+    from binance.spot.trade import cancel_oco_order
+    from binance.spot.trade import get_oco_order
+    from binance.spot.trade import get_oco_orders
+    from binance.spot.trade import get_oco_open_orders
+    from binance.spot.trade import account
+    from binance.spot.trade import my_trades
+    from binance.spot.trade import get_order_rate_limit
 
     # STREAMS
     from binance.spot.data_stream import new_listen_key
@@ -92,6 +92,7 @@ class Spot(API):
     from binance.spot.margin import margin_fee
     from binance.spot.margin import isolated_margin_fee
     from binance.spot.margin import isolated_margin_tier
+    from binance.spot.margin import margin_order_usage
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -180,6 +181,7 @@ class Spot(API):
     from binance.spot.sub_account import sub_account_api_add_ip
     from binance.spot.sub_account import sub_account_api_get_ip_restriction
     from binance.spot.sub_account import sub_account_api_delete_ip
+    from binance.spot.sub_account import managed_sub_account_get_snapshot
 
     # FUTURES
     from binance.spot.futures import futures_transfer
@@ -254,3 +256,6 @@ class Spot(API):
     from binance.spot.gift_card import gift_card_create_code
     from binance.spot.gift_card import gift_card_redeem_code
     from binance.spot.gift_card import gift_card_verify_code
+
+    # Portfolio Margin
+    from binance.spot.portfolio_margin import portfolio_margin_account

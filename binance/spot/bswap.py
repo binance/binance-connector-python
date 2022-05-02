@@ -43,6 +43,7 @@ def bswap_liquidity_add(self, poolId: int, asset: str, quantity: float, **kwargs
         asset (str)
         quantity (float)
     Keyword Args:
+        type (str, optional): "Single" to add a single token; "Combination" to add dual tokens. Default "Single"
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters(
