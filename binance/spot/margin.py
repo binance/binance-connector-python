@@ -905,3 +905,20 @@ def isolated_margin_tier(self, symbol: str, **kwargs):
     check_required_parameter(symbol, "symbol")
     payload = {"symbol": symbol, **kwargs}
     return self.sign_request("GET", "/sapi/v1/margin/isolatedMarginTier", payload)
+
+
+def margin_order_usage(self, **kwargs):
+    """Query Current Margin Order Count Usage (TRADE)
+    Displays the user's current margin order count usage for all intervals.
+
+    GET /sapi/v1/margin/rateLimit/order
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-current-margin-order-count-usage-trade
+
+    Keyword Args:
+        isIsolated (str, optional): for isolated margin or not, "TRUE", "FALSE", default "FALSE"
+        symbol (str, optional): isolated symbol, mandatory for isolated margin
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/margin/rateLimit/order", kwargs)

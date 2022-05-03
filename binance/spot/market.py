@@ -66,7 +66,7 @@ def depth(self, symbol: str, **kwargs):
     Args:
         symbol (str): the trading pair
     Keyword Args:
-        limit (int, optional): limit the results. Default 100; valid limits:[5, 10, 20, 50, 100, 500, 1000, 5000]
+        limit (int, optional): limit the results. Default 100; max 5000. If limit > 5000, then the response will truncate to 5000.
     """
 
     check_required_parameter(symbol, "symbol")

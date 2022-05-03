@@ -128,3 +128,7 @@ Get IP Restriction for a Sub-account API Key (For Master Account)
 Delete IP List for a Sub-account API Key (For Master Account)
 -------------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.sub_account_api_delete_ip
+
+Query Managed Sub-account Snapshot (For Investor Master Account)
+----------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.managed_sub_account_get_snapshot

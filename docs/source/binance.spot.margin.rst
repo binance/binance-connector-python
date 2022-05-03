@@ -168,3 +168,7 @@ Query Isolated Margin Fee Data (USER_DATA)
 Query Isolated Margin Tier Data (USER_DATA)
 -------------------------------------------
 .. autofunction:: binance.spot.margin.isolated_margin_tier
+
+Query Current Margin Order Count Usage (TRADE)
+----------------------------------------------
+.. autofunction:: binance.spot.margin.margin_order_usage

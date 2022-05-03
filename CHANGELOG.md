@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.12.0 - 2022-05-03
+
+### Added
+- New endpoint `GET /sapi/v1/managed-subaccount/accountSnapshot` to support investor master account query asset snapshot of managed sub-account.
+- New endpoint `GET /sapi/v1/portfolio/account` to support query portfolio margin account info
+- New endpoint `GET /sapi/v1/margin/rateLimit/order`, which will display the user's current margin order count usage for all intervals.
+
 ## 1.11.0 - 2022-02-23
 
 ### Added
