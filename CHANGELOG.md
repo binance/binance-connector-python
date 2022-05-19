@@ -144,3 +144,9 @@
 
 ### Added
 - First release, please find details from `README.md`
+
+
+# Unreleased
+
+### Added
+- add symbols query parameter support to ticker_price method

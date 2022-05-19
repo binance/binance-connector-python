@@ -188,7 +188,7 @@ def ticker_24hr(self, symbol: str = None):
     return self.query("/api/v3/ticker/24hr", params)
 
 
-def ticker_price(self, symbol: str = None):
+def ticker_price(self, symbol: str = None, symbols: list = None):
     """Symbol Price Ticker
 
     GET /api/v3/ticker/price
@@ -197,10 +197,16 @@ def ticker_price(self, symbol: str = None):
 
     Args:
         symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
+
     """
 
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    check_type_parameter(symbols, "symbols", list)
     params = {
         "symbol": symbol,
+        "symbols": convert_list_to_json_array(symbols)
     }
     return self.query("/api/v3/ticker/price", params)
 
