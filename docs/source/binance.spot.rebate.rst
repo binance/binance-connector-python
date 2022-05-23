@@ -1,5 +1,5 @@
 Rebate Endpoints
-=============
+================
 
 Get Spot Rebate History Records (USER_DATA)
 -------------------------------------------

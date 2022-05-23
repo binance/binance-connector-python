@@ -1,5 +1,5 @@
-Account / Trade Endpoints
-=========================
+Portfolio Margin Endpoints
+==========================
 
 
 Get Portfolio Margin Account Info (USER_DATA)

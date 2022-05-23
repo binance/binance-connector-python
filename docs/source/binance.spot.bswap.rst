@@ -47,7 +47,7 @@ Remove Liquidity Preview (USER_DATA)
 
 Get Unclaimed Rewards Record (USER_DATA)
 ----------------------------------------
-.. autofunction:: binance.spot.bswap_unclaimed_rewards
+.. autofunction:: binance.spot.bswap.bswap_unclaimed_rewards
 
 Claim rewards (TRADE)
 ---------------------
