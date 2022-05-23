@@ -171,7 +171,7 @@ def avg_price(self, symbol: str):
     return self.query("/api/v3/avgPrice", params)
 
 
-def ticker_24hr(self, symbol: str = None):
+def ticker_24hr(self, symbol: str = None, symbols: list = None):
     """24hr Ticker Price Change Statistics
 
     GET /api/v3/ticker/24hr
@@ -180,15 +180,17 @@ def ticker_24hr(self, symbol: str = None):
 
     Args:
         symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
     """
 
-    params = {
-        "symbol": symbol,
-    }
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    check_type_parameter(symbols, "symbols", list)
+    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query("/api/v3/ticker/24hr", params)
 
 
-def ticker_price(self, symbol: str = None):
+def ticker_price(self, symbol: str = None, symbols: list = None):
     """Symbol Price Ticker
 
     GET /api/v3/ticker/price
@@ -197,15 +199,17 @@ def ticker_price(self, symbol: str = None):
 
     Args:
         symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
     """
 
-    params = {
-        "symbol": symbol,
-    }
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    check_type_parameter(symbols, "symbols", list)
+    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query("/api/v3/ticker/price", params)
 
 
-def book_ticker(self, symbol: str = None):
+def book_ticker(self, symbol: str = None, symbols: list = None):
     """Symbol Order Book Ticker
 
     GET /api/v3/ticker/bookTicker
@@ -214,9 +218,11 @@ def book_ticker(self, symbol: str = None):
 
     Args:
         symbol (str, optional): the trading pair
+        symbols (list, optional): list of trading pairs
     """
 
-    params = {
-        "symbol": symbol,
-    }
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    check_type_parameter(symbols, "symbols", list)
+    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query("/api/v3/ticker/bookTicker", params)

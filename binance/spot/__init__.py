@@ -110,6 +110,15 @@ class Spot(API):
     from binance.spot.savings import savings_interest_history
     from binance.spot.savings import savings_change_position
 
+    # Staking
+    from binance.spot.staking import staking_product_list
+    from binance.spot.staking import staking_purchase_product
+    from binance.spot.staking import staking_redeem_product
+    from binance.spot.staking import staking_product_position
+    from binance.spot.staking import staking_history
+    from binance.spot.staking import staking_set_auto_staking
+    from binance.spot.staking import staking_product_quota
+
     # WALLET
     from binance.spot.wallet import system_status
     from binance.spot.wallet import coin_info
@@ -256,6 +265,7 @@ class Spot(API):
     from binance.spot.gift_card import gift_card_create_code
     from binance.spot.gift_card import gift_card_redeem_code
     from binance.spot.gift_card import gift_card_verify_code
+    from binance.spot.gift_card import gift_card_rsa_public_key
 
     # Portfolio Margin
     from binance.spot.portfolio_margin import portfolio_margin_account
