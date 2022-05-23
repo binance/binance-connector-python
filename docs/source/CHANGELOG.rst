@@ -2,6 +2,47 @@
 Changelog
 =========
 
+
+1.13.0 - 2022-05-23
+-------------------
+
+Added
+-----
+
+* New endpoint for Gift Card:
+  * ``GET /sapi/v1/giftcard/cryptography/rsa-public-key`` to fetch RSA public key.
+
+* New endpoints for Staking:
+  * ``GET /sapi/v1/staking/productList`` to get Staking product list
+  * ``POST /sapi/v1/staking/purchase`` to stake product
+  * ``POST /sapi/v1/staking/redeem`` to redeem product
+  * ``GET /sapi/v1/staking/position`` to get Staking product holding position
+  * ``GET /sapi/v1/staking/stakingRecord`` to inquiry Staking history records
+  * ``POST /sapi/v1/staking/setAutoStaking`` to set Auto Staking function
+  * ``GET /sapi/v1/staking/personalLeftQuota`` to inquiry Staking left quota
+
+Changed
+-------
+
+* Update endpoints for Market:
+  * ``GET /api/v3/ticker/24hr``, ``GET /api/v3/ticker/price`` and ``GET /api/v3/ticker/bookTicker`` new optional parameter symbols.
+
+* Update endpoint for Gift Card:
+  * ``POST /sapi/v1/giftcard/redeemCode``: new optional parameter externalUid. Each external unique ID represents a unique user on the partner platform. The function helps you to identify the redemption behavior of different users.
+
+
+1.12.0 - 2022-05-03
+-------------------
+
+Added
+^^^^^
+
+* New endpoint ``GET /sapi/v1/managed-subaccount/accountSnapshot`` to support investor master account query asset snapshot of managed sub-account.
+* New endpoint ``GET /sapi/v1/portfolio/account`` to support query portfolio margin account info
+* New endpoint ``GET /sapi/v1/margin/rateLimit/order``, which will display the user's current margin order count usage for all intervals.
+
+
+
 1.11.0 - 2022-02-23
 -------------------
 
