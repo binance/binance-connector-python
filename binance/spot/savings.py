@@ -103,22 +103,19 @@ def savings_flexible_redeem(self, productId: str, amount: float, type: str, **kw
     return self.sign_request("POST", "/sapi/v1/lending/daily/redeem", payload)
 
 
-def savings_flexible_product_position(self, asset: str, **kwargs):
+def savings_flexible_product_position(self, **kwargs):
     """Get Flexible Product Position (USER_DATA)
 
     GET /sapi/v1/lending/daily/token/position
 
     https://binance-docs.github.io/apidocs/spot/en/#get-flexible-product-position-user_data
 
-    Args:
-        asset (str)
     Keyword Args:
+        asset (str, optional)
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
-    check_required_parameter(asset, "asset")
-    payload = {"asset": asset, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/lending/daily/token/position", payload)
+    return self.sign_request("GET", "/sapi/v1/lending/daily/token/position", kwargs)
 
 
 def savings_project_list(self, type: str, **kwargs):
