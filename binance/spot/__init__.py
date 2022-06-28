@@ -20,6 +20,7 @@ class Spot(API):
     from binance.spot.market import ticker_24hr
     from binance.spot.market import ticker_price
     from binance.spot.market import book_ticker
+    from binance.spot.market import rolling_window_ticker
 
     # ACCOUNT (including orders and trades)
     from binance.spot.trade import new_order_test
@@ -27,6 +28,7 @@ class Spot(API):
     from binance.spot.trade import cancel_order
     from binance.spot.trade import cancel_open_orders
     from binance.spot.trade import get_order
+    from binance.spot.trade import cancel_and_replace
     from binance.spot.trade import get_open_orders
     from binance.spot.trade import get_orders
     from binance.spot.trade import new_oco_order

@@ -136,6 +136,38 @@ class SpotWebsocketClient(BinanceWebsocketClient):
             **kwargs
         )
 
+    def rolling_window_ticker(
+        self, symbol: str, windowSize: str, id: int, callback, **kwargs
+    ):
+        """Rolling window ticker statistics for a single symbol, computed over multiple windows.
+
+        Stream Name: <symbol>@ticker_<window_size>
+
+        Window Sizes: 1h,4h
+
+        Update Speed: 1000ms
+
+        Note: This stream is different from the <symbol>@ticker stream. The open time "O" always starts on a minute, while the closing time "C" is the current time of the update. As such, the effective window might be up to 59999ms wider that <window_size>.
+        """
+        self.live_subscribe(
+            "{}@ticker_{}".format(symbol.lower(), windowSize), id, callback, **kwargs
+        )
+
+    def rolling_window_ticker_all_symbols(
+        self, windowSize: str, id: int, callback, **kwargs
+    ):
+        """All Market Rolling Window Statistics Streams
+
+        Rolling window ticker statistics for all market symbols, computed over multiple windows. Note that only tickers that have changed will be present in the array.
+
+        Stream Name: !ticker_<window-size>@arr
+
+        Window Size: 1h,4h
+
+        Update Speed: 1000ms
+        """
+        self.live_subscribe("!ticker_{}@arr".format(windowSize), id, callback, **kwargs)
+
     def diff_book_depth(self, symbol: str, id: int, speed, callback, **kwargs):
         """Diff. Depth Stream
 

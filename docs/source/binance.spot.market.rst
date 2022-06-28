@@ -48,3 +48,7 @@ Symbol Price Ticker
 Symbol Order Book Ticker
 ------------------------
 .. autofunction:: binance.spot.market.book_ticker
+
+Rolling window price change statistics
+--------------------------------------
+.. autofunction:: binance.spot.market.rolling_window_ticker

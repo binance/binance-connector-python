@@ -22,6 +22,10 @@ Query Order (USER_DATA)
 -----------------------
 .. autofunction:: binance.spot.trade.get_order
 
+Cancel an Existing Order and Send a New Order (USER_DATA)
+---------------------------------------------------------
+.. autofunction:: binance.spot.trade.cancel_and_replace
+
 Current Open Orders (USER_DATA)
 -------------------------------
 .. autofunction:: binance.spot.trade.get_open_orders
