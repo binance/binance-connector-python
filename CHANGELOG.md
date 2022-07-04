@@ -2,7 +2,7 @@
 
 ## 1.14.0 - TBA
 
-### Add
+### Added
 
 - New endpoint `GET /api/v3/ticker`
 - New endpoint `POST /api/v3/order/cancelReplace`
