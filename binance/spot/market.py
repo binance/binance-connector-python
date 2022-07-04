@@ -226,3 +226,39 @@ def book_ticker(self, symbol: str = None, symbols: list = None):
     check_type_parameter(symbols, "symbols", list)
     params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
     return self.query("/api/v3/ticker/bookTicker", params)
+
+
+def rolling_window_ticker(self, symbol: str = None, symbols: list = None, **kwargs):
+    """Rolling window price change statistics
+
+    The window used to compute statistics is typically slightly wider than requested windowSize.
+
+    openTime for /api/v3/ticker always starts on a minute, while the closeTime is the current time of the request. As such, the effective window might be up to 1 minute wider than requested.
+
+    E.g. If the closeTime is 1641287867099 (January 04, 2022 09:17:47:099 UTC) , and the windowSize is 1d. the openTime will be: 1641201420000 (January 3, 2022, 09:17:00 UTC)
+
+    Weight(IP): 2 for each requested symbol regardless of windowSize.
+
+    The weight for this request will cap at 100 once the number of symbols in the request is more than 50.
+
+    GET /api/v3/ticker
+
+    https://binance-docs.github.io/apidocs/spot/en/#rolling-window-price-change-statistics
+
+    Args:
+        symbol (str, optional): the trading pair
+        symbols (str, optional): : list of trading pairs. The maximum number of symbols allowed in a request is 100.
+    Keyword Args:
+        windowSize (str, optional): Defaults to 1d if no parameter provided.
+    """
+
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    check_type_parameter(symbols, "symbols", list)
+    params = {
+        "symbol": symbol,
+        "symbols": convert_list_to_json_array(symbols),
+        **kwargs,
+    }
+    url_path = "/api/v3/ticker"
+    return self.query(url_path, params)

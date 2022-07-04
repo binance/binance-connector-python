@@ -26,6 +26,14 @@ Individual symbol or all book ticker
 ------------------------------------
 .. autofunction:: binance.websocket.spot.websocket_client.SpotWebsocketClient.book_ticker
 
+Individual Symbol Rolling Window Statistics Streams
+---------------------------------------------------
+.. autofunction:: binance.websocket.spot.websocket_client.SpotWebsocketClient.rolling_window_ticker
+
+All Market Rolling Window Statistics Streams
+--------------------------------------------
+.. autofunction:: binance.websocket.spot.websocket_client.SpotWebsocketClient.rolling_window_ticker_all_symbols
+
 Partial Book Depth Streams
 --------------------------
 .. autofunction:: binance.websocket.spot.websocket_client.SpotWebsocketClient.partial_book_depth

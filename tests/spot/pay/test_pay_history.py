@@ -9,7 +9,7 @@ mock_item = {"key_1": "value_1", "key_2": "value_2"}
 
 key = random_str()
 secret = random_str()
-params = {"startTimestamp": 1637186702000, "endTimestamp": 1637690208000, "limit": 50}
+params = {"startTime": 1637186702000, "endTime": 1637690208000, "limit": 50}
 
 client = Client(key, secret)
 

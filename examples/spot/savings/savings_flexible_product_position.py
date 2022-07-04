@@ -10,4 +10,4 @@ key = ""
 secret = ""
 
 client = Client(key, secret)
-logging.info(client.savings_flexible_product_position(asset="BTC"))
+logging.info(client.savings_flexible_product_position())

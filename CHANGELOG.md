@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.14.0 - TBA
+
+### Added
+
+- New endpoint `GET /api/v3/ticker`
+- New endpoint `POST /api/v3/order/cancelReplace`
+- New websocket stream `<symbol>@ticker_<window_size>`
+- New websocket stream `!ticker_<window-size>@arr`
+
+### Update
+
+- #146 `savings_flexible_product_position`  `asset` parameter should be optional
+
 ## 1.13.0 - 2022-05-23
 
 ### Added
