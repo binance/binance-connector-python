@@ -172,3 +172,7 @@ Query Isolated Margin Tier Data (USER_DATA)
 Query Current Margin Order Count Usage (TRADE)
 ----------------------------------------------
 .. autofunction:: binance.spot.margin.margin_order_usage
+
+Margin Dust Log (USER_DATA)
+---------------------------
+.. autofunction:: binance.spot.margin.margin_dust_log

@@ -356,6 +356,27 @@ def funding_wallet(self, **kwargs):
     return self.sign_request("POST", "/sapi/v1/asset/get-funding-asset", kwargs)
 
 
+def user_asset(self, **kwargs):
+    """User Asset (USER_DATA)
+
+    Get user assets, just for positive data.
+
+    Weight(IP): 5
+
+    POST /sapi/v3/asset/getUserAsset
+
+    https://binance-docs.github.io/apidocs/spot/en/#user-asset-user_data
+
+    Keyword Args:
+        asset (str, optional): If asset is blank, then query all positive assets user have.
+        needBtcValuation (str, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v3/asset/getUserAsset"
+    return self.sign_request("POST", url_path, {**kwargs})
+
+
 def api_key_permissions(self, **kwargs):
     """Get API Key Permission (USER_DATA)
 

@@ -95,6 +95,7 @@ class Spot(API):
     from binance.spot.margin import isolated_margin_fee
     from binance.spot.margin import isolated_margin_tier
     from binance.spot.margin import margin_order_usage
+    from binance.spot.margin import margin_dust_log
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -141,6 +142,7 @@ class Spot(API):
     from binance.spot.wallet import asset_detail
     from binance.spot.wallet import trade_fee
     from binance.spot.wallet import funding_wallet
+    from binance.spot.wallet import user_asset
     from binance.spot.wallet import api_key_permissions
     from binance.spot.wallet import bnb_convertible_assets
 
