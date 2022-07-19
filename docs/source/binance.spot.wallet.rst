@@ -77,6 +77,10 @@ Funding Wallet (USER_DATA)
 --------------------------
 .. autofunction:: binance.spot.wallet.funding_wallet
 
+User Asset (USER_DATA)
+----------------------
+.. autofunction:: binance.spot.wallet.user_asset
+
 API Key Permission (USER_DATA)
 ------------------------------
 .. autofunction:: binance.spot.wallet.api_key_permissions

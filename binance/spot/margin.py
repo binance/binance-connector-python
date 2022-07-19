@@ -922,3 +922,24 @@ def margin_order_usage(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/margin/rateLimit/order", kwargs)
+
+
+def margin_dust_log(self, **kwargs):
+    """Margin Dust Log (USER_DATA)
+
+    Query the historical information of user's margin account small-value asset conversion BNB.
+
+    Weight(IP): 1
+
+    GET /sapi/v1/margin/dribblet
+
+    https://binance-docs.github.io/apidocs/spot/en/#margin-dustlog-user_data
+
+    Keyword Args:
+        startTime (int, optional): UTC timestamp in ms
+        endTime (int, optional): UTC timestamp in ms
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/margin/dribblet"
+    return self.sign_request("GET", url_path, {**kwargs})
