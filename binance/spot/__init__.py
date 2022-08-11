@@ -273,3 +273,6 @@ class Spot(API):
 
     # Portfolio Margin
     from binance.spot.portfolio_margin import portfolio_margin_account
+    from binance.spot.portfolio_margin import portfolio_margin_collateral_rate
+    from binance.spot.portfolio_margin import portfolio_margin_bankruptcy_loan_amount
+    from binance.spot.portfolio_margin import portfolio_margin_bankruptcy_loan_repay

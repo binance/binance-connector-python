@@ -2,6 +2,60 @@
 Changelog
 =========
 
+1.16.0 - TBD
+------------
+
+Added
+^^^^^
+
+* New endpoint for Portfolio Margin:
+  * `GET /sapi/v1/portfolio/pmLoan` to query Portfolio Margin Bankruptcy Loan Record.
+  * `POST /sapi/v1/portfolio/repay` to repay Portfolio Margin Bankruptcy Loan.
+  * `GET /sapi/v1/portfolio/collateralRate` to get Portfolio Margin Collateral Rate.
+
+Update
+^^^^^^
+
+* Changes to `POST /api/v3/order` and `POST /api/v3/order/cancelReplace`
+  * New optional field `strategyId` is a parameter used to identify an order as part of a strategy.
+  * New optional field `strategyType` is a parameter used to identify what strategy was running. (E.g. If all the orders are part of spot grid strategy, it can be set to strategyType=1000000)
+  * Note: `strategyType` cannot be less than 1000000.
+* Changes to `POST /api/v3/order/oco`
+  * New optional fields `limitStrategyId`, `limitStrategyType`, `stopStrategyId`, `stopStrategyType`
+  * These are the strategy metadata parameters for both legs of the OCO orders.
+  * `limitStrategyType` and `stopStrategyType` both cannot be less than 1000000.
+* `asset` is no longer mandatory in `GET /sapi/v1/lending/project/position/list`
+
+1.15.0 - 2022-07-19
+-------------------
+
+Added
+^^^^^
+
+* New endpoint for Margin:
+
+  * `POST /sapi/v3/asset/getUserAsset` to get user assets.
+
+* New endpoint for Wallet:
+
+  * `GET /sapi/v1/margin/dribblet` to query the historical information of user's margin account small-value asset conversion BNB.
+
+1.14.0 - 2022-07-04
+-------------------
+
+Added
+^^^^^
+
+* New endpoint `GET /api/v3/ticker`
+* New endpoint `POST /api/v3/order/cancelReplace`
+* New websocket stream `<symbol>@ticker_<window_size>`
+* New websocket stream `!ticker_<window-size>@arr`
+
+Update
+^^^^^^
+
+* #146 `savings_flexible_product_position`  `asset` parameter should be optional
+
 
 1.13.0 - 2022-05-23
 -------------------
