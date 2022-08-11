@@ -163,24 +163,21 @@ def savings_purchase_project(self, projectId: str, lot: int, **kwargs):
     )
 
 
-def savings_project_position(self, asset: str, **kwargs):
+def savings_project_position(self, **kwargs):
     """Get Fixed/Activity Project Position  (USER_DATA)
 
     GET /sapi/v1/lending/project/position/list
 
     https://binance-docs.github.io/apidocs/spot/en/#get-fixed-activity-project-position-user_data
 
-    Args:
-        asset (str)
     Keyword Args:
+        asset (str, optional)
         projectId (str, optional)
         status (str, optional): "HOLDING", "REDEEMED"
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
-    check_required_parameter(asset, "asset")
-    payload = {"asset": asset, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/lending/project/position/list", payload)
+    return self.sign_request("GET", "/sapi/v1/lending/project/position/list", kwargs)
 
 
 def savings_account(self, **kwargs):
