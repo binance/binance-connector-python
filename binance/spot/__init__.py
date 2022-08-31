@@ -16,6 +16,7 @@ class Spot(API):
     from binance.spot.market import historical_trades
     from binance.spot.market import agg_trades
     from binance.spot.market import klines
+    from binance.spot.market import ui_klines
     from binance.spot.market import avg_price
     from binance.spot.market import ticker_24hr
     from binance.spot.market import ticker_price

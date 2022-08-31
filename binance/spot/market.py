@@ -141,7 +141,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
 
     Args:
         symbol (str): the trading pair
-        interval (str): the interval of kline, e.g 1m, 5m, 1h, 1d, etc.
+        interval (str): the interval of kline, e.g 1s, 1m, 5m, 1h, 1d, etc.
     Keyword Args:
         limit (int, optional): limit the results. Default 500; max 1000.
         startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
@@ -151,6 +151,27 @@ def klines(self, symbol: str, interval: str, **kwargs):
 
     params = {"symbol": symbol, "interval": interval, **kwargs}
     return self.query("/api/v3/klines", params)
+
+
+def ui_klines(self, symbol: str, interval: str, **kwargs):
+    """Kline/Candlestick Data
+
+    GET /api/v3/uiKlines
+
+    https://binance-docs.github.io/apidocs/spot/en/#uiklines
+
+    Args:
+        symbol (str): the trading pair
+        interval (str): the interval of kline, e.g 1s, 1m, 5m, 1h, 1d, etc.
+    Keyword Args:
+        limit (int, optional): limit the results. Default 500; max 1000.
+        startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
+        endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+    """
+    check_required_parameters([[symbol, "symbol"], [interval, "interval"]])
+
+    params = {"symbol": symbol, "interval": interval, **kwargs}
+    return self.query("/api/v3/uiKlines", params)
 
 
 def avg_price(self, symbol: str):
@@ -171,7 +192,7 @@ def avg_price(self, symbol: str):
     return self.query("/api/v3/avgPrice", params)
 
 
-def ticker_24hr(self, symbol: str = None, symbols: list = None):
+def ticker_24hr(self, symbol: str = None, symbols: list = None, **kwargs):
     """24hr Ticker Price Change Statistics
 
     GET /api/v3/ticker/24hr
@@ -186,7 +207,11 @@ def ticker_24hr(self, symbol: str = None, symbols: list = None):
     if symbol and symbols:
         raise ParameterArgumentError("symbol and symbols cannot be sent together.")
     check_type_parameter(symbols, "symbols", list)
-    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
+    params = {
+        "symbol": symbol,
+        "symbols": convert_list_to_json_array(symbols),
+        **kwargs,
+    }
     return self.query("/api/v3/ticker/24hr", params)
 
 

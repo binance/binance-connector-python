@@ -11,7 +11,7 @@ config_logging(logging, logging.DEBUG)
 client = Client()
 
 try:
-    response = client.rolling_window_ticker("BNBUSDT", windowSize="1d")
+    response = client.rolling_window_ticker("BNBUSDT", windowSize="1d", type="MINI")
     logging.info(response)
 except ClientError as error:
     logging.error(

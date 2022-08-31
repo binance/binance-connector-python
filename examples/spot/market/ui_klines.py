@@ -8,7 +8,5 @@ config_logging(logging, logging.DEBUG)
 
 spot_client = Client(base_url="https://testnet.binance.vision")
 
-logging.info(spot_client.ticker_24hr("BTCUSDT", symbols=None, type="MINI"))
-logging.info(
-    spot_client.ticker_24hr(symbol=None, symbols=["BTCUSDT", "BNBUSDT"], type="FULL")
-)
+logging.info(spot_client.ui_klines("BTCUSDT", "1m"))
+logging.info(spot_client.ui_klines("BTCUSDT", "1h", limit=10))

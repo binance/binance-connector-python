@@ -33,6 +33,10 @@ Kline/Candlestick Data
 ----------------------
 .. autofunction:: binance.spot.market.klines
 
+UIKlines
+--------
+.. autofunction:: binance.spot.market.ui_klines
+
 Current Average Price
 ---------------------
 .. autofunction:: binance.spot.market.avg_price
