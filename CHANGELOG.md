@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.17.0 - 2022-08-31
+## 1.17.0 - 2022-09-05
 
 ### Added
 - New endpoint for Market:
