@@ -54,13 +54,15 @@ def test_rolling_window_ticker_with_double_parameter():
 
 @mock_http_response(
     responses.GET,
-    "/api/v3/ticker\\?symbol=BTCUSDT&windowSize=" + str(windowSize),
+    "/api/v3/ticker\\?symbol=BTCUSDT&windowSize=" + str(windowSize) + "&type=MINI",
     mock_item,
     200,
 )
 def test_rolling_window_ticker_with_given_params():
-    """Tests the API endpoint to get ticker with given parametes"""
+    """Tests the API endpoint to get ticker with given parameters"""
 
     client = Client()
-    response = client.rolling_window_ticker(symbol="BTCUSDT", windowSize=windowSize)
+    response = client.rolling_window_ticker(
+        symbol="BTCUSDT", windowSize=windowSize, type="MINI"
+    )
     response.should.equal(mock_item)

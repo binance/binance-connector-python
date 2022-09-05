@@ -58,3 +58,17 @@ def test_avg_price_with_double_parameter():
     api.ticker_24hr.when.called_with(symbol=symbol, symbols=symbols).should.throw(
         ParameterArgumentError
     )
+
+
+@mock_http_response(
+    responses.GET,
+    "/api/v3/ticker/24hr\\?symbol=BTCUSDT&type=MINI",
+    mock_item,
+    200,
+)
+def test_rolling_window_ticker_with_given_params():
+    """Tests the API endpoint to get ticker with given parameters"""
+
+    api = Client()
+    response = api.ticker_24hr(symbol="BTCUSDT", symbols=None, type="MINI")
+    response.should.equal(mock_item)
