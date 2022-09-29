@@ -130,7 +130,7 @@ def savings_project_list(self, type: str, **kwargs):
     Keyword Args:
         asset (str, optional)
         status (str, optional): "ALL", "SUBSCRIBABLE", "UNSUBSCRIBABLE"; default "ALL"
-        isSortAsc (bool, optional): default "true"
+        isSortAsc (bool, optional): By default, it's True
         sortBy (str, optional): "START_TIME", "LOT_SIZE", "INTEREST_RATE", "DURATION"; default "START_TIME"
         current (int, optional): Currently querying page. Start from 1. Default:1
         size (int, optional): Default:10, Max:100

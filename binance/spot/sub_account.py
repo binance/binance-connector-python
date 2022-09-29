@@ -590,7 +590,7 @@ def sub_account_enable_leverage_token(self, email: str, enableBlvt: bool, **kwar
 
     Args:
         email (str): Sub-account email
-        enableBlvt (bool): Only true for now
+        enableBlvt (bool): Only True for now
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
     """
@@ -688,6 +688,7 @@ def sub_account_api_toggle_ip_restriction(
         subAccountApiKey (str)
         ipRestrict (bool): True or False
     Keyword Args:
+        thirdParty (bool, optional): False by default
         recvWindow (int, optional)
     """
 
@@ -726,6 +727,7 @@ def sub_account_api_add_ip(
         subAccountApiKey (str)
         ipAddress (str): Can be added in batches, separated by commas
     Keyword Args:
+        thirdPartyName (str, optional)
         recvWindow (int, optional)
     """
 
@@ -791,6 +793,7 @@ def sub_account_api_delete_ip(
         subAccountApiKey (str)
         ipAddress (str): Can be added in batches, separated by commas
     Keyword Args:
+        thirdPartyName (str, optional)
         recvWindow (int, optional)
     """
 

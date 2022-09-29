@@ -250,6 +250,13 @@ class Spot(API):
 
     # CRYPTO LOANS
     from binance.spot.loan import loan_history
+    from binance.spot.loan import loan_borrow
+    from binance.spot.loan import loan_borrow_history
+    from binance.spot.loan import loan_ongoing_orders
+    from binance.spot.loan import loan_repay
+    from binance.spot.loan import loan_repay_history
+    from binance.spot.loan import loan_adjust_ltv
+    from binance.spot.loan import loan_adjust_ltv_history
 
     # PAY
     from binance.spot.pay import pay_history

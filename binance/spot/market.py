@@ -35,7 +35,9 @@ def time(self):
     return self.query(url_path)
 
 
-def exchange_info(self, symbol: str = None, symbols: list = None):
+def exchange_info(
+    self, symbol: str = None, symbols: list = None, permissions: list = None
+):
     """Exchange Information
     Current exchange trading rules and symbol information
 
@@ -46,13 +48,24 @@ def exchange_info(self, symbol: str = None, symbols: list = None):
      Args:
         symbol (str, optional): the trading pair
         symbols (list, optional): list of trading pairs
+        permissions (list, optional): display all symbols with the permissions matching the parameter provided (eg.SPOT, MARGIN, LEVERAGED)
     """
 
     url_path = "/api/v3/exchangeInfo"
     if symbol and symbols:
         raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+    if symbol and permissions or symbols and permissions:
+        raise ParameterArgumentError(
+            "permissions cannot be sent together with symbol or symbols"
+        )
     check_type_parameter(symbols, "symbols", list)
-    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
+    check_type_parameter(permissions, "permissions", list)
+
+    params = {
+        "symbol": symbol,
+        "symbols": convert_list_to_json_array(symbols),
+        "permissions": convert_list_to_json_array(permissions),
+    }
     return self.query(url_path, params)
 
 

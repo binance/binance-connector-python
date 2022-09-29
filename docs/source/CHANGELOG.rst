@@ -2,6 +2,31 @@
 Changelog
 =========
 
+1.18.0 - 2022-09-29
+-------------------
+
+Added
+^^^^^
+
+* New endpoints for Crypto Loan:
+
+  * ``POST /sapi/v1/loan/borrow`` - Crypto Loan Borrow
+  * ``GET /sapi/v1/loan/borrow/history`` - Get Loan Borrow History
+  * ``GET/sapi/v1/loan/ongoing/orders`` - Get Loan Ongoing Orders
+  * ``POST/sapi/v1/loan/repay`` - Crypto Loan Repay
+  * ``GET/sapi/v1/loan/repay/history`` - Get Loan Repayment History
+  * ``POST/sapi/v1/loan/adjust/ltv`` - Crypto Loan Adjust LTV
+  * ``GET/sapi/v1/loan/ltv/adjustment/history`` - Get Loan LTV Adjustment History
+
+Changed
+^^^^^^^
+
+* Changes to ``GET /api/v3/exchangeInfo``:
+
+  * New optional parameter ``permissions`` added to display all symbols with the permissions matching the parameter provided (eg.SPOT, MARGIN, LEVERAGED).
+  * If not provided, the default value will be ``["SPOT","MARGIN", "LEVERAGED"]``
+  * Cannot be combined with symbol or symbols
+
 1.17.0 - 2022-09-05
 -------------------
 
@@ -9,7 +34,7 @@ Added
 ^^^^^
 
 * New endpoint for Market:
-    * ``GET /api/v3/uiKlines``
+  * ``GET /api/v3/uiKlines``
 
 * New kline interval: ``1s``
 
@@ -17,10 +42,11 @@ Changed
 ^^^^^^^
 
 * Changes to ``GET /api/v3/ticker`` and ``GET /api/v3/ticker/24hr``
-    * New optional parameter type added
-    * Supported values for parameter type are ``FULL`` and ``MINI``
-        * ``FULL`` is the default value and the response that is currently being returned from the endpoint
-        * ``MINI`` omits the following fields from the response: ``priceChangePercent``, ``weightedAvgPrice``, ``bidPrice``, ``bidQty``, ``askPrice``, ``askQty``, and ``lastQty``
+
+  * New optional parameter type added
+  * Supported values for parameter type are ``FULL`` and ``MINI``
+      * ``FULL`` is the default value and the response that is currently being returned from the endpoint
+      * ``MINI`` omits the following fields from the response: ``priceChangePercent``, ``weightedAvgPrice``, ``bidPrice``, ``bidQty``, ``askPrice``, ``askQty``, and ``lastQty``
 
 1.16.0 - 2022-08-11
 -------------------
@@ -29,6 +55,7 @@ Added
 ^^^^^
 
 * New endpoint for Portfolio Margin:
+  
   * ``GET /sapi/v1/portfolio/pmLoan`` to query Portfolio Margin Bankruptcy Loan Record.
   * ``POST /sapi/v1/portfolio/repay`` to repay Portfolio Margin Bankruptcy Loan.
   * ``GET /sapi/v1/portfolio/collateralRate`` to get Portfolio Margin Collateral Rate.
@@ -37,13 +64,17 @@ Update
 ^^^^^^
 
 * Changes to ``POST /api/v3/order`` and ``POST /api/v3/order/cancelReplace``
+  
   * New optional field ``strategyId`` is a parameter used to identify an order as part of a strategy.
   * New optional field ``strategyType`` is a parameter used to identify what strategy was running. (E.g. If all the orders are part of spot grid strategy, it can be set to strategyType=1000000)
   * Note: ``strategyType`` cannot be less than 1000000.
+  
 * Changes to ``POST /api/v3/order/oco``
+
   * New optional fields ``limitStrategyId``, ``limitStrategyType``, ``stopStrategyId``, ``stopStrategyType``
   * These are the strategy metadata parameters for both legs of the OCO orders.
   * ``limitStrategyType`` and ``stopStrategyType`` both cannot be less than 1000000.
+  
 * ``asset`` is no longer mandatory in ``GET /sapi/v1/lending/project/position/list``
 
 1.15.0 - 2022-07-19
