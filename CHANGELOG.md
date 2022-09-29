@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.18.0 - 2022-09-29
+
+### Added
+- New endpoints for Crypto Loan:
+  - `POST /sapi/v1/loan/borrow` - Crypto Loan Borrow
+  - `GET /sapi/v1/loan/borrow/history` - Get Loan Borrow History
+  - `GET/sapi/v1/loan/ongoing/orders` - Get Loan Ongoing Orders
+  - `POST/sapi/v1/loan/repay` - Crypto Loan Repay
+  - `GET/sapi/v1/loan/repay/history` - Get Loan Repayment History
+  - `POST/sapi/v1/loan/adjust/ltv` - Crypto Loan Adjust LTV
+  - `GET/sapi/v1/loan/ltv/adjustment/history` - Get Loan LTV Adjustment History
+
+### Changed
+- Changes to `GET /api/v3/exchangeInfo`:
+  - New optional parameter `permissions` added to display all symbols with the permissions matching the parameter provided. (eg.SPOT, MARGIN, LEVERAGED)
+  - If not provided, the default value will be `["SPOT","MARGIN", "LEVERAGED"]`
+  - Cannot be combined with symbol or symbols
+
 ## 1.17.0 - 2022-09-05
 
 ### Added

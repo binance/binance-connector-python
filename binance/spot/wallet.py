@@ -103,7 +103,7 @@ def withdraw(self, coin: str, amount: float, address: str, **kwargs):
         withdrawOrderId (str, optional): Client id for withdraw
         network (str, optional)
         addressTag (str, optional): Secondary address identifier for coins like XRP,XMR etc.
-        transactionFeeFlag (bool, optional): When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
+        transactionFeeFlag (bool, optional): When making internal transfer, True for returning the fee to the destination account; False for returning the fee back to the departure account. Default False.
         name (str, optional): Description of the address. Space in name should be encoded into %20.
         walletType (int, optional): The wallet type for withdraw，0-spot wallet，1-funding wallet. Default is spot wallet
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -225,11 +225,11 @@ def dust_log(self, **kwargs):
 
 
 def user_universal_transfer(self, type: str, asset: str, amount: str, **kwargs):
-    """User Universal Transfer
+    """User Universal Transfer (USER_DATA)
 
     POST /sapi/v1/asset/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#user-universal-transfer
+    https://binance-docs.github.io/apidocs/spot/en/#user-universal-transfer-user_data
 
     Args:
         type (str)
@@ -247,11 +247,11 @@ def user_universal_transfer(self, type: str, asset: str, amount: str, **kwargs):
 
 
 def user_universal_transfer_history(self, type: str, **kwargs):
-    """Query User Universal Transfer History
+    """Query User Universal Transfer History (USER_DATA)
 
     GET /sapi/v1/asset/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-user-universal-transfer-history
+    https://binance-docs.github.io/apidocs/spot/en/#query-user-universal-transfer-history-user_data
 
      Args:
         type (str)
