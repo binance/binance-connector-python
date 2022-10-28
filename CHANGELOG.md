@@ -18,6 +18,9 @@
   - If not provided, the default value will be `["SPOT","MARGIN", "LEVERAGED"]`
   - Cannot be combined with symbol or symbols
 
+### Fixed
+- Main thread not exiting due to reactor stop hang
+
 ## 1.17.0 - 2022-09-05
 
 ### Added
