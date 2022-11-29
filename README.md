@@ -73,11 +73,11 @@ client = Client(api_key, api_secret)
 print(client.account())
 
 # RSA Keys
-client = Client(api_key, private_key=private_key)
+client = Client(api_key=api_key, private_key=private_key)
 print(client.account())
 
 # Encrypted RSA Key
-client = Client(api_key=api_key, private_key=pem_key, private_key_pass='password')
+client = Client(api_key=api_key, private_key=private_key, private_key_pass='password')
 print(client.account())
 ```
 
