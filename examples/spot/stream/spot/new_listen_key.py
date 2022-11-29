@@ -6,7 +6,7 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
+api_key = ""
 
-client = Client(key, base_url="https://testnet.binance.vision")
+client = Client(api_key, base_url="https://testnet.binance.vision")
 logging.info(client.new_listen_key())

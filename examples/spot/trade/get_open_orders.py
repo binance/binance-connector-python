@@ -7,10 +7,10 @@ from binance.error import ClientError
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret, base_url="https://testnet.binance.vision")
+client = Client(api_key, api_secret, base_url="https://testnet.binance.vision")
 
 try:
     response = client.get_open_orders("BTCUSDT")

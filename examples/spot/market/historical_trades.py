@@ -6,10 +6,10 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
+api_key = ""
 
 # historical_trades requires api key in request header
-spot_client = Client(key=key, base_url="https://testnet.binance.vision")
+spot_client = Client(api_key=api_key, base_url="https://testnet.binance.vision")
 
 logging.info(spot_client.historical_trades("BTCUSDT"))
 logging.info(spot_client.historical_trades("BTCUSDT", limit=10, fromId=""))

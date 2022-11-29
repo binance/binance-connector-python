@@ -6,10 +6,10 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(
     client.futures_loan_collateral_repay_quote(
         coin="USDT", collateralCoin="BTC", amount=0.00222

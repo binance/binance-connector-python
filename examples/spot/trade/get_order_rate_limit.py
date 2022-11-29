@@ -6,10 +6,12 @@ from binance.spot import Spot as Client
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key=key, secret=secret, base_url="https://testnet.binance.vision")
+client = Client(
+    api_key=api_key, api_secret=api_secret, base_url="https://testnet.binance.vision"
+)
 logger = logging.getLogger(__name__)
 
 logger.info(client.get_order_rate_limit())

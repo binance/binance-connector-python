@@ -89,12 +89,12 @@ RESTful APIs
 
 .. code-block:: python
 
-   from binance.spot import Spot 
+   from binance.spot import Spot
 
    client = Spot()
    print(client.time())
 
-   client = Spot(key='<api_key>', secret='<api_secret>')
+   client = Spot(api_key='<api_key>', api_secret='<api_secret>')
 
    # Get account information
    print(client.account())

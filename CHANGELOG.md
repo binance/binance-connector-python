@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0-rc1 - 2022-11-29
+
+### Added
+- Add support for use of RSA Key to generate signatures
+
 ## 1.18.0 - 2022-09-29
 
 ### Added

@@ -6,6 +6,6 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-client = Client(key)
+api_key = ""
+client = Client(api_key)
 logging.info(client.renew_margin_listen_key(listenKey=""))
