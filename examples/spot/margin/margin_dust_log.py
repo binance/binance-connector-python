@@ -7,10 +7,10 @@ from binance.error import ClientError
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 
 try:
     response = client.margin_dust_log(recvWindow=5000)

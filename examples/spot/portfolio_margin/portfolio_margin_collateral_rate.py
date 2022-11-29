@@ -7,9 +7,9 @@ from binance.error import ClientError
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
+api_key = ""
 
-client = Client(key)
+client = Client(api_key)
 
 try:
     response = client.portfolio_margin_collateral_rate()

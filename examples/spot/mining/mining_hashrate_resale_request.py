@@ -6,8 +6,8 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
 params = {
     "algo": "sha256",
@@ -18,5 +18,5 @@ params = {
     "hashRate": "100000000",
 }
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(client.mining_hashrate_resale_request(**params))

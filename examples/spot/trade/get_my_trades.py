@@ -6,10 +6,10 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret, base_url="https://testnet.binance.vision")
+client = Client(api_key, api_secret, base_url="https://testnet.binance.vision")
 logging.info(client.my_trades("BTCUSDT"))
 
 # set the limit

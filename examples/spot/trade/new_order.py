@@ -7,8 +7,8 @@ from binance.error import ClientError
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
 params = {
     "symbol": "BTCUSDT",
@@ -19,7 +19,7 @@ params = {
     "price": 9500,
 }
 
-client = Client(key, secret, base_url="https://testnet.binance.vision")
+client = Client(api_key, api_secret, base_url="https://testnet.binance.vision")
 
 try:
     response = client.new_order(**params)

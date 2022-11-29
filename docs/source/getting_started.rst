@@ -40,7 +40,7 @@ Usage example:
    print(client.klines("BNBUSDT", "1h", limit=10))
 
    # api key/secret are required for user data endpoints
-   client = Spot(key='<api_key>', secret='<api_secret>')
+   client = Spot(api_key='<api_key>', api_secret='<api_secret>')
 
    # Get account and balance information
    print(client.account())
@@ -104,7 +104,7 @@ Anything beyond the limit will result in an error response from Binance server.
 
    from binance.spot import Spot as Client
 
-   client = Client(key, secret)
+   client = Client(api_key, api_secret)
    response = client.get_order('BTCUSDT', orderId=11, recvWindow=10000)
 
 

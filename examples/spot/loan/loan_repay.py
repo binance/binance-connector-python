@@ -6,9 +6,9 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(client.loan_repay(orderId=100000001, amount=100.5))

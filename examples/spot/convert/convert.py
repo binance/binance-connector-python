@@ -8,10 +8,10 @@ from datetime import datetime
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-spot_client = Spot(key, secret)
+spot_client = Spot(api_key, api_secret)
 
 # datetime uses POSIX timestamp
 start = int(datetime(2021, 11, 15, 23, 59, 59).timestamp() * 1000)
