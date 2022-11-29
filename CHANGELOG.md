@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0rc2 - 2022-11-29
+
+### Changed
+- Update version name as hyphens are not recommended.
+
 ## 2.0.0-rc1 - 2022-11-29
 
 ### Added
