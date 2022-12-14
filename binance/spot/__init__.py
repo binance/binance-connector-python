@@ -2,10 +2,10 @@ from binance.api import API
 
 
 class Spot(API):
-    def __init__(self, key=None, secret=None, **kwargs):
+    def __init__(self, api_key=None, api_secret=None, **kwargs):
         if "base_url" not in kwargs:
             kwargs["base_url"] = "https://api.binance.com"
-        super().__init__(key, secret, **kwargs)
+        super().__init__(api_key, api_secret, **kwargs)
 
     # MARKETS
     from binance.spot.market import ping

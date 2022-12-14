@@ -6,8 +6,8 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(client.toggle_bnbBurn(spotBNBBurn="true", interestBNBBurn="false"))

@@ -30,7 +30,7 @@ pip install binance-connector
 
 Usage examples:
 ```python
-from binance.spot import Spot 
+from binance.spot import Spot
 
 client = Spot()
 
@@ -41,8 +41,8 @@ print(client.klines("BTCUSDT", "1m"))
 # Get last 10 klines of BNBUSDT at 1h interval
 print(client.klines("BNBUSDT", "1h", limit=10))
 
-# api key/secret are required for user data endpoints
-client = Spot(key='<api_key>', secret='<api_secret>')
+# API key/secret are required for user data endpoints
+client = Spot(api_key='<api_key>', api_secret='<api_secret>')
 
 # Get account and balance information
 print(client.account())
@@ -61,6 +61,27 @@ response = client.new_order(**params)
 print(response)
 ```
 Please find `examples` folder to check for more endpoints.
+
+### Authentication
+
+Binance supports HMAC and RSA API authentication.
+
+```python
+
+# HMAC: pass API key and secret
+client = Client(api_key, api_secret)
+print(client.account())
+
+# RSA Keys
+client = Client(api_key=api_key, private_key=private_key)
+print(client.account())
+
+# Encrypted RSA Key
+client = Client(api_key=api_key, private_key=private_key, private_key_pass='password')
+print(client.account())
+```
+
+Please find `examples/spot/trade/get_account.py` for more details.
 
 ### Testnet
 
@@ -109,7 +130,7 @@ Anything beyond the limit will result in an error response from Binance server.
 ```python
 from binance.spot import Spot as Client
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 response = client.get_order('BTCUSDT', orderId=11, recvWindow=10000)
 ```
 
@@ -182,7 +203,7 @@ There are 2 types of error returned from the library:
         - `status_code` - HTTP status code
         - `error_code` - Server's error code, e.g. `-1102`
         - `error_message` - Server's error message, e.g. `Unknown order sent.`
-        - `header` - Full response header. 
+        - `header` - Full response header.
 - `binance.error.ServerError`
     - This is thrown when server returns `5XX`, it's an issue from server side.
 

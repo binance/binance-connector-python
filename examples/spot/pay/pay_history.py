@@ -7,10 +7,10 @@ from binance.error import ClientError
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 
 try:
     response = client.pay_history(startTimestamp=1637186702000, limit=50)

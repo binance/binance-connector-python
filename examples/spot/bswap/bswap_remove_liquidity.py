@@ -6,11 +6,11 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(client.bswap_liquidity_remove("2", "SINGLE", ["BUSD"], "12415"))
 logging.info(
     client.bswap_liquidity_remove("2", "COMBINATION", ["BUSD", "USDT"], "12415")

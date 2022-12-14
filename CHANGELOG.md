@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0rc3 - TBD
+
+### Fixed
+- Main thread not exiting due to reactor stop hang
+
+## 2.0.0rc2 - 2022-11-29
+
+### Changed
+- Update version name as hyphens are not recommended.
+
+## 2.0.0-rc1 - 2022-11-29
+
+### Added
+- Add support for use of RSA Key to generate signatures
+
 ## 1.18.0 - 2022-09-29
 
 ### Added
@@ -17,9 +32,6 @@
   - New optional parameter `permissions` added to display all symbols with the permissions matching the parameter provided. (eg.SPOT, MARGIN, LEVERAGED)
   - If not provided, the default value will be `["SPOT","MARGIN", "LEVERAGED"]`
   - Cannot be combined with symbol or symbols
-
-### Fixed
-- Main thread not exiting due to reactor stop hang
 
 ## 1.17.0 - 2022-09-05
 

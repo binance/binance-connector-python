@@ -27,9 +27,9 @@ def test_API_initial():
     client = API()
 
     client.should.be.a(API)
-    client.key.should.be.none
+    client.api_key.should.be.none
     client.timeout.should.be.none
-    client.secret.should.be.none
+    client.api_secret.should.be.none
     client.show_limit_usage.should.be.false
     client.show_header.should.be.false
     client.session.should.be.a(requests.Session)
@@ -46,14 +46,14 @@ def test_API_initial():
 def test_API_with_extra_parameters():
     """Tests the API initialization with extra parameters"""
 
-    key = random_str()
-    secret = random_str()
+    api_key = random_str()
+    api_secret = random_str()
     base_url = random_str()
     proxies = {"https": "https://1.2.3.4:8080"}
 
     client = API(
-        key,
-        secret,
+        api_key,
+        api_secret,
         base_url=base_url,
         show_limit_usage=True,
         show_header=True,
@@ -62,14 +62,14 @@ def test_API_with_extra_parameters():
     )
 
     client.should.be.a(API)
-    client.key.should.equal(key)
+    client.api_key.should.equal(api_key)
     client.timeout.should.equal(0.1)
-    client.secret.should.equal(secret)
+    client.api_secret.should.equal(api_secret)
     client.base_url.should.equal(base_url)
     client.show_limit_usage.should.be.true
     client.show_header.should.be.true
     client.proxies.should.equal(proxies)
-    client.session.headers.should.have.key("X-MBX-APIKEY").which.should.equal(key)
+    client.session.headers.should.have.key("X-MBX-APIKEY").which.should.equal(api_key)
 
 
 def test_API_with_none_time_out():

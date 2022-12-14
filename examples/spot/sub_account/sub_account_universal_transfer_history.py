@@ -6,9 +6,9 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-spot_client = Client(key, secret)
+spot_client = Client(api_key, api_secret)
 
 logging.info(spot_client.sub_account_universal_transfer_history(clientTranId="test"))

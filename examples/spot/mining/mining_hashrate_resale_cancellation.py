@@ -6,10 +6,10 @@ from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 
-key = ""
-secret = ""
+api_key = ""
+api_secret = ""
 
-client = Client(key, secret)
+client = Client(api_key, api_secret)
 logging.info(
     client.mining_hashrate_resale_cancellation(configId="123", userName="user_name")
 )
