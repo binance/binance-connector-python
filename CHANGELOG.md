@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0rc3 - TBD
+
+### Fixed
+- Main thread not exiting due to reactor stop hang
+
 ## 2.0.0rc2 - 2022-11-29
 
 ### Changed

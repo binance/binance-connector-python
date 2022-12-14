@@ -11,7 +11,7 @@ class BinanceWebsocketClient(BinanceSocketManager):
         try:
             self.close()
         finally:
-            reactor.stop()
+            reactor.callFromThread(reactor.stop)
 
     def _single_stream(self, stream):
         if isinstance(stream, str):
