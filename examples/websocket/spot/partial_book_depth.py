@@ -26,7 +26,7 @@ my_client.partial_book_depth(
 time.sleep(2)
 
 my_client.partial_book_depth(
-    symbol="btcusdt",
+    symbol=["btcusdt", "ltcusdt"],
     level=10,
     speed=100,
     id=2,

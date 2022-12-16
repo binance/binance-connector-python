@@ -19,7 +19,9 @@ my_client.kline(symbol="btcusdt", id=1, interval="1m", callback=message_handler)
 
 time.sleep(5)
 
-my_client.kline(symbol="bnbusdt", id=2, interval="3m", callback=message_handler)
+my_client.kline(
+    symbol=["bnbusdt", "ethusdt"], id=2, interval="3m", callback=message_handler
+)
 
 time.sleep(10)
 

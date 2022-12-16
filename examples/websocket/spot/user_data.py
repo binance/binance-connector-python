@@ -5,7 +5,10 @@ import logging
 from binance.lib.utils import config_logging
 from binance.spot import Spot as Client
 from binance.websocket.spot.websocket_client import SpotWebsocketClient
+from configparser import ConfigParser
 
+config = ConfigParser()
+config.read("../../config.ini")
 
 config_logging(logging, logging.DEBUG)
 
@@ -14,7 +17,7 @@ def message_handler(message):
     print(message)
 
 
-api_key = ""
+api_key = config["keys"]["api_key"]
 client = Client(api_key, base_url="https://testnet.binance.vision")
 response = client.new_listen_key()
 

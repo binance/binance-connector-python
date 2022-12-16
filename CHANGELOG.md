@@ -1,10 +1,32 @@
 # Changelog
 
-## 2.0.0rc3 - TBD
+## 2.0.0rc3 - 2022-12-16
+
+### Removed
+- Python 3.6 Support Removed
+- Futures Loan Endpoints:
+  - `POST /sapi/v1/futures/loan/borrow` - spot.futures_loan_borrow
+  - `POST /sapi/v1/futures/loan/repay` - spot.futures_loan_repay
+  - `GET /sapi/v2/futures/loan/configs` - spot.futures_loan_configs
+  - `GET /sapi/v2/futures/loan/calcAdjustLevel` - spot.futures_loan_calc_adjust_level
+  - `GET /sapi/v2/futures/loan/calcMaxAdjustAmount` - spot.futures_loan_calc_max_adjust_amount
+  - `POST /sapi/v2/futures/loan/adjustCollateral` - spot.futures_loan_adjust_collateral
+  - `GET /sapi/v1/futures/loan/collateralRepayLimit` - spot.futures_loan_collateral_repay_limit
+  - `GET /sapi/v1/futures/loan/collateralRepay` - spot.futures_loan_collateral_repay_quote
+  - `POST /sapi/v1/futures/loan/collateralRepay` - spot.futures_loan_repay
+  - `GET /sapi/v1/futures/loan/collateralRepayResult` - spot.futures_loan_collateral_repay_result
+
+### Added
+- New Margin Endpoint:
+  - `GET /sapi/v1/margin/tradeCoeff` - Get Summary of Margin Account
+- Re: https://github.com/binance/binance-connector-python/issues/184 - Exception handling now returns Raw Data instead of just Error Codes and Error Messages.
+- Websocket Enhancements
+  - Added support for passing list of symbols on all relevant Websocket endpoints to support subscription to multiple streams.
+  - Stream Identification for when multiple streams are subscribed to at once. Allows users to easily identify which data belongs to which stream.
+- `examples/config.ini` to globally set API and Secret Keys to apply in all example files
 
 ### Fixed
-- Main thread not exiting due to reactor stop hang
-
+- Twisted reactor hanging in some situations due to the main thread not exiting cleanly
 ## 2.0.0rc2 - 2022-11-29
 
 ### Changed

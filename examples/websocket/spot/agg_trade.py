@@ -15,6 +15,7 @@ def message_handler(message):
 my_client = Client()
 my_client.start()
 
+# Subscribe to a single symbol stream
 my_client.agg_trade(
     symbol="btcusdt",
     id=1,
@@ -23,8 +24,9 @@ my_client.agg_trade(
 
 time.sleep(2)
 
+# Subscribe to a new stream for each symbol in the list
 my_client.agg_trade(
-    symbol="bnbusdt",
+    symbol=["bnbusdt", "ethusdt", "ltcusdt"],
     id=2,
     callback=message_handler,
 )

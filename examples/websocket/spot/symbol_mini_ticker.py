@@ -24,7 +24,7 @@ my_client.mini_ticker(
 time.sleep(2)
 
 my_client.mini_ticker(
-    symbol="btcusdt",
+    symbol=["btcusdt", "ethusdt"],
     id=2,
     callback=message_handler,
 )

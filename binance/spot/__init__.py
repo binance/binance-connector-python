@@ -97,6 +97,7 @@ class Spot(API):
     from binance.spot.margin import isolated_margin_tier
     from binance.spot.margin import margin_order_usage
     from binance.spot.margin import margin_dust_log
+    from binance.spot.margin import summary_of_margin_account
 
     # SAVINGS
     from binance.spot.savings import savings_flexible_products
@@ -200,21 +201,11 @@ class Spot(API):
     # FUTURES
     from binance.spot.futures import futures_transfer
     from binance.spot.futures import futures_transfer_history
-    from binance.spot.futures import futures_loan_borrow
     from binance.spot.futures import futures_loan_borrow_history
-    from binance.spot.futures import futures_loan_repay
     from binance.spot.futures import futures_loan_repay_history
     from binance.spot.futures import futures_loan_wallet
-    from binance.spot.futures import futures_loan_configs
-    from binance.spot.futures import futures_loan_calc_adjust_level
-    from binance.spot.futures import futures_loan_calc_max_adjust_amount
-    from binance.spot.futures import futures_loan_adjust_collateral
     from binance.spot.futures import futures_loan_adjust_collateral_history
     from binance.spot.futures import futures_loan_liquidation_history
-    from binance.spot.futures import futures_loan_collateral_repay_limit
-    from binance.spot.futures import futures_loan_collateral_repay_quote
-    from binance.spot.futures import futures_loan_collateral_repay
-    from binance.spot.futures import futures_loan_collateral_repay_result
     from binance.spot.futures import futures_loan_interest_history
 
     # BLVTs

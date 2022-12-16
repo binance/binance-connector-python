@@ -19,9 +19,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         else:
             symbol = "{}@aggTrade".format(symbol.lower())
 
-        self.live_subscribe(
-            symbol, id, callback, **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def trade(self, symbol: str, id: int, callback, **kwargs):
         """Trade Streams
@@ -72,9 +70,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         else:
             symbol = "{}@kline_{}".format(symbol.lower(), interval)
 
-        self.live_subscribe(
-            symbol, id, callback, **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def mini_ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all symbols mini ticker
@@ -96,10 +92,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
             else:
                 symbol = "{}@miniTicker".format(symbol.lower())
 
-
-            self.live_subscribe(
-                symbol, id, callback, **kwargs
-            )
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all symbols ticker
@@ -121,9 +114,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
             else:
                 symbol = "{}@ticker".format(symbol.lower())
 
-            self.live_subscribe(
-                symbol, id, callback, **kwargs
-            )
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def book_ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all book ticker
@@ -144,9 +135,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
             else:
                 symbol = "{}@bookTicker".format(symbol.lower())
 
-            self.live_subscribe(
-                symbol, id, callback, **kwargs
-            )
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def partial_book_depth(
         self, symbol: str, id: int, level, speed, callback, **kwargs
@@ -165,12 +154,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         else:
             symbol = "{}@depth{}@{}ms".format(symbol.lower(), level, speed)
 
-        self.live_subscribe(
-            symbol,
-            id,
-            callback,
-            **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def rolling_window_ticker(
         self, symbol: str, windowSize: str, id: int, callback, **kwargs
@@ -191,9 +175,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         else:
             symbol = "{}@ticker_{}".format(symbol.lower(), windowSize)
 
-        self.live_subscribe(
-            symbol, id, callback, **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def rolling_window_ticker_all_symbols(
         self, windowSize: str, id: int, callback, **kwargs
@@ -224,9 +206,7 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         else:
             symbol = "{}@depth@{}ms".format(symbol.lower(), speed)
 
-        self.live_subscribe(
-            symbol, id, callback, **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def user_data(self, listen_key: str, id: int, callback, **kwargs):
         """Listen to user data by using the provided listen_key"""

@@ -943,3 +943,17 @@ def margin_dust_log(self, **kwargs):
 
     url_path = "/sapi/v1/margin/dribblet"
     return self.sign_request("GET", url_path, {**kwargs})
+
+
+def summary_of_margin_account(self, **kwargs):
+    """Get Summary of Margin account (USER_DATA)
+    Get personal margin level information
+
+    GET /sapi/v1/margin/tradeCoeff
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-margin-account-user_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    return self.sign_request("GET", "/sapi/v1/margin/tradeCoeff", kwargs)
