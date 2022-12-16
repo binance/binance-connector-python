@@ -176,3 +176,7 @@ Query Current Margin Order Count Usage (TRADE)
 Margin Dust Log (USER_DATA)
 ---------------------------
 .. autofunction:: binance.spot.margin.margin_dust_log
+
+Get Summary of Margin account (USER_DATA)
+-----------------------------------------
+.. autofunction:: binance.spot.margin.summary_of_margin_account

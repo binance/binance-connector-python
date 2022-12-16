@@ -23,6 +23,13 @@ my_client.rolling_window_ticker(
     callback=message_handler,
 )
 
+my_client.rolling_window_ticker(
+    ["LTCUSDT", "ETHUSDT"],
+    "1h",
+    id=1,
+    callback=message_handler,
+)
+
 time.sleep(30)
 
 logging.debug("closing ws connection")

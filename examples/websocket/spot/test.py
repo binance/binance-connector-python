@@ -24,7 +24,7 @@ my_client.agg_trade(
 time.sleep(1)
 
 my_client.agg_trade(
-    symbol="bnbusdt",
+    symbol=["bnbusdt", "ethusdt"],
     id=2,
     callback=message_handler,
 )

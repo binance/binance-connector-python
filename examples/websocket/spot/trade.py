@@ -25,7 +25,7 @@ my_client.trade(
 time.sleep(2)
 
 my_client.trade(
-    symbol="eosusdt",
+    symbol=["eosusdt", "ltcusdt"],
     interval="1m",
     id=2,
     callback=message_handler,

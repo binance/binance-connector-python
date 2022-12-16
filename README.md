@@ -61,6 +61,14 @@ response = client.new_order(**params)
 print(response)
 ```
 Please find `examples` folder to check for more endpoints.
+- In order to set your API and Secret Key for use of the examples, edit the `examples/config.ini` file with your keys.
+- Eg:
+    ```ini
+    # examples/config.ini
+    [keys]
+    api_key=abc123456
+    api_secret=cba654321
+    ```
 
 ### Authentication
 
@@ -199,11 +207,13 @@ Setting the log level to `DEBUG` will log the request URL, payload and response 
 There are 2 types of error returned from the library:
 - `binance.error.ClientError`
     - This is thrown when server returns `4XX`, it's an issue from client side.
-    - It has 4 properties:
+    - It has 5 properties:
         - `status_code` - HTTP status code
         - `error_code` - Server's error code, e.g. `-1102`
         - `error_message` - Server's error message, e.g. `Unknown order sent.`
         - `header` - Full response header.
+        - `error_data`* - Additional detailed data which supplements the `error_message`.
+            - **Only applicable on select endpoints, eg. `cancelReplace`*
 - `binance.error.ServerError`
     - This is thrown when server returns `5XX`, it's an issue from server side.
 

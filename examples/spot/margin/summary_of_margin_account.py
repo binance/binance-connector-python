@@ -3,6 +3,7 @@
 import logging
 from binance.spot import Spot as Client
 from binance.lib.utils import config_logging
+from binance.error import ClientError
 from configparser import ConfigParser
 
 config = ConfigParser()
@@ -14,6 +15,13 @@ api_key = config["keys"]["api_key"]
 api_secret = config["keys"]["api_secret"]
 
 client = Client(api_key, api_secret)
-logging.info(
-    client.savings_flexible_redeem(productId="BTC001", amount="0.01", type="NORMAL")
-)
+
+try:
+    response = client.summary_of_margin_account(recvWindow=5000)
+    logging.info(response)
+except ClientError as error:
+    logging.error(
+        "Found error. status: {}, error code: {}, error message: {}".format(
+            error.status_code, error.error_code, error.error_message
+        )
+    )

@@ -24,6 +24,16 @@ my_client.diff_book_depth(
 
 time.sleep(2)
 
+# Subscribe to a new stream for each symbol in the list
+my_client.diff_book_depth(
+    symbol=["ethusdt", "ltcusdt"],
+    speed=100,
+    id=1,
+    callback=message_handler,
+)
+
+time.sleep(2)
+
 my_client.diff_book_depth(
     symbol="btcusdt",
     speed=1000,

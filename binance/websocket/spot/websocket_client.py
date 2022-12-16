@@ -14,9 +14,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Update Speed: Real-time
         """
-        self.live_subscribe(
-            "{}@aggTrade".format(symbol.lower()), id, callback, **kwargs
-        )
+        if isinstance(symbol, list):
+            symbol = ["{}@aggTrade".format(x.lower()) for x in symbol]
+        else:
+            symbol = "{}@aggTrade".format(symbol.lower())
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def trade(self, symbol: str, id: int, callback, **kwargs):
         """Trade Streams
@@ -27,7 +30,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Update Speed: Real-time
         """
-        self.live_subscribe("{}@trade".format(symbol.lower()), id, callback, **kwargs)
+        if isinstance(symbol, list):
+            symbol = ["{}@trade".format(x.lower()) for x in symbol]
+        else:
+            symbol = "{}@trade".format(symbol.lower())
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def kline(self, symbol: str, id: int, interval: str, callback, **kwargs):
         """Kline/Candlestick Streams
@@ -57,10 +65,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Update Speed: 2000ms
         """
+        if isinstance(symbol, list):
+            symbol = ["{}@kline_{}".format(x.lower(), interval) for x in symbol]
+        else:
+            symbol = "{}@kline_{}".format(symbol.lower(), interval)
 
-        self.live_subscribe(
-            "{}@kline_{}".format(symbol.lower(), interval), id, callback, **kwargs
-        )
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def mini_ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all symbols mini ticker
@@ -77,9 +87,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         if symbol is None:
             self.live_subscribe("!miniTicker@arr", id, callback, **kwargs)
         else:
-            self.live_subscribe(
-                "{}@miniTicker".format(symbol.lower()), id, callback, **kwargs
-            )
+            if isinstance(symbol, list):
+                symbol = ["{}@miniTicker".format(x.lower()) for x in symbol]
+            else:
+                symbol = "{}@miniTicker".format(symbol.lower())
+
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all symbols ticker
@@ -96,9 +109,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         if symbol is None:
             self.live_subscribe("!ticker@arr", id, callback, **kwargs)
         else:
-            self.live_subscribe(
-                "{}@ticker".format(symbol.lower()), id, callback, **kwargs
-            )
+            if isinstance(symbol, list):
+                symbol = ["{}@ticker".format(x.lower()) for x in symbol]
+            else:
+                symbol = "{}@ticker".format(symbol.lower())
+
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def book_ticker(self, id: int, callback, symbol=None, **kwargs):
         """Individual symbol or all book ticker
@@ -114,9 +130,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
         if symbol is None:
             self.live_subscribe("!bookTicker", id, callback, **kwargs)
         else:
-            self.live_subscribe(
-                "{}@bookTicker".format(symbol.lower()), id, callback, **kwargs
-            )
+            if isinstance(symbol, list):
+                symbol = ["{}@bookTicker".format(x.lower()) for x in symbol]
+            else:
+                symbol = "{}@bookTicker".format(symbol.lower())
+
+            self.live_subscribe(symbol, id, callback, **kwargs)
 
     def partial_book_depth(
         self, symbol: str, id: int, level, speed, callback, **kwargs
@@ -129,12 +148,13 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Update Speed: 1000ms or 100ms
         """
-        self.live_subscribe(
-            "{}@depth{}@{}ms".format(symbol.lower(), level, speed),
-            id,
-            callback,
-            **kwargs
-        )
+
+        if isinstance(symbol, list):
+            symbol = ["{}@depth{}@{}ms".format(x.lower(), level, speed) for x in symbol]
+        else:
+            symbol = "{}@depth{}@{}ms".format(symbol.lower(), level, speed)
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def rolling_window_ticker(
         self, symbol: str, windowSize: str, id: int, callback, **kwargs
@@ -149,9 +169,13 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Note: This stream is different from the <symbol>@ticker stream. The open time "O" always starts on a minute, while the closing time "C" is the current time of the update. As such, the effective window might be up to 59999ms wider that <window_size>.
         """
-        self.live_subscribe(
-            "{}@ticker_{}".format(symbol.lower(), windowSize), id, callback, **kwargs
-        )
+
+        if isinstance(symbol, list):
+            symbol = ["{}@ticker_{}".format(x.lower(), windowSize) for x in symbol]
+        else:
+            symbol = "{}@ticker_{}".format(symbol.lower(), windowSize)
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def rolling_window_ticker_all_symbols(
         self, windowSize: str, id: int, callback, **kwargs
@@ -177,9 +201,12 @@ class SpotWebsocketClient(BinanceWebsocketClient):
 
         Order book price and quantity depth updates used to locally manage an order book.
         """
-        self.live_subscribe(
-            "{}@depth@{}ms".format(symbol.lower(), speed), id, callback, **kwargs
-        )
+        if isinstance(symbol, list):
+            symbol = ["{}@depth@{}ms".format(x.lower(), speed) for x in symbol]
+        else:
+            symbol = "{}@depth@{}ms".format(symbol.lower(), speed)
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def user_data(self, listen_key: str, id: int, callback, **kwargs):
         """Listen to user data by using the provided listen_key"""
