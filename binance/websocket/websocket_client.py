@@ -1,6 +1,11 @@
+import os
 import json
+import certifi
 from twisted.internet import reactor
 from binance.websocket.binance_socket_manager import BinanceSocketManager
+
+# To reference the installed certificate authority (CA) bundle, you can use the built-in function:
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 class BinanceWebsocketClient(BinanceSocketManager):
