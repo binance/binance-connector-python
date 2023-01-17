@@ -5,15 +5,11 @@ import logging
 from binance.spot import Spot
 from binance.lib.utils import config_logging
 from datetime import datetime
-from configparser import ConfigParser
-
-config = ConfigParser()
-config.read("../../config.ini")
+from examples.utils.prepare_env import get_api_key
 
 config_logging(logging, logging.DEBUG)
 
-api_key = config["keys"]["api_key"]
-api_secret = config["keys"]["api_secret"]
+api_key, api_secret = get_api_key()
 
 spot_client = Spot(api_key, api_secret)
 

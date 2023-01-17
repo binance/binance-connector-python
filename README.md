@@ -61,7 +61,7 @@ response = client.new_order(**params)
 print(response)
 ```
 Please find `examples` folder to check for more endpoints.
-- In order to set your API and Secret Key for use of the examples, edit the `examples/config.ini` file with your keys.
+- In order to set your API and Secret Key for use of the examples, create a file `examples/config.ini` with your keys.
 - Eg:
     ```ini
     # examples/config.ini

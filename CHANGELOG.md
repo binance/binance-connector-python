@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0rc4 - 2023-01-17
+
+### Change
+- Rewrite reading API key in example files.
+
 ## 2.0.0rc3 - 2022-12-16
 
 ### Removed
