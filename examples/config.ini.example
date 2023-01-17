@@ -1,4 +1,5 @@
 
+# Make a copy of this file, and save to `config.ini`
 # Enter your API and Secret Key for use in the example files
 [keys]
 api_key=

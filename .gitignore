@@ -18,3 +18,5 @@ venv/
 
 # document build
 docs/build/
+
+examples/*.ini
