@@ -1,4 +1,5 @@
 from binance.websocket.websocket_client import BinanceWebsocketClient
+from binance.error import ParameterRequiredError
 
 
 class SpotWebsocketClient(BinanceWebsocketClient):
@@ -117,25 +118,24 @@ class SpotWebsocketClient(BinanceWebsocketClient):
             self.live_subscribe(symbol, id, callback, **kwargs)
 
     def book_ticker(self, id: int, callback, symbol=None, **kwargs):
-        """Individual symbol or all book ticker
+        """Individual symbol book ticker
 
         Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
 
-        Stream Name: <symbol>@bookTicker or
-        Stream Name: !bookTicker
+        Stream Name: <symbol>@bookTicker
 
         Update Speed: realtime
         """
 
         if symbol is None:
-            self.live_subscribe("!bookTicker", id, callback, **kwargs)
-        else:
-            if isinstance(symbol, list):
-                symbol = ["{}@bookTicker".format(x.lower()) for x in symbol]
-            else:
-                symbol = "{}@bookTicker".format(symbol.lower())
+            raise ParameterRequiredError(["symbol"])
 
-            self.live_subscribe(symbol, id, callback, **kwargs)
+        if isinstance(symbol, list):
+            symbol = ["{}@bookTicker".format(x.lower()) for x in symbol]
+        else:
+            symbol = "{}@bookTicker".format(symbol.lower())
+
+        self.live_subscribe(symbol, id, callback, **kwargs)
 
     def partial_book_depth(
         self, symbol: str, id: int, level, speed, callback, **kwargs

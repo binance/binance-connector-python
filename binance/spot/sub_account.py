@@ -848,3 +848,89 @@ def managed_sub_account_get_snapshot(self, email: str, type: str, **kwargs):
     return self.limited_encoded_sign_request(
         "GET", "/sapi/v1/managed-subaccount/accountSnapshot", payload
     )
+
+
+def managed_sub_account_investor_trans_log(
+    self, email: str, startTime: int, endTime: int, page: int, limit: int, **kwargs
+):
+    """Query Managed Sub Account Transfer Log (Investor) (USER_DATA)
+
+    GET /sapi/v1/managed-subaccount/transfer/history (HMAC SHA256)
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-investor-user_data
+
+    Args:
+        email (str): email
+        startTime (int): start time
+        endTime (int): end time
+        page (int): page
+        limit (int): limit
+    Keyword Args:
+        transfers(str, optional): Transfer Direction (FROM/TO)
+        transferFunctionAccountType(str, optional): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [startTime, "startTime"],
+            [endTime, "endTime"],
+            [page, "page"],
+            [limit, "limit"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "startTime": startTime,
+        "endTime": endTime,
+        "page": page,
+        "limit": limit,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/managed-subaccount/queryTransLogForInvestor", payload
+    )
+
+
+def managed_sub_account_trading_trans_log(
+    self, email: str, startTime: int, endTime: int, page: int, limit: int, **kwargs
+):
+    """Query Managed Sub Account Transfer Log (Trading Team) (USER_DATA)
+
+    GET /sapi/v1/managed-subaccount/queryTransLogForTradeParent
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-trading-team-user_data
+
+    Args:
+        email (str): email
+        startTime (int): start time
+        endTime (int): end time
+        page (int): page
+        limit (int): limit
+    Keyword Args:
+        transfers(str, optional): Transfer Direction (FROM/TO)
+        transferFunctionAccountType(str, optional): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [startTime, "startTime"],
+            [endTime, "endTime"],
+            [page, "page"],
+            [limit, "limit"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "startTime": startTime,
+        "endTime": endTime,
+        "page": page,
+        "limit": limit,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/managed-subaccount/queryTransLogForTradeParent", payload
+    )

@@ -16,3 +16,11 @@ Verify a Binance Code (USER_DATA)
 Gift Card RSA Public Key (USER_DATA)
 ------------------------------------
 .. autofunction:: binance.spot.gift_card.gift_card_rsa_public_key
+
+Create a dual-token gift card (USER_DATA)
+-----------------------------------------
+.. autofunction:: binance.spot.gift_card.gift_card_buy_code
+
+Fetch Token Limit (USER_DATA)
+-----------------------------
+.. autofunction:: binance.spot.gift_card.gift_card_token_limit

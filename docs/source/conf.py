@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 # -- Project information -----------------------------------------------------
 
 project = "binance-connector"
-copyright = "2021, binance"
+copyright = "2023, binance"
 author = "binance"
 
 

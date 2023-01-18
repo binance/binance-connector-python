@@ -403,3 +403,124 @@ def bnb_convertible_assets(self, **kwargs):
     """
 
     return self.sign_request("POST", "/sapi/v1/asset/dust-btc", kwargs)
+
+
+def convertible_coins(self, **kwargs):
+    """Query auto-converting stable coins (USER_DATA)
+
+    GET /sapi/v1/capital/contract/convertible-coins
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-auto-converting-stable-coins-user_data
+    """
+
+    return self.sign_request(
+        "GET", "/sapi/v1/capital/contract/convertible-coins", kwargs
+    )
+
+
+def toggle_auto_convertion(self, coin: str, enable: bool, **kwargs):
+    """Toggle auto-converting stable coins (USER_DATA)
+
+    POST /sapi/v1/capital/contract/convertible-coins
+
+    https://binance-docs.github.io/apidocs/spot/en/#switch-on-off-busd-and-stable-coins-conversion-user_data
+    """
+
+    check_required_parameters([[coin, "symbol"], [enable, "enable"]])
+
+    payload = {"coin": coin, "enable": enable, **kwargs}
+    return self.sign_request(
+        "POST", "/sapi/v1/capital/contract/convertible-coins", payload
+    )
+
+
+def cloud_mining_trans_history(self, startTime: int, endTime: int, **kwargs):
+    """Get Cloud-Mining payment and refund history (USER_DATA)
+
+    GET /sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-cloud-mining-payment-and-refund-history-user_data
+
+    Args:
+        startTime (int)
+        endTime (int)
+    Keyword Args:
+        tranId (int, optional)
+        clientTranId (str, optional)
+        asset (str, optional)
+        current (int, optional): Default Value: 1
+        size (int, optional): Default Value: 100; Max Value: 100
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters([[startTime, "startTime"], [endTime, "endTime"]])
+
+    url_path = "/sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage"
+    payload = {"startTime": startTime, "endTime": endTime, **kwargs}
+    return self.sign_request("GET", url_path, payload)
+
+
+def convert_transfer(
+    self, clientTranId: str, asset: str, amount: float, targetAsset: str, **kwargs
+):
+    """BUSD Convert (USER_DATA)
+
+    POST /sapi/v1/asset/convert-transfer
+
+    https://binance-docs.github.io/apidocs/spot/en/#busd-convert-trade
+
+    Args:
+        clientTranId (str)
+        asset (str)
+        amount (float)
+        targetAsset (str)
+    Keyword Args:
+        accountType (str, optional)
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [clientTranId, "clientTranId"],
+            [asset, "asset"],
+            [amount, "amount"],
+            [targetAsset, "targetAsset"],
+        ]
+    )
+
+    url_path = "/sapi/v1/asset/convert-transfer"
+    payload = {
+        "clientTranId": clientTranId,
+        "asset": asset,
+        "amount": amount,
+        "targetAsset": targetAsset,
+        **kwargs,
+    }
+    return self.sign_request("POST", url_path, payload)
+
+
+def convert_history(self, startTime: int, endTime: int, **kwargs):
+    """BUSD Convert History (USER_DATA)
+
+    GET /sapi/v1/asset/convert-transfer/queryByPage
+
+    https://binance-docs.github.io/apidocs/spot/en/#busd-convert-history-user_data
+
+    Args:
+        startTime (int)
+        endTime (int)
+    Keyword Args:
+        tranId (int, optional)
+        clientTranId (str, optional)
+        asset (str, optional)
+        accountType (str, optional)
+        current (int, optional): Default Value: 1
+        size (int, optional): Default Value: 100; Max Value: 100
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters([[startTime, "startTime"], [endTime, "endTime"]])
+
+    url_path = "/sapi/v1/asset/convert-transfer/queryByPage"
+    payload = {"startTime": startTime, "endTime": endTime, **kwargs}
+    return self.sign_request("GET", url_path, payload)

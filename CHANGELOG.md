@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.0.0 - 2023-01-18
+### Added
+- New endpoints for wallet
+  - `GET /sapi/v1/capital/contract/convertible-coins` Get a user's auto-conversion settings in deposit/withdrawal
+  - `POST /sapi/v1/capital/contract/convertible-coins` User can use it to turn on or turn off the BUSD auto-conversion from/to a specific stable coin.
+- New endpoints for Sub-Account
+  - `GET /v1/managed-subaccount/queryTransLogForInvestor` Investor can use this api to query managed sub account transfer log
+  - `GET /v1/managed-subaccount/queryTransLogForTradeParent` Trading team can use this api to query managed sub account transfer log
+- New endpoints for Loan
+  - `GET /sapi/v1/loan/vip/ongoing/orders` Get VIP Loan Ongoing Orders
+  - `POST /sapi/v1/loan/vip/repay` VIP Loan Repay
+  - `GET /sapi/v1/loan/vip/repay/history` Get VIP Loan Repayment History
+  - `GET /sapi/v1/loan/vip/collateral/account` Check Locked Value of VIP Collateral Account
+  - `GET /sapi/v1/loan/loanable/data` Get Loanable Assets Data
+  - `GET /sapi/v1/loan/collateral/data` Get Collateral Assets Data
+  - `GET /sapi/v1/loan/repay/collateral/rate` Check Collateral Repay Rate
+  - `POST /sapi/v1/loan/customize/margin_call` Customize margin call for ongoing orders only.
+- New endpoints for Wallet
+  - `GET /sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage` Get Cloud-Mining payment and refund history
+  - `POST /sapi/v1/asset/convert-transfer` BUSD Convert
+  - `GET /sapi/v1/asset/convert-transfer/queryByPage` BUSD Convert History
+- New endpoint for gift card
+  - `POST /sapi/v1/giftcard/buyCode` Create a dual-token gift card
+  - `GET /sapi/v1/giftcard/buyCode/token-limit` Fetch Token Limit
+
+### Changed
+- Remove `!bookTicker` Websocket
+
+
 ## 2.0.0rc4 - 2023-01-17
 
 ### Change
