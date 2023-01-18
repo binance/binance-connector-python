@@ -32,3 +32,35 @@ Crypto Loan Adjust LTV (TRADE)
 Get Loan LTV Adjustment History (USER_DATA)
 -------------------------------------------
 .. autofunction:: binance.spot.loan.loan_adjust_ltv_history
+
+Get VIP Loan Ongoing Orders (USER_DATA)
+---------------------------------------
+.. autofunction:: binance.spot.loan.loan_vip_ongoing_orders
+
+VIP Loan Repay (TRADE)
+----------------------
+.. autofunction:: binance.spot.loan.loan_vip_repay
+
+Get VIP Loan Repayment History (USER_DATA)
+------------------------------------------
+.. autofunction:: binance.spot.loan.loan_vip_repay_history
+
+Check Locked Value of VIP Collateral Account (USER_DATA)
+--------------------------------------------------------
+.. autofunction:: binance.spot.loan.loan_vip_collateral_account
+
+Get Loanable Assets Data (USER_DATA)
+------------------------------------
+.. autofunction:: binance.spot.loan.loan_loanable_data
+
+Get Collateral Assets Data (USER_DATA)
+--------------------------------------
+.. autofunction:: binance.spot.loan.loan_collateral_data
+
+Check Collateral Repay Rate (USER_DATA)
+---------------------------------------
+.. autofunction:: binance.spot.loan.loan_collateral_rate
+
+Customize margin call for ongoing orders only. (USER_DATA)
+----------------------------------------------------------
+.. autofunction:: binance.spot.loan.loan_customize_margin_call

@@ -185,3 +185,166 @@ def loan_adjust_ltv_history(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/loan/ltv/adjustment/history", kwargs)
+
+
+def loan_vip_ongoing_orders(self, **kwargs):
+    """Get VIP Loan Ongoing Orders (USER_DATA)
+
+    GET /sapi/v1/loan/vip/ongoing/orders
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-vip-loan-ongoing-orders-user_data
+
+    Keyword Args:
+      orderId (int, optional)
+      collateralAccountId (int, optional)
+      loanCoin (str, optional)
+      collateralCoin (str, optional)
+      current (int, optional): Current querying page. Start from 1; default: 1; max: 1000
+      limit (int, optional): Default: 10; max: 100
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/loan/vip/ongoing/orders", kwargs)
+
+
+def loan_vip_repay(self, orderId: int, amount: float, **kwargs):
+    """VIP Loan Repay (TRADE)
+
+    POST /sapi/v1/loan/vip/repay
+
+    https://binance-docs.github.io/apidocs/spot/en/#vip-loan-repay-trade
+
+    Args:
+      orderId (int)
+      amount (float)
+    Keyword Args:
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameters([[orderId, "orderId"], [amount, "amount"]])
+
+    payload = {"orderId": orderId, "amount": amount, **kwargs}
+    return self.sign_request("POST", "/sapi/v1/loan/vip/repay", payload)
+
+
+def loan_vip_repay_history(self, **kwargs):
+    """Get VIP Loan Repayment History (USER_DATA)
+
+    GET /sapi/v1/loan/vip/repay/history
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-vip-loan-repayment-history-user_data
+
+    Keyword Args:
+      orderId (int, optional)
+      loanCoin (str, optional)
+      startTime (int, optional)
+      endTime (int, optional)
+      current (int, optional): Current querying page. Start from 1; default: 1; max: 1000
+      limit (int, optional): Default: 10; max: 100
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/loan/vip/repay/history", kwargs)
+
+
+def loan_vip_collateral_account(self, **kwargs):
+    """Check Locked Value of VIP Collateral Account (USER_DATA)
+
+    GET /sapi/v1/loan/vip/collateral/account
+
+    https://binance-docs.github.io/apidocs/spot/en/#check-locked-value-of-vip-collateral-account-user_data
+
+    Keyword Args:
+      orderId (int, optional)
+      collateralAccountId (int, optional)
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/loan/vip/collateral/account", kwargs)
+
+
+def loan_loanable_data(self, **kwargs):
+    """Get Loanable Assets Data (USER_DATA)
+
+    GET /sapi/v1/loan/loanable/data
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-loanable-assets-data-user_data
+
+    Keyword Args:
+      loanCoin (str, optional)
+      vipLevel (int, optional)
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/loan/loanable/data", kwargs)
+
+
+def loan_collateral_data(self, **kwargs):
+    """Get Collateral Assets Data (USER_DATA)
+
+    GET /sapi/v1/loan/collateral/data
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-collateral-assets-data-user_data
+
+    Keyword Args:
+      collateralCoin (str, optional)
+      vipLevel (int, optional)
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    return self.sign_request("GET", "/sapi/v1/loan/collateral/data", kwargs)
+
+
+def loan_collateral_rate(
+    self, loanCoin: str, collateralCoin: str, repayAmount: float, **kwargs
+):
+    """Check Collateral Repay Rate (USER_DATA)
+
+    GET /sapi/v1/loan/repay/collateral/rate
+
+    https://binance-docs.github.io/apidocs/spot/en/#check-collateral-repay-rate-user_data
+
+    Args:
+      loanCoin (str)
+      collateralCoin (str)
+      repayAmount (float)
+    Keyword Args:
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameters(
+        [
+            [loanCoin, "loanCoin"],
+            [collateralCoin, "collateralCoin"],
+            [repayAmount, "repayAmount"],
+        ]
+    )
+
+    payload = {
+        "loanCoin": loanCoin,
+        "collateralCoin": collateralCoin,
+        "repayAmount": repayAmount,
+        **kwargs,
+    }
+    return self.sign_request("GET", "/sapi/v1/loan/repay/collateral/rate", payload)
+
+
+def loan_customize_margin_call(self, marginCall: float, **kwargs):
+    """Customize Margin Call (USER_DATA)
+
+    POST /sapi/v1/loan/customize/margin_call
+
+    https://binance-docs.github.io/apidocs/spot/en/#crypto-loan-customize-margin-call-trade
+
+    Args:
+      marginCall (float)
+    Keyword Args:
+      orderId (int, optional)
+      collateralCoin (str, optional)
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameter(marginCall, "marginCall")
+
+    payload = {"marginCall": marginCall, **kwargs}
+    return self.sign_request("POST", "/sapi/v1/loan/customize/margin_call", payload)

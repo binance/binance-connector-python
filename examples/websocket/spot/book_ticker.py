@@ -19,6 +19,7 @@ my_client.start()
 my_client.book_ticker(
     id=1,
     callback=message_handler,
+    symbol="btcusdt",
 )
 
 time.sleep(30)

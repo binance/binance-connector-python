@@ -147,6 +147,11 @@ class Spot(API):
     from binance.spot.wallet import user_asset
     from binance.spot.wallet import api_key_permissions
     from binance.spot.wallet import bnb_convertible_assets
+    from binance.spot.wallet import convertible_coins
+    from binance.spot.wallet import toggle_auto_convertion
+    from binance.spot.wallet import cloud_mining_trans_history
+    from binance.spot.wallet import convert_transfer
+    from binance.spot.wallet import convert_history
 
     # MINING
     from binance.spot.mining import mining_algo_list
@@ -197,6 +202,8 @@ class Spot(API):
     from binance.spot.sub_account import sub_account_api_get_ip_restriction
     from binance.spot.sub_account import sub_account_api_delete_ip
     from binance.spot.sub_account import managed_sub_account_get_snapshot
+    from binance.spot.sub_account import managed_sub_account_investor_trans_log
+    from binance.spot.sub_account import managed_sub_account_trading_trans_log
 
     # FUTURES
     from binance.spot.futures import futures_transfer
@@ -239,7 +246,7 @@ class Spot(API):
     # C2C
     from binance.spot.c2c import c2c_trade_history
 
-    # CRYPTO LOANS
+    # LOANS
     from binance.spot.loan import loan_history
     from binance.spot.loan import loan_borrow
     from binance.spot.loan import loan_borrow_history
@@ -248,6 +255,14 @@ class Spot(API):
     from binance.spot.loan import loan_repay_history
     from binance.spot.loan import loan_adjust_ltv
     from binance.spot.loan import loan_adjust_ltv_history
+    from binance.spot.loan import loan_vip_ongoing_orders
+    from binance.spot.loan import loan_vip_repay
+    from binance.spot.loan import loan_vip_repay_history
+    from binance.spot.loan import loan_vip_collateral_account
+    from binance.spot.loan import loan_loanable_data
+    from binance.spot.loan import loan_collateral_data
+    from binance.spot.loan import loan_collateral_rate
+    from binance.spot.loan import loan_customize_margin_call
 
     # PAY
     from binance.spot.pay import pay_history
@@ -269,6 +284,8 @@ class Spot(API):
     from binance.spot.gift_card import gift_card_redeem_code
     from binance.spot.gift_card import gift_card_verify_code
     from binance.spot.gift_card import gift_card_rsa_public_key
+    from binance.spot.gift_card import gift_card_buy_code
+    from binance.spot.gift_card import gift_card_token_limit
 
     # Portfolio Margin
     from binance.spot.portfolio_margin import portfolio_margin_account

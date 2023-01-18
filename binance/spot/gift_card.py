@@ -93,3 +93,60 @@ def gift_card_rsa_public_key(self, **kwargs):
 
     url_path = "/sapi/v1/giftcard/cryptography/rsa-public-key"
     return self.sign_request("GET", url_path, {**kwargs})
+
+
+def gift_card_buy_code(
+    self, baseToken: str, faceToken: str, baseTokenAmount: float, **kwargs
+):
+    """Create a dual-token gift card (fixed value, discount feature) (TRADE)
+
+    POST /sapi/v1/giftcard/buyCode
+
+    https://binance-docs.github.io/apidocs/spot/en/#create-a-dual-token-gift-card-fixed-value-discount-feature-trade
+
+    Args:
+      baseToken (str): The coin type used to buy the Binance Code
+      faceToken (str): The coin type contained in the Binance Code
+      baseTokenAmount (float): The amount of the coin used to buy the Binance Code
+    Keyword Args:
+      discount (float, optional): The discount rate of the Binance Code
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameters(
+        [
+            [baseToken, "baseToken"],
+            [faceToken, "faceToken"],
+            [baseTokenAmount, "baseTokenAmount"],
+        ]
+    )
+
+    payload = {
+        "baseToken": baseToken,
+        "faceToken": faceToken,
+        "baseTokenAmount": baseTokenAmount,
+        **kwargs,
+    }
+
+    return self.sign_request("POST", "/sapi/v1/giftcard/buyCode", payload)
+
+
+def gift_card_token_limit(self, baseToken: str, **kwargs):
+    """Get the limit of a token (TRADE)
+
+    GET /sapi/v1/giftcard/buyCode/token-limit
+
+    https://binance-docs.github.io/apidocs/spot/en/#fetch-token-limit-user_data
+
+    Args:
+      baseToken (str): The coin type used to buy the Binance Code
+    Keyword Args:
+      recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameter(baseToken, "baseToken")
+    return self.sign_request(
+        "GET",
+        "/sapi/v1/giftcard/buyCode/token-limit",
+        {"baseToken": baseToken, **kwargs},
+    )

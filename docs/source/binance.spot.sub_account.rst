@@ -132,3 +132,11 @@ Delete IP List for a Sub-account API Key (For Master Account)
 Query Managed Sub-account Snapshot (For Investor Master Account)
 ----------------------------------------------------------------
 .. autofunction:: binance.spot.sub_account.managed_sub_account_get_snapshot
+
+Query Managed Sub Account Transfer Log (Investor) (USER_DATA)
+-------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.managed_sub_account_investor_trans_log
+
+Query Managed Sub Account Transfer Log (Trading Team) (USER_DATA)
+-----------------------------------------------------------------
+.. autofunction:: binance.spot.sub_account.managed_sub_account_trading_trans_log
