@@ -13,7 +13,8 @@ Contents
    CHANGELOG
    getting_started
    binance.spot
-   binance.websocket.spot
+   binance.websocket_stream.spot
+   binance.websocket_api
 
 Indices and tables
 ==================

@@ -7,6 +7,7 @@ from binance.lib.utils import (
     check_required_parameter,
     check_type_parameter,
     convert_list_to_json_array,
+    purge_map,
 )
 from binance.lib.utils import check_required_parameters
 from binance.lib.utils import check_enum_parameter
@@ -108,3 +109,11 @@ def test_encode_query_without_email_symbol():
 
 def test_convert_list_to_json_array():
     convert_list_to_json_array(["symbol"]).should.equal('["symbol"]')
+
+
+def test_remove_empty_parameter():
+    purge_map({"foo": "bar", "foo2": None}).should.equal({"foo": "bar"})
+    purge_map({"foo": "bar", "foo2": ""}).should.equal({"foo": "bar"})
+    purge_map({"foo": "bar", "foo2": 0}).should.equal({"foo": "bar"})
+    purge_map({"foo": "bar", "foo2": []}).should.equal({"foo": "bar", "foo2": []})
+    purge_map({"foo": "bar", "foo2": {}}).should.equal({"foo": "bar", "foo2": {}})
