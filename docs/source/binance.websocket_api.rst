@@ -121,3 +121,15 @@ Cancel OCO order
 Get all OCO orders
 ------------------
 .. autofunction:: binance.websocket.spot.websocket_api.SpotWebsocketAPIClient.get_open_oco_orders
+
+Start user data stream
+----------------------
+.. autofunction:: binance.websocket.spot.websocket_api.SpotWebsocketAPIClient.user_data_start
+
+Ping user data stream
+---------------------
+.. autofunction:: binance.websocket.spot.websocket_api.SpotWebsocketAPIClient.user_data_ping
+
+Stop user data stream
+---------------------
+.. autofunction:: binance.websocket.spot.websocket_api.SpotWebsocketAPIClient.user_data_stop

@@ -63,3 +63,8 @@ class SpotWebsocketAPIClient(BinanceWebsocketClient):
     from binance.websocket.spot.websocket_api.trade import get_oco_order
     from binance.websocket.spot.websocket_api.trade import cancel_oco_order
     from binance.websocket.spot.websocket_api.trade import get_open_oco_orders
+
+    # User Data Stream
+    from binance.websocket.spot.websocket_api.user_data import user_data_start
+    from binance.websocket.spot.websocket_api.user_data import user_data_ping
+    from binance.websocket.spot.websocket_api.user_data import user_data_stop

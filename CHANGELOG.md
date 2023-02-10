@@ -1,7 +1,7 @@
 # Changelog
 
 
-## 3.0.0rc1 - 2023-02-09
+## 3.0.0rc1 - 2023-02-10
 
 ### Changed
 - Redesign of Websocket part. Please consult `README.md` for details on its new usage.
