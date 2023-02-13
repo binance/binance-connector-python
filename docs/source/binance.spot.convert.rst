@@ -4,4 +4,4 @@ Convert Endpoints
 
 Get Convert Trade History (USER_DATA)
 -------------------------------------
-.. autofunction:: binance.spot.convert.convert_trade_history
+.. autofunction:: binance.spot.Spot.convert_trade_history
