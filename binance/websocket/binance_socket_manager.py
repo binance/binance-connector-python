@@ -34,9 +34,13 @@ class BinanceSocketManager(threading.Thread):
         self.create_ws_connection()
 
     def create_ws_connection(self):
-        self.logger.debug("Start connect to WebSocket Server: %s", self.stream_url)
+        self.logger.debug(
+            "Creating connection with WebSocket Server: %s", self.stream_url
+        )
         self.ws = create_connection(self.stream_url)
-        self.logger.debug("Created WebSocket connection to: %s", self.stream_url)
+        self.logger.debug(
+            "WebSocket connection has been established: %s", self.stream_url
+        )
         self._callback(self.on_open)
 
     def run(self):
@@ -56,12 +60,12 @@ class BinanceSocketManager(threading.Thread):
                 op_code, frame = self.ws.recv_data_frame(True)
             except WebSocketException as e:
                 if isinstance(e, WebSocketConnectionClosedException):
-                    self.logger.error("lost websocket connection")
+                    self.logger.error("Lost websocket connection")
                 else:
-                    self.logger.error("websocket exception: %s", e)
+                    self.logger.error("Websocket exception: {}".format(e))
                 raise e
             except Exception as e:
-                self.logger.error("Exception in read_data: %s", e)
+                self.logger.error("Exception in read_data: {}".format(e))
                 raise e
 
             if op_code == ABNF.OPCODE_CLOSE:
@@ -95,6 +99,6 @@ class BinanceSocketManager(threading.Thread):
             try:
                 callback(self, *args)
             except Exception as e:
-                self.logger.error("error from callback {}: {}".format(callback, e))
+                self.logger.error("Error from callback {}: {}".format(callback, e))
                 if self.on_error:
                     self.on_error(self, e)
