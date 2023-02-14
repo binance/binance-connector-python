@@ -1,5 +1,14 @@
 # Changelog
 
+
+## 3.0.0rc1 - 2023-02-10
+
+### Changed
+- Redesign of Websocket part. Please consult `README.md` for details on its new usage.
+
+### Added
+- Add Websocket API
+
 ## 2.0.0 - 2023-01-18
 ### Added
 - New endpoints for wallet

@@ -3,108 +3,108 @@ Wallet Endpoints
 
 System Status (System)
 ----------------------
-.. autofunction:: binance.spot.wallet.system_status
+.. autofunction:: binance.spot.Spot.system_status
 
 All Coins' Information (USER_DATA)
 ----------------------------------
-.. autofunction:: binance.spot.wallet.coin_info
+.. autofunction:: binance.spot.Spot.coin_info
 
 Daily Account Snapshot (USER_DATA)
 ----------------------------------
-.. autofunction:: binance.spot.wallet.account_snapshot
+.. autofunction:: binance.spot.Spot.account_snapshot
 
 Disable Fast Withdraw Switch (USER_DATA)
 ----------------------------------------
-.. autofunction:: binance.spot.wallet.disable_fast_withdraw
+.. autofunction:: binance.spot.Spot.disable_fast_withdraw
 
 Enable Fast Withdraw Switch (USER_DATA)
 ---------------------------------------
-.. autofunction:: binance.spot.wallet.enable_fast_withdraw
+.. autofunction:: binance.spot.Spot.enable_fast_withdraw
 
 Withdraw (USER_DATA)
 --------------------
-.. autofunction:: binance.spot.wallet.withdraw
+.. autofunction:: binance.spot.Spot.withdraw
 
 Deposit History（supporting network） (USER_DATA)
 -------------------------------------------------
-.. autofunction:: binance.spot.wallet.deposit_history
+.. autofunction:: binance.spot.Spot.deposit_history
 
 Withdraw History (supporting network) (USER_DATA)
 -------------------------------------------------
-.. autofunction:: binance.spot.wallet.withdraw_history
+.. autofunction:: binance.spot.Spot.withdraw_history
 
 Deposit Address (supporting network) (USER_DATA)
 ------------------------------------------------
-.. autofunction:: binance.spot.wallet.deposit_address
+.. autofunction:: binance.spot.Spot.deposit_address
 
 Account Status (USER_DATA)
 --------------------------
-.. autofunction:: binance.spot.wallet.account_status
+.. autofunction:: binance.spot.Spot.account_status
 
 Account API Trading Status (USER_DATA)
 --------------------------------------
-.. autofunction:: binance.spot.wallet.api_trading_status
+.. autofunction:: binance.spot.Spot.api_trading_status
 
 DustLog (USER_DATA)
 -------------------
-.. autofunction:: binance.spot.wallet.dust_log
+.. autofunction:: binance.spot.Spot.dust_log
 
 User Universal Transfer
 -----------------------
-.. autofunction:: binance.spot.wallet.user_universal_transfer
+.. autofunction:: binance.spot.Spot.user_universal_transfer
 
 Query User Universal Transfer History
 -------------------------------------
-.. autofunction:: binance.spot.wallet.user_universal_transfer_history
+.. autofunction:: binance.spot.Spot.user_universal_transfer_history
 
 Dust Transfer (USER_DATA)
 -------------------------
-.. autofunction:: binance.spot.wallet.transfer_dust
+.. autofunction:: binance.spot.Spot.transfer_dust
 
 Asset Dividend Record (USER_DATA)
 ---------------------------------
-.. autofunction:: binance.spot.wallet.asset_dividend_record
+.. autofunction:: binance.spot.Spot.asset_dividend_record
 
 Asset Detail (USER_DATA)
 ------------------------
-.. autofunction:: binance.spot.wallet.asset_detail
+.. autofunction:: binance.spot.Spot.asset_detail
 
 Trade Fee (USER_DATA)
 ---------------------
-.. autofunction:: binance.spot.wallet.trade_fee
+.. autofunction:: binance.spot.Spot.trade_fee
 
 Funding Wallet (USER_DATA)
 --------------------------
-.. autofunction:: binance.spot.wallet.funding_wallet
+.. autofunction:: binance.spot.Spot.funding_wallet
 
 User Asset (USER_DATA)
 ----------------------
-.. autofunction:: binance.spot.wallet.user_asset
+.. autofunction:: binance.spot.Spot.user_asset
 
 API Key Permission (USER_DATA)
 ------------------------------
-.. autofunction:: binance.spot.wallet.api_key_permissions
+.. autofunction:: binance.spot.Spot.api_key_permissions
 
 Get Assets That Can Be Converted Into BNB (USER_DATA)
 -----------------------------------------------------
-.. autofunction:: binance.spot.wallet.bnb_convertible_assets
+.. autofunction:: binance.spot.Spot.bnb_convertible_assets
 
 Query auto-converting stable coins (USER_DATA)
 ----------------------------------------------
-.. autofunction:: binance.spot.wallet.convertible_coins
+.. autofunction:: binance.spot.Spot.convertible_coins
 
 Switch on/off BUSD and stable coins conversion (USER_DATA)
 ----------------------------------------------------------
-.. autofunction:: binance.spot.wallet.toggle_auto_convertion
+.. autofunction:: binance.spot.Spot.toggle_auto_convertion
 
 Get Cloud-Mining payment and refund history (USER_DATA)
 -------------------------------------------------------
-.. autofunction:: binance.spot.wallet.cloud_mining_trans_history
+.. autofunction:: binance.spot.Spot.cloud_mining_trans_history
 
 BUSD Convert (USER_DATA)
 ------------------------
-.. autofunction:: binance.spot.wallet.convert_transfer
+.. autofunction:: binance.spot.Spot.convert_transfer
 
 BUSD Convert History (USER_DATA)
 --------------------------------
-.. autofunction:: binance.spot.wallet.convert_history
+.. autofunction:: binance.spot.Spot.convert_history

@@ -12,6 +12,7 @@ This is a lightweight library that works as a connector to [Binance public API](
     - `/sapi/*`
     - Spot Websocket Market Stream
     - Spot User Data Stream
+    - Spot WebSocket API
 - Inclusion of test cases and examples
 - Customizable base URL, request timeout and HTTP proxy
 - Response metadata can be displayed
@@ -219,6 +220,65 @@ There are 2 types of error returned from the library:
 
 ## Websocket
 
+### Connector v3
+
+WebSocket can be established through either of the following types of connections:
+- WebSocket API (`https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md`)
+- WebSocket Stream (`https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md`)
+
+```python
+
+# WebSocket API Client
+from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+my_client = SpotWebsocketAPIClient(on_message=message_handler)
+
+my_client.ticker(symbol="BNBBUSD", type="FULL")
+
+time.sleep(5)
+logging.info("closing ws connection")
+my_client.stop()
+```
+
+```python
+
+# WebSocket Stream Client
+from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+my_client = SpotWebsocketStreamClient(on_message=message_handler)
+
+# Subscribe to a single symbol stream
+my_client.agg_trade(symbol="bnbusdt")
+time.sleep(5)
+logging.info("closing ws connection")
+my_client.stop()
+```
+
+#### Request Id
+
+Client can assign a request id to each request. The request id will be returned in the response message. Not mandatory in the library, it generates a uuid format string if not provided.
+
+```python
+# id provided by client
+my_client.ping_connectivity(id="my_request_id")
+
+# library will generate a random uuid string
+my_client.ping_connectivity()
+```
+
+More websocket examples are available in the `examples` folder.
+
+Example file "examples/websocket_api/app_demo.py" demonstrates how Websocket API and Websocket Stream can be used together.
+
+
+### Connector v1 and v2
+
 ```python
 from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
 
@@ -242,7 +302,6 @@ ws_client.instant_subscribe(
 
 ws_client.stop()
 ```
-More websocket examples are available in the `examples` folder
 
 ### Heartbeat
 

@@ -3,64 +3,64 @@ Crypto Loans Endpoints
 
 Get Crypto Loans Income History (USER_DATA)
 -------------------------------------------
-.. autofunction:: binance.spot.loan.loan_history
+.. autofunction:: binance.spot.Spot.loan_history
 
 Crypto Loan Borrow (TRADE)
 --------------------------
-.. autofunction:: binance.spot.loan.loan_borrow
+.. autofunction:: binance.spot.Spot.loan_borrow
 
 Get Loan Borrow History (USER_DATA)
 -----------------------------------
-.. autofunction:: binance.spot.loan.loan_borrow_history
+.. autofunction:: binance.spot.Spot.loan_borrow_history
 
 Get Loan Ongoing Orders (USER_DATA)
 -----------------------------------
-.. autofunction:: binance.spot.loan.loan_ongoing_orders
+.. autofunction:: binance.spot.Spot.loan_ongoing_orders
 
 Crypto Loan Repay (TRADE)
 -------------------------
-.. autofunction:: binance.spot.loan.loan_repay
+.. autofunction:: binance.spot.Spot.loan_repay
 
 Get Loan Repayment History (USER_DATA)
 --------------------------------------
-.. autofunction:: binance.spot.loan.loan_repay_history
+.. autofunction:: binance.spot.Spot.loan_repay_history
 
 Crypto Loan Adjust LTV (TRADE)
 ------------------------------
-.. autofunction:: binance.spot.loan.loan_adjust_ltv
+.. autofunction:: binance.spot.Spot.loan_adjust_ltv
 
 Get Loan LTV Adjustment History (USER_DATA)
 -------------------------------------------
-.. autofunction:: binance.spot.loan.loan_adjust_ltv_history
+.. autofunction:: binance.spot.Spot.loan_adjust_ltv_history
 
 Get VIP Loan Ongoing Orders (USER_DATA)
 ---------------------------------------
-.. autofunction:: binance.spot.loan.loan_vip_ongoing_orders
+.. autofunction:: binance.spot.Spot.loan_vip_ongoing_orders
 
 VIP Loan Repay (TRADE)
 ----------------------
-.. autofunction:: binance.spot.loan.loan_vip_repay
+.. autofunction:: binance.spot.Spot.loan_vip_repay
 
 Get VIP Loan Repayment History (USER_DATA)
 ------------------------------------------
-.. autofunction:: binance.spot.loan.loan_vip_repay_history
+.. autofunction:: binance.spot.Spot.loan_vip_repay_history
 
 Check Locked Value of VIP Collateral Account (USER_DATA)
 --------------------------------------------------------
-.. autofunction:: binance.spot.loan.loan_vip_collateral_account
+.. autofunction:: binance.spot.Spot.loan_vip_collateral_account
 
 Get Loanable Assets Data (USER_DATA)
 ------------------------------------
-.. autofunction:: binance.spot.loan.loan_loanable_data
+.. autofunction:: binance.spot.Spot.loan_loanable_data
 
 Get Collateral Assets Data (USER_DATA)
 --------------------------------------
-.. autofunction:: binance.spot.loan.loan_collateral_data
+.. autofunction:: binance.spot.Spot.loan_collateral_data
 
 Check Collateral Repay Rate (USER_DATA)
 ---------------------------------------
-.. autofunction:: binance.spot.loan.loan_collateral_rate
+.. autofunction:: binance.spot.Spot.loan_collateral_rate
 
 Customize margin call for ongoing orders only. (USER_DATA)
 ----------------------------------------------------------
-.. autofunction:: binance.spot.loan.loan_customize_margin_call
+.. autofunction:: binance.spot.Spot.loan_customize_margin_call

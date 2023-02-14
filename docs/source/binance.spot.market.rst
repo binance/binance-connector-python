@@ -3,56 +3,56 @@ Market Endpoints
 
 Test Connectivity
 -----------------
-.. autofunction:: binance.spot.market.ping
+.. autofunction:: binance.spot.Spot.ping
 
 Check Server Time
 -----------------
-.. autofunction:: binance.spot.market.time
+.. autofunction:: binance.spot.Spot.time
 
 Exchange Information
 --------------------
-.. autofunction:: binance.spot.market.exchange_info
+.. autofunction:: binance.spot.Spot.exchange_info
 
 Get orderbook
 -------------
-.. autofunction:: binance.spot.market.depth
+.. autofunction:: binance.spot.Spot.depth
 
 Recent Trades List
 ------------------
-.. autofunction:: binance.spot.market.trades
+.. autofunction:: binance.spot.Spot.trades
 
 Old Trade Lookup
 ----------------
-.. autofunction:: binance.spot.market.historical_trades
+.. autofunction:: binance.spot.Spot.historical_trades
 
 Compressed/Aggregate Trades List
 --------------------------------
-.. autofunction:: binance.spot.market.agg_trades
+.. autofunction:: binance.spot.Spot.agg_trades
 
 Kline/Candlestick Data
 ----------------------
-.. autofunction:: binance.spot.market.klines
+.. autofunction:: binance.spot.Spot.klines
 
 UIKlines
 --------
-.. autofunction:: binance.spot.market.ui_klines
+.. autofunction:: binance.spot.Spot.ui_klines
 
 Current Average Price
 ---------------------
-.. autofunction:: binance.spot.market.avg_price
+.. autofunction:: binance.spot.Spot.avg_price
 
 24hr Ticker Price Change Statistics
 -----------------------------------
-.. autofunction:: binance.spot.market.ticker_24hr
+.. autofunction:: binance.spot.Spot.ticker_24hr
 
 Symbol Price Ticker
 -------------------
-.. autofunction:: binance.spot.market.ticker_price
+.. autofunction:: binance.spot.Spot.ticker_price
 
 Symbol Order Book Ticker
 ------------------------
-.. autofunction:: binance.spot.market.book_ticker
+.. autofunction:: binance.spot.Spot.book_ticker
 
 Rolling window price change statistics
 --------------------------------------
-.. autofunction:: binance.spot.market.rolling_window_ticker
+.. autofunction:: binance.spot.Spot.rolling_window_ticker

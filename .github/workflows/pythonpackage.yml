@@ -43,7 +43,7 @@ jobs:
         flake8 . --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest tests/
     - name: Test document build
       run: |
         python -m pip install sphinx sphinx-rtd-theme

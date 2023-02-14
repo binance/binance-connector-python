@@ -1,83 +1,104 @@
-import json
 import logging
 import threading
-from urllib.parse import urlparse
-from twisted.internet import reactor, ssl
-from twisted.internet.error import ReactorAlreadyRunning
-from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
-from binance.websocket.binance_client_protocol import BinanceClientProtocol
-from binance.websocket.binance_client_factory import BinanceClientFactory
+from websocket import (
+    ABNF,
+    create_connection,
+    WebSocketException,
+    WebSocketConnectionClosedException,
+)
 
 
 class BinanceSocketManager(threading.Thread):
-    def __init__(self, stream_url):
-        threading.Thread.__init__(self)
-
-        self.factories = {}
-        self._connected_event = threading.Event()
-        self.stream_url = stream_url
-        self._conns = {}
-        self._user_callback = None
-        self._logger = logging.getLogger(__name__)
-
-    def _start_socket(
-        self, stream_name, payload, callback, is_combined=False, is_live=True
+    def __init__(
+        self,
+        stream_url,
+        on_message=None,
+        on_open=None,
+        on_close=None,
+        on_error=None,
+        on_ping=None,
+        on_pong=None,
+        logger=None,
     ):
-        if stream_name in self._conns:
-            return False
+        threading.Thread.__init__(self)
+        if not logger:
+            logger = logging.getLogger(__name__)
+        self.logger = logger
+        self.stream_url = stream_url
+        self.on_message = on_message
+        self.on_open = on_open
+        self.on_close = on_close
+        self.on_ping = on_ping
+        self.on_pong = on_pong
+        self.on_error = on_error
+        self.create_ws_connection()
 
-        if is_combined:
-            factory_url = self.stream_url + "/stream"
-        else:
-            factory_url = self.stream_url + "/ws"
-
-        if not is_live:
-            payload_obj = json.loads(payload.decode("utf8"))
-
-            if is_combined:
-                factory_url = factory_url + "?streams=" + payload_obj["params"]
-            else:
-                factory_url = factory_url + "/" + payload_obj["params"]
-            payload = None
-
-        self._logger.info("Connection with URL: {}".format(factory_url))
-
-        factory = BinanceClientFactory(factory_url, payload=payload)
-        factory.base_client = self
-        factory.protocol = BinanceClientProtocol
-        factory.setProtocolOptions(
-            openHandshakeTimeout=5, autoPingInterval=300, autoPingTimeout=5
+    def create_ws_connection(self):
+        self.logger.debug(
+            "Creating connection with WebSocket Server: %s", self.stream_url
         )
-        factory.callback = callback
-        self.factories[stream_name] = factory
-        reactor.callFromThread(self.add_connection, stream_name, self.stream_url)
-
-    def add_connection(self, stream_name, url):
-        if not url.startswith("wss://"):
-            raise ValueError("expected wss:// URL prefix")
-
-        factory = self.factories[stream_name]
-        options = ssl.optionsForClientTLS(hostname=urlparse(url).hostname)
-        self._conns[stream_name] = connectWS(factory, options)
-
-    def stop_socket(self, conn_key):
-        if conn_key not in self._conns:
-            return
-
-        # disable reconnecting if we are closing
-        self._conns[conn_key].factory = WebSocketClientFactory(self.stream_url)
-        self._conns[conn_key].disconnect()
-        del self._conns[conn_key]
+        self.ws = create_connection(self.stream_url)
+        self.logger.debug(
+            "WebSocket connection has been established: %s", self.stream_url
+        )
+        self._callback(self.on_open)
 
     def run(self):
-        try:
-            reactor.run(installSignalHandlers=False)
-        except ReactorAlreadyRunning:
-            # Ignore error about reactor already running
-            pass
+        self.read_data()
+
+    def send_message(self, message):
+        self.logger.debug("Sending message to Binance WebSocket Server: %s", message)
+        self.ws.send(message)
+
+    def ping(self):
+        self.ws.ping()
+
+    def read_data(self):
+        data = ""
+        while True:
+            try:
+                op_code, frame = self.ws.recv_data_frame(True)
+            except WebSocketException as e:
+                if isinstance(e, WebSocketConnectionClosedException):
+                    self.logger.error("Lost websocket connection")
+                else:
+                    self.logger.error("Websocket exception: {}".format(e))
+                raise e
+            except Exception as e:
+                self.logger.error("Exception in read_data: {}".format(e))
+                raise e
+
+            if op_code == ABNF.OPCODE_CLOSE:
+                self.logger.warning(
+                    "CLOSE frame received, closing websocket connection"
+                )
+                self._callback(self.on_close)
+                break
+            elif op_code == ABNF.OPCODE_PING:
+                self._callback(self.on_ping, frame.data)
+                self.ws.pong("")
+                self.logger.debug("Received Ping; PONG frame sent back")
+            elif op_code == ABNF.OPCODE_PONG:
+                self.logger.debug("Received PONG frame")
+                self._callback(self.on_pong)
+            else:
+                data = frame.data
+                if op_code == ABNF.OPCODE_TEXT:
+                    data = data.decode("utf-8")
+                self._callback(self.on_message, data)
 
     def close(self):
-        keys = set(self._conns.keys())
-        for key in keys:
-            self.stop_socket(key)
-        self._conns = {}
+        if not self.ws.connected:
+            self.logger.warn("Websocket already closed")
+        else:
+            self.ws.send_close()
+        return
+
+    def _callback(self, callback, *args):
+        if callback:
+            try:
+                callback(self, *args)
+            except Exception as e:
+                self.logger.error("Error from callback {}: {}".format(callback, e))
+                if self.on_error:
+                    self.on_error(self, e)
