@@ -33,14 +33,13 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
-        self.timeout = timeout
-        self.create_ws_connection()
+        self.create_ws_connection(timeout)
 
-    def create_ws_connection(self):
+    def create_ws_connection(self, timeout):
         self.logger.debug(
             "Creating connection with WebSocket Server: %s", self.stream_url
         )
-        self.ws = create_connection(self.stream_url, timeout=self.timeout)
+        self.ws = create_connection(self.stream_url, timeout=timeout)
         self.logger.debug(
             "WebSocket connection has been established: %s", self.stream_url
         )
