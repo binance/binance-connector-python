@@ -5,6 +5,7 @@ from websocket import (
     create_connection,
     WebSocketException,
     WebSocketConnectionClosedException,
+    WebSocketTimeoutException,
 )
 
 
@@ -19,6 +20,7 @@ class BinanceSocketManager(threading.Thread):
         on_ping=None,
         on_pong=None,
         logger=None,
+        timeout=5,
     ):
         threading.Thread.__init__(self)
         if not logger:
@@ -31,13 +33,14 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
+        self.timeout = timeout
         self.create_ws_connection()
 
     def create_ws_connection(self):
         self.logger.debug(
             "Creating connection with WebSocket Server: %s", self.stream_url
         )
-        self.ws = create_connection(self.stream_url)
+        self.ws = create_connection(self.stream_url, timeout=self.timeout)
         self.logger.debug(
             "WebSocket connection has been established: %s", self.stream_url
         )
@@ -61,6 +64,11 @@ class BinanceSocketManager(threading.Thread):
             except WebSocketException as e:
                 if isinstance(e, WebSocketConnectionClosedException):
                     self.logger.error("Lost websocket connection")
+                elif isinstance(e, WebSocketTimeoutException):
+                    self.logger.error("Websocket connection timeout")
+                    if self.on_error:
+                        self.on_error(self, e)
+                        return
                 else:
                     self.logger.error("Websocket exception: {}".format(e))
                 raise e
