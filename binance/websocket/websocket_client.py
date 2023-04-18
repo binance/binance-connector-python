@@ -14,6 +14,7 @@ class BinanceWebsocketClient:
         on_error=None,
         on_ping=None,
         on_pong=None,
+        on_websocket_error=None,
         logger=None,
         timeout=5,
     ):
@@ -28,6 +29,7 @@ class BinanceWebsocketClient:
             on_error,
             on_ping,
             on_pong,
+            on_websocket_error,
             logger,
             timeout,
         )
@@ -45,6 +47,7 @@ class BinanceWebsocketClient:
         on_error,
         on_ping,
         on_pong,
+        on_websocket_error,
         logger,
         timeout,
     ):
@@ -56,6 +59,7 @@ class BinanceWebsocketClient:
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            on_websocket_error=on_websocket_error,
             logger=logger,
             timeout=timeout,
         )

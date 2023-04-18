@@ -19,6 +19,7 @@ class BinanceSocketManager(threading.Thread):
         on_error=None,
         on_ping=None,
         on_pong=None,
+        on_websocket_error=None,
         logger=None,
         timeout=5,
     ):
@@ -33,6 +34,7 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
+        self.on_websocket_error = on_websocket_error
         self.create_ws_connection(timeout)
 
     def create_ws_connection(self, timeout):
@@ -65,12 +67,13 @@ class BinanceSocketManager(threading.Thread):
                     self.logger.error("Lost websocket connection")
                 elif isinstance(e, WebSocketTimeoutException):
                     self.logger.error("Websocket connection timeout")
-                    if self.on_error:
-                        self.on_error(self, e)
-                        return
                 else:
                     self.logger.error("Websocket exception: {}".format(e))
-                raise e
+                if self.on_websocket_error:
+                    self.on_websocket_error(self, e)
+                    return
+                else:
+                    raise e
             except Exception as e:
                 self.logger.error("Exception in read_data: {}".format(e))
                 raise e
