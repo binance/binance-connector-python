@@ -14,9 +14,9 @@ spot_client = Client(api_key, api_secret)
 logger = logging.getLogger(__name__)
 
 logger.info(
-    spot_client.sub_account_api_toggle_ip_restriction(
+    spot_client.sub_account_update_ip_restriction(
         email="alice@test.com",
         subAccountApiKey="sub_account_api_key",
-        ipRestrict=True,
+        status="1",
     )
 )

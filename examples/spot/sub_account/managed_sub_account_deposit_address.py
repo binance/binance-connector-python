@@ -10,13 +10,6 @@ config_logging(logging, logging.DEBUG)
 api_key, api_secret = get_api_key()
 
 spot_client = Client(api_key, api_secret)
-
-logger = logging.getLogger(__name__)
-
-logger.info(
-    spot_client.sub_account_api_add_ip(
-        email="alice@test.com",
-        subAccountApiKey="sub_account_api_key",
-        ipAddress="1.2.3.4",
-    )
+logging.info(
+    spot_client.managed_sub_account_deposit_address(email="alice@test.com", coin="BTC")
 )

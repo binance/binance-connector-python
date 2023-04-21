@@ -113,13 +113,9 @@ Withdrawl assets from the managed sub-account (For Investor Master Account)
 ---------------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.managed_sub_account_withdraw
 
-Enable or Disable IP Restriction for a Sub-account API Key (For Master Account)
--------------------------------------------------------------------------------
-.. autofunction:: binance.spot.Spot.sub_account_api_toggle_ip_restriction
-
-Add IP List for a Sub-account API Key (For Master Account)
-----------------------------------------------------------
-.. autofunction:: binance.spot.Spot.sub_account_api_add_ip
+Update IP Restriction for Sub-Account API key (For Master Account)
+------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.sub_account_update_ip_restriction
 
 Get IP Restriction for a Sub-account API Key (For Master Account)
 -----------------------------------------------------------------
@@ -140,3 +136,7 @@ Query Managed Sub Account Transfer Log (Investor) (USER_DATA)
 Query Managed Sub Account Transfer Log (Trading Team) (USER_DATA)
 -----------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.managed_sub_account_trading_trans_log
+
+Get Managed Sub-account Deposit Address (For Investor Master Account) (USER_DATA)
+---------------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.managed_sub_account_deposit_address
