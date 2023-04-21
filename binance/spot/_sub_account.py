@@ -674,21 +674,21 @@ def managed_sub_account_withdraw(
     )
 
 
-def sub_account_api_toggle_ip_restriction(
-    self, email: str, subAccountApiKey: str, ipRestrict: bool, **kwargs
+def sub_account_update_ip_restriction(
+    self, email: str, subAccountApiKey: str, status: str, **kwargs
 ):
-    """Enable or Disable IP Restriction for a Sub-account API Key (For Master Account)
+    """Update IP Restriction for Sub-Account API key (For Master Account)
 
-    POST /sapi/v1/sub-account/subAccountApi/ipRestriction
+    POST /sapi/v2/sub-account/subAccountApi/ipRestriction
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-or-disable-ip-restriction-for-a-sub-account-api-key-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#update-ip-restriction-for-sub-account-api-key-for-master-account
 
     Args:
         email (str): Sub-account email
         subAccountApiKey (str)
-        ipRestrict (bool): True or False
+        status (str) : IP Restriction status. 1 = IP Unrestricted. 2 = Restrict access to trusted IPs only.
     Keyword Args:
-        thirdParty (bool, optional): False by default
+        ipAddress (str, optional): Can be added in batches, separated by commas
         recvWindow (int, optional)
     """
 
@@ -696,57 +696,18 @@ def sub_account_api_toggle_ip_restriction(
         [
             [email, "email"],
             [subAccountApiKey, "subAccountApiKey"],
-            [ipRestrict, "ipRestrict"],
+            [status, "status"],
         ]
     )
     payload = {
         "email": email,
         "subAccountApiKey": subAccountApiKey,
-        "ipRestrict": ipRestrict,
+        "status": status,
         **kwargs,
     }
 
     return self.limited_encoded_sign_request(
-        "POST", "/sapi/v1/sub-account/subAccountApi/ipRestriction", payload
-    )
-
-
-def sub_account_api_add_ip(
-    self, email: str, subAccountApiKey: str, ipAddress: str, **kwargs
-):
-    """Add IP List for a Sub-account API Key (For Master Account)
-
-    Before the usage of this endpoint, please ensure POST /sapi/v1/sub-account/subAccountApi/ipRestriction was used to enable the IP restriction.
-
-    POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList
-
-    https://binance-docs.github.io/apidocs/spot/en/#add-ip-list-for-a-sub-account-api-key-for-master-account
-
-    Args:
-        email (str): Sub-account email
-        subAccountApiKey (str)
-        ipAddress (str): Can be added in batches, separated by commas
-    Keyword Args:
-        thirdPartyName (str, optional)
-        recvWindow (int, optional)
-    """
-
-    check_required_parameters(
-        [
-            [email, "email"],
-            [subAccountApiKey, "subAccountApiKey"],
-            [ipAddress, "ipAddress"],
-        ]
-    )
-    payload = {
-        "email": email,
-        "subAccountApiKey": subAccountApiKey,
-        "ipAddress": ipAddress,
-        **kwargs,
-    }
-
-    return self.limited_encoded_sign_request(
-        "POST", "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", payload
+        "POST", "/sapi/v2/sub-account/subAccountApi/ipRestriction", payload
     )
 
 
@@ -933,4 +894,36 @@ def managed_sub_account_trading_trans_log(
 
     return self.limited_encoded_sign_request(
         "GET", "/sapi/v1/managed-subaccount/queryTransLogForTradeParent", payload
+    )
+
+
+def managed_sub_account_deposit_address(self, email: str, coin: str, **kwargs):
+    """Get Managed Sub-account Deposit Address (For Investor Master Account) (USER_DATA)
+
+    GET /sapi/v1/managed-subaccount/deposit/address (HMAC SHA256)
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-managed-sub-account-deposit-address-for-investor-master-account-user_data
+
+    Args:
+        email (str): email
+        coin (str): coin
+    Keyword Args:
+        network (str, optional)
+        recvWindow (int, optional)
+    """
+
+    check_required_parameters(
+        [
+            [email, "email"],
+            [coin, "coin"],
+        ]
+    )
+    payload = {
+        "email": email,
+        "coin": coin,
+        **kwargs,
+    }
+
+    return self.limited_encoded_sign_request(
+        "GET", "/sapi/v1/managed-subaccount/deposit/address", payload
     )

@@ -2,6 +2,22 @@
 Changelog
 =========
 
+3.0.0rc2 - 2023-04-21
+---------------------
+
+Removed
+^^^^^^^
+
+* Removed endpoint ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList``
+* Removed endpoint ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction``
+
+Added
+^^^^^
+
+* ``POST /sapi/v2/sub-account/subAccountApi/ipRestriction``
+* ``GET /sapi/v1/managed-subaccount/deposit/address``
+
+
 3.0.0rc1 - 2023-02-10
 ---------------------
 

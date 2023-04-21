@@ -197,13 +197,13 @@ class Spot(API):
     from binance.spot._sub_account import managed_sub_account_deposit
     from binance.spot._sub_account import managed_sub_account_assets
     from binance.spot._sub_account import managed_sub_account_withdraw
-    from binance.spot._sub_account import sub_account_api_toggle_ip_restriction
-    from binance.spot._sub_account import sub_account_api_add_ip
+    from binance.spot._sub_account import sub_account_update_ip_restriction
     from binance.spot._sub_account import sub_account_api_get_ip_restriction
     from binance.spot._sub_account import sub_account_api_delete_ip
     from binance.spot._sub_account import managed_sub_account_get_snapshot
     from binance.spot._sub_account import managed_sub_account_investor_trans_log
     from binance.spot._sub_account import managed_sub_account_trading_trans_log
+    from binance.spot._sub_account import managed_sub_account_deposit_address
 
     # FUTURES
     from binance.spot._futures import futures_transfer
