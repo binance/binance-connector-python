@@ -688,7 +688,7 @@ def sub_account_update_ip_restriction(
         subAccountApiKey (str)
         status (str) : IP Restriction status. 1 = IP Unrestricted. 2 = Restrict access to trusted IPs only.
     Keyword Args:
-        ipAddress (str): Can be added in batches, separated by commas
+        ipAddress (str, optional): Can be added in batches, separated by commas
         recvWindow (int, optional)
     """
 
