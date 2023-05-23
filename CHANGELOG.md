@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0 - 2023-05-23
+
+### Changed
+- Modified format of combined streams in Websocket Market Streams. Please refer to `examples/websocket/websocket_stream/combined_streams.py` for example implementation.
+
+### Removed
+- Discontinued official support for Python 3.6
+
 ## 3.0.0rc2 - 2023-04-21
 
 ### Removed
