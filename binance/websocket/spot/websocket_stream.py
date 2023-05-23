@@ -2,9 +2,6 @@ from binance.websocket.websocket_client import BinanceWebsocketClient
 
 
 class SpotWebsocketStreamClient(BinanceWebsocketClient):
-    ACTION_SUBSCRIBE = "SUBSCRIBE"
-    ACTION_UNSUBSCRIBE = "UNSUBSCRIBE"
-
     def __init__(
         self,
         stream_url="wss://stream.binance.com:9443",

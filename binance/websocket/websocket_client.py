@@ -5,6 +5,9 @@ from binance.websocket.binance_socket_manager import BinanceSocketManager
 
 
 class BinanceWebsocketClient:
+    ACTION_SUBSCRIBE = "SUBSCRIBE"
+    ACTION_UNSUBSCRIBE = "UNSUBSCRIBE"
+
     def __init__(
         self,
         stream_url,
@@ -56,6 +59,14 @@ class BinanceWebsocketClient:
             logger=logger,
         )
 
+    def _single_stream(self, stream):
+        if isinstance(stream, str):
+            return True
+        elif isinstance(stream, list):
+            return False
+        else:
+            raise ValueError("Invalid stream name, expect string or array")
+
     def send(self, message: dict):
         self.socket_manager.send_message(json.dumps(message))
 
@@ -75,17 +86,13 @@ class BinanceWebsocketClient:
         json_msg = json.dumps({"method": "SUBSCRIBE", "params": stream, "id": id})
         self.socket_manager.send_message(json_msg)
 
-    def unsubscribe(self, stream: str, id=None):
+    def unsubscribe(self, stream, id=None):
         if not id:
             id = get_timestamp()
-
-        if not self._single_stream(stream):
-            raise ValueError("Invalid stream name, expect a string")
-
-        stream = [stream]
-        self.socket_manager.send_message(
-            json.dumps({"method": "UNSUBSCRIBE", "params": stream, "id": id})
-        )
+        if self._single_stream(stream):
+            stream = [stream]
+        json_msg = json.dumps({"method": "UNSUBSCRIBE", "params": stream, "id": id})
+        self.socket_manager.send_message(json_msg)
 
     def ping(self):
         self.logger.debug("Sending ping to Binance WebSocket Server")
@@ -107,11 +114,3 @@ class BinanceWebsocketClient:
         self.socket_manager.send_message(
             json.dumps({"method": "LIST_SUBSCRIPTIONS", "id": id})
         )
-
-    def _single_stream(self, stream):
-        if isinstance(stream, str):
-            return True
-        elif isinstance(stream, list):
-            return False
-        else:
-            raise ValueError("Invalid stream name, expect string or array")
