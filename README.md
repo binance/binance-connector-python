@@ -272,10 +272,13 @@ my_client.ping_connectivity(id="my_request_id")
 my_client.ping_connectivity()
 ```
 
+#### Combined Streams
+- If you set `is_combined` to `True`, `"/stream/"` will be appended to the `baseURL` to allow for Combining streams.
+- `is_combined` defaults to `False` and `"/ws/"` (raw streams) will be appended to the `baseURL`.
+
 More websocket examples are available in the `examples` folder.
 
 Example file "examples/websocket_api/app_demo.py" demonstrates how Websocket API and Websocket Stream can be used together.
-
 
 ### Connector v1 and v2
 
