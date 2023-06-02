@@ -1,4 +1,5 @@
-from binance.lib.authentication import hmac_hashing, rsa_signature
+from binance.lib.authentication import hmac_hashing, rsa_signature, ed25519_signature
+import pytest
 
 
 def test_hamc_hashing():
@@ -81,3 +82,63 @@ qoOMy1yIoV7uYL+c4zugjzpgy58iBAiR1IVectxQY9lx1+d9tfjwK2Ne96hdzlLO
         "utf-8"
     )
     sign.should.equal(expected_signature)
+
+
+def test_invalid_rsa_secret_key():
+    invalid_rsa_secret_key = """-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIE6TAbBgkqhkiG9w0BBQMwDgQIeaAsdasdlju9u21u381273872138ydJMt/f5woCAggABIIEyI2jIbFTPo/YBmwH
+N1QqzFgnMK5LJ0pKY5O71Z8EZIBVrXtEdcFzswbwRZajMpMyxFBjhrd2Y4kQvt9K
+aQfwyJFQxs8L2hC1GRYf5ba6aNZHkWendNFvOET02UQwgDNdGdWCfcaoMCap0ZQ2
+7VOyqbwtuRkM2LNlrtbu282FbwXe4wKljSNUIXTU3UaCmjOq5KIwBoRKJYlwn0qt
+IzlyJKVurHX4cl/1mw55Qs+hRL1CdK/iYF5yqclbK96zq16SKZsaZZhHMf1oub4U
+v5QjJiiQZc+WONFpBi2TybQ1qXF/6+70lDofY3+moUVcPgFHVsKEVQJtYuRZoGoc
+QlXyyCRTyCIQSO41jhkRcJtjCpVCfvCwlob0cM59Hlfll9DdjKyAtaUsuA+cDMqd
+ZE8HSjBGXuSwWthHSfblZ84LReHufmiIYGO3+n0dyjdLKcakYJ5V4QwxN2y4CwE7
+TxszcZo7QYDRaWlz7Lx2gtXlS6UNhs5Ylt7lm/omkdg57zf9DO9P8Vhn0thXs5Ql
+7QIUzhhg0kgnagwmy682AkV+O6F1wWw8qV0uUxABvo9VNuUF8aYBFr9iJn1fUg8Y
+kjCXKns/S9l6Zhz3rSgjFzNdWmm+1TigjyqaVgK9Jdte/v9IG46R3q/rQDMSqIFn
+zO25DfwOr8GvSgxN4Ervy/IwqoC94ptFCLfTJdL2n7IRWX9B+ai2RVSnBEXti4BR
+nigKUkVR7+ynwA8KN5sf6Zc0apHIuylXnu4xeO0rehxhh920v05IjAPm9YIOP33/
+UkHZWtXe2MooV4jmSiWMfAAgL8J26vML2xeGjhFZNQPM1/C3TB+UBxvKbD47EO6k
+FgoVmpFZGTXbF1Rq9hyUpABOSDhPyVuQxW+Tmyjm8O0Oc7KABUP09DKneiNFFtO9
+/B2u7FZ2ArfUzHesEJLWU+CtYVPdpbvtmd054tMV53j3cga2SQmg/yYWOQ7LyMjo
+7FR04aBTq+BXGgU/fZryyHUb1fULy7YTCiMyvi2m+JrZ+TE7DSvbDiJVcZ52x++J
+UpmID04q3wSRrOjci3yXUBvSa1yqxH8F5j3tv/nVM8x2s8ZLEgOHARS0CHZ6KRGD
+TP3KqsOPoKognk712zbqJPWhx9HdAm9+B/5qWtUEOoeFXlzyzj0suVICg9rPNJm1
+zx+STX5zTQ9oPNj6MFgZPSzIoW5Wb6vEdu7ANoANuStMp3E2sQf7q0gY5UkfnYyj
+beTf+1t3k9ybAVZiT6yZ7T5KGeh040zSN2vpVKEEWzkGrL4wGs+aMpvtBEnVJYLl
+medTIY6Z2PM/GFd8Ky8I+uTazXfvZUdilYCyZeIoO6Hyomy7TrnCzc/vjkhWtQrW
++Pu5GjcGziUXNpzHNS+7uIOOa4f6VpGB8m5QsGUT7nPvVQqvta5fgJ8+W9J5Ifp5
+JqlyEAC7b7PFP9Rz65Do9AsbUbDStKMHl5CR/+CeOnzgfgeHCA8EroQ6WxMHFXec
+GSsZ7VWSSlgOyIEcNMhiM9PKAbx65TbUcvb+KWAI5aUwmdjrKFqOKDloX+2fn9y8
+qoOMy1yIoV7uYL+c4zugjzpgy58iBAiR1IVectxQY9lx1+d9tfjwK2Ne96hdzlLO
+/zJyaPr5pCU/IAr6Rg==
+---23123--END ENCRYPTED PRIVATE KEY-----"""
+    payload = "symbol=LTCBTC&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=0.1&recvWindow=5000&timestamp=1499827319559"
+    with pytest.raises(ValueError):
+        rsa_signature(
+            invalid_rsa_secret_key, payload, private_key_pass="password"
+        ).decode("utf-8")
+
+
+def test_ed25519_signature():
+    ed25519_secret_key = """-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK2VwBCIEIE4rJ0goma1nbu1d8T1dp//0pe40jnf8tghwRhsSY4Bk
+-----END PRIVATE KEY-----"""
+    payload = "type=SPOT&timestamp=1685686334211"
+    expected_signature = "E4nWIl3yUJgJFL6LoWImsrEwNegMiN9SN1FWKw+P3xXkJ2T/MtSq3Cg7fVnOGFWxTBX6vrTJJNoZnVtAgs1CAQ=="
+    sign = ed25519_signature(ed25519_secret_key, payload, private_key_pass=None).decode(
+        "utf-8"
+    )
+    sign.should.equal(expected_signature)
+
+
+def test_ed25519_signature_invalid_format():
+    invalid_ed25519_secret_key = """-----BEGIN PRIVATE KEY-----
+MC4CAQAwBQYDK231297dsah3167bjsfdaVwBCIEIE4rJ0goma1nbu1d8T1dp//0pe40jnf8tghwRhsSY4Bk
+--123321---END PRIVATE KEY-----"""
+    payload = "type=SPOT&timestamp=1685686334211"
+    with pytest.raises(ValueError):
+        ed25519_signature(
+            invalid_ed25519_secret_key, payload, private_key_pass=None
+        ).decode("utf-8")

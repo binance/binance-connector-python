@@ -73,7 +73,7 @@ Please find `examples` folder to check for more endpoints.
 
 ### Authentication
 
-Binance supports HMAC and RSA API authentication.
+Binance supports HMAC, RSA and ED25519 API authentication.
 
 ```python
 
@@ -85,12 +85,22 @@ print(client.account())
 client = Client(api_key=api_key, private_key=private_key)
 print(client.account())
 
+# ED25519 Keys
+api_key = ""
+private_key = "./private_key.pem"
+private_key_pass = "<password_if_applicable>"
+
+with open(private_key, 'rb') as f:
+    private_key = f.read()
+
+spot_client = Client(api_key=api_key, private_key=private_key, private_key_pass=private_key_pass)
+
 # Encrypted RSA Key
 client = Client(api_key=api_key, private_key=private_key, private_key_pass='password')
 print(client.account())
 ```
-
-Please find `examples/spot/trade/get_account.py` for more details.
+Please find `examples/spot/wallet/account_snapshot.py` for more details on ED25519.
+Please find `examples/spot/trade/get_account.py` for more details on RSA.
 
 ### Testnet
 
