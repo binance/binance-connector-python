@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0 - 2023-06-01
+
+### Added
+- Add support for use of ED25519 Key to generate signatures
+
 ## 3.0.0 - 2023-05-23
 
 ### Changed
