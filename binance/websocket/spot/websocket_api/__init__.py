@@ -13,6 +13,10 @@ class SpotWebsocketAPIClient(BinanceWebsocketClient):
         on_error=None,
         on_ping=None,
         on_pong=None,
+        http_proxy_host=None,
+        http_proxy_port=None,
+        proxy_type=None,
+        http_proxy_auth=None,
     ):
         self.api_key = api_key
         self.api_secret = api_secret
@@ -25,6 +29,10 @@ class SpotWebsocketAPIClient(BinanceWebsocketClient):
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            http_proxy_host=http_proxy_host,
+            http_proxy_port=http_proxy_port,
+            proxy_type=proxy_type,
+            http_proxy_auth=http_proxy_auth,
         )
 
     # Market

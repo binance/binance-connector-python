@@ -18,6 +18,10 @@ class BinanceWebsocketClient:
         on_ping=None,
         on_pong=None,
         logger=None,
+        http_proxy_host=None,
+        http_proxy_port=None,
+        proxy_type=None,
+        http_proxy_auth=None,
     ):
         if not logger:
             logger = logging.getLogger(__name__)
@@ -31,6 +35,10 @@ class BinanceWebsocketClient:
             on_ping,
             on_pong,
             logger,
+            http_proxy_host,
+            http_proxy_port,
+            proxy_type,
+            http_proxy_auth,
         )
 
         # start the thread
@@ -47,6 +55,10 @@ class BinanceWebsocketClient:
         on_ping,
         on_pong,
         logger,
+        http_proxy_host,
+        http_proxy_port,
+        proxy_type,
+        http_proxy_auth,
     ):
         return BinanceSocketManager(
             stream_url,
@@ -57,6 +69,10 @@ class BinanceWebsocketClient:
             on_ping=on_ping,
             on_pong=on_pong,
             logger=logger,
+            http_proxy_host=http_proxy_host,
+            http_proxy_port=http_proxy_port,
+            proxy_type=proxy_type,
+            http_proxy_auth=http_proxy_auth,
         )
 
     def _single_stream(self, stream):

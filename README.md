@@ -177,6 +177,12 @@ proxies = { 'https': 'http://1.2.3.4:8080' }
 client= Client(proxies=proxies)
 ```
 
+Use the parameters `http_proxy_host`, `http_proxy_port`, `proxy_type` in websocket client or api object.
+
+```python
+my_client = SpotWebsocketStreamClient(on_message=strategy,http_proxy_host="1.2.3.4", http_proxy_port="8080", proxy_type="http")
+```
+
 
 ### Response Metadata
 

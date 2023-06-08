@@ -3,6 +3,7 @@ import threading
 from websocket import (
     ABNF,
     create_connection,
+    WebSocket,
     WebSocketException,
     WebSocketConnectionClosedException,
 )
@@ -19,6 +20,10 @@ class BinanceSocketManager(threading.Thread):
         on_ping=None,
         on_pong=None,
         logger=None,
+        http_proxy_host=None,
+        http_proxy_port=None,
+        proxy_type=None,
+        http_proxy_auth=None,
     ):
         threading.Thread.__init__(self)
         if not logger:
@@ -31,13 +36,23 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
+        self.http_proxy_host = http_proxy_host
+        self.http_proxy_port = http_proxy_port
+        self.proxy_type = proxy_type
+        self.http_proxy_auth = http_proxy_auth
         self.create_ws_connection()
 
     def create_ws_connection(self):
         self.logger.debug(
             "Creating connection with WebSocket Server: %s", self.stream_url
         )
-        self.ws = create_connection(self.stream_url)
+        if self.proxy_type is None:
+            self.ws = create_connection(self.stream_url)
+        else:
+            self.ws = WebSocket()
+            self.ws.connect(self.stream_url, http_proxy_host=self.http_proxy_host, 
+                            http_proxy_port=self.http_proxy_port, proxy_type=self.proxy_type, 
+                            http_proxy_auth=self.http_proxy_auth)
         self.logger.debug(
             "WebSocket connection has been established: %s", self.stream_url
         )
