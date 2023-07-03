@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.1 - 2023-07-03
+
+### Changed
+- Change `User-Agent`
+
 ## 3.1.0 - 2023-06-01
 
 ### Added
