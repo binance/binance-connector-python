@@ -3,6 +3,7 @@ import uuid
 import time
 import random
 import responses
+from pytest_httpx import HTTPXMock
 
 
 def mock_http_response(
@@ -23,6 +24,27 @@ def mock_http_response(
                 headers=headers,
             )
             return fn(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+def mock_async_http_response(
+    method, uri, response_data, http_status=200, headers=None, body_data=""
+):
+    if headers is None:
+        headers = {}
+
+    def decorator(fn):
+        async def wrapper(httpx_mock:HTTPXMock, *args, **kwargs):
+            httpx_mock.add_response(
+                url=re.compile(".*" + uri),
+                json=response_data,
+                text=body_data if body_data else None,
+                status_code=http_status,
+                headers=headers,
+            )
+            return await fn(*args, **kwargs)
 
         return wrapper
 
