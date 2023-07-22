@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0rc2 - 2023-07-22
+
+### Added
+- Add support for asynchronous requests for `binance.spot.Spot` using httpx. Please refer to `examples/async_spot/*` for example implementations.
+- Add tests for asynchronous methods in `binance.async_spot.AsyncSpot`. Please refer to `tests/async_spot/*`.
+
 ## 3.1.1 - 2023-07-03
 
 ### Changed
