@@ -16,7 +16,7 @@ params = {"isFreeze": "false", "page": 1, "limit": 100, "recvWindow": 1000}
 @pytest.mark.asyncio
 @mock_async_http_response(
     "GET",
-    "/sapi/v1/sub-account/list\\?email=alice@test.com&" + urlencode(params),
+    "/sapi/v1/sub-account/list\\?" + urlencode({"email":"alice@test.com", **params}, True) ,
     mock_item,
     200,
 )

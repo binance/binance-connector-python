@@ -4,6 +4,8 @@ from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
 from binance.error import ParameterRequiredError
+from binance.lib.utils import urlencode as encode_string
+
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 
@@ -27,7 +29,7 @@ async def test_sub_account_enable_margin_without_email():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "POST",
-    "/sapi/v1/sub-account/margin/enable\\?email=alice@test.com",
+    "/sapi/v1/sub-account/margin/enable\\?"+encode_string({"email":"alice@test.com"}, True),
     mock_item,
     200,
 )

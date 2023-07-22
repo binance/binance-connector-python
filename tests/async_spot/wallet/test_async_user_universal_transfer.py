@@ -1,7 +1,7 @@
 import pytest
 
 from binance.error import ParameterRequiredError, ParameterValueError
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 from binance.async_spot import AsyncSpot as Client
 from tests.util import mock_async_http_response
 from tests.util import random_str
@@ -42,7 +42,7 @@ async def test_user_universal_transfer_with_invalid_enum_string():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "POST",
-    "/sapi/v1/asset/transfer\\?" + encoded_string(complete_params),
+    "/sapi/v1/asset/transfer\\?" + encoded_string(complete_params, True),
     mock_item,
     200,
 )

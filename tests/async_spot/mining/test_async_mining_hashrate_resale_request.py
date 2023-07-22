@@ -1,7 +1,7 @@
 import pytest
 
 from binance.error import ParameterRequiredError
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
@@ -106,7 +106,7 @@ async def test_mining_hashrate_resale_details_with_missing_field(params):
 @pytest.mark.asyncio
 @mock_async_http_response(
     "POST",
-    "/sapi/v1/mining/hash-transfer/config\\?" + encoded_string(complete_params),
+    "/sapi/v1/mining/hash-transfer/config\\?" + encoded_string(complete_params, True),
     mock_item,
     200,
 )

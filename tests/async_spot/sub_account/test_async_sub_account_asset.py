@@ -4,6 +4,7 @@ from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
 from binance.error import ParameterRequiredError
+from binance.lib.utils import urlencode as encode_string
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 
@@ -26,7 +27,7 @@ async def test_sub_account_assets_without_email():
 
 @pytest.mark.asyncio
 @mock_async_http_response(
-    "GET", "/sapi/v3/sub-account/assets\\?email=alice@test.com", mock_item, 200
+    "GET", "/sapi/v3/sub-account/assets\\?"+encode_string({"email":"alice@test.com"}, True), mock_item, 200
 )
 async def test_sub_account_assets():
     """Tests the API endpoint to  get sub account asset"""

@@ -3,7 +3,7 @@ import pytest
 from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 from binance.error import ParameterRequiredError
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
@@ -32,7 +32,7 @@ async def test_loan_history_without_asset():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "GET",
-    "/sapi/v1/loan/income\\?" + encoded_string(params),
+    "/sapi/v1/loan/income\\?" + encoded_string(params, True),
     mock_item,
     200,
 )

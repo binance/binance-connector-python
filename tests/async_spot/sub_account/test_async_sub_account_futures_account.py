@@ -1,6 +1,6 @@
 import pytest
 
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
@@ -51,7 +51,7 @@ async def test_sub_account_futures_account_v2_without_futuresType():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "GET",
-    "/sapi/v2/sub-account/futures/account\\?" + encoded_string(params),
+    "/sapi/v2/sub-account/futures/account\\?" + encoded_string(params, True),
     mock_item,
     200,
 )

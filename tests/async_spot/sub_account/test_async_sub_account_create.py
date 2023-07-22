@@ -4,7 +4,7 @@ from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
 from binance.error import ParameterRequiredError
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 
 mock_item = {"key_1": "value_1"}
 
@@ -30,7 +30,7 @@ async def test_sub_account_create_without_sub_account_string():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "POST",
-    "/sapi/v1/sub-account/virtualSubAccount\\?" + encoded_string(params),
+    "/sapi/v1/sub-account/virtualSubAccount\\?" + encoded_string(params, True),
     mock_item,
     200,
 )

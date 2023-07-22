@@ -107,8 +107,8 @@ class AsyncAPI(object):
         self._logger.debug("url: " + url)
         params = cleanNoneValue(
             {
-                "url": f'{url}?{self._prepare_params(payload)}', # httpx.get encodes characters like '@' which is not desirable according to the docstring.
-                # "params": self._prepare_params(payload),
+                "url": url,
+                "params": self._prepare_params(payload),
                 "timeout": self.timeout,
                 "proxies": self.proxies,
             }

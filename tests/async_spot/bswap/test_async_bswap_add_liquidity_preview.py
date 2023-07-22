@@ -4,7 +4,7 @@ from binance.async_spot import AsyncSpot as Client
 from tests.util import mock_async_http_response
 from tests.util import random_str
 from binance.error import ParameterRequiredError
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
@@ -40,7 +40,7 @@ async def test_bswap_add_liquidity_preview_with_missing_param(params):
 @pytest.mark.asyncio
 @mock_async_http_response(
     "GET",
-    "/sapi/v1/bswap/addLiquidityPreview\\?" + encoded_string(complete_params),
+    "/sapi/v1/bswap/addLiquidityPreview\\?" + encoded_string(complete_params, True),
     mock_item,
     200,
 )

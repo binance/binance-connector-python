@@ -4,6 +4,8 @@ from tests.util import random_str
 from tests.util import mock_async_http_response
 from binance.async_spot import AsyncSpot as Client
 from binance.error import ParameterRequiredError
+from binance.lib.utils import urlencode as encode_string
+
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
 
@@ -46,7 +48,7 @@ async def test_sub_account_futures_asset_transfer_history_without_futurestype():
 @pytest.mark.asyncio
 @mock_async_http_response(
     "GET",
-    "/sapi/v1/sub-account/futures/internalTransfer\\?email=alice@test.com&futuresType=1",
+    "/sapi/v1/sub-account/futures/internalTransfer\\?"+encode_string({"email":"alice@test.com", "futuresType": 1}, True),
     mock_item,
     200,
 )

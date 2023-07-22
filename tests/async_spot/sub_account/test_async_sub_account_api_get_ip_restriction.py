@@ -3,7 +3,7 @@ import pytest
 from binance.async_spot import AsyncSpot as Client
 from tests.util import mock_async_http_response
 from tests.util import random_str
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 from binance.error import ParameterRequiredError
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
@@ -38,7 +38,7 @@ async def test_sub_account_api_get_ip_restriction_without_missing_param(params):
 @mock_async_http_response(
     "GET",
     "/sapi/v1/sub-account/subAccountApi/ipRestriction\\?"
-    + encoded_string(complete_params),
+    + encoded_string(complete_params, True),
     mock_item,
     200,
 )

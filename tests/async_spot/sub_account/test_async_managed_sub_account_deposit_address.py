@@ -4,7 +4,7 @@ from binance.async_spot import AsyncSpot as Client
 from tests.util import mock_async_http_response
 from tests.util import random_str
 from binance.error import ParameterRequiredError
-from binance.lib.utils import encoded_string
+from binance.lib.utils import urlencode as encoded_string
 
 
 mock_item = {"key_1": "value_1", "key_2": "value_2"}
@@ -41,7 +41,7 @@ async def test_managed_sub_account_deposit_address_with_missing_param(params):
 @mock_async_http_response(
     "POST",
     "/sapi/v2/sub-account/subAccountApi/ipRestriction\\?"
-    + encoded_string(complete_params),
+    + encoded_string(complete_params, True),
     mock_item,
     200,
 )
