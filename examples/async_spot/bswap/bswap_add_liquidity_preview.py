@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+import logging
+import asyncio
+from binance.async_spot import AsyncSpot as Client
+from binance.lib.utils import config_logging
+from examples.utils.prepare_env import get_api_key
+
+config_logging(logging, logging.DEBUG)
+
+async def main():
+    api_key, api_secret = get_api_key()
+
+    client = Client(api_key, api_secret)
+    logging.info(
+        await client.bswap_add_liquidity_preview(
+            poolId=2, type="SINGLE", quoteAsset="USDT", quoteQty=0.01
+        )
+    )
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
