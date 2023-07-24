@@ -7,7 +7,7 @@ from .__version__ import __version__
 from binance.error import ClientError, ServerError
 from binance.lib.utils import get_timestamp
 from binance.lib.utils import cleanNoneValue
-from binance.lib.utils import encoded_string
+from binance.lib.utils import encoded_string, urlencode
 from binance.lib.utils import check_required_parameter
 from binance.lib.authentication import hmac_hashing, rsa_signature, ed25519_signature
 
@@ -145,7 +145,7 @@ class AsyncAPI(object):
         return data
 
     def _prepare_params(self, params):
-        return encoded_string(cleanNoneValue(params))
+        return urlencode(cleanNoneValue(params), True)
 
     def _get_sign(self, payload):
         if self.private_key is not None:
