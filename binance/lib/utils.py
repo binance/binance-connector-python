@@ -43,7 +43,7 @@ def check_enum_parameter(value, enum_class):
 
 
 def check_type_parameter(value, name, data_type):
-    if value is not None and type(value) != data_type:
+    if value is not None and not isinstance(value, data_type):
         raise ParameterTypeError([name, data_type])
 
 
