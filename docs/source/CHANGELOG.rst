@@ -2,6 +2,23 @@
 Changelog
 =========
 
+3.2.0 - 2023-08-01
+------------------
+
+Changed
+^^^^^^^
+
+* Changes to ``GET /api/v3/historicalTrades``: api key is not required.
+
+
+3.1.1 - 2023-07-03
+------------------
+
+Changed
+^^^^^^^
+
+* Change ``User-Agent``
+
 3.0.0rc2 - 2023-04-21
 ---------------------
 

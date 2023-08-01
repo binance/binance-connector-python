@@ -121,7 +121,7 @@ def historical_trades(self, symbol: str, **kwargs):
     """
     check_required_parameter(symbol, "symbol")
     params = {"symbol": symbol, **kwargs}
-    return self.limit_request("GET", "/api/v3/historicalTrades", params)
+    return self.query("/api/v3/historicalTrades", params)
 
 
 def agg_trades(self, symbol: str, **kwargs):
