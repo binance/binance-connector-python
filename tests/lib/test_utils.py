@@ -1,3 +1,5 @@
+import pytest
+
 from binance.error import (
     ParameterRequiredError,
     ParameterTypeError,
@@ -8,6 +10,7 @@ from binance.lib.utils import (
     check_type_parameter,
     convert_list_to_json_array,
     purge_map,
+    parse_proxies,
 )
 from binance.lib.utils import check_required_parameters
 from binance.lib.utils import check_enum_parameter
@@ -117,3 +120,34 @@ def test_remove_empty_parameter():
     purge_map({"foo": "bar", "foo2": 0}).should.equal({"foo": "bar"})
     purge_map({"foo": "bar", "foo2": []}).should.equal({"foo": "bar", "foo2": []})
     purge_map({"foo": "bar", "foo2": {}}).should.equal({"foo": "bar", "foo2": {}})
+
+
+def test_parse_proxies():
+    proxies = {"http": "http://1.2.3.4:8080"}
+    output = {
+        "http_proxy_host": "1.2.3.4",
+        "http_proxy_port": 8080,
+        "http_proxy_auth": None,
+    }
+
+    proxy_data = parse_proxies(proxies)
+    assert proxy_data == output
+
+    proxies_2 = {"https": "http://1.2.3.4:8080"}
+
+    proxy_data_2 = parse_proxies(proxies_2)
+    assert proxy_data_2 == output
+
+
+def test_parse_proxies_non_supported():
+    proxies = {"socks5": "http://1.2.3.4:8080"}
+
+    proxy_data = parse_proxies(proxies)
+    assert proxy_data == {}
+
+
+def test_parse_proxies_invalid():
+    proxies = {"http": "http://x1.2.3.4.6-8080:x"}
+
+    with pytest.raises(ValueError):
+        parse_proxies(proxies)

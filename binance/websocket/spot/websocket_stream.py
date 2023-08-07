@@ -1,3 +1,5 @@
+from typing import Optional
+
 from binance.websocket.websocket_client import BinanceWebsocketClient
 
 
@@ -12,6 +14,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         on_ping=None,
         on_pong=None,
         is_combined=False,
+        proxies: Optional[dict] = None,
     ):
         if is_combined:
             stream_url = stream_url + "/stream"
@@ -25,6 +28,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            proxies=proxies,
         )
 
     def agg_trade(self, symbol: str, id=None, action=None, **kwargs):
