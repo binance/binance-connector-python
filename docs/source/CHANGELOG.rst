@@ -2,6 +2,15 @@
 Changelog
 =========
 
+3.3.1 - 2023-08-23
+------------------
+
+Changed
+^^^^^^^
+
+* Add missing enum values in the ``User Universal Transfer`` endpoint
+
+
 3.3.0 - 2023-08-07
 ------------------
 
