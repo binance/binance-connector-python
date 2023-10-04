@@ -13,6 +13,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         on_error=None,
         on_ping=None,
         on_pong=None,
+        logger=None,
         is_combined=False,
         proxies: Optional[dict] = None,
     ):
@@ -28,6 +29,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            logger=logger,
             proxies=proxies,
         )
 
