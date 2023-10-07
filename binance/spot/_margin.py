@@ -30,7 +30,7 @@ def margin_borrow(self, asset: str, amount, **kwargs):
     """Margin Account Borrow (MARGIN)
     Apply for a loan.
 
-    POST /sapi/v1/margin/load
+    POST /sapi/v1/margin/loan
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-account-borrow-margin
 
@@ -211,7 +211,7 @@ def cancel_margin_order(self, symbol: str, **kwargs):
 
 
 def margin_transfer_history(self, asset: str, **kwargs):
-    """Get Transfer History (USER_DATA)
+    """Get Cross Margin Transfer History (USER_DATA)
 
     GET /sapi/v1/margin/transfer
 
@@ -957,3 +957,157 @@ def summary_of_margin_account(self, **kwargs):
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     return self.sign_request("GET", "/sapi/v1/margin/tradeCoeff", kwargs)
+
+
+def cross_margin_collateral_ratio(self):
+    """Cross margin collateral ratio (MARKET_DATA)
+
+
+    Weight(IP): 100
+
+    GET /sapi/v1/margin/crossMarginCollateralRatio
+
+    https://binance-docs.github.io/apidocs/spot/en/#cross-margin-collateral-ratio-market_data
+
+    """
+
+    url_path = "/sapi/v1/margin/crossMarginCollateralRatio"
+    return self.limit_request("GET", url_path)
+
+
+def get_small_liability_exchange_coin_list(self, **kwargs):
+    """Get Small Liability Exchange Coin List (USER_DATA)
+
+    Query the coins which can be small liability exchange
+
+    Weight(UID): 100
+
+    GET /sapi/v1/margin/exchange-small-liability
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-small-liability-exchange-coin-list-user_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/margin/exchange-small-liability"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
+def get_small_liability_exchange_history(self, current: int, size: int, **kwargs):
+    """Get Small Liability Exchange History (USER_DATA)
+
+    Get Small liability Exchange History
+
+    Weight(UID): 100
+
+    GET /sapi/v1/margin/exchange-small-liability-history
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-small-liability-exchange-history-user_data
+
+    Args:
+        current (int, optional): Current querying page. Start from 1. Default:1
+        size (int, optional): Default:10 Max:100
+    Keyword Args:
+        startTime (int, optional): UTC timestamp in ms
+        endTime (int, optional): UTC timestamp in ms
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameters([[current, "current"], [size, "size"]])
+    payload = {"current": current, "size": size, **kwargs}
+    url_path = "/sapi/v1/margin/exchange-small-liability-history"
+    return self.sign_request("GET", url_path, payload)
+
+
+def get_a_future_hourly_interest_rate(self, assets: str, isIsolated: bool, **kwargs):
+    """Get a future hourly interest rate (USER_DATA)
+
+    Get user the next hourly estimate interest
+
+    Weight(UID): 100
+
+    GET /sapi/v1/margin/next-hourly-interest-rate
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-a-future-hourly-interest-rate-user_data
+
+    Args:
+        assets (str, optional): List of assets, separated by commas, up to 20
+        isIsolated (IsIsolated, optional): for isolated margin or not, "TRUE", "FALSE"
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters([[assets, "assets"], [isIsolated, "isIsolated"]])
+
+    if isIsolated:
+        isIsolated = "TRUE"
+    else:
+        isIsolated = "FALSE"
+    params = {"assets": assets, "isIsolated": isIsolated, **kwargs}
+    url_path = "/sapi/v1/margin/next-hourly-interest-rate"
+    return self.sign_request("GET", url_path, params)
+
+
+def get_assets_that_can_be_converted_into_bnb(self, **kwargs):
+    """Get Assets That Can Be Converted Into BNB (USER_DATA)
+
+    Get assets that can be converted into BNB.
+
+    Weight(IP): 100
+
+    GET /sapi/v1/margin/dust
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-assets-that-can-be-converted-into-bnb-user_data-2
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/margin/dust"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
+def dust_transfer(self, asset: str, **kwargs):
+    """Dust Transfer (TRADE)
+
+    Convert dust assets to BNB
+
+    Weight(UID): 3000
+
+    POST /sapi/v1/margin/dust
+
+    https://binance-docs.github.io/apidocs/spot/en/#dust-transfer-trade
+
+    Args:
+        asset (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(asset, "asset")
+
+    params = {"asset": asset, **kwargs}
+    url_path = "/sapi/v1/margin/dust"
+    return self.sign_request("POST", url_path, params)
+
+
+def adjust_cross_margin_max_leverage(self, maxLeverage: int, **kwargs):
+    """Adjust cross margin max leverage (USER_DATA)
+
+    Adjust cross margin max leverage
+
+    Weight(IP): 3000
+
+    POST /sapi/v1/margin/max-leverage
+
+    https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-margin-max-leverage-user_data
+
+    Args:
+        maxLeverage (int)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(maxLeverage, "maxLeverage")
+
+    params = {"maxLeverage": maxLeverage, **kwargs}
+    url_path = "/sapi/v1/margin/max-leverage"
+    return self.sign_request("POST", url_path, params)

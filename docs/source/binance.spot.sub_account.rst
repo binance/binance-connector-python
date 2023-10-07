@@ -140,3 +140,43 @@ Query Managed Sub Account Transfer Log (Trading Team) (USER_DATA)
 Get Managed Sub-account Deposit Address (For Investor Master Account) (USER_DATA)
 ---------------------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.managed_sub_account_deposit_address
+
+Query Sub-account Assets (For Master Account)
+---------------------------------------------
+.. autofunction:: binance.spot.Spot.query_sub_account_assets
+
+Enable Options for Sub-account (For Master Account)
+---------------------------------------------------
+.. autofunction:: binance.spot.Spot.enable_options_for_sub_account
+
+Query Sub-account Transaction Statistics (For Master Account)
+-------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.query_sub_account_transaction_statistics
+
+Query Managed Sub-account Margin Asset Details (For Investor Master Account)
+----------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.query_managed_sub_account_margin_asset_details
+
+Query Managed Sub-account List (For Investor)
+---------------------------------------------
+.. autofunction:: binance.spot.Spot.query_managed_sub_account_list
+
+Query Managed Sub-account Futures Asset Details (For Investor Master Account)
+-----------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.query_managed_sub_account_futures_asset_details
+
+Futures Position-Risk of Sub-account (For Master Account)
+---------------------------------------------------------
+.. autofunction:: binance.spot.Spot.futures_position_risk_of_sub_account
+
+Summary of Sub-account's Futures Account V2 (For Master Account)
+----------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.summary_of_sub_account_s_futures_account
+
+Detail on Sub-account's Futures Account (For Master Account)
+------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.detail_on_sub_account_s_futures_account
+
+Query Managed Sub Account Transfer Log (For Trading Team Sub Account)(USER_DATA)
+--------------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.query_managed_sub_account_transfer_log

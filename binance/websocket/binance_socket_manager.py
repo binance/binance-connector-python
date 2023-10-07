@@ -97,7 +97,7 @@ class BinanceSocketManager(threading.Thread):
 
     def close(self):
         if not self.ws.connected:
-            self.logger.warn("Websocket already closed")
+            self.logger.warning("Websocket already closed")
         else:
             self.ws.send_close()
         return
