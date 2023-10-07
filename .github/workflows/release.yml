@@ -21,7 +21,7 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Post release cleaning 
+    - name: Post release cleaning
       run: |
         python setup.py clean --all
         rm dist/*

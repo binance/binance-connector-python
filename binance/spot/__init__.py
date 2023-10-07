@@ -40,6 +40,7 @@ class Spot(API):
     from binance.spot._trade import account
     from binance.spot._trade import my_trades
     from binance.spot._trade import get_order_rate_limit
+    from binance.spot._trade import query_prevented_matches
 
     # STREAMS
     from binance.spot._data_stream import new_listen_key
@@ -98,22 +99,13 @@ class Spot(API):
     from binance.spot._margin import margin_order_usage
     from binance.spot._margin import margin_dust_log
     from binance.spot._margin import summary_of_margin_account
-
-    # SAVINGS
-    from binance.spot._savings import savings_flexible_products
-    from binance.spot._savings import savings_flexible_user_left_quota
-    from binance.spot._savings import savings_purchase_flexible_product
-    from binance.spot._savings import savings_flexible_user_redemption_quota
-    from binance.spot._savings import savings_flexible_redeem
-    from binance.spot._savings import savings_flexible_product_position
-    from binance.spot._savings import savings_project_list
-    from binance.spot._savings import savings_purchase_project
-    from binance.spot._savings import savings_project_position
-    from binance.spot._savings import savings_account
-    from binance.spot._savings import savings_purchase_record
-    from binance.spot._savings import savings_redemption_record
-    from binance.spot._savings import savings_interest_history
-    from binance.spot._savings import savings_change_position
+    from binance.spot._margin import cross_margin_collateral_ratio
+    from binance.spot._margin import get_small_liability_exchange_coin_list
+    from binance.spot._margin import get_small_liability_exchange_history
+    from binance.spot._margin import get_a_future_hourly_interest_rate
+    from binance.spot._margin import get_assets_that_can_be_converted_into_bnb
+    from binance.spot._margin import dust_transfer
+    from binance.spot._margin import adjust_cross_margin_max_leverage
 
     # Staking
     from binance.spot._staking import staking_product_list
@@ -152,6 +144,7 @@ class Spot(API):
     from binance.spot._wallet import cloud_mining_trans_history
     from binance.spot._wallet import convert_transfer
     from binance.spot._wallet import convert_history
+    from binance.spot._wallet import one_click_arrival_deposit_apply
 
     # MINING
     from binance.spot._mining import mining_algo_list
@@ -204,16 +197,22 @@ class Spot(API):
     from binance.spot._sub_account import managed_sub_account_investor_trans_log
     from binance.spot._sub_account import managed_sub_account_trading_trans_log
     from binance.spot._sub_account import managed_sub_account_deposit_address
+    from binance.spot._sub_account import query_sub_account_assets
+    from binance.spot._sub_account import enable_options_for_sub_account
+    from binance.spot._sub_account import query_sub_account_transaction_statistics
+    from binance.spot._sub_account import query_managed_sub_account_margin_asset_details
+    from binance.spot._sub_account import query_managed_sub_account_list
+    from binance.spot._sub_account import (
+        query_managed_sub_account_futures_asset_details,
+    )
+    from binance.spot._sub_account import futures_position_risk_of_sub_account
+    from binance.spot._sub_account import summary_of_sub_account_s_futures_account
+    from binance.spot._sub_account import detail_on_sub_account_s_futures_account
+    from binance.spot._sub_account import query_managed_sub_account_transfer_log
 
     # FUTURES
     from binance.spot._futures import futures_transfer
     from binance.spot._futures import futures_transfer_history
-    from binance.spot._futures import futures_loan_borrow_history
-    from binance.spot._futures import futures_loan_repay_history
-    from binance.spot._futures import futures_loan_wallet
-    from binance.spot._futures import futures_loan_adjust_collateral_history
-    from binance.spot._futures import futures_loan_liquidation_history
-    from binance.spot._futures import futures_loan_interest_history
 
     # BLVTs
     from binance.spot._blvt import blvt_info
@@ -246,29 +245,43 @@ class Spot(API):
     # C2C
     from binance.spot._c2c import c2c_trade_history
 
-    # LOANS
-    from binance.spot._loan import loan_history
-    from binance.spot._loan import loan_borrow
-    from binance.spot._loan import loan_borrow_history
-    from binance.spot._loan import loan_ongoing_orders
-    from binance.spot._loan import loan_repay
-    from binance.spot._loan import loan_repay_history
-    from binance.spot._loan import loan_adjust_ltv
-    from binance.spot._loan import loan_adjust_ltv_history
-    from binance.spot._loan import loan_vip_ongoing_orders
-    from binance.spot._loan import loan_vip_repay
-    from binance.spot._loan import loan_vip_repay_history
-    from binance.spot._loan import loan_vip_collateral_account
-    from binance.spot._loan import loan_loanable_data
-    from binance.spot._loan import loan_collateral_data
-    from binance.spot._loan import loan_collateral_rate
-    from binance.spot._loan import loan_customize_margin_call
+    # Crypto LOANS
+    from binance.spot._crypto_loan import loan_history
+    from binance.spot._crypto_loan import loan_borrow
+    from binance.spot._crypto_loan import loan_borrow_history
+    from binance.spot._crypto_loan import loan_ongoing_orders
+    from binance.spot._crypto_loan import loan_repay
+    from binance.spot._crypto_loan import loan_repay_history
+    from binance.spot._crypto_loan import loan_adjust_ltv
+    from binance.spot._crypto_loan import loan_adjust_ltv_history
+    from binance.spot._crypto_loan import loan_vip_ongoing_orders
+    from binance.spot._crypto_loan import loan_vip_repay
+    from binance.spot._crypto_loan import loan_vip_repay_history
+    from binance.spot._crypto_loan import loan_vip_collateral_account
+    from binance.spot._crypto_loan import loan_loanable_data
+    from binance.spot._crypto_loan import loan_collateral_data
+    from binance.spot._crypto_loan import loan_collateral_rate
+    from binance.spot._crypto_loan import loan_customize_margin_call
+    from binance.spot._crypto_loan import flexible_loan_adjust_ltv
+    from binance.spot._crypto_loan import flexible_loan_assets_data
+    from binance.spot._crypto_loan import flexible_loan_borrow_history
+    from binance.spot._crypto_loan import flexible_loan_borrow
+    from binance.spot._crypto_loan import flexible_loan_collateral_assets_data
+    from binance.spot._crypto_loan import flexible_loan_ltv_adjustment_history
+    from binance.spot._crypto_loan import flexible_loan_ongoing_orders
+    from binance.spot._crypto_loan import flexible_loan_repay
+    from binance.spot._crypto_loan import flexible_loan_repayment_history
 
     # PAY
     from binance.spot._pay import pay_history
 
     # CONVERT
-    from binance.spot._convert import convert_trade_history
+    from binance.spot._convert import list_all_convert_pairs
+    from binance.spot._convert import query_order_quantity_precision_per_asset
+    from binance.spot._convert import send_quote_request
+    from binance.spot._convert import accept_quote
+    from binance.spot._convert import order_status
+    from binance.spot._convert import get_convert_trade_history
 
     # REBATE
     from binance.spot._rebate import rebate_spot_history
@@ -292,3 +305,55 @@ class Spot(API):
     from binance.spot._portfolio_margin import portfolio_margin_collateral_rate
     from binance.spot._portfolio_margin import portfolio_margin_bankruptcy_loan_amount
     from binance.spot._portfolio_margin import portfolio_margin_bankruptcy_loan_repay
+    from binance.spot._portfolio_margin import (
+        query_classic_portfolio_margin_negative_balance_interest_history,
+    )
+    from binance.spot._portfolio_margin import query_portfolio_margin_asset_index_price
+    from binance.spot._portfolio_margin import fund_auto_collection
+    from binance.spot._portfolio_margin import bnb_transfer
+    from binance.spot._portfolio_margin import change_auto_repay_futures_status
+    from binance.spot._portfolio_margin import get_auto_repay_futures_status
+    from binance.spot._portfolio_margin import repay_futures_negative_balance
+    from binance.spot._portfolio_margin import fund_collection_by_asset
+
+    # Simple Earn
+    from binance.spot._simple_earn import get_simple_earn_flexible_product_list
+    from binance.spot._simple_earn import get_simple_earn_locked_product_list
+    from binance.spot._simple_earn import subscribe_flexible_product
+    from binance.spot._simple_earn import subscribe_locked_product
+    from binance.spot._simple_earn import redeem_flexible_product
+    from binance.spot._simple_earn import redeem_locked_product
+    from binance.spot._simple_earn import get_flexible_product_position
+    from binance.spot._simple_earn import get_locked_product_position
+    from binance.spot._simple_earn import simple_account
+    from binance.spot._simple_earn import get_flexible_subscription_record
+    from binance.spot._simple_earn import get_locked_subscription_record
+    from binance.spot._simple_earn import get_flexible_redemption_record
+    from binance.spot._simple_earn import get_locked_redemption_record
+    from binance.spot._simple_earn import get_flexible_rewards_history
+    from binance.spot._simple_earn import get_locked_rewards_history
+    from binance.spot._simple_earn import set_flexible_auto_subscribe
+    from binance.spot._simple_earn import set_locked_auto_subscribe
+    from binance.spot._simple_earn import get_flexible_personal_left_quota
+    from binance.spot._simple_earn import get_locked_personal_left_quota
+    from binance.spot._simple_earn import get_flexible_subscription_preview
+    from binance.spot._simple_earn import get_locked_subscription_preview
+    from binance.spot._simple_earn import get_rate_history
+    from binance.spot._simple_earn import get_collateral_record
+
+    # Auto-Invest
+    from binance.spot._auto_invest import get_target_asset_list
+    from binance.spot._auto_invest import get_target_asset_roi_data
+    from binance.spot._auto_invest import query_all_source_asset_and_target_asset
+    from binance.spot._auto_invest import query_source_asset_list
+    from binance.spot._auto_invest import change_plan_status
+    from binance.spot._auto_invest import get_list_of_plans
+    from binance.spot._auto_invest import query_holding_details_of_the_plan
+    from binance.spot._auto_invest import query_subscription_transaction_history
+    from binance.spot._auto_invest import query_index_details
+    from binance.spot._auto_invest import query_index_linked_plan_position_details
+    from binance.spot._auto_invest import one_time_transaction
+    from binance.spot._auto_invest import query_one_time_transaction_status
+    from binance.spot._auto_invest import index_linked_plan_redemption
+    from binance.spot._auto_invest import get_index_linked_plan_redemption_history
+    from binance.spot._auto_invest import index_linked_plan_rebalance_details

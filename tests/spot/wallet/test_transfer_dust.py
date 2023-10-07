@@ -19,7 +19,7 @@ def test_withdraw_without_coin():
 
 
 @mock_http_response(
-    responses.POST, "/sapi/v1/asset/dust\\?asset=LTC&asset=EOS", mock_item, 200
+    responses.POST, "/sapi/v1/asset/dust\\?asset=LTC%2CEOS", mock_item, 200
 )
 def test_withdraw():
     """Tests the API endpoint to transfer dust"""

@@ -212,7 +212,7 @@ def sub_account_futures_transfer(
 ):
     """Futures Transfer for Sub-account（For Master Account）
 
-    GET /sapi/v1/sub-account/futures/transfer
+    POST /sapi/v1/sub-account/futures/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#futures-transfer-for-sub-account-for-master-account
 
@@ -237,7 +237,7 @@ def sub_account_margin_transfer(
 ):
     """Margin Transfer for Sub-account（For Master Account)
 
-    GET /sapi/v1/sub-account/margin/transfer
+    POST /sapi/v1/sub-account/margin/transfer
 
     https://binance-docs.github.io/apidocs/spot/en/#margin-transfer-for-sub-account-for-master-account
 
@@ -307,7 +307,7 @@ def sub_account_transfer_to_master(self, asset: str, amount: float, **kwargs):
 def sub_account_transfer_sub_account_history(self, **kwargs):
     """Sub-account Transfer History (For Sub-account)
 
-    POST /sapi/v1/sub-account/transfer/subUserHistory
+    GET /sapi/v1/sub-account/transfer/subUserHistory
 
     https://binance-docs.github.io/apidocs/spot/en/#sub-account-transfer-history-for-sub-account
 
@@ -518,7 +518,7 @@ def sub_account_futures_account_summary(self, futuresType: int, **kwargs):
 
     GET /sapi/v2/sub-account/futures/accountSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-v2-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-v2-for-master-account
 
     Args:
         futuresType (int): 1 : USDT-maringed Futues, 2: Coin-margined Futures
@@ -927,3 +927,245 @@ def managed_sub_account_deposit_address(self, email: str, coin: str, **kwargs):
     return self.limited_encoded_sign_request(
         "GET", "/sapi/v1/managed-subaccount/deposit/address", payload
     )
+
+
+def query_sub_account_assets(self, email: str, **kwargs):
+    """Query Sub-account Assets (For Master Account) (USER_DATA)
+
+    Fetch sub-account assets
+
+    Weight(UID): 60
+
+    GET /sapi/v4/sub-account/assets
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account-user_data
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v4/sub-account/assets"
+    return self.sign_request("GET", url_path, params)
+
+
+def enable_options_for_sub_account(self, email: str, **kwargs):
+    """Enable Options for Sub-account (For Master Account) (USER_DATA)
+
+    Weight(IP): 1
+
+    POST /sapi/v1/sub-account/eoptions/enable
+
+    https://binance-docs.github.io/apidocs/spot/en/#enable-options-for-sub-account-for-master-account-user_data
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/sub-account/eoptions/enable"
+    return self.sign_request("POST", url_path, params)
+
+
+def query_sub_account_transaction_statistics(self, email: str, **kwargs):
+    """Query Sub-account Transaction Statistics (For Master Account) (USER_DATA)
+
+    Weight(UID): 60
+
+    GET /sapi/v1/sub-account/transaction-statistics
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-transaction-statistics-for-master-account-user_data
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/sub-account/transaction-statistics"
+    return self.sign_request("GET", url_path, params)
+
+
+def query_managed_sub_account_transfer_log(
+    self, startTime: int, endTime: int, page: int, limit: int, **kwargs
+):
+    """Query Managed Sub Account Transfer Log (For Trading Team Sub Account)
+
+    Query Managed Sub Account Transfer Log (For Trading Team Sub Account)
+
+    Weight(UID): 60
+
+    GET /sapi/v1/managed-subaccount/query-trans-log
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-for-trading-team-sub-account-user_data
+
+    Args:
+        startTime (int): UTC timestamp in ms
+        endTime (int): UTC timestamp in ms
+        page (int): Default 1
+        limit (int): Default 500; max 1000.
+    Keyword Args:
+        transfers (str, optional)
+        transferFunctionAccountType (str, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [
+            [startTime, "startTime"],
+            [endTime, "endTime"],
+            [page, "page"],
+            [limit, "limit"],
+        ]
+    )
+
+    params = {
+        "startTime": startTime,
+        "endTime": endTime,
+        "page": page,
+        "limit": limit,
+        **kwargs,
+    }
+    url_path = "/sapi/v1/managed-subaccount/query-trans-log"
+    return self.sign_request("GET", url_path, params)
+
+
+def query_managed_sub_account_list(self, **kwargs):
+    """Query Managed Sub-account List (For Investor) (USER_DATA)
+
+    Get investor's managed sub-account list.
+
+    Weight(UID): 60
+
+    GET /sapi/v1/managed-subaccount/info
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-list-for-investor-user_data
+
+    Keyword Args:
+        email (str, optional)
+        page (int, optional): Default 1
+        limit (int, optional): Default 500; max 1000.
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/managed-subaccount/info"
+    return self.sign_request("GET", url_path, kwargs)
+
+
+def query_managed_sub_account_margin_asset_details(self, email: str, **kwargs):
+    """Query Managed Sub-account Margin Asset Details (For Investor Master Account)
+
+    Investor can use this api to query managed sub account margin asset details
+
+    Weight(IP): 1
+
+    GET /sapi/v1/managed-subaccount/marginAsset
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-margin-asset-details-for-investor-master-account-user_data
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/managed-subaccount/marginAsset"
+    return self.sign_request("GET", url_path, params)
+
+
+def query_managed_sub_account_futures_asset_details(self, email: str, **kwargs):
+    """Query Managed Sub-account Futures Asset Details (For Investor Master Account)
+
+    Investor can use this api to query managed sub account futures asset details
+
+    Weight(UID): 60
+
+    GET /sapi/v1/managed-subaccount/fetch-future-asset
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-futures-asset-details-for-investor-master-account-user_data
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/managed-subaccount/fetch-future-asset"
+    return self.sign_request("GET", url_path, params)
+
+
+def futures_position_risk_of_sub_account(self, email: str, **kwargs):
+    """Get Futures Position-Risk of Sub-account (For Master Account)
+
+    Weight(IP): 10
+
+    GET /sapi/v1/sub-account/futures/positionRisk
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-futures-position-risk-of-sub-account-for-master-account
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/sub-account/futures/positionRisk"
+    return self.sign_request("GET", url_path, params)
+
+
+def summary_of_sub_account_s_futures_account(self, futuresType: int, **kwargs):
+    """Get Summary of Sub-account's Futures Account V2 (For Master Account)
+
+    Weight(IP): 10
+
+    GET /sapi/v2/sub-account/futures/accountSummary
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-v2-for-master-account
+
+    Args:
+        futuresType (int): 1:USDT Margined Futures, 2:COIN Margined Futures
+    Keyword Args:
+        page (int, optional): default:1
+        limit (int, optional): default 10, max 20
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    check_required_parameter(futuresType, "futuresType")
+
+    params = {"futuresType": futuresType, **kwargs}
+    url_path = "/sapi/v2/sub-account/futures/accountSummary"
+    return self.sign_request("GET", url_path, params)
+
+
+def detail_on_sub_account_s_futures_account(self, email: str, **kwargs):
+    """Detail on Sub-account's Futures Account (For Master Account)
+
+    Weight(IP): 10
+
+    GET /sapi/v1/sub-account/futures/account
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-for-master-account
+
+    Args:
+        email (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(email, "email")
+
+    params = {"email": email, **kwargs}
+    url_path = "/sapi/v1/sub-account/futures/account"
+    return self.sign_request("GET", url_path, params)

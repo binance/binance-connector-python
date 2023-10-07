@@ -15,6 +15,7 @@ class SpotWebsocketAPIClient(BinanceWebsocketClient):
         on_error=None,
         on_ping=None,
         on_pong=None,
+        logger=None,
         proxies: Optional[dict] = None,
     ):
         self.api_key = api_key
@@ -28,6 +29,7 @@ class SpotWebsocketAPIClient(BinanceWebsocketClient):
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            logger=logger,
             proxies=proxies,
         )
 

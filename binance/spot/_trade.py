@@ -439,3 +439,44 @@ def get_order_rate_limit(self, **kwargs):
 
     url_path = "/api/v3/rateLimit/order"
     return self.sign_request("GET", url_path, {**kwargs})
+
+
+def query_prevented_matches(self, symbol: str, **kwargs):
+    """Query Prevented Matches
+
+    Displays the list of orders that were expired because of STP.
+
+    For additional information on what a Prevented match is, as well as Self Trade Prevention (STP), please refer to our STP FAQ page.
+
+    These are the combinations supported:
+
+    * symbol + preventedMatchId
+    * symbol + orderId
+    * symbol + orderId + fromPreventedMatchId (limit will default to 500)
+    * symbol + orderId + fromPreventedMatchId + limit
+
+    Weight(IP):
+
+    Case 	                          Weight
+    If symbol is invalid: 	        2
+    Querying by preventedMatchId: 	2
+    Querying by orderId: 	          20
+
+    GET /api/v3/myPreventedMatches
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-prevented-matches-user_data
+
+    Args:
+        symbol (str)
+    Keyword Args:
+        preventedMatchId (int, optional)
+        orderId (int, optional): Order id
+        fromPreventedMatchId (int, optional)
+        limit (int, optional): Default 500; max 1000.
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(symbol, "symbol")
+
+    params = {"symbol": symbol, **kwargs}
+    url_path = "/api/v3/myPreventedMatches"
+    return self.sign_request("GET", url_path, params)
