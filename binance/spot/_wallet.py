@@ -548,3 +548,20 @@ def one_click_arrival_deposit_apply(self, **kwargs):
 
     url_path = "/sapi/v1/capital/deposit/credit-apply"
     return self.sign_request("POST", url_path, {**kwargs})
+
+
+def balance(self, **kwargs):
+    """Query User Wallet Balance (USER_DATA)
+
+    Weight(IP): 60
+
+    GET /sapi/v1/asset/wallet/balance
+    
+    https://binance-docs.github.io/apidocs/spot/en/#query-user-wallet-balance-user_data
+
+    Keyword Args:
+        recvWindow (LONG, optional)
+    """
+    
+    url_path = "/sapi/v1/asset/wallet/balance"
+    return self.sign_request("GET", url_path, {**kwargs})
