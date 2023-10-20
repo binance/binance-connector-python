@@ -246,6 +246,8 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketAPIClient(on_message=message_handler)
 
+my_client.start()
+
 my_client.ticker(symbol="BNBBUSD", type="FULL")
 
 time.sleep(5)
@@ -262,6 +264,8 @@ def message_handler(_, message):
     logging.info(message)
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler)
+
+my_client.start()
 
 # Subscribe to a single symbol stream
 my_client.agg_trade(symbol="bnbusdt")
@@ -305,6 +309,8 @@ proxies = { 'http': 'http://1.2.3.4:8080' }
 
 my_client = SpotWebsocketAPIClient(on_message=message_handler, proxies=proxies)
 
+my_client.start()
+
 my_client.ticker(symbol="BNBBUSD", type="FULL")
 
 time.sleep(5)
@@ -323,6 +329,8 @@ def message_handler(_, message):
 proxies = { 'http': 'http://1.2.3.4:8080' }
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler, proxies=proxies)
+
+my_client.start()
 
 # Subscribe to a single symbol stream
 my_client.agg_trade(symbol="bnbusdt")
@@ -354,7 +362,7 @@ Example file "examples/websocket_api/app_demo.py" demonstrates how Websocket API
 ### Connector v1 and v2
 
 ```python
-from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient as WebsocketClient
 
 def message_handler(message):
     print(message)
