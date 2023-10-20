@@ -18,6 +18,8 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
 
+my_client.start()
+
 
 my_client.ticker_book(symbol="BNBBUSD")
 

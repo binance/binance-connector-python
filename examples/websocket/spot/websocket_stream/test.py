@@ -37,6 +37,8 @@ my_client = Client(
     is_combined=True,
 )
 
+my_client.start()
+
 
 my_client.kline(symbol="bnbusdt", interval="1m")
 

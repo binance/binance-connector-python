@@ -13,6 +13,7 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler, is_combined=True)
 
+my_client.start()
 
 my_client.subscribe(
     stream=["bnbusdt@bookTicker", "ethusdt@kline_1m"],

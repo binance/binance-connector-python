@@ -44,11 +44,15 @@ ws_api_client = SpotWebsocketAPIClient(
     on_close=on_close,
 )
 
+ws_api_client.start()
+
 # make a connection to the websocket stream
 ws_stream_client = SpotWebsocketStreamClient(
     stream_url="wss://testnet.binance.vision",
     on_message=websocket_stream_message_handler,
 )
+
+ws_stream_client.start()
 
 # spot api client to call all restful api endpoints
 spot_api_client = SpotAPIClient(api_key, base_url="https://testnet.binance.vision")

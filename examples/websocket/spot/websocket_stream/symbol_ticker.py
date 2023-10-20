@@ -14,6 +14,7 @@ def message_handler(_, message):
 
 my_client = Client(on_message=message_handler)
 
+my_client.start()
 
 my_client.ticker(symbol="bnbusdt")
 

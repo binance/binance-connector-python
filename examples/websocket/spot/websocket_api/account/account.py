@@ -27,6 +27,8 @@ my_client = SpotWebsocketAPIClient(
     on_close=on_close,
 )
 
+my_client.start()
+
 
 my_client.account()
 

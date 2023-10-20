@@ -14,6 +14,7 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler)
 
+my_client.start()
 
 my_client.rolling_window_ticker_all_symbols(windowSize="1h")
 

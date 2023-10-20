@@ -30,6 +30,8 @@ my_client = SpotWebsocketAPIClient(
 
 my_client.cancel_order(symbol="BNBUSDT", orderId=1)
 
+my_client.start()
+
 time.sleep(2)
 
 logging.info("closing ws connection")

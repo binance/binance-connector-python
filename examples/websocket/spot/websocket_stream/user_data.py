@@ -27,6 +27,8 @@ ws_client = SpotWebsocketStreamClient(
     stream_url="wss://testnet.binance.vision", on_message=message_handler
 )
 
+ws_client.start()
+
 ws_client.user_data(listen_key=response["listenKey"])
 
 time.sleep(30)

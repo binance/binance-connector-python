@@ -37,6 +37,7 @@ class BinanceWebsocketClient:
             proxies,
         )
 
+    def start(self):
         # start the thread
         self.socket_manager.start()
         self.logger.debug("Binance WebSocket Client started.")
@@ -106,7 +107,8 @@ class BinanceWebsocketClient:
 
     def stop(self, id=None):
         self.socket_manager.close()
-        self.socket_manager.join()
+        if self.socket_manager.is_alive():
+            self.socket_manager.join()
 
     def list_subscribe(self, id=None):
         """sending the list subscription message, e.g.

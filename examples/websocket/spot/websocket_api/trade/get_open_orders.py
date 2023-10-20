@@ -27,6 +27,7 @@ my_client = SpotWebsocketAPIClient(
     on_close=on_close,
 )
 
+my_client.start()
 
 my_client.get_open_orders(symbol="BNBUSDT")
 

@@ -14,6 +14,7 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler)
 
+my_client.start()
 
 my_client.partial_book_depth(symbol="bnbusdt", level=10, speed=1000)
 

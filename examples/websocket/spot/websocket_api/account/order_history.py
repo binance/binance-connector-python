@@ -27,6 +27,8 @@ my_client = SpotWebsocketAPIClient(
     on_close=on_close,
 )
 
+my_client.start()
+
 
 my_client.order_history(id="123", symbol="BNBUSDT", limit=10)
 

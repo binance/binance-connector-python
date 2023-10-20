@@ -14,6 +14,7 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler)
 
+my_client.start()
 
 # subscribe to all symbols ticker stream
 my_client.ticker()

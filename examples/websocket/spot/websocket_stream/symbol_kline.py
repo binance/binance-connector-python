@@ -14,6 +14,7 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketStreamClient(on_message=message_handler, is_combined=True)
 
+my_client.start()
 
 # subscribe btcusdt 1m kline
 my_client.kline(symbol="btcusdt", interval="1m")

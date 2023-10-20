@@ -18,6 +18,8 @@ def message_handler(_, message):
 
 my_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
 
+my_client.start()
+
 # send a message to the server to ping connectivity
 my_client.ping_connectivity(id="my_request_id")
 

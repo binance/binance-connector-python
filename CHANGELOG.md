@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+### Changed
+- Include a "start" method in WebSocket clients to initiate the thread once it has been initialized.
 ## 3.4.0 - 2023-10-07
 ### Added
 - Portfolio endpoints:
