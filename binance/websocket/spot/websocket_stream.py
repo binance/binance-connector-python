@@ -1,6 +1,7 @@
 from typing import Optional
 
 from binance.websocket.websocket_client import BinanceWebsocketClient
+from binance.lib.constants import WEBSOCKET_TIMEOUT_IN_SECONDS
 
 
 class SpotWebsocketStreamClient(BinanceWebsocketClient):
@@ -13,8 +14,9 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         on_error=None,
         on_ping=None,
         on_pong=None,
-        logger=None,
         is_combined=False,
+        timeout=WEBSOCKET_TIMEOUT_IN_SECONDS,
+        logger=None,
         proxies: Optional[dict] = None,
     ):
         if is_combined:
@@ -29,6 +31,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
             on_error=on_error,
             on_ping=on_ping,
             on_pong=on_pong,
+            timeout=timeout,
             logger=logger,
             proxies=proxies,
         )

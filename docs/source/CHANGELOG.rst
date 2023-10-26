@@ -2,6 +2,15 @@
 Changelog
 =========
 
+3.5.0 - 2023-10-26
+------------------
+
+Changed
+^^^^^^^
+
+* Add timeout parameter to Websocket clients
+* Add method for ``GET /sapi/v1/asset/wallet/balance``
+
 
 3.4.0 - 2023-10-07
 ------------------

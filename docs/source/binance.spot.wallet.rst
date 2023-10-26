@@ -112,3 +112,7 @@ BUSD Convert History (USER_DATA)
 One click arrival deposit apply (USER_DATA)
 -------------------------------------------
 .. autofunction:: binance.spot.Spot.one_click_arrival_deposit_apply
+
+Query User Wallet Balance (USER_DATA)
+-------------------------------------
+.. autofunction:: binance.spot.Spot.balance

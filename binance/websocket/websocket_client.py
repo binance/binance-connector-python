@@ -20,6 +20,7 @@ class BinanceWebsocketClient:
         on_ping=None,
         on_pong=None,
         logger=None,
+        timeout=None,
         proxies: Optional[dict] = None,
     ):
         if not logger:
@@ -34,6 +35,7 @@ class BinanceWebsocketClient:
             on_ping,
             on_pong,
             logger,
+            timeout,
             proxies,
         )
 
@@ -51,6 +53,7 @@ class BinanceWebsocketClient:
         on_ping,
         on_pong,
         logger,
+        timeout,
         proxies,
     ):
         return BinanceSocketManager(
@@ -62,6 +65,7 @@ class BinanceWebsocketClient:
             on_ping=on_ping,
             on_pong=on_pong,
             logger=logger,
+            timeout=timeout,
             proxies=proxies,
         )
 

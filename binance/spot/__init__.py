@@ -145,6 +145,7 @@ class Spot(API):
     from binance.spot._wallet import convert_transfer
     from binance.spot._wallet import convert_history
     from binance.spot._wallet import one_click_arrival_deposit_apply
+    from binance.spot._wallet import balance
 
     # MINING
     from binance.spot._mining import mining_algo_list
