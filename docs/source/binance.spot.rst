@@ -12,7 +12,7 @@ Spot APIs
    binance.spot.fiat
    binance.spot.futures
    binance.spot.gift_card
-   binance.spot.loan
+   binance.spot.crypto_loan
    binance.spot.margin
    binance.spot.market
    binance.spot.mining
@@ -20,8 +20,8 @@ Spot APIs
    binance.spot.pay
    binance.spot.portfolio_margin
    binance.spot.rebate
-   binance.spot.savings
    binance.spot.staking
    binance.spot.sub_account
    binance.spot.trade
    binance.spot.wallet
+   binance.spot.simple_earn

@@ -270,7 +270,7 @@ def user_universal_transfer_history(self, type: str, **kwargs):
     return self.sign_request("GET", "/sapi/v1/asset/transfer", payload)
 
 
-def transfer_dust(self, asset, **kwargs):
+def transfer_dust(self, asset: list, **kwargs):
     """Dust Transfer (USER_DATA)
     Convert dust assets to BNB.
 
@@ -285,7 +285,8 @@ def transfer_dust(self, asset, **kwargs):
     """
 
     check_required_parameter(asset, "asset")
-    payload = {"asset": asset, **kwargs}
+
+    payload = {"asset": ",".join(asset), **kwargs}
 
     return self.sign_request("POST", "/sapi/v1/asset/dust", payload)
 
@@ -524,3 +525,43 @@ def convert_history(self, startTime: int, endTime: int, **kwargs):
     url_path = "/sapi/v1/asset/convert-transfer/queryByPage"
     payload = {"startTime": startTime, "endTime": endTime, **kwargs}
     return self.sign_request("GET", url_path, payload)
+
+
+def one_click_arrival_deposit_apply(self, **kwargs):
+    """One click arrival deposit apply (USER_DATA)
+
+    Apply deposit credit for expired address (One click arrival)
+
+    Weight(IP): 1
+
+    POST /sapi/v1/capital/deposit/credit-apply
+
+    https://binance-docs.github.io/apidocs/spot/en/#one-click-arrival-deposit-apply-user_data
+
+    Keyword Args:
+        depositId (int, optional): Deposit record Id, priority use
+        txId (str, optional): Deposit txId, used when depositId is not specified
+        subAccountId (int, optional)
+        subUserId (int, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/capital/deposit/credit-apply"
+    return self.sign_request("POST", url_path, {**kwargs})
+
+
+def balance(self, **kwargs):
+    """Query User Wallet Balance (USER_DATA)
+
+    Weight(IP): 60
+
+    GET /sapi/v1/asset/wallet/balance
+    
+    https://binance-docs.github.io/apidocs/spot/en/#query-user-wallet-balance-user_data
+
+    Keyword Args:
+        recvWindow (LONG, optional)
+    """
+    
+    url_path = "/sapi/v1/asset/wallet/balance"
+    return self.sign_request("GET", url_path, {**kwargs})

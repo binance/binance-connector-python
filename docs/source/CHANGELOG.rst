@@ -2,6 +2,185 @@
 Changelog
 =========
 
+
+3.4.0 - 2023-10-07
+------------------
+
+Added
+^^^^^
+
+* Portfolio endpoints:
+
+  * ``POST /sapi/v1/portfolio/interest-history``
+  * ``POST /sapi/v1/portfolio/asset-index-price``
+  * ``POST /sapi/v1/portfolio/auto-collection``
+  * ``POST /sapi/v1/portfolio/bnb-transfer``
+  * ``POST /sapi/v1/portfolio/repay-futures-switch``
+  * ``GET /sapi/v1/portfolio/repay-futures-switch``
+  * ``POST /sapi/v1/portfolio/repay-futures-negative-balance``
+  * ``POST /sapi/v1/portfolio/asset-collection``
+
+* Convert
+
+  * ``GET /sapi/v1/convert/exchangeInfo``
+  * ``GET /sapi/v1/convert/assetInfo``
+  * ``POST /sapi/v1/convert/getQuote``
+  * ``POST /sapi/v1/convert/acceptQuote``
+  * ``GET /sapi/v1/convert/orderStatus``
+
+* Crypto Loan
+
+  * ``POST /sapi/v1/loan/flexible/borrow``
+  * ``GET /sapi/v1/loan/flexible/ongoing/order``
+  * ``GET /sapi/v1/loan/flexible/borrow/history``
+  * ``POST /sapi/v1/loan/flexible/repay``
+  * ``GET /sapi/v1/loan/flexible/repay/history``
+  * ``POST /sapi/v1/loan/flexible/adjust/ltv``
+  * ``GET /sapi/v1/loan/flexible/ltv/adjustment/history``
+  * ``GET /sapi/v1/loan/flexible/loanable/data``
+  * ``GET /sapi/v1/loan/flexible/collateral/data``
+
+* Margin
+
+  * ``GET /sapi/v1/margin/crossMarginCollateralRatio``
+  * ``GET /sapi/v1/margin/exchange-small-liability``
+  * ``GET /sapi/v1/margin/exchange-small-liability-history``
+  * ``GET /sapi/v1/margin/next-hourly-interest-rate``
+  * ``GET /sapi/v1/margin/dust``
+  * ``POST /sapi/v1/margin/dust``
+  * ``GET /sapi/v1/margin/max-leverage``
+
+* SubAccount
+
+  * ``POST /sapi/v4/sub-account/assets``
+  * ``POST /sapi/v1/sub-account/eoptions/enable``
+  * ``GET /sapi/v1/sub-account/transaction-statistics``
+  * ``GET /sapi/v1/managed-subaccount/query-trans-log``
+  * ``GET /sapi/v1/managed-subaccount/info``
+  * ``GET /sapi/v1/managed-subaccount/marginAsset``
+  * ``GET /sapi/v1/managed-subaccount/fetch-future-asset``
+  * ``GET /sapi/v1/sub-account/futures/positionRisk``
+  * ``GET /sapi/v1/sub-account/futures/accountSummary``
+  * ``GET /sapi/v1/sub-account/futures/account``
+
+* Trade
+
+  * ``GET /api/v3/myPreventedMatches``
+
+* Wallet
+
+  * ``POST /sapi/v1/capital/deposit/credit-apply``
+
+* Simple Earn
+
+  * ``GET /sapi/v1/simple-earn/flexible/list``
+  * ``GET /sapi/v1/simple-earn/locked/list``
+  * ``POST /sapi/v1/simple-earn/flexible/subscribe``
+  * ``POST /sapi/v1/simple-earn/locked/subscribe``
+  * ``POST /sapi/v1/simple-earn/flexible/redeem``
+  * ``POST /sapi/v1/simple-earn/locked/redeem``
+  * ``GET /sapi/v1/simple-earn/flexible/position``
+  * ``GET /sapi/v1/simple-earn/locked/position``
+  * ``GET /sapi/v1/simple-earn/account``
+  * ``GET /sapi/v1/simple-earn/flexible/history/subscriptionRecord``
+  * ``GET /sapi/v1/simple-earn/locked/history/subscriptionRecord``
+  * ``GET /sapi/v1/simple-earn/flexible/history/redemptionRecord``
+  * ``GET /sapi/v1/simple-earn/locked/history/redemptionRecord``
+  * ``GET /sapi/v1/simple-earn/flexible/history/rewardsRecord``
+  * ``GET /sapi/v1/simple-earn/locked/history/rewardsRecord``
+  * ``POST /sapi/v1/simple-earn/flexible/setAutoSubscribe``
+  * ``POST /sapi/v1/simple-earn/locked/setAutoSubscribe``
+  * ``GET /sapi/v1/simple-earn/flexible/personalLeftQuota``
+  * ``GET /sapi/v1/simple-earn/locked/personalLeftQuota``
+  * ``GET /sapi/v1/simple-earn/flexible/subscriptionPreview``
+  * ``GET /sapi/v1/simple-earn/locked/subscriptionPreview``
+  * ``GET /sapi/v1/simple-earn/flexible/history/rateHistory``
+  * ``GET /sapi/v1/simple-earn/flexible/history/collateralRecord``
+
+Deleted
+^^^^^^^
+
+* ``GET /sapi/v1/lending/daily/product/list``
+* ``GET /sapi/v1/lending/daily/userLeftQuota``
+* ``POST /sapi/v1/lending/daily/purchase``
+* ``GET /sapi/v1/lending/daily/userRedemptionQuota``
+* ``POST /sapi/v1/lending/daily/redeem``
+* ``GET /sapi/v1/lending/daily/token/position``
+* ``GET /sapi/v1/lending/union/account``
+* ``GET /sapi/v1/lending/union/purchaseRecord``
+* ``GET /sapi/v1/lending/union/redemptionRecord``
+* ``GET /sapi/v1/lending/union/interestHistory``
+* ``GET /sapi/v1/lending/project/list``
+* ``POST /sapi/v1/lending/customizedFixed/purchase``
+* ``GET /sapi/v1/lending/project/position/list``
+* ``POST /sapi/v1/lending/positionChanged``
+* ``GET /sapi/v1/futures/loan/borrow/history``
+* ``GET /sapi/v1/futures/loan/repay/history``
+* ``GET /sapi/v2/futures/loan/wallet``
+* ``GET /sapi/v1/futures/loan/adjustCollateral/history``
+* ``GET /sapi/v1/futures/loan/liquidationHistory``
+* ``GET /sapi/v1/futures/loan/interestHistory``
+
+
+Changed
+^^^^^^^
+
+* Change ``Loan`` module name to ``Crypto Loan``
+* Pump dependencies
+
+
+3.3.1 - 2023-08-23
+------------------
+
+Changed
+^^^^^^^
+
+* Add missing enum values in the ``User Universal Transfer`` endpoint
+
+
+3.3.0 - 2023-08-07
+------------------
+
+Changed
+^^^^^^^
+
+* Add support for proxy in Websocket clients
+* Remove support for python 3.7
+
+
+3.2.0 - 2023-08-01
+------------------
+
+Changed
+^^^^^^^
+
+* Changes to ``GET /api/v3/historicalTrades``: api key is not required.
+
+
+3.1.1 - 2023-07-03
+------------------
+
+Changed
+^^^^^^^
+
+* Change ``User-Agent``
+
+3.0.0rc2 - 2023-04-21
+---------------------
+
+Removed
+^^^^^^^
+
+* Removed endpoint ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList``
+* Removed endpoint ``POST /sapi/v1/sub-account/subAccountApi/ipRestriction``
+
+Added
+^^^^^
+
+* ``POST /sapi/v2/sub-account/subAccountApi/ipRestriction``
+* ``GET /sapi/v1/managed-subaccount/deposit/address``
+
+
 3.0.0rc1 - 2023-02-10
 ---------------------
 

@@ -65,3 +65,7 @@ Account Trade List (USER_DATA)
 Query Current Order Count Usage (TRADE)
 ---------------------------------------
 .. autofunction:: binance.spot.Spot.get_order_rate_limit
+
+Query Prevented Matches
+-----------------------
+.. autofunction:: binance.spot.Spot.query_prevented_matches

@@ -73,7 +73,7 @@ Please find `examples` folder to check for more endpoints.
 
 ### Authentication
 
-Binance supports HMAC and RSA API authentication.
+Binance supports HMAC, RSA and ED25519 API authentication.
 
 ```python
 
@@ -85,12 +85,22 @@ print(client.account())
 client = Client(api_key=api_key, private_key=private_key)
 print(client.account())
 
+# ED25519 Keys
+api_key = ""
+private_key = "./private_key.pem"
+private_key_pass = "<password_if_applicable>"
+
+with open(private_key, 'rb') as f:
+    private_key = f.read()
+
+spot_client = Client(api_key=api_key, private_key=private_key, private_key_pass=private_key_pass)
+
 # Encrypted RSA Key
 client = Client(api_key=api_key, private_key=private_key, private_key_pass='password')
 print(client.account())
 ```
-
-Please find `examples/spot/trade/get_account.py` for more details.
+Please find `examples/spot/wallet/account_snapshot.py` for more details on ED25519.
+Please find `examples/spot/trade/get_account.py` for more details on RSA.
 
 ### Testnet
 
@@ -260,6 +270,67 @@ logging.info("closing ws connection")
 my_client.stop()
 ```
 
+#### Proxy
+
+Proxy is supported for both WebSocket API and WebSocket Stream.
+
+To use it, pass in the `proxies` parameter when initializing the client.
+
+The format of the `proxies` parameter is the same as the one used in the Spot RESTful API.
+
+It consists on a dictionary with the following format, where the key is the type of the proxy and the value is the proxy URL:
+
+For websockets, the proxy type is `http`.
+
+```python
+proxies = { 'http': 'http://1.2.3.4:8080' }
+```
+
+You can also use authentication for the proxy by adding the `username` and `password` parameters to the proxy URL:
+
+```python
+proxies = { 'http': 'http://username:password@host:port' }
+```
+
+
+```python
+
+# WebSocket API Client
+from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+proxies = { 'http': 'http://1.2.3.4:8080' }
+
+my_client = SpotWebsocketAPIClient(on_message=message_handler, proxies=proxies)
+
+my_client.ticker(symbol="BNBBUSD", type="FULL")
+
+time.sleep(5)
+logging.info("closing ws connection")
+my_client.stop()
+```
+
+```python
+
+# WebSocket Stream Client
+from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+proxies = { 'http': 'http://1.2.3.4:8080' }
+
+my_client = SpotWebsocketStreamClient(on_message=message_handler, proxies=proxies)
+
+# Subscribe to a single symbol stream
+my_client.agg_trade(symbol="bnbusdt")
+time.sleep(5)
+logging.info("closing ws connection")
+my_client.stop()
+```
+
 #### Request Id
 
 Client can assign a request id to each request. The request id will be returned in the response message. Not mandatory in the library, it generates a uuid format string if not provided.
@@ -272,10 +343,13 @@ my_client.ping_connectivity(id="my_request_id")
 my_client.ping_connectivity()
 ```
 
+#### Combined Streams
+- If you set `is_combined` to `True`, `"/stream/"` will be appended to the `baseURL` to allow for Combining streams.
+- `is_combined` defaults to `False` and `"/ws/"` (raw streams) will be appended to the `baseURL`.
+
 More websocket examples are available in the `examples` folder.
 
 Example file "examples/websocket_api/app_demo.py" demonstrates how Websocket API and Websocket Stream can be used together.
-
 
 ### Connector v1 and v2
 

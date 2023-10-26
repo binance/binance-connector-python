@@ -1,3 +1,5 @@
+from typing import Optional
+
 import logging
 import threading
 from websocket import (
@@ -7,6 +9,7 @@ from websocket import (
     WebSocketConnectionClosedException,
     WebSocketTimeoutException,
 )
+from binance.lib.utils import parse_proxies
 
 
 class BinanceSocketManager(threading.Thread):
@@ -22,6 +25,7 @@ class BinanceSocketManager(threading.Thread):
         on_websocket_error=None,
         logger=None,
         timeout=5,
+        proxies: Optional[dict] = None,
     ):
         threading.Thread.__init__(self)
         if not logger:
@@ -36,14 +40,22 @@ class BinanceSocketManager(threading.Thread):
         self.on_error = on_error
         self.on_websocket_error = on_websocket_error
         self.create_ws_connection(timeout)
+        self.proxies = proxies
+
+        self._proxy_params = parse_proxies(proxies) if proxies else {}
+
+        self.create_ws_connection()
 
     def create_ws_connection(self, timeout):
         self.logger.debug(
-            "Creating connection with WebSocket Server: %s", self.stream_url
+            f"Creating connection with WebSocket Server: {self.stream_url}, proxies: {self.proxies}",
         )
+
         self.ws = create_connection(self.stream_url, timeout=timeout)
+
+        self.ws = create_connection(self.stream_url, **self._proxy_params)
         self.logger.debug(
-            "WebSocket connection has been established: %s", self.stream_url
+            f"WebSocket connection has been established: {self.stream_url}, proxies: {self.proxies}",
         )
         self._callback(self.on_open)
 
@@ -99,7 +111,7 @@ class BinanceSocketManager(threading.Thread):
 
     def close(self):
         if not self.ws.connected:
-            self.logger.warn("Websocket already closed")
+            self.logger.warning("Websocket already closed")
         else:
             self.ws.send_close()
         return
