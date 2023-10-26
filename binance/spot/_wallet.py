@@ -556,12 +556,12 @@ def balance(self, **kwargs):
     Weight(IP): 60
 
     GET /sapi/v1/asset/wallet/balance
-    
+
     https://binance-docs.github.io/apidocs/spot/en/#query-user-wallet-balance-user_data
 
     Keyword Args:
         recvWindow (LONG, optional)
     """
-    
+
     url_path = "/sapi/v1/asset/wallet/balance"
     return self.sign_request("GET", url_path, {**kwargs})

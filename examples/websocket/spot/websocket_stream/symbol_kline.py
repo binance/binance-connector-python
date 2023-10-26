@@ -12,7 +12,12 @@ def message_handler(_, message):
     logging.info(message)
 
 
-my_client = SpotWebsocketStreamClient(on_message=message_handler, is_combined=True)
+my_client = SpotWebsocketStreamClient(
+    on_message=message_handler,
+    is_combined=True,
+    timeout=2,
+    proxies={"https": "http://1.2.3.4:8080"},
+)
 
 
 # subscribe btcusdt 1m kline

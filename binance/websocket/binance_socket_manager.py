@@ -22,9 +22,8 @@ class BinanceSocketManager(threading.Thread):
         on_error=None,
         on_ping=None,
         on_pong=None,
-        on_websocket_error=None,
         logger=None,
-        timeout=5,
+        timeout=None,
         proxies: Optional[dict] = None,
     ):
         threading.Thread.__init__(self)
@@ -38,24 +37,22 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
-        self.on_websocket_error = on_websocket_error
-        self.create_ws_connection(timeout)
-        self.proxies = proxies
+        self.timeout = timeout
 
         self._proxy_params = parse_proxies(proxies) if proxies else {}
 
         self.create_ws_connection()
 
-    def create_ws_connection(self, timeout):
+    def create_ws_connection(self):
         self.logger.debug(
-            f"Creating connection with WebSocket Server: {self.stream_url}, proxies: {self.proxies}",
+            f"Creating connection with WebSocket Server: {self.stream_url}, proxies: {self._proxy_params}",
         )
 
-        self.ws = create_connection(self.stream_url, timeout=timeout)
-
-        self.ws = create_connection(self.stream_url, **self._proxy_params)
+        self.ws = create_connection(
+            self.stream_url, timeout=self.timeout, **self._proxy_params
+        )
         self.logger.debug(
-            f"WebSocket connection has been established: {self.stream_url}, proxies: {self.proxies}",
+            f"WebSocket connection has been established: {self.stream_url}, proxies: {self._proxy_params}",
         )
         self._callback(self.on_open)
 
@@ -81,14 +78,13 @@ class BinanceSocketManager(threading.Thread):
                     self.logger.error("Websocket connection timeout")
                 else:
                     self.logger.error("Websocket exception: {}".format(e))
-                if self.on_websocket_error:
-                    self.on_websocket_error(self, e)
-                    return
-                else:
-                    raise e
+                raise e
             except Exception as e:
                 self.logger.error("Exception in read_data: {}".format(e))
                 raise e
+
+            self._handle_data(op_code, frame, data)
+            self._handle_heartbeat(op_code, frame)
 
             if op_code == ABNF.OPCODE_CLOSE:
                 self.logger.warning(
@@ -96,18 +92,20 @@ class BinanceSocketManager(threading.Thread):
                 )
                 self._callback(self.on_close)
                 break
-            elif op_code == ABNF.OPCODE_PING:
-                self._callback(self.on_ping, frame.data)
-                self.ws.pong("")
-                self.logger.debug("Received Ping; PONG frame sent back")
-            elif op_code == ABNF.OPCODE_PONG:
-                self.logger.debug("Received PONG frame")
-                self._callback(self.on_pong)
-            else:
-                data = frame.data
-                if op_code == ABNF.OPCODE_TEXT:
-                    data = data.decode("utf-8")
-                self._callback(self.on_message, data)
+
+    def _handle_heartbeat(self, op_code, frame):
+        if op_code == ABNF.OPCODE_PING:
+            self._callback(self.on_ping, frame.data)
+            self.ws.pong("")
+            self.logger.debug("Received Ping; PONG frame sent back")
+        elif op_code == ABNF.OPCODE_PONG:
+            self.logger.debug("Received PONG frame")
+            self._callback(self.on_pong)
+
+    def _handle_data(self, op_code, frame, data):
+        if op_code == ABNF.OPCODE_TEXT:
+            data = frame.data.decode("utf-8")
+            self._callback(self.on_message, data)
 
     def close(self):
         if not self.ws.connected:

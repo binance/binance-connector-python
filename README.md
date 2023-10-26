@@ -303,7 +303,7 @@ def message_handler(_, message):
 
 proxies = { 'http': 'http://1.2.3.4:8080' }
 
-my_client = SpotWebsocketAPIClient(on_message=message_handler, proxies=proxies)
+my_client = SpotWebsocketAPIClient(on_message=message_handler, proxies=proxies, timeout=10)
 
 my_client.ticker(symbol="BNBBUSD", type="FULL")
 
@@ -322,7 +322,7 @@ def message_handler(_, message):
 
 proxies = { 'http': 'http://1.2.3.4:8080' }
 
-my_client = SpotWebsocketStreamClient(on_message=message_handler, proxies=proxies)
+my_client = SpotWebsocketStreamClient(on_message=message_handler, proxies=proxies, timeout=10)
 
 # Subscribe to a single symbol stream
 my_client.agg_trade(symbol="bnbusdt")
