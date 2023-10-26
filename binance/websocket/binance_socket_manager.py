@@ -7,6 +7,7 @@ from websocket import (
     create_connection,
     WebSocketException,
     WebSocketConnectionClosedException,
+    WebSocketTimeoutException,
 )
 from binance.lib.utils import parse_proxies
 
@@ -21,7 +22,9 @@ class BinanceSocketManager(threading.Thread):
         on_error=None,
         on_ping=None,
         on_pong=None,
+        on_websocket_error=None,
         logger=None,
+        timeout=5,
         proxies: Optional[dict] = None,
     ):
         threading.Thread.__init__(self)
@@ -35,16 +38,21 @@ class BinanceSocketManager(threading.Thread):
         self.on_ping = on_ping
         self.on_pong = on_pong
         self.on_error = on_error
+        self.on_websocket_error = on_websocket_error
+        self.create_ws_connection(timeout)
         self.proxies = proxies
 
         self._proxy_params = parse_proxies(proxies) if proxies else {}
 
         self.create_ws_connection()
 
-    def create_ws_connection(self):
+    def create_ws_connection(self, timeout):
         self.logger.debug(
             f"Creating connection with WebSocket Server: {self.stream_url}, proxies: {self.proxies}",
         )
+
+        self.ws = create_connection(self.stream_url, timeout=timeout)
+
         self.ws = create_connection(self.stream_url, **self._proxy_params)
         self.logger.debug(
             f"WebSocket connection has been established: {self.stream_url}, proxies: {self.proxies}",
@@ -69,9 +77,15 @@ class BinanceSocketManager(threading.Thread):
             except WebSocketException as e:
                 if isinstance(e, WebSocketConnectionClosedException):
                     self.logger.error("Lost websocket connection")
+                elif isinstance(e, WebSocketTimeoutException):
+                    self.logger.error("Websocket connection timeout")
                 else:
                     self.logger.error("Websocket exception: {}".format(e))
-                raise e
+                if self.on_websocket_error:
+                    self.on_websocket_error(self, e)
+                    return
+                else:
+                    raise e
             except Exception as e:
                 self.logger.error("Exception in read_data: {}".format(e))
                 raise e
