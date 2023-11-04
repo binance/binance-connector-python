@@ -112,7 +112,6 @@ class BinanceSocketManager(threading.Thread):
             self.logger.warning("Websocket already closed")
         else:
             self.ws.send_close()
-        return
 
     def _callback(self, callback, *args):
         if callback:
