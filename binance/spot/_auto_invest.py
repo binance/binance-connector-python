@@ -13,7 +13,7 @@ def get_target_asset_list(self, **kwargs):
 
     Keyword Args:
         targetAsset (str)
-        size (int, optional): Default:10 Max:100
+        size (int, optional): Default:8 Max:100
         current (int, optional): Current querying page. Start from 1. Default:1
         recvWindow (int, optional): The value cannot be greater than 60000
     """
