@@ -2,6 +2,15 @@
 Changelog
 =========
 
+3.5.1 - 2023-11-16
+------------------
+
+Fixed
+^^^^^^^
+
+* Resolve timeout parameter issue in Websocket clients (Issue #273)
+
+
 3.5.0 - 2023-10-26
 ------------------
 
