@@ -1,8 +1,8 @@
 # Changelog
 
-## 3.5.1 - 2023-11-16
+## 3.5.1 - 2023-11-17
 ### Fixed
-- Resolve timeout parameter issue in Websocket clients (Issue #273)
+- Set the default timeout value to None in WebSocket clients
 
 ## 3.5.0 - 2023-10-26
 ### Changed
