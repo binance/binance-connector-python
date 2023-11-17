@@ -1,7 +1,6 @@
 from typing import Optional
 
 from binance.websocket.websocket_client import BinanceWebsocketClient
-from binance.lib.constants import WEBSOCKET_TIMEOUT_IN_SECONDS
 
 
 class SpotWebsocketStreamClient(BinanceWebsocketClient):
@@ -15,7 +14,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         on_ping=None,
         on_pong=None,
         is_combined=False,
-        timeout=WEBSOCKET_TIMEOUT_IN_SECONDS,
+        timeout=None,
         logger=None,
         proxies: Optional[dict] = None,
     ):
