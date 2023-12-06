@@ -88,14 +88,15 @@ def new_order(self, symbol: str, side: str, type: str, **kwargs):
 
     parameters = {"symbol": symbol, "side": side, "type": type, **kwargs}
     parameters = purge_map(parameters)
-
+    id =get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "order.place",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
 
     self.send(payload)
+    return id 
 
 
 def new_order_test(self, symbol: str, side: str, type: str, **kwargs):
@@ -165,15 +166,15 @@ def new_order_test(self, symbol: str, side: str, type: str, **kwargs):
 
     parameters = {"symbol": symbol, "side": side, "type": type, **kwargs}
     parameters = purge_map(parameters)
-
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id",id),
         "method": "order.test",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
 
     self.send(payload)
-
+    return id
 
 def get_order(self, symbol: str, **kwargs):
     """Get order (USER_DATA)
@@ -252,14 +253,15 @@ def get_order(self, symbol: str, **kwargs):
     parameters = {"symbol": symbol, **kwargs}
     parameters = purge_map(parameters)
 
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "order.status",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
 
     self.send(payload)
-
+    return id 
 
 def cancel_order(self, symbol: str, **kwargs):
     """Cancel order (USER_DATA)
@@ -332,15 +334,15 @@ def cancel_order(self, symbol: str, **kwargs):
 
     parameters = {"symbol": symbol, **kwargs}
     parameters = purge_map(parameters)
-
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id",id),
         "method": "order.cancel",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
 
     self.send(payload)
-
+    return id 
 
 def cancel_replace_order(
     self, symbol: str, cancelReplaceMode: str, side: str, type: str, **kwargs
@@ -520,13 +522,14 @@ def cancel_replace_order(
         **kwargs,
     }
     parameters = purge_map(parameters)
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "order.cancelReplace",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
-
+    return id
 
 def get_open_orders(self, **kwargs):
     """Current open orders (USER_DATA)
@@ -596,13 +599,14 @@ def get_open_orders(self, **kwargs):
     """
 
     parameters = purge_map(kwargs)
+    id = get_uuid() 
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "openOrders.status",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
-
+    return id 
 
 def cancel_open_orders(self, symbol: str, **kwargs):
     """Cancel all open orders on a symbol (USER_DATA)
@@ -729,12 +733,14 @@ def cancel_open_orders(self, symbol: str, **kwargs):
     """
 
     parameters = purge_map({"symbol": symbol, **kwargs})
+    id = get_uuid() 
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "openOrders.cancelAll",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
+    return id 
 
 
 def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
@@ -884,13 +890,14 @@ def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
         "quantity": quantity,
         **kwargs,
     }
-
+    id = get_uuid() 
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "orderList.place",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
+    return id 
 
 
 def get_oco_order(self, **kwargs):
@@ -960,13 +967,14 @@ def get_oco_order(self, **kwargs):
     """
 
     parameters = {**kwargs}
-
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "orderList.status",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
+    return id
 
 
 def cancel_oco_order(self, symbol: str, **kwargs):
@@ -1074,13 +1082,14 @@ def cancel_oco_order(self, symbol: str, **kwargs):
     """
 
     parameters = {"symbol": symbol, **kwargs}
-
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "orderList.cancel",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
+    return id 
 
 
 def get_open_oco_orders(self, **kwargs):
@@ -1148,10 +1157,11 @@ def get_open_oco_orders(self, **kwargs):
     """
 
     parameters = {**kwargs}
-
+    id = get_uuid()
     payload = {
-        "id": parameters.pop("id", get_uuid()),
+        "id": parameters.pop("id", id),
         "method": "openOrderLists.status",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)
+    return id 
