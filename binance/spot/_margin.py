@@ -233,7 +233,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
     return self.sign_request("GET", "/sapi/v1/margin/transfer", payload)
 
 
-def margin_load_record(self, asset: str, **kwargs):
+def margin_loan_record(self, asset: str, **kwargs):
     """Query Loan Record (USER_DATA)
 
     GET /sapi/v1/margin/loan
