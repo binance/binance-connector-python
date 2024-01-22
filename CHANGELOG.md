@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.6.0 - 2024-12-22
+## 3.6.0 - 2024-01-22
 ### Removed
 - `POST /sapi/v1/margin/transfer`
 - `POST /sapi/v1/margin/isolated/transfer`
