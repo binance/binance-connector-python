@@ -3,132 +3,75 @@ from binance.lib.utils import check_required_parameters
 from binance.error import ParameterArgumentError
 
 
-def margin_transfer(self, asset: str, amount, type: int, **kwargs):
-    """Margin Account Transfer (MARGIN)
-    Execute transfer between spot account and margin account.
+def borrow_repay(
+    self, asset: str, isIsolated: str, symbol: str, amount, type: str, **kwargs
+):
+    """Margin account borrow/repay (MARGIN)
 
-    POST /sapi/v1/margin/transfer
+    Margin account borrow/repay(MARGIN)
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-transfer-margin
+    POST /sapi/v1/margin/borrow-repay
+
+    https://binance-docs.github.io/apidocs/spot/en/#margin-account-borrow-repay-margin
 
     Args:
         asset (str): The asset being transferred, e.g., BTC.
-        amount (float): The amount to be transferred
-        type (int): 1: transfer from main account to cross margin account
-                    2: transfer from cross margin account to main account
+        isIsolated (str): for isolated margin or not,"TRUE", "FALSE", default "FALSE".
+        symbol (str): isolated symbol
+        amount (float):
+        type (str): BORROW or REPAY
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
-    check_required_parameters([[asset, "asset"], [amount, "amount"], [type, "type"]])
+    check_required_parameters(
+        [
+            [asset, "asset"],
+            [amount, "amount"],
+            [type, "type"],
+            [isIsolated, "isIsolated"],
+            [symbol, "symbol"],
+        ]
+    )
 
-    payload = {"asset": asset, "amount": amount, "type": type, **kwargs}
-    return self.sign_request("POST", "/sapi/v1/margin/transfer", payload)
-
-
-def margin_borrow(self, asset: str, amount, **kwargs):
-    """Margin Account Borrow (MARGIN)
-    Apply for a loan.
-
-    POST /sapi/v1/margin/loan
-
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-borrow-margin
-
-    Args:
-        asset (str): The asset being transferred, e.g., BTC.
-        amount (float): The amount to be transferred
-    Keyword Args:
-        isIsolated (str, optional): for isolated margin or not,"TRUE", "FALSE"，default "FALSE".
-        symbol (str, optional): isolated symbol
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameters([[asset, "asset"], [amount, "amount"]])
-
-    payload = {"asset": asset, "amount": amount, **kwargs}
-    return self.sign_request("POST", "/sapi/v1/margin/loan", payload)
+    payload = {
+        "asset": asset,
+        "amount": amount,
+        "type": type,
+        "isIsolated": isIsolated,
+        "symbol": symbol,
+        **kwargs,
+    }
+    return self.sign_request("POST", "/sapi/v1/margin/borrow-repay", payload)
 
 
-def margin_repay(self, asset: str, amount, **kwargs):
-    """Margin Account Repay(MARGIN)
-    Repay loan for margin account.
-
-    POST /sapi/v1/margin/repay
-
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-repay-margin
-
-    Args:
-        asset (str): The asset being transferred, e.g., BTC.
-        amount (float): The amount to be transferred
-    Keyword Args:
-        isIsolated (str, optional): for isolated margin or not,"TRUE", "FALSE"，default "FALSE".
-        symbol (str, optional): isolated symbol
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameters([[asset, "asset"], [amount, "amount"]])
-
-    payload = {"asset": asset, "amount": amount, **kwargs}
-    return self.sign_request("POST", "/sapi/v1/margin/repay", payload)
-
-
-def margin_asset(self, asset: str):
-    """Query Margin Asset (MARKET_DATA)
-
-    GET /sapi/v1/margin/asset
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-asset-market_data
-
-    Args:
-        asset (str): The asset being transferred, e.g., BTC.
-
-    """
-
-    check_required_parameter(asset, "asset")
-
-    payload = {"asset": asset}
-    return self.limit_request("GET", "/sapi/v1/margin/asset", payload)
-
-
-def margin_pair(self, symbol: str):
-    """Query Margin Pair (MARKET_DATA)
-
-    GET /sapi/v1/margin/pair
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-pair-market_data
-
-    Args:
-        symbol (str)
-    """
-
-    check_required_parameter(symbol, "symbol")
-
-    payload = {"symbol": symbol}
-    return self.limit_request("GET", "/sapi/v1/margin/pair", payload)
-
-
-def margin_all_assets(self):
+def margin_all_assets(self, **kwargs):
     """Get All Margin Assets (MARKET_DATA)
 
     GET /sapi/v1/margin/allAssets
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-assets-market_data
 
+
+    Keyword Args:
+        asset (str, optional)
     """
 
-    return self.limit_request("GET", "/sapi/v1/margin/allAssets")
+    return self.limit_request("GET", "/sapi/v1/margin/allAssets", kwargs)
 
 
-def margin_all_pairs(self):
+def margin_all_pairs(self, **kwargs):
     """Get All Margin Pairs (MARKET_DATA)
 
     GET /sapi/v1/margin/allPairs
 
     https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-pairs-market_data
 
+    Keyword Args:
+        symbol (str, optional)
     """
 
-    return self.limit_request("GET", "/sapi/v1/margin/allPairs")
+    return self.limit_request("GET", "/sapi/v1/margin/allPairs", kwargs)
 
 
 def margin_pair_index(self, symbol: str, **kwargs):
@@ -225,7 +168,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
         endTime (int, optional)
         current (int, optional): Currently querying page. Start from 1. Default:1
         size (int, optional): Default:10 Max:100
-        archived (str, optional): Default: false. Set to true for archived data from 6 months ago
+        isolatedSymbol (str, optional): Symbol in Isolated Margin
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameter(asset, "asset")
@@ -233,54 +176,29 @@ def margin_transfer_history(self, asset: str, **kwargs):
     return self.sign_request("GET", "/sapi/v1/margin/transfer", payload)
 
 
-def margin_loan_record(self, asset: str, **kwargs):
-    """Query Loan Record (USER_DATA)
+def borrow_repay_record(self, type: str, **kwargs):
+    """Query borrow/repay records in Margin account (USER_DATA)
 
-    GET /sapi/v1/margin/loan
+    GET /sapi/v1/margin/borrow-repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-loan-record-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-borrow-repay-records-in-margin-account-user_data
 
     Args:
-        asset (str)
+        type (str): BORROW or REPAY
     Keyword Args:
+        asset (str, optional)
         isolatedSymbol (str, optional): isolated symbol
         txId (int, optional): the tranId in POST /sapi/v1/margin/loan
         startTime (int, optional)
         endTime (int, optional)
         current (int, optional): Currently querying page. Start from 1. Default:1
         size (int, optional): Default:10 Max:100
-        archived (str, optional): Default: false. Set to true for archived data from 6 months ago
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
-    check_required_parameter(asset, "asset")
-    payload = {"asset": asset, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/margin/loan", payload)
-
-
-def margin_repay_record(self, asset: str, **kwargs):
-    """Query Repay Record (USER_DATA)
-
-    GET /sapi/v1/margin/repay
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-repay-record-user_data
-
-    Args:
-        asset (str)
-    Keyword Args:
-        isolatedSymbol (str, optional): isolated symbol
-        txId (int, optional): return of /sapi/v1/margin/repay
-        startTime (int, optional)
-        endTime (int, optional)
-        current (int, optional): Currently querying page. Start from 1. Default:1
-        size (int, optional): Default:10 Max:100
-        archived (str, optional): Default: false. Set to true for archived data from 6 months ago
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameter(asset, "asset")
-    payload = {"asset": asset, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/margin/repay", payload)
+    check_required_parameter(type, "type")
+    payload = {"type": type, **kwargs}
+    return self.sign_request("GET", "/sapi/v1/margin/borrow-repay", payload)
 
 
 def margin_interest_history(self, **kwargs):
@@ -479,72 +397,6 @@ def margin_max_transferable(self, asset: str, **kwargs):
     return self.sign_request("GET", "/sapi/v1/margin/maxTransferable", payload)
 
 
-def isolated_margin_transfer(
-    self, asset: str, symbol: str, transFrom: str, transTo: str, amount, **kwargs
-):
-    """Isolated Margin Account Transfer (MARGIN)
-
-    POST /sapi/v1/margin/isolated/transfer
-
-    https://binance-docs.github.io/apidocs/spot/en/#isolated-margin-account-transfer-margin
-
-    Args:
-        asset (str)
-        symbol (str)
-        amount (float)
-        transFrom (str): "SPOT", "ISOLATED_MARGIN"
-        transTo (str): "SPOT", "ISOLATED_MARGIN"
-    Keyword Args:
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameters(
-        [
-            [asset, "asset"],
-            [symbol, "symbol"],
-            [transFrom, "transFrom"],
-            [transTo, "transTo"],
-            [amount, "amount"],
-        ]
-    )
-
-    payload = {
-        "asset": asset,
-        "symbol": symbol,
-        "transFrom": transFrom,
-        "transTo": transTo,
-        "amount": amount,
-        **kwargs,
-    }
-    return self.sign_request("POST", "/sapi/v1/margin/isolated/transfer", payload)
-
-
-def isolated_margin_transfer_history(self, symbol: str, **kwargs):
-    """Get Isolated Margin Transfer History (USER_DATA)
-
-    GET /sapi/v1/margin/isolated/transfer
-
-    https://binance-docs.github.io/apidocs/spot/en/#get-isolated-margin-transfer-history-user_data
-
-    Args:
-        symbol (str)
-    Keyword Args:
-        asset (str, optional): asset,such as BTC
-        transFrom (str, optional): "SPOT", "ISOLATED_MARGIN"
-        transTo (str, optional): "SPOT", "ISOLATED_MARGIN"
-        startTime (int, optional)
-        endTime (int, optional)
-        current (int, optional): Currently querying page. Start from 1. Default:1
-        size (int, optional): Default:10 Max:100
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameter(symbol, "symbol")
-
-    payload = {"symbol": symbol, **kwargs}
-    return self.sign_request("GET", "/sapi/v1/margin/isolated/transfer", payload)
-
-
 def isolated_margin_account(self, **kwargs):
     """Query Isolated Margin Account Info (USER_DATA)
 
@@ -560,26 +412,6 @@ def isolated_margin_account(self, **kwargs):
     return self.sign_request("GET", "/sapi/v1/margin/isolated/account", kwargs)
 
 
-def isolated_margin_pair(self, symbol: str, **kwargs):
-    """Query Isolated Margin Symbol (USER_DATA)
-
-    GET /sapi/v1/margin/isolated/pair
-
-    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
-
-    Args:
-        symbol (str)
-    Keyword Args:
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameter(symbol, "symbol")
-
-    payload = {"symbol": symbol, **kwargs}
-
-    return self.sign_request("GET", "/sapi/v1/margin/isolated/pair", payload)
-
-
 def isolated_margin_all_pairs(self, **kwargs):
     """Get All Isolated Margin Symbol(USER_DATA)
 
@@ -588,6 +420,7 @@ def isolated_margin_all_pairs(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-user_data
 
     Keyword Args:
+        symbol (str, optional)
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -924,27 +757,6 @@ def margin_order_usage(self, **kwargs):
     return self.sign_request("GET", "/sapi/v1/margin/rateLimit/order", kwargs)
 
 
-def margin_dust_log(self, **kwargs):
-    """Margin Dust Log (USER_DATA)
-
-    Query the historical information of user's margin account small-value asset conversion BNB.
-
-    Weight(IP): 1
-
-    GET /sapi/v1/margin/dribblet
-
-    https://binance-docs.github.io/apidocs/spot/en/#margin-dustlog-user_data
-
-    Keyword Args:
-        startTime (int, optional): UTC timestamp in ms
-        endTime (int, optional): UTC timestamp in ms
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    url_path = "/sapi/v1/margin/dribblet"
-    return self.sign_request("GET", url_path, {**kwargs})
-
-
 def summary_of_margin_account(self, **kwargs):
     """Get Summary of Margin account (USER_DATA)
     Get personal margin level information
@@ -1046,48 +858,6 @@ def get_a_future_hourly_interest_rate(self, assets: str, isIsolated: bool, **kwa
     params = {"assets": assets, "isIsolated": isIsolated, **kwargs}
     url_path = "/sapi/v1/margin/next-hourly-interest-rate"
     return self.sign_request("GET", url_path, params)
-
-
-def get_assets_that_can_be_converted_into_bnb(self, **kwargs):
-    """Get Assets That Can Be Converted Into BNB (USER_DATA)
-
-    Get assets that can be converted into BNB.
-
-    Weight(IP): 100
-
-    GET /sapi/v1/margin/dust
-
-    https://binance-docs.github.io/apidocs/spot/en/#get-assets-that-can-be-converted-into-bnb-user_data-2
-
-    Keyword Args:
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    url_path = "/sapi/v1/margin/dust"
-    return self.sign_request("GET", url_path, {**kwargs})
-
-
-def dust_transfer(self, asset: str, **kwargs):
-    """Dust Transfer (TRADE)
-
-    Convert dust assets to BNB
-
-    Weight(UID): 3000
-
-    POST /sapi/v1/margin/dust
-
-    https://binance-docs.github.io/apidocs/spot/en/#dust-transfer-trade
-
-    Args:
-        asset (str)
-    Keyword Args:
-        recvWindow (int, optional): The value cannot be greater than 60000
-    """
-    check_required_parameter(asset, "asset")
-
-    params = {"asset": asset, **kwargs}
-    url_path = "/sapi/v1/margin/dust"
-    return self.sign_request("POST", url_path, params)
 
 
 def adjust_cross_margin_max_leverage(self, maxLeverage: int, **kwargs):

@@ -10,12 +10,4 @@ config_logging(logging, logging.DEBUG)
 api_key, api_secret = get_api_key()
 
 client = Client(api_key, api_secret)
-logging.info(
-    client.isolated_margin_transfer(
-        asset="USDT",
-        symbol="BTCUSDT",
-        transFrom="SPOT",
-        transTo="ISOLATED_MARGIN",
-        amount=1,
-    )
-)
+logging.info(client.borrow_repay_record(type="BORROW"))

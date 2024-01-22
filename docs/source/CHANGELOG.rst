@@ -2,11 +2,46 @@
 Changelog
 =========
 
+3.6.0 - 2024-12-22
+------------------
+
+Removed
+^^^^^^^
+
+* ``POST /sapi/v1/margin/transfer``
+* ``POST /sapi/v1/margin/isolated/transfer``
+* ``POST /sapi/v1/margin/loan``
+* ``POST /sapi/v1/margin/repay``
+* ``GET /sapi/v1/margin/isolated/transfer``
+* ``GET /sapi/v1/margin/asset``
+* ``GET /sapi/v1/margin/pair``
+* ``GET /sapi/v1/margin/isolated/pair``
+* ``GET /sapi/v1/margin/loan``
+* ``GET /sapi/v1/margin/repay``
+* ``GET /sapi/v1/margin/dribblet``
+* ``GET /sapi/v1/margin/dust``
+* ``POST /sapi/v1/margin/dust``
+
+Added
+^^^^^
+
+* ``POST /sapi/v1/margin/borrow-repay``
+* ``GET /sapi/v1/margin/borrow-repay``
+
+Updated
+^^^^^^^
+
+* ``GET /sapi/v1/margin/transfer`` add parameter ``isolatedSymbol``
+* ``GET /sapi/v1/margin/allAssets`` add parameter ``asset``
+* ``GET /sapi/v1/margin/allPairs`` add parameter ``symbol``
+* ``GET /sapi/v1/margin/isolated/allPairs`` add parameter ``symbol``
+
+
 3.5.1 - 2023-11-17
 ------------------
 
 Fixed
-^^^^^^^
+^^^^^
 
 * Set the default timeout value to None in WebSocket clients
 

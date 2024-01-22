@@ -1,25 +1,9 @@
 Margin Endpoints
 ================
 
-Margin Account Transfer (MARGIN)
---------------------------------
-.. autofunction:: binance.spot.Spot.margin_transfer
-
-Margin Account Borrow (MARGIN)
-------------------------------
-.. autofunction:: binance.spot.Spot.margin_borrow
-
-Margin Account Repay(MARGIN)
-----------------------------
-.. autofunction:: binance.spot.Spot.margin_repay
-
-Query Margin Asset (MARKET_DATA)
---------------------------------
-.. autofunction:: binance.spot.Spot.margin_asset
-
-Query Margin Pair (MARKET_DATA)
--------------------------------
-.. autofunction:: binance.spot.Spot.margin_pair
+Margin Account Borrow/Repay (MARGIN)
+------------------------------------
+.. autofunction:: binance.spot.Spot.borrow_repay
 
 Get All Margin Assets (MARKET_DATA)
 -----------------------------------
@@ -45,13 +29,9 @@ Get Transfer History (USER_DATA)
 --------------------------------
 .. autofunction:: binance.spot.Spot.margin_transfer_history
 
-Query Loan Record (USER_DATA)
------------------------------
-.. autofunction:: binance.spot.Spot.margin_load_record
-
-Query Repay Record (USER_DATA)
---------------------------------
-.. autofunction:: binance.spot.Spot.margin_repay_record
+Query borrow/repay records in Margin account (USER_DATA)
+--------------------------------------------------------
+.. autofunction:: binance.spot.Spot.borrow_repay_record
 
 Get Interest History (USER_DATA)
 --------------------------------
@@ -93,21 +73,9 @@ Query Max Transfer-Out Amount (USER_DATA)
 -----------------------------------------
 .. autofunction:: binance.spot.Spot.margin_max_transferable
 
-Isolated Margin Account Transfer (MARGIN)
------------------------------------------
-.. autofunction:: binance.spot.Spot.isolated_margin_transfer
-
-Get Isolated Margin Transfer History (USER_DATA)
-------------------------------------------------
-.. autofunction:: binance.spot.Spot.isolated_margin_transfer_history
-
 Query Isolated Margin Account Info (USER_DATA)
 ----------------------------------------------
 .. autofunction:: binance.spot.Spot.isolated_margin_account
-
-Query Isolated Margin Symbol (USER_DATA)
-----------------------------------------
-.. autofunction:: binance.spot.Spot.isolated_margin_pair
 
 Get All Isolated Margin Symbol(USER_DATA)
 -----------------------------------------
@@ -172,10 +140,6 @@ Query Isolated Margin Tier Data (USER_DATA)
 Query Current Margin Order Count Usage (TRADE)
 ----------------------------------------------
 .. autofunction:: binance.spot.Spot.margin_order_usage
-
-Margin Dust Log (USER_DATA)
----------------------------
-.. autofunction:: binance.spot.Spot.margin_dust_log
 
 Get Summary of Margin account (USER_DATA)
 -----------------------------------------
