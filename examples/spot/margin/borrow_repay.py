@@ -10,4 +10,9 @@ config_logging(logging, logging.DEBUG)
 api_key, api_secret = get_api_key()
 
 client = Client(api_key, api_secret)
-logging.info(client.margin_asset(asset="BNB"))
+
+logging.info(
+    client.borrow_repay(
+        asset="BNB", isIsolated="TRUE", symbol="BNBUSDT", amount="0.001", type="BORROW"
+    )
+)

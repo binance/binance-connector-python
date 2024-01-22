@@ -54,19 +54,14 @@ class Spot(API):
     from binance.spot._data_stream import close_isolated_margin_listen_key
 
     # MARGIN
-    from binance.spot._margin import margin_transfer
-    from binance.spot._margin import margin_borrow
-    from binance.spot._margin import margin_repay
-    from binance.spot._margin import margin_asset
-    from binance.spot._margin import margin_pair
+    from binance.spot._margin import borrow_repay
     from binance.spot._margin import margin_all_assets
     from binance.spot._margin import margin_all_pairs
     from binance.spot._margin import margin_pair_index
     from binance.spot._margin import new_margin_order
     from binance.spot._margin import cancel_margin_order
     from binance.spot._margin import margin_transfer_history
-    from binance.spot._margin import margin_load_record
-    from binance.spot._margin import margin_repay_record
+    from binance.spot._margin import borrow_repay_record
     from binance.spot._margin import margin_interest_history
     from binance.spot._margin import margin_force_liquidation_record
     from binance.spot._margin import margin_account
@@ -77,10 +72,7 @@ class Spot(API):
     from binance.spot._margin import margin_my_trades
     from binance.spot._margin import margin_max_borrowable
     from binance.spot._margin import margin_max_transferable
-    from binance.spot._margin import isolated_margin_transfer
-    from binance.spot._margin import isolated_margin_transfer_history
     from binance.spot._margin import isolated_margin_account
-    from binance.spot._margin import isolated_margin_pair
     from binance.spot._margin import isolated_margin_all_pairs
     from binance.spot._margin import toggle_bnbBurn
     from binance.spot._margin import bnbBurn_status
@@ -97,14 +89,11 @@ class Spot(API):
     from binance.spot._margin import isolated_margin_fee
     from binance.spot._margin import isolated_margin_tier
     from binance.spot._margin import margin_order_usage
-    from binance.spot._margin import margin_dust_log
     from binance.spot._margin import summary_of_margin_account
     from binance.spot._margin import cross_margin_collateral_ratio
     from binance.spot._margin import get_small_liability_exchange_coin_list
     from binance.spot._margin import get_small_liability_exchange_history
     from binance.spot._margin import get_a_future_hourly_interest_rate
-    from binance.spot._margin import get_assets_that_can_be_converted_into_bnb
-    from binance.spot._margin import dust_transfer
     from binance.spot._margin import adjust_cross_margin_max_leverage
 
     # Staking
