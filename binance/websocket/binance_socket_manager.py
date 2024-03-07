@@ -78,10 +78,12 @@ class BinanceSocketManager(threading.Thread):
                     self.logger.error("Websocket connection timeout")
                 else:
                     self.logger.error("Websocket exception: {}".format(e))
-                raise e
+                self._handle_exception(e)
+                break
             except Exception as e:
                 self.logger.error("Exception in read_data: {}".format(e))
-                raise e
+                self._handle_exception(e)
+                break
 
             self._handle_data(op_code, frame, data)
             self._handle_heartbeat(op_code, frame)
@@ -112,7 +114,6 @@ class BinanceSocketManager(threading.Thread):
             self.logger.warning("Websocket already closed")
         else:
             self.ws.send_close()
-        return
 
     def _callback(self, callback, *args):
         if callback:
@@ -120,5 +121,10 @@ class BinanceSocketManager(threading.Thread):
                 callback(self, *args)
             except Exception as e:
                 self.logger.error("Error from callback {}: {}".format(callback, e))
-                if self.on_error:
-                    self.on_error(self, e)
+                self._handle_exception(e)
+
+    def _handle_exception(self, e):
+        if self.on_error:
+            self.on_error(self, e)
+        else:
+            raise e
