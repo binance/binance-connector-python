@@ -126,7 +126,9 @@ def parse_proxies(proxies: dict):
     return {
         "http_proxy_host": parsed.hostname,
         "http_proxy_port": parsed.port,
-        "http_proxy_auth": (parsed.username, parsed.password)
-        if parsed.username and parsed.password
-        else None,
+        "http_proxy_auth": (
+            (parsed.username, parsed.password)
+            if parsed.username and parsed.password
+            else None
+        ),
     }

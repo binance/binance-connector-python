@@ -396,7 +396,7 @@ ws_client = WebsocketClient(stream_url='wss://testnet.binance.vision')
 # In case packages are not installed yet
 pip install -r requirements/requirements-test.txt
 
-pytest
+python -m pytest tests/
 ```
 
 ## Limitation
