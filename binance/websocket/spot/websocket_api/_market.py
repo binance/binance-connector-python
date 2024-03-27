@@ -223,7 +223,7 @@ def exchange_info(self, **kwargs):
             "Only one of symbol, symbols or permissions is required."
         )
 
-    payload = {"id": parameters.pop("id", get_uuid()), "method": "exchangeInfo"}
+    payload = {"id": parameters.pop("id", get_uuid()), "method": "exchangeInfo", "params": parameters}
 
     self.send(payload)
 
