@@ -442,7 +442,7 @@ def get_order_rate_limit(self, **kwargs):
 
 
 def query_prevented_matches(self, symbol: str, **kwargs):
-    """Query Prevented Matches
+    """Query Prevented Matches (USER_DATA)
 
     Displays the list of orders that were expired because of STP.
 
@@ -479,4 +479,47 @@ def query_prevented_matches(self, symbol: str, **kwargs):
 
     params = {"symbol": symbol, **kwargs}
     url_path = "/api/v3/myPreventedMatches"
+    return self.sign_request("GET", url_path, params)
+
+
+def query_allocations(self, symbol: str, **kwargs):
+    """Query Cross-Collateral Information (USER_DATA)
+
+    GET /api/v3/myAllocations
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-allocations-user_data
+
+    Args:
+        symbol (str)
+    Keyword Args:
+        startTime (int, optional)
+        endTime (int, optional)
+        fromAllocationId (int, optional)
+        limit (int, optional): Default Value: 500; Max Value: 1000
+        orderId (int, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(symbol, "symbol")
+
+    params = {"symbol": symbol, **kwargs}
+    url_path = "/api/v3/myAllocations"
+    return self.sign_request("GET", url_path, params)
+
+
+def query_commission_rates(self, symbol: str, **kwargs):
+    """Query Commission Rates (USER_DATA)
+
+    GET /api/v3/account/commission
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-commission-rates-user_data
+
+    Args:
+        symbol (str)
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(symbol, "symbol")
+
+    params = {"symbol": symbol, **kwargs}
+    url_path = "/api/v3/account/commission"
     return self.sign_request("GET", url_path, params)

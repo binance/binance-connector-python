@@ -45,6 +45,10 @@ Current Average Price
 -----------------------------------
 .. autofunction:: binance.spot.Spot.ticker_24hr
 
+Trading Day Ticker
+------------------
+.. autofunction:: binance.spot.Spot.trading_day_ticker
+
 Symbol Price Ticker
 -------------------
 .. autofunction:: binance.spot.Spot.ticker_price

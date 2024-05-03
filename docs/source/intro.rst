@@ -89,15 +89,19 @@ RESTful APIs
 
 .. code-block:: python
 
+   import logging
    from binance.spot import Spot
+   from binance.lib.utils import config_logging
+
+   config_logging(logging, logging.DEBUG)
 
    client = Spot()
-   print(client.time())
+   logging.info(client.time())
 
    client = Spot(api_key='<api_key>', api_secret='<api_secret>')
 
    # Get account information
-   print(client.account())
+   logging.info(client.account())
 
    # Post a new order
    params = {
@@ -110,7 +114,7 @@ RESTful APIs
    }
 
    response = client.new_order(**params)
-   print(response)
+   logging.info(response)
 
 Please find `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder to check for more endpoints.
 
@@ -120,24 +124,27 @@ Websocket
 
 .. code-block:: python
 
-   from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+   import logging
+   from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
+
+   def on_close(_):
+       logging.info("Do custom stuff when connection is closed")
 
    def message_handler(message):
        print(message)
 
-   ws_client = WebsocketClient()
-   ws_client.start()
+   ws_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
 
-   ws_client.mini_ticker(
+   ws_client.ticker(
        symbol='bnbusdt',
-       id=1,
-       callback=message_handler,
+       type="FULL",
    )
 
    # Combine selected streams
-   ws_client.instant_subscribe(
-       stream=['bnbusdt@bookTicker', 'ethusdt@bookTicker'],
-       callback=message_handler,
+   ws_client.ticker(
+       symbols=["BNBBUSD", "BTCUSDT"],
+       type="MINI",
+       windowSize="2h",
    )
 
    ws_client.stop()

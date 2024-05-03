@@ -5,7 +5,6 @@ Spot APIs
    :maxdepth: 2
 
    binance.spot.blvt
-   binance.spot.bswap
    binance.spot.c2c
    binance.spot.convert
    binance.spot.data_stream
@@ -20,7 +19,6 @@ Spot APIs
    binance.spot.pay
    binance.spot.portfolio_margin
    binance.spot.rebate
-   binance.spot.staking
    binance.spot.sub_account
    binance.spot.trade
    binance.spot.wallet

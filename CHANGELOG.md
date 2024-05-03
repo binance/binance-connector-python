@@ -1,5 +1,74 @@
 # Changelog
 
+## 3.7.0 - 2024-05-03
+### Added
+- Convert
+  - `POST /sapi/v1/convert/limit/placeOrder`
+  - `POST /sapi/v1/convert/limit/cancelOrder`
+  - `GET /sapi/v1/convert/limit/queryOpenOrders`
+
+- Margin
+  - `GET /sapi/v1/margin/available-inventory`
+  - `POST /sapi/v1/margin/manual-liquidation`
+  - `GET /sapi/v1/margin/leverageBracket`
+
+- Market
+  - `GET /api/v3/ticker/tradingDay`
+
+- Trade
+  - `GET /api/v3/myAllocations`
+  - `GET /api/v3/account/commission`
+
+- Wallet
+  - `GET /sapi/v1/capital/deposit/address/list`
+  - `GET /sapi/v1/spot/delist-schedule`
+
+### Updated
+- `POST /sapi/v1/asset/dust-btc` add parameter `accountType`
+- `POST /sapi/v1/asset/dust` add parameter `accountType`
+- `GET /sapi/v1/asset/dribblet` add parameter `accountType`
+- `POST /sapi/v1/margin/order/oco`: New enumerate value `AUTO_BORROW_REPAY` for the field of `sideEffectType`
+- `POST /sapi/v1/margin/order`: New enumerate value `AUTO_BORROW_REPAY` for the field of `sideEffectType`
+- Update documentation
+- Add new handle exception in websocket read_data
+
+### Removed
+- Bswap
+  - `GET /sapi/v1/bswap/pools`
+  - `GET /sapi/v1/bswap/liquidity`
+  - `POST /sapi/v1/bswap/liquidityAdd`
+  - `POST /sapi/v1/bswap/liquidityRemove`
+  - `GET /sapi/v1/bswap/liquidityOps`
+  - `GET /sapi/v1/bswap/quote`
+  - `POST /sapi/v1/bswap/swap`
+  - `GET /sapi/v1/bswap/swap`
+  - `GET /sapi/v1/bswap/poolConfigure`
+  - `GET /sapi/v1/bswap/addLiquidityPreview`
+  - `GET /sapi/v1/bswap/removeLiquidityPreview`
+  - `GET /sapi/v1/bswap/unclaimedRewards`
+  - `POST /sapi/v1/bswap/claimRewards`
+  - `GET /sapi/v1/bswap/claimedHistory`
+
+- Loan
+  - `POST /sapi/v1/loan/flexible/borrow`
+  - `GET /sapi/v1/loan/flexible/ongoing/orders`
+  - `GET /sapi/v1/loan/flexible/borrow/history`
+  - `POST /sapi/v1/loan/flexible/repay`
+  - `GET /sapi/v1/loan/flexible/repay/history`
+  - `POST /sapi/v1/loan/flexible/adjust/ltv`
+  - `GET /sapi/v1/loan/flexible/ltv/adjustment/history`
+  - `GET /sapi/v1/loan/flexible/loanable/data`
+  - `GET /sapi/v1/loan/flexible/collateral/data`
+
+- Staking
+  - `GET /sapi/v1/staking/productList`
+  - `POST /sapi/v1/staking/purchase`
+  - `POST /sapi/v1/staking/redeem`
+  - `GET /sapi/v1/staking/position`
+  - `GET /sapi/v1/staking/stakingRecord`
+  - `POST /sapi/v1/staking/setAutoStaking`
+  - `GET /sapi/v1/staking/personalLeftQuota`
+
 ## 3.6.0 - 2024-03-07
 ### Removed
 - `POST /sapi/v1/margin/transfer`

@@ -218,6 +218,9 @@ def dust_log(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#dustlog-sapi-user_data
 
     Keyword Args:
+        accountType (str, optional): SPOT or MARGIN, default SPOT
+        startTime (int, optional)
+        endTime (int, optional)
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -281,6 +284,7 @@ def transfer_dust(self, asset: list, **kwargs):
     Args:
         asset (str)
     Keyword Args:
+        accountType (str, optional): SPOT or MARGIN, default SPOT
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -400,6 +404,7 @@ def bnb_convertible_assets(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#get-assets-that-can-be-converted-into-bnb-user_data
 
     Keyword Args:
+        accountType (str, optional): SPOT or MARGIN, default SPOT
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -433,6 +438,23 @@ def toggle_auto_convertion(self, coin: str, enable: bool, **kwargs):
     return self.sign_request(
         "POST", "/sapi/v1/capital/contract/convertible-coins", payload
     )
+
+
+def list_deposit_address(self, coin: str, **kwargs):
+    """Fetch deposit address list with network(USER_DATA)
+
+    GET /sapi/v1/capital/deposit/address/list
+
+    https://binance-docs.github.io/apidocs/spot/en/#fetch-deposit-address-list-with-network-user_data
+
+    Args:
+        coin (str): coin refers to the parent network address format that the address is using
+    Keyword Args:
+        network (str, optional)
+    """
+    check_required_parameter(coin, "coin")
+    payload = {"coin": coin, **kwargs}
+    return self.sign_request("GET", "/sapi/v1/capital/deposit/address/list", payload)
 
 
 def cloud_mining_trans_history(self, startTime: int, endTime: int, **kwargs):
@@ -560,8 +582,23 @@ def balance(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-user-wallet-balance-user_data
 
     Keyword Args:
-        recvWindow (LONG, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
     """
 
     url_path = "/sapi/v1/asset/wallet/balance"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
+def delist_schedule_symbols(self, **kwargs):
+    """Get symbols delist schedule for spot (MARKET_DATA)
+
+    GET /sapi/v1/spot/delist-schedule
+
+    https://binance-docs.github.io/apidocs/spot/en/#get-symbols-delist-schedule-for-spot-market_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+
+    url_path = "/sapi/v1/spot/delist-schedule"
     return self.sign_request("GET", url_path, {**kwargs})
