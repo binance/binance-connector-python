@@ -96,15 +96,6 @@ class Spot(API):
     from binance.spot._margin import get_a_future_hourly_interest_rate
     from binance.spot._margin import adjust_cross_margin_max_leverage
 
-    # Staking
-    from binance.spot._staking import staking_product_list
-    from binance.spot._staking import staking_purchase_product
-    from binance.spot._staking import staking_redeem_product
-    from binance.spot._staking import staking_product_position
-    from binance.spot._staking import staking_history
-    from binance.spot._staking import staking_set_auto_staking
-    from binance.spot._staking import staking_product_quota
-
     # WALLET
     from binance.spot._wallet import system_status
     from binance.spot._wallet import coin_info
@@ -212,22 +203,6 @@ class Spot(API):
     from binance.spot._blvt import redemption_record
     from binance.spot._blvt import user_limit_info
 
-    # BSwap
-    from binance.spot._bswap import bswap_pools
-    from binance.spot._bswap import bswap_liquidity
-    from binance.spot._bswap import bswap_liquidity_add
-    from binance.spot._bswap import bswap_liquidity_remove
-    from binance.spot._bswap import bswap_liquidity_operation_record
-    from binance.spot._bswap import bswap_request_quote
-    from binance.spot._bswap import bswap_swap
-    from binance.spot._bswap import bswap_swap_history
-    from binance.spot._bswap import bswap_pool_configure
-    from binance.spot._bswap import bswap_add_liquidity_preview
-    from binance.spot._bswap import bswap_remove_liquidity_preview
-    from binance.spot._bswap import bswap_unclaimed_rewards
-    from binance.spot._bswap import bswap_claim_rewards
-    from binance.spot._bswap import bswap_claimed_rewards
-
     # FIAT
     from binance.spot._fiat import fiat_order_history
     from binance.spot._fiat import fiat_payment_history
@@ -252,15 +227,6 @@ class Spot(API):
     from binance.spot._crypto_loan import loan_collateral_data
     from binance.spot._crypto_loan import loan_collateral_rate
     from binance.spot._crypto_loan import loan_customize_margin_call
-    from binance.spot._crypto_loan import flexible_loan_adjust_ltv
-    from binance.spot._crypto_loan import flexible_loan_assets_data
-    from binance.spot._crypto_loan import flexible_loan_borrow_history
-    from binance.spot._crypto_loan import flexible_loan_borrow
-    from binance.spot._crypto_loan import flexible_loan_collateral_assets_data
-    from binance.spot._crypto_loan import flexible_loan_ltv_adjustment_history
-    from binance.spot._crypto_loan import flexible_loan_ongoing_orders
-    from binance.spot._crypto_loan import flexible_loan_repay
-    from binance.spot._crypto_loan import flexible_loan_repayment_history
 
     # PAY
     from binance.spot._pay import pay_history
