@@ -66,6 +66,14 @@ Query Current Order Count Usage (TRADE)
 ---------------------------------------
 .. autofunction:: binance.spot.Spot.get_order_rate_limit
 
-Query Prevented Matches
------------------------
+Query Prevented Matches (USER_DATA)
+-----------------------------------
 .. autofunction:: binance.spot.Spot.query_prevented_matches
+
+Query Cross-Collateral Information (USER_DATA)
+----------------------------------------------
+.. autofunction:: binance.spot.Spot.query_allocations
+
+Query Commission Rates (USER_DATA)
+----------------------------------
+.. autofunction:: binance.spot.Spot.query_commission_rates

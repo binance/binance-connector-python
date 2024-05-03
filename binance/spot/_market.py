@@ -228,6 +228,28 @@ def ticker_24hr(self, symbol: str = None, symbols: list = None, **kwargs):
     return self.query("/api/v3/ticker/24hr", params)
 
 
+def trading_day_ticker(self, symbol: str = None, symbols: list = None):
+    """Trading Day Ticker
+
+    GET /api/v3/ticker/tradingDay
+
+    https://binance-docs.github.io/apidocs/spot/en/#trading-day-ticker
+
+    Args:
+        symbol (str, optional): Either symbol or symbols must be provided
+        symbols (list, optional): list of trading pairs
+    Keyword Args:
+        timeZone (str, optional): Default: 0 (UTC)
+        type (str, optional): Supported values: FULL or MINI. If none provided, the default is FULL.
+    """
+    if symbol and symbols:
+        raise ParameterArgumentError("symbol and symbols cannot be sent together.")
+
+    check_type_parameter(symbols, "symbols", list)
+    params = {"symbol": symbol, "symbols": convert_list_to_json_array(symbols)}
+    return self.query("/api/v3/ticker/tradingDay", params)
+
+
 def ticker_price(self, symbol: str = None, symbols: list = None):
     """Symbol Price Ticker
 

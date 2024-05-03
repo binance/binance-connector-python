@@ -112,9 +112,9 @@ def new_margin_order(self, symbol: str, side: str, type: str, **kwargs):
         icebergQty (float, optional): Used with LIMIT, STOP_LOSS_LIMIT and TAKE_PROFIT_LIMIT to create an iceberg order.
         newOrderRespType (str, optional): Set the response JSON. ACK, RESULT or FULL;
                 MARKET and LIMIT order types default to FULL, all other orders default to ACK.
-        sideEffectType (str, optional): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
+        sideEffectType (str, optional): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT.
         timeInForce (str, optional): GTC,IOC,FOK
-        isIsolated (str, optional): for isolated margin or not,"TRUE", "FALSE"，default "FALSE".
+        isIsolated (str, optional): for isolated margin or not,"TRUE", "FALSE" default "FALSE".
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -512,7 +512,7 @@ def new_margin_oco_order(
         stopIcebergQty (float, optional)
         stopLimitTimeInForce (str, optional): Valid values are GTC/FOK/IOC
         newOrderRespType (str, optional): Set the response JSON
-        sideEffectType (str, optional): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT
+        sideEffectType (str, optional): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
@@ -630,7 +630,7 @@ def get_margin_open_oco_orders(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-oco-user_data
 
     Keyword Args:
-        isIsolated (str, optional): For isolated margin or not "TRUE", "FALSE"，default "FALSE"
+        isIsolated (str, optional): For isolated margin or not "TRUE", "FALSE" default "FALSE"
         symbol (str, optional): Mandatory for isolated margin, not supported for cross margin
         recvWindow (int, optional): The value cannot be greater than 60000
     """
@@ -881,3 +881,51 @@ def adjust_cross_margin_max_leverage(self, maxLeverage: int, **kwargs):
     params = {"maxLeverage": maxLeverage, **kwargs}
     url_path = "/sapi/v1/margin/max-leverage"
     return self.sign_request("POST", url_path, params)
+
+
+def margin_available_inventory(self, type: str, **kwargs):
+    """Query Margin Available Inventory (USER_DATA)
+
+    GET /sapi/v1/margin/available-inventory
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-margin-available-inventory-user_data
+
+    Args:
+        type (str): "MARGIN", "ISOLATED"
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(type, "type")
+    payload = {"type": type, **kwargs}
+    return self.sign_request("GET", "/sapi/v1/margin/available-inventory", payload)
+
+
+def margin_manual_liquidation(self, type: str, **kwargs):
+    """Margin manual liquidation(MARGIN)
+
+    POST /sapi/v1/margin/manual-liquidation
+
+    https://binance-docs.github.io/apidocs/spot/en/#margin-manual-liquidation-margin
+
+    Args:
+        type (str): "MARGIN", "ISOLATED"
+    Keyword Args:
+        symbol (str, optional): When type selects ISOLATED, symbol must be filled in
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters([[type, "type"]])
+    payload = {"type": type, **kwargs}
+    return self.sign_request("POST", "/sapi/v1/margin/manual-liquidation", payload)
+
+
+def liability_coin_leverage_bracket(self, **kwargs):
+    """Query Liability Coin Leverage Bracket in Cross Margin Pro Mode(MARKET_DATA)
+
+    GET /sapi/v1/margin/leverageBracket
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-liability-coin-leverage-bracket-in-cross-margin-pro-mode-market_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    return self.sign_request("GET", "/sapi/v1/margin/leverageBracket", kwargs)

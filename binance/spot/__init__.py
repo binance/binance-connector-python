@@ -19,6 +19,7 @@ class Spot(API):
     from binance.spot._market import ui_klines
     from binance.spot._market import avg_price
     from binance.spot._market import ticker_24hr
+    from binance.spot._market import trading_day_ticker
     from binance.spot._market import ticker_price
     from binance.spot._market import book_ticker
     from binance.spot._market import rolling_window_ticker
@@ -41,6 +42,8 @@ class Spot(API):
     from binance.spot._trade import my_trades
     from binance.spot._trade import get_order_rate_limit
     from binance.spot._trade import query_prevented_matches
+    from binance.spot._trade import query_allocations
+    from binance.spot._trade import query_commission_rates
 
     # STREAMS
     from binance.spot._data_stream import new_listen_key
@@ -95,6 +98,9 @@ class Spot(API):
     from binance.spot._margin import get_small_liability_exchange_history
     from binance.spot._margin import get_a_future_hourly_interest_rate
     from binance.spot._margin import adjust_cross_margin_max_leverage
+    from binance.spot._margin import margin_available_inventory
+    from binance.spot._margin import margin_manual_liquidation
+    from binance.spot._margin import liability_coin_leverage_bracket
 
     # WALLET
     from binance.spot._wallet import system_status
@@ -121,11 +127,13 @@ class Spot(API):
     from binance.spot._wallet import bnb_convertible_assets
     from binance.spot._wallet import convertible_coins
     from binance.spot._wallet import toggle_auto_convertion
+    from binance.spot._wallet import list_deposit_address
     from binance.spot._wallet import cloud_mining_trans_history
     from binance.spot._wallet import convert_transfer
     from binance.spot._wallet import convert_history
     from binance.spot._wallet import one_click_arrival_deposit_apply
     from binance.spot._wallet import balance
+    from binance.spot._wallet import delist_schedule_symbols
 
     # MINING
     from binance.spot._mining import mining_algo_list
@@ -237,6 +245,9 @@ class Spot(API):
     from binance.spot._convert import send_quote_request
     from binance.spot._convert import accept_quote
     from binance.spot._convert import order_status
+    from binance.spot._convert import place_limit_order
+    from binance.spot._convert import cancel_limit_order
+    from binance.spot._convert import query_limit_open_order
     from binance.spot._convert import get_convert_trade_history
 
     # REBATE

@@ -115,24 +115,24 @@ Usage example:
 
 .. code-block:: python
 
-   from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+   import logging
+   from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
 
    def message_handler(message):
        print(message)
 
-   ws_client = WebsocketClient()
-   ws_client.start()
+   ws_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
 
-   ws_client.mini_ticker(
+   ws_client.ticker(
        symbol='bnbusdt',
-       id=1,
-       callback=message_handler,
+       type="FULL",
    )
 
    # Combine selected streams
-   ws_client.instant_subscribe(
-       stream=['bnbusdt@bookTicker', 'ethusdt@bookTicker'],
-       callback=message_handler,
+   ws_client.ticker(
+       symbols=["BNBBUSD", "BTCUSDT"],
+       type="MINI",
+       windowSize="2h",
    )
 
    ws_client.stop()
@@ -173,9 +173,9 @@ WebSocket
 
 .. code-block:: python
 
-   from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
+   from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
 
-   ws_client = WebsocketClient(stream_url='wss://testnet.binance.vision')
+   ws_client = SpotWebsocketAPIClient(stream_url='wss://testnet.binance.vision')
 
 Errors
 ------

@@ -115,6 +115,88 @@ def order_status(self, **kwargs):
     return self.sign_request("GET", url_path, {**kwargs})
 
 
+def place_limit_order(
+    self,
+    baseAsset: str,
+    quoteAsset: str,
+    limitPrice: float,
+    side: str,
+    expiredType: str,
+    **kwargs
+):
+    """Place limit order (USER_DATA)
+
+    POST /sapi/v1/convert/limit/placeOrder
+
+    https://binance-docs.github.io/apidocs/spot/en/#place-limit-order-user_data
+
+    Args:
+        baseAsset (str): base asset (use the response fromIsBase from GET /sapi/v1/convert/exchangeInfo api to check which one is baseAsset)
+        quoteAsset (str): quote asset
+        limitPrice (float): Symbol limit price (from baseAsset to quoteAsset)
+        side (str): BUY or SELL
+        expiredType (str): 1_D, 3_D, 7_D, 30_D (D means day)
+    Keyword Args:
+        baseAmount (float, optional): Base asset amount. (One of baseAmount or quoteAmount is required)
+        quotrAmount (float, optional): Quote asset amount. (One of baseAmount or quoteAmount is required)
+        walletType (str, optional): SPOT or FUNDING or SPOT_FUNDING. It is to use which type of assets. Default is SPOT.
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [
+            [baseAsset, "baseAsset"],
+            [quoteAsset, "quoteAsset"],
+            [limitPrice, "limitPrice"],
+            [side, "side"],
+            [expiredType, "expiredType"],
+        ]
+    )
+
+    params = {
+        "baseAsset": baseAsset,
+        "quoteAsset": quoteAsset,
+        "limitPrice": limitPrice,
+        "side": side,
+        "expiredType": expiredType,
+        **kwargs,
+    }
+    url_path = "/sapi/v1/convert/limit/placeOrder"
+    return self.sign_request("POST", url_path, params)
+
+
+def cancel_limit_order(self, orderId: str, **kwargs):
+    """Cancel limit order (USER_DATA)
+
+    POST /sapi/v1/convert/limit/cancelOrder
+
+    https://binance-docs.github.io/apidocs/spot/en/#cancel-limit-order-user_data
+
+    Args:
+        orderId (str): The orderId from placeOrder api
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameter(orderId, "orderId")
+
+    params = {"orderId": orderId, **kwargs}
+    url_path = "/sapi/v1/convert/limit/cancelOrder"
+    return self.sign_request("POST", url_path, params)
+
+
+def query_limit_open_order(self, **kwargs):
+    """Query limit open orders (USER_DATA)
+
+    GET /sapi/v1/convert/limit/queryOpenOrders
+
+    https://binance-docs.github.io/apidocs/spot/en/#query-limit-open-orders-user_data
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    url_path = "/sapi/v1/convert/limit/queryOpenOrders"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
 def get_convert_trade_history(self, startTime: int, endTime: int, **kwargs):
     """Get Convert Trade History (USER_DATA)
 

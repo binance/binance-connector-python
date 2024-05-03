@@ -1,6 +1,37 @@
 # Changelog
 
 ## 3.7.0 - 2024-05-03
+### Added
+- Convert
+  - `POST /sapi/v1/convert/limit/placeOrder`
+  - `POST /sapi/v1/convert/limit/cancelOrder`
+  - `GET /sapi/v1/convert/limit/queryOpenOrders`
+
+- Margin
+  - `GET /sapi/v1/margin/available-inventory`
+  - `POST /sapi/v1/margin/manual-liquidation`
+  - `GET /sapi/v1/margin/leverageBracket`
+
+- Market
+  - `GET /api/v3/ticker/tradingDay`
+
+- Trade
+  - `GET /api/v3/myAllocations`
+  - `GET /api/v3/account/commission`
+
+- Wallet
+  - `GET /sapi/v1/capital/deposit/address/list`
+  - `GET /sapi/v1/spot/delist-schedule`
+
+### Updated
+- `POST /sapi/v1/asset/dust-btc` add parameter `accountType`
+- `POST /sapi/v1/asset/dust` add parameter `accountType`
+- `GET /sapi/v1/asset/dribblet` add parameter `accountType`
+- `POST /sapi/v1/margin/order/oco`: New enumerate value `AUTO_BORROW_REPAY` for the field of `sideEffectType`
+- `POST /sapi/v1/margin/order`: New enumerate value `AUTO_BORROW_REPAY` for the field of `sideEffectType`
+- Update documentation
+- Add new handle exception in websocket read_data
+
 ### Removed
 - Bswap
   - `GET /sapi/v1/bswap/pools`
