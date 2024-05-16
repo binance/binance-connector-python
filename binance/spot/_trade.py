@@ -298,7 +298,7 @@ def new_oco_order(
         **kwargs,
     }
 
-    url_path = "/api/v3/order/oco"
+    url_path = "/api/v3/order/oco" #todo: check this, the binance official documentation has a different url, this one is deprecated
     return self.sign_request("POST", url_path, params)
 
 
@@ -379,6 +379,8 @@ def get_oco_open_orders(self, **kwargs):
     url_path = "/api/v3/openOrderList"
     return self.sign_request("GET", url_path, {**kwargs})
 
+
+# todo smart order routing POST /api/v3/sor/order
 
 def account(self, **kwargs):
     """Account Information (USER_DATA)
