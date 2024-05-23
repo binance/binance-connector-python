@@ -138,7 +138,7 @@ def get_order(self, symbol, **kwargs):
 
 
 def cancel_and_replace(
-    self, symbol: str, side: str, type: str, cancelReplaceMode: str, **kwargs
+        self, symbol: str, side: str, type: str, cancelReplaceMode: str, **kwargs
 ):
     """Cancel an Existing Order and Send a New Order (USER_DATA)
 
@@ -241,14 +241,55 @@ def get_orders(self, symbol: str, **kwargs):
     return self.sign_request("GET", url_path, payload)
 
 
+def new_oco_order_list(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        belowType: str,
+        aboveType: str,
+        **kwargs
+):
+    """
+    Send in an one-cancels-the-other (OCO) pair, where activation of one order immediately cancels the other.
+
+    An OCO has 2 legs called the above leg and below leg.
+    One of the legs must be a LIMIT_MAKER order and the other leg must be STOP_LOSS or STOP_LOSS_LIMIT order.
+    Price restrictions:
+    If the OCO is on the SELL side: LIMIT_MAKER price > Last Traded Price > stopPrice
+    If the OCO is on the BUY side: LIMIT_MAKER price < Last Traded Price < stopPrice
+    OCO counts as 2 orders against the order rate limit.
+    """
+    check_required_parameters(
+        [
+            [symbol, "symbol"],
+            [side, "side"],
+            [quantity, "quantity"],
+            [belowType, "belowType"],
+            [aboveType, "aboveType"],
+        ]
+    )
+    params = {
+        "symbol": symbol,
+        "side": side,
+        "quantity": quantity,
+        "belowType": belowType,
+        "aboveType": aboveType,
+        **kwargs,
+    }
+
+    url_path = "/api/v3/orderList/oco"
+    return self.sign_request("POST", url_path, params)
+
+
 def new_oco_order(
-    self,
-    symbol: str,
-    side: str,
-    quantity: float,
-    price: float,
-    stopPrice: float,
-    **kwargs
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        price: float,
+        stopPrice: float,
+        **kwargs
 ):
     """New OCO (TRADE)
 
@@ -298,7 +339,7 @@ def new_oco_order(
         **kwargs,
     }
 
-    url_path = "/api/v3/order/oco" #todo: check this, the binance official documentation has a different url, this one is deprecated
+    url_path = "/api/v3/order/oco"  #todo: check this, the binance official documentation has a different url, this one is deprecated
     return self.sign_request("POST", url_path, params)
 
 
