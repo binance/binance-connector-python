@@ -34,6 +34,8 @@ class Spot(API):
     from binance.spot._trade import get_open_orders
     from binance.spot._trade import get_orders
     from binance.spot._trade import new_oco_order
+    from binance.spot._trade import new_oto_order
+    from binance.spot._trade import new_otoco_order
     from binance.spot._trade import cancel_oco_order
     from binance.spot._trade import get_oco_order
     from binance.spot._trade import get_oco_orders

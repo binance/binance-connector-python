@@ -28,7 +28,19 @@ my_client = SpotWebsocketAPIClient(
 )
 
 
-my_client.get_order(symbol="BNBUSDT", orderId=1)
+my_client.new_otoco_order(
+    symbol="BNBUSDT",
+    workingType="LIMIT",
+    workingSide="BUY",
+    workingPrice=400,
+    workingQuantity=1,
+    pendingSide="BUY",
+    pendingQuantity=1,
+    pendingAboveType="LIMIT_MAKER",
+    workingTimeInForce="GTC",
+    pendingPrice=400,
+    pendingTimeInForce="GTC",
+)
 
 time.sleep(2)
 

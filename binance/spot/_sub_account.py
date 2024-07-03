@@ -30,7 +30,7 @@ def sub_account_list(self, **kwargs):
 
     GET /sapi/v1/sub-account/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-list-sapi-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-list-for-master-account
 
     Keyword Args:
         email (str, optional): Sub-account email
@@ -49,7 +49,7 @@ def sub_account_assets(self, email: str, **kwargs):
 
     GET /sapi/v3/sub-account/assets
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-sapi-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account
 
     Args:
         email (str)
@@ -681,7 +681,7 @@ def sub_account_update_ip_restriction(
 
     POST /sapi/v2/sub-account/subAccountApi/ipRestriction
 
-    https://binance-docs.github.io/apidocs/spot/en/#update-ip-restriction-for-sub-account-api-key-for-master-account
+    https://binance-docs.github.io/apidocs/spot/en/#add-ip-restriction-for-sub-account-api-key-for-master-account
 
     Args:
         email (str): Sub-account email
@@ -861,7 +861,7 @@ def managed_sub_account_trading_trans_log(
 
     GET /sapi/v1/managed-subaccount/queryTransLogForTradeParent
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-trading-team-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-for-trading-team-master-account-user_data
 
     Args:
         email (str): email

@@ -737,29 +737,42 @@ def cancel_open_orders(self, symbol: str, **kwargs):
     self.send(payload)
 
 
-def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
-    """Place a new OCO Order (TRADE)
+def new_oco_order(
+    self,
+    symbol: str,
+    side: str,
+    quantity: float,
+    aboveType: str,
+    belowType: str,
+    **kwargs
+):
+    """Place new Order list - OCO (TRADE)
     Args:
         symbol (str): Symbol.
         side (str): BUY or SELL.
-        price (float): Price.
         quantity (float): Quantity.
+        aboveType (str): Supported values : STOP_LOSS_LIMIT, STOP_LOSS, LIMIT_MAKER
+        belowType (str): Supported values : STOP_LOSS_LIMIT, STOP_LOSS, LIMIT_MAKER.
     Keyword Arguments:
         listClientOrderId (str): A unique id for the entire order list.
-        limitClientOrderId (str): A unique id for the limit order.
-        limitIcebergQty (float): Iceberg quantity.
-        limitStrategyId (int): Strategy id.
-        limitStrategyType (int): Strategy type.
-        stopPrice (float): Stop price.
-        trailingDelta (float): Trailing delta.
-        stopClientOrderId (str): A unique id for the stop loss order.
-        stopLimitPrice (float): Stop limit price.
-        stopLimitTimeInForce (str): GTC or FOK.
-        stopIcebergQty (float): Iceberg quantity.
-        stopStrategyId (int): Strategy id.
-        stopStrategyType (int): Strategy type.
-        newOrderRespType (str): ACK, RESULT, or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
-        selfTradePreventionMode (str): NONE, EXPIRE_TAKER, EXPIRE_MAKER or EXPIRE_BOTH.
+        aboveClientOrderId (str): Arbitrary unique ID among open orders for the above leg order. Automatically generated if not sent
+        aboveIcebergQty (int): Note that this can only be used if aboveTimeInForce is GTC.
+        abovePrice (float)
+        aboveStopPrice (float): Can be used if aboveType is STOP_LOSS or STOP_LOSS_LIMIT. Either aboveStopPrice or aboveTrailingDelta or both, must be specified.
+        aboveTrailingDelta (int)
+        aboveTimeInForce (float): Required if the aboveType is STOP_LOSS_LIMIT.
+        aboveStrategyId (int): Arbitrary numeric value identifying the above leg order within an order strategy.
+        aboveStrategyType (int): Arbitrary numeric value identifying the above leg order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        belowClientOrderId (str)
+        belowIcebergQty (int): Note that this can only be used if belowTimeInForce is GTC.
+        belowPrice (float)
+        belowStopPrice (float): Can be used if belowType is STOP_LOSS or STOP_LOSS_LIMIT. Either belowStopPrice or belowTrailingDelta or both, must be specified.
+        belowTrailingDelta (int)
+        belowTimeInForce (str): Required if the belowType is STOP_LOSS_LIMIT.
+        belowStrategyId (int): Arbitrary numeric value identifying the below leg order within an order strategy.
+        belowStrategyType (int): Arbitrary numeric value identifying the below leg order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        newOrderRespType (str): Select response format: ACK, RESULT, FULL
+        selfTradePreventionMode (str): The allowed enums is dependent on what is configured on the symbol. The possible supported values are EXPIRE_TAKER, EXPIRE_MAKER, EXPIRE_BOTH, NONE.
         recvWindow (int): Recv window.
 
     Message sent:
@@ -767,22 +780,25 @@ def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
     .. code-block:: json
 
         {
-            "id": "56374a46-3061-486b-a311-99ee972eb648",
-            "method": "orderList.place",
-            "params": {
-                "symbol": "BTCUSDT",
-                "side": "SELL",
-                "price": "23420.00000000",
-                "quantity": "0.00650000",
-                "stopPrice": "23410.00000000",
-                "stopLimitPrice": "23405.00000000",
-                "stopLimitTimeInForce": "GTC",
-                "newOrderRespType": "RESULT",
-                "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
-                "signature": "6689c2a36a639ff3915c2904871709990ab65f3c7a9ff13857558fd350315c35",
-                "timestamp": 1660801713767
+            "id": "56374a46-3261-486b-a211-99ed972eb648",
+            "method": "orderList.place.oco",
+            "params":
+            {
+                "symbol": "LTCBNB",
+                "side": "BUY",
+                "quantity": 1,
+                "timestamp": 1711062760647,
+                "aboveType": "STOP_LOSS_LIMIT",
+                "abovePrice": "1.5",
+                "aboveStopPrice": "1.50000001",
+                "aboveTimeInForce": "GTC",
+                "belowType": "LIMIT_MAKER",
+                "belowPrice": "1.49999999",
+                "apiKey": "duwNf97YPLqhFIk7kZF0dDdGYVAXStA7BeEz0fIT9RAhUbixJtyS6kJ3hhzJsRXC",
+                "signature": "64614cfd8dd38260d4fd86d3c455dbf4b9d1c8a8170ea54f700592a986c30ddb"
             }
         }
+
 
 
     Response:
@@ -790,62 +806,63 @@ def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
     .. code-block:: json
 
         {
-            "id": "57833dc0-e3f2-43fb-ba20-46480973b0aa",
+            "id": "56374a46-3261-486b-a211-99ed972eb648",
             "status": 200,
-            "result": {
-                "orderListId": 1274512,
+            "result":
+            {
+                "orderListId": 2,
                 "contingencyType": "OCO",
                 "listStatusType": "EXEC_STARTED",
                 "listOrderStatus": "EXECUTING",
-                "listClientOrderId": "08985fedd9ea2cf6b28996",
-                "transactionTime": 1660801713793,
-                "symbol": "BTCUSDT",
+                "listClientOrderId": "cKPMnDCbcLQILtDYM4f4fX",
+                "transactionTime": 1711062760648,
+                "symbol": "LTCBNB",
                 "orders": [
                     {
-                        "symbol": "BTCUSDT",
-                        "orderId": 12569138901,
-                        "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU"
+                        "symbol": "LTCBNB",
+                        "orderId": 2,
+                        "clientOrderId": "0m6I4wfxvTUrOBSMUl0OPU"
                     },
                     {
-                        "symbol": "BTCUSDT",
-                        "orderId": 12569138902,
-                        "clientOrderId": "jLnZpj5enfMXTuhKB1d0us"
+                        "symbol": "LTCBNB",
+                        "orderId": 3,
+                        "clientOrderId": "Z2IMlR79XNY5LU0tOxrWyW"
                     }
                 ],
                 "orderReports": [
                     {
-                        "symbol": "BTCUSDT",
-                        "orderId": 12569138901,
-                        "orderListId": 1274512,
-                        "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU",
-                        "transactTime": 1660801713793,
-                        "price": "23410.00000000",
-                        "origQty": "0.00650000",
-                        "executedQty": "0.00000000",
+                        "symbol": "LTCBNB",
+                        "orderId": 2,
+                        "orderListId": 2,
+                        "clientOrderId": "0m6I4wfxvTUrOBSMUl0OPU",
+                        "transactTime": 1711062760648,
+                        "price": "1.50000000",
+                        "origQty": "1.000000",
+                        "executedQty": "0.000000",
                         "cummulativeQuoteQty": "0.00000000",
                         "status": "NEW",
                         "timeInForce": "GTC",
                         "type": "STOP_LOSS_LIMIT",
-                        "side": "SELL",
-                        "stopPrice": "23405.00000000",
+                        "side": "BUY",
+                        "stopPrice": "1.50000001",
                         "workingTime": -1,
                         "selfTradePreventionMode": "NONE"
                     },
                     {
-                        "symbol": "BTCUSDT",
-                        "orderId": 12569138902,
-                        "orderListId": 1274512,
-                        "clientOrderId": "jLnZpj5enfMXTuhKB1d0us",
-                        "transactTime": 1660801713793,
-                        "price": "23420.00000000",
-                        "origQty": "0.00650000",
-                        "executedQty": "0.00000000",
+                        "symbol": "LTCBNB",
+                        "orderId": 3,
+                        "orderListId": 2,
+                        "clientOrderId": "Z2IMlR79XNY5LU0tOxrWyW",
+                        "transactTime": 1711062760648,
+                        "price": "1.49999999",
+                        "origQty": "1.000000",
+                        "executedQty": "0.000000",
                         "cummulativeQuoteQty": "0.00000000",
                         "status": "NEW",
                         "timeInForce": "GTC",
                         "type": "LIMIT_MAKER",
-                        "side": "SELL",
-                        "workingTime": 1660801713793,
+                        "side": "BUY",
+                        "workingTime": 1711062760648,
                         "selfTradePreventionMode": "NONE"
                     }
                 ]
@@ -869,8 +886,174 @@ def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
                     "rateLimitType": "REQUEST_WEIGHT",
                     "interval": "MINUTE",
                     "intervalNum": 1,
-                    "limit": 1200,
+                    "limit": 6000,
                     "count": 1
+                }
+            ]
+        }
+
+
+    """
+
+    parameters = {
+        "symbol": symbol,
+        "side": side,
+        "quantity": quantity,
+        "aboveType": aboveType,
+        "belowType": belowType,
+        **kwargs,
+    }
+
+    payload = {
+        "id": parameters.pop("id", get_uuid()),
+        "method": "orderList.place.oco",
+        "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
+    }
+    self.send(payload)
+
+
+def new_oto_order(
+    self,
+    symbol: str,
+    workingType: str,
+    workingSide: str,
+    workingPrice: float,
+    workingQuantity: float,
+    pendingType: str,
+    pendingSide: str,
+    pendingQuantity: float,
+    **kwargs
+):
+    """Place new Order list - OTO (TRADE)
+    Args:
+        symbol (str): Symbol.
+        workingType (str): Supported values : LIMIT, MARKET
+        workingSide (str): BUY or SELL.
+        workingPrice (float)
+        workingQuantity (float)
+        pendingType (str): Supported values : LIMIT, MARKET
+        pendingSide (str): BUY or SELL.
+        pendingQuantity (float)
+    Keyword Args:
+        listClientOrderId (str): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same listClientOrderId is accepted only when the previous one is filled or completely expired. listClientOrderId is distinct from the workingClientOrderId and the pendingClientOrderId.
+        newOrderRespType (str): Sets the response JSON. Supported values: ACK, FULL, RESULT
+        selfTradePreventionMode (str): The allowed enums is dependent on what is configured on the symbol.
+        workingClientOrderId (str): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
+        workingTimeInForce (str): Supported values: GTC, FOK, IOC
+        workingStrategyId (int): Arbitrary numeric value identifying the working order within an order strategy.
+        workingStrategyType (int): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        pendingClientOrderId (str): Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
+        pendingPrice (float)
+        pendingStopPrice (float)
+        pendingTrailingDelta (float)
+        pendingIcebergQty (float): Note this can only be used if pendingTimeInForce is GTC or if pendingType is LIMIT_MAKER.
+        pendingTimeInForce (str): Supported values: GTC, FOK, IOC
+        pendingStrategyId (int): Arbitrary numeric value identifying the pending order within an order strategy.
+        pendingStrategyType (int): Arbitrary numeric value identifying the pending order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        recvWindow (int): Recv window.
+
+    Message sent:
+
+    .. code-block:: json
+
+        {
+            "id": "1712544395950",
+            "method": "orderList.place.oto",
+            "params": {
+                "signature": "3e1e5ac8690b0caf9a2afd5c5de881ceba69939cc9d817daead5386bf65d0cbb",
+                "apiKey": "Rf07JlnL9PHVxjs27O5CvKNyOsV4qJ5gXdrRfpvlOdvMZbGZbPO5Ce2nIwfRP0iA",
+                "pendingQuantity": 1,
+                "pendingSide": "BUY",
+                "pendingType": "MARKET",
+                "symbol": "LTCBNB",
+                "recvWindow": "5000",
+                "timestamp": "1712544395951",
+                "workingPrice": 1,
+                "workingQuantity": 1,
+                "workingSide": "SELL",
+                "workingTimeInForce": "GTC",
+                "workingType": "LIMIT"
+            }
+        }
+
+    Response:
+
+    .. code-block:: json
+
+        {
+            "id": "1712544395950",
+            "status": 200,
+            "result": {
+                "orderListId": 626,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "KA4EBjGnzvSwSCQsDdTrlf",
+                "transactionTime": 1712544395981,
+                "symbol": "1712544378871",
+                "orders": [
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 13,
+                    "clientOrderId": "YiAUtM9yJjl1a2jXHSp9Ny"
+                },
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 14,
+                    "clientOrderId": "9MxJSE1TYkmyx5lbGLve7R"
+                }
+                ],
+                "orderReports": [
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 13,
+                    "orderListId": 626,
+                    "clientOrderId": "YiAUtM9yJjl1a2jXHSp9Ny",
+                    "transactTime": 1712544395981,
+                    "price": "1.000000",
+                    "origQty": "1.000000",
+                    "executedQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "SELL",
+                    "workingTime": 1712544395981,
+                    "selfTradePreventionMode": "NONE"
+                },
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 14,
+                    "orderListId": 626,
+                    "clientOrderId": "9MxJSE1TYkmyx5lbGLve7R",
+                    "transactTime": 1712544395981,
+                    "price": "0.000000",
+                    "origQty": "1.000000",
+                    "executedQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "BUY",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE"
+                }
+                ]
+            },
+            "rateLimits": [
+                {
+                "rateLimitType": "ORDERS",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 10000000,
+                "count": 10
+                },
+                {
+                "rateLimitType": "REQUEST_WEIGHT",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 1000,
+                "count": 38
                 }
             ]
         }
@@ -879,15 +1062,220 @@ def new_oco_order(self, symbol: str, side: str, price, quantity, **kwargs):
 
     parameters = {
         "symbol": symbol,
-        "side": side,
-        "price": price,
-        "quantity": quantity,
+        "workingType": workingType,
+        "workingSide": workingSide,
+        "workingPrice": workingPrice,
+        "workingQuantity": workingQuantity,
+        "pendingType": pendingType,
+        "pendingSide": pendingSide,
+        "pendingQuantity": pendingQuantity,
         **kwargs,
     }
 
     payload = {
         "id": parameters.pop("id", get_uuid()),
-        "method": "orderList.place",
+        "method": "orderList.place.oto",
+        "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
+    }
+    self.send(payload)
+
+
+def new_otoco_order(
+    self,
+    symbol: str,
+    workingType: str,
+    workingSide: str,
+    workingPrice: float,
+    pendingSide: str,
+    pendingQuantity: float,
+    pendingAboveType: str,
+    **kwargs
+):
+    """Place new Order list - OTOCO (TRADE)
+    Args:
+        symbol (str): Symbol.
+        workingType (str): Supported values: LIMIT, LIMIT_MAKER
+        workingSide (str): Supported values: BUY, SELL
+        workingPrice (float)
+        pendingSide (str): Supported values: BUY, SELL
+        pendingQuantity (float)
+        pendingAboveType (str): Supported values: LIMIT_MAKER, STOP_LOSS, and STOP_LOSS_LIMIT
+    Keyword Args:
+        listClientOrderId (str): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same listClientOrderId is accepted only when the previous one is filled or completely expired. listClientOrderId is distinct from the workingClientOrderId, pendingAboveClientOrderId, and the pendingBelowClientOrderId
+        newOrderRespType (str): Format the JSON response. Supported values: ACK, FULL, RESULT
+        selfTradePreventionMode (str): The allowed enums is dependent on what is configured on the symbol.
+        workingClientOrderId (str): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
+        workingQuantity (float)
+        workingIcebergQty (float): This can only be used if workingTimeInForce is GTC or if workingType is LIMIT_MAKER.
+        workingTimeInForce (str): Supported values: GTC, FOK, IOC
+        workingStrategyId (int): Arbitrary numeric value identifying the working order within an order strategy.
+        workingStrategyType (int): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        pendingAboveClientOrderId (str): Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
+        pendingAbovePrice (float)
+        pendingAboveStopPrice (float)
+        pendingAboveTrailingDelta (float)
+        pendingAboveIcebergQty (float)
+        pendingAboveTimeInForce (str): This can only be used if pendingAboveTimeInForce is GTC or if pendingAboveType is LIMIT_MAKER.
+        pendingAboveStrategyId (int): Arbitrary numeric value identifying the pending above order within an order strategy.
+        pendingAboveStrategyType (int): Arbitrary numeric value identifying the pending above order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        pendingBelowType (str): Supported values: LIMIT_MAKER, STOP_LOSS, and STOP_LOSS_LIMIT
+        pendingBelowClientOrderId (str): Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
+        pendingBelowPrice (float)
+        pendingBelowStopPrice (float)
+        pendingBelowTrailingDelta (float)
+        pendingBelowIcebergQty (float): Note this can only be used if pendingBelowTimeInForce is GTC or if pendingBelowType is LIMIT_MAKER.
+        pendingBelowTimeInForce (str)
+        pendingBelowStrategyId (int): Arbitrary numeric value identifying the pending below order within an order strategy.
+        pendingBelowStrategyType (int): Arbitrary numeric value identifying the pending below order strategy. Values smaller than 1000000 are reserved and cannot be used.
+        recvWindow (int): Recv window.
+
+    Message sent:
+
+    .. code-block:: json
+
+        {
+            "id": "1712544408508",
+            "method": "orderList.place.otoco",
+            "params": {
+                "signature": "c094473304374e1b9c5f7e2558358066cfa99df69f50f63d09cfee755136cb07",
+                "apiKey": "Rf07JlnL9PHVxjs27O5CvKNyOsV4qJ5gXdrRfpvlOdvMZbGZbPO5Ce2nIwfRP0iA",
+                "pendingQuantity": 5,
+                "pendingSide": "SELL",
+                "pendingBelowPrice": 5,
+                "pendingBelowType": "LIMIT_MAKER",
+                "pendingAboveStopPrice": 0.5,
+                "pendingAboveType": "STOP_LOSS",
+                "symbol": "LTCBNB",
+                "recvWindow": "5000",
+                "timestamp": "1712544408509",
+                "workingPrice": 1.5,
+                "workingQuantity": 1,
+                "workingSide": "BUY",
+                "workingTimeInForce": "GTC",
+                "workingType": "LIMIT"
+            }
+        }
+
+    Response:
+
+    .. code-block:: json
+
+        {
+            "id": "1712544408508",
+            "status": 200,
+            "result": {
+                "orderListId": 629,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "GaeJHjZPasPItFj4x7Mqm6",
+                "transactionTime": 1712544408537,
+                "symbol": "1712544378871",
+                "orders": [
+                {
+                    "symbol": "1712544378871",
+                    "orderId": 23,
+                    "clientOrderId": "OVQOpKwfmPCfaBTD0n7e7H"
+                },
+                {
+                    "symbol": "1712544378871",
+                    "orderId": 24,
+                    "clientOrderId": "YcCPKCDMQIjNvLtNswt82X"
+                },
+                {
+                    "symbol": "1712544378871",
+                    "orderId": 25,
+                    "clientOrderId": "ilpIoShcFZ1ZGgSASKxMPt"
+                }
+                ],
+                "orderReports": [
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 23,
+                    "orderListId": 629,
+                    "clientOrderId": "OVQOpKwfmPCfaBTD0n7e7H",
+                    "transactTime": 1712544408537,
+                    "price": "1.500000",
+                    "origQty": "1.000000",
+                    "executedQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "BUY",
+                    "workingTime": 1712544408537,
+                    "selfTradePreventionMode": "NONE"
+                },
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 24,
+                    "orderListId": 629,
+                    "clientOrderId": "YcCPKCDMQIjNvLtNswt82X",
+                    "transactTime": 1712544408537,
+                    "price": "0.000000",
+                    "origQty": "5.000000",
+                    "executedQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "STOP_LOSS",
+                    "side": "SELL",
+                    "stopPrice": "0.500000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE"
+                },
+                {
+                    "symbol": "LTCBNB",
+                    "orderId": 25,
+                    "orderListId": 629,
+                    "clientOrderId": "ilpIoShcFZ1ZGgSASKxMPt",
+                    "transactTime": 1712544408537,
+                    "price": "5.000000",
+                    "origQty": "5.000000",
+                    "executedQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE"
+                }
+                ]
+            },
+            "rateLimits": [
+                {
+                "rateLimitType": "ORDERS",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 10000000,
+                "count": 18
+                },
+                {
+                "rateLimitType": "REQUEST_WEIGHT",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 1000,
+                "count": 65
+                }
+            ]
+        }
+    """
+
+    parameters = {
+        "symbol": symbol,
+        "workingType": workingType,
+        "workingSide": workingSide,
+        "workingPrice": workingPrice,
+        "pendingSide": pendingSide,
+        "pendingQuantity": pendingQuantity,
+        "pendingAboveType": pendingAboveType,
+        **kwargs,
+    }
+
+    payload = {
+        "id": parameters.pop("id", get_uuid()),
+        "method": "orderList.place.otoco",
         "params": websocket_api_signature(self.api_key, self.api_secret, parameters),
     }
     self.send(payload)

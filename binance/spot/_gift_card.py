@@ -11,7 +11,7 @@ def gift_card_create_code(self, token: str, amount: float, **kwargs):
     - You have a sufﬁcient balance in your Binance funding wallet
     - You need Enable Withdrawals for the API Key which requests this endpoint.
 
-    https://binance-docs.github.io/apidocs/spot/en/#create-a-binance-code-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#create-a-single-token-gift-card-user_data
 
     Args:
       token (str): The coin type contained in the Binance Code
@@ -36,7 +36,7 @@ def gift_card_redeem_code(self, code: str, **kwargs):
 
     Please note that if you enter the wrong code 5 times within 24 hours, you will no longer be able to redeem any Binance Code that day.
 
-    https://binance-docs.github.io/apidocs/spot/en/#redeem-a-binance-code-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#redeem-a-binance-gift-card-user_data
 
     Args:
       code (str): Binance Code
@@ -60,7 +60,7 @@ def gift_card_verify_code(self, referenceNo: str, **kwargs):
 
     Please note that if you enter the wrong binance code 5 times within an hour, you will no longer be able to verify any binance code for that hour.
 
-    https://binance-docs.github.io/apidocs/spot/en/#verify-a-binance-code-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#verify-binance-gift-card-by-gift-card-number-user_data
 
     Args:
       referenceNo (str): reference number

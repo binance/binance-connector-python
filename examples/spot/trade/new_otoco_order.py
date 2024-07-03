@@ -12,18 +12,22 @@ api_key, api_secret = get_api_key()
 
 params = {
     "symbol": "BNBUSDT",
-    "side": "SELL",
-    "quantity": 0.002,
-    "aboveType": "LIMIT_MAKER",
-    "belowType": "LIMIT_MAKER",
-    "abovePrice": 510,
-    "belowPrice": 500,
+    "workingType": "LIMIT",
+    "workingSide": "BUY",
+    "workingPrice": 400,
+    "workingQuantity": 1,
+    "pendingSide": "BUY",
+    "pendingQuantity": 1,
+    "pendingAboveType": "LIMIT_MAKER",
+    "workingTimeInForce": "GTC",
+    "pendingPrice": 400,
+    "pendingTimeInForce": "GTC",
 }
 
 client = Client(api_key, api_secret, base_url="https://testnet.binance.vision")
 
 try:
-    response = client.new_oco_order(**params)
+    response = client.new_otoco_order(**params)
     logging.info(response)
 except ClientError as error:
     logging.error(

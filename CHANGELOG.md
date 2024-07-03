@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.8.0 - 2024-07-04
+### Added
+- Trade
+  - Spot
+    - `POST /api/v3/orderList/oto`
+    - `POST /api/v3/orderList/otoco`
+  - Websocket API
+    - `orderList.place.oto`
+    - `orderList.place.otoco`
+
+### Updated
+- Updated and Resolved documentation issue
+- Updated `Restful` OCO trade deprecated endpoint `POST /api/v3/order/oco` to `POST /api/v3/orderList/oco`
+- Updated `Websocket API` OCO trade deprecated endpoint `orderList.place` to `orderList.place.oco`
+
 ## 3.7.0 - 2024-05-03
 ### Added
 - Convert

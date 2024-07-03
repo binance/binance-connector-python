@@ -10,7 +10,7 @@ def system_status(self):
 
     GET /sapi/v1/system/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#system-status-sapi-system
+    https://binance-docs.github.io/apidocs/spot/en/#system-status-system
     """
 
     return self.query("/sapi/v1/system/status")
@@ -143,7 +143,7 @@ def withdraw_history(self, **kwargs):
 
     GET /sapi/v1/capital/withdraw/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#deposit-history-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#withdraw-history-supporting-network-user_data
 
     Keyword Args:
         coin (str, optional)
@@ -185,7 +185,7 @@ def account_status(self, **kwargs):
 
     GET /sapi/v1/account/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#account-status-sapi-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#account-status-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -200,7 +200,7 @@ def api_trading_status(self, **kwargs):
 
     GET /sapi/v1/account/apiTradingStatus
 
-    https://binance-docs.github.io/apidocs/spot/en/#account-api-trading-status-sapi-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#account-api-trading-status-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -215,7 +215,7 @@ def dust_log(self, **kwargs):
 
     GET /sapi/v1/asset/dribblet
 
-    https://binance-docs.github.io/apidocs/spot/en/#dustlog-sapi-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#dustlog-user_data
 
     Keyword Args:
         accountType (str, optional): SPOT or MARGIN, default SPOT
@@ -320,7 +320,7 @@ def asset_detail(self, **kwargs):
 
     GET /sapi/v1/asset/assetDetail
 
-    https://binance-docs.github.io/apidocs/spot/en/#asset-detail-sapi-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#asset-detail-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -335,7 +335,7 @@ def trade_fee(self, **kwargs):
 
     GET /sapi/v1/asset/tradeFee
 
-    https://binance-docs.github.io/apidocs/spot/en/#trade-fee-sapi-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#trade-fee-user_data
 
     Keyword Args:
         symbol (str, optional)
@@ -558,7 +558,7 @@ def one_click_arrival_deposit_apply(self, **kwargs):
 
     POST /sapi/v1/capital/deposit/credit-apply
 
-    https://binance-docs.github.io/apidocs/spot/en/#one-click-arrival-deposit-apply-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#one-click-arrival-deposit-apply-for-expired-address-deposit-user_data
 
     Keyword Args:
         depositId (int, optional): Deposit record Id, priority use

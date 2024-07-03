@@ -1,16 +1,16 @@
 Sub Account Endpoints
 =====================
 
-Create a Virtual Sub-account(For Master Account)
-------------------------------------------------
+Create a Virtual Sub-account (For Master Account)
+-------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_create
 
-Query Sub-account List(For Master Account)
-------------------------------------------
+Query Sub-account List (For Master Account)
+-------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_list
 
-Query Sub-account Assets(For Master Account)
---------------------------------------------
+Query Sub-account Assets (For Master Account)
+---------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_assets
 
 Get Sub-account Deposit Address (For Master Account)
@@ -41,19 +41,19 @@ Enable Futures for Sub-account (For Master Account)
 ---------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_enable_futures
 
-Futures Transfer for Sub-account（For Master Account）
+Futures Transfer for Sub-account (For Master Account)
 ------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_futures_transfer
 
-Margin Transfer for Sub-account（For Master Account)
+Margin Transfer for Sub-account (For Master Account)
 ----------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_margin_transfer
 
-Transfer to Sub-account of Same Master（For Sub-account）
+Transfer to Sub-account of Same Master (For Sub-account)
 ---------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_transfer_to_sub
 
-Transfer to Master（For Sub-account）
+Transfer to Master (For Sub-account)
 -------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_transfer_to_master
 
@@ -61,12 +61,12 @@ Sub-account Transfer History (For Sub-account)
 ----------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_transfer_sub_account_history
 
-Query Sub-account Futures Asset Transfer History(For Master Account)
---------------------------------------------------------------------
+Query Sub-account Futures Asset Transfer History (For Master Account)
+---------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_futures_asset_transfer_history
 
-Query Sub-account Futures Asset Transfer History(For Master Account)
---------------------------------------------------------------------
+Query Sub-account Futures Asset Transfer History (For Master Account)
+---------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_futures_asset_transfer
 
 Query Sub-account Spot Assets Summary (For Master Account)
@@ -97,8 +97,8 @@ Query Sub-account Spot Asset Transfer History (SAPI For Master Account)
 -----------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_spot_transfer_history
 
-Enable Leverage Token for Sub-account(For Master Account)
----------------------------------------------------------
+Enable Leverage Token for Sub-account (For Master Account)
+----------------------------------------------------------
 .. autofunction:: binance.spot.Spot.sub_account_enable_leverage_token
 
 Deposit assets into the managed sub-account (For Investor Master Account)

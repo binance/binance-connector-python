@@ -20,7 +20,7 @@ def message_handler(_, message):
 
 
 my_client = SpotWebsocketAPIClient(
-    stream_url="wss://testnet.binance.vision/ws-api/v3",
+    stream_url="wss://ws-api.testnet.binance.vision/ws-api/v3",
     api_key=api_key,
     api_secret=api_secret,
     on_message=message_handler,
@@ -31,14 +31,12 @@ my_client = SpotWebsocketAPIClient(
 my_client.new_oco_order(
     symbol="BNBUSDT",
     side="BUY",
-    price=200,
     quantity=1,
+    aboveType="LIMIT_MAKER",
+    belowType="LIMIT_MAKER",
+    abovePrice=400,
+    belowPrice=395,
     listClientOrderId="123",
-    limitClientOrderId="456",
-    stopPrice=350,
-    stopLimitPrice=400,
-    stopLimitTimeInForce="GTC",
-    newOrderRespType="RESULT",
 )
 
 time.sleep(2)

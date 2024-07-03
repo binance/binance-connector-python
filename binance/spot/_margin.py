@@ -65,7 +65,7 @@ def margin_all_pairs(self, **kwargs):
 
     GET /sapi/v1/margin/allPairs
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-pairs-market_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-all-cross-margin-pairs-market_data
 
     Keyword Args:
         symbol (str, optional)
@@ -158,7 +158,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
 
     GET /sapi/v1/margin/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-transfer-history-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-cross-margin-transfer-history-user_data
 
     Args:
         asset (str)
@@ -246,7 +246,7 @@ def margin_account(self, **kwargs):
 
     GET /sapi/v1/margin/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-details-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-cross-margin-account-details-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -281,7 +281,7 @@ def margin_open_orders(self, **kwargs):
 
     GET /sapi/v1/margin/openOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-order-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-orders-user_data
 
     Keyword Args:
         symbol (str, optional)
@@ -316,7 +316,7 @@ def margin_all_orders(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/allOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-all-order-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-all-orders-user_data
 
     Args:
         symbol (str)
@@ -417,7 +417,7 @@ def isolated_margin_all_pairs(self, **kwargs):
 
     GET /sapi/v1/margin/isolated/allPairs
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-market_data
 
     Keyword Args:
         symbol (str, optional)

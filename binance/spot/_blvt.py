@@ -99,7 +99,7 @@ def user_limit_info(self, **kwargs):
 
     GET /sapi/v1/blvt/userLimit
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-blvt-user-limit-info
+    https://binance-docs.github.io/apidocs/spot/en/#get-blvt-user-limit-info-user_data
 
     Keyword Args:
         tokenName (str, optional): BTCDOWN, BTCUP

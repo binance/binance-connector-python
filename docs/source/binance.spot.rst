@@ -4,6 +4,7 @@ Spot APIs
 .. toctree::
    :maxdepth: 2
 
+   binance.spot.auto_invest
    binance.spot.blvt
    binance.spot.c2c
    binance.spot.convert

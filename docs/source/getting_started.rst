@@ -175,7 +175,7 @@ WebSocket
 
    from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
 
-   ws_client = SpotWebsocketAPIClient(stream_url='wss://testnet.binance.vision')
+   ws_client = SpotWebsocketAPIClient(stream_url='wss://ws-api.testnet.binance.vision/ws-api/v3')
 
 Errors
 ------
