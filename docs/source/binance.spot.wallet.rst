@@ -25,7 +25,7 @@ Withdraw (USER_DATA)
 --------------------
 .. autofunction:: binance.spot.Spot.withdraw
 
-Deposit History（supporting network） (USER_DATA)
+Deposit History (supporting network) (USER_DATA)
 -------------------------------------------------
 .. autofunction:: binance.spot.Spot.deposit_history
 
@@ -116,3 +116,7 @@ One click arrival deposit apply (USER_DATA)
 Query User Wallet Balance (USER_DATA)
 -------------------------------------
 .. autofunction:: binance.spot.Spot.balance
+
+Get symbols delist schedule for spot (MARKET_DATA)
+--------------------------------------------------
+.. autofunction:: binance.spot.Spot.delist_schedule_symbols

@@ -20,7 +20,7 @@ def message_handler(_, message):
 
 
 my_client = SpotWebsocketAPIClient(
-    stream_url="wss://testnet.binance.vision/ws-api/v3",
+    stream_url="wss://ws-api.testnet.binance.vision/ws-api/v3",
     api_key=api_key,
     api_secret=api_secret,
     on_message=message_handler,

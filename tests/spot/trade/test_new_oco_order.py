@@ -13,18 +13,18 @@ key = random_str()
 secret = random_str()
 
 params = {
-    "symbol": "BTCUSDT",
+    "symbol": "BNBUSDT",
     "side": "SELL",
     "quantity": 0.002,
-    "price": 9500,
-    "stopPrice": 7500,
-    "stopLimitPrice": 7000,
-    "stopLimitTimeInForce": "GTC",
+    "aboveType": "LIMIT_MAKER",
+    "belowType": "LIMIT_MAKER",
+    "abovePrice": 510,
+    "belowPrice": 500,
     "recvWindow": 1000,
 }
 
 
-@mock_http_response(responses.POST, "/api/v3/order/oco", mock_exception, 400)
+@mock_http_response(responses.POST, "/api/v3/orderList/oco", mock_exception, 400)
 def test_post_an_oco_order_without_param():
     """Tests the API endpoint to post a new oco order without parameters"""
 
@@ -35,7 +35,7 @@ def test_post_an_oco_order_without_param():
 
 
 @mock_http_response(
-    responses.POST, "/api/v3/order/oco\\?" + urlencode(params), mock_item, 200
+    responses.POST, "/api/v3/orderList/oco\\?" + urlencode(params), mock_item, 200
 )
 def test_post_an_oco_order():
     """Tests the API endpoint to post a new oco order"""

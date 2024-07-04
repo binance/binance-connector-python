@@ -387,7 +387,7 @@ a 10 minutes period. This package handles the pong responses automatically.
 ```python
 from binance.websocket.spot.websocket_client import SpotWebsocketClient as WebsocketClient
 
-ws_client = WebsocketClient(stream_url='wss://testnet.binance.vision')
+ws_client = WebsocketClient(stream_url='wss://stream.testnet.binance.vision')
 ```
 
 ## Test Case

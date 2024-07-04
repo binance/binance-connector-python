@@ -13,7 +13,7 @@ def portfolio_margin_account(self, **kwargs):
 
     GET /sapi/v1/portfolio/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-classic-portfolio-margin-account-info-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#get-portfolio-margin-pro-account-info-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -32,7 +32,7 @@ def portfolio_margin_collateral_rate(self):
 
     GET /sapi/v1/portfolio/collateralRate
 
-    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-collateral-rate-market_data
+    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-pro-collateral-rate-market_data
 
     """
 
@@ -49,7 +49,7 @@ def portfolio_margin_bankruptcy_loan_amount(self, **kwargs):
 
     GET /sapi/v1/portfolio/pmLoan
 
-    https://binance-docs.github.io/apidocs/spot/en/#classic-portfolio-margin-collateral-rate-market_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-portfolio-margin-pro-bankruptcy-loan-amount-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -68,7 +68,7 @@ def portfolio_margin_bankruptcy_loan_repay(self, **kwargs):
 
     POST /sapi/v1/portfolio/repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-bankruptcy-loan-repay-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-pro-bankruptcy-loan-repay
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -89,7 +89,7 @@ def query_classic_portfolio_margin_negative_balance_interest_history(
 
     GET /sapi/v1/portfolio/interest-history
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-classic-portfolio-margin-negative-balance-interest-history-user_data
+    https://binance-docs.github.io/apidocs/spot/en/#query-portfolio-margin-pro-negative-balance-interest-history-user_data
 
     Args:
         asset (str)
@@ -136,7 +136,7 @@ def fund_auto_collection(self, **kwargs):
 
     POST /sapi/v1/portfolio/auto-collection
 
-    https://binance-docs.github.io/apidocs/spot/en/#fund-auto-collection-usdr_data
+    https://binance-docs.github.io/apidocs/spot/en/#fund-auto-collection-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -155,7 +155,7 @@ def bnb_transfer(self, transferSide: str, amount: float, **kwargs):
 
     POST /sapi/v1/portfolio/bnb-transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#bnb-transfer-usdr_data
+    https://binance-docs.github.io/apidocs/spot/en/#bnb-transfer-user_data
 
     Args:
         transferSide (str)
@@ -240,7 +240,7 @@ def fund_collection_by_asset(self, asset: str, **kwargs):
 
     POST /sapi/v1/portfolio/asset-collection
 
-    https://binance-docs.github.io/apidocs/spot/en/#fund-collection-by-asset-usdr_data
+    https://binance-docs.github.io/apidocs/spot/en/#fund-collection-by-asset-user_data
 
     Args:
         asset (str)

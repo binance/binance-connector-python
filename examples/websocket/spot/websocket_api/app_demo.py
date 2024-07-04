@@ -37,7 +37,7 @@ def websocket_stream_message_handler(_, message):
 
 # make a connection to the websocket api
 ws_api_client = SpotWebsocketAPIClient(
-    stream_url="wss://testnet.binance.vision/ws-api/v3",
+    stream_url="wss://ws-api.testnet.binance.vision/ws-api/v3",
     api_key=api_key,
     api_secret=api_secret,
     on_message=websocket_api_message_handler,
@@ -46,7 +46,7 @@ ws_api_client = SpotWebsocketAPIClient(
 
 # make a connection to the websocket stream
 ws_stream_client = SpotWebsocketStreamClient(
-    stream_url="wss://testnet.binance.vision",
+    stream_url="wss://stream.testnet.binance.vision",
     on_message=websocket_stream_message_handler,
 )
 

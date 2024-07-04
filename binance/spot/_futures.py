@@ -13,7 +13,7 @@ def futures_transfer(self, asset: str, amount: float, type: int, **kwargs):
 
     POST /sapi/v1/futures/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#new-future-account-transfer-futures
+    https://binance-docs.github.io/apidocs/spot/en/#new-future-account-transfer-user_data
 
     Args:
         asset (str): The asset being transferred, e.g. USDT

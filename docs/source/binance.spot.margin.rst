@@ -144,3 +144,35 @@ Query Current Margin Order Count Usage (TRADE)
 Get Summary of Margin account (USER_DATA)
 -----------------------------------------
 .. autofunction:: binance.spot.Spot.summary_of_margin_account
+
+Cross margin collateral ratio (MARKET_DATA)
+--------------------------------------------
+.. autofunction:: binance.spot.Spot.cross_margin_collateral_ratio
+
+Get Small Liability Exchange Coin List (USER_DATA)
+--------------------------------------------------
+.. autofunction:: binance.spot.Spot.get_small_liability_exchange_coin_list
+
+Get Small Liability Exchange History (USER_DATA)
+------------------------------------------------
+.. autofunction:: binance.spot.Spot.get_small_liability_exchange_history
+
+Get a future hourly interest rate (USER_DATA)
+---------------------------------------------
+.. autofunction:: binance.spot.Spot.get_a_future_hourly_interest_rate
+
+Adjust cross margin max leverage (USER_DATA)
+--------------------------------------------
+.. autofunction:: binance.spot.Spot.adjust_cross_margin_max_leverage
+
+Query Margin Available Inventory (USER_DATA)
+---------------------------------------------
+.. autofunction:: binance.spot.Spot.margin_available_inventory
+
+Margin manual liquidation (MARGIN)
+----------------------------------
+.. autofunction:: binance.spot.Spot.margin_manual_liquidation
+
+Query Liability Coin Leverage Bracket in Cross Margin Pro Mode(MARKET_DATA)
+---------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.liability_coin_leverage_bracket

@@ -17,7 +17,6 @@ client = Client(api_key, api_secret)
 try:
     response = client.place_limit_order(
         baseAsset="BNB",
-        quoteAsset="USDT",
         limitPrice=0.0001,
         side="BUY",
         expiredType="1_D",
