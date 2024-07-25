@@ -174,6 +174,9 @@ def cancel_and_replace(
         trailingDelta (float, optional): Used with STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.
         icebergQty (float, optional): Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order.
         newOrderRespType (str, optional): Set the response JSON. MARKET and LIMIT order types default to FULL, all other orders default to ACK.
+        selfTradePreventionMode (str, optional): The allowed enums is dependent on what is configured on the symbol. The possible supported values are EXPIRE_TAKER, EXPIRE_MAKER, EXPIRE_BOTH, NONE.
+        cancelRestrictions (str, optional): Supported values: ONLY_NEW - Cancel will succeed if the order status is NEW. ONLY_PARTIALLY_FILLED - Cancel will succeed if order status is PARTIALLY_FILLED.
+        orderRateLimitExceededMode (str, optional): Supported values: DO_NOTHING (default)- will only attempt to cancel the order if account has not exceeded the order rate limit. CANCEL_ONLY - will always cancel the order.
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters(
@@ -580,6 +583,7 @@ def account(self, **kwargs):
     https://binance-docs.github.io/apidocs/spot/en/#account-information-user_data
 
     Keyword Args:
+        omitZeroBalances (bool, optional): When set to true, emits only the non-zero balances of an account. Default value: false
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 
