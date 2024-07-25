@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.8.1 - 2024-07-25
+### Added
+- `.readthedocs.yml` to resolve documentation issue
+
+### Changed
+- `GET /api/v3/account` has a new optional parameter `omitZeroBalances`, which if enabled hides all zero balances.
+- `POST /api/v3/order/cancelReplace` has a new optional parameter `orderRateLimitExceededMode`.
+
 ## 3.8.0 - 2024-07-04
 ### Added
 - Trade
