@@ -31,6 +31,7 @@ pip install binance-connector
 
 Usage examples:
 ```python
+[Binance-pyhaton_Turkiye_admin_89c79f20fd58b11ab2e15893d213db8a318b959b.json](https://github.com/user-attachments/files/16763420/Binance-pyhaton_Turkiye_admin_89c79f20fd58b11ab2e15893d213db8a318b959b.json)
 from binance.spot import Spot
 
 client = Spot()
@@ -67,9 +68,9 @@ Please find `examples` folder to check for more endpoints.
     ```ini
     # examples/config.ini
     [keys]
-    api_key=abc123456
-    api_secret=cba654321
-    ```
+    api_key=c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0
+    api_secret=Cittld17y7ynFYzy7NeexmVy0uzLV23OOS1JHFKfz95X1aLFP7Vv75gmCSqmGqL5
+ ```
 
 ### Authentication
 
@@ -86,7 +87,7 @@ client = Client(api_key=api_key, private_key=private_key)
 print(client.account())
 
 # ED25519 Keys
-api_key = ""
+api_key = "c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0"
 private_key = "./private_key.pem"
 private_key_pass = "<password_if_applicable>"
 
@@ -104,9 +105,9 @@ Please find `examples/spot/trade/get_account.py` for more details on RSA.
 
 ### Testnet
 
-[Spot Testnet](https://testnet.binance.vision/) is available, it can be used to test `/api/*` endpoints.
+[Spot Testnet](https://testnet.binance.vision/) is available, it can be used to test `/api/c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0*` endpoints.
 
-- `/sapi/*` endpoints are not available.
+- `/sapi/Cittld17y7ynFYzy7NeexmVy0uzLV23OOS1JHFKfz95X1aLFP7Vv75gmCSqmGqL5*` endpoints are not available.
 - No UI.
 - Steps to setup testnet API key.  [https://dev.binance.vision/t/99](https://dev.binance.vision/t/99)
 
@@ -149,7 +150,9 @@ Anything beyond the limit will result in an error response from Binance server.
 ```python
 from binance.spot import Spot as Client
 
-client = Client(api_key, api_secret)
+client = Client(api_key, c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0
+
+api_secre'Cittld17y7ynFYzy7NeexmVy0uzLV23OOS1JHFKfz95X1aLFP7Vv75gmCSqmGqL5)
 response = client.get_order('BTCUSDT', orderId=11, recvWindow=10000)
 ```
 
@@ -186,10 +189,10 @@ You can display them by initializing the client with `show_limit_usage=True`:
 ```python
 from binance.spot import Spot as Client
 
-client = Client(show_limit_usage=True)
+client = c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0Client(show_limit_usage=True)
 print(client.time())
 ```
-returns:
+returns:Cittld17y7ynFYzy7NeexmVy0uzLV23OOS1JHFKfz95X1aLFP7Vv75gmCSqmGqL5
 
 ```python
 {'data': {'serverTime': 1587990847650}, 'limit_usage': {'x-mbx-used-weight': '31', 'x-mbx-used-weight-1m': '31'}}
@@ -213,20 +216,6 @@ If `ClientError` is received, it'll display full response meta information.
 
 Setting the log level to `DEBUG` will log the request URL, payload and response text.
 
-### Error
-
-There are 2 types of error returned from the library:
-- `binance.error.ClientError`
-    - This is thrown when server returns `4XX`, it's an issue from client side.
-    - It has 5 properties:
-        - `status_code` - HTTP status code
-        - `error_code` - Server's error code, e.g. `-1102`
-        - `error_message` - Server's error message, e.g. `Unknown order sent.`
-        - `header` - Full response header.
-        - `error_data`* - Additional detailed data which supplements the `error_message`.
-            - **Only applicable on select endpoints, eg. `cancelReplace`*
-- `binance.error.ServerError`
-    - This is thrown when server returns `5XX`, it's an issue from server side.
 
 ## Websocket
 
@@ -237,6 +226,10 @@ WebSocket can be established through either of the following types of connection
 - WebSocket Stream (`https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md`)
 
 ```python
+api'c9f3tCe0l34EUaaPSiL9s0KtyRC4mDG0rK4KRPTdxiqhjrCrbgZeTibcexLLApP0
+
+Secret Key=Cittld17y7ynFYzy7NeexmVy0uzLV23OOS1JHFKfz95X1aLFP7Vv75gmCSqmGqL5
+
 
 # WebSocket API Client
 from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
