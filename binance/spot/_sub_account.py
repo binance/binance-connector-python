@@ -8,7 +8,7 @@ def sub_account_create(self, subAccountString: str, **kwargs):
 
     POST /sapi/v1/sub-account/virtualSubAccount
 
-    https://binance-docs.github.io/apidocs/spot/en/#create-a-virtual-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Create-a-Virtual-Sub-account
 
     Args:
         subAccountString (str): Please input a string. We will create a virtual email using that string for you to register
@@ -30,7 +30,7 @@ def sub_account_list(self, **kwargs):
 
     GET /sapi/v1/sub-account/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-list-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Query-Sub-account-List
 
     Keyword Args:
         email (str, optional): Sub-account email
@@ -49,7 +49,7 @@ def sub_account_assets(self, email: str, **kwargs):
 
     GET /sapi/v3/sub-account/assets
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Sub-account-Assets-V3
 
     Args:
         email (str)
@@ -70,7 +70,7 @@ def sub_account_deposit_address(self, email: str, coin: str, **kwargs):
 
     GET /sapi/v1/capital/deposit/subAddress
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-sub-account-deposit-address-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Sub-account-Deposit-Address
 
     Args:
         email (str)
@@ -93,7 +93,7 @@ def sub_account_deposit_history(self, email: str, **kwargs):
 
     GET /sapi/v1/capital/deposit/subHisrec
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-sub-account-deposit-address-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Sub-account-Deposit-Address
 
     Args:
         email (str)
@@ -119,7 +119,7 @@ def sub_account_status(self, **kwargs):
 
     GET /sapi/v1/sub-account/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-sub-account-39-s-status-on-margin-futures-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Get-Sub-accounts-Status-on-Margin-Or-Futures
 
     Keyword Args:
         email (str, optional): Sub-account email
@@ -136,7 +136,7 @@ def sub_account_enable_margin(self, email: str, **kwargs):
 
     POST /sapi/v1/sub-account/margin/enable
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-margin-for-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Enable-Margin-for-Sub-account
 
     Args:
         email (str)
@@ -156,7 +156,7 @@ def sub_account_margin_account(self, email: str, **kwargs):
 
     GET /sapi/v1/sub-account/margin/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-margin-account-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Detail-on-Sub-accounts-Margin-Account
 
     Args:
         email (str)
@@ -176,7 +176,7 @@ def sub_account_margin_account_summary(self, **kwargs):
 
     GET /sapi/v1/sub-account/margin/accountSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-margin-account-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Summary-of-Sub-accounts-Margin-Account
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -192,7 +192,7 @@ def sub_account_enable_futures(self, email: str, **kwargs):
 
     POST /sapi/v1/sub-account/futures/enable
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-futures-for-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Enable-Futures-for-Sub-account
 
     Args:
         email (str)
@@ -214,7 +214,7 @@ def sub_account_futures_transfer(
 
     POST /sapi/v1/sub-account/futures/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#futures-transfer-for-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Futures-Transfer-for-Sub-account
 
     Args:
         email (str)
@@ -239,7 +239,7 @@ def sub_account_margin_transfer(
 
     POST /sapi/v1/sub-account/margin/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-transfer-for-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Margin-Transfer-for-Sub-account
 
     Args:
         email (str)
@@ -264,7 +264,7 @@ def sub_account_transfer_to_sub(
 
     POST /sapi/v1/sub-account/transfer/subToSub
 
-    https://binance-docs.github.io/apidocs/spot/en/#transfer-to-sub-account-of-same-master-for-sub-account
+    https://developers.binance.com/docs/sub_account/asset-management/Transfer-to-Sub-account-of-Same-Master
 
     Args:
         toEmail (str)
@@ -288,7 +288,7 @@ def sub_account_transfer_to_master(self, asset: str, amount: float, **kwargs):
 
     POST /sapi/v1/sub-account/transfer/subToMaster
 
-    https://binance-docs.github.io/apidocs/spot/en/#transfer-to-master-for-sub-account
+    https://developers.binance.com/docs/sub_account/asset-management/Transfer-to-Master
 
     Args:
         asset (str)
@@ -309,7 +309,7 @@ def sub_account_transfer_sub_account_history(self, **kwargs):
 
     GET /sapi/v1/sub-account/transfer/subUserHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-transfer-history-for-sub-account
+    https://developers.binance.com/docs/sub_account/asset-management/Sub-account-Transfer-History
 
     Keyword Args:
         asset (str, optional): If not sent, result of all assets will be returned
@@ -332,7 +332,7 @@ def sub_account_futures_asset_transfer_history(
 
     GET /sapi/v1/sub-account/futures/internalTransfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-futures-asset-transfer-history-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Sub-account-Futures-Asset-Transfer-History
 
     Args:
         email (str): Sub-account email
@@ -364,7 +364,7 @@ def sub_account_futures_asset_transfer(
 
     POST /sapi/v1/sub-account/futures/internalTransfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#sub-account-futures-asset-transfer-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Sub-account-Futures-Asset-Transfer
 
     Args:
         fromEmail (str): Sender email
@@ -402,7 +402,7 @@ def sub_account_spot_summary(self, **kwargs):
 
     GET /sapi/v1/sub-account/spotSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-spot-assets-summary-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Sub-account-Spot-Assets-Summary
 
     Keyword Args:
         email (str, optional): Sub account email
@@ -421,7 +421,7 @@ def sub_account_universal_transfer(
 
     POST /sapi/v1/sub-account/universalTransfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#universal-transfer-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Universal-Transfer
 
     You need to enable "internal transfer" option for the api key which requests this endpoint.
     Transfer from master account by default if fromEmail is not sent.
@@ -469,7 +469,7 @@ def sub_account_universal_transfer_history(self, **kwargs):
 
     GET /sapi/v1/sub-account/universalTransfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-universal-transfer-history-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Universal-Transfer-History
 
     fromEmail and toEmail cannot be sent at the same time.
     Return fromEmail equal master account email by default.
@@ -496,7 +496,7 @@ def sub_account_futures_account(self, email: str, futuresType: int, **kwargs):
 
     GET /sapi/v2/sub-account/futures/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-v2-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Detail-on-Sub-accounts-Futures-Account-V2
 
     Args:
         email (str): Sub-account email
@@ -518,7 +518,7 @@ def sub_account_futures_account_summary(self, futuresType: int, **kwargs):
 
     GET /sapi/v2/sub-account/futures/accountSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-v2-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Summary-of-Sub-accounts-Futures-Account-V2
 
     Args:
         futuresType (int): 1 : USDT-maringed Futues, 2: Coin-margined Futures
@@ -541,7 +541,7 @@ def sub_account_futures_position_risk(self, email: str, futuresType: str, **kwar
 
     GET /sapi/v2/sub-account/futures/positionRisk
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-futures-position-risk-of-sub-account-v2-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Get-Futures-Position-Risk-of-Sub-account-V2
 
     Args:
         email (str): Sub-account email
@@ -563,7 +563,7 @@ def sub_account_spot_transfer_history(self, **kwargs):
 
     GET /sapi/v1/sub-account/sub/transfer/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-spot-asset-transfer-history-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Sub-account-Spot-Asset-Transfer-History
 
     Keyword Args:
         fromEmail (str, optional)
@@ -586,7 +586,7 @@ def sub_account_enable_leverage_token(self, email: str, enableBlvt: bool, **kwar
 
     POST /sapi/v1/sub-account/blvt/enable
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-leverage-token-for-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Enable-Leverage-Token-for-Sub-account
 
     Args:
         email (str): Sub-account email
@@ -610,7 +610,7 @@ def managed_sub_account_deposit(
 
     POST /sapi/v1/managed-subaccount/deposit
 
-    https://binance-docs.github.io/apidocs/spot/en/#deposit-assets-into-the-managed-sub-account-for-investor-master-account
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Deposit-Assets-Into-The-Managed-Sub-account
 
     Args:
         toEmail (str): Sub-account email
@@ -633,7 +633,7 @@ def managed_sub_account_assets(self, email: str, **kwargs):
 
     GET /sapi/v1/managed-subaccount/asset
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-asset-details-for-investor-master-account
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-account-Asset-Details
 
     Args:
         email (str): Sub-account email
@@ -654,7 +654,7 @@ def managed_sub_account_withdraw(
 
     POST /sapi/v1/managed-subaccount/withdraw
 
-    https://binance-docs.github.io/apidocs/spot/en/#withdrawl-assets-from-the-managed-sub-account-for-investor-master-account
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Withdrawl-Assets-From-The-Managed-Sub-account
 
     Args:
         fromEmail (str): Sub-account email
@@ -681,7 +681,7 @@ def sub_account_update_ip_restriction(
 
     POST /sapi/v2/sub-account/subAccountApi/ipRestriction
 
-    https://binance-docs.github.io/apidocs/spot/en/#add-ip-restriction-for-sub-account-api-key-for-master-account
+    https://developers.binance.com/docs/sub_account/api-management/Add-IP-Restriction-for-Sub-Account-API-key
 
     Args:
         email (str): Sub-account email
@@ -718,7 +718,7 @@ def sub_account_api_get_ip_restriction(
 
     GET /sapi/v1/sub-account/subAccountApi/ipRestriction
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-ip-restriction-for-a-sub-account-api-key-for-master-account
+    https://developers.binance.com/docs/sub_account/api-management/Get-IP-Restriction-for-a-Sub-account-API-Key
 
     Args:
         email (str): Sub-account email
@@ -747,7 +747,7 @@ def sub_account_api_delete_ip(
 
     DELETE /sapi/v1/sub-account/subAccountApi/ipRestriction/ipList
 
-    https://binance-docs.github.io/apidocs/spot/en/#delete-ip-list-for-a-sub-account-api-key-for-master-account
+    https://developers.binance.com/docs/sub_account/api-management/Delete-IP-List-For-a-Sub-account-API-Key
 
     Args:
         email (str): Sub-account email
@@ -782,7 +782,7 @@ def managed_sub_account_get_snapshot(self, email: str, type: str, **kwargs):
 
     GET /sapi/v1/managed-subaccount/accountSnapshot (HMAC SHA256)
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-snapshot-for-investor-master-account
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-account-Snapshot
 
     Args:
         email (str): email
@@ -818,7 +818,7 @@ def managed_sub_account_investor_trans_log(
 
     GET /sapi/v1/managed-subaccount/transfer/history (HMAC SHA256)
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-investor-user_data
+    https://developers.binance.com/en
 
     Args:
         email (str): email
@@ -861,7 +861,7 @@ def managed_sub_account_trading_trans_log(
 
     GET /sapi/v1/managed-subaccount/queryTransLogForTradeParent
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-for-trading-team-master-account-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-Account-Transfer-Log-Trading-Team-Master
 
     Args:
         email (str): email
@@ -902,7 +902,7 @@ def managed_sub_account_deposit_address(self, email: str, coin: str, **kwargs):
 
     GET /sapi/v1/managed-subaccount/deposit/address (HMAC SHA256)
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-managed-sub-account-deposit-address-for-investor-master-account-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Get-Managed-Sub-account-Deposit-Address
 
     Args:
         email (str): email
@@ -938,7 +938,7 @@ def query_sub_account_assets(self, email: str, **kwargs):
 
     GET /sapi/v4/sub-account/assets
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-assets-for-master-account-user_data
+    https://developers.binance.com/docs/sub_account/asset-management/Query-Sub-account-Assets-V4
 
     Args:
         email (str)
@@ -959,7 +959,7 @@ def enable_options_for_sub_account(self, email: str, **kwargs):
 
     POST /sapi/v1/sub-account/eoptions/enable
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-options-for-sub-account-for-master-account-user_data
+    https://developers.binance.com/docs/sub_account/account-management/Enable-Options-for-Sub-account
 
     Args:
         email (str)
@@ -980,7 +980,7 @@ def query_sub_account_transaction_statistics(self, email: str, **kwargs):
 
     GET /sapi/v1/sub-account/transaction-statistics
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-sub-account-transaction-statistics-for-master-account-user_data
+    https://developers.binance.com/docs/sub_account/account-management/Query-Sub-account-Transaction-Statistics
 
     Args:
         email (str)
@@ -1005,7 +1005,7 @@ def query_managed_sub_account_transfer_log(
 
     GET /sapi/v1/managed-subaccount/query-trans-log
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-transfer-log-for-trading-team-sub-account-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-Account-Transfer-Log-Trading-Team-Sub
 
     Args:
         startTime (int): UTC timestamp in ms
@@ -1046,7 +1046,7 @@ def query_managed_sub_account_list(self, **kwargs):
 
     GET /sapi/v1/managed-subaccount/info
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-list-for-investor-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-account-List
 
     Keyword Args:
         email (str, optional)
@@ -1068,7 +1068,7 @@ def query_managed_sub_account_margin_asset_details(self, email: str, **kwargs):
 
     GET /sapi/v1/managed-subaccount/marginAsset
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-margin-asset-details-for-investor-master-account-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-account-Margin-Asset-Details
 
     Args:
         email (str)
@@ -1091,7 +1091,7 @@ def query_managed_sub_account_futures_asset_details(self, email: str, **kwargs):
 
     GET /sapi/v1/managed-subaccount/fetch-future-asset
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-managed-sub-account-futures-asset-details-for-investor-master-account-user_data
+    https://developers.binance.com/docs/sub_account/managed-sub-account/Query-Managed-Sub-account-Futures-Asset-Details
 
     Args:
         email (str)
@@ -1112,7 +1112,7 @@ def futures_position_risk_of_sub_account(self, email: str, **kwargs):
 
     GET /sapi/v1/sub-account/futures/positionRisk
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-futures-position-risk-of-sub-account-for-master-account
+    https://developers.binance.com/docs/sub_account/account-management/Get-Futures-Position-Risk-of-Sub-account
 
     Args:
         email (str)
@@ -1133,7 +1133,7 @@ def summary_of_sub_account_s_futures_account(self, futuresType: int, **kwargs):
 
     GET /sapi/v2/sub-account/futures/accountSummary
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-sub-account-39-s-futures-account-v2-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Summary-of-Sub-accounts-Futures-Account-V2
 
     Args:
         futuresType (int): 1:USDT Margined Futures, 2:COIN Margined Futures
@@ -1157,7 +1157,7 @@ def detail_on_sub_account_s_futures_account(self, email: str, **kwargs):
 
     GET /sapi/v1/sub-account/futures/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-detail-on-sub-account-39-s-futures-account-for-master-account
+    https://developers.binance.com/docs/sub_account/asset-management/Get-Detail-on-Sub-accounts-Futures-Account
 
     Args:
         email (str)

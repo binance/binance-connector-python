@@ -5,12 +5,10 @@ Spot APIs
    :maxdepth: 2
 
    binance.spot.auto_invest
-   binance.spot.blvt
    binance.spot.c2c
    binance.spot.convert
    binance.spot.data_stream
    binance.spot.fiat
-   binance.spot.futures
    binance.spot.gift_card
    binance.spot.crypto_loan
    binance.spot.margin

@@ -13,7 +13,7 @@ def get_simple_earn_flexible_product_list(self, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-simple-earn-flexible-product-list-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Simple-Earn-Flexible-Product-List
 
     Keyword Args:
         asset (str, optional)
@@ -33,7 +33,7 @@ def get_simple_earn_locked_product_list(self, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-simple-earn-locked-product-list-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Simple-Earn-Locked-Product-List
 
     Keyword Args:
         asset (str, optional)
@@ -55,7 +55,7 @@ def subscribe_flexible_product(self, productId: str, amount: float, **kwargs):
 
     POST /sapi/v1/simple-earn/flexible/subscribe
 
-    https://binance-docs.github.io/apidocs/spot/en/#subscribe-flexible-product-trade
+    https://developers.binance.com/docs/simple_earn/earn/Subscribe-Flexible-Product
 
     Args:
         productId (str)
@@ -81,7 +81,7 @@ def subscribe_locked_product(self, projectId: str, amount: float, **kwargs):
 
     POST /sapi/v1/simple-earn/locked/subscribe
 
-    https://binance-docs.github.io/apidocs/spot/en/#subscribe-locked-product-trade
+    https://developers.binance.com/docs/simple_earn/earn/Subscribe-Locked-Product
 
     Args:
         projectId (str)
@@ -107,7 +107,7 @@ def redeem_flexible_product(self, productId: str, **kwargs):
 
     POST /sapi/v1/simple-earn/flexible/redeem
 
-    https://binance-docs.github.io/apidocs/spot/en/#redeem-flexible-product-trade
+    https://developers.binance.com/docs/simple_earn/earn/Redeem-Flexible-Product
 
     Args:
         productId (str)
@@ -133,7 +133,7 @@ def redeem_locked_product(self, positionId: str, **kwargs):
 
     POST /sapi/v1/simple-earn/locked/redeem
 
-    https://binance-docs.github.io/apidocs/spot/en/#redeem-locked-product-trade
+    https://developers.binance.com/docs/simple_earn/earn/Redeem-Locked-Product
 
     Args:
         positionId (str)
@@ -154,7 +154,7 @@ def get_flexible_product_position(self, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/position
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-product-position-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Flexible-Product-Position
 
     Keyword Args:
         asset (str, optional)
@@ -175,7 +175,7 @@ def get_locked_product_position(self, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/position
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-product-position-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Locked-Product-Position
 
     Keyword Args:
         asset (str, optional)
@@ -197,7 +197,7 @@ def simple_account(self, **kwargs):
 
     GET /sapi/v1/simple-earn/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#simple-account-user_data
+    https://developers.binance.com/docs/simple_earn/account/Simple-Account
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -214,7 +214,7 @@ def get_flexible_subscription_record(self, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/history/subscriptionRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-subscription-record-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Subscription-Record
 
     Keyword Args:
         productId (str, optional)
@@ -238,7 +238,7 @@ def get_locked_subscription_record(self, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/history/subscriptionRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-subscription-record-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Locked-Subscription-Record
 
     Keyword Args:
         purchaseId (str, optional)
@@ -261,7 +261,7 @@ def get_flexible_redemption_record(self, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/history/redemptionRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-redemption-record-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Redemption-Record
 
     Keyword Args:
         productId (str, optional)
@@ -284,7 +284,7 @@ def get_locked_redemption_record(self, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/history/redemptionRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-redemption-record-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Locked-Redemption-Record
 
     Keyword Args:
         positionId (str, optional)
@@ -308,7 +308,7 @@ def get_flexible_rewards_history(self, type: str, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/history/rewardsRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-rewards-history-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Flexible-Rewards-History
 
     Args:
         type (str)
@@ -332,7 +332,7 @@ def get_locked_rewards_history(self, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/history/rewardsRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-rewards-history-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Locked-Rewards-History
 
     Keyword Args:
         positionId (str, optional)
@@ -355,7 +355,7 @@ def set_flexible_auto_subscribe(self, productId: str, autoSubscribe: bool, **kwa
 
     POST /sapi/v1/simple-earn/flexible/setAutoSubscribe
 
-    https://binance-docs.github.io/apidocs/spot/en/#set-flexible-auto-subscribe-user_data
+    https://developers.binance.com/docs/simple_earn/earn/Set-Flexible-Auto-Subscribe
 
     Args:
         productId (str)
@@ -379,7 +379,7 @@ def set_locked_auto_subscribe(self, positionId: str, autoSubscribe: bool, **kwar
 
     POST /sapi/v1/simple-earn/locked/setAutoSubscribe
 
-    https://binance-docs.github.io/apidocs/spot/en/#set-locked-auto-subscribe-user_data
+    https://developers.binance.com/docs/simple_earn/earn/Set-Locked-Auto-Subscribe
 
     Args:
         positionId (str)
@@ -403,7 +403,7 @@ def get_flexible_personal_left_quota(self, productId: str, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/personalLeftQuota
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-personal-left-quota-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Flexible-Personal-Left-Quota
 
     Args:
         productId (str)
@@ -424,7 +424,7 @@ def get_locked_personal_left_quota(self, projectId: str, **kwargs):
 
     GET /sapi/v1/simple-earn/locked/personalLeftQuota
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-personal-left-quota-user_data
+    https://developers.binance.com/docs/simple_earn/account/Get-Locked-Personal-Left-Quota
 
     Args:
         projectId (str)
@@ -445,7 +445,7 @@ def get_flexible_subscription_preview(self, productId: str, amount: float, **kwa
 
     GET /sapi/v1/simple-earn/flexible/subscriptionPreview
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-flexible-subscription-preview-user_data
+    https://developers.binance.com/docs/simple_earn/earn/Get-Flexible-Subscription-Preview
 
     Args:
         productId (str)
@@ -467,7 +467,7 @@ def get_locked_subscription_preview(self, projectId: str, amount: float, **kwarg
 
     GET /sapi/v1/simple-earn/locked/subscriptionPreview
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-locked-subscription-preview-user_data
+    https://developers.binance.com/docs/simple_earn/earn/Get-Locked-Subscription-Preview
 
     Args:
         projectId (str)
@@ -490,7 +490,7 @@ def get_rate_history(self, productId: str, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/history/rateHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-rate-history-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Rate-History
 
     Args:
         productId (str)
@@ -515,7 +515,7 @@ def get_collateral_record(self, **kwargs):
 
     GET /sapi/v1/simple-earn/flexible/history/collateralRecord
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-collateral-record-user_data
+    https://developers.binance.com/docs/simple_earn/history/Get-Collateral-Record
 
     Keyword Args:
         productId (str, optional)

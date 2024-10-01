@@ -13,7 +13,7 @@ def list_all_convert_pairs(self, **kwargs):
 
     GET /sapi/v1/convert/exchangeInfo
 
-    https://binance-docs.github.io/apidocs/spot/en/#list-all-convert-pairs
+    https://developers.binance.com/docs/convert/market-data/List-all-convert-pairs
 
     Keyword Args:
         fromAsset (str, optional): User spends coin
@@ -33,7 +33,7 @@ def query_order_quantity_precision_per_asset(self, **kwargs):
 
     GET /sapi/v1/convert/assetInfo
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-order-quantity-precision-per-asset-user_data
+    https://developers.binance.com/docs/convert/market-data/Query-order-quantity-precision-per-asset
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -52,7 +52,7 @@ def send_quote_request(self, fromAsset: str, toAsset: str, **kwargs):
 
     POST /sapi/v1/convert/getQuote
 
-    https://binance-docs.github.io/apidocs/spot/en/#send-quote-request-user_data
+    https://developers.binance.com/docs/convert/trade/Send-quote-request
 
     Args:
         fromAsset (str)
@@ -80,7 +80,7 @@ def accept_quote(self, quoteId: str, **kwargs):
 
     POST /sapi/v1/convert/acceptQuote
 
-    https://binance-docs.github.io/apidocs/spot/en/#accept-quote-trade
+    https://developers.binance.com/docs/convert/trade/Accept-Quote
 
     Args:
         quoteId (str)
@@ -103,7 +103,7 @@ def order_status(self, **kwargs):
 
     GET /sapi/v1/convert/orderStatus
 
-    https://binance-docs.github.io/apidocs/spot/en/#order-status-user_data
+    https://developers.binance.com/docs/convert/trade/Order-Status
 
     Keyword Args:
         orderId (str, optional)
@@ -128,7 +128,7 @@ def place_limit_order(
 
     POST /sapi/v1/convert/limit/placeOrder
 
-    https://binance-docs.github.io/apidocs/spot/en/#place-limit-order-user_data
+    https://developers.binance.com/docs/convert/trade/Place-Order
 
     Args:
         baseAsset (str): base asset (use the response fromIsBase from GET /sapi/v1/convert/exchangeInfo api to check which one is baseAsset)
@@ -169,7 +169,7 @@ def cancel_limit_order(self, orderId: str, **kwargs):
 
     POST /sapi/v1/convert/limit/cancelOrder
 
-    https://binance-docs.github.io/apidocs/spot/en/#cancel-limit-order-user_data
+    https://developers.binance.com/docs/convert/trade/Cancel-Order
 
     Args:
         orderId (str): The orderId from placeOrder api
@@ -188,7 +188,7 @@ def query_limit_open_order(self, **kwargs):
 
     GET /sapi/v1/convert/limit/queryOpenOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-limit-open-orders-user_data
+    https://developers.binance.com/docs/convert/trade/Query-Order
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -206,7 +206,7 @@ def get_convert_trade_history(self, startTime: int, endTime: int, **kwargs):
 
     GET /sapi/v1/convert/tradeFlow
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-convert-trade-history-user_data
+    https://developers.binance.com/docs/convert/trade/Get-Convert-Trade-History
 
     Args:
         startTime (int)

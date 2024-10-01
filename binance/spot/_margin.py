@@ -12,7 +12,7 @@ def borrow_repay(
 
     POST /sapi/v1/margin/borrow-repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-borrow-repay-margin
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Margin-Account-Borrow-Repay
 
     Args:
         asset (str): The asset being transferred, e.g., BTC.
@@ -50,7 +50,7 @@ def margin_all_assets(self, **kwargs):
 
     GET /sapi/v1/margin/allAssets
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-all-margin-assets-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Get-All-Margin-Assets
 
 
     Keyword Args:
@@ -65,7 +65,7 @@ def margin_all_pairs(self, **kwargs):
 
     GET /sapi/v1/margin/allPairs
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-all-cross-margin-pairs-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Get-All-Cross-Margin-Pairs
 
     Keyword Args:
         symbol (str, optional)
@@ -79,7 +79,7 @@ def margin_pair_index(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/priceIndex
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-priceindex-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Query-Margin-PriceIndex
 
     Args:
         symbol (str)
@@ -97,7 +97,7 @@ def new_margin_order(self, symbol: str, side: str, type: str, **kwargs):
 
     POST /sapi/v1/margin/order
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-order-trade
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Account-New-Order
 
     Args:
         symbol (str)
@@ -137,7 +137,7 @@ def cancel_margin_order(self, symbol: str, **kwargs):
 
     DELETE /sapi/v1/margin/order
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-order-trade
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Account-Cancel-Order
 
     Args:
         symbol (str)
@@ -158,7 +158,7 @@ def margin_transfer_history(self, asset: str, **kwargs):
 
     GET /sapi/v1/margin/transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-cross-margin-transfer-history-user_data
+    https://developers.binance.com/docs/margin_trading/transfer/Get-Cross-Margin-Transfer-History
 
     Args:
         asset (str)
@@ -181,7 +181,7 @@ def borrow_repay_record(self, type: str, **kwargs):
 
     GET /sapi/v1/margin/borrow-repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-borrow-repay-records-in-margin-account-user_data
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Query-Borrow-Repay
 
     Args:
         type (str): BORROW or REPAY
@@ -206,7 +206,7 @@ def margin_interest_history(self, **kwargs):
 
     GET /sapi/v1/margin/interestHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-interest-history-user_data
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Get-Interest-History
 
     Keyword Args:
         asset (str, optional)
@@ -227,7 +227,7 @@ def margin_force_liquidation_record(self, **kwargs):
 
     GET /sapi/v1/margin/forceLiquidationRec
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-force-liquidation-record-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Get-Force-Liquidation-Record
 
     Keyword Args:
         isolatedSymbol (str, optional): isolated symbol
@@ -246,7 +246,7 @@ def margin_account(self, **kwargs):
 
     GET /sapi/v1/margin/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-cross-margin-account-details-user_data
+    https://developers.binance.com/docs/margin_trading/account/Query-Cross-Margin-Account-Details
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -260,7 +260,7 @@ def margin_order(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/order
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-order-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-Order
 
     Args:
         symbol (str)
@@ -281,7 +281,7 @@ def margin_open_orders(self, **kwargs):
 
     GET /sapi/v1/margin/openOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-orders-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-Open-Orders
 
     Keyword Args:
         symbol (str, optional)
@@ -297,7 +297,7 @@ def margin_open_orders_cancellation(self, symbol: str, **kwargs):
 
     DELETE /sapi/v1/margin/openOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-all-open-orders-on-a-symbol-trade
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Account-Cancel-All-Open-Orders
 
     Args:
         symbol (str)
@@ -316,7 +316,7 @@ def margin_all_orders(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/allOrders
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-all-orders-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-All-Orders
 
     Args:
         symbol (str)
@@ -339,7 +339,7 @@ def margin_my_trades(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/myTrades
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-trade-list-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-Trade-List
 
     Args:
         symbol (str)
@@ -364,7 +364,7 @@ def margin_max_borrowable(self, asset: str, **kwargs):
 
     GET /sapi/v1/margin/maxBorrowable
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-max-borrow-user_data
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Query-Max-Borrow
 
     Args:
         asset (str)
@@ -383,7 +383,7 @@ def margin_max_transferable(self, asset: str, **kwargs):
 
     GET /sapi/v1/margin/maxTransferable
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-max-transfer-out-amount-user_data
+    https://developers.binance.com/docs/margin_trading/transfer/Query-Max-Transfer-Out-Amount
 
     Args:
         asset (str)
@@ -402,7 +402,7 @@ def isolated_margin_account(self, **kwargs):
 
     GET /sapi/v1/margin/isolated/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-account-info-user_data
+    https://developers.binance.com/docs/margin_trading/account/Query-Isolated-Margin-Account-Info
 
     Keyword Args:
         symbols (str, optional): Max 5 symbols can be sent; separated by ",". e.g. "BTCUSDT,BNBUSDT,ADAUSDT"
@@ -417,7 +417,7 @@ def isolated_margin_all_pairs(self, **kwargs):
 
     GET /sapi/v1/margin/isolated/allPairs
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-all-isolated-margin-symbol-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Get-All-Isolated-Margin-Symbol
 
     Keyword Args:
         symbol (str, optional)
@@ -432,7 +432,7 @@ def toggle_bnbBurn(self, **kwargs):
 
     POST /sapi/v1/bnbBurn
 
-    https://binance-docs.github.io/apidocs/spot/en/#toggle-bnb-burn-on-spot-trade-and-margin-interest-user_data
+    https://developers.binance.com/docs/margin_trading/account/Toggle-BNB-Burn-On-Spot-Trade-And-Margin-Interest
 
     Keyword Args:
         spotBNBBurn (str, optional): "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
@@ -448,7 +448,7 @@ def bnbBurn_status(self, **kwargs):
 
     GET /sapi/v1/bnbBurn
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-bnb-burn-status-user_data
+    https://developers.binance.com/docs/margin_trading/account/Get-BNB-Burn-Status
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -462,7 +462,7 @@ def margin_interest_rate_history(self, asset: str, **kwargs):
 
     GET /sapi/v1/margin/interestRateHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-interest-rate-history-user_data
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Query-Margin-Interest-Rate-History
 
     Args:
         asset (str)
@@ -493,7 +493,7 @@ def new_margin_oco_order(
 
     POST /sapi/v1/margin/order/oco
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-new-oco-trade
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Account-New-OCO
 
     Args:
         symbol (str)
@@ -545,7 +545,7 @@ def cancel_margin_oco_order(
 
     DELETE /sapi/v1/margin/orderList
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-account-cancel-oco-trade
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Account-Cancel-OCO
 
     Args:
         symbol (str)
@@ -575,7 +575,7 @@ def get_margin_oco_order(
 
     GET /sapi/v1/margin/orderList
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-oco-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-OCO
 
     Args:
         orderListId (int, optional): Either orderListId or origClientOrderId must be provided
@@ -602,7 +602,7 @@ def get_margin_oco_orders(self, **kwargs):
 
     GET /sapi/v1/margin/allOrderList
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-all-oco-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-All-OCO
 
     Keyword Args:
         isIsolated (str, optional): For isolated margin or not "TRUE", "FALSE"，default "FALSE"
@@ -627,7 +627,7 @@ def get_margin_open_oco_orders(self, **kwargs):
 
     GET /sapi/v1/margin/openOrderList
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-account-39-s-open-oco-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Account-Open-OCO
 
     Keyword Args:
         isIsolated (str, optional): For isolated margin or not "TRUE", "FALSE" default "FALSE"
@@ -645,7 +645,7 @@ def cancel_isolated_margin_account(self, symbol: str, **kwargs):
 
     DELETE /sapi/v1/margin/isolated/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#disable-isolated-margin-account-trade
+    https://developers.binance.com/docs/margin_trading/account/Disable-Isolated-Margin-Account
 
     Args:
         symbol (str)
@@ -663,7 +663,7 @@ def enable_isolated_margin_account(self, symbol: str, **kwargs):
 
     POST /sapi/v1/margin/isolated/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#enable-isolated-margin-account-trade
+    https://developers.binance.com/docs/margin_trading/account/Enable-Isolated-Margin-Account
 
     Args:
         symbol (str)
@@ -681,7 +681,7 @@ def isolated_margin_account_limit(self, **kwargs):
 
     GET /sapi/v1/margin/isolated/accountLimit
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-enabled-isolated-margin-account-limit-user_data
+    https://developers.binance.com/docs/margin_trading/account/Query-Enabled-Isolated-Margin-Account-Limit
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -695,7 +695,7 @@ def margin_fee(self, **kwargs):
 
     GET /sapi/v1/margin/crossMarginData
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-cross-margin-fee-data-user_data
+    https://developers.binance.com/docs/margin_trading/account/Query-Cross-Margin-Fee-Data
 
     Keyword Args:
         vipLevel (int, optional): User's current specific margin data will be returned if vipLevel is omitted
@@ -711,7 +711,7 @@ def isolated_margin_fee(self, **kwargs):
 
     GET /sapi/v1/margin/isolatedMarginData
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-fee-data-user_data
+    https://developers.binance.com/docs/margin_trading/account/Query-Isolated-Margin-Fee-Data
 
     Keyword Args:
         vipLevel (int, optional): User's current specific margin data will be returned if vipLevel is omitted
@@ -727,7 +727,7 @@ def isolated_margin_tier(self, symbol: str, **kwargs):
 
     GET /sapi/v1/margin/isolatedMarginTier
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-isolated-margin-tier-data-user_data
+    https://developers.binance.com/docs/margin_trading/market-data/Query-Isolated-Margin-Tier-Data
 
     Args:
         symbol (str)
@@ -746,7 +746,7 @@ def margin_order_usage(self, **kwargs):
 
     GET /sapi/v1/margin/rateLimit/order
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-current-margin-order-count-usage-trade
+    https://developers.binance.com/docs/margin_trading/trade/Query-Current-Margin-Order-Count-Usage
 
     Keyword Args:
         isIsolated (str, optional): for isolated margin or not, "TRUE", "FALSE", default "FALSE"
@@ -763,7 +763,7 @@ def summary_of_margin_account(self, **kwargs):
 
     GET /sapi/v1/margin/tradeCoeff
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-summary-of-margin-account-user_data
+    https://developers.binance.com/docs/margin_trading/account/Get-Summary-Of-Margin-Account
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -779,7 +779,7 @@ def cross_margin_collateral_ratio(self):
 
     GET /sapi/v1/margin/crossMarginCollateralRatio
 
-    https://binance-docs.github.io/apidocs/spot/en/#cross-margin-collateral-ratio-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Cross-margin-collateral-ratio
 
     """
 
@@ -796,7 +796,7 @@ def get_small_liability_exchange_coin_list(self, **kwargs):
 
     GET /sapi/v1/margin/exchange-small-liability
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-small-liability-exchange-coin-list-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Get-Small-Liability-Exchange-Coin-List
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -815,7 +815,7 @@ def get_small_liability_exchange_history(self, current: int, size: int, **kwargs
 
     GET /sapi/v1/margin/exchange-small-liability-history
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-small-liability-exchange-history-user_data
+    https://developers.binance.com/docs/margin_trading/trade/Get-Small-Liability-Exchange-History
 
     Args:
         current (int, optional): Current querying page. Start from 1. Default:1
@@ -841,7 +841,7 @@ def get_a_future_hourly_interest_rate(self, assets: str, isIsolated: bool, **kwa
 
     GET /sapi/v1/margin/next-hourly-interest-rate
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-a-future-hourly-interest-rate-user_data
+    https://developers.binance.com/docs/margin_trading/borrow-and-repay/Get-a-future-hourly-interest-rate
 
     Args:
         assets (str, optional): List of assets, separated by commas, up to 20
@@ -869,7 +869,7 @@ def adjust_cross_margin_max_leverage(self, maxLeverage: int, **kwargs):
 
     POST /sapi/v1/margin/max-leverage
 
-    https://binance-docs.github.io/apidocs/spot/en/#adjust-cross-margin-max-leverage-user_data
+    https://developers.binance.com/docs/margin_trading/account/Adjust-Cross-Margin-Max-Leverage
 
     Args:
         maxLeverage (int)
@@ -888,7 +888,7 @@ def margin_available_inventory(self, type: str, **kwargs):
 
     GET /sapi/v1/margin/available-inventory
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-margin-available-inventory-user_data
+    https://developers.binance.com/docs/margin_trading/market-data/Query-margin-avaliable-inventory
 
     Args:
         type (str): "MARGIN", "ISOLATED"
@@ -905,7 +905,7 @@ def margin_manual_liquidation(self, type: str, **kwargs):
 
     POST /sapi/v1/margin/manual-liquidation
 
-    https://binance-docs.github.io/apidocs/spot/en/#margin-manual-liquidation-margin
+    https://developers.binance.com/docs/margin_trading/trade/Margin-Manual-Liquidation
 
     Args:
         type (str): "MARGIN", "ISOLATED"
@@ -923,7 +923,7 @@ def liability_coin_leverage_bracket(self, **kwargs):
 
     GET /sapi/v1/margin/leverageBracket
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-liability-coin-leverage-bracket-in-cross-margin-pro-mode-market_data
+    https://developers.binance.com/docs/margin_trading/market-data/Query-Liability-Coin-Leverage-Bracket-in-Cross-Margin-Pro-Mode
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000

@@ -9,7 +9,7 @@ def get_target_asset_list(self, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/target-asset/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-target-asset-list-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Get-target-asset-list
 
     Keyword Args:
         targetAsset (str)
@@ -31,7 +31,7 @@ def get_target_asset_roi_data(self, targetAsset: str, hisRoiType: str, **kwargs)
 
     GET /sapi/v1/lending/auto-invest/target-asset/roi/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-target-asset-roi-data-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Get-target-asset-ROI-data
 
     Args:
         targetAsset (str)
@@ -57,7 +57,7 @@ def query_all_source_asset_and_target_asset(self, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/all/asset
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-all-source-asset-and-target-asset-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Query-all-source-asset-and-target-asset
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -76,7 +76,7 @@ def query_source_asset_list(self, usageType: str, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/source-asset/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-source-asset-list-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Query-source-asset-list
 
     Args:
         usageType (str)
@@ -103,7 +103,7 @@ def change_plan_status(self, planId: int, status: str, **kwargs):
 
     POST /sapi/v1/lending/auto-invest/plan/edit-status
 
-    https://binance-docs.github.io/apidocs/spot/en/#change-plan-status-trade
+    https://developers.binance.com/docs/auto_invest/trade/Change-Plan-Status
 
     Args:
         planId (int)
@@ -127,7 +127,7 @@ def get_list_of_plans(self, planType: str, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/plan/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-list-of-plans-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Get-list-of-plans
 
     Args:
         planType (str)
@@ -150,7 +150,7 @@ def query_holding_details_of_the_plan(self, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/plan/id
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-holding-details-of-the-plan-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Query-holding-details-of-the-plan
 
     Keyword Args:
         planId (int, optional)
@@ -171,7 +171,7 @@ def query_subscription_transaction_history(self, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/history/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-subscription-transaction-history-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Query-subscription-transaction-history
 
     Keyword Args:
         planType (str, optional)
@@ -196,7 +196,7 @@ def query_index_details(self, indexId: int, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/index/info
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-index-details-user_data
+    https://developers.binance.com/docs/auto_invest/market-data/Query-Index-Details
 
     Args:
         indexId (int)
@@ -219,7 +219,7 @@ def query_index_linked_plan_position_details(self, indexId: int, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/index/user-summary
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-index-linked-plan-position-details-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Query-Index-Linked-Plan-Position-Details
 
     Args:
         indexId (int)
@@ -244,7 +244,7 @@ def one_time_transaction(
 
     POST /sapi/v1/lending/auto-invest/one-off
 
-    https://binance-docs.github.io/apidocs/spot/en/#one-time-transaction-trade
+    https://developers.binance.com/docs/auto_invest/trade/One-Time-Transaction
 
     Args:
         sourceType (str)
@@ -285,7 +285,7 @@ def query_one_time_transaction_status(self, transactionId: int, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/one-off/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-one-time-transaction-status-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Query-One-Time-Transaction-Status
 
     Args:
         transactionId (int)
@@ -311,7 +311,7 @@ def index_linked_plan_redemption(
 
     POST /sapi/v1/lending/auto-invest/redeem
 
-    https://binance-docs.github.io/apidocs/spot/en/#index-linked-plan-redemption-trade
+    https://developers.binance.com/docs/auto_invest/trade/Index-Linked-Plan-Redemption
 
     Args:
         indexId (int)
@@ -342,7 +342,7 @@ def get_index_linked_plan_redemption_history(self, requestId: int, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/redeem/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#index-linked-plan-redemption-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Query-Index-Linked-Plan-Redemption
 
     Args:
         requestId (int)
@@ -373,7 +373,7 @@ def index_linked_plan_rebalance_details(self, **kwargs):
 
     GET /sapi/v1/lending/auto-invest/rebalance/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#index-linked-plan-rebalance-details-user_data
+    https://developers.binance.com/docs/auto_invest/trade/Index-Linked-Plan-Rebalance-Details
 
     Keyword Args:
         startTime (int, optional): UTC timestamp in ms

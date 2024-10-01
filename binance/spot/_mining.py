@@ -7,7 +7,7 @@ def mining_algo_list(self):
 
     GET /sapi/v1/mining/pub/algoList
 
-    https://binance-docs.github.io/apidocs/spot/en/#acquiring-algorithm-market_data
+    https://developers.binance.com/docs/mining/rest-api/Acquiring-Algorithm
 
     """
 
@@ -19,7 +19,7 @@ def mining_coin_list(self):
 
     GET /sapi/v1/mining/pub/coinList
 
-    https://binance-docs.github.io/apidocs/spot/en/#acquiring-coinname-market_data
+    https://developers.binance.com/docs/mining/rest-api/Acquiring-CoinName
 
     """
 
@@ -31,7 +31,7 @@ def mining_worker(self, algo: str, userName: str, workerName: str, **kwargs):
 
     GET /sapi/v1/mining/worker/detail
 
-    https://binance-docs.github.io/apidocs/spot/en/#request-for-detail-miner-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Request-for-Detail-Miner-List
 
     Args:
         algo (str)
@@ -53,7 +53,7 @@ def mining_worker_list(self, algo: str, userName: str, **kwargs):
 
     GET /sapi/v1/mining/worker/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#request-for-miner-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Request-for-Miner-List
 
     Args:
         algo (str)
@@ -78,7 +78,7 @@ def mining_earnings_list(self, algo: str, userName: str, **kwargs):
 
     GET /sapi/v1/mining/payment/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#earnings-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Earnings-List
 
     Args:
         algo (str)
@@ -102,7 +102,7 @@ def mining_bonus_list(self, algo: str, userName: str, **kwargs):
 
     GET /sapi/v1/mining/payment/other
 
-    https://binance-docs.github.io/apidocs/spot/en/#extra-bonus-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Extra-Bonus-List
 
     Args:
         algo (str)
@@ -126,7 +126,7 @@ def mining_statistics_list(self, algo: str, userName: str, **kwargs):
 
     GET /sapi/v1/mining/statistics/user/status
 
-    https://binance-docs.github.io/apidocs/spot/en/#statistic-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Statistic-List
 
     Args:
         algo (str)
@@ -146,7 +146,7 @@ def mining_account_list(self, algo: str, userName: str, **kwargs):
 
     GET /sapi/v1/mining/statistics/user/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#account-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Account-List
 
     Args:
         algo (str)
@@ -175,7 +175,7 @@ def mining_hashrate_resale_request(
 
     POST /sapi/v1/mining/hash-transfer/config
 
-    https://binance-docs.github.io/apidocs/spot/en/#hashrate-resale-request-user_data
+    https://developers.binance.com/docs/mining/rest-api/Hashrate-Resale-Request
 
     Args:
         algo (str)
@@ -216,7 +216,7 @@ def mining_hashrate_resale_cancellation(self, configId: int, userName: str, **kw
 
     POST /sapi/v1/mining/hash-transfer/config/cancel
 
-    https://binance-docs.github.io/apidocs/spot/en/#cancel-hashrate-resale-configuration-user_data
+    https://developers.binance.com/docs/mining/rest-api/Cancel-hashrate-resale-configuration
 
     Args:
         configId (int): Mining ID
@@ -238,7 +238,7 @@ def mining_hashrate_resale_list(self, **kwargs):
 
     GET /sapi/v1/mining/hash-transfer/config/details/list
 
-    https://binance-docs.github.io/apidocs/spot/en/#hashrate-resale-list-user_data
+    https://developers.binance.com/docs/mining/rest-api/Hashrate-Resale-List
 
     Keyword Args:
         pageIndex (int, optional): Page number, empty default first page, starting from 1
@@ -256,7 +256,7 @@ def mining_hashrate_resale_details(self, configId: int, userName: str, **kwargs)
 
     GET /sapi/v1/mining/hash-transfer/profit/details
 
-    https://binance-docs.github.io/apidocs/spot/en/#hashrate-resale-detail-user_data
+    https://developers.binance.com/docs/mining/rest-api/Hashrate-Resale-Detail
 
     Args:
         configId (int): Mining ID
@@ -279,7 +279,7 @@ def mining_account_earning(self, algo: str, **kwargs):
 
     GET /sapi/v1/mining/payment/uid
 
-    https://binance-docs.github.io/apidocs/spot/en/#mining-account-earning-user_data
+    https://developers.binance.com/docs/mining/rest-api/Mining-Account-Earning
 
     Args:
         algo (str): Algorithm(sha256)
