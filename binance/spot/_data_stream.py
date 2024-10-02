@@ -6,7 +6,7 @@ def new_listen_key(self):
 
     POST /api/v3/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-spot
+    https://developers.binance.com/docs/binance-spot-api-docs/user-data-stream#create-a-listenkey-user_stream
     """
 
     url_path = "/api/v3/userDataStream"
@@ -18,7 +18,7 @@ def renew_listen_key(self, listenKey: str):
 
     PUT /api/v3/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-spot
+    https://developers.binance.com/docs/binance-spot-api-docs/user-data-stream#pingkeep-alive-a-listenkey-user_stream
 
     Args:
         listenKey (str)
@@ -34,7 +34,7 @@ def close_listen_key(self, listenKey: str):
 
     DELETE /api/v3/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-spot
+    https://developers.binance.com/docs/binance-spot-api-docs/user-data-stream#close-a-listenkey-user_stream
 
     Args:
         listenKey (str)
@@ -51,7 +51,7 @@ def new_margin_listen_key(self):
 
     POST /sapi/v1/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Start-Margin-User-Data-Stream
     """
 
     url_path = "/sapi/v1/userDataStream"
@@ -63,7 +63,7 @@ def renew_margin_listen_key(self, listenKey: str):
 
     PUT /sapi/v1/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Keepalive-Margin-User-Data-Stream
 
     Args:
         listenKey (str)
@@ -79,7 +79,7 @@ def close_margin_listen_key(self, listenKey: str):
 
     DELETE /sapi/v1/userDataStream
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Close-Margin-User-Data-Stream
 
     Args:
         listenKey (str)
@@ -96,7 +96,7 @@ def new_isolated_margin_listen_key(self, symbol: str):
 
     POST /sapi/v1/userDataStream/isolated
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Start-Isolated-Margin-User-Data-Stream
 
     Args:
         symbol (str)
@@ -112,7 +112,7 @@ def renew_isolated_margin_listen_key(self, listenKey: str, symbol: str):
 
     PUT /sapi/v1/userDataStream/isolated
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Keepalive-Isolated-Margin-User-Data-Stream
 
     Args:
         listenKey (str)
@@ -132,7 +132,7 @@ def close_isolated_margin_listen_key(self, listenKey: str, symbol: str):
 
     DELETE /sapi/v1/userDataStream/isolated
 
-    https://binance-docs.github.io/apidocs/spot/en/#listen-key-margin
+    https://developers.binance.com/docs/margin_trading/trade-data-stream/Close-Isolated-Margin-User-Data-Stream
 
     Args:
         listenKey (str)

@@ -89,25 +89,9 @@ Get Assets That Can Be Converted Into BNB (USER_DATA)
 -----------------------------------------------------
 .. autofunction:: binance.spot.Spot.bnb_convertible_assets
 
-Query auto-converting stable coins (USER_DATA)
-----------------------------------------------
-.. autofunction:: binance.spot.Spot.convertible_coins
-
-Switch on/off BUSD and stable coins conversion (USER_DATA)
-----------------------------------------------------------
-.. autofunction:: binance.spot.Spot.toggle_auto_convertion
-
 Get Cloud-Mining payment and refund history (USER_DATA)
 -------------------------------------------------------
 .. autofunction:: binance.spot.Spot.cloud_mining_trans_history
-
-BUSD Convert (USER_DATA)
-------------------------
-.. autofunction:: binance.spot.Spot.convert_transfer
-
-BUSD Convert History (USER_DATA)
---------------------------------
-.. autofunction:: binance.spot.Spot.convert_history
 
 One click arrival deposit apply (USER_DATA)
 -------------------------------------------

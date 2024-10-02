@@ -6,7 +6,7 @@ def nft_transaction_history(self, orderType: int, **kwargs):
 
     GET /sapi/v1/nft/history/transactions
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-nft-transaction-history-user_data
+    https://developers.binance.com/docs/nft/rest-api/Get-NFT-Transaction-History
 
     Args:
       orderType (int): 0: purchase order, 1: sell order, 2: royalty income, 3: primary market order, 4: mint fee
@@ -27,7 +27,7 @@ def nft_deposit_history(self, **kwargs):
 
     GET /sapi/v1/nft/history/deposit
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-nft-deposit-history-user_data
+    https://developers.binance.com/docs/nft/rest-api/Get-NFT-Deposit-History
 
     Keyword Args:
       startTime (int, optional)
@@ -45,7 +45,7 @@ def nft_withdraw_history(self, **kwargs):
 
     GET /sapi/v1/nft/history/withdraw
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-nft-withdraw-history-user_data
+    https://developers.binance.com/docs/nft/rest-api/Get-NFT-Withdraw-History
 
     Keyword Args:
       startTime (int, optional)
@@ -63,7 +63,7 @@ def nft_asset(self, **kwargs):
 
     GET /sapi/v1/nft/user/getAsset
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-nft-asset-user_data
+    https://developers.binance.com/docs/nft/rest-api/Get-NFT-Asset
 
     Keyword Args:
       limit (int, optional): Default 50, Max 50

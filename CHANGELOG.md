@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.9.0 - 2024-10-02
+
+### Removed
+- Futures
+  - `POST /sapi/v1/futures/transfer`
+  - `GET /sapi/v1/futures/transfer`
+
+- BLVT
+  - `GET /sapi/v1/blvt/tokenInfo`
+  - `POST /sapi/v1/blvt/subscribe`
+  - `GET /sapi/v1/blvt/subscribe/record`
+  - `POST /sapi/v1/blvt/redeem`
+  - `GET /sapi/v1/blvt/redeem/record`
+  - `GET /sapi/v1/blvt/userLimit`
+
+- Wallet
+  - `POST /sapi/v1/asset/convert-transfer`
+  - `GET /sapi/v1/asset/convert-transfer/queryByPage`
+  - `GET /sapi/v1/capital/contract/convertible-coins`
+  - `POST /sapi/v1/capital/contract/convertible-coins`
+
 ## 3.8.1 - 2024-07-25
 ### Added
 - `.readthedocs.yml` to resolve documentation issue

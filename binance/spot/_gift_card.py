@@ -11,7 +11,7 @@ def gift_card_create_code(self, token: str, amount: float, **kwargs):
     - You have a sufﬁcient balance in your Binance funding wallet
     - You need Enable Withdrawals for the API Key which requests this endpoint.
 
-    https://binance-docs.github.io/apidocs/spot/en/#create-a-single-token-gift-card-user_data
+    https://developers.binance.com/docs/gift_card/market-data/Create-a-single-token-gift-card
 
     Args:
       token (str): The coin type contained in the Binance Code
@@ -36,7 +36,7 @@ def gift_card_redeem_code(self, code: str, **kwargs):
 
     Please note that if you enter the wrong code 5 times within 24 hours, you will no longer be able to redeem any Binance Code that day.
 
-    https://binance-docs.github.io/apidocs/spot/en/#redeem-a-binance-gift-card-user_data
+    https://developers.binance.com/docs/gift_card/market-data/Redeem-a-Binance-Gift-Card
 
     Args:
       code (str): Binance Code
@@ -60,7 +60,7 @@ def gift_card_verify_code(self, referenceNo: str, **kwargs):
 
     Please note that if you enter the wrong binance code 5 times within an hour, you will no longer be able to verify any binance code for that hour.
 
-    https://binance-docs.github.io/apidocs/spot/en/#verify-binance-gift-card-by-gift-card-number-user_data
+    https://developers.binance.com/docs/gift_card/market-data/Verify-Binance-Gift-Card-by-Gift-Card-Number
 
     Args:
       referenceNo (str): reference number
@@ -85,7 +85,7 @@ def gift_card_rsa_public_key(self, **kwargs):
 
     GET /sapi/v1/giftcard/cryptography/rsa-public-key
 
-    https://binance-docs.github.io/apidocs/spot/en/#fetch-rsa-public-key-user_data
+    https://developers.binance.com/docs/gift_card/market-data/Fetch-RSA-Public-Key
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -102,7 +102,7 @@ def gift_card_buy_code(
 
     POST /sapi/v1/giftcard/buyCode
 
-    https://binance-docs.github.io/apidocs/spot/en/#create-a-dual-token-gift-card-fixed-value-discount-feature-trade
+    https://developers.binance.com/docs/gift_card/market-data/Create-a-dual-token-gift-card
 
     Args:
       baseToken (str): The coin type used to buy the Binance Code
@@ -136,7 +136,7 @@ def gift_card_token_limit(self, baseToken: str, **kwargs):
 
     GET /sapi/v1/giftcard/buyCode/token-limit
 
-    https://binance-docs.github.io/apidocs/spot/en/#fetch-token-limit-user_data
+    https://developers.binance.com/docs/gift_card/market-data/Fetch-Token-Limit
 
     Args:
       baseToken (str): The coin type used to buy the Binance Code

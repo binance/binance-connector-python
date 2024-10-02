@@ -127,12 +127,8 @@ class Spot(API):
     from binance.spot._wallet import user_asset
     from binance.spot._wallet import api_key_permissions
     from binance.spot._wallet import bnb_convertible_assets
-    from binance.spot._wallet import convertible_coins
-    from binance.spot._wallet import toggle_auto_convertion
     from binance.spot._wallet import list_deposit_address
     from binance.spot._wallet import cloud_mining_trans_history
-    from binance.spot._wallet import convert_transfer
-    from binance.spot._wallet import convert_history
     from binance.spot._wallet import one_click_arrival_deposit_apply
     from binance.spot._wallet import balance
     from binance.spot._wallet import delist_schedule_symbols
@@ -200,18 +196,6 @@ class Spot(API):
     from binance.spot._sub_account import summary_of_sub_account_s_futures_account
     from binance.spot._sub_account import detail_on_sub_account_s_futures_account
     from binance.spot._sub_account import query_managed_sub_account_transfer_log
-
-    # FUTURES
-    from binance.spot._futures import futures_transfer
-    from binance.spot._futures import futures_transfer_history
-
-    # BLVTs
-    from binance.spot._blvt import blvt_info
-    from binance.spot._blvt import subscribe_blvt
-    from binance.spot._blvt import subscription_record
-    from binance.spot._blvt import redeem_blvt
-    from binance.spot._blvt import redemption_record
-    from binance.spot._blvt import user_limit_info
 
     # FIAT
     from binance.spot._fiat import fiat_order_history

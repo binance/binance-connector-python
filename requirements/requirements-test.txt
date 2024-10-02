@@ -6,6 +6,8 @@ responses>=0.10.12
 pytest-pep8>=1.0.6
 black
 flake8
+sphinx
+sphinx_rtd_theme
 tox
 tox-pyenv
 wheel

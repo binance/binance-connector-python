@@ -6,7 +6,7 @@ def c2c_trade_history(self, tradeType: str, **kwargs):
 
     GET /sapi/v1/c2c/orderMatch/listUserOrderHistory
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-c2c-trade-history-user_data
+    https://developers.binance.com/docs/c2c/rest-api/Get-C2C-Trade-History
 
     Args:
       tradeType (str): BUY, SELL

@@ -6,7 +6,7 @@ def loan_history(self, asset: str, **kwargs):
 
     GET /sapi/v1/loan/income
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-crypto-loans-income-history-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/market-data/Get-Crypto-Loans-Income-History
 
     Args:
       asset (str)
@@ -31,7 +31,7 @@ def loan_borrow(self, loanCoin: str, collateralCoin: str, loanTerm: int, **kwarg
 
     POST /sapi/v1/loan/borrow
 
-    https://binance-docs.github.io/apidocs/spot/en/#borrow-crypto-loan-borrow-trade
+    https://developers.binance.com/docs/crypto_loan/stable-rate/trade/Crypto-Loan-Borrow
 
     Args:
       loanCoin (str)
@@ -65,7 +65,7 @@ def loan_borrow_history(self, **kwargs):
 
     GET /sapi/v1/loan/borrow/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#borrow-get-loan-borrow-history-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/user-information/Get-Loan-Borrow-History
 
     Keyword Args:
       orderId (int, optional): orderId in POST /sapi/v1/loan/borrow
@@ -86,7 +86,7 @@ def loan_ongoing_orders(self, **kwargs):
 
     GET /sapi/v1/loan/ongoing/orders
 
-    https://binance-docs.github.io/apidocs/spot/en/#borrow-get-loan-ongoing-orders-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/user-information/Get-Loan-Ongoing-Orders
 
     Keyword Args:
       orderId (int, optional): orderId in POST /sapi/v1/loan/borrow
@@ -105,7 +105,7 @@ def loan_repay(self, orderId: int, amount: float, **kwargs):
 
     POST /sapi/v1/loan/repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#repay-crypto-loan-repay-trade
+    https://developers.binance.com/docs/crypto_loan/stable-rate/trade/Crypto-Loan-Repay
 
     Args:
       orderId (int)
@@ -127,7 +127,7 @@ def loan_repay_history(self, **kwargs):
 
     GET /sapi/v1/loan/repay/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#repay-get-loan-repayment-history-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/user-information/Get-Loan-Repayment-History
 
     Keyword Args:
       orderId (int, optional)
@@ -148,7 +148,7 @@ def loan_adjust_ltv(self, orderId: int, amount: float, direction: str, **kwargs)
 
     POST /sapi/v1/loan/adjust/ltv
 
-    https://binance-docs.github.io/apidocs/spot/en/#adjust-ltv-crypto-loan-adjust-ltv-trade
+    https://developers.binance.com/docs/crypto_loan/stable-rate/trade/Crypto-Loan-Adjust-LTV
 
     Args:
       orderId (int)
@@ -171,7 +171,7 @@ def loan_adjust_ltv_history(self, **kwargs):
 
     GET /sapi/v1/loan/ltv/adjustment/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#adjust-ltv-get-loan-ltv-adjustment-history-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/user-information/Get-Loan-LTV-Adjustment-History
 
     Keyword Args:
       orderId (int, optional)
@@ -192,7 +192,7 @@ def loan_vip_ongoing_orders(self, **kwargs):
 
     GET /sapi/v1/loan/vip/ongoing/orders
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-vip-loan-ongoing-orders-user_data
+    https://developers.binance.com/docs/vip_loan/user-information/Get-VIP-Loan-Ongoing-Orders
 
     Keyword Args:
       orderId (int, optional)
@@ -212,7 +212,7 @@ def loan_vip_repay(self, orderId: int, amount: float, **kwargs):
 
     POST /sapi/v1/loan/vip/repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#vip-loan-repay-trade
+    https://developers.binance.com/docs/vip_loan/trade/VIP-Loan-Repay
 
     Args:
       orderId (int)
@@ -232,7 +232,7 @@ def loan_vip_repay_history(self, **kwargs):
 
     GET /sapi/v1/loan/vip/repay/history
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-vip-loan-repayment-history-user_data
+    https://developers.binance.com/docs/vip_loan/user-information/Get-VIP-Loan-Repayment-History
 
     Keyword Args:
       orderId (int, optional)
@@ -252,7 +252,7 @@ def loan_vip_collateral_account(self, **kwargs):
 
     GET /sapi/v1/loan/vip/collateral/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#check-locked-value-of-vip-collateral-account-user_data
+    https://developers.binance.com/docs/vip_loan/user-information/Check-Locked-Value-of-VIP-Collateral-Account
 
     Keyword Args:
       orderId (int, optional)
@@ -268,7 +268,7 @@ def loan_loanable_data(self, **kwargs):
 
     GET /sapi/v1/loan/loanable/data
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-loanable-assets-data-user_data
+    https://developers.binance.com/docs/vip_loan/market-data/Get-Loanable-Assets-Data
 
     Keyword Args:
       loanCoin (str, optional)
@@ -284,7 +284,7 @@ def loan_collateral_data(self, **kwargs):
 
     GET /sapi/v1/loan/collateral/data
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-collateral-assets-data-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/market-data/Get-Collateral-Assets-Data
 
     Keyword Args:
       collateralCoin (str, optional)
@@ -302,7 +302,7 @@ def loan_collateral_rate(
 
     GET /sapi/v1/loan/repay/collateral/rate
 
-    https://binance-docs.github.io/apidocs/spot/en/#check-collateral-repay-rate-user_data
+    https://developers.binance.com/docs/crypto_loan/stable-rate/market-data/Check-Collateral-Repay-Rate
 
     Args:
       loanCoin (str)
@@ -334,7 +334,7 @@ def loan_customize_margin_call(self, marginCall: float, **kwargs):
 
     POST /sapi/v1/loan/customize/margin_call
 
-    https://binance-docs.github.io/apidocs/spot/en/#crypto-loan-customize-margin-call-trade
+    https://developers.binance.com/docs/crypto_loan/stable-rate/trade/Crypto-Loan-Customize-Margin-Call
 
     Args:
       marginCall (float)

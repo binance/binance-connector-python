@@ -3,7 +3,7 @@ def rebate_spot_history(self, **kwargs):
 
     GET /sapi/v1/rebate/taxQuery
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-spot-rebate-history-records-user_data
+    https://developers.binance.com/docs/rebate/rest-api/Get-Spot-Rebate-History-Records
 
     Keyword Args:
       startTime (int, optional)

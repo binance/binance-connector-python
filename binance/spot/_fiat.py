@@ -6,7 +6,7 @@ def fiat_order_history(self, transactionType: int, **kwargs):
 
     GET /sapi/v1/fiat/orders
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-fiat-deposit-withdraw-history-user_data
+    https://developers.binance.com/docs/fiat/rest-api/Get-Fiat-Deposit-Withdraw-History
 
     Args:
       transactionType (int): 0-deposit,1-withdraw
@@ -28,7 +28,7 @@ def fiat_payment_history(self, transactionType: int, **kwargs):
 
     GET /sapi/v1/fiat/payments
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-fiat-payments-history-user_data
+    https://developers.binance.com/docs/fiat/rest-api/Get-Fiat-Payments-History
 
     Args:
       transactionType (int): 0-buy,1-sell

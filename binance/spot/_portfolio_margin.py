@@ -13,7 +13,7 @@ def portfolio_margin_account(self, **kwargs):
 
     GET /sapi/v1/portfolio/account
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-portfolio-margin-pro-account-info-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Classic-Portfolio-Margin-Account-Info
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -32,7 +32,7 @@ def portfolio_margin_collateral_rate(self):
 
     GET /sapi/v1/portfolio/collateralRate
 
-    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-pro-collateral-rate-market_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/market-data/Classic-Portfolio-Margin-Collateral-Rate
 
     """
 
@@ -49,7 +49,7 @@ def portfolio_margin_bankruptcy_loan_amount(self, **kwargs):
 
     GET /sapi/v1/portfolio/pmLoan
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-portfolio-margin-pro-bankruptcy-loan-amount-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Query-Classic-Portfolio-Margin-Bankruptcy-Loan-Amount
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -68,7 +68,7 @@ def portfolio_margin_bankruptcy_loan_repay(self, **kwargs):
 
     POST /sapi/v1/portfolio/repay
 
-    https://binance-docs.github.io/apidocs/spot/en/#portfolio-margin-pro-bankruptcy-loan-repay
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Classic-Portfolio-Margin-Bankruptcy-Loan-Repay
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -89,7 +89,7 @@ def query_classic_portfolio_margin_negative_balance_interest_history(
 
     GET /sapi/v1/portfolio/interest-history
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-portfolio-margin-pro-negative-balance-interest-history-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Query-Classic-Portfolio-Margin-Negative-Balance-Interest-History
 
     Args:
         asset (str)
@@ -117,7 +117,7 @@ def query_portfolio_margin_asset_index_price(self, **kwargs):
 
     GET /sapi/v1/portfolio/asset-index-price
 
-    https://binance-docs.github.io/apidocs/spot/en/#query-portfolio-margin-asset-index-price-market_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/market-data/Query-Portfolio-Margin-Asset-Index-Price
 
     Keyword Args:
         asset (str, optional)
@@ -136,7 +136,7 @@ def fund_auto_collection(self, **kwargs):
 
     POST /sapi/v1/portfolio/auto-collection
 
-    https://binance-docs.github.io/apidocs/spot/en/#fund-auto-collection-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Fund-Auto-collection
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -155,7 +155,7 @@ def bnb_transfer(self, transferSide: str, amount: float, **kwargs):
 
     POST /sapi/v1/portfolio/bnb-transfer
 
-    https://binance-docs.github.io/apidocs/spot/en/#bnb-transfer-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/BNB-transfer
 
     Args:
         transferSide (str)
@@ -179,7 +179,7 @@ def change_auto_repay_futures_status(self, autoRepay: bool, **kwargs):
 
     POST /sapi/v1/portfolio/repay-futures-switch
 
-    https://binance-docs.github.io/apidocs/spot/en/#change-auto-repay-futures-status-trade
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Change-Auto-repay-futures-Status
 
     Args:
         autoRepay (boolean)
@@ -202,7 +202,7 @@ def get_auto_repay_futures_status(self, **kwargs):
 
     GET /sapi/v1/portfolio/repay-futures-switch
 
-    https://binance-docs.github.io/apidocs/spot/en/#get-auto-repay-futures-status-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Auto-repay-futures-Status
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -221,7 +221,7 @@ def repay_futures_negative_balance(self, **kwargs):
 
     POST /sapi/v1/portfolio/repay-futures-negative-balance
 
-    https://binance-docs.github.io/apidocs/spot/en/#repay-futures-negative-balance-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Repay-futures-Negative-Balance
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -240,7 +240,7 @@ def fund_collection_by_asset(self, asset: str, **kwargs):
 
     POST /sapi/v1/portfolio/asset-collection
 
-    https://binance-docs.github.io/apidocs/spot/en/#fund-collection-by-asset-user_data
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Fund-Collection-by-Asset
 
     Args:
         asset (str)
