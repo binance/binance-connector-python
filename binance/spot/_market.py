@@ -13,7 +13,7 @@ def ping(self):
 
     GET /api/v3/ping
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#test-connectivity
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#test-connectivity
 
     """
 
@@ -27,7 +27,7 @@ def time(self):
 
     GET /api/v3/time
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#check-server-time
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#check-server-time
 
     """
 
@@ -43,12 +43,14 @@ def exchange_info(
 
     GET /api/v3/exchangeinfo
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#exchange-information
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#exchange-information
 
      Args:
         symbol (str, optional): the trading pair
         symbols (list, optional): list of trading pairs
         permissions (list, optional): display all symbols with the permissions matching the parameter provided (eg.SPOT, MARGIN, LEVERAGED)
+        showPermissionSets (bool, optional): Controls whether the content of the `permissionSets` field is populated or not. Defaults to true
+        symbolStatus (str, optional): Filters symbols that have this `tradingStatus`. Valid values: `TRADING`, `HALT`, `BREAK`. Cannot be used in combination with `symbols` or `symbol`.
     """
 
     url_path = "/api/v3/exchangeInfo"
@@ -74,7 +76,7 @@ def depth(self, symbol: str, **kwargs):
 
     GET /api/v3/depth
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#order-book
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#order-book
 
     Args:
         symbol (str): the trading pair
@@ -93,7 +95,7 @@ def trades(self, symbol: str, **kwargs):
 
     GET /api/v3/trades
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#recent-trades-list
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#recent-trades-list
 
     Args:
         symbol (str): the trading pair
@@ -111,7 +113,7 @@ def historical_trades(self, symbol: str, **kwargs):
 
     GET /api/v3/historicalTrades
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#old-trade-lookup
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#old-trade-lookup
 
     Args:
         symbol (str): the trading pair
@@ -129,7 +131,7 @@ def agg_trades(self, symbol: str, **kwargs):
 
     GET /api/v3/aggTrades
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#compressedaggregate-trades-list
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#compressedaggregate-trades-list
 
     Args:
         symbol (str): the trading pair
@@ -150,7 +152,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
 
     GET /api/v3/klines
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#klinecandlestick-data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#klinecandlestick-data
 
     Args:
         symbol (str): the trading pair
@@ -159,6 +161,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
         limit (int, optional): limit the results. Default 500; max 1000.
         startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
         endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+        timeZone (str, optional): Default: 0 (UTC)
     """
     check_required_parameters([[symbol, "symbol"], [interval, "interval"]])
 
@@ -171,7 +174,7 @@ def ui_klines(self, symbol: str, interval: str, **kwargs):
 
     GET /api/v3/uiKlines
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#uiklines
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#uiklines
 
     Args:
         symbol (str): the trading pair
@@ -180,6 +183,7 @@ def ui_klines(self, symbol: str, interval: str, **kwargs):
         limit (int, optional): limit the results. Default 500; max 1000.
         startTime (int, optional): Timestamp in ms to get aggregate trades from INCLUSIVE.
         endTime (int, optional): Timestamp in ms to get aggregate trades until INCLUSIVE.
+        timeZone (str, optional): Default: 0 (UTC)
     """
     check_required_parameters([[symbol, "symbol"], [interval, "interval"]])
 
@@ -192,7 +196,7 @@ def avg_price(self, symbol: str):
 
     GET /api/v3/avgPrice
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#current-average-price
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#current-average-price
 
     Args:
         symbol (str): the trading pair
@@ -210,7 +214,7 @@ def ticker_24hr(self, symbol: str = None, symbols: list = None, **kwargs):
 
     GET /api/v3/ticker/24hr
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#24hr-ticker-price-change-statistics
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#24hr-ticker-price-change-statistics
 
     Args:
         symbol (str, optional): the trading pair
@@ -233,7 +237,7 @@ def trading_day_ticker(self, symbol: str = None, symbols: list = None):
 
     GET /api/v3/ticker/tradingDay
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#trading-day-ticker
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#trading-day-ticker
 
     Args:
         symbol (str, optional): Either symbol or symbols must be provided
@@ -255,7 +259,7 @@ def ticker_price(self, symbol: str = None, symbols: list = None):
 
     GET /api/v3/ticker/price
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#symbol-price-ticker
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#symbol-price-ticker
 
     Args:
         symbol (str, optional): the trading pair
@@ -274,7 +278,7 @@ def book_ticker(self, symbol: str = None, symbols: list = None):
 
     GET /api/v3/ticker/bookTicker
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#symbol-order-book-ticker
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#symbol-order-book-ticker
 
     Args:
         symbol (str, optional): the trading pair
@@ -303,7 +307,7 @@ def rolling_window_ticker(self, symbol: str = None, symbols: list = None, **kwar
 
     GET /api/v3/ticker
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#rolling-window-price-change-statistics
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#rolling-window-price-change-statistics
 
     Args:
         symbol (str, optional): the trading pair

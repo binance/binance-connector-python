@@ -10,7 +10,7 @@ def new_order_test(self, symbol: str, side: str, type: str, **kwargs):
 
     POST /api/v3/order/test
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#test-new-order-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#test-new-order-trade
 
     Args:
         symbol (str)
@@ -41,7 +41,7 @@ def new_order(self, symbol: str, side: str, type: str, **kwargs):
 
     POST /api/v3/order
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#new-order-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#new-order-trade
 
     Args:
         symbol (str)
@@ -75,7 +75,7 @@ def cancel_order(self, symbol: str, **kwargs):
 
     DELETE /api/v3/order
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#cancel-order-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#cancel-order-trade
 
     Args:
         symbol (str)
@@ -100,7 +100,7 @@ def cancel_open_orders(self, symbol: str, **kwargs):
 
     DELETE api/v3/openOrders
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#cancel-all-open-orders-on-a-symbol-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#cancel-all-open-orders-on-a-symbol-trade
 
     Args:
         symbol (str)
@@ -121,7 +121,7 @@ def get_order(self, symbol, **kwargs):
 
     GET /api/v3/order
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-order-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-order-user_data
 
     Args:
         symbol (str)
@@ -152,7 +152,7 @@ def cancel_and_replace(
 
     POST /api/v3/order/cancelReplace
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#cancel-an-existing-order-and-send-a-new-order-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#cancel-an-existing-order-and-send-a-new-order-trade
 
     Args:
         symbol (str)
@@ -206,7 +206,7 @@ def get_open_orders(self, symbol=None, **kwargs):
 
     GET /api/v3/openOrders
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#current-open-orders-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#current-open-orders-user_data
 
     Args:
         symbol (str, optional)
@@ -226,7 +226,7 @@ def get_orders(self, symbol: str, **kwargs):
 
     GET /api/v3/allOrders
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#all-orders-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#all-orders-user_data
 
     Args:
         symbol (str)
@@ -268,7 +268,7 @@ def new_oco_order(
 
     POST /api/v3/orderList/oco
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#new-order-list---oco-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#new-order-list---oco-trade
 
     Args:
         symbol (str)
@@ -345,7 +345,7 @@ def new_oto_order(
 
     POST /api/v3/orderList/oto
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#new-order-list---oto-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#new-order-list---oto-trade
 
     Args:
         symbol (str)
@@ -428,7 +428,7 @@ def new_otoco_order(
 
     POST /api/v3/orderList/otoco
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#new-order-list---otoco-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#new-order-list---otoco-trade
 
     Args:
         symbol (str)
@@ -502,7 +502,7 @@ def cancel_oco_order(self, symbol, **kwargs):
 
     DELETE /api/v3/orderList
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#cancel-order-list-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#cancel-order-list-trade
 
     Args:
         symbol (str)
@@ -526,7 +526,7 @@ def get_oco_order(self, **kwargs):
 
     GET /api/v3/orderList
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-order-lists-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-order-list-user_data
 
     Keyword Args:
         orderListId (int, optional): Either orderListId or listClientOrderId must be provided
@@ -544,7 +544,7 @@ def get_oco_orders(self, **kwargs):
 
     GET /api/v3/allOrderList
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-all-order-lists-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-all-order-lists-user_data
 
     Keyword Args:
         fromId (int, optional): If supplied, neither startTime or endTime can be provided
@@ -563,7 +563,7 @@ def get_oco_open_orders(self, **kwargs):
 
     GET /api/v3/openOrderList
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-open-order-lists-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-open-order-lists-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -580,7 +580,7 @@ def account(self, **kwargs):
 
     GET /api/v3/account
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#account-information-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#account-information-user_data
 
     Keyword Args:
         omitZeroBalances (bool, optional): When set to true, emits only the non-zero balances of an account. Default value: false
@@ -598,7 +598,7 @@ def my_trades(self, symbol: str, **kwargs):
 
     GET /api/v3/myTrades
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#account-trade-list-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#account-trade-list-user_data
 
     Args:
         symbol (str)
@@ -625,7 +625,7 @@ def get_order_rate_limit(self, **kwargs):
 
     GET /api/v3/rateLimit/order
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-current-order-count-usage-trade
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-unfilled-order-count-user_data
 
     Keyword Args:
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -658,7 +658,7 @@ def query_prevented_matches(self, symbol: str, **kwargs):
 
     GET /api/v3/myPreventedMatches
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-prevented-matches-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-prevented-matches-user_data
 
     Args:
         symbol (str)
@@ -681,7 +681,7 @@ def query_allocations(self, symbol: str, **kwargs):
 
     GET /api/v3/myAllocations
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-allocations-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-allocations-user_data
 
     Args:
         symbol (str)
@@ -705,7 +705,7 @@ def query_commission_rates(self, symbol: str, **kwargs):
 
     GET /api/v3/account/commission
 
-    https://developers.binance.com/docs/binance-spot-api-docs/rest-api#query-commission-rates-user_data
+    https://developers.binance.com/docs/binance-spot-api-docs/rest-api/public-api-endpoints#query-commission-rates-user_data
 
     Args:
         symbol (str)

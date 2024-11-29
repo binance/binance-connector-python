@@ -550,6 +550,7 @@ def klines(self, symbol: str, interval: str, **kwargs):
     Keyword Args:
         startTime (int): start time to fetch from
         endTime (int): end time to fetch from
+        timeZone (str, optional): Default: 0 (UTC)
         limit (int): limit of klines
 
     Message sent:
@@ -626,6 +627,7 @@ def ui_klines(self, symbol: str, interval: str, **kwargs):
     Keyword Args:
         startTime (int): start time to fetch from
         endTime (int): end time to fetch from
+        timeZone (str, optional): Default: 0 (UTC)
         limit (int): limit of klines
 
     Message sent:

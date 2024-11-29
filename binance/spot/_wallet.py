@@ -125,13 +125,14 @@ def deposit_history(self, **kwargs):
     https://developers.binance.com/docs/wallet/capital/deposite-history
 
     Keyword Args:
+        includeSource (bool, optional): Default: false, return sourceAddressfield when set to true
         coin (str, optional)
         status (int, optional): Default 0 (0:pending, 6: credited but cannot withdraw, 1:success)
         startTime (int, optional): Default: 90 days from current timestamp
         endTime (int, optional): Default: present timestamp
         offset (int, optional): Default value: 0
         limit (int, optional): Default:1000, Max:1000
-        recvWindow (int, optional): The value cannot be greater than 60000
+        txId (str, optional)
     """
 
     return self.sign_request("GET", "/sapi/v1/capital/deposit/hisrec", kwargs)
@@ -152,6 +153,7 @@ def withdraw_history(self, **kwargs):
                 3:Rejected, 4:Processing, 5:Failure, 6:Completed)
         offset (int, optional)
         limit (int, optional): Default: 1000, Max: 1000
+        idList (str, optional): id list returned in the response of POST /sapi/v1/capital/withdraw/apply, separated by commas
         startTime (int, optional): Default: 90 days from current timestamp
         endTime (int, optional): Default: present timestamp
         recvWindow (int, optional): The value cannot be greater than 60000
@@ -394,6 +396,134 @@ def api_key_permissions(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/account/apiRestrictions", kwargs)
+
+
+def local_entity_withdraw(
+    self, coin: str, address: str, amount: float, questionnaire: str, **kwargs
+):
+    """Withdraw (for local entities that require travel rule) (USER_DATA)
+
+    Submit a withdrawal request for local entities that required travel rule.
+
+    Weight(UID): 600
+
+    POST /sapi/v1/localentity/withdraw/apply
+
+    https://developers.binance.com/docs/wallet/travel-rule/withdraw
+
+    Args:
+        coin (str)
+        address (str)
+        amount (float)
+        questionnaire (str): Questionnaire ID
+    Keyword Args:
+        withdrawOrderId (str, optional): withdrawID defined by the client (i.e. client's internal withdrawID)
+        network (str, optional)
+        addressTag (str, optional): Secondary address identifier for coins like XRP,XMR etc.
+        transactionFeeFlag (bool, optional): When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.
+        name (str, optional): Description of the address. Address book cap is 200, space in name should be encoded into %20
+        walletType (int, optional): The wallet type for withdraw, 0-spot wallet, 1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters(
+        [
+            [coin, "coin"],
+            [address, "address"],
+            [amount, "amount"],
+            [questionnaire, "questionnaire"],
+        ]
+    )
+
+    payload = {
+        "coin": coin,
+        "address": address,
+        "amount": amount,
+        "questionnaire": questionnaire,
+        **kwargs,
+    }
+    return self.sign_request("POST", "/sapi/v1/localentity/withdraw/apply", payload)
+
+
+def local_entity_withdraw_history(self, **kwargs):
+    """Withdraw History (for local entities that require travel rule) (supporting network) (USER_DATA)
+
+    Fetch withdraw history for local entities that required travel rule.
+
+    Weight(IP): 18000 Request limit: 10 requests per second
+
+    GET /sapi/v1/localentity/withdraw/history
+
+    https://developers.binance.com/docs/wallet/travel-rule/withdraw-history
+
+    Keyword Args:
+        trId (str, optional): Separated list of travel rule record Ids
+        txId (str, optional): Separated list of transaction Ids
+        withdrawOrderId (str, optional): Separated list of withdrawID defined by the client (i.e. client's internal withdrawID).
+        network (str, optional)
+        coin (str, optional)
+        travelRuleStatus (int, optional): 0: Completed, 1: Pending, 2: Failed
+        offset (int, optional): Default: 0
+        limit (int, optional): Default: 1000, Max: 1000
+        startTime (int, optional): Default: 90 days from current timestamp
+        endTime (int, optional): Default: present timestamp
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    url_path = "/sapi/v1/localentity/withdraw/history"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
+def local_entity_submit_deposit_questionnaire(
+    self, tranId: int, questionnaire: str, **kwargs
+):
+    """Submit Deposit Questionnaire (For local entities that require travel rule) (supporting network) (USER_DATA)
+
+    Submit questionnaire for local entities that require travel rule.
+    The questionnaire is only applies to transactions from unhosted wallets or VASPs that are not yet onboarded with GTR.
+
+    Weight(UID): 600
+
+    PUT /sapi/v1/localentity/deposit/provide-info
+
+    https://developers.binance.com/docs/wallet/travel-rule/deposit-provide-info
+
+    Args:
+        tranId (int): Wallet tran Id
+        questionnaire (str): JSON format questionnaire answers.
+    """
+    check_required_parameters([[tranId, "tranId"], [questionnaire, "questionnaire"]])
+
+    payload = {"tranId": tranId, "questionnaire": questionnaire, **kwargs}
+    return self.sign_request(
+        "PUT", "/sapi/v1/localentity/deposit/provide-info", payload
+    )
+
+
+def local_entity_deposit_history(self, **kwargs):
+    """Deposit History (for local entities that required travel rule) (supporting network) (USER_DATA)
+
+    Fetch deposit history for local entities that required travel rule.
+
+    Weight(IP): 1
+
+    GET /sapi/v1/localentity/deposit/history
+
+    https://developers.binance.com/docs/wallet/travel-rule/deposit-history
+
+    Keyword Args:
+        trId (str, optional): Separated list of travel rule record Ids
+        txId (str, optional): Separated list of transaction Ids
+        tranId (str, optional): Separated list of wallet tran Ids
+        network (str, optional)
+        coin (str, optional)
+        travelRuleStatus (int, optional): 0: Completed, 1: Pending, 2: Failed
+        pendingQuestionnaire (bool, optional): true: Only return records that pending deposit questionnaire. false/not provided: return all records.
+        startTime (int, optional): Default: 90 days from current timestamp
+        endTime (int, optional): Default: present timestamp
+        offset (int, optional): Default: 0
+        limit (int, optional): Default: 1000, Max: 1000
+    """
+    url_path = "/sapi/v1/localentity/deposit/history"
+    return self.sign_request("GET", url_path, {**kwargs})
 
 
 def bnb_convertible_assets(self, **kwargs):

@@ -85,6 +85,22 @@ API Key Permission (USER_DATA)
 ------------------------------
 .. autofunction:: binance.spot.Spot.api_key_permissions
 
+Withdraw (for local entities that require travel rule) (USER_DATA)
+------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.local_entity_withdraw
+
+Withdraw History (for local entities that require travel rule) (supporting network) (USER_DATA)
+-----------------------------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.local_entity_withdraw_history
+
+Submit Deposit Questionnaire (For local entities that require travel rule) (supporting network) (USER_DATA)
+-----------------------------------------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.local_entity_submit_deposit_questionnaire
+
+Deposit History (for local entities that required travel rule) (supporting network) (USER_DATA)
+-----------------------------------------------------------------------------------------------
+.. autofunction:: binance.spot.Spot.local_entity_deposit_history
+
 Get Assets That Can Be Converted Into BNB (USER_DATA)
 -----------------------------------------------------
 .. autofunction:: binance.spot.Spot.bnb_convertible_assets

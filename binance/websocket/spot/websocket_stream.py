@@ -88,9 +88,41 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         - 1w
         - 1M
 
-        Update Speed: 2000ms
+        Update Speed: 1000ms for 1s, 2000ms for the other intervals
         """
         stream_name = "{}@kline_{}".format(symbol.lower(), interval)
+
+        self.send_message_to_server(stream_name, action=action, id=id)
+
+    def kline_timezone_offset(self, symbol: str, interval: str, id=None, action=None):
+        """Kline/Candlestick Streams with timezone offset
+
+        The Kline/Candlestick Stream push updates to the current klines/candlestick every second in UTC+8 timezone
+
+        <symbol>@kline_<interval>@+08:00
+
+        interval:
+        m -> minutes; h -> hours; d -> days; w -> weeks; M -> months
+
+        - 1m
+        - 3m
+        - 5m
+        - 15m
+        - 30m
+        - 1h
+        - 2h
+        - 4h
+        - 6h
+        - 8h
+        - 12h
+        - 1d
+        - 3d
+        - 1w
+        - 1M
+
+        Update Speed: 1000ms for 1s, 2000ms for the other intervals
+        """
+        stream_name = "{}@kline_{}@+08:00".format(symbol.lower(), interval)
 
         self.send_message_to_server(stream_name, action=action, id=id)
 

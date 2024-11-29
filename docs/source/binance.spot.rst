@@ -18,6 +18,7 @@ Spot APIs
    binance.spot.pay
    binance.spot.portfolio_margin
    binance.spot.rebate
+   binance.spot.staking
    binance.spot.sub_account
    binance.spot.trade
    binance.spot.wallet
