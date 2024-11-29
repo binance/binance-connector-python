@@ -1,5 +1,61 @@
 # Changelog
 
+## 3.10.0 - 2024-11-29
+### Added
+- Margin
+  - `POST /sapi/v1/margin/order/oto`
+  - `POST /sapi/v1/margin/order/otoco`
+
+- Portfolio
+  - `GET /sapi/v2/portfolio/account`
+  - `GET /sapi/v1/portfolio/balance`
+  - `GET /sapi/v2/portfolio/collateralRate`
+
+- Simple Earn
+  - `POST /sapi/v1/simple-earn/locked/setRedeemOption`
+
+- Staking
+  - `GET /sapi/v2/eth-staking/account`
+  - `GET /sapi/v1/eth-staking/eth/quota`
+  - `POST /sapi/v2/eth-staking/eth/stake`
+  - `POST /sapi/v1/eth-staking/eth/redeem`
+  - `POST /sapi/v1/eth-staking/wbeth/wrap`
+  - `GET /sapi/v1/eth-staking/eth/history/stakingHistory`
+  - `GET /sapi/v1/eth-staking/eth/history/redemptionHistory`
+  - `GET /sapi/v1/eth-staking/eth/history/rewardsHistory`
+  - `GET /sapi/v1/eth-staking/eth/history/wbethRewardsHistory`
+  - `GET /sapi/v1/eth-staking/eth/history/rateHistory`
+  - `GET /sapi/v1/eth-staking/wbeth/history/wrapHistory`
+  - `GET /sapi/v1/eth-staking/wbeth/history/unwrapHistory`
+
+- Wallet
+  - `POST /sapi/v1/localentity/withdraw/apply`
+  - `GET /sapi/v1/localentity/withdraw/history`
+  - `PUT /sapi/v1/localentity/deposit/provide-info`
+  - `GET /sapi/v1/localentity/deposit/history`
+
+- Websocket Stream
+  - `<symbol>kline_<interval>+08:00`
+
+### Updated
+- Add parameters showPermissionSets and symbolStatus to `GET /api/v3/exchangeInfo`
+- Add parameter timeZone to `GET /api/v3/klines`, `GET /api/v3/uiKlines`, `klines` and `uiKlines`
+- Add parameter redeemTo to `POST /sapi/v1/simple-earn/locked/subscribe`
+- Add parameters `txId` and `includeSource` to `GET /sapi/v1/capital/deposit/hisrec`
+- Add parameter `idList` to `GET /sapi/v1/capital/withdraw/history` and `GET /sapi/v1/capital/deposit/subHisrec`
+- Update Documentation
+- Update `JSONDecodeError` error response
+
+### Removed
+- Crypto-loans
+  - `GET /sapi/v1/loan/collateral/data`
+  - `POST /sapi/v1/loan/borrow`
+  - `POST /sapi/v1/loan/repay`
+  - `POST /sapi/v1/loan/adjust/ltv`
+  - `POST /sapi/v1/loan/customize/margin_call`
+  - `GET /sapi/v1/loan/ongoing/orders`
+
+
 ## 3.9.0 - 2024-10-02
 
 ### Removed

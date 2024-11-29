@@ -9,6 +9,10 @@ Portfolio Margin Collateral Rate (MARKET_DATA)
 ----------------------------------------------
 .. autofunction:: binance.spot.Spot.portfolio_margin_collateral_rate
 
+Portfolio Margin Pro Tiered Collateral Rate (USER_DATA)
+-------------------------------------------------------
+.. autofunction:: binance.spot.Spot.portfolio_margin_tiered_collateral_rate
+
 Portfolio Margin Bankruptcy Loan Amount (USER_DATA)
 ---------------------------------------------------
 .. autofunction:: binance.spot.Spot.portfolio_margin_bankruptcy_loan_amount
@@ -20,6 +24,14 @@ Portfolio Margin Bankruptcy Loan Repay (USER_DATA)
 Query Classic Portfolio Margin Negative Balance Interest History (USER_DATA)
 ----------------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.query_classic_portfolio_margin_negative_balance_interest_history
+
+Get Portfolio Margin Pro SPAN Account Info (USER_DATA)
+------------------------------------------------------
+.. autofunction:: binance.spot.Spot.get_portfolio_margin_span_account_info
+
+Get Portfolio Margin Pro Account Balance (USER_DATA)
+----------------------------------------------------
+.. autofunction:: binance.spot.Spot.get_portfolio_margin_account_balance
 
 Query Portfolio Margin Asset Index Price (MARKET_DATA)
 ------------------------------------------------------

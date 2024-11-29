@@ -85,6 +85,10 @@ Get Locked Subscription Preview (USER_DATA)
 -------------------------------------------
 .. autofunction:: binance.spot.Spot.get_locked_subscription_preview
 
+Set Locked Product Redeem Option (USER_DATA)
+--------------------------------------------
+.. autofunction:: binance.spot.Spot.set_locked_product_redeem_option
+
 Get Rate History (USER_DATA)
 ----------------------------
 .. autofunction:: binance.spot.Spot.get_rate_history

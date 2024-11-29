@@ -176,7 +176,7 @@ class API(object):
                 err = json.loads(response.text)
             except JSONDecodeError:
                 raise ClientError(
-                    status_code, None, response.text, None, response.headers
+                    status_code, None, response.text, response.headers, None
                 )
             error_data = None
             if "data" in err:

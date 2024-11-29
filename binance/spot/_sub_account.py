@@ -104,6 +104,7 @@ def sub_account_deposit_history(self, email: str, **kwargs):
         endTime (int, optional)
         limit (int, optional)
         offset (int, optional): Default:0
+        txId (str, optional)
         recvWindow (int, optional): The value cannot be greater than 60000
     """
 

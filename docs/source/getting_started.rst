@@ -58,7 +58,7 @@ Usage example:
    response = client.new_order(**params)
    print(response)
 
-Please find `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder to check for more endpoints.
+Please find `examples <https://github.com/binance/binance-connector-python/tree/master/examples/spot>`_ folder to check for more endpoints.
 
 Base URL
 """"""""
@@ -111,6 +111,15 @@ Anything beyond the limit will result in an error response from Binance server.
 Websocket
 ^^^^^^^^^
 
+Websocket can be established through either of the following types of connections:
+
+* Websocket API (``https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md``)
+* Websocket Stream (``https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md``)
+
+
+Websocket API
+"""""""""""""
+
 Usage example:
 
 .. code-block:: python
@@ -118,8 +127,11 @@ Usage example:
    import logging
    from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
 
+   def on_close(_):
+       logging.info("Do custom stuff when connection is closed")
+
    def message_handler(message):
-       print(message)
+       logging.info(message)
 
    ws_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
 
@@ -137,8 +149,33 @@ Usage example:
 
    ws_client.stop()
 
+The ``stream_url`` defaults to ``wss://ws-api.binance.com/ws-api/v3``.
+More websocket API examples are available in the `examples websocket api <https://github.com/binance/binance-connector-python/tree/master/examples/websocket/spot/websocket_api>`_ folder.
+
+
+Websocket Stream
+""""""""""""""""
+
+Usage example:
+
+.. code-block:: python
+
+   import logging
+   from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient as Client
+
+   def message_handler(message):
+       logging.info(message)
+
+   ws_client = Client(on_message=message_handler)
+
+   ws_client.ticker(symbol="bnbusdt")
+
+   logging.debug("closing ws connection")
+   ws_client.stop()
+
 The ``stream_url`` defaults to ``wss://stream.binance.com:9443``.
-More websocket examples are available in the `examples <https://github.com/binance/binance-connector-python/tree/master/examples>`_ folder.
+More websocket Stream examples are available in the `websocket stream examples <https://github.com/binance/binance-connector-python/tree/master/examples/websocket/spot/websocket_stream>`_ folder.
+
 
 Heartbeat
 """""""""

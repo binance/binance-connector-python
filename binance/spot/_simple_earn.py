@@ -88,7 +88,8 @@ def subscribe_locked_product(self, projectId: str, amount: float, **kwargs):
         amount (float)
     Keyword Args:
         autoSubscribe (boolean, optional): true or false, default true.
-        sourceAccount (str, optional): SPOT,FUND,ALL, default SPOT
+        sourceAccount (str, optional): SPOT, FUND, ALL, default SPOT
+        redeemTo (str, optional): SPOT, FLEXIBLE, default FLEXIBLE
         recvWindow (int, optional): The value cannot be greater than 60000
     """
     check_required_parameters([[projectId, "projectId"], [amount, "amount"]])
@@ -481,6 +482,30 @@ def get_locked_subscription_preview(self, projectId: str, amount: float, **kwarg
     params = {"projectId": projectId, "amount": amount, **kwargs}
     url_path = "/sapi/v1/simple-earn/locked/subscriptionPreview"
     return self.sign_request("GET", url_path, params)
+
+
+def set_locked_product_redeem_option(self, positionId: str, redeemTo: str, **kwargs):
+    """Set Locked Product Redeem Option (USER_DATA)
+
+    Set redeem option for Locked product
+
+    Weight(IP): 50
+
+    POST /sapi/v1/simple-earn/locked/setRedeemOption
+
+    https://developers.binance.com/docs/simple_earn/earn/Set-Locked-Redeem-Option
+
+    Args:
+        positionId (str)
+        redeemTo (str): SPOT,FUND,ALL
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    check_required_parameters([[positionId, "positionId"], [redeemTo, "redeemTo"]])
+
+    params = {"positionId": positionId, "redeemTo": redeemTo, **kwargs}
+    url_path = "/sapi/v1/simple-earn/locked/setRedeemOption"
+    return self.sign_request("POST", url_path, params)
 
 
 def get_rate_history(self, productId: str, **kwargs):

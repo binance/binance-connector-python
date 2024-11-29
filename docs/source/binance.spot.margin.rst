@@ -173,6 +173,14 @@ Margin manual liquidation (MARGIN)
 ----------------------------------
 .. autofunction:: binance.spot.Spot.margin_manual_liquidation
 
+Margin Account New OTO (TRADE)
+------------------------------
+.. autofunction:: binance.spot.Spot.margin_new_oto_order
+
+Margin Account New OTOCO (TRADE)
+--------------------------------
+.. autofunction:: binance.spot.Spot.margin_new_otoco_order
+
 Query Liability Coin Leverage Bracket in Cross Margin Pro Mode(MARKET_DATA)
 ---------------------------------------------------------------------------
 .. autofunction:: binance.spot.Spot.liability_coin_leverage_bracket

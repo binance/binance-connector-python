@@ -40,6 +40,24 @@ def portfolio_margin_collateral_rate(self):
     return self.sign_request("GET", url_path)
 
 
+def portfolio_margin_tiered_collateral_rate(self, **kwargs):
+    """Portfolio Margin Pro Tiered Collateral Rate (USER_DATA)
+
+    Portfolio Margin PRO Tiered Collateral Rate
+
+    Weight(IP): 50
+
+    GET /sapi/v2/portfolio/collateralRate
+
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/market-data/Portfolio-Margin-Pro-Tiered-Collateral-Rate
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    url_path = "/sapi/v2/portfolio/collateralRate"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
 def portfolio_margin_bankruptcy_loan_amount(self, **kwargs):
     """Query Classic Portfolio Margin Bankruptcy Loan Amount (USER_DATA)
 
@@ -104,6 +122,43 @@ def query_classic_portfolio_margin_negative_balance_interest_history(
     params = {"asset": asset, **kwargs}
     url_path = "/sapi/v1/portfolio/interest-history"
     return self.sign_request("GET", url_path, params)
+
+
+def get_portfolio_margin_span_account_info(self, **kwargs):
+    """Get Portfolio Margin Pro SPAN Account Info (USER_DATA)
+
+    Get Portfolio Margin Pro SPAN Account Info (For Portfolio Margin Pro SPAN users only)
+
+    Weight(IP): 5
+
+    GET /sapi/v2/portfolio/account
+
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Classic-Portfolio-Margin-Account-Info-V2
+
+    Keyword Args:
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    url_path = "/sapi/v2/portfolio/account"
+    return self.sign_request("GET", url_path, {**kwargs})
+
+
+def get_portfolio_margin_account_balance(self, **kwargs):
+    """Get Portfolio Margin Pro Account Balance (USER_DATA)
+
+    Query Portfolio Margin Pro account balance
+
+    Weight(IP): 20
+
+    GET /sapi/v1/portfolio/balance
+
+    https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Classic-Portfolio-Margin-Balance-Info
+
+    Keyword Args:
+        asset (str, optional)
+        recvWindow (int, optional): The value cannot be greater than 60000
+    """
+    url_path = "/sapi/v1/portfolio/balance"
+    return self.sign_request("GET", url_path, {**kwargs})
 
 
 def query_portfolio_margin_asset_index_price(self, **kwargs):

@@ -102,6 +102,8 @@ class Spot(API):
     from binance.spot._margin import adjust_cross_margin_max_leverage
     from binance.spot._margin import margin_available_inventory
     from binance.spot._margin import margin_manual_liquidation
+    from binance.spot._margin import margin_new_oto_order
+    from binance.spot._margin import margin_new_otoco_order
     from binance.spot._margin import liability_coin_leverage_bracket
 
     # WALLET
@@ -126,6 +128,10 @@ class Spot(API):
     from binance.spot._wallet import funding_wallet
     from binance.spot._wallet import user_asset
     from binance.spot._wallet import api_key_permissions
+    from binance.spot._wallet import local_entity_withdraw
+    from binance.spot._wallet import local_entity_withdraw_history
+    from binance.spot._wallet import local_entity_submit_deposit_questionnaire
+    from binance.spot._wallet import local_entity_deposit_history
     from binance.spot._wallet import bnb_convertible_assets
     from binance.spot._wallet import list_deposit_address
     from binance.spot._wallet import cloud_mining_trans_history
@@ -206,21 +212,15 @@ class Spot(API):
 
     # Crypto LOANS
     from binance.spot._crypto_loan import loan_history
-    from binance.spot._crypto_loan import loan_borrow
     from binance.spot._crypto_loan import loan_borrow_history
-    from binance.spot._crypto_loan import loan_ongoing_orders
-    from binance.spot._crypto_loan import loan_repay
     from binance.spot._crypto_loan import loan_repay_history
-    from binance.spot._crypto_loan import loan_adjust_ltv
     from binance.spot._crypto_loan import loan_adjust_ltv_history
     from binance.spot._crypto_loan import loan_vip_ongoing_orders
     from binance.spot._crypto_loan import loan_vip_repay
     from binance.spot._crypto_loan import loan_vip_repay_history
     from binance.spot._crypto_loan import loan_vip_collateral_account
     from binance.spot._crypto_loan import loan_loanable_data
-    from binance.spot._crypto_loan import loan_collateral_data
     from binance.spot._crypto_loan import loan_collateral_rate
-    from binance.spot._crypto_loan import loan_customize_margin_call
 
     # PAY
     from binance.spot._pay import pay_history
@@ -256,11 +256,14 @@ class Spot(API):
     # Portfolio Margin
     from binance.spot._portfolio_margin import portfolio_margin_account
     from binance.spot._portfolio_margin import portfolio_margin_collateral_rate
+    from binance.spot._portfolio_margin import portfolio_margin_tiered_collateral_rate
     from binance.spot._portfolio_margin import portfolio_margin_bankruptcy_loan_amount
     from binance.spot._portfolio_margin import portfolio_margin_bankruptcy_loan_repay
     from binance.spot._portfolio_margin import (
         query_classic_portfolio_margin_negative_balance_interest_history,
     )
+    from binance.spot._portfolio_margin import get_portfolio_margin_span_account_info
+    from binance.spot._portfolio_margin import get_portfolio_margin_account_balance
     from binance.spot._portfolio_margin import query_portfolio_margin_asset_index_price
     from binance.spot._portfolio_margin import fund_auto_collection
     from binance.spot._portfolio_margin import bnb_transfer
@@ -291,6 +294,7 @@ class Spot(API):
     from binance.spot._simple_earn import get_locked_personal_left_quota
     from binance.spot._simple_earn import get_flexible_subscription_preview
     from binance.spot._simple_earn import get_locked_subscription_preview
+    from binance.spot._simple_earn import set_locked_product_redeem_option
     from binance.spot._simple_earn import get_rate_history
     from binance.spot._simple_earn import get_collateral_record
 
@@ -310,3 +314,17 @@ class Spot(API):
     from binance.spot._auto_invest import index_linked_plan_redemption
     from binance.spot._auto_invest import get_index_linked_plan_redemption_history
     from binance.spot._auto_invest import index_linked_plan_rebalance_details
+
+    # Staking
+    from binance.spot._staking import eth_staking_account
+    from binance.spot._staking import get_eth_staking_quota
+    from binance.spot._staking import subscribe_eth_staking
+    from binance.spot._staking import redeem_eth
+    from binance.spot._staking import wrap_beth
+    from binance.spot._staking import get_eth_staking_history
+    from binance.spot._staking import get_eth_redemption_history
+    from binance.spot._staking import get_beth_rewards_distribution_history
+    from binance.spot._staking import get_wbeth_rewards_history
+    from binance.spot._staking import get_wbeth_rate_history
+    from binance.spot._staking import get_wbeth_wrap_history
+    from binance.spot._staking import get_wbeth_unwrap_history

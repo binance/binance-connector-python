@@ -14,6 +14,10 @@ Kline/Candlestick Streams
 -------------------------
 .. autofunction:: binance.websocket.spot.websocket_stream.SpotWebsocketStreamClient.kline
 
+Kline/Candlestick Streams with timezone offset
+----------------------------------------------
+.. autofunction:: binance.websocket.spot.websocket_stream.SpotWebsocketStreamClient.kline_timezone_offset
+
 Individual symbol or all symbols mini ticker
 --------------------------------------------
 .. autofunction:: binance.websocket.spot.websocket_stream.SpotWebsocketStreamClient.mini_ticker
