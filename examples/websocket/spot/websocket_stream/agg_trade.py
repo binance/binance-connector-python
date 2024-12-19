@@ -12,7 +12,9 @@ def message_handler(_, message):
     logging.info(message)
 
 
-my_client = SpotWebsocketStreamClient(on_message=message_handler, is_combined=True)
+my_client = SpotWebsocketStreamClient(
+    on_message=message_handler, is_combined=True, time_unit="microsecond"
+)
 
 # Subscribe to a single symbol stream
 my_client.agg_trade(symbol="bnbusdt")

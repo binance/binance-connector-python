@@ -20,6 +20,7 @@ class API(object):
         proxies (obj, optional): Dictionary mapping protocol to the URL of the proxy. e.g. {'https': 'http://1.2.3.4:8080'}
         show_limit_usage (bool, optional): whether return limit usage(requests and/or orders). By default, it's False
         show_header (bool, optional): whether return the whole response header. By default, it's False
+        time_unit (str, optional): select a time unit. By default, it's None.
         private_key (str, optional): RSA private key for RSA authentication
         private_key_pass(str, optional): Password for PSA private key
     """
@@ -33,6 +34,7 @@ class API(object):
         proxies=None,
         show_limit_usage=False,
         show_header=False,
+        time_unit=None,
         private_key=None,
         private_key_pass=None,
     ):
@@ -53,6 +55,14 @@ class API(object):
                 "X-MBX-APIKEY": api_key,
             }
         )
+
+        if (
+            time_unit == "microsecond"
+            or time_unit == "millisecond"
+            or time_unit == "MILLISECOND"
+            or time_unit == "MICROSECOND"
+        ):
+            self.session.headers.update({"X-MBX-TIME-UNIT": time_unit})
 
         if show_limit_usage is True:
             self.show_limit_usage = True

@@ -258,6 +258,23 @@ Proxy is supported.
 
    client= Client(proxies=proxies)
 
+Time Unit
+---------
+
+The `time_unit` parameter is optional and allows you to retrieve data with timestamps in `microsecond` or `millisecond`. Users can set it with the following values:
+  * `microsecond`
+  * `millisecond`
+  * `MICROSECOND`
+  * `MILLISECOND`
+
+By default, `time_unit` is set to `None` and will return a timestamp values in milliseconds.
+
+.. code-block:: python
+
+   from binance.spot import Spot as Client
+
+   client = Client(time_unit="microsecond")
+
 Timeout
 -------
 

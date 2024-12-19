@@ -165,6 +165,22 @@ from binance.spot import Spot as Client
 client= Client(timeout=1)
 ```
 
+### Time Unit
+
+The `time_unit` parameter is optional and allows you to retrieve data with timestamps in `microsecond` or `millisecond`. Users can set it with the following values:
+- `microsecond`
+- `millisecond`
+- `MICROSECOND`
+- `MILLISECOND`
+
+By default, `time_unit` is set to `None` and will return a timestamp values in milliseconds.
+
+```python
+from binance.spot import Spot as Client
+
+client = Client(time_unit="microsecond")
+```
+
 ### Proxy
 
 Proxy is supported.
@@ -268,6 +284,39 @@ my_client.agg_trade(symbol="bnbusdt")
 time.sleep(5)
 logging.info("closing ws connection")
 my_client.stop()
+```
+
+### Time Unit
+
+The `time_unit` parameter is optional and allows you to retrieve data with timestamps in `microsecond` or `millisecond`. Users can set it with the following values:
+- `microsecond`
+- `millisecond`
+- `MICROSECOND`
+- `MILLISECOND`
+
+By default, `time_unit` is set to `None` and will return a timestamp values in milliseconds.
+
+```python
+# WebSocket API Client
+import logging
+from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+
+my_client = SpotWebsocketAPIClient(on_message=message_handler, time_unit='microsecond')
+```
+
+```python
+# WebSocket Stream Client
+import logging
+from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient
+
+def message_handler(_, message):
+    logging.info(message)
+
+my_client = SpotWebsocketStreamClient(on_message=message_handler, time_unit="microsecond")
 ```
 
 #### Proxy
