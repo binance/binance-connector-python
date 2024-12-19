@@ -24,13 +24,21 @@ class BinanceSocketManager(threading.Thread):
         on_pong=None,
         logger=None,
         timeout=None,
+        time_unit=None,
         proxies: Optional[dict] = None,
     ):
         threading.Thread.__init__(self)
         if not logger:
             logger = logging.getLogger(__name__)
         self.logger = logger
-        self.stream_url = stream_url
+        self.stream_url = (
+            stream_url + f"?timeUnit={time_unit}"
+            if time_unit == "microsecond"
+            or time_unit == "millisecond"
+            or time_unit == "MILLISECOND"
+            or time_unit == "MICROSECOND"
+            else stream_url
+        )
         self.on_message = on_message
         self.on_open = on_open
         self.on_close = on_close

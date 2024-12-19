@@ -16,7 +16,9 @@ def message_handler(_, message):
     logging.info(message)
 
 
-my_client = SpotWebsocketAPIClient(on_message=message_handler, on_close=on_close)
+my_client = SpotWebsocketAPIClient(
+    on_message=message_handler, on_close=on_close, time_unit="microsecond"
+)
 
 
 my_client.historical_trades(symbol="BNBBUSD", apiKey="", limit=1)

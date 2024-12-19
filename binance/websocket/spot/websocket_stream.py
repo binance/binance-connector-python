@@ -15,6 +15,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
         on_pong=None,
         is_combined=False,
         timeout=None,
+        time_unit=None,
         logger=None,
         proxies: Optional[dict] = None,
     ):
@@ -31,6 +32,7 @@ class SpotWebsocketStreamClient(BinanceWebsocketClient):
             on_ping=on_ping,
             on_pong=on_pong,
             timeout=timeout,
+            time_unit=time_unit,
             logger=logger,
             proxies=proxies,
         )

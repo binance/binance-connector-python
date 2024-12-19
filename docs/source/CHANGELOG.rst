@@ -2,6 +2,14 @@
 Changelog
 =========
 
+3.11.0 - 2024-12-19
+-------------------
+
+Added
+^^^^^
+
+* A new optional parameter `time_unit` can be used to select the time unit.
+
 3.10.0 - 2024-11-29
 -------------------
 
