@@ -222,6 +222,20 @@ class Spot(API):
     from binance.spot._crypto_loan import loan_loanable_data
     from binance.spot._crypto_loan import loan_collateral_rate
 
+    # VIP LOANS
+    from binance.spot._viploan import vip_loan_borrow_interest_rate
+    from binance.spot._viploan import vip_loan_interest_rate_history
+    from binance.spot._viploan import vip_loan_loanable_data
+    from binance.spot._viploan import vip_loan_collateral_data
+    from binance.spot._viploan import vip_loan_ongoing_orders
+    from binance.spot._viploan import vip_loan_repayment_history
+    from binance.spot._viploan import vip_loan_accrued_interest
+    from binance.spot._viploan import vip_loan_collateral_account
+    from binance.spot._viploan import vip_loan_application_status
+    from binance.spot._viploan import vip_loan_renew
+    from binance.spot._viploan import vip_loan_repay
+    from binance.spot._viploan import vip_loan_borrow
+
     # PAY
     from binance.spot._pay import pay_history
 
