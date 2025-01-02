@@ -115,6 +115,7 @@ class API(object):
         if payload is None:
             payload = {}
         url = self.base_url + url_path
+        print(f"[HTTP REQUEST] Method: {http_method}, URL: {url}, Payload: {payload}")
         self._logger.debug("url: " + url)
         params = cleanNoneValue(
             {
