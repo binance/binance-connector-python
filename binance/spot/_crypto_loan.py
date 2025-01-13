@@ -179,37 +179,3 @@ def loan_loanable_data(self, **kwargs):
     """
 
     return self.sign_request("GET", "/sapi/v1/loan/loanable/data", kwargs)
-
-
-def loan_collateral_rate(
-    self, loanCoin: str, collateralCoin: str, repayAmount: float, **kwargs
-):
-    """Check Collateral Repay Rate (USER_DATA)
-
-    GET /sapi/v1/loan/repay/collateral/rate
-
-    https://developers.binance.com/docs/crypto_loan/stable-rate/market-data/Check-Collateral-Repay-Rate
-
-    Args:
-      loanCoin (str)
-      collateralCoin (str)
-      repayAmount (float)
-    Keyword Args:
-      recvWindow (int, optional): The value cannot be greater than 60000
-    """
-
-    check_required_parameters(
-        [
-            [loanCoin, "loanCoin"],
-            [collateralCoin, "collateralCoin"],
-            [repayAmount, "repayAmount"],
-        ]
-    )
-
-    payload = {
-        "loanCoin": loanCoin,
-        "collateralCoin": collateralCoin,
-        "repayAmount": repayAmount,
-        **kwargs,
-    }
-    return self.sign_request("GET", "/sapi/v1/loan/repay/collateral/rate", payload)

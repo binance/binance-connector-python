@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.12.0 - 2025-01-13
+### Changed
+- Updated documentation links.
+
+### Removed
+- Crypto-loans
+  - `GET /sapi/v1/loan/repay/collateral/rate`
+
 ## 3.11.0 - 2024-12-19
 ### Added
 - A new optional parameter `time_unit` can be used to select the time unit.

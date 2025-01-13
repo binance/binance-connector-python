@@ -2,6 +2,21 @@
 Changelog
 =========
 
+3.12.0 - 2025-01-09
+-------------------
+
+Updated
+^^^^^^^
+
+* Updated documentation links.
+
+Removed
+^^^^^^^
+
+* Crypto-loans
+
+  * ``GET /sapi/v1/loan/repay/collateral/rate``
+
 3.11.0 - 2024-12-19
 -------------------
 
