@@ -220,7 +220,6 @@ class Spot(API):
     from binance.spot._crypto_loan import loan_vip_repay_history
     from binance.spot._crypto_loan import loan_vip_collateral_account
     from binance.spot._crypto_loan import loan_loanable_data
-    from binance.spot._crypto_loan import loan_collateral_rate
 
     # PAY
     from binance.spot._pay import pay_history

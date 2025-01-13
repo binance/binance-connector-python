@@ -36,7 +36,3 @@ Check Locked Value of VIP Collateral Account (USER_DATA)
 Get Loanable Assets Data (USER_DATA)
 ------------------------------------
 .. autofunction:: binance.spot.Spot.loan_loanable_data
-
-Check Collateral Repay Rate (USER_DATA)
----------------------------------------
-.. autofunction:: binance.spot.Spot.loan_collateral_rate
