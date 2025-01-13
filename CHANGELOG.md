@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.12.0 - 2025-01-09
+## 3.12.0 - 2025-01-13
 ### Changed
 - Updated documentation links.
 
