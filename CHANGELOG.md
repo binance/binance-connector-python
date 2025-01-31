@@ -1,4 +1,18 @@
 # Changelog
+## 3.13.0 - 2025-01-31
+### Added
+- Staking
+  - `GET /sapi/v1/sol-staking/account`
+  - `GET /sapi/v1/sol-staking/sol/quota`
+  - `POST /sapi/v1/sol-staking/sol/stake`
+  - `POST /sapi/v1/sol-staking/sol/redeem`
+  - `POST /sapi/v1/sol-staking/sol/claim`
+  - `GET /sapi/v1/sol-staking/sol/history/stakingHistory`
+  - `GET /sapi/v1/sol-staking/sol/history/redemptionHistory`
+  - `GET /sapi/v1/sol-staking/sol/history/bnsolRewardsHistory`
+  - `GET /sapi/v1/sol-staking/sol/history/rateHistory`
+  - `GET /sapi/v1/sol-staking/sol/history/boostRewardsHistory`
+  - `GET /sapi/v1/sol-staking/sol/history/unclaimedRewards`
 
 ## 3.12.0 - 2025-01-13
 ### Changed
