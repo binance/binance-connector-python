@@ -327,3 +327,14 @@ class Spot(API):
     from binance.spot._staking import get_wbeth_rate_history
     from binance.spot._staking import get_wbeth_wrap_history
     from binance.spot._staking import get_wbeth_unwrap_history
+    from binance.spot._staking import sol_staking_account
+    from binance.spot._staking import get_sol_staking_quota
+    from binance.spot._staking import subscribe_sol_staking
+    from binance.spot._staking import redeem_sol
+    from binance.spot._staking import claim_boost_rewards
+    from binance.spot._staking import get_sol_staking_history
+    from binance.spot._staking import get_sol_redemption_history
+    from binance.spot._staking import get_bnsol_rewards_history
+    from binance.spot._staking import get_bnsol_rate_history
+    from binance.spot._staking import get_boost_rewards_history
+    from binance.spot._staking import get_unclaimed_rewards
