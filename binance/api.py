@@ -1,6 +1,7 @@
 import json
 from json import JSONDecodeError
 import logging
+from typing import Any, Literal
 import requests
 from .__version__ import __version__
 from binance.error import ClientError, ServerError
@@ -85,7 +86,12 @@ class API(object):
         check_required_parameter(self.api_key, "api_key")
         return self.send_request(http_method, url_path, payload=payload)
 
-    def sign_request(self, http_method, url_path, payload=None):
+    def sign_request(
+        self,
+        http_method: Literal["GET", "POST", "DELETE", "PUT"],
+        url_path: str,
+        payload: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         if payload is None:
             payload = {}
         payload["timestamp"] = get_timestamp()
