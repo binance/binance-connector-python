@@ -60,3 +60,13 @@ class WebsocketClientError(Error):
 
     def __str__(self):
         return self.error_message
+
+
+class ExchangeError(Error):
+    def __init__(self, message):
+        self.message = message
+
+
+class OrderBookError(Error):
+    def __init__(self, message):
+        self.message = message

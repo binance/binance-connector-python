@@ -132,3 +132,21 @@ def parse_proxies(proxies: dict):
             else None
         ),
     }
+
+
+def validate_symbol(symbol):
+    """Validate the format of a trading symbol"""
+    if not isinstance(symbol, str) or not symbol.isalnum():
+        raise ValueError("Invalid symbol format")
+    return True
+
+
+def parse_order_book(order_book_data):
+    """Parse the order book data returned by the Binance API"""
+    if not isinstance(order_book_data, dict):
+        raise ValueError("Invalid order book data format")
+    return {
+        "lastUpdateId": order_book_data.get("lastUpdateId"),
+        "bids": order_book_data.get("bids", []),
+        "asks": order_book_data.get("asks", []),
+    }

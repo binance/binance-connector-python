@@ -136,3 +136,18 @@ class BinanceSocketManager(threading.Thread):
             self.on_error(self, e)
         else:
             raise e
+
+    def subscribe_to_agg_trades(self, symbol):
+        """Subscribe to aggregate trade streams"""
+        stream_name = f"{symbol.lower()}@aggTrade"
+        self.send_message(json.dumps({"method": "SUBSCRIBE", "params": [stream_name], "id": 1}))
+
+    def subscribe_to_kline(self, symbol, interval):
+        """Subscribe to kline/candlestick streams"""
+        stream_name = f"{symbol.lower()}@kline_{interval}"
+        self.send_message(json.dumps({"method": "SUBSCRIBE", "params": [stream_name], "id": 1}))
+
+    def subscribe_to_order_book(self, symbol, level=5):
+        """Subscribe to order book streams"""
+        stream_name = f"{symbol.lower()}@depth{level}"
+        self.send_message(json.dumps({"method": "SUBSCRIBE", "params": [stream_name], "id": 1}))

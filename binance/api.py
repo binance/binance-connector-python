@@ -195,3 +195,20 @@ class API(object):
                 status_code, err["code"], err["msg"], response.headers, error_data
             )
         raise ServerError(status_code, response.text)
+
+    def get_server_time(self):
+        """Fetch the server time from the Binance API"""
+        url_path = "/api/v3/time"
+        return self.query(url_path)
+
+    def get_exchange_info(self):
+        """Fetch exchange information from the Binance API"""
+        url_path = "/api/v3/exchangeInfo"
+        return self.query(url_path)
+
+    def get_order_book(self, symbol, limit=100):
+        """Fetch the order book for a specific symbol from the Binance API"""
+        check_required_parameter(symbol, "symbol")
+        url_path = "/api/v3/depth"
+        payload = {"symbol": symbol, "limit": limit}
+        return self.query(url_path, payload)
