@@ -35,4 +35,4 @@ client = Client(
     private_key=private_key,
     private_key_pass="password",
 )
-logging.info(client.account())
+logging.info(client.account(omitZeroBalances=True))
