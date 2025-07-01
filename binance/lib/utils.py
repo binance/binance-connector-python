@@ -54,6 +54,7 @@ def get_timestamp():
 
 
 def encoded_string(query):
+    query = {k: str(v).lower() if isinstance(v, bool) else v for k, v in query.items()}
     return urlencode(query, True).replace("%40", "@")
 
 
