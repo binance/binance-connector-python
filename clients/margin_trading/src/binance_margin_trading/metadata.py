@@ -1,0 +1,1 @@
+NAME = "binance-margin-trading"

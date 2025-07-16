@@ -1,0 +1,1 @@
+NAME = "binance-sub-account"

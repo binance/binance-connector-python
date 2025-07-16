@@ -1,5 +1,0 @@
--r requirements-test.txt
-pre-commit
-sphinx
-sphinx_rtd_theme
-configparser>=5.3.0

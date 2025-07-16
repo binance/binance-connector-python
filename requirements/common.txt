@@ -1,3 +1,0 @@
-requests>=2.31.0
-websocket-client>=1.6.3
-pycryptodome>=3.15.0
