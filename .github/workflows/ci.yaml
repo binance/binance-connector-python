@@ -1,0 +1,69 @@
+name: Python Connectors CI
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  detect-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      clients: ${{ steps.detect.outputs.clients }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Detect all clients
+        id: detect
+        run: |
+          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          echo "Detected clients: $ALL_CLIENTS"
+          echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
+          echo "::set-output name=clients::$ALL_CLIENTS"
+
+  build:
+    needs: detect-clients
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        client: ${{ fromJson(needs.detect-clients.outputs.clients) }}
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        poetry-version: ["latest", "main", "1.8.4"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Build ${{ matrix.client }} client
+        run: |
+          if [ "${{ matrix.client }}" == "common" ]; then
+            cd common
+          else
+            cd clients/${{ matrix.client }}
+          fi
+
+          # Install dependencies
+          poetry install
+
+          # Format
+          poetry run black .
+
+          # Lint
+          poetry run ruff check --fix .
+
+          # Test
+          poetry run pytest tests
+
+          # Build
+          poetry build

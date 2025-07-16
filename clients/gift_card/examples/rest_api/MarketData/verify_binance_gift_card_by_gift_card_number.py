@@ -1,0 +1,43 @@
+import os
+import logging
+
+from binance_gift_card.gift_card import (
+    GiftCard,
+    ConfigurationRestAPI,
+    GIFT_CARD_REST_API_PROD_URL,
+)
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+# Create configuration for the REST API
+configuration_rest_api = ConfigurationRestAPI(
+    api_key=os.getenv("API_KEY", ""),
+    api_secret=os.getenv("API_SECRET", ""),
+    base_path=os.getenv("BASE_PATH", GIFT_CARD_REST_API_PROD_URL),
+)
+
+# Initialize GiftCard client
+client = GiftCard(config_rest_api=configuration_rest_api)
+
+
+def verify_binance_gift_card_by_gift_card_number():
+    try:
+        response = client.rest_api.verify_binance_gift_card_by_gift_card_number(
+            reference_no="reference_no_example",
+        )
+
+        rate_limits = response.rate_limits
+        logging.info(
+            f"verify_binance_gift_card_by_gift_card_number() rate limits: {rate_limits}"
+        )
+
+        data = response.data()
+        logging.info(f"verify_binance_gift_card_by_gift_card_number() response: {data}")
+    except Exception as e:
+        logging.error(f"verify_binance_gift_card_by_gift_card_number() error: {e}")
+
+
+if __name__ == "__main__":
+    verify_binance_gift_card_by_gift_card_number()

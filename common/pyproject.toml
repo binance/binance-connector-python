@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "binance-common"
+version = "1.0.0"
+description = "Binance Common Types and Utilities for Binance Connectors"
+authors = ["Binance"]
+license = "MIT"
+readme = "README.md"
+include = ["CHANGELOG.md", "LICENSE", "README.md"]
+packages = [
+  { include = "binance_common", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<=3.13"
+requests = ">=2.31.0"
+pydantic = ">=2.10.0"
+websockets = "^15.0.1"
+black = "^25.1.0"
+ruff = "^0.12.0"
+pycryptodome = "^3.17"
+aiohttp = "^3.9"
+pytest = { version = ">=6.2.5", optional = true }
+
+[tool.poetry.extras]
+dev = ["pytest"]
+
+[tool.poetry.group.dev.dependencies]
+tox = "^4.27.0"
+pytest = ">=8.4.1"
+pytest-asyncio = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+exclude = [".git", ".tox", "build", "dist"]
+
+[tool.ruff.lint]
+ignore = ["E741"]

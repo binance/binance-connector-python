@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "binance-connector"
+version = "1.0.0"
+description = "Official Binance Connector - This is a lightweight library that works as a connector to Binance public API."
+authors = ["Binance"]
+license = "MIT"
+readme = "README.md"
+include = ["CHANGELOG.md", "LICENSE", "README.md"]
+packages = [
+  { include = "binance_algo", from = "clients/algo/src" },
+  { include = "binance_c2c", from = "clients/c2c/src" },
+  { include = "binance_convert", from = "clients/convert/src" },
+  { include = "binance_copy_trading", from = "clients/copy_trading/src" },
+  { include = "binance_crypto_loan", from = "clients/crypto_loan/src" },
+  { include = "binance_derivatives_trading_coin_futures", from = "clients/derivatives_trading_coin_futures/src" },
+  { include = "binance_derivatives_trading_options", from = "clients/derivatives_trading_options/src" },
+  { include = "binance_derivatives_trading_portfolio_margin", from = "clients/derivatives_trading_portfolio_margin/src" },
+  { include = "binance_derivatives_trading_portfolio_margin_pro", from = "clients/derivatives_trading_portfolio_margin_pro/src" },
+  { include = "binance_derivatives_trading_usds_futures", from = "clients/derivatives_trading_usds_futures/src" },
+  { include = "binance_dual_investment", from = "clients/dual_investment/src" },
+  { include = "binance_fiat", from = "clients/fiat/src" },
+  { include = "binance_gift_card", from = "clients/gift_card/src" },
+  { include = "binance_margin_trading", from = "clients/margin_trading/src" },
+  { include = "binance_mining", from = "clients/mining/src" },
+  { include = "binance_nft", from = "clients/nft/src" },
+  { include = "binance_pay", from = "clients/pay/src" },
+  { include = "binance_rebate", from = "clients/rebate/src" },
+  { include = "binance_simple_earn", from = "clients/simple_earn/src" },
+  { include = "binance_spot", from = "clients/spot/src" },
+  { include = "binance_staking", from = "clients/staking/src" },
+  { include = "binance_sub_account", from = "clients/sub_account/src" },
+  { include = "binance_vip_loan", from = "clients/vip_loan/src" },
+  { include = "binance_wallet", from = "clients/wallet/src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<=3.13"
+requests = ">=2.31.0"
+pydantic = ">=2.10.0"
+websockets = "^15.0.1"
+websocket-client = ">=1.6.3"
+black = "^25.1.0"
+ruff = "^0.12.0"
+pycryptodome = "^3.17"
+aiohttp = "^3.9"
+binance-common = "1.0.0"
+pytest = { version = ">=6.2.5", optional = true }
+
+[tool.poetry.extras]
+dev = ["pytest"]
+
+[tool.poetry.group.dev.dependencies]
+tox = "^4.27.0"
+pytest = ">=8.4.1"
+pytest-asyncio = "^1.0.0"
+
+[tool.ruff]
+exclude = [".git", ".tox", "build", "dist"]
+lint.ignore = ["E741"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "binance-vip-loan"
+version = "1.0.0"
+description = "Official Binance VipLoan Connector - A lightweight library that provides a convenient interface to Binance's VipLoan REST API"
+authors = ["Binance"]
+license = "MIT"
+readme = "README.md"
+include = ["CHANGELOG.md", "LICENSE", "README.md"]
+packages = [
+  { include = "binance_vip_loan", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<=3.13"
+requests = ">=2.31.0"
+pydantic = ">=2.10.0"
+websockets = "^15.0.1"
+websocket-client = ">=1.6.3"
+black = "^25.1.0"
+ruff = "^0.12.0"
+pycryptodome = "^3.17"
+aiohttp = "^3.9"
+binance-common = "1.0.0"
+pytest = { version = ">=6.2.5", optional = true }
+
+[tool.poetry.extras]
+dev = ["pytest"]
+
+[tool.poetry.group.dev.dependencies]
+tox = "^4.27.0"
+pytest = ">=8.4.1"
+pytest-asyncio = "^1.0.0"
+
+[tool.ruff]
+exclude = [".git", ".tox", "build", "dist"]
+lint.ignore = ["E741"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
