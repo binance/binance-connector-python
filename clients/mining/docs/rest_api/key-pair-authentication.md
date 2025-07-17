@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_mining.mining import Mining
-from binance_mining.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_mining.mining import Mining
+from binance_sdk_mining.rest_api.models import AcquiringAlgorithmResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

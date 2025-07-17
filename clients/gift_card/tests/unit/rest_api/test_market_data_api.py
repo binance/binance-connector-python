@@ -19,13 +19,13 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_gift_card.rest_api.api import MarketDataApi
-from binance_gift_card.rest_api.models import CreateADualTokenGiftCardResponse
-from binance_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
-from binance_gift_card.rest_api.models import FetchRsaPublicKeyResponse
-from binance_gift_card.rest_api.models import FetchTokenLimitResponse
-from binance_gift_card.rest_api.models import RedeemABinanceGiftCardResponse
-from binance_gift_card.rest_api.models import (
+from binance_sdk_gift_card.rest_api.api import MarketDataApi
+from binance_sdk_gift_card.rest_api.models import CreateADualTokenGiftCardResponse
+from binance_sdk_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
+from binance_sdk_gift_card.rest_api.models import FetchRsaPublicKeyResponse
+from binance_sdk_gift_card.rest_api.models import FetchTokenLimitResponse
+from binance_sdk_gift_card.rest_api.models import RedeemABinanceGiftCardResponse
+from binance_sdk_gift_card.rest_api.models import (
     VerifyBinanceGiftCardByGiftCardNumberResponse,
 )
 

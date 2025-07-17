@@ -20,27 +20,27 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_spot.websocket_api.api import MarketApi
+from binance_sdk_spot.websocket_api.api import MarketApi
 
 
-from binance_spot.websocket_api.models import KlinesIntervalEnum
-from binance_spot.websocket_api.models import TickerTypeEnum
-from binance_spot.websocket_api.models import TickerWindowSizeEnum
-from binance_spot.websocket_api.models import Ticker24hrTypeEnum
-from binance_spot.websocket_api.models import TickerTradingDayTypeEnum
-from binance_spot.websocket_api.models import UiKlinesIntervalEnum
-from binance_spot.websocket_api.models import AvgPriceResponse
-from binance_spot.websocket_api.models import DepthResponse
-from binance_spot.websocket_api.models import KlinesResponse
-from binance_spot.websocket_api.models import TickerResponse
-from binance_spot.websocket_api.models import Ticker24hrResponse
-from binance_spot.websocket_api.models import TickerBookResponse
-from binance_spot.websocket_api.models import TickerPriceResponse
-from binance_spot.websocket_api.models import TickerTradingDayResponse
-from binance_spot.websocket_api.models import TradesAggregateResponse
-from binance_spot.websocket_api.models import TradesHistoricalResponse
-from binance_spot.websocket_api.models import TradesRecentResponse
-from binance_spot.websocket_api.models import UiKlinesResponse
+from binance_sdk_spot.websocket_api.models import KlinesIntervalEnum
+from binance_sdk_spot.websocket_api.models import TickerTypeEnum
+from binance_sdk_spot.websocket_api.models import TickerWindowSizeEnum
+from binance_sdk_spot.websocket_api.models import Ticker24hrTypeEnum
+from binance_sdk_spot.websocket_api.models import TickerTradingDayTypeEnum
+from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
+from binance_sdk_spot.websocket_api.models import AvgPriceResponse
+from binance_sdk_spot.websocket_api.models import DepthResponse
+from binance_sdk_spot.websocket_api.models import KlinesResponse
+from binance_sdk_spot.websocket_api.models import TickerResponse
+from binance_sdk_spot.websocket_api.models import Ticker24hrResponse
+from binance_sdk_spot.websocket_api.models import TickerBookResponse
+from binance_sdk_spot.websocket_api.models import TickerPriceResponse
+from binance_sdk_spot.websocket_api.models import TickerTradingDayResponse
+from binance_sdk_spot.websocket_api.models import TradesAggregateResponse
+from binance_sdk_spot.websocket_api.models import TradesHistoricalResponse
+from binance_sdk_spot.websocket_api.models import TradesRecentResponse
+from binance_sdk_spot.websocket_api.models import UiKlinesResponse
 
 
 class TestWebSocketMarketApi:

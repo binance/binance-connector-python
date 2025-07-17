@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_algo.algo import Algo
-from binance_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
+from binance_sdk_algo.algo import Algo
+from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

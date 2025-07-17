@@ -19,24 +19,28 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_wallet.rest_api.api import AssetApi
-from binance_wallet.rest_api.models import AssetDetailResponse
-from binance_wallet.rest_api.models import AssetDividendRecordResponse
-from binance_wallet.rest_api.models import DustTransferResponse
-from binance_wallet.rest_api.models import DustlogResponse
-from binance_wallet.rest_api.models import FundingWalletResponse
-from binance_wallet.rest_api.models import GetAssetsThatCanBeConvertedIntoBnbResponse
-from binance_wallet.rest_api.models import GetCloudMiningPaymentAndRefundHistoryResponse
-from binance_wallet.rest_api.models import GetOpenSymbolListResponse
-from binance_wallet.rest_api.models import QueryUserDelegationHistoryResponse
-from binance_wallet.rest_api.models import QueryUserUniversalTransferHistoryResponse
-from binance_wallet.rest_api.models import QueryUserWalletBalanceResponse
-from binance_wallet.rest_api.models import (
+from binance_sdk_wallet.rest_api.api import AssetApi
+from binance_sdk_wallet.rest_api.models import AssetDetailResponse
+from binance_sdk_wallet.rest_api.models import AssetDividendRecordResponse
+from binance_sdk_wallet.rest_api.models import DustTransferResponse
+from binance_sdk_wallet.rest_api.models import DustlogResponse
+from binance_sdk_wallet.rest_api.models import FundingWalletResponse
+from binance_sdk_wallet.rest_api.models import (
+    GetAssetsThatCanBeConvertedIntoBnbResponse,
+)
+from binance_sdk_wallet.rest_api.models import (
+    GetCloudMiningPaymentAndRefundHistoryResponse,
+)
+from binance_sdk_wallet.rest_api.models import GetOpenSymbolListResponse
+from binance_sdk_wallet.rest_api.models import QueryUserDelegationHistoryResponse
+from binance_sdk_wallet.rest_api.models import QueryUserUniversalTransferHistoryResponse
+from binance_sdk_wallet.rest_api.models import QueryUserWalletBalanceResponse
+from binance_sdk_wallet.rest_api.models import (
     ToggleBnbBurnOnSpotTradeAndMarginInterestResponse,
 )
-from binance_wallet.rest_api.models import TradeFeeResponse
-from binance_wallet.rest_api.models import UserAssetResponse
-from binance_wallet.rest_api.models import UserUniversalTransferResponse
+from binance_sdk_wallet.rest_api.models import TradeFeeResponse
+from binance_sdk_wallet.rest_api.models import UserAssetResponse
+from binance_sdk_wallet.rest_api.models import UserUniversalTransferResponse
 
 
 class TestAssetApi:

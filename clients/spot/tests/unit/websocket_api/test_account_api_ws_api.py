@@ -20,22 +20,22 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_spot.websocket_api.api import AccountApi
+from binance_sdk_spot.websocket_api.api import AccountApi
 
 
-from binance_spot.websocket_api.models import AccountCommissionResponse
-from binance_spot.websocket_api.models import AccountRateLimitsOrdersResponse
-from binance_spot.websocket_api.models import AccountStatusResponse
-from binance_spot.websocket_api.models import AllOrderListsResponse
-from binance_spot.websocket_api.models import AllOrdersResponse
-from binance_spot.websocket_api.models import MyAllocationsResponse
-from binance_spot.websocket_api.models import MyPreventedMatchesResponse
-from binance_spot.websocket_api.models import MyTradesResponse
-from binance_spot.websocket_api.models import OpenOrderListsStatusResponse
-from binance_spot.websocket_api.models import OpenOrdersStatusResponse
-from binance_spot.websocket_api.models import OrderAmendmentsResponse
-from binance_spot.websocket_api.models import OrderListStatusResponse
-from binance_spot.websocket_api.models import OrderStatusResponse
+from binance_sdk_spot.websocket_api.models import AccountCommissionResponse
+from binance_sdk_spot.websocket_api.models import AccountRateLimitsOrdersResponse
+from binance_sdk_spot.websocket_api.models import AccountStatusResponse
+from binance_sdk_spot.websocket_api.models import AllOrderListsResponse
+from binance_sdk_spot.websocket_api.models import AllOrdersResponse
+from binance_sdk_spot.websocket_api.models import MyAllocationsResponse
+from binance_sdk_spot.websocket_api.models import MyPreventedMatchesResponse
+from binance_sdk_spot.websocket_api.models import MyTradesResponse
+from binance_sdk_spot.websocket_api.models import OpenOrderListsStatusResponse
+from binance_sdk_spot.websocket_api.models import OpenOrdersStatusResponse
+from binance_sdk_spot.websocket_api.models import OrderAmendmentsResponse
+from binance_sdk_spot.websocket_api.models import OrderListStatusResponse
+from binance_sdk_spot.websocket_api.models import OrderStatusResponse
 
 
 class TestWebSocketAccountApi:

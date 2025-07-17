@@ -19,12 +19,12 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_algo.rest_api.api import SpotAlgoApi
-from binance_algo.rest_api.models import CancelAlgoOrderSpotAlgoResponse
-from binance_algo.rest_api.models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
-from binance_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
-from binance_algo.rest_api.models import QuerySubOrdersSpotAlgoResponse
-from binance_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoResponse
+from binance_sdk_algo.rest_api.api import SpotAlgoApi
+from binance_sdk_algo.rest_api.models import CancelAlgoOrderSpotAlgoResponse
+from binance_sdk_algo.rest_api.models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
+from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
+from binance_sdk_algo.rest_api.models import QuerySubOrdersSpotAlgoResponse
+from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoResponse
 
 
 class TestSpotAlgoApi:

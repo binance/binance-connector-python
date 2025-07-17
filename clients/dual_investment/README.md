@@ -1,17 +1,17 @@
-# Binance Python Dual Investment Connector
+# Binance Python Dual Investment SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-dual-investment.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-dual-investment)](https://pypi.python.org/pypi/binance-dual-investment)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-dual-investment.svg)](https://pypi.org/project/binance-dual-investment/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-dual-investment)](https://pypi.python.org/pypi/binance-sdk-dual-investment)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-dual-investment.svg)](https://pypi.org/project/binance-sdk-dual-investment/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Dual Investment API, enabling developers to interact programmatically with Binance's Dual Investment trading platform. The library provides tools to buy or sell cryptocurrency at your desired price and date in the future, while earning high rewards no matter which direction the market goes through the REST API:
+This is a client library for the Binance Dual Investment SDK API, enabling developers to interact programmatically with Binance's Dual Investment trading platform. The library provides tools to buy or sell cryptocurrency at your desired price and date in the future, while earning high rewards no matter which direction the market goes through the REST API:
 
-- [REST API](./src/binance_dual_investment/rest_api/rest_api.py)
+- [REST API](./src/binance_sdk_dual_investment/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -20,7 +20,6 @@ This is a client library for the Binance Dual Investment API, enabling developer
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
 - [Testing](#testing)
-- [Migration Guide](#migration-guide)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,7 +34,7 @@ This is a client library for the Binance Dual Investment API, enabling developer
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-dual-investment
+pip install binance-sdk-dual-investment
 ```
 
 ## Documentation
@@ -44,13 +43,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_dual_investment/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_dual_investment/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import DUAL_INVESTMENT_REST_API_PROD_URL
-from binance_dual_investment.dual_investment import DualInvestment
-from binance_dual_investment.rest_api.models import GetDualInvestmentPositionsResponse
+from binance_sdk_dual_investment.dual_investment import DualInvestment
+from binance_sdk_dual_investment.rest_api.models import GetDualInvestmentPositionsResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DUAL_INVESTMENT_REST_API_PROD_URL)
@@ -124,7 +123,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -152,10 +151,6 @@ The tests cover:
 * REST API endpoints
 * Error handling
 * Edge cases
-
-## Migration Guide
-
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_dual_investment_connector.md) for detailed steps.
 
 ## Contributing
 

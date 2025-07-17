@@ -24,20 +24,20 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_spot.rest_api.api import AccountApi
-from binance_spot.rest_api.models import AccountCommissionResponse
-from binance_spot.rest_api.models import AllOrderListResponse
-from binance_spot.rest_api.models import AllOrdersResponse
-from binance_spot.rest_api.models import GetAccountResponse
-from binance_spot.rest_api.models import GetOpenOrdersResponse
-from binance_spot.rest_api.models import GetOrderResponse
-from binance_spot.rest_api.models import GetOrderListResponse
-from binance_spot.rest_api.models import MyAllocationsResponse
-from binance_spot.rest_api.models import MyPreventedMatchesResponse
-from binance_spot.rest_api.models import MyTradesResponse
-from binance_spot.rest_api.models import OpenOrderListResponse
-from binance_spot.rest_api.models import OrderAmendmentsResponse
-from binance_spot.rest_api.models import RateLimitOrderResponse
+from binance_sdk_spot.rest_api.api import AccountApi
+from binance_sdk_spot.rest_api.models import AccountCommissionResponse
+from binance_sdk_spot.rest_api.models import AllOrderListResponse
+from binance_sdk_spot.rest_api.models import AllOrdersResponse
+from binance_sdk_spot.rest_api.models import GetAccountResponse
+from binance_sdk_spot.rest_api.models import GetOpenOrdersResponse
+from binance_sdk_spot.rest_api.models import GetOrderResponse
+from binance_sdk_spot.rest_api.models import GetOrderListResponse
+from binance_sdk_spot.rest_api.models import MyAllocationsResponse
+from binance_sdk_spot.rest_api.models import MyPreventedMatchesResponse
+from binance_sdk_spot.rest_api.models import MyTradesResponse
+from binance_sdk_spot.rest_api.models import OpenOrderListResponse
+from binance_sdk_spot.rest_api.models import OrderAmendmentsResponse
+from binance_sdk_spot.rest_api.models import RateLimitOrderResponse
 
 
 class TestAccountApi:

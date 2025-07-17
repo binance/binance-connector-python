@@ -1,17 +1,17 @@
-# Binance Python VIP Loan Connector
+# Binance Python VIP Loan SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-vip-loan.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-vip-loan)](https://pypi.python.org/pypi/binance-vip-loan)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-vip-loan.svg)](https://pypi.org/project/binance-vip-loan/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-vipp-loan)](https://pypi.python.org/pypi/binance-sdk-vipp-loan)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-vipp-loan.svg)](https://pypi.org/project/binance-sdk-vipp-loan/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance VIP Loan API, enabling developers to interact programmatically with Binance's VIP Loan trading platform. The library provides tools to over-collateralized loan service with competitive rates, terms, and services through the REST API:
+This is a client library for the Binance VIP Loan SDK API, enabling developers to interact programmatically with Binance's VIP Loan trading platform. The library provides tools to over-collateralized loan service with competitive rates, terms, and services through the REST API:
 
-- [REST API](./src/binance_vip_loan/rest_api/rest_api.py)
+- [REST API](./src/binance_sdk_vip_loan/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -20,7 +20,6 @@ This is a client library for the Binance VIP Loan API, enabling developers to in
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
 - [Testing](#testing)
-- [Migration Guide](#migration-guide)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,7 +34,7 @@ This is a client library for the Binance VIP Loan API, enabling developers to in
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-vip-loan
+pip install binance-sdk-vipp-loan
 ```
 
 ## Documentation
@@ -44,13 +43,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_vip_loan/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_vip_loan/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import VIP_LOAN_REST_API_PROD_URL
-from binance_vip_loan.vip_loan import VipLoan
-from binance_vip_loan.rest_api.models import GetCollateralAssetDataResponse
+from binance_sdk_vip_loan.vip_loan import VipLoan
+from binance_sdk_vip_loan.rest_api.models import GetCollateralAssetDataResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=VIP_LOAN_REST_API_PROD_URL)
@@ -124,7 +123,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -152,10 +151,6 @@ The tests cover:
 * REST API endpoints
 * Error handling
 * Edge cases
-
-## Migration Guide
-
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_vip_loan_connector.md) for detailed steps.
 
 ## Contributing
 

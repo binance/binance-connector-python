@@ -2,7 +2,7 @@ import asyncio
 import os
 import logging
 
-from binance_spot.spot import (
+from binance_sdk_spot.spot import (
     Spot,
     SPOT_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,

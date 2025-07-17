@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_fiat.fiat import Fiat, ConfigurationRestAPI, FIAT_REST_API_PROD_URL
+from binance_sdk_fiat.fiat import Fiat, ConfigurationRestAPI, FIAT_REST_API_PROD_URL
 
 
 # Configure logging

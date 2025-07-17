@@ -19,13 +19,13 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_margin_trading.rest_api.api import TradeDataStreamApi
+from binance_sdk_margin_trading.rest_api.api import TradeDataStreamApi
 
 
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     StartIsolatedMarginUserDataStreamResponse,
 )
-from binance_margin_trading.rest_api.models import StartMarginUserDataStreamResponse
+from binance_sdk_margin_trading.rest_api.models import StartMarginUserDataStreamResponse
 
 
 class TestTradeDataStreamApi:

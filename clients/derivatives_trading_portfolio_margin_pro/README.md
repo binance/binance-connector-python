@@ -1,17 +1,17 @@
-# Binance Python Derivatives Trading (Portfolio Margin Pro) Connector
+# Binance Python Derivatives Trading (Portfolio Margin Pro) SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-derivatives-trading-portfolio-margin.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-derivatives-trading-portfolio-margin)](https://pypi.python.org/pypi/binance-derivatives-trading-portfolio-margin)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-derivatives-trading-portfolio-margin.svg)](https://pypi.org/project/binance-derivatives-trading-portfolio-margin/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-derivatives-trading-portfolio-margin)](https://pypi.python.org/pypi/binance-sdk-derivatives-trading-portfolio-margin)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-derivatives-trading-portfolio-margin.svg)](https://pypi.org/project/binance-sdk-derivatives-trading-portfolio-margin/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Derivatives Trading Portfolio Margin Pro API, enabling developers to interact programmatically with Binance's API to suit their derivative trading needs, through three distinct endpoints:
-- [REST API](./src/binance_derivatives_trading_portfolio_margin/rest_api/rest_api.py)
-- [Websocket Streams](./src/binance_derivatives_trading_portfolio_margin/websocket_streams/websocket_streams.py)
+This is a client library for the Binance Derivatives Trading Portfolio Margin Pro SDK API, enabling developers to interact programmatically with Binance's API to suit their derivative trading needs, through three distinct endpoints:
+- [REST API](./src/binance_sdk_derivatives_trading_portfolio_margin/rest_api/rest_api.py)
+- [Websocket Streams](./src/binance_sdk_derivatives_trading_portfolio_margin/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -36,7 +36,7 @@ This is a client library for the Binance Derivatives Trading Portfolio Margin Pr
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-derivatives-trading-portfolio-margin-pro
+pip install binance-sdk-derivatives-trading-portfolio-margin-pro
 ```
 
 ## Documentation
@@ -45,13 +45,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_derivatives_trading_portfolio_margin_pro/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_derivatives_trading_portfolio_margin_pro/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL
-from binance_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import GetPortfolioMarginProAccountInfoResponse
+from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import GetPortfolioMarginProAccountInfoResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL)
@@ -125,7 +125,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -142,7 +142,7 @@ If `base_path` is not provided, it defaults to `https://api.binance.com`.
 
 ### Websocket Streams
 
-WebSocket Streams in `derivatives-trading-portfolio-margin-pro` is used for subscribing to user data streams. Use the [websocket-streams](./src/binance_derivatives_trading_portfolio_margin_pro/websocket_streams/websocket_streams.py) module to interact with it.
+WebSocket Streams in `derivatives-trading-portfolio-margin-pro` is used for subscribing to user data streams. Use the [websocket-streams](./src/binance_sdk_derivatives_trading_portfolio_margin_pro/websocket_streams/websocket_streams.py) module to interact with it.
 
 #### Configuration Options
 
@@ -166,7 +166,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_WS_STREAMS_PROD_URL
-from binance_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
+from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
 
 logging.basicConfig(level=logging.INFO)
 
@@ -199,7 +199,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_WS_STREAMS_PROD_URL
-from binance_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
+from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
 
 logging.basicConfig(level=logging.INFO)
 
@@ -252,7 +252,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_derivatives_trading_portfolio_margin_pro_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_derivatives_trading_portfolio_margin_pro_sdk.md) for detailed steps.
 
 ## Contributing
 

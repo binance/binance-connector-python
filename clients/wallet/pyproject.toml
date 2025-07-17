@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-wallet"
+name = "binance-sdk-wallet"
 version = "1.0.0"
-description = "Official Binance Wallet Connector - A lightweight library that provides a convenient interface to Binance's Wallet REST API"
+description = "Official Binance Wallet SDK - A lightweight library that provides a convenient interface to Binance's Wallet REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_wallet", from = "src" }
+  { include = "binance_sdk_wallet", from = "src" }
 ]
 
 [tool.poetry.dependencies]

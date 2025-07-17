@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-gift-card"
+name = "binance-sdk-gift-card"
 version = "1.0.0"
-description = "Official Binance GiftCard Connector - A lightweight library that provides a convenient interface to Binance's GiftCard REST API"
+description = "Official Binance GiftCard SDK - A lightweight library that provides a convenient interface to Binance's GiftCard REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_gift_card", from = "src" }
+  { include = "binance_sdk_gift_card", from = "src" }
 ]
 
 [tool.poetry.dependencies]

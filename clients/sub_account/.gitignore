@@ -1,6 +1,6 @@
 build
 dist
-binance_connector.egg-info/
+
 __pycache__
 *.pyc
 .tox

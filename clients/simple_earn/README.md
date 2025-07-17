@@ -3,15 +3,15 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-simple-earn.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-simple-earn)](https://pypi.python.org/pypi/binance-simple-earn)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-simple-earn.svg)](https://pypi.org/project/binance-simple-earn/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-simple-earn)](https://pypi.python.org/pypi/binance-sdk-simple-earn)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-simple-earn.svg)](https://pypi.org/project/binance-sdk-simple-earn/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Simple Earn API, enabling developers to interact programmatically with Binance's Simple Earn trading platform. The library provides tools to earn rewards by depositing digital assets for either flexible or locked periods of time through the REST API:
+This is a client library for the Binance Simple Earn SDK API, enabling developers to interact programmatically with Binance's Simple Earn trading platform. The library provides tools to earn rewards by depositing digital assets for either flexible or locked periods of time through the REST API:
 
-- [REST API](./src/binance_simple_earn/rest_api/rest_api.py)
+- [REST API](./src/binance_sdk_simple_earn/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ This is a client library for the Binance Simple Earn API, enabling developers to
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-simple-earn
+pip install binance-sdk-simple-earn
 ```
 
 ## Documentation
@@ -44,13 +44,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_simple_earn/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_simple_earn/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import SIMPLE_EARN_REST_API_PROD_URL
-from binance_simple_earn.simple_earn import SimpleEarn
-from binance_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
+from binance_sdk_simple_earn.simple_earn import SimpleEarn
+from binance_sdk_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=SIMPLE_EARN_REST_API_PROD_URL)
@@ -124,7 +124,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -155,7 +155,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_simple_earn_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_simple_earn_sdk.md) for detailed steps.
 
 ## Contributing
 

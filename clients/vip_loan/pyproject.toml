@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-vip-loan"
+name = "binance-sdk-vip-loan"
 version = "1.0.0"
-description = "Official Binance VipLoan Connector - A lightweight library that provides a convenient interface to Binance's VipLoan REST API"
+description = "Official Binance Vip Loan SDK - A lightweight library that provides a convenient interface to Binance's VipLoan REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_vip_loan", from = "src" }
+  { include = "binance_sdk_vip_loan", from = "src" }
 ]
 
 [tool.poetry.dependencies]

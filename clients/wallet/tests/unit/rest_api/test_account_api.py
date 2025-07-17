@@ -19,14 +19,14 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_wallet.rest_api.api import AccountApi
-from binance_wallet.rest_api.models import AccountApiTradingStatusResponse
-from binance_wallet.rest_api.models import AccountInfoResponse
-from binance_wallet.rest_api.models import AccountStatusResponse
-from binance_wallet.rest_api.models import DailyAccountSnapshotResponse
+from binance_sdk_wallet.rest_api.api import AccountApi
+from binance_sdk_wallet.rest_api.models import AccountApiTradingStatusResponse
+from binance_sdk_wallet.rest_api.models import AccountInfoResponse
+from binance_sdk_wallet.rest_api.models import AccountStatusResponse
+from binance_sdk_wallet.rest_api.models import DailyAccountSnapshotResponse
 
 
-from binance_wallet.rest_api.models import GetApiKeyPermissionResponse
+from binance_sdk_wallet.rest_api.models import GetApiKeyPermissionResponse
 
 
 class TestAccountApi:

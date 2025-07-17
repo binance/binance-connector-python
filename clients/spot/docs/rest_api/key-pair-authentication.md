@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_spot.spot import Spot
-from binance_spot.rest_api.models import GetAccountResponse
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.rest_api.models import GetAccountResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

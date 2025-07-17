@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "binance-crypto-loan"
+name = "binance-sdk-crypto-loan"
 version = "1.0.0"
 description = "Official Binance CryptoLoan Connector - A lightweight library that provides a convenient interface to Binance's CryptoLoan REST API"
 authors = ["Binance"]
@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_crypto_loan", from = "src" }
+  { include = "binance_sdk_crypto_loan", from = "src" }
 ]
 
 [tool.poetry.dependencies]

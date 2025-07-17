@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-spot"
+name = "binance-sdk-spot"
 version = "1.0.0"
-description = "Official Binance Spot Connector - A lightweight library that provides a convenient interface to Binance's Spot REST API, WebSocket API and WebSocket Streams."
+description = "Official Binance Spot SDK - A lightweight library that provides a convenient interface to Binance's Spot REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_spot", from = "src" }
+  { include = "binance_sdk_spot", from = "src" }
 ]
 
 [tool.poetry.dependencies]

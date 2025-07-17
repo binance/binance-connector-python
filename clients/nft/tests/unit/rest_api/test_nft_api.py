@@ -19,11 +19,11 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_nft.rest_api.api import NFTApi
-from binance_nft.rest_api.models import GetNFTAssetResponse
-from binance_nft.rest_api.models import GetNFTDepositHistoryResponse
-from binance_nft.rest_api.models import GetNFTTransactionHistoryResponse
-from binance_nft.rest_api.models import GetNFTWithdrawHistoryResponse
+from binance_sdk_nft.rest_api.api import NFTApi
+from binance_sdk_nft.rest_api.models import GetNFTAssetResponse
+from binance_sdk_nft.rest_api.models import GetNFTDepositHistoryResponse
+from binance_sdk_nft.rest_api.models import GetNFTTransactionHistoryResponse
+from binance_sdk_nft.rest_api.models import GetNFTWithdrawHistoryResponse
 
 
 class TestNFTApi:

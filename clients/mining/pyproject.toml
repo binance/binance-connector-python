@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-mining"
+name = "binance-sdk-mining"
 version = "1.0.0"
-description = "Official Binance Mining Connector - A lightweight library that provides a convenient interface to Binance's Mining REST API"
+description = "Official Binance Mining SDK - A lightweight library that provides a convenient interface to Binance's Mining REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_mining", from = "src" }
+  { include = "binance_sdk_mining", from = "src" }
 ]
 
 [tool.poetry.dependencies]

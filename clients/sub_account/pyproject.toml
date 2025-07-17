@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-sub-account"
+name = "binance-sdk-sub-account"
 version = "1.0.0"
-description = "Official Binance SubAccount Connector - A lightweight library that provides a convenient interface to Binance's SubAccount REST API"
+description = "Official Binance SubAccount SDK - A lightweight library that provides a convenient interface to Binance's SubAccount REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_sub_account", from = "src" }
+  { include = "binance_sdk_sub_account", from = "src" }
 ]
 
 [tool.poetry.dependencies]

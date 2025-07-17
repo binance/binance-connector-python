@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_vip_loan.vip_loan import (
+from binance_sdk_vip_loan.vip_loan import (
     VipLoan,
     ConfigurationRestAPI,
     VIP_LOAN_REST_API_PROD_URL,

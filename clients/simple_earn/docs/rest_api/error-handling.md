@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_simple_earn.simple_earn import SimpleEarn
-from binance_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
+from binance_sdk_simple_earn.simple_earn import SimpleEarn
+from binance_sdk_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

@@ -1,17 +1,17 @@
-# Binance Python Staking Connector
+# Binance Python Staking SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-staking.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-staking)](https://pypi.python.org/pypi/binance-staking)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-staking.svg)](https://pypi.org/project/binance-staking/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-staking)](https://pypi.python.org/pypi/binance-sdk-staking)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-staking.svg)](https://pypi.org/project/binance-sdk-staking/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Staking API, enabling developers to interact programmatically with Binance's Staking trading platform. The library provides tools to participate in certain DeFi products, obtains and distributes realized earnings through the REST API:
+This is a client library for the Binance Staking SDK API, enabling developers to interact programmatically with Binance's Staking trading platform. The library provides tools to participate in certain DeFi products, obtains and distributes realized earnings through the REST API:
 
-- [REST API](./src/binance_staking/rest_api/rest_api.py)
+- [REST API](./src/binance_sdk_staking/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ This is a client library for the Binance Staking API, enabling developers to int
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-staking
+pip install binance-sdk-staking
 ```
 
 ## Documentation
@@ -46,13 +46,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_staking/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_staking/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import STAKING_REST_API_PROD_URL
-from binance_staking.staking import Staking
-from binance_staking.rest_api.models import ClaimBoostRewardsResponse
+from binance_sdk_staking.staking import Staking
+from binance_sdk_staking.rest_api.models import ClaimBoostRewardsResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=STAKING_REST_API_PROD_URL)
@@ -126,7 +126,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -157,7 +157,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_staking_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_staking_sdk.md) for detailed steps.
 
 ## Contributing
 

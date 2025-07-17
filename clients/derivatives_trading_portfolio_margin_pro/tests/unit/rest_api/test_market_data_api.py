@@ -18,17 +18,19 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.api import MarketDataApi
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.api import (
+    MarketDataApi,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginAssetLeverageResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginCollateralRateResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginProTieredCollateralRateResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     QueryPortfolioMarginAssetIndexPriceResponse,
 )
 

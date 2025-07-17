@@ -2,10 +2,10 @@ import asyncio
 import os
 import logging
 
-from binance_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
+from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
-from binance_spot.websocket_api.models import OrderPlaceSideEnum
-from binance_spot.websocket_api.models import OrderPlaceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceSideEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceTypeEnum
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

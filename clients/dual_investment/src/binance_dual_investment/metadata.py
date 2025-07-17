@@ -1,1 +1,0 @@
-NAME = "binance-dual-investment"

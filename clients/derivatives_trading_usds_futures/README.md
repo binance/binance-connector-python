@@ -1,18 +1,18 @@
-# Binance Python Derivatives Trading (USDS-M Futures) Connector
+# Binance Python Derivatives Trading (USDS-M Futures) SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-derivatives-trading-usds-futures.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-derivatives-trading-usds-futures)](https://pypi.python.org/pypi/binance-derivatives-trading-usds-futures)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-derivatives-trading-usds-futures.svg)](https://pypi.org/project/binance-derivatives-trading-usds-futures/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-derivatives-trading-usds-futures)](https://pypi.python.org/pypi/binance-sdk-derivatives-trading-usds-futures)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-derivatives-trading-usds-futures.svg)](https://pypi.org/project/binance-sdk-derivatives-trading-usds-futures/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Derivatives Trading USDS-M Futures API, enabling developers to interact programmatically with Binance's API to suit their derivative trading needs, through three distinct endpoints:
-- [REST API](./src/binance_derivatives_trading_usds_futures/rest_api/rest_api.py)
-- [WebSocket API](./src/binance_derivatives_trading_usds_futures/websocket_api/websocket_api.py) 
-- [WebSocket Streams](./src/binance_derivatives_trading_usds_futures/websocket_streams/websocket_streams.py)
+This is a client library for the Binance Derivatives Trading USDS-M Futures SDK API, enabling developers to interact programmatically with Binance's API to suit their derivative trading needs, through three distinct endpoints:
+- [REST API](./src/binance_sdk_derivatives_trading_usds_futures/rest_api/rest_api.py)
+- [WebSocket API](./src/binance_sdk_derivatives_trading_usds_futures/websocket_api/websocket_api.py) 
+- [WebSocket Streams](./src/binance_sdk_derivatives_trading_usds_futures/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -39,7 +39,7 @@ This is a client library for the Binance Derivatives Trading USDS-M Futures API,
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-derivatives-trading-usds-futures
+pip install binance-sdk-derivatives-trading-usds-futures
 ```
 
 ## Documentation
@@ -48,13 +48,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_derivatives_trading_usds_futures/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_derivatives_trading_usds_futures/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
-from binance_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL)
@@ -128,7 +128,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -148,7 +148,7 @@ For testing purposes, `/fapi/*` endpoints can be used in the [Futures Testnet](h
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL)
 client = DerivativesTradingUsdsFutures(config_rest_api=configuration)
@@ -158,12 +158,12 @@ If `base_path` is not provided, it defaults to `https://fapi.binance.com`.
 
 ### Websocket APIs
 
-The WebSocket API provides request-response communication for market data and trading actions. Use the [`websocket_api`](./src/binance_derivatives_trading_usds_futures/websocket_api/websocket_api.py) module to interact with these endpoints.
+The WebSocket API provides request-response communication for market data and trading actions. Use the [`websocket_api`](./src/binance_sdk_derivatives_trading_usds_futures/websocket_api/websocket_api.py) module to interact with these endpoints.
 
 ```python
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_WS_API_PROD_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 configuration = ConfigurationWebsocketAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DERIVATIVES_TRADING_USDS_FUTURES_WS_API_PROD_URL)
 client = DerivativesTradingUsdsFutures(configuration_websocket_api=configuration)
@@ -218,7 +218,7 @@ For testing purposes, the Websocket API also supports a testnet environment. Upd
 ```python
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_WS_API_TESTNET_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 configuration_ws_api = ConfigurationWebSocketAPI(
     api_key="your-api-key",
@@ -232,7 +232,7 @@ If `wsURL` is not provided, it defaults to `wss://ws-fapi.binance.com/ws-fapi/v1
 
 ### Websocket Streams
 
-WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_derivatives_trading_usds_futures/websocket_streams/websocket_streams.py) module to subscribe to these streams.
+WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_sdk_derivatives_trading_usds_futures/websocket_streams/websocket_streams.py) module to subscribe to these streams.
 
 ```python
 import asyncio
@@ -240,7 +240,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_WS_STREAMS_PROD_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 logging.basicConfig(level=logging.INFO)
 
@@ -321,7 +321,7 @@ import asyncio
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 logging.basicConfig(level=logging.INFO)
 
@@ -358,7 +358,7 @@ Websocket Streams also support a testnet environment for development and testing
 ```python
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import DERIVATIVES_TRADING_USDS_FUTURES_WS_API_TESTNET_URL
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 config_ws_streams = ConfigurationWebSocketStreams(
     stream_url=DERIVATIVES_TRADING_USDS_FUTURES_WS_STREAMS_TESTNET_URL
@@ -391,7 +391,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_derivatives_trading_usds_futures_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_derivatives_trading_usds_futures_sdk.md) for detailed steps.
 
 ## Contributing
 

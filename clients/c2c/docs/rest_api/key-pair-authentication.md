@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_c2c.c2c import C2C
-from binance_c2c.rest_api.models import GetC2CTradeHistoryResponse
+from binance_sdk_c2c.c2c import C2C
+from binance_sdk_c2c.rest_api.models import GetC2CTradeHistoryResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

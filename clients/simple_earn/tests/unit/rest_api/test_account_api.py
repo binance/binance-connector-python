@@ -19,14 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_simple_earn.rest_api.api import AccountApi
-from binance_simple_earn.rest_api.models import GetFlexiblePersonalLeftQuotaResponse
-from binance_simple_earn.rest_api.models import GetFlexibleProductPositionResponse
-from binance_simple_earn.rest_api.models import GetLockedPersonalLeftQuotaResponse
-from binance_simple_earn.rest_api.models import GetLockedProductPositionResponse
-from binance_simple_earn.rest_api.models import GetSimpleEarnFlexibleProductListResponse
-from binance_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
-from binance_simple_earn.rest_api.models import SimpleAccountResponse
+from binance_sdk_simple_earn.rest_api.api import AccountApi
+from binance_sdk_simple_earn.rest_api.models import GetFlexiblePersonalLeftQuotaResponse
+from binance_sdk_simple_earn.rest_api.models import GetFlexibleProductPositionResponse
+from binance_sdk_simple_earn.rest_api.models import GetLockedPersonalLeftQuotaResponse
+from binance_sdk_simple_earn.rest_api.models import GetLockedProductPositionResponse
+from binance_sdk_simple_earn.rest_api.models import (
+    GetSimpleEarnFlexibleProductListResponse,
+)
+from binance_sdk_simple_earn.rest_api.models import (
+    GetSimpleEarnLockedProductListResponse,
+)
+from binance_sdk_simple_earn.rest_api.models import SimpleAccountResponse
 
 
 class TestAccountApi:

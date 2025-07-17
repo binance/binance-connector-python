@@ -15,52 +15,52 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_derivatives_trading_coin_futures.websocket_api.api import TradeApi
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.api import TradeApi
 
 
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     ModifyOrderSideEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     ModifyOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderSideEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderPositionSideEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderWorkingTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     CancelOrderResponse,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     ModifyOrderResponse,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderResponse,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     PositionInformationResponse,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     QueryOrderResponse,
 )
 

@@ -17,7 +17,7 @@ from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
 from binance_common.websocket import WebSocketStreamBase
-from binance_derivatives_trading_usds_futures.websocket_streams.streams import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_streams.streams import (
     WebsocketMarketStreamsApi,
 )
 

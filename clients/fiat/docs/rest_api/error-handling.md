@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_fiat.fiat import Fiat
-from binance_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
+from binance_sdk_fiat.fiat import Fiat
+from binance_sdk_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

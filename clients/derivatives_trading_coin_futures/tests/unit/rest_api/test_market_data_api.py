@@ -19,122 +19,124 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_coin_futures.rest_api.api import MarketDataApi
-from binance_derivatives_trading_coin_futures.rest_api.models import BasisResponse
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.api import MarketDataApi
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import BasisResponse
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     CheckServerTimeResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     CompressedAggregateTradesListResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ContinuousContractKlineCandlestickDataResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ExchangeInformationResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetFundingRateHistoryOfPerpetualFuturesResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetFundingRateInfoResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     IndexPriceAndMarkPriceResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     IndexPriceKlineCandlestickDataResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     KlineCandlestickDataResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     LongShortRatioResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     MarkPriceKlineCandlestickDataResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OldTradesLookupResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import OrderBookResponse
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    OrderBookResponse,
+)
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     PremiumIndexKlineDataResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     QueryIndexPriceConstituentsResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     RecentTradesListResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     SymbolOrderBookTickerResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     SymbolPriceTickerResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumeResponse,
 )
 
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     Ticker24hrPriceChangeStatisticsResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioAccountsResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsResponse,
 )
 
 
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     BasisContractTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import BasisPeriodEnum
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import BasisPeriodEnum
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ContinuousContractKlineCandlestickDataContractTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ContinuousContractKlineCandlestickDataIntervalEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     IndexPriceKlineCandlestickDataIntervalEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     KlineCandlestickDataIntervalEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     LongShortRatioPeriodEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     MarkPriceKlineCandlestickDataIntervalEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsContractTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsPeriodEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     PremiumIndexKlineDataIntervalEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumeContractTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumePeriodEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioAccountsPeriodEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsPeriodEnum,
 )
 

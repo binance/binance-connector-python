@@ -1,7 +1,11 @@
 import os
 import logging
 
-from binance_wallet.wallet import Wallet, ConfigurationRestAPI, WALLET_REST_API_PROD_URL
+from binance_sdk_wallet.wallet import (
+    Wallet,
+    ConfigurationRestAPI,
+    WALLET_REST_API_PROD_URL,
+)
 
 
 # Configure logging

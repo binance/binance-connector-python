@@ -2,7 +2,7 @@ import asyncio
 import os
 import logging
 
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
     DerivativesTradingUsdsFutures,
     DERIVATIVES_TRADING_USDS_FUTURES_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,

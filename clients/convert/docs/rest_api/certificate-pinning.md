@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_convert.convert import Convert
-from binance_convert.rest_api.models import ListAllConvertPairsResponse
+from binance_sdk_convert.convert import Convert
+from binance_sdk_convert.rest_api.models import ListAllConvertPairsResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"

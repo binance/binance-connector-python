@@ -4,8 +4,8 @@
 import ssl
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
-from binance_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

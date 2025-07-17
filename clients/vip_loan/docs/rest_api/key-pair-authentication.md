@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_vip_loan.vip_loan import VipLoan
-from binance_vip_loan.rest_api.models import GetCollateralAssetDataResponse
+from binance_sdk_vip_loan.vip_loan import VipLoan
+from binance_sdk_vip_loan.rest_api.models import GetCollateralAssetDataResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

@@ -19,26 +19,34 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_margin_trading.rest_api.api import AccountApi
-from binance_margin_trading.rest_api.models import AdjustCrossMarginMaxLeverageResponse
-from binance_margin_trading.rest_api.models import DisableIsolatedMarginAccountResponse
-from binance_margin_trading.rest_api.models import EnableIsolatedMarginAccountResponse
-from binance_margin_trading.rest_api.models import GetBnbBurnStatusResponse
-from binance_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.api import AccountApi
+from binance_sdk_margin_trading.rest_api.models import (
+    AdjustCrossMarginMaxLeverageResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    DisableIsolatedMarginAccountResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    EnableIsolatedMarginAccountResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import GetBnbBurnStatusResponse
+from binance_sdk_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
+from binance_sdk_margin_trading.rest_api.models import (
     QueryCrossIsolatedMarginCapitalFlowResponse,
 )
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     QueryCrossMarginAccountDetailsResponse,
 )
-from binance_margin_trading.rest_api.models import QueryCrossMarginFeeDataResponse
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import QueryCrossMarginFeeDataResponse
+from binance_sdk_margin_trading.rest_api.models import (
     QueryEnabledIsolatedMarginAccountLimitResponse,
 )
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     QueryIsolatedMarginAccountInfoResponse,
 )
-from binance_margin_trading.rest_api.models import QueryIsolatedMarginFeeDataResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryIsolatedMarginFeeDataResponse,
+)
 
 
 class TestAccountApi:

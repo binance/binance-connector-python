@@ -19,24 +19,26 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_crypto_loan.rest_api.api import FlexibleRateApi
-from binance_crypto_loan.rest_api.models import CheckCollateralRepayRateResponse
-from binance_crypto_loan.rest_api.models import FlexibleLoanAdjustLtvResponse
-from binance_crypto_loan.rest_api.models import FlexibleLoanBorrowResponse
-from binance_crypto_loan.rest_api.models import FlexibleLoanRepayResponse
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanAssetsDataResponse
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
-from binance_crypto_loan.rest_api.models import (
+from binance_sdk_crypto_loan.rest_api.api import FlexibleRateApi
+from binance_sdk_crypto_loan.rest_api.models import CheckCollateralRepayRateResponse
+from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanAdjustLtvResponse
+from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanBorrowResponse
+from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanRepayResponse
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanAssetsDataResponse
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import (
     GetFlexibleLoanCollateralAssetsDataResponse,
 )
-from binance_crypto_loan.rest_api.models import (
+from binance_sdk_crypto_loan.rest_api.models import (
     GetFlexibleLoanLiquidationHistoryResponse,
 )
-from binance_crypto_loan.rest_api.models import (
+from binance_sdk_crypto_loan.rest_api.models import (
     GetFlexibleLoanLtvAdjustmentHistoryResponse,
 )
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanOngoingOrdersResponse
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanRepaymentHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanOngoingOrdersResponse
+from binance_sdk_crypto_loan.rest_api.models import (
+    GetFlexibleLoanRepaymentHistoryResponse,
+)
 
 
 class TestFlexibleRateApi:

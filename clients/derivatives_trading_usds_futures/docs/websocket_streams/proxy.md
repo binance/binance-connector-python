@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
 
 
 configuration_ws_streams = ConfigurationWebSocketStreams(

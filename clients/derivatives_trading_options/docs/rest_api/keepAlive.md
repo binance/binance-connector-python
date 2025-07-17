@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_derivatives_trading_options.derivatives_trading_options import DerivativesTradingOptions
-from binance_derivatives_trading_options.rest_api.models import OptionAccountInformationResponse
+from binance_sdk_derivatives_trading_options.derivatives_trading_options import DerivativesTradingOptions
+from binance_sdk_derivatives_trading_options.rest_api.models import OptionAccountInformationResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

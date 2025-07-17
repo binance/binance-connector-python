@@ -1,9 +1,9 @@
 import os
 import logging
 
-from binance_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
-from binance_spot.rest_api.models import SorOrderSideEnum
-from binance_spot.rest_api.models import SorOrderTypeEnum
+from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
+from binance_sdk_spot.rest_api.models import SorOrderSideEnum
+from binance_sdk_spot.rest_api.models import SorOrderTypeEnum
 
 
 # Configure logging

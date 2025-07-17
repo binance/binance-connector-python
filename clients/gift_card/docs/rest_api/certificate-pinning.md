@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_gift_card.gift_card import GiftCard
-from binance_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
+from binance_sdk_gift_card.gift_card import GiftCard
+from binance_sdk_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"

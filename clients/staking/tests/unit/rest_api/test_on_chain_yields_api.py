@@ -19,31 +19,39 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_staking.rest_api.api import OnChainYieldsApi
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.api import OnChainYieldsApi
+from binance_sdk_staking.rest_api.models import (
     GetOnChainYieldsLockedPersonalLeftQuotaResponse,
 )
-from binance_staking.rest_api.models import GetOnChainYieldsLockedProductListResponse
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.models import (
+    GetOnChainYieldsLockedProductListResponse,
+)
+from binance_sdk_staking.rest_api.models import (
     GetOnChainYieldsLockedProductPositionResponse,
 )
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.models import (
     GetOnChainYieldsLockedRedemptionRecordResponse,
 )
-from binance_staking.rest_api.models import GetOnChainYieldsLockedRewardsHistoryResponse
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.models import (
+    GetOnChainYieldsLockedRewardsHistoryResponse,
+)
+from binance_sdk_staking.rest_api.models import (
     GetOnChainYieldsLockedSubscriptionPreviewResponse,
 )
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.models import (
     GetOnChainYieldsLockedSubscriptionRecordResponse,
 )
-from binance_staking.rest_api.models import OnChainYieldsAccountResponse
-from binance_staking.rest_api.models import RedeemOnChainYieldsLockedProductResponse
-from binance_staking.rest_api.models import SetOnChainYieldsLockedAutoSubscribeResponse
-from binance_staking.rest_api.models import (
+from binance_sdk_staking.rest_api.models import OnChainYieldsAccountResponse
+from binance_sdk_staking.rest_api.models import RedeemOnChainYieldsLockedProductResponse
+from binance_sdk_staking.rest_api.models import (
+    SetOnChainYieldsLockedAutoSubscribeResponse,
+)
+from binance_sdk_staking.rest_api.models import (
     SetOnChainYieldsLockedProductRedeemOptionResponse,
 )
-from binance_staking.rest_api.models import SubscribeOnChainYieldsLockedProductResponse
+from binance_sdk_staking.rest_api.models import (
+    SubscribeOnChainYieldsLockedProductResponse,
+)
 
 
 class TestOnChainYieldsApi:

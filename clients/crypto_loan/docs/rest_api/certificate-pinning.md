@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_crypto_loan.crypto_loan import CryptoLoan
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.crypto_loan import CryptoLoan
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"

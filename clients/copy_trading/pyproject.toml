@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "binance-copy-trading"
+name = "binance-sdk-copy-trading"
 version = "1.0.0"
 description = "Official Binance CopyTrading Connector - A lightweight library that provides a convenient interface to Binance's CopyTrading REST API"
 authors = ["Binance"]
@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_copy_trading", from = "src" }
+  { include = "binance_sdk_copy_trading", from = "src" }
 ]
 
 [tool.poetry.dependencies]

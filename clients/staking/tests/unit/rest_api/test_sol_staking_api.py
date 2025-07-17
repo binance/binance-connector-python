@@ -19,18 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_staking.rest_api.api import SolStakingApi
-from binance_staking.rest_api.models import ClaimBoostRewardsResponse
-from binance_staking.rest_api.models import GetBnsolRateHistoryResponse
-from binance_staking.rest_api.models import GetBnsolRewardsHistoryResponse
-from binance_staking.rest_api.models import GetBoostRewardsHistoryResponse
-from binance_staking.rest_api.models import GetSolRedemptionHistoryResponse
-from binance_staking.rest_api.models import GetSolStakingHistoryResponse
-from binance_staking.rest_api.models import GetSolStakingQuotaDetailsResponse
-from binance_staking.rest_api.models import GetUnclaimedRewardsResponse
-from binance_staking.rest_api.models import RedeemSolResponse
-from binance_staking.rest_api.models import SolStakingAccountResponse
-from binance_staking.rest_api.models import SubscribeSolStakingResponse
+from binance_sdk_staking.rest_api.api import SolStakingApi
+from binance_sdk_staking.rest_api.models import ClaimBoostRewardsResponse
+from binance_sdk_staking.rest_api.models import GetBnsolRateHistoryResponse
+from binance_sdk_staking.rest_api.models import GetBnsolRewardsHistoryResponse
+from binance_sdk_staking.rest_api.models import GetBoostRewardsHistoryResponse
+from binance_sdk_staking.rest_api.models import GetSolRedemptionHistoryResponse
+from binance_sdk_staking.rest_api.models import GetSolStakingHistoryResponse
+from binance_sdk_staking.rest_api.models import GetSolStakingQuotaDetailsResponse
+from binance_sdk_staking.rest_api.models import GetUnclaimedRewardsResponse
+from binance_sdk_staking.rest_api.models import RedeemSolResponse
+from binance_sdk_staking.rest_api.models import SolStakingAccountResponse
+from binance_sdk_staking.rest_api.models import SubscribeSolStakingResponse
 
 
 class TestSolStakingApi:

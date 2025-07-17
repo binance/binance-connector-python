@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_dual_investment.dual_investment import (
+from binance_sdk_dual_investment.dual_investment import (
     DualInvestment,
     ConfigurationRestAPI,
     DUAL_INVESTMENT_REST_API_PROD_URL,

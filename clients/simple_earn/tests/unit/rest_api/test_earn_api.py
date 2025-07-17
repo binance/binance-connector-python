@@ -19,16 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_simple_earn.rest_api.api import EarnApi
-from binance_simple_earn.rest_api.models import GetFlexibleSubscriptionPreviewResponse
-from binance_simple_earn.rest_api.models import GetLockedSubscriptionPreviewResponse
-from binance_simple_earn.rest_api.models import RedeemFlexibleProductResponse
-from binance_simple_earn.rest_api.models import RedeemLockedProductResponse
-from binance_simple_earn.rest_api.models import SetFlexibleAutoSubscribeResponse
-from binance_simple_earn.rest_api.models import SetLockedAutoSubscribeResponse
-from binance_simple_earn.rest_api.models import SetLockedProductRedeemOptionResponse
-from binance_simple_earn.rest_api.models import SubscribeFlexibleProductResponse
-from binance_simple_earn.rest_api.models import SubscribeLockedProductResponse
+from binance_sdk_simple_earn.rest_api.api import EarnApi
+from binance_sdk_simple_earn.rest_api.models import (
+    GetFlexibleSubscriptionPreviewResponse,
+)
+from binance_sdk_simple_earn.rest_api.models import GetLockedSubscriptionPreviewResponse
+from binance_sdk_simple_earn.rest_api.models import RedeemFlexibleProductResponse
+from binance_sdk_simple_earn.rest_api.models import RedeemLockedProductResponse
+from binance_sdk_simple_earn.rest_api.models import SetFlexibleAutoSubscribeResponse
+from binance_sdk_simple_earn.rest_api.models import SetLockedAutoSubscribeResponse
+from binance_sdk_simple_earn.rest_api.models import SetLockedProductRedeemOptionResponse
+from binance_sdk_simple_earn.rest_api.models import SubscribeFlexibleProductResponse
+from binance_sdk_simple_earn.rest_api.models import SubscribeLockedProductResponse
 
 
 class TestEarnApi:

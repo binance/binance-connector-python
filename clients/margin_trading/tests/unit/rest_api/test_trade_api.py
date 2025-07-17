@@ -19,54 +19,64 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_margin_trading.rest_api.api import TradeApi
-from binance_margin_trading.rest_api.models import CreateSpecialKeyResponse
+from binance_sdk_margin_trading.rest_api.api import TradeApi
+from binance_sdk_margin_trading.rest_api.models import CreateSpecialKeyResponse
 
 
-from binance_margin_trading.rest_api.models import GetForceLiquidationRecordResponse
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import GetForceLiquidationRecordResponse
+from binance_sdk_margin_trading.rest_api.models import (
     GetSmallLiabilityExchangeCoinListResponse,
 )
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     GetSmallLiabilityExchangeHistoryResponse,
 )
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountCancelAllOpenOrdersOnASymbolResponse,
 )
-from binance_margin_trading.rest_api.models import MarginAccountCancelOcoResponse
-from binance_margin_trading.rest_api.models import MarginAccountCancelOrderResponse
-from binance_margin_trading.rest_api.models import MarginAccountNewOcoResponse
-from binance_margin_trading.rest_api.models import MarginAccountNewOrderResponse
-from binance_margin_trading.rest_api.models import MarginAccountNewOtoResponse
-from binance_margin_trading.rest_api.models import MarginAccountNewOtocoResponse
-from binance_margin_trading.rest_api.models import MarginManualLiquidationResponse
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import MarginAccountCancelOcoResponse
+from binance_sdk_margin_trading.rest_api.models import MarginAccountCancelOrderResponse
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOcoResponse
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderResponse
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOtoResponse
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOtocoResponse
+from binance_sdk_margin_trading.rest_api.models import MarginManualLiquidationResponse
+from binance_sdk_margin_trading.rest_api.models import (
     QueryCurrentMarginOrderCountUsageResponse,
 )
-from binance_margin_trading.rest_api.models import QueryMarginAccountsAllOcoResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsAllOrdersResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsOcoResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsOpenOcoResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsOpenOrdersResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsOrderResponse
-from binance_margin_trading.rest_api.models import QueryMarginAccountsTradeListResponse
-from binance_margin_trading.rest_api.models import QuerySpecialKeyResponse
-from binance_margin_trading.rest_api.models import QuerySpecialKeyListResponse
+from binance_sdk_margin_trading.rest_api.models import QueryMarginAccountsAllOcoResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAccountsAllOrdersResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import QueryMarginAccountsOcoResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAccountsOpenOcoResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAccountsOpenOrdersResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import QueryMarginAccountsOrderResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAccountsTradeListResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyResponse
+from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyListResponse
 
 
-from binance_margin_trading.rest_api.models import MarginAccountNewOcoSideEnum
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOcoSideEnum
+from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOcoNewOrderRespTypeEnum,
 )
-from binance_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
+from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOrderNewOrderRespTypeEnum,
 )
-from binance_margin_trading.rest_api.models import MarginAccountNewOrderTimeInForceEnum
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountNewOrderTimeInForceEnum,
+)
+from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoNewOrderRespTypeEnum,
 )
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoNewOrderRespTypeEnum,
 )
 

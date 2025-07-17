@@ -19,44 +19,44 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_coin_futures.rest_api.api import AccountApi
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.api import AccountApi
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     AccountInformationResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     FuturesAccountBalanceResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetCurrentPositionModeResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetDownloadIdForFuturesOrderHistoryResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetDownloadIdForFuturesTradeHistoryResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetDownloadIdForFuturesTransactionHistoryResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetFuturesOrderHistoryDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetFuturesTradeDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetFuturesTransactionHistoryDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetIncomeHistoryResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NotionalBracketForPairResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NotionalBracketForSymbolResponse,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     UserCommissionRateResponse,
 )
 

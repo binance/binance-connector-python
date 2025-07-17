@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-c2c"
+name = "binance-sdk-c2c"
 version = "1.0.0"
-description = "Official Binance C2C Connector - A lightweight library that provides a convenient interface to Binance's C2C REST API"
+description = "Official Binance C2C SDK - A lightweight library that provides a convenient interface to Binance's C2C REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_c2c", from = "src" }
+  { include = "binance_sdk_c2c", from = "src" }
 ]
 
 [tool.poetry.dependencies]

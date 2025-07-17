@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_gift_card.gift_card import GiftCard
-from binance_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
+from binance_sdk_gift_card.gift_card import GiftCard
+from binance_sdk_gift_card.rest_api.models import CreateASingleTokenGiftCardResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

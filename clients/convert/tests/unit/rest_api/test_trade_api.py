@@ -19,14 +19,14 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_convert.rest_api.api import TradeApi
-from binance_convert.rest_api.models import AcceptQuoteResponse
-from binance_convert.rest_api.models import CancelLimitOrderResponse
-from binance_convert.rest_api.models import GetConvertTradeHistoryResponse
-from binance_convert.rest_api.models import OrderStatusResponse
-from binance_convert.rest_api.models import PlaceLimitOrderResponse
-from binance_convert.rest_api.models import QueryLimitOpenOrdersResponse
-from binance_convert.rest_api.models import SendQuoteRequestResponse
+from binance_sdk_convert.rest_api.api import TradeApi
+from binance_sdk_convert.rest_api.models import AcceptQuoteResponse
+from binance_sdk_convert.rest_api.models import CancelLimitOrderResponse
+from binance_sdk_convert.rest_api.models import GetConvertTradeHistoryResponse
+from binance_sdk_convert.rest_api.models import OrderStatusResponse
+from binance_sdk_convert.rest_api.models import PlaceLimitOrderResponse
+from binance_sdk_convert.rest_api.models import QueryLimitOpenOrdersResponse
+from binance_sdk_convert.rest_api.models import SendQuoteRequestResponse
 
 
 class TestTradeApi:

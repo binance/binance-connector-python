@@ -1,16 +1,16 @@
-# Binance Python Wallet Connector
+# Binance Python Wallet SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-wallet.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-wallet)](https://pypi.python.org/pypi/binance-wallet)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-wallet.svg)](https://pypi.org/project/binance-wallet/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-wallet)](https://pypi.python.org/pypi/binance-sdk-wallet)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-wallet.svg)](https://pypi.org/project/binance-sdk-wallet/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Wallet API, enabling developers to interact programmatically with Binance's Wallet trading platform. The library provides tools to interact with wallet related functions like dust convert/ query balance etc through the REST API:
-- [REST API](./src/binance_wallet/rest_api/rest_api.py)
+This is a client library for the Binance Wallet SDK API, enabling developers to interact programmatically with Binance's Wallet trading platform. The library provides tools to interact with wallet related functions like dust convert/ query balance etc through the REST API:
+- [REST API](./src/binance_sdk_wallet/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -42,7 +42,7 @@ This is a client library for the Binance Wallet API, enabling developers to inte
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-wallet
+pip install binance-sdk-wallet
 ```
 
 ## Documentation
@@ -51,13 +51,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_wallet/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_wallet/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import WALLET_REST_API_PROD_URL
-from binance_wallet.wallet import Wallet
-from binance_wallet.rest_api.models import AccountInfoResponse
+from binance_sdk_wallet.wallet import Wallet
+from binance_sdk_wallet.rest_api.models import AccountInfoResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=WALLET_REST_API_PROD_URL)
@@ -131,7 +131,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -162,7 +162,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_wallet_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_wallet_sdk.md) for detailed steps.
 
 ## Contributing
 

@@ -2,8 +2,8 @@ import asyncio
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketAPI
-from binance_spot.spot import Spot
-from binance_spot.websocket_api.models import open_order_lists_status_response
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.websocket_api.models import open_order_lists_status_response
 
 
 logging.basicConfig(level=logging.INFO)

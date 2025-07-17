@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_nft.nft import NFT
-from binance_nft.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_nft.nft import NFT
+from binance_sdk_nft.rest_api.models import AcquiringAlgorithmResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

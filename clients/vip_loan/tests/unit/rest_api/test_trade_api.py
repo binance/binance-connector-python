@@ -19,10 +19,10 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_vip_loan.rest_api.api import TradeApi
-from binance_vip_loan.rest_api.models import VipLoanBorrowResponse
-from binance_vip_loan.rest_api.models import VipLoanRenewResponse
-from binance_vip_loan.rest_api.models import VipLoanRepayResponse
+from binance_sdk_vip_loan.rest_api.api import TradeApi
+from binance_sdk_vip_loan.rest_api.models import VipLoanBorrowResponse
+from binance_sdk_vip_loan.rest_api.models import VipLoanRenewResponse
+from binance_sdk_vip_loan.rest_api.models import VipLoanRepayResponse
 
 
 class TestTradeApi:

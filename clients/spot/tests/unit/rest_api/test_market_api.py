@@ -24,27 +24,27 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_spot.rest_api.api import MarketApi
-from binance_spot.rest_api.models import AggTradesResponse
-from binance_spot.rest_api.models import AvgPriceResponse
-from binance_spot.rest_api.models import DepthResponse
-from binance_spot.rest_api.models import GetTradesResponse
-from binance_spot.rest_api.models import HistoricalTradesResponse
-from binance_spot.rest_api.models import KlinesResponse
-from binance_spot.rest_api.models import TickerResponse
-from binance_spot.rest_api.models import Ticker24hrResponse
-from binance_spot.rest_api.models import TickerBookTickerResponse
-from binance_spot.rest_api.models import TickerPriceResponse
-from binance_spot.rest_api.models import TickerTradingDayResponse
-from binance_spot.rest_api.models import UiKlinesResponse
+from binance_sdk_spot.rest_api.api import MarketApi
+from binance_sdk_spot.rest_api.models import AggTradesResponse
+from binance_sdk_spot.rest_api.models import AvgPriceResponse
+from binance_sdk_spot.rest_api.models import DepthResponse
+from binance_sdk_spot.rest_api.models import GetTradesResponse
+from binance_sdk_spot.rest_api.models import HistoricalTradesResponse
+from binance_sdk_spot.rest_api.models import KlinesResponse
+from binance_sdk_spot.rest_api.models import TickerResponse
+from binance_sdk_spot.rest_api.models import Ticker24hrResponse
+from binance_sdk_spot.rest_api.models import TickerBookTickerResponse
+from binance_sdk_spot.rest_api.models import TickerPriceResponse
+from binance_sdk_spot.rest_api.models import TickerTradingDayResponse
+from binance_sdk_spot.rest_api.models import UiKlinesResponse
 
 
-from binance_spot.rest_api.models import KlinesIntervalEnum
-from binance_spot.rest_api.models import TickerWindowSizeEnum
-from binance_spot.rest_api.models import TickerTypeEnum
-from binance_spot.rest_api.models import Ticker24hrTypeEnum
-from binance_spot.rest_api.models import TickerTradingDayTypeEnum
-from binance_spot.rest_api.models import UiKlinesIntervalEnum
+from binance_sdk_spot.rest_api.models import KlinesIntervalEnum
+from binance_sdk_spot.rest_api.models import TickerWindowSizeEnum
+from binance_sdk_spot.rest_api.models import TickerTypeEnum
+from binance_sdk_spot.rest_api.models import Ticker24hrTypeEnum
+from binance_sdk_spot.rest_api.models import TickerTradingDayTypeEnum
+from binance_sdk_spot.rest_api.models import UiKlinesIntervalEnum
 
 
 class TestMarketApi:

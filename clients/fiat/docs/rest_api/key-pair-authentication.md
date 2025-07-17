@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_fiat.fiat import Fiat
-from binance_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
+from binance_sdk_fiat.fiat import Fiat
+from binance_sdk_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

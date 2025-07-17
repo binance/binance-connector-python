@@ -19,20 +19,20 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_mining.rest_api.api import MiningApi
-from binance_mining.rest_api.models import AccountListResponse
-from binance_mining.rest_api.models import AcquiringAlgorithmResponse
-from binance_mining.rest_api.models import AcquiringCoinnameResponse
-from binance_mining.rest_api.models import CancelHashrateResaleConfigurationResponse
-from binance_mining.rest_api.models import EarningsListResponse
-from binance_mining.rest_api.models import ExtraBonusListResponse
-from binance_mining.rest_api.models import HashrateResaleDetailResponse
-from binance_mining.rest_api.models import HashrateResaleListResponse
-from binance_mining.rest_api.models import HashrateResaleRequestResponse
-from binance_mining.rest_api.models import MiningAccountEarningResponse
-from binance_mining.rest_api.models import RequestForDetailMinerListResponse
-from binance_mining.rest_api.models import RequestForMinerListResponse
-from binance_mining.rest_api.models import StatisticListResponse
+from binance_sdk_mining.rest_api.api import MiningApi
+from binance_sdk_mining.rest_api.models import AccountListResponse
+from binance_sdk_mining.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_mining.rest_api.models import AcquiringCoinnameResponse
+from binance_sdk_mining.rest_api.models import CancelHashrateResaleConfigurationResponse
+from binance_sdk_mining.rest_api.models import EarningsListResponse
+from binance_sdk_mining.rest_api.models import ExtraBonusListResponse
+from binance_sdk_mining.rest_api.models import HashrateResaleDetailResponse
+from binance_sdk_mining.rest_api.models import HashrateResaleListResponse
+from binance_sdk_mining.rest_api.models import HashrateResaleRequestResponse
+from binance_sdk_mining.rest_api.models import MiningAccountEarningResponse
+from binance_sdk_mining.rest_api.models import RequestForDetailMinerListResponse
+from binance_sdk_mining.rest_api.models import RequestForMinerListResponse
+from binance_sdk_mining.rest_api.models import StatisticListResponse
 
 
 class TestMiningApi:

@@ -1,7 +1,11 @@
 import os
 import logging
 
-from binance_mining.mining import Mining, ConfigurationRestAPI, MINING_REST_API_PROD_URL
+from binance_sdk_mining.mining import (
+    Mining,
+    ConfigurationRestAPI,
+    MINING_REST_API_PROD_URL,
+)
 
 
 # Configure logging

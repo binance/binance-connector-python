@@ -1,16 +1,16 @@
-# Binance Python Copy Trading Connector
+# Binance Python Copy Trading SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-copy-trading.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-copy-trading)](https://pypi.python.org/pypi/binance-copy-trading)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-copy-trading.svg)](https://pypi.org/project/binance-copy-trading/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-copy-trading)](https://pypi.python.org/pypi/binance-sdk-copy-trading)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-copy-trading.svg)](https://pypi.org/project/binance-sdk-copy-trading/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Copy Trading API, enabling developers to interact programmatically with Binance's Copy Trading trading platform. The library provides tools to do automatic lead trading through the REST API:
-- [REST API](./src/binance_copy_trading/rest_api/rest_api.py)
+This is a client library for the Binance Copy Trading SDK API, enabling developers to interact programmatically with Binance's Copy Trading trading platform. The library provides tools to do automatic lead trading through the REST API:
+- [REST API](./src/binance_sdk_copy_trading/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -19,7 +19,6 @@ This is a client library for the Binance Copy Trading API, enabling developers t
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
 - [Testing](#testing)
-- [Migration Guide](#migration-guide)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -34,7 +33,7 @@ This is a client library for the Binance Copy Trading API, enabling developers t
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-copy-trading
+pip install binance-sdk-copy-trading
 ```
 
 ## Documentation
@@ -43,13 +42,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_copy_trading/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_copy_trading/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import COPY_TRADING_REST_API_PROD_URL
-from binance_copy_trading.copy_trading import CopyTrading
-from binance_copy_trading.rest_api.models import GetFuturesLeadTraderStatusResponse
+from binance_sdk_copy_trading.copy_trading import CopyTrading
+from binance_sdk_copy_trading.rest_api.models import GetFuturesLeadTraderStatusResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=COPY_TRADING_REST_API_PROD_URL)
@@ -123,7 +122,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -151,10 +150,6 @@ The tests cover:
 * REST API endpoints
 * Error handling
 * Edge cases
-
-## Migration Guide
-
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_copy_trading_connector.md) for detailed steps.
 
 ## Contributing
 

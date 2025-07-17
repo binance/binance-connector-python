@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import (
     DerivativesTradingPortfolioMarginPro,
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL,

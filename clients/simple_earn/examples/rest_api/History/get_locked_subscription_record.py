@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_simple_earn.simple_earn import (
+from binance_sdk_simple_earn.simple_earn import (
     SimpleEarn,
     ConfigurationRestAPI,
     SIMPLE_EARN_REST_API_PROD_URL,

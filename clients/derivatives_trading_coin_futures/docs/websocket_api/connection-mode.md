@@ -3,8 +3,8 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import WebsocketMode
-from binance_derivatives_trading_coin_futures.derivatives_trading_coin_futures import DerivativesTradingCoinFutures
-from binance_derivatives_trading_coin_futures.websocket_api.models import PositionInformationResponse
+from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futures import DerivativesTradingCoinFutures
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import PositionInformationResponse
 
 logging.basicConfig(level=logging.INFO)
 

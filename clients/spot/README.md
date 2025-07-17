@@ -1,19 +1,19 @@
-# Binance Python SPOT Connector
+# Binance Python SPOT SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-spot.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-spot)](https://pypi.python.org/pypi/binance-spot)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-spot.svg)](https://pypi.org/project/binance-spot/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-spot)](https://pypi.python.org/pypi/binance-sdk-spot)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-spot.svg)](https://pypi.org/project/binance-sdk-spot/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance SPOT API, enabling developers to interact programmatically with Binance's SPOT trading platform. The library provides tools for retrieving market data, executing trades, and managing orders through three distinct endpoints:
+This is a client library for the Binance Spot SDK API, enabling developers to interact programmatically with Binance's SPOT trading platform. The library provides tools for retrieving market data, executing trades, and managing orders through three distinct endpoints:
 
-- [REST API](./src/binance_spot/rest_api/rest_api.py)
-- [Websocket API](./src/binance_spot/websocket_api/websocket_api.py)
-- [Websocket Stream](./src/binance_spot/websocket_streams/websocket_streams.py)
+- [REST API](./src/binance_sdk_spot/rest_api/rest_api.py)
+- [Websocket API](./src/binance_sdk_spot/websocket_api/websocket_api.py)
+- [Websocket Stream](./src/binance_sdk_spot/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -40,22 +40,22 @@ This is a client library for the Binance SPOT API, enabling developers to intera
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-spot
+pip install binance-sdk-spot
 ```
 
 ## Documentation
 
-For detailed information, refer to the [Binance API Documentation](https://developers.binance.com/docs/binance-spot-api-docs).
+For detailed information, refer to the [Binance API Documentation](https://developers.binance.com/docs/binance-sdk-spot-api-docs).
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_spot/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_spot/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import SPOT_REST_API_PROD_URL
-from binance_spot.spot import Spot
-from binance_spot.rest_api.models import ExchangeInfoResponse, RateLimits
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.rest_api.models import ExchangeInfoResponse, RateLimits
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=SPOT_REST_API_PROD_URL)
@@ -137,7 +137,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -157,7 +157,7 @@ For testing purposes, `/api/*` endpoints can be used in the [Spot Testnet](https
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import SPOT_REST_API_TESTNET_URL
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=SPOT_REST_API_TESTNET_URL)
 client = Spot(config_rest_api=configuration)
@@ -167,7 +167,7 @@ If `base_path` is not provided, it defaults to `https://api.binance.com`.
 
 ### Websocket APIs
 
-The WebSocket API provides request-response communication for market data and trading actions. Use the [`websocket_api`](./src/binance_spot/websocket_api/websocket_api.py) module to interact with these endpoints.
+The WebSocket API provides request-response communication for market data and trading actions. Use the [`websocket_api`](./src/binance_sdk_spot/websocket_api/websocket_api.py) module to interact with these endpoints.
 
 ```python
 import asyncio
@@ -175,8 +175,8 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import SPOT_WS_API_PROD_URL
-from binance_spot.spot import Spot
-from binance_spot.websocket_api.models import AccountCommissionResponse
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.websocket_api.models import AccountCommissionResponse
 
 logging.basicConfig(level=logging.INFO)
 
@@ -270,7 +270,7 @@ For testing purposes, the Websocket API also supports a testnet environment. Upd
 ```python
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import SPOT_WS_API_TESTNET_URL
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 configuration_ws_api = ConfigurationWebSocketAPI(
     api_key="your-api-key",
@@ -284,7 +284,7 @@ If `wsURL` is not provided, it defaults to `wss://ws-api.binance.com:443/ws-api/
 
 ### Websocket Streams
 
-WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_spot/websocket_streams/websocket_streams.py) module to subscribe to these streams.
+WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_sdk_spot/websocket_streams/websocket_streams.py) module to subscribe to these streams.
 
 ```python
 import asyncio
@@ -292,7 +292,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import SPOT_WS_STREAMS_PROD_URL
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 logging.basicConfig(level=logging.INFO)
 
@@ -382,7 +382,7 @@ import asyncio
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 logging.basicConfig(level=logging.INFO)
 
@@ -419,7 +419,7 @@ Websocket Streams also support a testnet environment for development and testing
 ```python
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import SPOT_WS_API_TESTNET_URL
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 config_ws_streams = ConfigurationWebSocketStreams(
     stream_url=SPOT_WS_STREAMS_TESTNET_URL
@@ -447,7 +447,7 @@ The tests cover: - REST API endpoints - WebSocket API and Streams - Error handli
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_spot_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_spot_sdk.md) for detailed steps.
 
 ## Contributing
 

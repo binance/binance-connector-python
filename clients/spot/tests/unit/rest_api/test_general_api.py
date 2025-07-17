@@ -22,13 +22,13 @@ from unittest.mock import MagicMock
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_spot.rest_api.api import GeneralApi
-from binance_spot.rest_api.models import ExchangeInfoResponse
+from binance_sdk_spot.rest_api.api import GeneralApi
+from binance_sdk_spot.rest_api.models import ExchangeInfoResponse
 
-from binance_spot.rest_api.models import TimeResponse
+from binance_sdk_spot.rest_api.models import TimeResponse
 
 
-from binance_spot.rest_api.models import ExchangeInfoSymbolStatusEnum
+from binance_sdk_spot.rest_api.models import ExchangeInfoSymbolStatusEnum
 
 
 class TestGeneralApi:

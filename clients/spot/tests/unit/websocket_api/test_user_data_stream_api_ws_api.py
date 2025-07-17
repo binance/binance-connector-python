@@ -20,14 +20,14 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_spot.websocket_api.api import UserDataStreamApi
+from binance_sdk_spot.websocket_api.api import UserDataStreamApi
 
 
-from binance_spot.websocket_api.models import UserDataStreamPingResponse
-from binance_spot.websocket_api.models import UserDataStreamStartResponse
-from binance_spot.websocket_api.models import UserDataStreamStopResponse
-from binance_spot.websocket_api.models import UserDataStreamSubscribeResponse
-from binance_spot.websocket_api.models import UserDataStreamUnsubscribeResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamPingResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamStartResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamStopResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamSubscribeResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamUnsubscribeResponse
 
 
 class TestWebSocketUserDataStreamApi:

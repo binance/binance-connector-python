@@ -3,7 +3,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import WebsocketMode
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 
 logging.basicConfig(level=logging.INFO)
 

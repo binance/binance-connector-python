@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_convert.convert import Convert
-from binance_convert.rest_api.models import ListAllConvertPairsResponse
+from binance_sdk_convert.convert import Convert
+from binance_sdk_convert.rest_api.models import ListAllConvertPairsResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-algo"
+name = "binance-sdk-algo"
 version = "1.0.0"
-description = "Official Binance Algo Connector - A lightweight library that provides a convenient interface to Binance's Algo REST API"
+description = "Official Binance Algo SDK - A lightweight library that provides a convenient interface to Binance's Algo REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_algo", from = "src" }
+  { include = "binance_sdk_algo", from = "src" }
 ]
 
 [tool.poetry.dependencies]
@@ -20,7 +20,7 @@ black = "^25.1.0"
 ruff = "^0.12.0"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = { path = "../../common", develop = true }
+binance-common = "1.0.0"
 pytest = { version = ">=6.2.5", optional = true }
 
 [tool.poetry.extras]
