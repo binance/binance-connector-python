@@ -1,12 +1,12 @@
 import os
 import logging
 
-from binance_margin_trading.margin_trading import (
+from binance_sdk_margin_trading.margin_trading import (
     MarginTrading,
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
-from binance_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
 
 
 # Configure logging

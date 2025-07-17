@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_c2c.c2c import C2C
-from binance_c2c.rest_api.models import GetC2CTradeHistoryResponse
+from binance_sdk_c2c.c2c import C2C
+from binance_sdk_c2c.rest_api.models import GetC2CTradeHistoryResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-nft"
+name = "binance-sdk-nft"
 version = "1.0.0"
-description = "Official Binance NFT Connector - A lightweight library that provides a convenient interface to Binance's NFT REST API"
+description = "Official Binance NFT SDK - A lightweight library that provides a convenient interface to Binance's NFT REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_nft", from = "src" }
+  { include = "binance_sdk_nft", from = "src" }
 ]
 
 [tool.poetry.dependencies]

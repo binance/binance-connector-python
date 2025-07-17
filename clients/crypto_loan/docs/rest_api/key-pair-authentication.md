@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_crypto_loan.crypto_loan import CryptoLoan
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.crypto_loan import CryptoLoan
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

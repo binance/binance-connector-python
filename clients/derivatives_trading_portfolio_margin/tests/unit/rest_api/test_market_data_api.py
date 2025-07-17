@@ -16,7 +16,7 @@ from unittest.mock import MagicMock
 
 from binance_common.configuration import ConfigurationRestAPI
 
-from binance_derivatives_trading_portfolio_margin.rest_api.api import MarketDataApi
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.api import MarketDataApi
 
 
 class TestMarketDataApi:

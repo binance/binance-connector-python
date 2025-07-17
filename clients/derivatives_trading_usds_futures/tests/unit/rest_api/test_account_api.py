@@ -19,68 +19,68 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_usds_futures.rest_api.api import AccountApi
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.api import AccountApi
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     AccountInformationV2Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     AccountInformationV3Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     FuturesAccountBalanceV2Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     FuturesAccountBalanceV3Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     FuturesAccountConfigurationResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     FuturesTradingQuantitativeRulesIndicatorsResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetBnbBurnStatusResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetCurrentMultiAssetsModeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetCurrentPositionModeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetDownloadIdForFuturesOrderHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetDownloadIdForFuturesTradeHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetDownloadIdForFuturesTransactionHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetFuturesOrderHistoryDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetFuturesTradeDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetFuturesTransactionHistoryDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetIncomeHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NotionalAndLeverageBracketsResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     QueryUserRateLimitResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     SymbolConfigurationResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ToggleBnbBurnOnFuturesTradeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     UserCommissionRateResponse,
 )
 

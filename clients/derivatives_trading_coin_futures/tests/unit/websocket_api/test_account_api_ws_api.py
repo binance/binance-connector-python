@@ -14,13 +14,13 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
-from binance_derivatives_trading_coin_futures.websocket_api.api import AccountApi
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.api import AccountApi
 
 
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     AccountInformationResponse,
 )
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     FuturesAccountBalanceResponse,
 )
 

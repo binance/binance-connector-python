@@ -19,29 +19,31 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_options.rest_api.api import MarketMakerBlockTradeApi
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.api import (
+    MarketMakerBlockTradeApi,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     AcceptBlockTradeOrderResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     AccountBlockTradeListResponse,
 )
 
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     ExtendBlockTradeOrderResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewBlockTradeOrderResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     QueryBlockTradeDetailsResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     QueryBlockTradeOrderResponse,
 )
 
 
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewBlockTradeOrderSideEnum,
 )
 

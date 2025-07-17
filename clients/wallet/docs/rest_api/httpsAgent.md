@@ -4,8 +4,8 @@
 import ssl
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_wallet.wallet import Wallet
-from binance_wallet.rest_api.models import AccountInfoResponse
+from binance_sdk_wallet.wallet import Wallet
+from binance_sdk_wallet.rest_api.models import AccountInfoResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

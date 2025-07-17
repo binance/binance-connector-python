@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-fiat"
+name = "binance-sdk-fiat"
 version = "1.0.0"
-description = "Official Binance Fiat Connector - A lightweight library that provides a convenient interface to Binance's Fiat REST API"
+description = "Official Binance Fiat SDK - A lightweight library that provides a convenient interface to Binance's Fiat REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_fiat", from = "src" }
+  { include = "binance_sdk_fiat", from = "src" }
 ]
 
 [tool.poetry.dependencies]

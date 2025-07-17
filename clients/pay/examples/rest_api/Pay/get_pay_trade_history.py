@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_pay.pay import Pay, ConfigurationRestAPI, PAY_REST_API_PROD_URL
+from binance_sdk_pay.pay import Pay, ConfigurationRestAPI, PAY_REST_API_PROD_URL
 
 
 # Configure logging

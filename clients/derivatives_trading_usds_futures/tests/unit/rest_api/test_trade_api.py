@@ -19,128 +19,146 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_usds_futures.rest_api.api import TradeApi
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.api import TradeApi
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     AccountTradeListResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import AllOrdersResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    AllOrdersResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     AutoCancelAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CancelAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CancelMultipleOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import CancelOrderResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    CancelOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangeInitialLeverageResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangeMarginTypeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangeMultiAssetsModeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangePositionModeResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CurrentAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetOrderModifyHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetPositionMarginChangeHistoryResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyIsolatedPositionMarginResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyMultipleOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import ModifyOrderResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import NewOrderResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    ModifyOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    NewOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PlaceMultipleOrdersResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PositionAdlQuantileEstimationResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PositionInformationV2Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PositionInformationV3Response,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     QueryCurrentOpenOrderResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import QueryOrderResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import TestOrderResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    QueryOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    TestOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     UsersForceOrdersResponse,
 )
 
 
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangeMarginTypeMarginTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyIsolatedPositionMarginPositionSideEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import ModifyOrderSideEnum
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    ModifyOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import NewOrderSideEnum
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    NewOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderPositionSideEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderWorkingTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import TestOrderSideEnum
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    TestOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderPositionSideEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderWorkingTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     UsersForceOrdersAutoCloseTypeEnum,
 )
 
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyMultipleOrdersBatchOrdersParameterInner,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PlaceMultipleOrdersBatchOrdersParameterInner,
 )
 

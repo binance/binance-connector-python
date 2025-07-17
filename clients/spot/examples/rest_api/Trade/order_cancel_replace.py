@@ -1,10 +1,10 @@
 import os
 import logging
 
-from binance_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
-from binance_spot.rest_api.models import OrderCancelReplaceSideEnum
-from binance_spot.rest_api.models import OrderCancelReplaceTypeEnum
-from binance_spot.rest_api.models import OrderCancelReplaceCancelReplaceModeEnum
+from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
+from binance_sdk_spot.rest_api.models import OrderCancelReplaceSideEnum
+from binance_sdk_spot.rest_api.models import OrderCancelReplaceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderCancelReplaceCancelReplaceModeEnum
 
 
 # Configure logging

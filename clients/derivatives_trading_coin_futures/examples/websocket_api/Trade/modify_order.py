@@ -2,13 +2,13 @@ import asyncio
 import os
 import logging
 
-from binance_derivatives_trading_coin_futures.derivatives_trading_coin_futures import (
+from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futures import (
     DerivativesTradingCoinFutures,
     DERIVATIVES_TRADING_COIN_FUTURES_WS_API_PROD_URL,
     ConfigurationWebSocketAPI,
 )
 
-from binance_derivatives_trading_coin_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     ModifyOrderSideEnum,
 )
 

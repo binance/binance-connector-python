@@ -1,17 +1,17 @@
-# Binance Python Pay Connector
+# Binance Python Pay SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-pay.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-pay)](https://pypi.python.org/pypi/binance-pay)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-pay.svg)](https://pypi.org/project/binance-pay/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-pay)](https://pypi.python.org/pypi/binance-sdk-pay)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-pay.svg)](https://pypi.org/project/binance-sdk-pay/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Pay API, enabling developers to interact programmatically with Binance's Pay trading platform. The library provides tools to query transaction history through the REST API:
+This is a client library for the Binance Pay SDK API, enabling developers to interact programmatically with Binance's Pay trading platform. The library provides tools to query transaction history through the REST API:
 
-- [REST API](./src/binance_pay/rest_api/rest_api.py)
+- [REST API](./src/binance_sdk_pay/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ This is a client library for the Binance Pay API, enabling developers to interac
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-pay
+pip install binance-sdk-pay
 ```
 
 ## Documentation
@@ -44,13 +44,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_pay/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_pay/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import PAY_REST_API_PROD_URL
-from binance_pay.pay import Pay
-from binance_pay.rest_api.models import GetPayTradeHistoryResponse
+from binance_sdk_pay.pay import Pay
+from binance_sdk_pay.rest_api.models import GetPayTradeHistoryResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=PAY_REST_API_PROD_URL)
@@ -58,7 +58,7 @@ configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-ap
 client = Pay(config_rest_api=configuration)
 
 try:
-    response = client.rest_api.get_pay_trade_history()
+    response = client.rest_api.get_pay_trade_history(startTimestamp=1637186702000, limit=50)
 
     data: GetPayTradeHistoryResponse = response.data()
     logging.info(f"get_pay_trade_history() response: {data}")
@@ -124,7 +124,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -155,7 +155,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_pay_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_pay_sdk.md) for detailed steps.
 
 ## Contributing
 

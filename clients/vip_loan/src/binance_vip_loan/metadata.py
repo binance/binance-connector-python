@@ -1,1 +1,0 @@
-NAME = "binance-vip-loan"

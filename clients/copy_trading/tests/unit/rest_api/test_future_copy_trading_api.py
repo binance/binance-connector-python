@@ -18,9 +18,9 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_copy_trading.rest_api.api import FutureCopyTradingApi
-from binance_copy_trading.rest_api.models import GetFuturesLeadTraderStatusResponse
-from binance_copy_trading.rest_api.models import (
+from binance_sdk_copy_trading.rest_api.api import FutureCopyTradingApi
+from binance_sdk_copy_trading.rest_api.models import GetFuturesLeadTraderStatusResponse
+from binance_sdk_copy_trading.rest_api.models import (
     GetFuturesLeadTradingSymbolWhitelistResponse,
 )
 

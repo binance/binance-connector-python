@@ -19,16 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_wallet.rest_api.api import CapitalApi
-from binance_wallet.rest_api.models import AllCoinsInformationResponse
-from binance_wallet.rest_api.models import DepositAddressResponse
-from binance_wallet.rest_api.models import DepositHistoryResponse
-from binance_wallet.rest_api.models import FetchDepositAddressListWithNetworkResponse
-from binance_wallet.rest_api.models import FetchWithdrawAddressListResponse
-from binance_wallet.rest_api.models import FetchWithdrawQuotaResponse
-from binance_wallet.rest_api.models import OneClickArrivalDepositApplyResponse
-from binance_wallet.rest_api.models import WithdrawResponse
-from binance_wallet.rest_api.models import WithdrawHistoryResponse
+from binance_sdk_wallet.rest_api.api import CapitalApi
+from binance_sdk_wallet.rest_api.models import AllCoinsInformationResponse
+from binance_sdk_wallet.rest_api.models import DepositAddressResponse
+from binance_sdk_wallet.rest_api.models import DepositHistoryResponse
+from binance_sdk_wallet.rest_api.models import (
+    FetchDepositAddressListWithNetworkResponse,
+)
+from binance_sdk_wallet.rest_api.models import FetchWithdrawAddressListResponse
+from binance_sdk_wallet.rest_api.models import FetchWithdrawQuotaResponse
+from binance_sdk_wallet.rest_api.models import OneClickArrivalDepositApplyResponse
+from binance_sdk_wallet.rest_api.models import WithdrawResponse
+from binance_sdk_wallet.rest_api.models import WithdrawHistoryResponse
 
 
 class TestCapitalApi:

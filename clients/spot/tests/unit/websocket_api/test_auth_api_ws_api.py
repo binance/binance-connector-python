@@ -19,12 +19,12 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
-from binance_spot.websocket_api.api import AuthApi
+from binance_sdk_spot.websocket_api.api import AuthApi
 
 
-from binance_spot.websocket_api.models import SessionLogonResponse
-from binance_spot.websocket_api.models import SessionLogoutResponse
-from binance_spot.websocket_api.models import SessionStatusResponse
+from binance_sdk_spot.websocket_api.models import SessionLogonResponse
+from binance_sdk_spot.websocket_api.models import SessionLogoutResponse
+from binance_sdk_spot.websocket_api.models import SessionStatusResponse
 
 
 class TestWebSocketAuthApi:

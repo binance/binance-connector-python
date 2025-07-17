@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_margin_trading.margin_trading import MarginTrading
-from binance_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
+from binance_sdk_margin_trading.margin_trading import MarginTrading
+from binance_sdk_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

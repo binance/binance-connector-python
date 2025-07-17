@@ -19,18 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_staking.rest_api.api import EthStakingApi
-from binance_staking.rest_api.models import EthStakingAccountResponse
-from binance_staking.rest_api.models import GetCurrentEthStakingQuotaResponse
-from binance_staking.rest_api.models import GetEthRedemptionHistoryResponse
-from binance_staking.rest_api.models import GetEthStakingHistoryResponse
-from binance_staking.rest_api.models import GetWbethRateHistoryResponse
-from binance_staking.rest_api.models import GetWbethRewardsHistoryResponse
-from binance_staking.rest_api.models import GetWbethUnwrapHistoryResponse
-from binance_staking.rest_api.models import GetWbethWrapHistoryResponse
-from binance_staking.rest_api.models import RedeemEthResponse
-from binance_staking.rest_api.models import SubscribeEthStakingResponse
-from binance_staking.rest_api.models import WrapBethResponse
+from binance_sdk_staking.rest_api.api import EthStakingApi
+from binance_sdk_staking.rest_api.models import EthStakingAccountResponse
+from binance_sdk_staking.rest_api.models import GetCurrentEthStakingQuotaResponse
+from binance_sdk_staking.rest_api.models import GetEthRedemptionHistoryResponse
+from binance_sdk_staking.rest_api.models import GetEthStakingHistoryResponse
+from binance_sdk_staking.rest_api.models import GetWbethRateHistoryResponse
+from binance_sdk_staking.rest_api.models import GetWbethRewardsHistoryResponse
+from binance_sdk_staking.rest_api.models import GetWbethUnwrapHistoryResponse
+from binance_sdk_staking.rest_api.models import GetWbethWrapHistoryResponse
+from binance_sdk_staking.rest_api.models import RedeemEthResponse
+from binance_sdk_staking.rest_api.models import SubscribeEthStakingResponse
+from binance_sdk_staking.rest_api.models import WrapBethResponse
 
 
 class TestEthStakingApi:

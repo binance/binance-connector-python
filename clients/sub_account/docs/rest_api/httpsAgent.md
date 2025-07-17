@@ -4,8 +4,8 @@
 import ssl
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_sub_account.sub_account import SubAccount
-from binance_sub_account.rest_api.models import GetSummaryOfSubAccountsMarginAccountResponse
+from binance_sdk_sub_account.sub_account import SubAccount
+from binance_sdk_sub_account.rest_api.models import GetSummaryOfSubAccountsMarginAccountResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

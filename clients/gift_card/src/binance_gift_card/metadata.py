@@ -1,1 +1,0 @@
-NAME = "binance-gift-card"

@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_crypto_loan.crypto_loan import CryptoLoan
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.crypto_loan import CryptoLoan
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

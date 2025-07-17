@@ -22,16 +22,16 @@ from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
 from binance_common.websocket import WebSocketStreamBase
-from binance_spot.websocket_streams.streams import WebSocketStreamsApi
+from binance_sdk_spot.websocket_streams.streams import WebSocketStreamsApi
 
 
-from binance_spot.websocket_streams.models import (
+from binance_sdk_spot.websocket_streams.models import (
     AllMarketRollingWindowTickerWindowSizeEnum,
 )
-from binance_spot.websocket_streams.models import KlineIntervalEnum
-from binance_spot.websocket_streams.models import KlineOffsetIntervalEnum
-from binance_spot.websocket_streams.models import PartialBookDepthLevelsEnum
-from binance_spot.websocket_streams.models import RollingWindowTickerWindowSizeEnum
+from binance_sdk_spot.websocket_streams.models import KlineIntervalEnum
+from binance_sdk_spot.websocket_streams.models import KlineOffsetIntervalEnum
+from binance_sdk_spot.websocket_streams.models import PartialBookDepthLevelsEnum
+from binance_sdk_spot.websocket_streams.models import RollingWindowTickerWindowSizeEnum
 
 
 @pytest.fixture

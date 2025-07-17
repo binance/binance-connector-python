@@ -19,14 +19,14 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_crypto_loan.rest_api.api import StableRateApi
-from binance_crypto_loan.rest_api.models import (
+from binance_sdk_crypto_loan.rest_api.api import StableRateApi
+from binance_sdk_crypto_loan.rest_api.models import (
     CheckCollateralRepayRateStableRateResponse,
 )
-from binance_crypto_loan.rest_api.models import GetCryptoLoansIncomeHistoryResponse
-from binance_crypto_loan.rest_api.models import GetLoanBorrowHistoryResponse
-from binance_crypto_loan.rest_api.models import GetLoanLtvAdjustmentHistoryResponse
-from binance_crypto_loan.rest_api.models import GetLoanRepaymentHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import GetCryptoLoansIncomeHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import GetLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import GetLoanLtvAdjustmentHistoryResponse
+from binance_sdk_crypto_loan.rest_api.models import GetLoanRepaymentHistoryResponse
 
 
 class TestStableRateApi:

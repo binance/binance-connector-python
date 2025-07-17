@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_algo.algo import Algo
-from binance_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
+from binance_sdk_algo.algo import Algo
+from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

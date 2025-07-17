@@ -19,15 +19,17 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_usds_futures.rest_api.api import ConvertApi
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.api import ConvertApi
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     AcceptTheOfferedQuoteResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ListAllConvertPairsResponse,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import OrderStatusResponse
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    OrderStatusResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     SendQuoteRequestResponse,
 )
 

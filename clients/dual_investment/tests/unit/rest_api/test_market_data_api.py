@@ -19,8 +19,10 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_dual_investment.rest_api.api import MarketDataApi
-from binance_dual_investment.rest_api.models import GetDualInvestmentProductListResponse
+from binance_sdk_dual_investment.rest_api.api import MarketDataApi
+from binance_sdk_dual_investment.rest_api.models import (
+    GetDualInvestmentProductListResponse,
+)
 
 
 class TestMarketDataApi:

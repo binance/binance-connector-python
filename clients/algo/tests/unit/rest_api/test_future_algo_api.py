@@ -19,13 +19,15 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_algo.rest_api.api import FutureAlgoApi
-from binance_algo.rest_api.models import CancelAlgoOrderFutureAlgoResponse
-from binance_algo.rest_api.models import QueryCurrentAlgoOpenOrdersFutureAlgoResponse
-from binance_algo.rest_api.models import QueryHistoricalAlgoOrdersFutureAlgoResponse
-from binance_algo.rest_api.models import QuerySubOrdersFutureAlgoResponse
-from binance_algo.rest_api.models import TimeWeightedAveragePriceFutureAlgoResponse
-from binance_algo.rest_api.models import VolumeParticipationFutureAlgoResponse
+from binance_sdk_algo.rest_api.api import FutureAlgoApi
+from binance_sdk_algo.rest_api.models import CancelAlgoOrderFutureAlgoResponse
+from binance_sdk_algo.rest_api.models import (
+    QueryCurrentAlgoOpenOrdersFutureAlgoResponse,
+)
+from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersFutureAlgoResponse
+from binance_sdk_algo.rest_api.models import QuerySubOrdersFutureAlgoResponse
+from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceFutureAlgoResponse
+from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoResponse
 
 
 class TestFutureAlgoApi:

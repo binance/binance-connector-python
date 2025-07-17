@@ -1,18 +1,18 @@
-# Binance Python Margin Trading Connector
+# Binance Python Margin Trading SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-margin-trading.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-margin-trading)](https://pypi.python.org/pypi/binance-margin-trading)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-margin-trading.svg)](https://pypi.org/project/binance-margin-trading/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-margin-trading)](https://pypi.python.org/pypi/binance-sdk-margin-trading)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-margin-trading.svg)](https://pypi.org/project/binance-sdk-margin-trading/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Margin Trading API, enabling developers to interact programmatically with Binance's Margin Trading trading platform. The library provides tools to use funds provided by a third party to conduct asset transactions through the REST API:
+This is a client library for the Binance Margin Trading SDK API, enabling developers to interact programmatically with Binance's Margin Trading trading platform. The library provides tools to use funds provided by a third party to conduct asset transactions through the REST API:
 
-- [REST API](./src/binance_margin_trading/rest_api/rest_api.py)
-- [Websocket Stream](./src/binance_margin_trading/websocket_streams/websocket_streams.py)
+- [REST API](./src/binance_sdk_margin_trading/rest_api/rest_api.py)
+- [Websocket Stream](./src/binance_sdk_margin_trading/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -39,7 +39,7 @@ This is a client library for the Binance Margin Trading API, enabling developers
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-margin-trading
+pip install binance-sdk-margin-trading
 ```
 
 ## Documentation
@@ -48,13 +48,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_margin_trading/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_margin_trading/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import MARGIN_TRADING_REST_API_PROD_URL
-from binance_margin_trading.margin_trading import MarginTrading
-from binance_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
+from binance_sdk_margin_trading.margin_trading import MarginTrading
+from binance_sdk_margin_trading.rest_api.models import GetSummaryOfMarginAccountResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=MARGIN_TRADING_REST_API_PROD_URL)
@@ -128,7 +128,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -145,7 +145,7 @@ If `base_path` is not provided, it defaults to `https://api.binance.com`.
 
 ### Websocket Streams
 
-WebSocket Streams in margin-trading is used for subscribing to risk and trade data streams. Use the [websocket-streams](./src/binance_margin_trading/websocket_streams/websocket_streams.py) module to interact with it.
+WebSocket Streams in margin-trading is used for subscribing to risk and trade data streams. Use the [websocket-streams](./src/binance_sdk_margin_trading/websocket_streams/websocket_streams.py) module to interact with it.
 
 #### Configuration Options
 
@@ -170,7 +170,7 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.constants import MARGIN_TRADING_WS_STREAMS_PROD_URL
-from binance_margin_trading.margin_trading import MarginTrading
+from binance_sdk_margin_trading.margin_trading import MarginTrading
 
 logging.basicConfig(level=logging.INFO)
 
@@ -209,7 +209,7 @@ import asyncio
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_margin_trading.margin_trading import MarginTrading
+from binance_sdk_margin_trading.margin_trading import MarginTrading
 
 logging.basicConfig(level=logging.INFO)
 
@@ -257,7 +257,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_margin_trading_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_margin_trading_sdk.md) for detailed steps.
 
 ## Contributing
 

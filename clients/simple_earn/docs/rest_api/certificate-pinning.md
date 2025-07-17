@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_simple_earn.simple_earn import SimpleEarn
-from binance_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
+from binance_sdk_simple_earn.simple_earn import SimpleEarn
+from binance_sdk_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"

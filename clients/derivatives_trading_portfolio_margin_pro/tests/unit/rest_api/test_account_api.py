@@ -19,56 +19,56 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.api import AccountApi
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.api import AccountApi
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     BnbTransferResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     ChangeAutoRepayFuturesStatusResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     FundAutoCollectionResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     FundCollectionByAssetResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetAutoRepayFuturesStatusResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProAccountBalanceResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProAccountInfoResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProSpanAccountInfoResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetTransferableEarnAssetBalanceForPortfolioMarginResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     MintBfusdForPortfolioMarginResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginProBankruptcyLoanRepayResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     QueryPortfolioMarginProBankruptcyLoanAmountResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RedeemBfusdForPortfolioMarginResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RepayFuturesNegativeBalanceResponse,
 )
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     TransferLdusdtForPortfolioMarginResponse,
 )
 

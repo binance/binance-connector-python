@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_rebate.rebate import Rebate
-from binance_rebate.rest_api.models import GetSpotRebateHistoryRecordsResponse
+from binance_sdk_rebate.rebate import Rebate
+from binance_sdk_rebate.rest_api.models import GetSpotRebateHistoryRecordsResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

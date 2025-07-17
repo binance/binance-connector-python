@@ -1,15 +1,15 @@
 import os
 import logging
 
-from binance_derivatives_trading_coin_futures.derivatives_trading_coin_futures import (
+from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futures import (
     DerivativesTradingCoinFutures,
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_COIN_FUTURES_REST_API_PROD_URL,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumeContractTypeEnum,
 )
-from binance_derivatives_trading_coin_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumePeriodEnum,
 )
 

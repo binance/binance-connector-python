@@ -4,8 +4,8 @@
 import ssl
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_staking.staking import Staking
-from binance_staking.rest_api.models import ClaimBoostRewardsResponse
+from binance_sdk_staking.staking import Staking
+from binance_sdk_staking.rest_api.models import ClaimBoostRewardsResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

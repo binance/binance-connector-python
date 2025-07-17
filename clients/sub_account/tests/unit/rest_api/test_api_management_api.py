@@ -19,12 +19,14 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_sub_account.rest_api.api import ApiManagementApi
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.api import ApiManagementApi
+from binance_sdk_sub_account.rest_api.models import (
     AddIpRestrictionForSubAccountApiKeyResponse,
 )
-from binance_sub_account.rest_api.models import DeleteIpListForASubAccountApiKeyResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
+    DeleteIpListForASubAccountApiKeyResponse,
+)
+from binance_sdk_sub_account.rest_api.models import (
     GetIpRestrictionForASubAccountApiKeyResponse,
 )
 

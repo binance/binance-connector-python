@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_vip_loan.vip_loan import VipLoan
-from binance_vip_loan.rest_api.models import GetCollateralAssetDataResponse
+from binance_sdk_vip_loan.vip_loan import VipLoan
+from binance_sdk_vip_loan.rest_api.models import GetCollateralAssetDataResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

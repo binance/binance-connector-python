@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_mining.mining import Mining
-from binance_mining.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_mining.mining import Mining
+from binance_sdk_mining.rest_api.models import AcquiringAlgorithmResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"

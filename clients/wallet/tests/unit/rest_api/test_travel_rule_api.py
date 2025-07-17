@@ -19,16 +19,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_wallet.rest_api.api import TravelRuleApi
-from binance_wallet.rest_api.models import BrokerWithdrawResponse
-from binance_wallet.rest_api.models import DepositHistoryTravelRuleResponse
-from binance_wallet.rest_api.models import FetchAddressVerificationListResponse
-from binance_wallet.rest_api.models import OnboardedVaspListResponse
-from binance_wallet.rest_api.models import SubmitDepositQuestionnaireResponse
-from binance_wallet.rest_api.models import SubmitDepositQuestionnaireTravelRuleResponse
-from binance_wallet.rest_api.models import WithdrawHistoryV1Response
-from binance_wallet.rest_api.models import WithdrawHistoryV2Response
-from binance_wallet.rest_api.models import WithdrawTravelRuleResponse
+from binance_sdk_wallet.rest_api.api import TravelRuleApi
+from binance_sdk_wallet.rest_api.models import BrokerWithdrawResponse
+from binance_sdk_wallet.rest_api.models import DepositHistoryTravelRuleResponse
+from binance_sdk_wallet.rest_api.models import FetchAddressVerificationListResponse
+from binance_sdk_wallet.rest_api.models import OnboardedVaspListResponse
+from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireResponse
+from binance_sdk_wallet.rest_api.models import (
+    SubmitDepositQuestionnaireTravelRuleResponse,
+)
+from binance_sdk_wallet.rest_api.models import WithdrawHistoryV1Response
+from binance_sdk_wallet.rest_api.models import WithdrawHistoryV2Response
+from binance_sdk_wallet.rest_api.models import WithdrawTravelRuleResponse
 
 
 class TestTravelRuleApi:

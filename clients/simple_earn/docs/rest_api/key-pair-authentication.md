@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_simple_earn.simple_earn import SimpleEarn
-from binance_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
+from binance_sdk_simple_earn.simple_earn import SimpleEarn
+from binance_sdk_simple_earn.rest_api.models import GetSimpleEarnLockedProductListResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-derivatives-trading-usds-futures"
+name = "binance-sdk-derivatives-trading-usds-futures"
 version = "1.0.0"
-description = "Official Binance DerivativesTradingUsdsFutures Connector - A lightweight library that provides a convenient interface to Binance's DerivativesTradingUsdsFutures REST API, WebSocket API and WebSocket Streams."
+description = "Official Binance Derivatives Trading Usds Futures SDK - A lightweight library that provides a convenient interface to Binance's DerivativesTradingUsdsFutures REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_derivatives_trading_usds_futures", from = "src" }
+  { include = "binance_sdk_derivatives_trading_usds_futures", from = "src" }
 ]
 
 [tool.poetry.dependencies]

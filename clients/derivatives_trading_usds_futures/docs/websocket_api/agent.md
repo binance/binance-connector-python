@@ -3,8 +3,8 @@ import logging
 import ssl
 
 from binance_common.configuration import ConfigurationWebSocketAPI
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
-from binance_derivatives_trading_usds_futures.websocket_api.models import PositionInformationResponse
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import PositionInformationResponse
 
 logging.basicConfig(level=logging.INFO)
 

@@ -18,8 +18,8 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_pay.rest_api.api import PayApi
-from binance_pay.rest_api.models import GetPayTradeHistoryResponse
+from binance_sdk_pay.rest_api.api import PayApi
+from binance_sdk_pay.rest_api.models import GetPayTradeHistoryResponse
 
 
 class TestPayApi:

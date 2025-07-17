@@ -1,10 +1,10 @@
 import os
 import logging
 
-from binance_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
-from binance_spot.rest_api.models import OrderListOcoSideEnum
-from binance_spot.rest_api.models import OrderListOcoAboveTypeEnum
-from binance_spot.rest_api.models import OrderListOcoBelowTypeEnum
+from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
+from binance_sdk_spot.rest_api.models import OrderListOcoSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoAboveTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoBelowTypeEnum
 
 
 # Configure logging

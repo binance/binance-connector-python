@@ -18,10 +18,10 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_vip_loan.rest_api.api import UserInformationApi
-from binance_vip_loan.rest_api.models import CheckVIPLoanCollateralAccountResponse
-from binance_vip_loan.rest_api.models import GetVIPLoanOngoingOrdersResponse
-from binance_vip_loan.rest_api.models import QueryApplicationStatusResponse
+from binance_sdk_vip_loan.rest_api.api import UserInformationApi
+from binance_sdk_vip_loan.rest_api.models import CheckVIPLoanCollateralAccountResponse
+from binance_sdk_vip_loan.rest_api.models import GetVIPLoanOngoingOrdersResponse
+from binance_sdk_vip_loan.rest_api.models import QueryApplicationStatusResponse
 
 
 class TestUserInformationApi:

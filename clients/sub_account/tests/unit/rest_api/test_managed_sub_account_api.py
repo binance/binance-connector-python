@@ -19,34 +19,36 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_sub_account.rest_api.api import ManagedSubAccountApi
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.api import ManagedSubAccountApi
+from binance_sdk_sub_account.rest_api.models import (
     DepositAssetsIntoTheManagedSubAccountResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetManagedSubAccountDepositAddressResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountAssetDetailsResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountFuturesAssetDetailsResponse,
 )
-from binance_sub_account.rest_api.models import QueryManagedSubAccountListResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import QueryManagedSubAccountListResponse
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountMarginAssetDetailsResponse,
 )
-from binance_sub_account.rest_api.models import QueryManagedSubAccountSnapshotResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
+    QueryManagedSubAccountSnapshotResponse,
+)
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogMasterAccountInvestorResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogMasterAccountTradingResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogSubAccountTradingResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     WithdrawlAssetsFromTheManagedSubAccountResponse,
 )
 

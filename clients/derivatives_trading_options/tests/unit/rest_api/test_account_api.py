@@ -19,17 +19,17 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_options.rest_api.api import AccountApi
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.api import AccountApi
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     AccountFundingFlowResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     GetDownloadIdForOptionTransactionHistoryResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     GetOptionTransactionHistoryDownloadLinkByIdResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionAccountInformationResponse,
 )
 

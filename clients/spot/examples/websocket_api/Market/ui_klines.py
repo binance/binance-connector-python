@@ -2,9 +2,9 @@ import asyncio
 import os
 import logging
 
-from binance_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
+from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
-from binance_spot.websocket_api.models import UiKlinesIntervalEnum
+from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

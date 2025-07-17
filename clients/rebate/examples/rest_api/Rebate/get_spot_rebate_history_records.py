@@ -1,7 +1,11 @@
 import os
 import logging
 
-from binance_rebate.rebate import Rebate, ConfigurationRestAPI, REBATE_REST_API_PROD_URL
+from binance_sdk_rebate.rebate import (
+    Rebate,
+    ConfigurationRestAPI,
+    REBATE_REST_API_PROD_URL,
+)
 
 
 # Configure logging

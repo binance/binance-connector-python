@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-simple-earn"
+name = "binance-sdk-simple-earn"
 version = "1.0.0"
-description = "Official Binance SimpleEarn Connector - A lightweight library that provides a convenient interface to Binance's SimpleEarn REST API"
+description = "Official Binance Simple Earn SDK - A lightweight library that provides a convenient interface to Binance's SimpleEarn REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_simple_earn", from = "src" }
+  { include = "binance_sdk_simple_earn", from = "src" }
 ]
 
 [tool.poetry.dependencies]

@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_staking.staking import (
+from binance_sdk_staking.staking import (
     Staking,
     ConfigurationRestAPI,
     STAKING_REST_API_PROD_URL,

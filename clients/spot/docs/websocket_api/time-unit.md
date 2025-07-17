@@ -3,8 +3,8 @@ import logging
 
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.constants import TimeUnit
-from binance_spot.spot import Spot
-from binance_spot.websocket_api.models import exchange_info_response_result
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.websocket_api.models import exchange_info_response_result
 
 logging.basicConfig(level=logging.INFO)
 

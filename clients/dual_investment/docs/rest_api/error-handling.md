@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_dual_investment.dual_investment import DualInvestment
-from binance_dual_investment.rest_api.models import GetDualInvestmentPositionsResponse
+from binance_sdk_dual_investment.dual_investment import DualInvestment
+from binance_sdk_dual_investment.rest_api.models import GetDualInvestmentPositionsResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_convert.convert import Convert
-from binance_convert.rest_api.models import ListAllConvertPairsResponse
+from binance_sdk_convert.convert import Convert
+from binance_sdk_convert.rest_api.models import ListAllConvertPairsResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

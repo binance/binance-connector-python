@@ -3,7 +3,7 @@ import ssl
 import logging
 
 from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_derivatives_trading_coin_futures.derivatives_trading_coin_futures import DerivativesTradingCoinFutures
+from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futures import DerivativesTradingCoinFutures
 
 logging.basicConfig(level=logging.INFO)
 

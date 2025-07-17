@@ -18,9 +18,11 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_convert.rest_api.api import MarketDataApi
-from binance_convert.rest_api.models import ListAllConvertPairsResponse
-from binance_convert.rest_api.models import QueryOrderQuantityPrecisionPerAssetResponse
+from binance_sdk_convert.rest_api.api import MarketDataApi
+from binance_sdk_convert.rest_api.models import ListAllConvertPairsResponse
+from binance_sdk_convert.rest_api.models import (
+    QueryOrderQuantityPrecisionPerAssetResponse,
+)
 
 
 class TestMarketDataApi:

@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_nft.nft import NFT, ConfigurationRestAPI, NFT_REST_API_PROD_URL
+from binance_sdk_nft.nft import NFT, ConfigurationRestAPI, NFT_REST_API_PROD_URL
 
 
 # Configure logging

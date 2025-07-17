@@ -18,8 +18,8 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_rebate.rest_api.api import RebateApi
-from binance_rebate.rest_api.models import GetSpotRebateHistoryRecordsResponse
+from binance_sdk_rebate.rest_api.api import RebateApi
+from binance_sdk_rebate.rest_api.models import GetSpotRebateHistoryRecordsResponse
 
 
 class TestRebateApi:

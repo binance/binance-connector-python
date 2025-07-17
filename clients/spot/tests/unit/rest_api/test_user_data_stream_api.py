@@ -24,9 +24,9 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_spot.rest_api.api import UserDataStreamApi
+from binance_sdk_spot.rest_api.api import UserDataStreamApi
 
-from binance_spot.rest_api.models import NewUserDataStreamResponse
+from binance_sdk_spot.rest_api.models import NewUserDataStreamResponse
 
 
 class TestUserDataStreamApi:

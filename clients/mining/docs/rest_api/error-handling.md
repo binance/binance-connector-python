@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_mining.mining import Mining
-from binance_mining.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_mining.mining import Mining
+from binance_sdk_mining.rest_api.models import AcquiringAlgorithmResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

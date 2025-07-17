@@ -1,15 +1,15 @@
 import os
 import logging
 
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import (
     DerivativesTradingUsdsFutures,
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     BasisContractTypeEnum,
 )
-from binance_derivatives_trading_usds_futures.rest_api.models import BasisPeriodEnum
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import BasisPeriodEnum
 
 
 # Configure logging

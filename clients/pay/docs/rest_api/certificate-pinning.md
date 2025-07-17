@@ -9,8 +9,8 @@ from socket import create_connection
 from OpenSSL.crypto import dump_publickey, load_certificate, FILETYPE_ASN1
 
 from binance_common.configuration import ConfigurationRestAPI
-from binance_pay.pay import Pay
-from binance_pay.rest_api.models import GetPayTradeHistoryResponse
+from binance_sdk_pay.pay import Pay
+from binance_sdk_pay.rest_api.models import GetPayTradeHistoryResponse
 
 PINNED_PUBLIC_KEY = "YOUR-PINNED-PUBLIC-KEY"
 CA_CERT_PATH = "/path/to/certificate.pem"
@@ -55,7 +55,7 @@ configuration = ConfigurationRestAPI(
 client = Pay(config_rest_api=configuration)
 
 try:
-    response = client.rest_api.get_pay_trade_history()
+    response = client.rest_api.get_pay_trade_history(startTimestamp=1637186702000, limit=50)
     data: GetPayTradeHistoryResponse = response.data()
     print(data)
 except ssl.SSLError as ssl_err:

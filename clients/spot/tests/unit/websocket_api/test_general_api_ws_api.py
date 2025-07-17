@@ -19,13 +19,13 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
-from binance_spot.websocket_api.api import GeneralApi
+from binance_sdk_spot.websocket_api.api import GeneralApi
 
 
-from binance_spot.websocket_api.models import ExchangeInfoSymbolStatusEnum
-from binance_spot.websocket_api.models import ExchangeInfoResponse
-from binance_spot.websocket_api.models import PingResponse
-from binance_spot.websocket_api.models import TimeResponse
+from binance_sdk_spot.websocket_api.models import ExchangeInfoSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import ExchangeInfoResponse
+from binance_sdk_spot.websocket_api.models import PingResponse
+from binance_sdk_spot.websocket_api.models import TimeResponse
 
 
 class TestWebSocketGeneralApi:

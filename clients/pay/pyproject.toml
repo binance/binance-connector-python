@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-pay"
+name = "binance-sdk-pay"
 version = "1.0.0"
-description = "Official Binance Pay Connector - A lightweight library that provides a convenient interface to Binance's Pay REST API"
+description = "Official Binance Pay SDK - A lightweight library that provides a convenient interface to Binance's Pay REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_pay", from = "src" }
+  { include = "binance_sdk_pay", from = "src" }
 ]
 
 [tool.poetry.dependencies]

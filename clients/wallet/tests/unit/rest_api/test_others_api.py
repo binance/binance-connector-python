@@ -17,9 +17,9 @@ from unittest.mock import MagicMock
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_wallet.rest_api.api import OthersApi
-from binance_wallet.rest_api.models import GetSymbolsDelistScheduleForSpotResponse
-from binance_wallet.rest_api.models import SystemStatusResponse
+from binance_sdk_wallet.rest_api.api import OthersApi
+from binance_sdk_wallet.rest_api.models import GetSymbolsDelistScheduleForSpotResponse
+from binance_sdk_wallet.rest_api.models import SystemStatusResponse
 
 
 class TestOthersApi:

@@ -2,12 +2,12 @@ import asyncio
 import os
 import logging
 
-from binance_spot.spot import (
+from binance_sdk_spot.spot import (
     Spot,
     SPOT_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,
 )
-from binance_spot.websocket_streams.models import RollingWindowTickerWindowSizeEnum
+from binance_sdk_spot.websocket_streams.models import RollingWindowTickerWindowSizeEnum
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

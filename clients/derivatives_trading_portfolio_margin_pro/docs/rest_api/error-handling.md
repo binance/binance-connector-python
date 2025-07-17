@@ -14,8 +14,8 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError
 )
-from binance_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
-from binance_derivatives_trading_portfolio_margin_pro.rest_api.models import GetPortfolioMarginProAccountInfoResponse
+from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_portfolio_margin_pro import DerivativesTradingPortfolioMarginPro
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import GetPortfolioMarginProAccountInfoResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

@@ -19,47 +19,53 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_options.rest_api.api import TradeApi
-from binance_derivatives_trading_options.rest_api.models import AccountTradeListResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.api import TradeApi
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    AccountTradeListResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     CancelAllOptionOrdersByUnderlyingResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     CancelAllOptionOrdersOnSpecificSymbolResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     CancelMultipleOptionOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     CancelOptionOrderResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import NewOrderResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderResponse
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionPositionInformationResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     PlaceMultipleOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     QueryCurrentOpenOptionOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     QueryOptionOrderHistoryResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import QuerySingleOrderResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    QuerySingleOrderResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     UserExerciseRecordResponse,
 )
 
 
-from binance_derivatives_trading_options.rest_api.models import NewOrderSideEnum
-from binance_derivatives_trading_options.rest_api.models import NewOrderTypeEnum
-from binance_derivatives_trading_options.rest_api.models import NewOrderTimeInForceEnum
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderSideEnum
+from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderTypeEnum
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    NewOrderTimeInForceEnum,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
 
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     PlaceMultipleOrdersOrdersParameterInner,
 )
 

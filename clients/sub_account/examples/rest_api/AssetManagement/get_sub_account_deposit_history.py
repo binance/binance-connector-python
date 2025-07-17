@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_sub_account.sub_account import (
+from binance_sdk_sub_account.sub_account import (
     SubAccount,
     ConfigurationRestAPI,
     SUB_ACCOUNT_REST_API_PROD_URL,

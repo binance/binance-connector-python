@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_nft.nft import NFT
-from binance_nft.rest_api.models import AcquiringAlgorithmResponse
+from binance_sdk_nft.nft import NFT
+from binance_sdk_nft.rest_api.models import AcquiringAlgorithmResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

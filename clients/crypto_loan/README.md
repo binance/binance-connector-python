@@ -1,16 +1,16 @@
-# Binance Python Crypto Loan Connector
+# Binance Python Crypto Loan SDK
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-crypto-loan.yml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-crypto-loan)](https://pypi.python.org/pypi/binance-crypto-loan)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-crypto-loan.svg)](https://pypi.org/project/binance-crypto-loan/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-crypto-loan)](https://pypi.python.org/pypi/binance-sdk-crypto-loan)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-crypto-loan.svg)](https://pypi.org/project/binance-sdk-crypto-loan/)
 [![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance Crypto Loan API, enabling developers to interact programmatically with Binance's Crypto Loan trading platform. The library provides tools to subscribe to fixed-term loans with fixed interest rates through the REST API:
-- [REST API](./src/binance_crypto_loan/rest_api/rest_api.py)
+This is a client library for the Binance Crypto Loan SDK API, enabling developers to interact programmatically with Binance's Crypto Loan trading platform. The library provides tools to subscribe to fixed-term loans with fixed interest rates through the REST API:
+- [REST API](./src/binance_sdk_crypto_loan/rest_api/rest_api.py)
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ This is a client library for the Binance Crypto Loan API, enabling developers to
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-crypto-loan
+pip install binance-sdk-crypto-loan
 ```
 
 ## Documentation
@@ -44,13 +44,13 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 
 ### REST APIs
 
-All REST API endpoints are available through the [`rest_api`](./src/binance_crypto_loan/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
+All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_crypto_loan/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import CRYPTO_LOAN_REST_API_PROD_URL
-from binance_crypto_loan.crypto_loan import CryptoLoan
-from binance_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
+from binance_sdk_crypto_loan.crypto_loan import CryptoLoan
+from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanBorrowHistoryResponse
 
 logging.basicConfig(level=logging.INFO)
 configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=CRYPTO_LOAN_REST_API_PROD_URL)
@@ -124,7 +124,7 @@ To enhance security, you can use certificate pinning with the `https_agent` opti
 
 The REST API provides detailed error types to help you handle issues effectively:
 
-- `ClientError`: Represents an error that occurred in the Connector client.
+- `ClientError`: Represents an error that occurred in the SDK client.
 - `RequiredError`: Thrown when a required parameter is missing or undefined.
 - `UnauthorizedError`: Indicates missing or invalid authentication credentials.
 - `ForbiddenError`: Access to the requested resource is forbidden.
@@ -155,7 +155,7 @@ The tests cover:
 
 ## Migration Guide
 
-If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_crypto_loan_connector.md) for detailed steps.
+If you are upgrading to the new modularized structure, refer to the [Migration Guide](./docs/migration_guide_crypto_loan_sdk.md) for detailed steps.
 
 ## Contributing
 

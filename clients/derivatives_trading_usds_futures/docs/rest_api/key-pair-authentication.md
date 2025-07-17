@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
-from binance_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
+from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futures import DerivativesTradingUsdsFutures
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import ExchangeInformationResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()

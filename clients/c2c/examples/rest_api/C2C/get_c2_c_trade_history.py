@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_c2c.c2c import C2C, ConfigurationRestAPI, C2C_REST_API_PROD_URL
+from binance_sdk_c2c.c2c import C2C, ConfigurationRestAPI, C2C_REST_API_PROD_URL
 
 
 # Configure logging

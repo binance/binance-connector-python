@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_derivatives_trading_options.derivatives_trading_options import (
+from binance_sdk_derivatives_trading_options.derivatives_trading_options import (
     DerivativesTradingOptions,
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_OPTIONS_REST_API_PROD_URL,

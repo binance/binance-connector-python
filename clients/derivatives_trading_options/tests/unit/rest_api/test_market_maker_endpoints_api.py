@@ -19,26 +19,26 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_options.rest_api.api import MarketMakerEndpointsApi
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.api import MarketMakerEndpointsApi
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     AutoCancelAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     GetAutoCancelAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     GetMarketMakerProtectionConfigResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionMarginAccountInformationResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     ResetMarketMakerProtectionConfigResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     SetAutoCancelAllOpenOrdersResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     SetMarketMakerProtectionConfigResponse,
 )
 

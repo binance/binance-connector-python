@@ -20,83 +20,103 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_spot.websocket_api.api import TradeApi
+from binance_sdk_spot.websocket_api.api import TradeApi
 
 
-from binance_spot.websocket_api.models import OrderCancelCancelRestrictionsEnum
-from binance_spot.websocket_api.models import OrderCancelReplaceCancelReplaceModeEnum
-from binance_spot.websocket_api.models import OrderCancelReplaceSideEnum
-from binance_spot.websocket_api.models import OrderCancelReplaceTypeEnum
-from binance_spot.websocket_api.models import OrderCancelReplaceTimeInForceEnum
-from binance_spot.websocket_api.models import OrderCancelReplaceNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import OrderCancelCancelRestrictionsEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderCancelReplaceCancelReplaceModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import OrderCancelReplaceSideEnum
+from binance_sdk_spot.websocket_api.models import OrderCancelReplaceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderCancelReplaceTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderCancelReplaceNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
     OrderCancelReplaceSelfTradePreventionModeEnum,
 )
-from binance_spot.websocket_api.models import OrderCancelReplaceCancelRestrictionsEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import (
+    OrderCancelReplaceCancelRestrictionsEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderCancelReplaceOrderRateLimitExceededModeEnum,
 )
-from binance_spot.websocket_api.models import OrderListPlaceSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceStopLimitTimeInForceEnum
-from binance_spot.websocket_api.models import OrderListPlaceNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceSelfTradePreventionModeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOcoSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceOcoAboveTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOcoBelowTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOcoBelowTimeInForceEnum
-from binance_spot.websocket_api.models import OrderListPlaceOcoNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import OrderListPlaceSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceStopLimitTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceSelfTradePreventionModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAboveTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOcoSelfTradePreventionModeEnum,
 )
-from binance_spot.websocket_api.models import OrderListPlaceOtoWorkingTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtoWorkingSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtoPendingTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtoPendingSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtoNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoWorkingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoWorkingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoPendingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoPendingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtoSelfTradePreventionModeEnum,
 )
-from binance_spot.websocket_api.models import OrderListPlaceOtoWorkingTimeInForceEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtoPendingTimeInForceEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtocoWorkingTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtocoWorkingSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtocoPendingSideEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtocoPendingAboveTypeEnum
-from binance_spot.websocket_api.models import OrderListPlaceOtocoNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoWorkingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoPendingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoPendingSideEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingAboveTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoNewOrderRespTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoSelfTradePreventionModeEnum,
 )
-from binance_spot.websocket_api.models import OrderListPlaceOtocoWorkingTimeInForceEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoWorkingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingAboveTimeInForceEnum,
 )
-from binance_spot.websocket_api.models import OrderListPlaceOtocoPendingBelowTypeEnum
-from binance_spot.websocket_api.models import (
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingBelowTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingBelowTimeInForceEnum,
 )
-from binance_spot.websocket_api.models import OrderPlaceSideEnum
-from binance_spot.websocket_api.models import OrderPlaceTypeEnum
-from binance_spot.websocket_api.models import OrderPlaceTimeInForceEnum
-from binance_spot.websocket_api.models import OrderPlaceNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import OrderPlaceSelfTradePreventionModeEnum
-from binance_spot.websocket_api.models import SorOrderPlaceSideEnum
-from binance_spot.websocket_api.models import SorOrderPlaceTypeEnum
-from binance_spot.websocket_api.models import SorOrderPlaceTimeInForceEnum
-from binance_spot.websocket_api.models import SorOrderPlaceNewOrderRespTypeEnum
-from binance_spot.websocket_api.models import SorOrderPlaceSelfTradePreventionModeEnum
-from binance_spot.websocket_api.models import OpenOrdersCancelAllResponse
-from binance_spot.websocket_api.models import OrderAmendKeepPriorityResponse
-from binance_spot.websocket_api.models import OrderCancelResponse
-from binance_spot.websocket_api.models import OrderCancelReplaceResponse
-from binance_spot.websocket_api.models import OrderListCancelResponse
-from binance_spot.websocket_api.models import OrderListPlaceResponse
-from binance_spot.websocket_api.models import OrderListPlaceOcoResponse
-from binance_spot.websocket_api.models import OrderListPlaceOtoResponse
-from binance_spot.websocket_api.models import OrderListPlaceOtocoResponse
-from binance_spot.websocket_api.models import OrderPlaceResponse
-from binance_spot.websocket_api.models import OrderTestResponse
-from binance_spot.websocket_api.models import SorOrderPlaceResponse
-from binance_spot.websocket_api.models import SorOrderTestResponse
+from binance_sdk_spot.websocket_api.models import OrderPlaceSideEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderPlaceSelfTradePreventionModeEnum
+from binance_sdk_spot.websocket_api.models import SorOrderPlaceSideEnum
+from binance_sdk_spot.websocket_api.models import SorOrderPlaceTypeEnum
+from binance_sdk_spot.websocket_api.models import SorOrderPlaceTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import SorOrderPlaceNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    SorOrderPlaceSelfTradePreventionModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import OpenOrdersCancelAllResponse
+from binance_sdk_spot.websocket_api.models import OrderAmendKeepPriorityResponse
+from binance_sdk_spot.websocket_api.models import OrderCancelResponse
+from binance_sdk_spot.websocket_api.models import OrderCancelReplaceResponse
+from binance_sdk_spot.websocket_api.models import OrderListCancelResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoResponse
+from binance_sdk_spot.websocket_api.models import OrderPlaceResponse
+from binance_sdk_spot.websocket_api.models import OrderTestResponse
+from binance_sdk_spot.websocket_api.models import SorOrderPlaceResponse
+from binance_sdk_spot.websocket_api.models import SorOrderTestResponse
 
 
 class TestWebSocketTradeApi:

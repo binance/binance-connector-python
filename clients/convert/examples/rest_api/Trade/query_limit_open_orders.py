@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_convert.convert import (
+from binance_sdk_convert.convert import (
     Convert,
     ConfigurationRestAPI,
     CONVERT_REST_API_PROD_URL,

@@ -15,16 +15,16 @@ from unittest.mock import AsyncMock, MagicMock
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
 from binance_common.errors import RequiredError
-from binance_derivatives_trading_usds_futures.websocket_api.api import MarketDataApi
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.api import MarketDataApi
 
 
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     OrderBookResponse,
 )
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     SymbolOrderBookTickerResponse,
 )
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     SymbolPriceTickerResponse,
 )
 

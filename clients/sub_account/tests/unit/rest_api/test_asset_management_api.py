@@ -19,50 +19,58 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_sub_account.rest_api.api import AssetManagementApi
-from binance_sub_account.rest_api.models import FuturesTransferForSubAccountResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.api import AssetManagementApi
+from binance_sdk_sub_account.rest_api.models import FuturesTransferForSubAccountResponse
+from binance_sdk_sub_account.rest_api.models import (
     GetDetailOnSubAccountsFuturesAccountResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetDetailOnSubAccountsFuturesAccountV2Response,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetDetailOnSubAccountsMarginAccountResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetMovePositionHistoryForSubAccountResponse,
 )
-from binance_sub_account.rest_api.models import GetSubAccountDepositAddressResponse
-from binance_sub_account.rest_api.models import GetSubAccountDepositHistoryResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import GetSubAccountDepositAddressResponse
+from binance_sdk_sub_account.rest_api.models import GetSubAccountDepositHistoryResponse
+from binance_sdk_sub_account.rest_api.models import (
     GetSummaryOfSubAccountsFuturesAccountResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetSummaryOfSubAccountsFuturesAccountV2Response,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     GetSummaryOfSubAccountsMarginAccountResponse,
 )
-from binance_sub_account.rest_api.models import MarginTransferForSubAccountResponse
-from binance_sub_account.rest_api.models import MovePositionForSubAccountResponse
-from binance_sub_account.rest_api.models import QuerySubAccountAssetsResponse
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import MarginTransferForSubAccountResponse
+from binance_sdk_sub_account.rest_api.models import MovePositionForSubAccountResponse
+from binance_sdk_sub_account.rest_api.models import QuerySubAccountAssetsResponse
+from binance_sdk_sub_account.rest_api.models import (
     QuerySubAccountAssetsAssetManagementResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QuerySubAccountFuturesAssetTransferHistoryResponse,
 )
-from binance_sub_account.rest_api.models import (
+from binance_sdk_sub_account.rest_api.models import (
     QuerySubAccountSpotAssetTransferHistoryResponse,
 )
-from binance_sub_account.rest_api.models import QuerySubAccountSpotAssetsSummaryResponse
-from binance_sub_account.rest_api.models import QueryUniversalTransferHistoryResponse
-from binance_sub_account.rest_api.models import SubAccountFuturesAssetTransferResponse
-from binance_sub_account.rest_api.models import SubAccountTransferHistoryResponse
-from binance_sub_account.rest_api.models import TransferToMasterResponse
-from binance_sub_account.rest_api.models import TransferToSubAccountOfSameMasterResponse
-from binance_sub_account.rest_api.models import UniversalTransferResponse
+from binance_sdk_sub_account.rest_api.models import (
+    QuerySubAccountSpotAssetsSummaryResponse,
+)
+from binance_sdk_sub_account.rest_api.models import (
+    QueryUniversalTransferHistoryResponse,
+)
+from binance_sdk_sub_account.rest_api.models import (
+    SubAccountFuturesAssetTransferResponse,
+)
+from binance_sdk_sub_account.rest_api.models import SubAccountTransferHistoryResponse
+from binance_sdk_sub_account.rest_api.models import TransferToMasterResponse
+from binance_sdk_sub_account.rest_api.models import (
+    TransferToSubAccountOfSameMasterResponse,
+)
+from binance_sdk_sub_account.rest_api.models import UniversalTransferResponse
 
 
 class TestAssetManagementApi:

@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "binance-convert"
+name = "binance-sdk-convert"
 version = "1.0.0"
-description = "Official Binance Convert Connector - A lightweight library that provides a convenient interface to Binance's Convert REST API"
+description = "Official Binance Convert SDK - A lightweight library that provides a convenient interface to Binance's Convert REST API"
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
 include = ["CHANGELOG.md", "LICENSE", "README.md"]
 packages = [
-  { include = "binance_convert", from = "src" }
+  { include = "binance_sdk_convert", from = "src" }
 ]
 
 [tool.poetry.dependencies]

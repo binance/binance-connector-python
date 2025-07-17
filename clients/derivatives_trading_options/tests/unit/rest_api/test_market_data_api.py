@@ -19,30 +19,38 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_options.rest_api.api import MarketDataApi
-from binance_derivatives_trading_options.rest_api.models import CheckServerTimeResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.api import MarketDataApi
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    CheckServerTimeResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     ExchangeInformationResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     HistoricalExerciseRecordsResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     KlineCandlestickDataResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import OldTradesLookupResponse
-from binance_derivatives_trading_options.rest_api.models import OpenInterestResponse
-from binance_derivatives_trading_options.rest_api.models import OptionMarkPriceResponse
-from binance_derivatives_trading_options.rest_api.models import OrderBookResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    OldTradesLookupResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import OpenInterestResponse
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    OptionMarkPriceResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import OrderBookResponse
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     RecentBlockTradesListResponse,
 )
-from binance_derivatives_trading_options.rest_api.models import RecentTradesListResponse
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    RecentTradesListResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     SymbolPriceTickerResponse,
 )
 
-from binance_derivatives_trading_options.rest_api.models import (
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     Ticker24hrPriceChangeStatisticsResponse,
 )
 

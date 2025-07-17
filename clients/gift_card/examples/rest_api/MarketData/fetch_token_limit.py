@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_gift_card.gift_card import (
+from binance_sdk_gift_card.gift_card import (
     GiftCard,
     ConfigurationRestAPI,
     GIFT_CARD_REST_API_PROD_URL,

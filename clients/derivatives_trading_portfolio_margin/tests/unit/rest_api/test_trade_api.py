@@ -19,298 +19,298 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_derivatives_trading_portfolio_margin.rest_api.api import TradeApi
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.api import TradeApi
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllCmOpenConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllCmOpenOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllUmOpenConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllUmOpenOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelCmConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelCmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelMarginAccountAllOpenOrdersOnASymbolResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelMarginAccountOcoOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelMarginAccountOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelUmConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelUmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CmAccountTradeListResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CmPositionAdlQuantileEstimationResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetUmFuturesBnbBurnStatusResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountBorrowResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountRepayResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountRepayDebtResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountTradeListResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyCmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyUmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCmConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCmOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentCmOpenConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentCmOpenOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentUmOpenConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentUmOpenOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllMarginAccountOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllUmConditionalOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllUmOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCmConditionalOrderHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCmModifyOrderHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentCmOpenConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentCmOpenOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentMarginOpenOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentUmOpenConditionalOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentUmOpenOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginAccountOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginAccountsAllOcoResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginAccountsOcoResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginAccountsOpenOcoResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUmConditionalOrderHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUmModifyOrderHistoryResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUmOrderResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersCmForceOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersMarginForceOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersUmForceOrdersResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ToggleBnbBurnOnUmFuturesTradeResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     UmAccountTradeListResponse,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     UmPositionAdlQuantileEstimationResponse,
 )
 
 
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoStopLimitTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoSideEffectTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyCmOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyCmOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyUmOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyUmOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderStrategyTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderPositionSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderWorkingTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderPositionSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSideEffectTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderStrategyTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderPositionSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderWorkingTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderPositionSideEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderTimeInForceEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderNewOrderRespTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderPriceMatchEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderSelfTradePreventionModeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersCmForceOrdersAutoCloseTypeEnum,
 )
-from binance_derivatives_trading_portfolio_margin.rest_api.models import (
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersUmForceOrdersAutoCloseTypeEnum,
 )
 

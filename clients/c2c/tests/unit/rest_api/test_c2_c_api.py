@@ -18,8 +18,8 @@ from urllib.parse import parse_qs
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
-from binance_c2c.rest_api.api import C2CApi
-from binance_c2c.rest_api.models import GetC2CTradeHistoryResponse
+from binance_sdk_c2c.rest_api.api import C2CApi
+from binance_sdk_c2c.rest_api.models import GetC2CTradeHistoryResponse
 
 
 class TestC2CApi:

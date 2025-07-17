@@ -1,7 +1,7 @@
 import os
 import logging
 
-from binance_copy_trading.copy_trading import (
+from binance_sdk_copy_trading.copy_trading import (
     CopyTrading,
     ConfigurationRestAPI,
     COPY_TRADING_REST_API_PROD_URL,

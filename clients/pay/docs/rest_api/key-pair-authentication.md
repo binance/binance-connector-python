@@ -2,8 +2,8 @@
 
 ```python
 from binance_common.configuration import ConfigurationRestAPI
-from binance_pay.pay import Pay
-from binance_pay.rest_api.models import GetPayTradeHistoryResponse
+from binance_sdk_pay.pay import Pay
+from binance_sdk_pay.rest_api.models import GetPayTradeHistoryResponse
 
 with open("/path/to/private_key.pem", "r") as key_file:
     private_key = key_file.read()
@@ -17,7 +17,7 @@ configuration = ConfigurationRestAPI(
 client = Pay(config_rest_api=configuration)
 
 try:
-    response = client.rest_api.get_pay_trade_history()
+    response = client.rest_api.get_pay_trade_history(startTimestamp=1637186702000, limit=50)
     data: GetPayTradeHistoryResponse = response.data()
     print(data)
 except Exception as e:

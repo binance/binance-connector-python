@@ -14,18 +14,18 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.models import WebsocketApiResponse
 from binance_common.utils import parse_ws_rate_limit_headers
-from binance_derivatives_trading_usds_futures.websocket_api.api import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.api import (
     UserDataStreamsApi,
 )
 
 
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     CloseUserDataStreamResponse,
 )
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     KeepaliveUserDataStreamResponse,
 )
-from binance_derivatives_trading_usds_futures.websocket_api.models import (
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     StartUserDataStreamResponse,
 )
 

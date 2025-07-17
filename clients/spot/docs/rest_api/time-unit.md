@@ -5,8 +5,8 @@ The API supports different time units for timestamp values, including `milliseco
 ```python
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import TimeUnit
-from binance_spot.spot import Spot
-from binance_spot.rest_api.models import ExchangeInfoResponse
+from binance_sdk_spot.spot import Spot
+from binance_sdk_spot.rest_api.models import ExchangeInfoResponse
 
 configuration = ConfigurationRestAPI(
     api_key="your-api-key",

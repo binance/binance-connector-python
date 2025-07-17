@@ -19,19 +19,27 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
-from binance_margin_trading.rest_api.api import MarketDataApi
-from binance_margin_trading.rest_api.models import CrossMarginCollateralRatioResponse
-from binance_margin_trading.rest_api.models import GetAllCrossMarginPairsResponse
-from binance_margin_trading.rest_api.models import GetAllIsolatedMarginSymbolResponse
-from binance_margin_trading.rest_api.models import GetAllMarginAssetsResponse
-from binance_margin_trading.rest_api.models import GetDelistScheduleResponse
-from binance_margin_trading.rest_api.models import GetListScheduleResponse
-from binance_margin_trading.rest_api.models import QueryIsolatedMarginTierDataResponse
-from binance_margin_trading.rest_api.models import (
+from binance_sdk_margin_trading.rest_api.api import MarketDataApi
+from binance_sdk_margin_trading.rest_api.models import (
+    CrossMarginCollateralRatioResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import GetAllCrossMarginPairsResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    GetAllIsolatedMarginSymbolResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import GetAllMarginAssetsResponse
+from binance_sdk_margin_trading.rest_api.models import GetDelistScheduleResponse
+from binance_sdk_margin_trading.rest_api.models import GetListScheduleResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryIsolatedMarginTierDataResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import (
     QueryLiabilityCoinLeverageBracketInCrossMarginProModeResponse,
 )
-from binance_margin_trading.rest_api.models import QueryMarginAvailableInventoryResponse
-from binance_margin_trading.rest_api.models import QueryMarginPriceindexResponse
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAvailableInventoryResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import QueryMarginPriceindexResponse
 
 
 class TestMarketDataApi:
