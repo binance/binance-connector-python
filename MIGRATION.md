@@ -6,7 +6,7 @@ With the move towards modularization, Binance connectors are now split into smal
 
 | Feature | Monolithic Connector | Modular Connector |
 |---------|----------------------|------------------|
-| Package Name | `binance-connector` | `binance-<product>` |
+| Package Name | `binance-connector` | `binance-sdk-<product>` |
 | API Coverage | All Binance APIs | Individual APIs (Spot, Wallet, Algo Trading, Mining, etc.) |
 | Imports | Single package import | Separate package per product |
 | Code Structure | One large client | Smaller, focused clients |
@@ -26,13 +26,13 @@ pip uninstall binance-connector
 Install only the connector(s) you need. For example, to install the Spot Trading connector:
 
 ```bash
-pip install binance-spot
+pip install binance-sdk-spot
 ```
 
 To install multiple connectors:
 
 ```bash
-pip install binance-spot binance-margin-trading binance-wallet
+pip install binance-sdk-spot binance-sdk-margin-trading binanc-sdk-wallet
 ```
 
 ### **Step 3: Update Imports**
@@ -49,7 +49,7 @@ from binance.spot import Spot
 **New:**
 
 ```python
-from binance_spot.spot import Spot
+from binance_sdk_spot.spot import Spot
 ```
 
 ### **Step 4: Update Client Initialization**
@@ -69,8 +69,8 @@ print(account_info)
 **New (Modular Spot Connector):**
 
 ```python
-from binance_spot.spot import Spot
 from binance_common.configuration import ConfigurationRestAPI
+from binance_sdk_spot.spot import Spot
 
 configuration = ConfigurationRestAPI(api_key, api_secret)
 client = Spot(config_rest_api=configuration)
