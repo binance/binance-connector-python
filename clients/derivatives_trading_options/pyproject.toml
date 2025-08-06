@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-derivatives-trading-options"
-version = "1.1.0"
+version = "1.1.1"
 description = "Official Binance Derivatives Trading Options SDK - A lightweight library that provides a convenient interface to Binance's DerivativesTradingOptions REST API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"

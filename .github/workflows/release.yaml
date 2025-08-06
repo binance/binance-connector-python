@@ -24,7 +24,11 @@ jobs:
           echo "::set-output name=clients::$ALL_CLIENTS"
 
   release:
+    needs: detect-clients
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        client: ${{ fromJson(needs.detect-clients.outputs.clients) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,7 +42,7 @@ jobs:
             cd clients/${{ matrix.client }}
           fi
 
-          old_version=$(git show HEAD:pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
+          old_version=$(git show HEAD^:clients/${{ matrix.client }}/pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
           new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
           
           if [ "$old_version" = "$new_version" ]; then
@@ -72,4 +76,4 @@ jobs:
 
       - name: Publish to pypi
         working-directory: ${{ steps.path.outputs.dir }}
-        run: poetry publish --build
+        run: poetry publish --build --no-interaction

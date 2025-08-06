@@ -163,6 +163,7 @@ class TestMarketDataApi:
                     "unit": 1,
                     "makerFeeRate": "0.0002",
                     "takerFeeRate": "0.0002",
+                    "liquidationFeeRate": "0.0019000",
                     "minQty": "0.01",
                     "maxQty": "100",
                     "initialMargin": "0.15",
