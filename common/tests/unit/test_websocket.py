@@ -473,6 +473,24 @@ class TestWebSocketStreamBase:
             await websocket_stream.ping_ws_stream(mock_connection)
             mock_ping.assert_awaited_once_with(mock_connection)
 
+    @pytest.mark.asyncio
+    async def test_list_subscribe(self, websocket_stream, mock_connection):
+        mock_response = {"id": "some-id", "streams": ["stream1", "stream2"]}
+        future = asyncio.Future()
+        future.set_result(mock_response)
+
+        websocket_stream.send_message = AsyncMock(return_value=future)
+        result = await websocket_stream.list_subscribe()
+
+        assert isinstance(result, dict)
+        assert "streams" in result
+        assert "id" in result
+
+        sent_message = websocket_stream.send_message.call_args[0][0]
+        assert isinstance(sent_message, dict)
+        assert sent_message["method"] == "LIST_SUBSCRIPTIONS"
+        assert "id" in sent_message
+
 
 # ========== WebSocketAPIBase Tests ==========
 
