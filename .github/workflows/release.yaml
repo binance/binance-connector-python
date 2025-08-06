@@ -1,0 +1,75 @@
+name: Release Python Connector
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  detect-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      clients: ${{ steps.detect.outputs.clients }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Detect all clients
+        id: detect
+        run: |
+          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          echo "Detected clients: $ALL_CLIENTS"
+          echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
+          echo "::set-output name=clients::$ALL_CLIENTS"
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compare versions
+        id: version
+        run: |
+          if [ "${{ matrix.client }}" == "common" ]; then
+            cd common
+          else
+            cd clients/${{ matrix.client }}
+          fi
+
+          old_version=$(git show HEAD^:pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
+          new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
+          
+          if [ "$old_version" = "$new_version" ]; then
+            echo "::error ::Version was not bumped in pyproject.toml — skipping release"
+            exit 1
+          fi
+
+      - name: Set working directory path
+        id: path
+        run: echo "dir=$([[ '${{ matrix.client }}' == 'common' ]] && echo 'common' || echo 'clients/${{ matrix.client }}')" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Poetry
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: |
+          poetry install
+          if [ "${{ matrix.client }}" == "common" ]; then
+            poetry config pypi-token.pypi ${{ secrets.PYPI_COMMON_TOKEN }}
+          else
+            poetry config pypi-token.pypi ${{ secrets.PYPI_CLIENTS_TOKEN }}
+          fi
+
+      - name: Build (release)
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: poetry build
+
+      - name: Publish to pypi
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: poetry publish --build

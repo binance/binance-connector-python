@@ -498,12 +498,24 @@ class WebSocketStreamBase(WebSocketCommon):
             else:
                 raise ValueError(f"Stream {stream} not connected.")
 
-    async def list_subscribe(self):
-        """List all subscriptions."""
+    async def list_subscribe(self) -> dict:
+        """List all subscriptions.
+
+        Returns:
+            dict: Current subscriptions.
+        """
 
         for connection in self.connections:
-            json_msg = json.dumps({"method": "LIST_SUBSCRIPTIONS", "id": get_uuid()})
-            await self.send_message(json_msg, connection)
+            json_msg = {"method": "LIST_SUBSCRIPTIONS", "id": get_uuid()}
+            future = await self.send_message(json_msg, connection)
+            try:
+                response = await asyncio.wait_for(future, timeout=20)
+                logging.info(f"Current subscriptions: {response}")
+                return response
+            except asyncio.TimeoutError:
+                logging.warning(
+                    f"Timeout waiting for response to LIST_SUBSCRIPTIONS for connection {connection.id}"
+                )
 
     async def ping_ws_stream(self, connection: WebSocketConnection):
         """Send a ping message to the WebSocket server.

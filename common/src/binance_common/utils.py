@@ -11,6 +11,7 @@ import uuid
 from base64 import b64encode
 from Crypto.Hash import SHA256
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
+from enum import Enum
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Type, TypeVar, Union
 from urllib.parse import urlencode
@@ -119,6 +120,8 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
         return [v.__dict__ if hasattr(v, '__dict__') else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
+    if isinstance(val , Enum):
+        return val.value
     return val
 
 
