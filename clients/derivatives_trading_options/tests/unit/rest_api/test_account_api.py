@@ -32,6 +32,9 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionAccountInformationResponse,
 )
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    OptionMarginAccountInformationResponse,
+)
 
 
 class TestAccountApi:
@@ -655,3 +658,144 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.option_account_information()
+
+    @patch("binance_common.utils.get_signature")
+    def test_option_margin_account_information_success(self, mock_get_signature):
+        """Test option_margin_account_information() successfully with required parameters only."""
+
+        expected_response = {
+            "asset": [
+                {
+                    "asset": "USDT",
+                    "marginBalance": "10099.448",
+                    "equity": "10094.44662",
+                    "available": "8725.92524",
+                    "initialMargin": "1084.52138",
+                    "maintMargin": "151.00138",
+                    "unrealizedPNL": "-5.00138",
+                    "adjustedEquity": "34.13282285",
+                }
+            ],
+            "greek": [
+                {
+                    "underlying": "BTCUSDT",
+                    "delta": "-0.05",
+                    "gamma": "-0.002",
+                    "theta": "-0.05",
+                    "vega": "-0.002",
+                }
+            ],
+            "time": 1592449455993,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.option_margin_account_information()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/eapi/v1/marginAccount" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OptionMarginAccountInformationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = OptionMarginAccountInformationResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = OptionMarginAccountInformationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_option_margin_account_information_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test option_margin_account_information() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {
+            "asset": [
+                {
+                    "asset": "USDT",
+                    "marginBalance": "10099.448",
+                    "equity": "10094.44662",
+                    "available": "8725.92524",
+                    "initialMargin": "1084.52138",
+                    "maintMargin": "151.00138",
+                    "unrealizedPNL": "-5.00138",
+                    "adjustedEquity": "34.13282285",
+                }
+            ],
+            "greek": [
+                {
+                    "underlying": "BTCUSDT",
+                    "delta": "-0.05",
+                    "gamma": "-0.002",
+                    "theta": "-0.05",
+                    "vega": "-0.002",
+                }
+            ],
+            "time": 1592449455993,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.option_margin_account_information(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/eapi/v1/marginAccount" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OptionMarginAccountInformationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = OptionMarginAccountInformationResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = OptionMarginAccountInformationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_option_margin_account_information_server_error(self):
+        """Test that option_margin_account_information() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.option_margin_account_information = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.option_margin_account_information()

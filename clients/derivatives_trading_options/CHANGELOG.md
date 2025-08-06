@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.1 - 2025-08-06
+
+### Changed (1)
+
+#### REST API
+
+- Moved `option_margin_account_information` unit tests from `test_market_maker_endpoints_api` folder to `test_account_api`
+
 ## 1.1.0 - 2025-08-06
 
 ### Changed (4)
