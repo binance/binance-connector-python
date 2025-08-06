@@ -25,6 +25,7 @@ from .models import AccountFundingFlowResponse
 from .models import GetDownloadIdForOptionTransactionHistoryResponse
 from .models import GetOptionTransactionHistoryDownloadLinkByIdResponse
 from .models import OptionAccountInformationResponse
+from .models import OptionMarginAccountInformationResponse
 from .models import CheckServerTimeResponse
 from .models import ExchangeInformationResponse
 from .models import HistoricalExerciseRecordsResponse
@@ -48,7 +49,6 @@ from .models import QueryBlockTradeOrderResponse
 from .models import AutoCancelAllOpenOrdersResponse
 from .models import GetAutoCancelAllOpenOrdersResponse
 from .models import GetMarketMakerProtectionConfigResponse
-from .models import OptionMarginAccountInformationResponse
 from .models import ResetMarketMakerProtectionConfigResponse
 from .models import SetAutoCancelAllOpenOrdersResponse
 from .models import SetMarketMakerProtectionConfigResponse
@@ -275,6 +275,30 @@ class DerivativesTradingOptionsRestAPI:
         """
 
         return self._accountApi.option_account_information(recv_window)
+
+    def option_margin_account_information(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[OptionMarginAccountInformationResponse]:
+        """
+                Option Margin Account Information (USER_DATA)
+
+                Get current account information.
+
+        Weight: 3
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[OptionMarginAccountInformationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.option_margin_account_information(recv_window)
 
     def check_server_time(
         self,
@@ -924,32 +948,6 @@ class DerivativesTradingOptionsRestAPI:
 
         return self._marketMakerEndpointsApi.get_market_maker_protection_config(
             underlying, recv_window
-        )
-
-    def option_margin_account_information(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[OptionMarginAccountInformationResponse]:
-        """
-                Option Margin Account Information (USER_DATA)
-
-                Get current account information.
-
-        Weight: 3
-
-                Args:
-                    recv_window (Optional[int]):
-
-                Returns:
-                    ApiResponse[OptionMarginAccountInformationResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketMakerEndpointsApi.option_margin_account_information(
-            recv_window
         )
 
     def reset_market_maker_protection_config(

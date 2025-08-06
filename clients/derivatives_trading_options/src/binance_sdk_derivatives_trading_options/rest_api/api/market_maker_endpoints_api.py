@@ -19,7 +19,6 @@ from binance_common.utils import send_request
 from ..models import AutoCancelAllOpenOrdersResponse
 from ..models import GetAutoCancelAllOpenOrdersResponse
 from ..models import GetMarketMakerProtectionConfigResponse
-from ..models import OptionMarginAccountInformationResponse
 from ..models import ResetMarketMakerProtectionConfigResponse
 from ..models import SetAutoCancelAllOpenOrdersResponse
 from ..models import SetMarketMakerProtectionConfigResponse
@@ -164,44 +163,6 @@ class MarketMakerEndpointsApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=GetMarketMakerProtectionConfigResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
-    def option_margin_account_information(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[OptionMarginAccountInformationResponse]:
-        """
-                Option Margin Account Information (USER_DATA)
-                GET /eapi/v1/marginAccount
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Option-Margin-Account-Information
-
-                Get current account information.
-
-        Weight: 3
-
-                Args:
-                    recv_window (Optional[int]):
-
-                Returns:
-                    ApiResponse[OptionMarginAccountInformationResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        payload = {"recv_window": recv_window}
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="GET",
-            path="/eapi/v1/marginAccount",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=OptionMarginAccountInformationResponse,
             is_signed=True,
             signer=self._signer,
         )

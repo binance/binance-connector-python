@@ -28,9 +28,6 @@ from .all_coins_information_response_inner import (
 from .all_coins_information_response_inner_network_list_inner import (
     AllCoinsInformationResponseInnerNetworkListInner as AllCoinsInformationResponseInnerNetworkListInner,
 )
-from .all_coins_information_response_inner_network_list_inner_network_list_inner import (
-    AllCoinsInformationResponseInnerNetworkListInnerNetworkListInner as AllCoinsInformationResponseInnerNetworkListInnerNetworkListInner,
-)
 from .asset_detail_response import AssetDetailResponse as AssetDetailResponse
 from .asset_detail_response_ctr import AssetDetailResponseCTR as AssetDetailResponseCTR
 from .asset_detail_response_sky import AssetDetailResponseSKY as AssetDetailResponseSKY
@@ -41,6 +38,9 @@ from .asset_dividend_record_response_rows_inner import (
     AssetDividendRecordResponseRowsInner as AssetDividendRecordResponseRowsInner,
 )
 from .broker_withdraw_response import BrokerWithdrawResponse as BrokerWithdrawResponse
+from .check_questionnaire_requirements_response import (
+    CheckQuestionnaireRequirementsResponse as CheckQuestionnaireRequirementsResponse,
+)
 from .daily_account_snapshot_response import (
     DailyAccountSnapshotResponse as DailyAccountSnapshotResponse,
 )
@@ -145,12 +145,6 @@ from .get_symbols_delist_schedule_for_spot_response import (
 from .get_symbols_delist_schedule_for_spot_response_inner import (
     GetSymbolsDelistScheduleForSpotResponseInner as GetSymbolsDelistScheduleForSpotResponseInner,
 )
-from .onboarded_vasp_list_response import (
-    OnboardedVaspListResponse as OnboardedVaspListResponse,
-)
-from .onboarded_vasp_list_response_inner import (
-    OnboardedVaspListResponseInner as OnboardedVaspListResponseInner,
-)
 from .one_click_arrival_deposit_apply_response import (
     OneClickArrivalDepositApplyResponse as OneClickArrivalDepositApplyResponse,
 )
@@ -189,6 +183,8 @@ from .user_asset_response_inner import UserAssetResponseInner as UserAssetRespon
 from .user_universal_transfer_response import (
     UserUniversalTransferResponse as UserUniversalTransferResponse,
 )
+from .vasp_list_response import VaspListResponse as VaspListResponse
+from .vasp_list_response_inner import VaspListResponseInner as VaspListResponseInner
 from .withdraw_history_response import (
     WithdrawHistoryResponse as WithdrawHistoryResponse,
 )

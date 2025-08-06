@@ -27,7 +27,7 @@ class Risklevelchange(BaseModel):
     Risklevelchange
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     u: Optional[StrictStr] = None
     s: Optional[StrictStr] = None
     eq: Optional[StrictStr] = None

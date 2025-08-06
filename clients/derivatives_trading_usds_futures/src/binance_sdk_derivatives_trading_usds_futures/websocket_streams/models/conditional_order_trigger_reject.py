@@ -30,8 +30,8 @@ class ConditionalOrderTriggerReject(BaseModel):
     ConditionalOrderTriggerReject
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     var_or: Optional[ConditionalOrderTriggerRejectOr] = Field(default=None, alias="or")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "T", "or"]

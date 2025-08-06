@@ -27,10 +27,10 @@ class Liabilitychange(BaseModel):
     Liabilitychange
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     a: Optional[StrictStr] = None
     t: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     p: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
     l: Optional[StrictStr] = None

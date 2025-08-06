@@ -30,7 +30,7 @@ class OrderTradeUpdateOInnerFiInner(BaseModel):
     t: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

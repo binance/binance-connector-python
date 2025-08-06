@@ -22,15 +22,16 @@ from typing import Set
 from typing_extensions import Self
 
 
-class OnboardedVaspListResponseInner(BaseModel):
+class CheckQuestionnaireRequirementsResponse(BaseModel):
     """
-    OnboardedVaspListResponseInner
+    CheckQuestionnaireRequirementsResponse
     """  # noqa: E501
 
-    vasp_name: Optional[StrictStr] = Field(default=None, alias="vaspName")
-    vasp_code: Optional[StrictStr] = Field(default=None, alias="vaspCode")
+    questionnaire_country_code: Optional[StrictStr] = Field(
+        default=None, alias="questionnaireCountryCode"
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["vaspName", "vaspCode"]
+    __properties: ClassVar[List[str]] = ["questionnaireCountryCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +54,7 @@ class OnboardedVaspListResponseInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OnboardedVaspListResponseInner from a JSON string"""
+        """Create an instance of CheckQuestionnaireRequirementsResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -87,7 +88,7 @@ class OnboardedVaspListResponseInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OnboardedVaspListResponseInner from a dict"""
+        """Create an instance of CheckQuestionnaireRequirementsResponse from a dict"""
         if obj is None:
             return None
 
@@ -95,7 +96,7 @@ class OnboardedVaspListResponseInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"vaspName": obj.get("vaspName"), "vaspCode": obj.get("vaspCode")}
+            {"questionnaireCountryCode": obj.get("questionnaireCountryCode")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -21,13 +21,14 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 
 from binance_sdk_wallet.rest_api.api import TravelRuleApi
 from binance_sdk_wallet.rest_api.models import BrokerWithdrawResponse
+from binance_sdk_wallet.rest_api.models import CheckQuestionnaireRequirementsResponse
 from binance_sdk_wallet.rest_api.models import DepositHistoryTravelRuleResponse
 from binance_sdk_wallet.rest_api.models import FetchAddressVerificationListResponse
-from binance_sdk_wallet.rest_api.models import OnboardedVaspListResponse
 from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireResponse
 from binance_sdk_wallet.rest_api.models import (
     SubmitDepositQuestionnaireTravelRuleResponse,
 )
+from binance_sdk_wallet.rest_api.models import VaspListResponse
 from binance_sdk_wallet.rest_api.models import WithdrawHistoryV1Response
 from binance_sdk_wallet.rest_api.models import WithdrawHistoryV2Response
 from binance_sdk_wallet.rest_api.models import WithdrawTravelRuleResponse
@@ -315,6 +316,103 @@ class TestTravelRuleApi:
             self.client.broker_withdraw(**params)
 
     @patch("binance_common.utils.get_signature")
+    def test_check_questionnaire_requirements_success(self, mock_get_signature):
+        """Test check_questionnaire_requirements() successfully with required parameters only."""
+
+        expected_response = {"questionnaireCountryCode": "AE"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.check_questionnaire_requirements()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert (
+            "/sapi/v1/localentity/questionnaire-requirements" in request_kwargs["url"]
+        )
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CheckQuestionnaireRequirementsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = CheckQuestionnaireRequirementsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = CheckQuestionnaireRequirementsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_check_questionnaire_requirements_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test check_questionnaire_requirements() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"questionnaireCountryCode": "AE"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.check_questionnaire_requirements(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert (
+            "/sapi/v1/localentity/questionnaire-requirements" in request_kwargs["url"]
+        )
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CheckQuestionnaireRequirementsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = CheckQuestionnaireRequirementsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = CheckQuestionnaireRequirementsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_check_questionnaire_requirements_server_error(self):
+        """Test that check_questionnaire_requirements() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.check_questionnaire_requirements = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.check_questionnaire_requirements()
+
+    @patch("binance_common.utils.get_signature")
     def test_deposit_history_travel_rule_success(self, mock_get_signature):
         """Test deposit_history_travel_rule() successfully with required parameters only."""
 
@@ -545,6 +643,60 @@ class TestTravelRuleApi:
 
         assert response.data() == expected
 
+    @patch("binance_common.utils.get_signature")
+    def test_fetch_address_verification_list_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test fetch_address_verification_list() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = [
+            {
+                "status": "PENDING",
+                "token": "AVAX",
+                "network": "AVAXC",
+                "walletAddress": "0xc03a6aa728a8dde7464c33828424ede7553a0021",
+                "addressQuestionnaire": {
+                    "sendTo": 1,
+                    "satoshiToken": "AVAX",
+                    "isAddressOwner": 1,
+                    "verifyMethod": 1,
+                },
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.fetch_address_verification_list(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/addressVerify/list" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FetchAddressVerificationListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = FetchAddressVerificationListResponse.from_dict(expected_response)
+        else:
+            expected = FetchAddressVerificationListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
     def test_fetch_address_verification_list_server_error(self):
         """Test that fetch_address_verification_list() raises an error when the server returns an error."""
 
@@ -553,57 +705,6 @@ class TestTravelRuleApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.fetch_address_verification_list()
-
-    @patch("binance_common.utils.get_signature")
-    def test_onboarded_vasp_list_success(self, mock_get_signature):
-        """Test onboarded_vasp_list() successfully with required parameters only."""
-
-        expected_response = [
-            {"vaspName": "Binance", "vaspCode": "BINANCE"},
-            {"vaspName": "HashKeyGlobal", "vaspCode": "NVBH3Z_nNEHjvqbUfkaL"},
-        ]
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.onboarded_vasp_list()
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/localentity/vasp" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(OnboardedVaspListResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif is_oneof or is_list:
-            expected = OnboardedVaspListResponse.from_dict(expected_response)
-        else:
-            expected = OnboardedVaspListResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_onboarded_vasp_list_server_error(self):
-        """Test that onboarded_vasp_list() raises an error when the server returns an error."""
-
-        mock_error = Exception("ResponseError")
-        self.client.onboarded_vasp_list = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.onboarded_vasp_list()
 
     @patch("binance_common.utils.get_signature")
     def test_submit_deposit_questionnaire_success(self, mock_get_signature):
@@ -953,6 +1054,99 @@ class TestTravelRuleApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.submit_deposit_questionnaire_travel_rule(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_vasp_list_success(self, mock_get_signature):
+        """Test vasp_list() successfully with required parameters only."""
+
+        expected_response = [
+            {"vaspName": "Binance", "vaspCode": "BINANCE"},
+            {"vaspName": "HashKeyGlobal", "vaspCode": "NVBH3Z_nNEHjvqbUfkaL"},
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.vasp_list()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/localentity/vasp" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VaspListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = VaspListResponse.from_dict(expected_response)
+        else:
+            expected = VaspListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_vasp_list_success_with_optional_params(self, mock_get_signature):
+        """Test vasp_list() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = [
+            {"vaspName": "Binance", "vaspCode": "BINANCE"},
+            {"vaspName": "HashKeyGlobal", "vaspCode": "NVBH3Z_nNEHjvqbUfkaL"},
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.vasp_list(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/localentity/vasp" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VaspListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = VaspListResponse.from_dict(expected_response)
+        else:
+            expected = VaspListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_vasp_list_server_error(self):
+        """Test that vasp_list() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.vasp_list = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.vasp_list()
 
     @patch("binance_common.utils.get_signature")
     def test_withdraw_history_v1_success(self, mock_get_signature):

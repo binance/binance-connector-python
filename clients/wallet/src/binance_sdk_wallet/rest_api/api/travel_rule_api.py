@@ -17,11 +17,12 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import BrokerWithdrawResponse
+from ..models import CheckQuestionnaireRequirementsResponse
 from ..models import DepositHistoryTravelRuleResponse
 from ..models import FetchAddressVerificationListResponse
-from ..models import OnboardedVaspListResponse
 from ..models import SubmitDepositQuestionnaireResponse
 from ..models import SubmitDepositQuestionnaireTravelRuleResponse
+from ..models import VaspListResponse
 from ..models import WithdrawHistoryV1Response
 from ..models import WithdrawHistoryV2Response
 from ..models import WithdrawTravelRuleResponse
@@ -151,6 +152,50 @@ class TravelRuleApi:
             signer=self._signer,
         )
 
+    def check_questionnaire_requirements(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CheckQuestionnaireRequirementsResponse]:
+        """
+                Check Questionnaire Requirements (for local entities that require travel rule) (supporting network) (USER_DATA)
+                GET /sapi/v1/localentity/questionnaire-requirements
+                https://developers.binance.com/docs/wallet/travel-rule/questionnaire-requirements
+
+                This API will return user-specific Travel Rule questionnaire requirement information in reference to the current API key.
+
+        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+
+        Weight: 18000
+        Request limit: 10 requests per second
+        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+        limit is 180000/second. Response from the endpoint contains header
+        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[CheckQuestionnaireRequirementsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/localentity/questionnaire-requirements",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=CheckQuestionnaireRequirementsResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def deposit_history_travel_rule(
         self,
         tr_id: Optional[str] = None,
@@ -226,6 +271,7 @@ class TravelRuleApi:
 
     def fetch_address_verification_list(
         self,
+        recv_window: Optional[int] = None,
     ) -> ApiResponse[FetchAddressVerificationListResponse]:
         """
                 Fetch address verification list (USER_DATA)
@@ -237,6 +283,7 @@ class TravelRuleApi:
         Weight: 10
 
                 Args:
+                    recv_window (Optional[int]):
 
                 Returns:
                     ApiResponse[FetchAddressVerificationListResponse]
@@ -246,7 +293,7 @@ class TravelRuleApi:
 
         """
 
-        payload = None
+        payload = {"recv_window": recv_window}
 
         return send_request(
             self._session,
@@ -256,48 +303,6 @@ class TravelRuleApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=FetchAddressVerificationListResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
-    def onboarded_vasp_list(
-        self,
-    ) -> ApiResponse[OnboardedVaspListResponse]:
-        """
-                Onboarded VASP list (for local entities that require travel rule) (supporting network) (USER_DATA)
-                GET /sapi/v1/localentity/vasp
-                https://developers.binance.com/docs/wallet/travel-rule/Onboarded-VASP-list
-
-                Fetch the onboarded VASP list for local entities that required travel rule.
-
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
-
-                Args:
-
-                Returns:
-                    ApiResponse[OnboardedVaspListResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        payload = None
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="GET",
-            path="/sapi/v1/localentity/vasp",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=OnboardedVaspListResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -451,6 +456,50 @@ class TravelRuleApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireTravelRuleResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def vasp_list(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VaspListResponse]:
+        """
+                VASP list (for local entities that require travel rule) (supporting network) (USER_DATA)
+                GET /sapi/v1/localentity/vasp
+                https://developers.binance.com/docs/wallet/travel-rule/onboarded-vasp-list
+
+                Fetch the VASP list for local entities.
+
+        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+
+        Weight: 18000
+        Request limit: 10 requests per second
+        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+        limit is 180000/second. Response from the endpoint contains header
+        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[VaspListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/localentity/vasp",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=VaspListResponse,
             is_signed=True,
             signer=self._signer,
         )

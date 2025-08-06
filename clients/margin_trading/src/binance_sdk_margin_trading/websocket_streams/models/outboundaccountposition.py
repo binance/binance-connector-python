@@ -30,9 +30,9 @@ class Outboundaccountposition(BaseModel):
     Outboundaccountposition
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     u: Optional[StrictInt] = None
-    b: Optional[List[OutboundaccountpositionBInner]] = Field(default=None, alias="B")
+    B: Optional[List[OutboundaccountpositionBInner]] = Field(default=None, alias="B")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "u", "B"]
 

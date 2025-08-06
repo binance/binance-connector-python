@@ -252,7 +252,7 @@ class AccountApi:
             Args:
                 symbol (str):
                 id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): Cancel order by orderId
+                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
                 start_time (Optional[int]):
                 end_time (Optional[int]):
                 limit (Optional[int]): Default: 100; Maximum: 5000
@@ -461,7 +461,7 @@ class AccountApi:
             Args:
                 symbol (str):
                 id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): Cancel order by orderId
+                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
                 start_time (Optional[int]):
                 end_time (Optional[int]):
                 from_id (Optional[int]): Aggregate trade ID to begin at
@@ -733,7 +733,7 @@ class AccountApi:
             Args:
                 symbol (str):
                 id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): Cancel order by orderId
+                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
                 orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
                 recv_window (Optional[int]): The value cannot be greater than `60000`
 

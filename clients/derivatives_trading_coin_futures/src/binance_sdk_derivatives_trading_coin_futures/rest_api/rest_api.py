@@ -2076,76 +2076,76 @@ class DerivativesTradingCoinFuturesRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
-        New Order (TRADE)
+                New Order (TRADE)
 
-        Send in a new order.
+                Send in a new order.
 
 
-* Order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
-* Order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
-* Condition orders will be triggered when:
+        * Order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Condition orders will be triggered when:
 
-* If parameter`priceProtect`is sent as true:
-* when price reaches the `stopPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
-* "triggerProtect" of a symbol can be got from `GET /dapi/v1/exchangeInfo`
+        * If parameter`priceProtect`is sent as true:
+        * when price reaches the `stopPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+        * "triggerProtect" of a symbol can be got from `GET /dapi/v1/exchangeInfo`
 
-* `STOP`, `STOP_MARKET`:
-* BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-* SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-* `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
-* BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-* SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-* `TRAILING_STOP_MARKET`:
-* BUY: the lowest price after order placed `<= `activationPrice`, and the latest price >`= the lowest price * (1 + `callbackRate`)
-* SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+        * `STOP`, `STOP_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
+        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
+        * `TRAILING_STOP_MARKET`:
+        * BUY: the lowest price after order placed `<= `activationPrice`, and the latest price >`= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
 
-* For `TRAILING_STOP_MARKET`, if you got such error code.
-``{"code": -2021, "msg": "Order would immediately trigger."}``
-means that the parameters you send do not meet the following requirements:
-* BUY: `activationPrice` should be smaller than latest price.
-* SELL: `activationPrice` should be larger than latest price.
+        * For `TRAILING_STOP_MARKET`, if you got such error code.
+        ``{"code": -2021, "msg": "Order would immediately trigger."}``
+        means that the parameters you send do not meet the following requirements:
+        * BUY: `activationPrice` should be smaller than latest price.
+        * SELL: `activationPrice` should be larger than latest price.
 
-* If `newOrderRespType ` is sent as `RESULT` :
-* `MARKET` order: the final FILLED result of the order will be return directly.
-* `LIMIT` order with special `timeInForce`: the final status result of the order(FILLED or EXPIRED) will be returned directly.
+        * If `newOrderRespType ` is sent as `RESULT` :
+        * `MARKET` order: the final FILLED result of the order will be return directly.
+        * `LIMIT` order with special `timeInForce`: the final status result of the order(FILLED or EXPIRED) will be returned directly.
 
-* `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
-* Follow the same rules for condition orders.
-* If triggered,**close all** current long position( if `SELL`) or current short position( if `BUY`).
-* Cannot be used with `quantity` parameter
-* Cannot be used with `reduceOnly` parameter
-* In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
-* `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC`.
+        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+        * Follow the same rules for condition orders.
+        * If triggered,**close all** current long position( if `SELL`) or current short position( if `BUY`).
+        * Cannot be used with `quantity` parameter
+        * Cannot be used with `reduceOnly` parameter
+        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC`.
 
-Weight: 1 on 1min order rate limit(X-MBX-ORDER-COUNT-1M)\
-0 on IP rate limit(x-mbx-used-weight-1m)
+        Weight: 1 on 1min order rate limit(X-MBX-ORDER-COUNT-1M)
+        0 on IP rate limit(x-mbx-used-weight-1m)
 
-        Args:
-            symbol (str): 
-            side (NewOrderSideEnum): `SELL`, `BUY`
-            type (NewOrderTypeEnum): 
-            position_side (Optional[NewOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
-            time_in_force (Optional[NewOrderTimeInForceEnum]): 
-            quantity (Optional[float]): quantity measured by contract number, Cannot be sent with `closePosition`=`true`
-            reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`(Close-All)
-            price (Optional[float]): 
-            new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[\.A-Z\:/a-z0-9_-]{1,36}$`
-            stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-            close_position (Optional[str]): `true`, `false`；Close-All,used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-            activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-            callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-            working_type (Optional[NewOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-            price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-            new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-            price_match (Optional[NewOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-            self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum]): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `EXPIRE_MAKER`
-            recv_window (Optional[int]): 
-        
-        Returns:
-            ApiResponse[NewOrderResponse]
+                Args:
+                    symbol (str):
+                    side (NewOrderSideEnum): `SELL`, `BUY`
+                    type (NewOrderTypeEnum):
+                    position_side (Optional[NewOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    time_in_force (Optional[NewOrderTimeInForceEnum]):
+                    quantity (Optional[float]): quantity measured by contract number, Cannot be sent with `closePosition`=`true`
+                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`(Close-All)
+                    price (Optional[float]):
+                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    close_position (Optional[str]): `true`, `false`；Close-All,used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    working_type (Optional[NewOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
+                    price_match (Optional[NewOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum]): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `EXPIRE_MAKER`
+                    recv_window (Optional[int]):
 
-        Raises:
-            RequiredError: If a required parameter is missing.
+                Returns:
+                    ApiResponse[NewOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
 
         """
 

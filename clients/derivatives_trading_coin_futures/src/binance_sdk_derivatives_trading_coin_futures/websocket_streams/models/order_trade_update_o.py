@@ -29,7 +29,7 @@ class OrderTradeUpdateO(BaseModel):
 
     s: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     o: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
@@ -37,29 +37,29 @@ class OrderTradeUpdateO(BaseModel):
     ap: Optional[StrictStr] = None
     sp: Optional[StrictStr] = None
     x: Optional[StrictStr] = None
-    x: Optional[StrictStr] = Field(default=None, alias="X")
+    X: Optional[StrictStr] = Field(default=None, alias="X")
     i: Optional[StrictInt] = None
     l: Optional[StrictStr] = None
     z: Optional[StrictStr] = None
-    l: Optional[StrictStr] = Field(default=None, alias="L")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
     ma: Optional[StrictStr] = None
-    n: Optional[StrictStr] = Field(default=None, alias="N")
+    N: Optional[StrictStr] = Field(default=None, alias="N")
     n: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     t: Optional[StrictInt] = None
     rp: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
     a: Optional[StrictStr] = None
     m: Optional[StrictBool] = None
-    r: Optional[StrictBool] = Field(default=None, alias="R")
+    R: Optional[StrictBool] = Field(default=None, alias="R")
     wt: Optional[StrictStr] = None
     ot: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
     cp: Optional[StrictBool] = None
-    ap: Optional[StrictStr] = Field(default=None, alias="AP")
+    AP: Optional[StrictStr] = Field(default=None, alias="AP")
     cr: Optional[StrictStr] = None
-    p_p: Optional[StrictBool] = Field(default=None, alias="pP")
-    v: Optional[StrictStr] = Field(default=None, alias="V")
+    pP: Optional[StrictBool] = Field(default=None, alias="pP")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
     pm: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

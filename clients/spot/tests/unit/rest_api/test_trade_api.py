@@ -86,6 +86,11 @@ from binance_sdk_spot.rest_api.models import OrderOcoSideEnum
 from binance_sdk_spot.rest_api.models import OrderOcoStopLimitTimeInForceEnum
 from binance_sdk_spot.rest_api.models import OrderOcoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderOcoSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import OrderTestSideEnum
+from binance_sdk_spot.rest_api.models import OrderTestTypeEnum
+from binance_sdk_spot.rest_api.models import OrderTestTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderTestNewOrderRespTypeEnum
+from binance_sdk_spot.rest_api.models import OrderTestSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import SorOrderSideEnum
 from binance_sdk_spot.rest_api.models import SorOrderTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderTimeInForceEnum
@@ -3322,6 +3327,12 @@ class TestTradeApi:
     def test_order_test_success(self, mock_get_signature):
         """Test order_test() successfully with required parameters only."""
 
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
+
         expected_response = {
             "standardCommissionForOrder": {
                 "maker": "0.00000112",
@@ -3338,10 +3349,13 @@ class TestTradeApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.order_test()
+        response = self.client.order_test(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -3350,6 +3364,9 @@ class TestTradeApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/api/v3/order/test" in request_kwargs["url"]
         assert request_kwargs["method"] == "POST"
+        assert normalized["symbol"] == "BNBUSDT"
+        assert normalized["side"] == OrderTestSideEnum["BUY"].value
+        assert normalized["type"] == OrderTestTypeEnum["MARKET"].value
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -3373,7 +3390,27 @@ class TestTradeApi:
     def test_order_test_success_with_optional_params(self, mock_get_signature):
         """Test order_test() successfully with optional parameters."""
 
-        params = {"compute_commission_rates": False}
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+            "compute_commission_rates": False,
+            "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "quote_order_qty": 1.0,
+            "price": 400.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "stop_price": 1.0,
+            "trailing_delta": 1,
+            "iceberg_qty": 1.0,
+            "new_order_resp_type": OrderTestNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
 
         expected_response = {
             "standardCommissionForOrder": {
@@ -3420,14 +3457,56 @@ class TestTradeApi:
 
         assert response.data() == expected
 
+    def test_order_test_missing_required_param_symbol(self):
+        """Test that order_test() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
+        del params["symbol"]
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.order_test(**params)
+
+    def test_order_test_missing_required_param_side(self):
+        """Test that order_test() raises RequiredError when 'side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
+        del params["side"]
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            self.client.order_test(**params)
+
+    def test_order_test_missing_required_param_type(self):
+        """Test that order_test() raises RequiredError when 'type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
+        del params["type"]
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            self.client.order_test(**params)
+
     def test_order_test_server_error(self):
         """Test that order_test() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
 
         mock_error = Exception("ResponseError")
         self.client.order_test = MagicMock(side_effect=mock_error)
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.order_test()
+            self.client.order_test(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_sor_order_success(self, mock_get_signature):

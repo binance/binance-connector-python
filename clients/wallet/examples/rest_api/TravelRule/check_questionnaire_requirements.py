@@ -22,18 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = Wallet(config_rest_api=configuration_rest_api)
 
 
-def onboarded_vasp_list():
+def check_questionnaire_requirements():
     try:
-        response = client.rest_api.onboarded_vasp_list()
+        response = client.rest_api.check_questionnaire_requirements()
 
         rate_limits = response.rate_limits
-        logging.info(f"onboarded_vasp_list() rate limits: {rate_limits}")
+        logging.info(f"check_questionnaire_requirements() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"onboarded_vasp_list() response: {data}")
+        logging.info(f"check_questionnaire_requirements() response: {data}")
     except Exception as e:
-        logging.error(f"onboarded_vasp_list() error: {e}")
+        logging.error(f"check_questionnaire_requirements() error: {e}")
 
 
 if __name__ == "__main__":
-    onboarded_vasp_list()
+    check_questionnaire_requirements()

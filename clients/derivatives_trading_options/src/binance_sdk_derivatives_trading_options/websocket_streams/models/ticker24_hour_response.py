@@ -28,20 +28,20 @@ class Ticker24HourResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     o: Optional[StrictStr] = None
     h: Optional[StrictStr] = None
     l: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    v: Optional[StrictStr] = Field(default=None, alias="V")
-    a: Optional[StrictStr] = Field(default=None, alias="A")
-    p: Optional[StrictStr] = Field(default=None, alias="P")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
+    P: Optional[StrictStr] = Field(default=None, alias="P")
     p: Optional[StrictStr] = None
-    q: Optional[StrictStr] = Field(default=None, alias="Q")
-    f: Optional[StrictStr] = Field(default=None, alias="F")
-    l: Optional[StrictStr] = Field(default=None, alias="L")
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
+    F: Optional[StrictStr] = Field(default=None, alias="F")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
     n: Optional[StrictInt] = None
     bo: Optional[StrictStr] = None
     ao: Optional[StrictStr] = None

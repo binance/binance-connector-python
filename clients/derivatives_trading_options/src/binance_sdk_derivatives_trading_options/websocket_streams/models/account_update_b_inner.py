@@ -30,8 +30,8 @@ class AccountUpdateBInner(BaseModel):
     b: Optional[StrictStr] = None
     m: Optional[StrictStr] = None
     u: Optional[StrictStr] = None
-    u: Optional[StrictInt] = Field(default=None, alias="U")
-    m: Optional[StrictStr] = Field(default=None, alias="M")
+    U: Optional[StrictInt] = Field(default=None, alias="U")
+    M: Optional[StrictStr] = Field(default=None, alias="M")
     i: Optional[StrictStr] = None
     a: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

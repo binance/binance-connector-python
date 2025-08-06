@@ -101,5 +101,5 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self.websocket_base, listenKey, response_model=UserDataStreamEventsResponse
+            self, listenKey, response_model=UserDataStreamEventsResponse
         )

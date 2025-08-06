@@ -28,22 +28,22 @@ class IndividualSymbolTickerStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
-    p: Optional[StrictStr] = Field(default=None, alias="P")
+    P: Optional[StrictStr] = Field(default=None, alias="P")
     w: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    q: Optional[StrictStr] = Field(default=None, alias="Q")
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
     o: Optional[StrictStr] = None
     h: Optional[StrictStr] = None
     l: Optional[StrictStr] = None
     v: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
-    o: Optional[StrictInt] = Field(default=None, alias="O")
-    c: Optional[StrictInt] = Field(default=None, alias="C")
-    f: Optional[StrictInt] = Field(default=None, alias="F")
-    l: Optional[StrictInt] = Field(default=None, alias="L")
+    O: Optional[StrictInt] = Field(default=None, alias="O")
+    C: Optional[StrictInt] = Field(default=None, alias="C")
+    F: Optional[StrictInt] = Field(default=None, alias="F")
+    L: Optional[StrictInt] = Field(default=None, alias="L")
     n: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

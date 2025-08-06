@@ -33,16 +33,16 @@ class AggTradeResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     a: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     f: Optional[StrictInt] = None
     l: Optional[StrictInt] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
-    m: Optional[StrictBool] = Field(default=None, alias="M")
+    M: Optional[StrictBool] = Field(default=None, alias="M")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",

@@ -30,8 +30,8 @@ class StrategyUpdate(BaseModel):
     StrategyUpdate
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, alias="T")
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     su: Optional[StrategyUpdateSu] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["T", "E", "su"]

@@ -28,17 +28,17 @@ class MultiAssetsModeAssetIndexResponseInner(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
     a: Optional[StrictStr] = None
-    b: Optional[StrictStr] = Field(default=None, alias="B")
-    a: Optional[StrictStr] = Field(default=None, alias="A")
+    B: Optional[StrictStr] = Field(default=None, alias="B")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
     q: Optional[StrictStr] = None
     g: Optional[StrictStr] = None
-    q: Optional[StrictStr] = Field(default=None, alias="Q")
-    g: Optional[StrictStr] = Field(default=None, alias="G")
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
+    G: Optional[StrictStr] = Field(default=None, alias="G")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",

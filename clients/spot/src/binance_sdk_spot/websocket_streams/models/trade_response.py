@@ -33,14 +33,14 @@ class TradeResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     t: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
-    m: Optional[StrictBool] = Field(default=None, alias="M")
+    M: Optional[StrictBool] = Field(default=None, alias="M")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "t", "p", "q", "T", "m", "M"]
 

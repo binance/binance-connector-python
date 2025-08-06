@@ -29,7 +29,7 @@ class OrderTradeUpdateO(BaseModel):
 
     s: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     o: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
@@ -37,24 +37,24 @@ class OrderTradeUpdateO(BaseModel):
     ap: Optional[StrictStr] = None
     sp: Optional[StrictStr] = None
     x: Optional[StrictStr] = None
-    x: Optional[StrictStr] = Field(default=None, alias="X")
+    X: Optional[StrictStr] = Field(default=None, alias="X")
     i: Optional[StrictInt] = None
     l: Optional[StrictStr] = None
     z: Optional[StrictStr] = None
-    l: Optional[StrictStr] = Field(default=None, alias="L")
-    n: Optional[StrictStr] = Field(default=None, alias="N")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
+    N: Optional[StrictStr] = Field(default=None, alias="N")
     n: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     t: Optional[StrictInt] = None
     b: Optional[StrictStr] = None
     a: Optional[StrictStr] = None
     m: Optional[StrictBool] = None
-    r: Optional[StrictBool] = Field(default=None, alias="R")
+    R: Optional[StrictBool] = Field(default=None, alias="R")
     ps: Optional[StrictStr] = None
     rp: Optional[StrictStr] = None
     st: Optional[StrictStr] = None
     si: Optional[StrictInt] = None
-    v: Optional[StrictStr] = Field(default=None, alias="V")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
     gtd: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

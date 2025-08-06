@@ -33,11 +33,11 @@ class AvgPriceResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
     w: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "i", "w", "T"]
 

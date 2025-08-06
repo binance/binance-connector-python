@@ -28,13 +28,13 @@ class MarkPriceOfAllSymbolsOfAPairResponseInner(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
-    p: Optional[StrictStr] = Field(default=None, alias="P")
+    P: Optional[StrictStr] = Field(default=None, alias="P")
     i: Optional[StrictStr] = None
     r: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "P", "i", "r", "T"]
 

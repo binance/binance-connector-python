@@ -31,8 +31,8 @@ class OrderTradeUpdate(BaseModel):
     """  # noqa: E501
 
     fs: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     i: Optional[StrictStr] = None
     o: Optional[OrderTradeUpdateO] = None
     additional_properties: Dict[str, Any] = {}

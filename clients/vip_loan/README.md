@@ -1,11 +1,11 @@
 # Binance Python VIP Loan SDK
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-vip-loan.yml)](https://github.com/binance/binance-connector-python/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci.yaml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-vipp-loan)](https://pypi.python.org/pypi/binance-sdk-vipp-loan)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-vipp-loan.svg)](https://pypi.org/project/binance-sdk-vipp-loan/)
-[![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-vip-loan)](https://pypi.python.org/pypi/binance-sdk-vip-loan)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-vip-loan.svg)](https://pypi.org/project/binance-sdk-vip-loan/)
+[![Python version](https://img.shields.io/pypi/pyversions/binance-sdk-vip-loan)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,7 +34,7 @@ This is a client library for the Binance VIP Loan SDK API, enabling developers t
 To use this library, ensure your environment is running Python version **3.9** or later.
 
 ```bash
-pip install binance-sdk-vipp-loan
+pip install binance-sdk-vip-loan
 ```
 
 ## Documentation

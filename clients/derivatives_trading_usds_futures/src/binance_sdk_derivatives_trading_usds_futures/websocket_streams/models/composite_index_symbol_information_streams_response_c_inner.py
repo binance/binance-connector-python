@@ -30,7 +30,7 @@ class CompositeIndexSymbolInformationStreamsResponseCInner(BaseModel):
     b: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     w: Optional[StrictStr] = None
-    w: Optional[StrictStr] = Field(default=None, alias="W")
+    W: Optional[StrictStr] = Field(default=None, alias="W")
     i: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["b", "q", "w", "W", "i"]

@@ -243,7 +243,7 @@ class TradeApi:
             Args:
                 symbol (str):
                 id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): Cancel order by orderId
+                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
                 orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
                 new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
                 cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum]):

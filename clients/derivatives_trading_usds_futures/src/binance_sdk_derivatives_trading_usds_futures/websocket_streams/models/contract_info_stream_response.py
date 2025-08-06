@@ -31,7 +31,7 @@ class ContractInfoStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
     ct: Optional[StrictStr] = None

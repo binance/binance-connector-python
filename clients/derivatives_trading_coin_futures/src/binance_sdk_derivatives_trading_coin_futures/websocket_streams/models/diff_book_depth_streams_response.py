@@ -34,11 +34,11 @@ class DiffBookDepthStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
-    u: Optional[StrictInt] = Field(default=None, alias="U")
+    U: Optional[StrictInt] = Field(default=None, alias="U")
     u: Optional[StrictInt] = None
     pu: Optional[StrictInt] = None
     b: Optional[List[DiffBookDepthStreamsResponseBItem]] = None

@@ -30,8 +30,8 @@ class AccountUpdate(BaseModel):
     AccountUpdate
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     a: Optional[AccountUpdateA] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "T", "a"]
