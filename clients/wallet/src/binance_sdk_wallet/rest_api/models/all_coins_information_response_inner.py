@@ -34,38 +34,38 @@ class AllCoinsInformationResponseInner(BaseModel):
     deposit_all_enable: Optional[StrictBool] = Field(
         default=None, alias="depositAllEnable"
     )
-    free: Optional[StrictStr] = None
-    freeze: Optional[StrictStr] = None
-    ipoable: Optional[StrictStr] = None
-    ipoing: Optional[StrictStr] = None
-    is_legal_money: Optional[StrictBool] = Field(default=None, alias="isLegalMoney")
-    locked: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    network_list: Optional[List[AllCoinsInformationResponseInnerNetworkListInner]] = (
-        Field(default=None, alias="networkList")
-    )
-    storage: Optional[StrictStr] = None
-    trading: Optional[StrictBool] = None
     withdraw_all_enable: Optional[StrictBool] = Field(
         default=None, alias="withdrawAllEnable"
     )
+    name: Optional[StrictStr] = None
+    free: Optional[StrictStr] = None
+    locked: Optional[StrictStr] = None
+    freeze: Optional[StrictStr] = None
     withdrawing: Optional[StrictStr] = None
+    ipoing: Optional[StrictStr] = None
+    ipoable: Optional[StrictStr] = None
+    storage: Optional[StrictStr] = None
+    is_legal_money: Optional[StrictBool] = Field(default=None, alias="isLegalMoney")
+    trading: Optional[StrictBool] = None
+    network_list: Optional[List[AllCoinsInformationResponseInnerNetworkListInner]] = (
+        Field(default=None, alias="networkList")
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "coin",
         "depositAllEnable",
-        "free",
-        "freeze",
-        "ipoable",
-        "ipoing",
-        "isLegalMoney",
-        "locked",
-        "name",
-        "networkList",
-        "storage",
-        "trading",
         "withdrawAllEnable",
+        "name",
+        "free",
+        "locked",
+        "freeze",
         "withdrawing",
+        "ipoing",
+        "ipoable",
+        "storage",
+        "isLegalMoney",
+        "trading",
+        "networkList",
     ]
 
     model_config = ConfigDict(
@@ -141,13 +141,17 @@ class AllCoinsInformationResponseInner(BaseModel):
             {
                 "coin": obj.get("coin"),
                 "depositAllEnable": obj.get("depositAllEnable"),
-                "free": obj.get("free"),
-                "freeze": obj.get("freeze"),
-                "ipoable": obj.get("ipoable"),
-                "ipoing": obj.get("ipoing"),
-                "isLegalMoney": obj.get("isLegalMoney"),
-                "locked": obj.get("locked"),
+                "withdrawAllEnable": obj.get("withdrawAllEnable"),
                 "name": obj.get("name"),
+                "free": obj.get("free"),
+                "locked": obj.get("locked"),
+                "freeze": obj.get("freeze"),
+                "withdrawing": obj.get("withdrawing"),
+                "ipoing": obj.get("ipoing"),
+                "ipoable": obj.get("ipoable"),
+                "storage": obj.get("storage"),
+                "isLegalMoney": obj.get("isLegalMoney"),
+                "trading": obj.get("trading"),
                 "networkList": (
                     [
                         AllCoinsInformationResponseInnerNetworkListInner.from_dict(
@@ -158,10 +162,6 @@ class AllCoinsInformationResponseInner(BaseModel):
                     if obj.get("networkList") is not None
                     else None
                 ),
-                "storage": obj.get("storage"),
-                "trading": obj.get("trading"),
-                "withdrawAllEnable": obj.get("withdrawAllEnable"),
-                "withdrawing": obj.get("withdrawing"),
             }
         )
         # store additional fields in additional_properties

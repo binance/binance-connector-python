@@ -30,8 +30,8 @@ class ConditionalOrderTradeUpdate(BaseModel):
     ConditionalOrderTradeUpdate
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, alias="T")
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     fs: Optional[StrictStr] = None
     so: Optional[ConditionalOrderTradeUpdateSo] = None
     additional_properties: Dict[str, Any] = {}

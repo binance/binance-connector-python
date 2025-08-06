@@ -343,7 +343,7 @@ class DerivativesTradingCoinFuturesWebSocketAPI(WebSocketAPIBase):
                     quantity (Optional[float]): Quantity measured by contract number, Cannot be sent with `closePosition`=`true`
                     reduce_only (Optional[str]): `true` or `false`. default `false`. Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true` (Close-All)
                     price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[\.A-Z\:/a-z0-9_-]{1,36}$`
+                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     close_position (Optional[str]): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different workingType)

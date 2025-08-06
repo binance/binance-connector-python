@@ -28,14 +28,14 @@ class AggregateTradeStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     a: Optional[StrictInt] = None
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     f: Optional[StrictInt] = None
     l: Optional[StrictInt] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -28,16 +28,16 @@ class TradeStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     t: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     b: Optional[StrictInt] = None
     a: Optional[StrictInt] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
-    s: Optional[StrictStr] = Field(default=None, alias="S")
-    x: Optional[StrictStr] = Field(default=None, alias="X")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
+    X: Optional[StrictStr] = Field(default=None, alias="X")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",

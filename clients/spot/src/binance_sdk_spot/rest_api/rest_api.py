@@ -119,6 +119,11 @@ from .models import OrderOcoSideEnum
 from .models import OrderOcoStopLimitTimeInForceEnum
 from .models import OrderOcoNewOrderRespTypeEnum
 from .models import OrderOcoSelfTradePreventionModeEnum
+from .models import OrderTestSideEnum
+from .models import OrderTestTypeEnum
+from .models import OrderTestTimeInForceEnum
+from .models import OrderTestNewOrderRespTypeEnum
+from .models import OrderTestSelfTradePreventionModeEnum
 from .models import SorOrderSideEnum
 from .models import SorOrderTypeEnum
 from .models import SorOrderTimeInForceEnum
@@ -1903,7 +1908,25 @@ class SpotRestAPI:
 
     def order_test(
         self,
+        symbol: str = None,
+        side: OrderTestSideEnum = None,
+        type: OrderTestTypeEnum = None,
         compute_commission_rates: Optional[bool] = None,
+        time_in_force: Optional[OrderTestTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        quote_order_qty: Optional[float] = None,
+        price: Optional[float] = None,
+        new_client_order_id: Optional[str] = None,
+        strategy_id: Optional[int] = None,
+        strategy_type: Optional[int] = None,
+        stop_price: Optional[float] = None,
+        trailing_delta: Optional[int] = None,
+        iceberg_qty: Optional[float] = None,
+        new_order_resp_type: Optional[OrderTestNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            OrderTestSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
                 Test new order
@@ -1916,7 +1939,23 @@ class SpotRestAPI:
         |With `computeCommissionRates`|20|
 
                 Args:
+                    symbol (str):
+                    side (OrderTestSideEnum):
+                    type (OrderTestTypeEnum):
                     compute_commission_rates (Optional[bool]): Default: `false`
+                    time_in_force (Optional[OrderTestTimeInForceEnum]):
+                    quantity (Optional[float]):
+                    quote_order_qty (Optional[float]):
+                    price (Optional[float]):
+                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int]):
+                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
+                    stop_price (Optional[float]): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
+                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum]):
+                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum]):
+                    recv_window (Optional[int]): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderTestResponse]
@@ -1926,7 +1965,25 @@ class SpotRestAPI:
 
         """
 
-        return self._tradeApi.order_test(compute_commission_rates)
+        return self._tradeApi.order_test(
+            symbol,
+            side,
+            type,
+            compute_commission_rates,
+            time_in_force,
+            quantity,
+            quote_order_qty,
+            price,
+            new_client_order_id,
+            strategy_id,
+            strategy_type,
+            stop_price,
+            trailing_delta,
+            iceberg_qty,
+            new_order_resp_type,
+            self_trade_prevention_mode,
+            recv_window,
+        )
 
     def sor_order(
         self,

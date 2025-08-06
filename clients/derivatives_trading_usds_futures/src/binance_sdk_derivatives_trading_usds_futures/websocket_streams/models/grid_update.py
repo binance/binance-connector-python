@@ -30,8 +30,8 @@ class GridUpdate(BaseModel):
     GridUpdate
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, alias="T")
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     gu: Optional[GridUpdateGu] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["T", "E", "gu"]

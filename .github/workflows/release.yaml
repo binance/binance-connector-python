@@ -38,7 +38,7 @@ jobs:
             cd clients/${{ matrix.client }}
           fi
 
-          old_version=$(git show HEAD^:pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
+          old_version=$(git show HEAD:pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
           new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
           
           if [ "$old_version" = "$new_version" ]; then

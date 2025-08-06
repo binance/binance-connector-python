@@ -20,6 +20,7 @@ from ..models import AccountFundingFlowResponse
 from ..models import GetDownloadIdForOptionTransactionHistoryResponse
 from ..models import GetOptionTransactionHistoryDownloadLinkByIdResponse
 from ..models import OptionAccountInformationResponse
+from ..models import OptionMarginAccountInformationResponse
 
 
 class AccountApi:
@@ -236,6 +237,44 @@ class AccountApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=OptionAccountInformationResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def option_margin_account_information(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[OptionMarginAccountInformationResponse]:
+        """
+                Option Margin Account Information (USER_DATA)
+                GET /eapi/v1/marginAccount
+                https://developers.binance.com/docs/derivatives/option/account/Option-Margin-Account-Information
+
+                Get current account information.
+
+        Weight: 3
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[OptionMarginAccountInformationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/eapi/v1/marginAccount",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=OptionMarginAccountInformationResponse,
             is_signed=True,
             signer=self._signer,
         )

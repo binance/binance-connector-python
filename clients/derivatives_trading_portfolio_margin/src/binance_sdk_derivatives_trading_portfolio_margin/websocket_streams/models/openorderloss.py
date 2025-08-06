@@ -30,8 +30,8 @@ class Openorderloss(BaseModel):
     Openorderloss
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    o: Optional[List[OpenorderlossOInner]] = Field(default=None, alias="O")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    O: Optional[List[OpenorderlossOInner]] = Field(default=None, alias="O")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "O"]
 

@@ -31,10 +31,10 @@ class CompositeIndexSymbolInformationStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
-    c: Optional[StrictStr] = Field(default=None, alias="C")
+    C: Optional[StrictStr] = Field(default=None, alias="C")
     c: Optional[List[CompositeIndexSymbolInformationStreamsResponseCInner]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "C", "c"]

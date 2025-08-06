@@ -30,8 +30,8 @@ class AccountConfigUpdate(BaseModel):
     AccountConfigUpdate
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     ac: Optional[AccountConfigUpdateAc] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "T", "ac"]

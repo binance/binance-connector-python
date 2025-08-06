@@ -462,6 +462,46 @@ class OrderOcoSelfTradePreventionModeEnum(Enum):
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
+class OrderTestSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderTestTypeEnum(Enum):
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+    STOP_LOSS = "STOP_LOSS"
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderTestTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderTestNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+    FULL = "FULL"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+
+
+class OrderTestSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    DECREMENT = "DECREMENT"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class SorOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"

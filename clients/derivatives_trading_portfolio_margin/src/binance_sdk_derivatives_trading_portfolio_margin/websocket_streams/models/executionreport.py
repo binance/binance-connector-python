@@ -27,48 +27,48 @@ class Executionreport(BaseModel):
     Executionreport
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     o: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
-    p: Optional[StrictStr] = Field(default=None, alias="P")
+    P: Optional[StrictStr] = Field(default=None, alias="P")
     d: Optional[StrictInt] = None
-    f: Optional[StrictStr] = Field(default=None, alias="F")
+    F: Optional[StrictStr] = Field(default=None, alias="F")
     g: Optional[StrictInt] = None
-    c: Optional[StrictStr] = Field(default=None, alias="C")
+    C: Optional[StrictStr] = Field(default=None, alias="C")
     x: Optional[StrictStr] = None
-    x: Optional[StrictStr] = Field(default=None, alias="X")
+    X: Optional[StrictStr] = Field(default=None, alias="X")
     r: Optional[StrictStr] = None
     i: Optional[StrictInt] = None
     l: Optional[StrictStr] = None
     z: Optional[StrictStr] = None
-    l: Optional[StrictStr] = Field(default=None, alias="L")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
     n: Optional[StrictStr] = None
-    n: Optional[StrictStr] = Field(default=None, alias="N")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    N: Optional[StrictStr] = Field(default=None, alias="N")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     t: Optional[StrictInt] = None
     v: Optional[StrictInt] = None
-    i: Optional[StrictInt] = Field(default=None, alias="I")
+    I: Optional[StrictInt] = Field(default=None, alias="I")
     w: Optional[StrictBool] = None
     m: Optional[StrictBool] = None
-    m: Optional[StrictBool] = Field(default=None, alias="M")
-    o: Optional[StrictInt] = Field(default=None, alias="O")
-    z: Optional[StrictStr] = Field(default=None, alias="Z")
-    y: Optional[StrictStr] = Field(default=None, alias="Y")
-    q: Optional[StrictStr] = Field(default=None, alias="Q")
-    d: Optional[StrictInt] = Field(default=None, alias="D")
+    M: Optional[StrictBool] = Field(default=None, alias="M")
+    O: Optional[StrictInt] = Field(default=None, alias="O")
+    Z: Optional[StrictStr] = Field(default=None, alias="Z")
+    Y: Optional[StrictStr] = Field(default=None, alias="Y")
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
+    D: Optional[StrictInt] = Field(default=None, alias="D")
     j: Optional[StrictInt] = None
-    j: Optional[StrictInt] = Field(default=None, alias="J")
-    w: Optional[StrictInt] = Field(default=None, alias="W")
-    v: Optional[StrictStr] = Field(default=None, alias="V")
+    J: Optional[StrictInt] = Field(default=None, alias="J")
+    W: Optional[StrictInt] = Field(default=None, alias="W")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
     u: Optional[StrictInt] = None
-    u: Optional[StrictInt] = Field(default=None, alias="U")
-    a: Optional[StrictStr] = Field(default=None, alias="A")
-    b: Optional[StrictStr] = Field(default=None, alias="B")
+    U: Optional[StrictInt] = Field(default=None, alias="U")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
+    B: Optional[StrictStr] = Field(default=None, alias="B")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "E",

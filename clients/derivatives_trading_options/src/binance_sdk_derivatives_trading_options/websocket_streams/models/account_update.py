@@ -36,10 +36,10 @@ class AccountUpdate(BaseModel):
     AccountUpdate
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    b: Optional[List[AccountUpdateBInner]] = Field(default=None, alias="B")
-    g: Optional[List[AccountUpdateGInner]] = Field(default=None, alias="G")
-    p: Optional[List[AccountUpdatePInner]] = Field(default=None, alias="P")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    B: Optional[List[AccountUpdateBInner]] = Field(default=None, alias="B")
+    G: Optional[List[AccountUpdateGInner]] = Field(default=None, alias="G")
+    P: Optional[List[AccountUpdatePInner]] = Field(default=None, alias="P")
     uid: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "B", "G", "P", "uid"]

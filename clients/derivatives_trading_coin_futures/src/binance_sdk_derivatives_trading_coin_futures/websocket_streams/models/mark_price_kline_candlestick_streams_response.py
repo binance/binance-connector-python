@@ -31,7 +31,7 @@ class MarkPriceKlineCandlestickStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     ps: Optional[StrictStr] = None
     k: Optional[MarkPriceKlineCandlestickStreamsResponseK] = None
     additional_properties: Dict[str, Any] = {}

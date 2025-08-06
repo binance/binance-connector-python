@@ -31,8 +31,8 @@ class AccountConfigUpdate(BaseModel):
     """  # noqa: E501
 
     fs: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     ac: Optional[AccountConfigUpdateAc] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["fs", "E", "T", "ac"]

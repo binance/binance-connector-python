@@ -30,7 +30,7 @@ class OrderTradeUpdate(BaseModel):
     OrderTradeUpdate
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     o: Optional[List[OrderTradeUpdateOInner]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "o"]

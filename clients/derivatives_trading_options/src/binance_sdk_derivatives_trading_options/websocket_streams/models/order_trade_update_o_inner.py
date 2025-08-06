@@ -30,7 +30,7 @@ class OrderTradeUpdateOInner(BaseModel):
     OrderTradeUpdateOInner
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     t: Optional[StrictInt] = None
     s: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
@@ -40,7 +40,7 @@ class OrderTradeUpdateOInner(BaseModel):
     stp: Optional[StrictInt] = None
     r: Optional[StrictBool] = None
     po: Optional[StrictBool] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     e: Optional[StrictStr] = None
     ec: Optional[StrictStr] = None
     f: Optional[StrictStr] = None

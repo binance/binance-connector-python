@@ -32,11 +32,11 @@ class IndividualSymbolBookTickerStreamsResponse(BaseModel):
     s: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
-    b: Optional[StrictStr] = Field(default=None, alias="B")
+    B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
-    a: Optional[StrictStr] = Field(default=None, alias="A")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
     t: Optional[StrictInt] = Field(default=None, alias="T")
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",

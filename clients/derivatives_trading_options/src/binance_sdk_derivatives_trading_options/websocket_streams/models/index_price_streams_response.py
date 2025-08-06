@@ -28,7 +28,7 @@ class IndexPriceStreamsResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

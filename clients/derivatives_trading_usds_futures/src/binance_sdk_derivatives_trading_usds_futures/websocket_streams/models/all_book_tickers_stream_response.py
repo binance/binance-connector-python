@@ -29,13 +29,13 @@ class AllBookTickersStreamResponse(BaseModel):
 
     e: Optional[StrictStr] = None
     u: Optional[StrictInt] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
-    b: Optional[StrictStr] = Field(default=None, alias="B")
+    B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
-    a: Optional[StrictStr] = Field(default=None, alias="A")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "u", "E", "T", "s", "b", "B", "a", "A"]
 

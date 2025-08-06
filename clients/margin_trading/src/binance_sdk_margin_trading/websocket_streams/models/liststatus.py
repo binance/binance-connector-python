@@ -30,16 +30,16 @@ class Liststatus(BaseModel):
     Liststatus
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     g: Optional[StrictInt] = None
     c: Optional[StrictStr] = None
     l: Optional[StrictStr] = None
-    l: Optional[StrictStr] = Field(default=None, alias="L")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
     r: Optional[StrictStr] = None
-    c: Optional[StrictStr] = Field(default=None, alias="C")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
-    o: Optional[List[ListstatusOInner]] = Field(default=None, alias="O")
+    C: Optional[StrictStr] = Field(default=None, alias="C")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    O: Optional[List[ListstatusOInner]] = Field(default=None, alias="O")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "E",

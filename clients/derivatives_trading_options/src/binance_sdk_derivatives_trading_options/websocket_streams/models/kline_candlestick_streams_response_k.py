@@ -28,11 +28,11 @@ class KlineCandlestickStreamsResponseK(BaseModel):
     """  # noqa: E501
 
     t: Optional[StrictInt] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
-    f: Optional[StrictInt] = Field(default=None, alias="F")
-    l: Optional[StrictInt] = Field(default=None, alias="L")
+    F: Optional[StrictInt] = Field(default=None, alias="F")
+    L: Optional[StrictInt] = Field(default=None, alias="L")
     o: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
     h: Optional[StrictStr] = None
@@ -41,8 +41,8 @@ class KlineCandlestickStreamsResponseK(BaseModel):
     n: Optional[StrictInt] = None
     x: Optional[StrictBool] = None
     q: Optional[StrictStr] = None
-    v: Optional[StrictStr] = Field(default=None, alias="V")
-    q: Optional[StrictStr] = Field(default=None, alias="Q")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "t",

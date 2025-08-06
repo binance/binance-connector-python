@@ -27,15 +27,15 @@ class TradeLite(BaseModel):
     TradeLite
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     m: Optional[StrictBool] = None
     c: Optional[StrictStr] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
-    l: Optional[StrictStr] = Field(default=None, alias="L")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
+    L: Optional[StrictStr] = Field(default=None, alias="L")
     l: Optional[StrictStr] = None
     t: Optional[StrictInt] = None
     i: Optional[StrictInt] = None

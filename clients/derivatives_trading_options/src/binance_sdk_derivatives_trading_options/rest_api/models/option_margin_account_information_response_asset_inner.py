@@ -34,7 +34,7 @@ class OptionMarginAccountInformationResponseAssetInner(BaseModel):
     initial_margin: Optional[StrictStr] = Field(default=None, alias="initialMargin")
     maint_margin: Optional[StrictStr] = Field(default=None, alias="maintMargin")
     unrealized_pnl: Optional[StrictStr] = Field(default=None, alias="unrealizedPNL")
-    lp_profit: Optional[StrictStr] = Field(default=None, alias="lpProfit")
+    adjusted_equity: Optional[StrictStr] = Field(default=None, alias="adjustedEquity")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",
@@ -44,7 +44,7 @@ class OptionMarginAccountInformationResponseAssetInner(BaseModel):
         "initialMargin",
         "maintMargin",
         "unrealizedPNL",
-        "lpProfit",
+        "adjustedEquity",
     ]
 
     model_config = ConfigDict(
@@ -118,7 +118,7 @@ class OptionMarginAccountInformationResponseAssetInner(BaseModel):
                 "initialMargin": obj.get("initialMargin"),
                 "maintMargin": obj.get("maintMargin"),
                 "unrealizedPNL": obj.get("unrealizedPNL"),
-                "lpProfit": obj.get("lpProfit"),
+                "adjustedEquity": obj.get("adjustedEquity"),
             }
         )
         # store additional fields in additional_properties

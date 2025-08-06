@@ -98,10 +98,14 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         super().on(event, callback, stream)
 
-    async def list_subscribe(self):
-        """Lists all currently subscribed WebSocket streams."""
+    async def list_subscribe(self) -> dict:
+        """Lists all currently subscribed WebSocket streams.
 
-        await super().list_subscribe()
+        Returns:
+            dict: A dictionary containing the current subscriptions.
+        """
+
+        return await super().list_subscribe()
 
     async def close_connection(
         self, connection: WebSocketConnection = None, close_session: bool = True
@@ -125,7 +129,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self.websocket_base, listenKey, response_model=UserDataStreamEventsResponse
+            self, listenKey, response_model=UserDataStreamEventsResponse
         )
 
     async def aggregate_trade_streams(

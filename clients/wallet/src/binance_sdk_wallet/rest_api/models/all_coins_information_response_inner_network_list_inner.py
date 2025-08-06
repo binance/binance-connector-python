@@ -18,9 +18,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_wallet.rest_api.models.all_coins_information_response_inner_network_list_inner_network_list_inner import (
-    AllCoinsInformationResponseInnerNetworkListInnerNetworkListInner,
-)
 from typing import Set
 from typing_extensions import Self
 
@@ -30,28 +27,35 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
     AllCoinsInformationResponseInnerNetworkListInner
     """  # noqa: E501
 
-    address_regex: Optional[StrictStr] = Field(default=None, alias="addressRegex")
-    coin: Optional[StrictStr] = None
-    deposit_desc: Optional[StrictStr] = Field(default=None, alias="depositDesc")
-    deposit_enable: Optional[StrictBool] = Field(default=None, alias="depositEnable")
-    is_default: Optional[StrictBool] = Field(default=None, alias="isDefault")
-    memo_regex: Optional[StrictStr] = Field(default=None, alias="memoRegex")
-    min_confirm: Optional[StrictInt] = Field(default=None, alias="minConfirm")
-    name: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
-    special_tips: Optional[StrictStr] = Field(default=None, alias="specialTips")
-    un_lock_confirm: Optional[StrictInt] = Field(default=None, alias="unLockConfirm")
-    withdraw_desc: Optional[StrictStr] = Field(default=None, alias="withdrawDesc")
-    withdraw_enable: Optional[StrictBool] = Field(default=None, alias="withdrawEnable")
-    withdraw_fee: Optional[StrictStr] = Field(default=None, alias="withdrawFee")
+    coin: Optional[StrictStr] = None
     withdraw_integer_multiple: Optional[StrictStr] = Field(
         default=None, alias="withdrawIntegerMultiple"
     )
-    withdraw_max: Optional[StrictStr] = Field(default=None, alias="withdrawMax")
+    is_default: Optional[StrictBool] = Field(default=None, alias="isDefault")
+    deposit_enable: Optional[StrictBool] = Field(default=None, alias="depositEnable")
+    withdraw_enable: Optional[StrictBool] = Field(default=None, alias="withdrawEnable")
+    deposit_desc: Optional[StrictStr] = Field(default=None, alias="depositDesc")
+    withdraw_desc: Optional[StrictStr] = Field(default=None, alias="withdrawDesc")
+    special_tips: Optional[StrictStr] = Field(default=None, alias="specialTips")
+    special_withdraw_tips: Optional[StrictStr] = Field(
+        default=None, alias="specialWithdrawTips"
+    )
+    name: Optional[StrictStr] = None
+    reset_address_status: Optional[StrictBool] = Field(
+        default=None, alias="resetAddressStatus"
+    )
+    address_regex: Optional[StrictStr] = Field(default=None, alias="addressRegex")
+    memo_regex: Optional[StrictStr] = Field(default=None, alias="memoRegex")
+    withdraw_fee: Optional[StrictStr] = Field(default=None, alias="withdrawFee")
     withdraw_min: Optional[StrictStr] = Field(default=None, alias="withdrawMin")
+    withdraw_max: Optional[StrictStr] = Field(default=None, alias="withdrawMax")
     withdraw_internal_min: Optional[StrictStr] = Field(
         default=None, alias="withdrawInternalMin"
     )
+    deposit_dust: Optional[StrictStr] = Field(default=None, alias="depositDust")
+    min_confirm: Optional[StrictInt] = Field(default=None, alias="minConfirm")
+    un_lock_confirm: Optional[StrictInt] = Field(default=None, alias="unLockConfirm")
     same_address: Optional[StrictBool] = Field(default=None, alias="sameAddress")
     estimated_arrival_time: Optional[StrictInt] = Field(
         default=None, alias="estimatedArrivalTime"
@@ -61,61 +65,36 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
         default=None, alias="contractAddressUrl"
     )
     contract_address: Optional[StrictStr] = Field(default=None, alias="contractAddress")
-    deposit_all_enable: Optional[StrictBool] = Field(
-        default=None, alias="depositAllEnable"
-    )
-    withdraw_all_enable: Optional[StrictBool] = Field(
-        default=None, alias="withdrawAllEnable"
-    )
-    free: Optional[StrictStr] = None
-    locked: Optional[StrictStr] = None
-    freeze: Optional[StrictStr] = None
-    withdrawing: Optional[StrictStr] = None
-    ipoing: Optional[StrictStr] = None
-    ipoable: Optional[StrictStr] = None
-    storage: Optional[StrictStr] = None
-    is_legal_money: Optional[StrictBool] = Field(default=None, alias="isLegalMoney")
-    trading: Optional[StrictBool] = None
-    network_list: Optional[
-        List[AllCoinsInformationResponseInnerNetworkListInnerNetworkListInner]
-    ] = Field(default=None, alias="networkList")
+    denomination: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "addressRegex",
-        "coin",
-        "depositDesc",
-        "depositEnable",
-        "isDefault",
-        "memoRegex",
-        "minConfirm",
-        "name",
         "network",
-        "specialTips",
-        "unLockConfirm",
-        "withdrawDesc",
-        "withdrawEnable",
-        "withdrawFee",
+        "coin",
         "withdrawIntegerMultiple",
-        "withdrawMax",
+        "isDefault",
+        "depositEnable",
+        "withdrawEnable",
+        "depositDesc",
+        "withdrawDesc",
+        "specialTips",
+        "specialWithdrawTips",
+        "name",
+        "resetAddressStatus",
+        "addressRegex",
+        "memoRegex",
+        "withdrawFee",
         "withdrawMin",
+        "withdrawMax",
         "withdrawInternalMin",
+        "depositDust",
+        "minConfirm",
+        "unLockConfirm",
         "sameAddress",
         "estimatedArrivalTime",
         "busy",
         "contractAddressUrl",
         "contractAddress",
-        "depositAllEnable",
-        "withdrawAllEnable",
-        "free",
-        "locked",
-        "freeze",
-        "withdrawing",
-        "ipoing",
-        "ipoable",
-        "storage",
-        "isLegalMoney",
-        "trading",
-        "networkList",
+        "denomination",
     ]
 
     model_config = ConfigDict(
@@ -164,13 +143,6 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in network_list (list)
-        _items = []
-        if self.network_list:
-            for _item_network_list in self.network_list:
-                if _item_network_list:
-                    _items.append(_item_network_list.to_dict())
-            _dict["networkList"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -189,50 +161,33 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "addressRegex": obj.get("addressRegex"),
-                "coin": obj.get("coin"),
-                "depositDesc": obj.get("depositDesc"),
-                "depositEnable": obj.get("depositEnable"),
-                "isDefault": obj.get("isDefault"),
-                "memoRegex": obj.get("memoRegex"),
-                "minConfirm": obj.get("minConfirm"),
-                "name": obj.get("name"),
                 "network": obj.get("network"),
-                "specialTips": obj.get("specialTips"),
-                "unLockConfirm": obj.get("unLockConfirm"),
-                "withdrawDesc": obj.get("withdrawDesc"),
-                "withdrawEnable": obj.get("withdrawEnable"),
-                "withdrawFee": obj.get("withdrawFee"),
+                "coin": obj.get("coin"),
                 "withdrawIntegerMultiple": obj.get("withdrawIntegerMultiple"),
-                "withdrawMax": obj.get("withdrawMax"),
+                "isDefault": obj.get("isDefault"),
+                "depositEnable": obj.get("depositEnable"),
+                "withdrawEnable": obj.get("withdrawEnable"),
+                "depositDesc": obj.get("depositDesc"),
+                "withdrawDesc": obj.get("withdrawDesc"),
+                "specialTips": obj.get("specialTips"),
+                "specialWithdrawTips": obj.get("specialWithdrawTips"),
+                "name": obj.get("name"),
+                "resetAddressStatus": obj.get("resetAddressStatus"),
+                "addressRegex": obj.get("addressRegex"),
+                "memoRegex": obj.get("memoRegex"),
+                "withdrawFee": obj.get("withdrawFee"),
                 "withdrawMin": obj.get("withdrawMin"),
+                "withdrawMax": obj.get("withdrawMax"),
                 "withdrawInternalMin": obj.get("withdrawInternalMin"),
+                "depositDust": obj.get("depositDust"),
+                "minConfirm": obj.get("minConfirm"),
+                "unLockConfirm": obj.get("unLockConfirm"),
                 "sameAddress": obj.get("sameAddress"),
                 "estimatedArrivalTime": obj.get("estimatedArrivalTime"),
                 "busy": obj.get("busy"),
                 "contractAddressUrl": obj.get("contractAddressUrl"),
                 "contractAddress": obj.get("contractAddress"),
-                "depositAllEnable": obj.get("depositAllEnable"),
-                "withdrawAllEnable": obj.get("withdrawAllEnable"),
-                "free": obj.get("free"),
-                "locked": obj.get("locked"),
-                "freeze": obj.get("freeze"),
-                "withdrawing": obj.get("withdrawing"),
-                "ipoing": obj.get("ipoing"),
-                "ipoable": obj.get("ipoable"),
-                "storage": obj.get("storage"),
-                "isLegalMoney": obj.get("isLegalMoney"),
-                "trading": obj.get("trading"),
-                "networkList": (
-                    [
-                        AllCoinsInformationResponseInnerNetworkListInnerNetworkListInner.from_dict(
-                            _item
-                        )
-                        for _item in obj["networkList"]
-                    ]
-                    if obj.get("networkList") is not None
-                    else None
-                ),
+                "denomination": obj.get("denomination"),
             }
         )
         # store additional fields in additional_properties

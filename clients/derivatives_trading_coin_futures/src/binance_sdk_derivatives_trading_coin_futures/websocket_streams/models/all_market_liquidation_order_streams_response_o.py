@@ -29,16 +29,16 @@ class AllMarketLiquidationOrderStreamsResponseO(BaseModel):
 
     s: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     o: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     ap: Optional[StrictStr] = None
-    x: Optional[StrictStr] = Field(default=None, alias="X")
+    X: Optional[StrictStr] = Field(default=None, alias="X")
     l: Optional[StrictStr] = None
     z: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "s",

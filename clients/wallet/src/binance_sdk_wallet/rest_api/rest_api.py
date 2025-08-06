@@ -54,11 +54,12 @@ from .models import WithdrawHistoryResponse
 from .models import GetSymbolsDelistScheduleForSpotResponse
 from .models import SystemStatusResponse
 from .models import BrokerWithdrawResponse
+from .models import CheckQuestionnaireRequirementsResponse
 from .models import DepositHistoryTravelRuleResponse
 from .models import FetchAddressVerificationListResponse
-from .models import OnboardedVaspListResponse
 from .models import SubmitDepositQuestionnaireResponse
 from .models import SubmitDepositQuestionnaireTravelRuleResponse
+from .models import VaspListResponse
 from .models import WithdrawHistoryV1Response
 from .models import WithdrawHistoryV2Response
 from .models import WithdrawTravelRuleResponse
@@ -1292,6 +1293,36 @@ class WalletRestAPI:
             wallet_type,
         )
 
+    def check_questionnaire_requirements(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CheckQuestionnaireRequirementsResponse]:
+        """
+                Check Questionnaire Requirements (for local entities that require travel rule) (supporting network) (USER_DATA)
+
+                This API will return user-specific Travel Rule questionnaire requirement information in reference to the current API key.
+
+        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+
+        Weight: 18000
+        Request limit: 10 requests per second
+        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+        limit is 180000/second. Response from the endpoint contains header
+        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[CheckQuestionnaireRequirementsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.check_questionnaire_requirements(recv_window)
+
     def deposit_history_travel_rule(
         self,
         tr_id: Optional[str] = None,
@@ -1353,6 +1384,7 @@ class WalletRestAPI:
 
     def fetch_address_verification_list(
         self,
+        recv_window: Optional[int] = None,
     ) -> ApiResponse[FetchAddressVerificationListResponse]:
         """
                 Fetch address verification list (USER_DATA)
@@ -1362,6 +1394,7 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
+                    recv_window (Optional[int]):
 
                 Returns:
                     ApiResponse[FetchAddressVerificationListResponse]
@@ -1371,35 +1404,7 @@ class WalletRestAPI:
 
         """
 
-        return self._travelRuleApi.fetch_address_verification_list()
-
-    def onboarded_vasp_list(
-        self,
-    ) -> ApiResponse[OnboardedVaspListResponse]:
-        """
-                Onboarded VASP list (for local entities that require travel rule) (supporting network) (USER_DATA)
-
-                Fetch the onboarded VASP list for local entities that required travel rule.
-
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
-
-                Args:
-
-                Returns:
-                    ApiResponse[OnboardedVaspListResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._travelRuleApi.onboarded_vasp_list()
+        return self._travelRuleApi.fetch_address_verification_list(recv_window)
 
     def submit_deposit_questionnaire(
         self,
@@ -1491,6 +1496,36 @@ class WalletRestAPI:
         return self._travelRuleApi.submit_deposit_questionnaire_travel_rule(
             tran_id, questionnaire
         )
+
+    def vasp_list(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VaspListResponse]:
+        """
+                VASP list (for local entities that require travel rule) (supporting network) (USER_DATA)
+
+                Fetch the VASP list for local entities.
+
+        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+
+        Weight: 18000
+        Request limit: 10 requests per second
+        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
+        limit is 180000/second. Response from the endpoint contains header
+        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+
+                Args:
+                    recv_window (Optional[int]):
+
+                Returns:
+                    ApiResponse[VaspListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.vasp_list(recv_window)
 
     def withdraw_history_v1(
         self,

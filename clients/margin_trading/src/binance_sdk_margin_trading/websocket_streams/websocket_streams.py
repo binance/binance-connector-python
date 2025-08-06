@@ -103,7 +103,7 @@ class MarginTradingWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self.websocket_base, listenKey, response_model=RiskDataStreamEventsResponse
+            self, listenKey, response_model=RiskDataStreamEventsResponse
         )
 
     async def trade_data(self, listenKey: str) -> TradeDataStreamEventsResponse:
@@ -116,5 +116,5 @@ class MarginTradingWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self.websocket_base, listenKey, response_model=TradeDataStreamEventsResponse
+            self, listenKey, response_model=TradeDataStreamEventsResponse
         )

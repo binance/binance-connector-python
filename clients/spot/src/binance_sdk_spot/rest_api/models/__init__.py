@@ -323,6 +323,13 @@ from .enums import OrderOcoNewOrderRespTypeEnum as OrderOcoNewOrderRespTypeEnum
 from .enums import (
     OrderOcoSelfTradePreventionModeEnum as OrderOcoSelfTradePreventionModeEnum,
 )
+from .enums import OrderTestSideEnum as OrderTestSideEnum
+from .enums import OrderTestTypeEnum as OrderTestTypeEnum
+from .enums import OrderTestTimeInForceEnum as OrderTestTimeInForceEnum
+from .enums import OrderTestNewOrderRespTypeEnum as OrderTestNewOrderRespTypeEnum
+from .enums import (
+    OrderTestSelfTradePreventionModeEnum as OrderTestSelfTradePreventionModeEnum,
+)
 from .enums import SorOrderSideEnum as SorOrderSideEnum
 from .enums import SorOrderTypeEnum as SorOrderTypeEnum
 from .enums import SorOrderTimeInForceEnum as SorOrderTimeInForceEnum

@@ -30,7 +30,7 @@ class MarginCall(BaseModel):
     MarginCall
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     cw: Optional[StrictStr] = None
     p: Optional[List[MarginCallPInner]] = None
     additional_properties: Dict[str, Any] = {}

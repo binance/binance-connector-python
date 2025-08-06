@@ -27,10 +27,10 @@ class Balanceupdate(BaseModel):
     Balanceupdate
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     a: Optional[StrictStr] = None
     d: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "a", "d", "T"]
 

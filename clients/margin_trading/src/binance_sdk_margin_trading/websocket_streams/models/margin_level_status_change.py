@@ -27,7 +27,7 @@ class MarginLevelStatusChange(BaseModel):
     MarginLevelStatusChange
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     l: Optional[StrictStr] = None
     s: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

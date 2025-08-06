@@ -18,16 +18,16 @@ import json
 
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_wallet.rest_api.models.onboarded_vasp_list_response_inner import (
-    OnboardedVaspListResponseInner,
+from binance_sdk_wallet.rest_api.models.vasp_list_response_inner import (
+    VaspListResponseInner,
 )
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class OnboardedVaspListResponse(OnboardedVaspListResponseInner):
+class VaspListResponse(VaspListResponseInner):
     """
-    OnboardedVaspListResponse
+    VaspListResponse
     """  # noqa: E501
 
     __properties: ClassVar[List[str]] = []
@@ -53,7 +53,7 @@ class OnboardedVaspListResponse(OnboardedVaspListResponseInner):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OnboardedVaspListResponse from a JSON string"""
+        """Create an instance of VaspListResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:

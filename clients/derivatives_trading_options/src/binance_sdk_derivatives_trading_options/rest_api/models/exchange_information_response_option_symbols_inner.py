@@ -41,6 +41,9 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
     unit: Optional[StrictInt] = None
     maker_fee_rate: Optional[StrictStr] = Field(default=None, alias="makerFeeRate")
     taker_fee_rate: Optional[StrictStr] = Field(default=None, alias="takerFeeRate")
+    liquidation_fee_rate: Optional[StrictStr] = Field(
+        default=None, alias="liquidationFeeRate"
+    )
     min_qty: Optional[StrictStr] = Field(default=None, alias="minQty")
     max_qty: Optional[StrictStr] = Field(default=None, alias="maxQty")
     initial_margin: Optional[StrictStr] = Field(default=None, alias="initialMargin")
@@ -67,6 +70,7 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
         "unit",
         "makerFeeRate",
         "takerFeeRate",
+        "liquidationFeeRate",
         "minQty",
         "maxQty",
         "initialMargin",
@@ -167,6 +171,7 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
                 "unit": obj.get("unit"),
                 "makerFeeRate": obj.get("makerFeeRate"),
                 "takerFeeRate": obj.get("takerFeeRate"),
+                "liquidationFeeRate": obj.get("liquidationFeeRate"),
                 "minQty": obj.get("minQty"),
                 "maxQty": obj.get("maxQty"),
                 "initialMargin": obj.get("initialMargin"),

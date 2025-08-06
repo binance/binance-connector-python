@@ -78,6 +78,11 @@ from ..models import OrderOcoSideEnum
 from ..models import OrderOcoStopLimitTimeInForceEnum
 from ..models import OrderOcoNewOrderRespTypeEnum
 from ..models import OrderOcoSelfTradePreventionModeEnum
+from ..models import OrderTestSideEnum
+from ..models import OrderTestTypeEnum
+from ..models import OrderTestTimeInForceEnum
+from ..models import OrderTestNewOrderRespTypeEnum
+from ..models import OrderTestSelfTradePreventionModeEnum
 from ..models import SorOrderSideEnum
 from ..models import SorOrderTypeEnum
 from ..models import SorOrderTimeInForceEnum
@@ -1190,7 +1195,25 @@ class TradeApi:
 
     def order_test(
         self,
+        symbol: str = None,
+        side: OrderTestSideEnum = None,
+        type: OrderTestTypeEnum = None,
         compute_commission_rates: Optional[bool] = None,
+        time_in_force: Optional[OrderTestTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        quote_order_qty: Optional[float] = None,
+        price: Optional[float] = None,
+        new_client_order_id: Optional[str] = None,
+        strategy_id: Optional[int] = None,
+        strategy_type: Optional[int] = None,
+        stop_price: Optional[float] = None,
+        trailing_delta: Optional[int] = None,
+        iceberg_qty: Optional[float] = None,
+        new_order_resp_type: Optional[OrderTestNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            OrderTestSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
                 Test new order
@@ -1205,7 +1228,23 @@ class TradeApi:
         |With `computeCommissionRates`|20|
 
                 Args:
+                    symbol (str):
+                    side (OrderTestSideEnum):
+                    type (OrderTestTypeEnum):
                     compute_commission_rates (Optional[bool]): Default: `false`
+                    time_in_force (Optional[OrderTestTimeInForceEnum]):
+                    quantity (Optional[float]):
+                    quote_order_qty (Optional[float]):
+                    price (Optional[float]):
+                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int]):
+                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
+                    stop_price (Optional[float]): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
+                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum]):
+                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum]):
+                    recv_window (Optional[int]): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderTestResponse]
@@ -1215,7 +1254,38 @@ class TradeApi:
 
         """
 
-        payload = {"compute_commission_rates": compute_commission_rates}
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
+        payload = {
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            "compute_commission_rates": compute_commission_rates,
+            "time_in_force": time_in_force,
+            "quantity": quantity,
+            "quote_order_qty": quote_order_qty,
+            "price": price,
+            "new_client_order_id": new_client_order_id,
+            "strategy_id": strategy_id,
+            "strategy_type": strategy_type,
+            "stop_price": stop_price,
+            "trailing_delta": trailing_delta,
+            "iceberg_qty": iceberg_qty,
+            "new_order_resp_type": new_order_resp_type,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
+            "recv_window": recv_window,
+        }
 
         return send_request(
             self._session,

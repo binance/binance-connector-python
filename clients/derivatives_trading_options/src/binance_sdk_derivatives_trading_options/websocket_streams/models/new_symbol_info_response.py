@@ -28,7 +28,7 @@ class NewSymbolInfoResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     u: Optional[StrictStr] = None
     qa: Optional[StrictStr] = None
     s: Optional[StrictStr] = None

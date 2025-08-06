@@ -1,11 +1,11 @@
 # Binance Python Fiat SDK
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci-fiat.yml)](https://github.com/binance/binance-connector-python/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci.yaml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
 [![PyPI version](https://img.shields.io/pypi/v/binance-sdk-fiat)](https://pypi.python.org/pypi/binance-sdk-fiat)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-fiat.svg)](https://pypi.org/project/binance-sdk-fiat/)
-[![Python version](https://img.shields.io/pypi/pyversions/binance-connector)](https://www.python.org/downloads/)
+[![Python version](https://img.shields.io/pypi/pyversions/binance-sdk-fiat)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

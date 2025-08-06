@@ -30,23 +30,23 @@ class ConditionalOrderTradeUpdateSo(BaseModel):
     s: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
     si: Optional[StrictInt] = None
-    s: Optional[StrictStr] = Field(default=None, alias="S")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
     st: Optional[StrictStr] = None
     f: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     sp: Optional[StrictStr] = None
     os: Optional[StrictStr] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     ut: Optional[StrictInt] = None
-    r: Optional[StrictBool] = Field(default=None, alias="R")
+    R: Optional[StrictBool] = Field(default=None, alias="R")
     wt: Optional[StrictStr] = None
     ps: Optional[StrictStr] = None
     cp: Optional[StrictBool] = None
-    ap: Optional[StrictStr] = Field(default=None, alias="AP")
+    AP: Optional[StrictStr] = Field(default=None, alias="AP")
     cr: Optional[StrictStr] = None
     i: Optional[StrictInt] = None
-    v: Optional[StrictStr] = Field(default=None, alias="V")
+    V: Optional[StrictStr] = Field(default=None, alias="V")
     gtd: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

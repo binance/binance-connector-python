@@ -35,9 +35,9 @@ class BookTickerResponse(BaseModel):
     u: Optional[StrictInt] = None
     s: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
-    b: Optional[StrictStr] = Field(default=None, alias="B")
+    B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
-    a: Optional[StrictStr] = Field(default=None, alias="A")
+    A: Optional[StrictStr] = Field(default=None, alias="A")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["u", "s", "b", "B", "a", "A"]
 

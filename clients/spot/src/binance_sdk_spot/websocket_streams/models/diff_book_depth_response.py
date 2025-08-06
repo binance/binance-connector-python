@@ -33,9 +33,9 @@ class DiffBookDepthResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = None
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
-    u: Optional[StrictInt] = Field(default=None, alias="U")
+    U: Optional[StrictInt] = Field(default=None, alias="U")
     u: Optional[StrictInt] = None
     b: Optional[List[List[StrictStr]]] = None
     a: Optional[List[List[StrictStr]]] = None
