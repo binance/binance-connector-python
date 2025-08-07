@@ -18,7 +18,7 @@ jobs:
       - name: Detect all clients
         id: detect
         run: |
-          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1] + ["common"]')
           echo "Detected clients: $ALL_CLIENTS"
           echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
           echo "::set-output name=clients::$ALL_CLIENTS"
@@ -38,13 +38,14 @@ jobs:
         run: |
           if [ "${{ matrix.client }}" == "common" ]; then
             cd common
+            old_version=$(git show HEAD^:${{ matrix.client }}/pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
           else
             cd clients/${{ matrix.client }}
+            old_version=$(git show HEAD^:clients/${{ matrix.client }}/pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
           fi
 
-          old_version=$(git show HEAD^:clients/${{ matrix.client }}/pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
           new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
-          
+
           if [ "$old_version" = "$new_version" ]; then
             echo "::error ::Version was not bumped in pyproject.toml — skipping release"
             exit 1
@@ -76,4 +77,4 @@ jobs:
 
       - name: Publish to pypi
         working-directory: ${{ steps.path.outputs.dir }}
-        run: poetry publish --build --no-interaction
+        run: poetry publish

@@ -335,7 +335,10 @@ def send_request(
             parsed = json.loads(response.text)
             is_list = isinstance(parsed, list)
             is_oneof = is_one_of_model(response_model)
-            is_flat_list = is_list and not isinstance(parsed[0], list) if is_list else False
+            is_flat_list = is_list and (
+                len(parsed) == 0 or
+                (not isinstance(parsed[0], list) if is_list else False)
+            )
             if (is_list and not is_flat_list) or not response_model:
                 data_function = lambda: parsed
             elif is_oneof or is_list:

@@ -561,6 +561,40 @@ class TestSendRequest(unittest.TestCase):
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_successful_request_empty_array_response(
+        self, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
+    ):
+        """Test successful request (200 response)."""
+        mock_response = Mock(status_code=200)
+        mock_response.json.return_value = []
+        mock_response.text = json.dumps([])
+
+        self.session.request.return_value = mock_response
+
+        response = send_request(
+            self.session, self.configuration, self.method, self.path, {"param": "value"}
+        )
+
+        self.assertEqual(response.data(), [])
+        self.assertEqual(response.status, 200)
+        self.assertEqual(response.headers, mock_response.headers)
+        self.assertEqual(response.rate_limits, [])
+
+        headers = self.configuration.base_headers
+        headers["Connection"] = "close"
+
+        self.session.request.assert_called_once_with(
+            method=self.method,
+            url=self.url,
+            params={"param": "value"},
+            headers=headers,
+            timeout=5,
+            proxies=None,
+        )
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
     def test_client_errors(self, mock_clean_none, mock_encoded_string):
         """Test 400-499 errors raising appropriate exceptions."""
         error_cases = {
