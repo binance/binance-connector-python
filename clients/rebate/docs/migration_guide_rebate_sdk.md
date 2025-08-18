@@ -10,14 +10,14 @@ With the transition to a modularized structure, the Binance Connector has been s
    The modularised Rebate Connector has been moved to a new package:
 
    **Old:** `binance-connector`  
-   **New:** `binance-sdk-ebate`
+   **New:** `binance-sdk-rebate`
 
 2. **Installation**:  
    Uninstall the old package and install the new one:
 
    ```bash
    pip uninstall binance-connector
-   pip install binance-sdk-ebate
+   pip install binance-sdk-rebate
    ```
 
 3. **Imports**:  
