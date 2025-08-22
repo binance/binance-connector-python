@@ -103,8 +103,8 @@ def snake_to_camel(snake_str: str) -> str:
         str: The converted camelCase string.
     """
 
-    parts = snake_str.split('_')
-    return parts[0] + ''.join(word.capitalize() for word in parts[1:])
+    parts = snake_str.split("_")
+    return parts[0] + "".join(word.capitalize() for word in parts[1:])
 
 
 def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
@@ -117,7 +117,7 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
     """
 
     if isinstance(val, list):
-        return [v.__dict__ if hasattr(v, '__dict__') else v for v in val]
+        return [v.__dict__ if hasattr(v, "__dict__") else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
     if isinstance(val , Enum):
@@ -544,9 +544,9 @@ def normalize_query_values(parsed, expected_types=None):
             elif expected_type == str:
                 return val_stripped
         val_lower = val_stripped.lower()
-        if val_lower == 'true':
+        if val_lower == "true":
             return True
-        elif val_lower == 'false':
+        elif val_lower == "false":
             return False
         try:
             return int(val_stripped)

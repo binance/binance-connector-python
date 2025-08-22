@@ -1,9 +1,10 @@
 import ssl
 
-from typing import Optional, Dict, Union
+from typing import Optional, Dict, Union, List
 from http.client import HTTPSConnection
 
 from binance_common.constants import TimeUnit, WebsocketMode
+from binance_common.headers import parse_custom_headers
 
 
 class ConfigurationRestAPI:
@@ -19,6 +20,7 @@ class ConfigurationRestAPI:
     - Time Unit
     - Proxy support
     - Retries & Backoff
+    - Custom REST headers
     """
 
     def __init__(
@@ -36,6 +38,7 @@ class ConfigurationRestAPI:
         time_unit: Optional[str] = None,
         private_key: Optional[Union[bytes, str]] = None,
         private_key_passphrase: Optional[str] = None,
+        custom_headers: Optional[dict[str, Union[str, List[str]]]] = {},
     ):
         """
         Initialize the API configuration.
@@ -54,6 +57,7 @@ class ConfigurationRestAPI:
             time_unit (Optional[str]): Time unit for time-based responses (default: None).
             private_key (Optional[Union[bytes, str]]): Private key for authentication (default: None).
             private_key_passphrase (Optional[str]): Passphrase for private key (default: None).
+            custom_headers (Optional[dict[str, Union[str, List[str]]]]): Custom REST headers (default: {}).
         """
 
         self.api_key = api_key
@@ -73,6 +77,7 @@ class ConfigurationRestAPI:
         self.base_headers = {
             "Accept": "application/json",
             "X-MBX-APIKEY": str(self.api_key) if self.api_key else "",
+            **parse_custom_headers(custom_headers)
         }
 
 

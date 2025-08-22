@@ -2,7 +2,8 @@ from typing import List, Optional, Callable, TypeVar, Generic
 from pydantic import BaseModel
 
 T = TypeVar("T")
-
+T_Response = TypeVar("T_Response")
+T_Stream = TypeVar("T_Stream")
 
 class RateLimit(BaseModel):
     """Represents a single rate limit entry.
@@ -90,3 +91,19 @@ class WebsocketApiResponse(Generic[T]):
         :return: The parsed data of type T.
         """
         return self._data_function()
+
+
+class WebsocketApiUserDataStreamResponse(Generic[T_Response, T_Stream]):
+    """A wrapper for WebSocket API user data stream responses.
+
+    :param response: A callable that lazily returns a WebSocket API responses of type T_Response.
+    :param stream: A callable that lazily returns a RequestStreamHandle responses of type T_Stream.
+    """
+
+    def __init__(
+        self,
+        response: WebsocketApiResponse[T_Response],
+        stream: T_Stream,
+    ):
+        self.response = response
+        self.stream = stream

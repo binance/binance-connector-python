@@ -14,6 +14,7 @@ from binance_common.constants import WebsocketMode
 from binance_common.websocket import (
     global_stream_connections,
     RequestStream,
+    RequestStreamHandle,
     WebSocketStreamBase,
     WebSocketAPIBase,
     WebSocketCommon,
@@ -54,6 +55,7 @@ def mock_config():
     config.api_key = "test-api-key"
     config.api_secret = "test-secret"
     config.stream_url = "wss://example.com/ws"
+    config.mode = WebsocketMode.SINGLE
     return config
 
 
@@ -246,7 +248,9 @@ class TestWebSocketCommon:
         "binance_common.websocket.aiohttp.ClientSession.ws_connect",
         new_callable=AsyncMock,
     )
-    async def test_schedule_reconnect(self, mock_ws_connect, config, mock_websocket, mock_registry):
+    async def test_schedule_reconnect(
+        self, mock_ws_connect, config, mock_websocket, mock_registry
+    ):
         mock_ws_connect.return_value = mock_websocket
         ws_common = WebSocketCommon(config)
         await ws_common.connect("wss://test.com/ws", config)
@@ -319,7 +323,7 @@ class TestWebSocketCommon:
         assert future.result() == msg_data
 
     @pytest.mark.asyncio
-    async def test_receive_loop_calls_callbacks(self):
+    async def test_receive_loop_stream_calls_callbacks(self):
         ws_mock = AsyncMock()
         callback = MagicMock()
         msg_data = {"stream": "ticker", "data": {"price": "100"}}
@@ -335,6 +339,24 @@ class TestWebSocketCommon:
         await ws_common.receive_loop(conn)
 
         callback.assert_called_once_with(msg_data)
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_subscription_id_calls_callbacks(self):
+        ws_mock = AsyncMock()
+        callback = MagicMock()
+        msg_data = {"subscriptionId": 0, "event": {"test": "test"}}
+        msg = MagicMock()
+        msg.type = aiohttp.WSMsgType.TEXT
+        msg.data = json.dumps(msg_data)
+        ws_mock.__aiter__.return_value = [msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketAPI")
+        conn.stream_callback_map[0] = [callback]
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        callback.assert_called_once_with(msg_data["event"])
 
     @pytest.mark.asyncio
     async def test_receive_loop_handles_ping_and_pong(self):
@@ -384,7 +406,7 @@ class TestWebSocketStreamBase:
         await websocket_stream.subscribe(["test_stream"])
 
         assert "test_stream" in mock_registry.stream_connections_map
-        assert mock_registry.stream_connections_map['test_stream'] == mock_connection
+        assert mock_registry.stream_connections_map["test_stream"] == mock_connection
 
         assert "test_stream" in mock_connection.stream_callback_map
         mock_connection.websocket.send_str.assert_called_once()
@@ -416,9 +438,7 @@ class TestWebSocketStreamBase:
         self, websocket_stream, caplog
     ):
         websocket_stream.connections = [
-            SimpleNamespace(
-                reconnect=True, stream_callback_map={}, id=1
-            )
+            SimpleNamespace(reconnect=True, stream_callback_map={}, id=1)
         ]
         websocket_stream.reconnect_tasks = ["dummy_task"]
 
@@ -432,7 +452,9 @@ class TestWebSocketStreamBase:
             websocket_stream.on("open", lambda x: x, "test_stream")
 
     @pytest.mark.asyncio
-    async def test_unsubscribe_removes_stream(self, websocket_stream, mock_connection, mock_registry):
+    async def test_unsubscribe_removes_stream(
+        self, websocket_stream, mock_connection, mock_registry
+    ):
         await websocket_stream.subscribe(["test_stream"])
         await websocket_stream.unsubscribe(["test_stream"])
 
@@ -463,7 +485,7 @@ class TestWebSocketStreamBase:
     @pytest.mark.asyncio
     async def test_request_stream_returns_correct_interface(self, websocket_stream):
         result = await RequestStream(websocket_stream, "test_stream")
-        assert isinstance(result, SimpleNamespace)
+        assert isinstance(result, RequestStreamHandle)
         assert hasattr(result, "on")
         assert hasattr(result, "unsubscribe")
 
@@ -521,7 +543,10 @@ class TestWebSocketAPIBase:
 
             assert isinstance(result, WebsocketApiResponse)
             assert callable(result._data_function)
-            assert result._data_function() == {"result": {"foo": "bar"}, "rateLimits": []}
+            assert result._data_function() == {
+                "result": {"foo": "bar"},
+                "rateLimits": [],
+            }
             assert result.rate_limits == []
 
     @pytest.mark.asyncio
@@ -552,7 +577,10 @@ class TestWebSocketAPIBase:
 
             assert isinstance(result, WebsocketApiResponse)
             assert callable(result._data_function)
-            assert result._data_function() == {"result": {"foo": "bar"}, "rateLimits": []}
+            assert result._data_function() == {
+                "result": {"foo": "bar"},
+                "rateLimits": [],
+            }
             assert result.rate_limits == []
 
     @pytest.mark.asyncio
@@ -712,3 +740,88 @@ class TestWebSocketAPIBase:
         with patch.object(WebSocketCommon, "ping", new_callable=AsyncMock) as mock_ping:
             await ws_api.ping_ws_api(mock_connection)
             mock_ping.assert_awaited_once_with(mock_connection)
+
+    @pytest.mark.asyncio
+    async def test_request_stream_returns_correct_interface(
+        self, ws_api, mock_connection
+    ):
+        ws_api.connections = [mock_connection]
+        result = await RequestStream(ws_api, "0")
+        assert isinstance(result, RequestStreamHandle)
+        assert hasattr(result, "on")
+        assert hasattr(result, "unsubscribe")
+
+    @pytest.mark.asyncio
+    async def test_subscribe_adds_stream_and_callback(
+        self, ws_api, mock_connection, mock_registry
+    ):
+        ws_api.connections = [mock_connection]
+        await ws_api.subscribe_user_data(id="0")
+
+        assert "0" in mock_registry.stream_connections_map
+        assert mock_registry.stream_connections_map["0"] == mock_connection
+        assert "0" in mock_connection.stream_callback_map
+        await ws_api.unsubscribe(id="0")
+
+    @pytest.mark.asyncio
+    async def test_on_sets_callback_for_stream(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        await ws_api.subscribe_user_data(id="0")
+
+        callback = lambda x: x
+        ws_api.on("message", callback, "0")
+
+        assert mock_connection.stream_callback_map["0"] == [callback]
+
+        callback = lambda x: x
+        ws_api.on("message", callback, "0")
+
+        assert mock_connection.stream_callback_map["0"] == [callback]
+        await ws_api.unsubscribe(id="0")
+
+    @pytest.mark.asyncio
+    async def test_on_sets_callback_for_stream(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        await ws_api.subscribe_user_data(id="0")
+
+        callback = lambda x: x
+        ws_api.on("message", callback, "0")
+
+        assert mock_connection.stream_callback_map["0"] == [callback]
+        await ws_api.unsubscribe(id="0")
+
+    @pytest.mark.asyncio
+    async def test_on_unsupported_event_raises(self, ws_api):
+        with pytest.raises(ValueError):
+            ws_api.on("open", lambda x: x, "0")
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_removes_stream(
+        self, ws_api, mock_connection, mock_registry
+    ):
+        ws_api.connections = [mock_connection]
+        await ws_api.subscribe_user_data(id="0")
+        await ws_api.unsubscribe(id="0")
+
+        assert "test_stream" not in mock_registry.stream_connections_map
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_with_empty_streams(self, ws_api, caplog):
+        await ws_api.unsubscribe(id="0")
+
+        assert "No user data connections available for unsubscription" in caplog.text
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_no_connections(self, ws_api, caplog):
+        ws_api.connections = []
+        await ws_api.unsubscribe(id="0")
+
+        assert "No user data connections available for unsubscription." in caplog.text
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_stream_not_connected_warns(
+        self, ws_api, mock_connection, caplog
+    ):
+        ws_api.connections = [mock_connection]
+        await ws_api.unsubscribe(id="0")
+        assert "Stream 0 is not subscribed." in caplog.text
