@@ -37,7 +37,7 @@ class ExchangeInformationResponseSymbolsInnerFiltersInner(BaseModel):
     limit: Optional[StrictInt] = None
     multiplier_up: Optional[StrictStr] = Field(default=None, alias="multiplierUp")
     multiplier_down: Optional[StrictStr] = Field(default=None, alias="multiplierDown")
-    multiplier_decimal: Optional[StrictInt] = Field(
+    multiplier_decimal: Optional[StrictStr] = Field(
         default=None, alias="multiplierDecimal"
     )
     additional_properties: Dict[str, Any] = {}

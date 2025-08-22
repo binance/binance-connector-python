@@ -144,7 +144,7 @@ class TestSpotAlgoApi:
         params = {
             "algo_id": 1,
         }
-        del params["algo_id"]
+        params["algo_id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo_id'"):
             self.client.cancel_algo_order_spot_algo(**params)
@@ -573,7 +573,7 @@ class TestSpotAlgoApi:
         params = {
             "algo_id": 1,
         }
-        del params["algo_id"]
+        params["algo_id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo_id'"):
             self.client.query_sub_orders_spot_algo(**params)
@@ -714,7 +714,7 @@ class TestSpotAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.time_weighted_average_price_spot_algo(**params)
@@ -727,7 +727,7 @@ class TestSpotAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.time_weighted_average_price_spot_algo(**params)
@@ -742,7 +742,7 @@ class TestSpotAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -759,7 +759,7 @@ class TestSpotAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["duration"]
+        params["duration"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'duration'"

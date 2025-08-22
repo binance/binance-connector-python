@@ -56,12 +56,12 @@ class GeneralApi:
         Weight: 20
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
-                permissions (Optional[List[str]]):
-                show_permission_sets (Optional[bool]):
-                symbol_status (Optional[ExchangeInfoSymbolStatusEnum]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    permissions (Optional[List[str]] = None):
+                    show_permission_sets (Optional[bool] = None):
+                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[ExchangeInfoResponse]
@@ -106,7 +106,7 @@ class GeneralApi:
         Weight: 1
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[PingResponse]
@@ -142,7 +142,7 @@ class GeneralApi:
         Weight: 1
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[TimeResponse]

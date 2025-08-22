@@ -319,7 +319,7 @@ class TestHistoryApi:
         """Test get_flexible_rewards_history() successfully with required parameters only."""
 
         params = {
-            "type": "Bonus",
+            "type": "BONUS",
         }
 
         expected_response = {
@@ -362,7 +362,7 @@ class TestHistoryApi:
             in request_kwargs["url"]
         )
         assert request_kwargs["method"] == "GET"
-        assert normalized["type"] == "Bonus"
+        assert normalized["type"] == "BONUS"
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -389,7 +389,7 @@ class TestHistoryApi:
         """Test get_flexible_rewards_history() successfully with optional parameters."""
 
         params = {
-            "type": "Bonus",
+            "type": "BONUS",
             "product_id": "1",
             "asset": "asset_example",
             "start_time": 1623319461670,
@@ -456,9 +456,9 @@ class TestHistoryApi:
     def test_get_flexible_rewards_history_missing_required_param_type(self):
         """Test that get_flexible_rewards_history() raises RequiredError when 'type' is missing."""
         params = {
-            "type": "Bonus",
+            "type": "BONUS",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.get_flexible_rewards_history(**params)
@@ -467,7 +467,7 @@ class TestHistoryApi:
         """Test that get_flexible_rewards_history() raises an error when the server returns an error."""
 
         params = {
-            "type": "Bonus",
+            "type": "BONUS",
         }
 
         mock_error = Exception("ResponseError")
@@ -1165,7 +1165,7 @@ class TestHistoryApi:
         params = {
             "product_id": "1",
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"

@@ -187,7 +187,7 @@ class TestOnChainYieldsApi:
         params = {
             "project_id": "1",
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -225,7 +225,7 @@ class TestOnChainYieldsApi:
                         "isSoldOut": True,
                         "apr": "0.039",
                         "status": "PREHEATING",
-                        "subscriptionStartTime": "1646182276000",
+                        "subscriptionStartTime": 1646182276000,
                         "canRedeemToFlex": True,
                     },
                     "quota": {"totalPersonalQuota": "2", "minimum": "0.001"},
@@ -289,7 +289,7 @@ class TestOnChainYieldsApi:
                         "isSoldOut": True,
                         "apr": "0.039",
                         "status": "PREHEATING",
-                        "subscriptionStartTime": "1646182276000",
+                        "subscriptionStartTime": 1646182276000,
                         "canRedeemToFlex": True,
                     },
                     "quota": {"totalPersonalQuota": "2", "minimum": "0.001"},
@@ -936,7 +936,7 @@ class TestOnChainYieldsApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -951,7 +951,7 @@ class TestOnChainYieldsApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.get_on_chain_yields_locked_subscription_preview(**params)
@@ -1328,7 +1328,7 @@ class TestOnChainYieldsApi:
         params = {
             "position_id": "1",
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -1458,7 +1458,7 @@ class TestOnChainYieldsApi:
             "position_id": "1",
             "auto_subscribe": True,
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -1473,7 +1473,7 @@ class TestOnChainYieldsApi:
             "position_id": "1",
             "auto_subscribe": True,
         }
-        del params["auto_subscribe"]
+        params["auto_subscribe"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_subscribe'"
@@ -1612,7 +1612,7 @@ class TestOnChainYieldsApi:
             "position_id": "1",
             "redeem_to": "redeem_to_example",
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -1627,7 +1627,7 @@ class TestOnChainYieldsApi:
             "position_id": "1",
             "redeem_to": "redeem_to_example",
         }
-        del params["redeem_to"]
+        params["redeem_to"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'redeem_to'"
@@ -1771,7 +1771,7 @@ class TestOnChainYieldsApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -1786,7 +1786,7 @@ class TestOnChainYieldsApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.subscribe_on_chain_yields_locked_product(**params)

@@ -466,7 +466,7 @@ class TestNFTApi:
         params = {
             "order_type": 56,
         }
-        del params["order_type"]
+        params["order_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_type'"

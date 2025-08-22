@@ -187,7 +187,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["address"]
+        params["address"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'address'"):
             self.client.broker_withdraw(**params)
@@ -203,7 +203,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.broker_withdraw(**params)
@@ -219,7 +219,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.broker_withdraw(**params)
@@ -235,7 +235,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["withdraw_order_id"]
+        params["withdraw_order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'withdraw_order_id'"
@@ -253,7 +253,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["questionnaire"]
+        params["questionnaire"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'questionnaire'"
@@ -271,7 +271,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["originator_pii"]
+        params["originator_pii"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'originator_pii'"
@@ -289,7 +289,7 @@ class TestTravelRuleApi:
             "originator_pii": "originator_pii_example",
             "signature": "signature_example",
         }
-        del params["signature"]
+        params["signature"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'signature'"
@@ -833,7 +833,7 @@ class TestTravelRuleApi:
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
         }
-        del params["sub_account_id"]
+        params["sub_account_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'sub_account_id'"
@@ -849,7 +849,7 @@ class TestTravelRuleApi:
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
         }
-        del params["deposit_id"]
+        params["deposit_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'deposit_id'"
@@ -865,7 +865,7 @@ class TestTravelRuleApi:
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
         }
-        del params["questionnaire"]
+        params["questionnaire"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'questionnaire'"
@@ -881,7 +881,7 @@ class TestTravelRuleApi:
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
         }
-        del params["beneficiary_pii"]
+        params["beneficiary_pii"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'beneficiary_pii'"
@@ -897,7 +897,7 @@ class TestTravelRuleApi:
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
         }
-        del params["signature"]
+        params["signature"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'signature'"
@@ -1025,7 +1025,7 @@ class TestTravelRuleApi:
     ):
         """Test that submit_deposit_questionnaire_travel_rule() raises RequiredError when 'tran_id' is missing."""
         params = {"tran_id": 1, "questionnaire": "questionnaire_example"}
-        del params["tran_id"]
+        params["tran_id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'tran_id'"):
             self.client.submit_deposit_questionnaire_travel_rule(**params)
@@ -1035,7 +1035,7 @@ class TestTravelRuleApi:
     ):
         """Test that submit_deposit_questionnaire_travel_rule() raises RequiredError when 'questionnaire' is missing."""
         params = {"tran_id": 1, "questionnaire": "questionnaire_example"}
-        del params["questionnaire"]
+        params["questionnaire"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'questionnaire'"
@@ -1640,7 +1640,7 @@ class TestTravelRuleApi:
             "amount": 1.0,
             "questionnaire": "questionnaire_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.withdraw_travel_rule(**params)
@@ -1653,7 +1653,7 @@ class TestTravelRuleApi:
             "amount": 1.0,
             "questionnaire": "questionnaire_example",
         }
-        del params["address"]
+        params["address"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'address'"):
             self.client.withdraw_travel_rule(**params)
@@ -1666,7 +1666,7 @@ class TestTravelRuleApi:
             "amount": 1.0,
             "questionnaire": "questionnaire_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.withdraw_travel_rule(**params)
@@ -1679,7 +1679,7 @@ class TestTravelRuleApi:
             "amount": 1.0,
             "questionnaire": "questionnaire_example",
         }
-        del params["questionnaire"]
+        params["questionnaire"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'questionnaire'"

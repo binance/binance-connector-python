@@ -320,7 +320,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.account_trade_list(**params)
@@ -494,7 +494,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.all_orders(**params)
@@ -608,7 +608,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "countdown_time": 56,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.auto_cancel_all_open_orders(**params)
@@ -619,7 +619,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "countdown_time": 56,
         }
-        del params["countdown_time"]
+        params["countdown_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'countdown_time'"
@@ -739,7 +739,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.cancel_all_open_orders(**params)
@@ -913,7 +913,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.cancel_multiple_orders(**params)
@@ -1079,7 +1079,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.cancel_order(**params)
@@ -1201,7 +1201,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.change_initial_leverage(**params)
@@ -1212,7 +1212,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["leverage"]
+        params["leverage"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'leverage'"
@@ -1333,7 +1333,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "margin_type": ChangeMarginTypeMarginTypeEnum["ISOLATED"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.change_margin_type(**params)
@@ -1344,7 +1344,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "margin_type": ChangeMarginTypeMarginTypeEnum["ISOLATED"].value,
         }
-        del params["margin_type"]
+        params["margin_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'margin_type'"
@@ -1461,7 +1461,7 @@ class TestTradeApi:
         params = {
             "multi_assets_margin": "multi_assets_margin_example",
         }
-        del params["multi_assets_margin"]
+        params["multi_assets_margin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'multi_assets_margin'"
@@ -1577,7 +1577,7 @@ class TestTradeApi:
         params = {
             "dual_side_position": "dual_side_position_example",
         }
-        del params["dual_side_position"]
+        params["dual_side_position"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'dual_side_position'"
@@ -1925,7 +1925,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_order_modify_history(**params)
@@ -2085,7 +2085,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_position_margin_change_history(**params)
@@ -2220,7 +2220,7 @@ class TestTradeApi:
             "amount": 1.0,
             "type": "type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.modify_isolated_position_margin(**params)
@@ -2232,7 +2232,7 @@ class TestTradeApi:
             "amount": 1.0,
             "type": "type_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.modify_isolated_position_margin(**params)
@@ -2244,7 +2244,7 @@ class TestTradeApi:
             "amount": 1.0,
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.modify_isolated_position_margin(**params)
@@ -2451,7 +2451,7 @@ class TestTradeApi:
                 )
             ],
         }
-        del params["batch_orders"]
+        params["batch_orders"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'batch_orders'"
@@ -2643,7 +2643,7 @@ class TestTradeApi:
             "quantity": 1.0,
             "price": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.modify_order(**params)
@@ -2656,7 +2656,7 @@ class TestTradeApi:
             "quantity": 1.0,
             "price": 1.0,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.modify_order(**params)
@@ -2669,7 +2669,7 @@ class TestTradeApi:
             "quantity": 1.0,
             "price": 1.0,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -2684,7 +2684,7 @@ class TestTradeApi:
             "quantity": 1.0,
             "price": 1.0,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             self.client.modify_order(**params)
@@ -2879,7 +2879,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.new_order(**params)
@@ -2891,7 +2891,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.new_order(**params)
@@ -2903,7 +2903,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.new_order(**params)
@@ -3140,7 +3140,7 @@ class TestTradeApi:
                 )
             ],
         }
-        del params["batch_orders"]
+        params["batch_orders"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'batch_orders'"
@@ -3854,7 +3854,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_current_open_order(**params)
@@ -4022,7 +4022,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_order(**params)
@@ -4214,7 +4214,7 @@ class TestTradeApi:
             "side": TestOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.test_order(**params)
@@ -4226,7 +4226,7 @@ class TestTradeApi:
             "side": TestOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.test_order(**params)
@@ -4238,7 +4238,7 @@ class TestTradeApi:
             "side": TestOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.test_order(**params)

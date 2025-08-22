@@ -50,8 +50,8 @@ class MarketDataApi:
         Weight: 3000(IP)
 
                 Args:
-                    from_asset (Optional[str]): User spends coin
-                    to_asset (Optional[str]): User receives coin
+                    from_asset (Optional[str] = None): User spends coin
+                    to_asset (Optional[str] = None): User receives coin
 
                 Returns:
                     ApiResponse[ListAllConvertPairsResponse]
@@ -87,7 +87,7 @@ class MarketDataApi:
         Weight: 100(IP)
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[QueryOrderQuantityPrecisionPerAssetResponse]

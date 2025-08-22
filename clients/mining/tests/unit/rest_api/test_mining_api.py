@@ -231,7 +231,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.account_list(**params)
@@ -242,7 +242,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -473,7 +473,7 @@ class TestMiningApi:
             "config_id": 1,
             "user_name": "user_name_example",
         }
-        del params["config_id"]
+        params["config_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'config_id'"
@@ -488,7 +488,7 @@ class TestMiningApi:
             "config_id": 1,
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -692,7 +692,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.earnings_list(**params)
@@ -703,7 +703,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -859,7 +859,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.extra_bonus_list(**params)
@@ -870,7 +870,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -1047,7 +1047,7 @@ class TestMiningApi:
             "config_id": 1,
             "user_name": "user_name_example",
         }
-        del params["config_id"]
+        params["config_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'config_id'"
@@ -1060,7 +1060,7 @@ class TestMiningApi:
             "config_id": 1,
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -1348,7 +1348,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -1365,7 +1365,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.hashrate_resale_request(**params)
@@ -1380,7 +1380,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["end_date"]
+        params["end_date"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_date'"
@@ -1397,7 +1397,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["start_date"]
+        params["start_date"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_date'"
@@ -1414,7 +1414,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["to_pool_user"]
+        params["to_pool_user"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_pool_user'"
@@ -1431,7 +1431,7 @@ class TestMiningApi:
             "to_pool_user": "to_pool_user_example",
             "hash_rate": 56,
         }
-        del params["hash_rate"]
+        params["hash_rate"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'hash_rate'"
@@ -1590,7 +1590,7 @@ class TestMiningApi:
         params = {
             "algo": "algo_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.mining_account_earning(**params)
@@ -1754,7 +1754,7 @@ class TestMiningApi:
             "user_name": "user_name_example",
             "worker_name": "worker_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.request_for_detail_miner_list(**params)
@@ -1766,7 +1766,7 @@ class TestMiningApi:
             "user_name": "user_name_example",
             "worker_name": "worker_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -1780,7 +1780,7 @@ class TestMiningApi:
             "user_name": "user_name_example",
             "worker_name": "worker_name_example",
         }
-        del params["worker_name"]
+        params["worker_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'worker_name'"
@@ -1960,7 +1960,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.request_for_miner_list(**params)
@@ -1971,7 +1971,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"
@@ -2134,7 +2134,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["algo"]
+        params["algo"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo'"):
             self.client.statistic_list(**params)
@@ -2145,7 +2145,7 @@ class TestMiningApi:
             "algo": "algo_example",
             "user_name": "user_name_example",
         }
-        del params["user_name"]
+        params["user_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'user_name'"

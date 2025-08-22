@@ -15,6 +15,7 @@ from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.websocket import (
     WebSocketStreamBase,
     WebSocketConnection,
+    RequestStreamHandle,
     RequestStream,
 )
 
@@ -74,10 +75,14 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
 
         super().on(event, callback, stream)
 
-    async def list_subscribe(self):
-        """Lists all currently subscribed WebSocket streams."""
+    async def list_subscribe(self) -> dict:
+        """Lists all currently subscribed WebSocket streams.
 
-        await super().list_subscribe()
+        Returns:
+            dict: A dictionary containing the current subscriptions.
+        """
+
+        return await super().list_subscribe()
 
     async def close_connection(
         self, connection: WebSocketConnection = None, close_session: bool = True
@@ -91,13 +96,13 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
 
         await super().close_connection(connection, close_session)
 
-    async def user_data(self, listenKey: str) -> UserDataStreamEventsResponse:
+    async def user_data(self, listenKey: str) -> RequestStreamHandle:
         """Subscribe to User Data Stream (USER_STREAM)
 
         Args:
             listenKey (str): The listen key for the user data stream.
         Returns:
-            UserDataStreamEventsResponse: The response model containing user data stream events.
+            RequestStreamHandle: An instance of RequestStream that provides the on() and unsubscribe() methods.
         """
 
         return await RequestStream(

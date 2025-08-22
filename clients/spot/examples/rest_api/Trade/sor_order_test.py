@@ -2,6 +2,8 @@ import os
 import logging
 
 from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
+from binance_sdk_spot.rest_api.models import SorOrderTestSideEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestTypeEnum
 
 
 # Configure logging
@@ -20,7 +22,12 @@ client = Spot(config_rest_api=configuration_rest_api)
 
 def sor_order_test():
     try:
-        response = client.rest_api.sor_order_test()
+        response = client.rest_api.sor_order_test(
+            symbol="BNBUSDT",
+            side=SorOrderTestSideEnum["BUY"].value,
+            type=SorOrderTestTypeEnum["MARKET"].value,
+            quantity=1.0,
+        )
 
         rate_limits = response.rate_limits
         logging.info(f"sor_order_test() rate limits: {rate_limits}")

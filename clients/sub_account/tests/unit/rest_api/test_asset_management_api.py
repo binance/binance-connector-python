@@ -207,7 +207,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.futures_transfer_for_sub_account(**params)
@@ -220,7 +220,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.futures_transfer_for_sub_account(**params)
@@ -233,7 +233,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.futures_transfer_for_sub_account(**params)
@@ -246,7 +246,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.futures_transfer_for_sub_account(**params)
@@ -426,7 +426,7 @@ class TestAssetManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_detail_on_sub_accounts_futures_account(**params)
@@ -660,7 +660,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_detail_on_sub_accounts_futures_account_v2(**params)
@@ -673,7 +673,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["futures_type"]
+        params["futures_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'futures_type'"
@@ -887,7 +887,7 @@ class TestAssetManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_detail_on_sub_accounts_margin_account(**params)
@@ -1095,7 +1095,7 @@ class TestAssetManagementApi:
             "page": 56,
             "row": 56,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_move_position_history_for_sub_account(**params)
@@ -1109,7 +1109,7 @@ class TestAssetManagementApi:
             "page": 56,
             "row": 56,
         }
-        del params["page"]
+        params["page"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
             self.client.get_move_position_history_for_sub_account(**params)
@@ -1121,7 +1121,7 @@ class TestAssetManagementApi:
             "page": 56,
             "row": 56,
         }
-        del params["row"]
+        params["row"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'row'"):
             self.client.get_move_position_history_for_sub_account(**params)
@@ -1255,7 +1255,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "coin": "coin_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_sub_account_deposit_address(**params)
@@ -1266,7 +1266,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "coin": "coin_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.get_sub_account_deposit_address(**params)
@@ -1450,7 +1450,7 @@ class TestAssetManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_sub_account_deposit_history(**params)
@@ -1854,7 +1854,7 @@ class TestAssetManagementApi:
         params = {
             "futures_type": 56,
         }
-        del params["futures_type"]
+        params["futures_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'futures_type'"
@@ -2117,7 +2117,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.margin_transfer_for_sub_account(**params)
@@ -2130,7 +2130,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.margin_transfer_for_sub_account(**params)
@@ -2143,7 +2143,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.margin_transfer_for_sub_account(**params)
@@ -2156,7 +2156,7 @@ class TestAssetManagementApi:
             "amount": 1.0,
             "type": 56,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.margin_transfer_for_sub_account(**params)
@@ -2339,7 +2339,7 @@ class TestAssetManagementApi:
             "product_type": "product_type_example",
             "order_args": [None],
         }
-        del params["from_user_email"]
+        params["from_user_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_user_email'"
@@ -2354,7 +2354,7 @@ class TestAssetManagementApi:
             "product_type": "product_type_example",
             "order_args": [None],
         }
-        del params["to_user_email"]
+        params["to_user_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_user_email'"
@@ -2369,7 +2369,7 @@ class TestAssetManagementApi:
             "product_type": "product_type_example",
             "order_args": [None],
         }
-        del params["product_type"]
+        params["product_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_type'"
@@ -2384,7 +2384,7 @@ class TestAssetManagementApi:
             "product_type": "product_type_example",
             "order_args": [None],
         }
-        del params["order_args"]
+        params["order_args"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_args'"
@@ -2576,7 +2576,7 @@ class TestAssetManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_sub_account_assets(**params)
@@ -2743,7 +2743,7 @@ class TestAssetManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_sub_account_assets_asset_management(**params)
@@ -2925,7 +2925,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_sub_account_futures_asset_transfer_history(**params)
@@ -2938,7 +2938,7 @@ class TestAssetManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["futures_type"]
+        params["futures_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'futures_type'"
@@ -3467,7 +3467,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["from_email"]
+        params["from_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_email'"
@@ -3483,7 +3483,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["to_email"]
+        params["to_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_email'"
@@ -3501,7 +3501,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["futures_type"]
+        params["futures_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'futures_type'"
@@ -3517,7 +3517,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.sub_account_futures_asset_transfer(**params)
@@ -3531,7 +3531,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.sub_account_futures_asset_transfer(**params)
@@ -3796,7 +3796,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.transfer_to_master(**params)
@@ -3807,7 +3807,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.transfer_to_master(**params)
@@ -3936,7 +3936,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["to_email"]
+        params["to_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_email'"
@@ -3950,7 +3950,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.transfer_to_sub_account_of_same_master(**params)
@@ -3962,7 +3962,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.transfer_to_sub_account_of_same_master(**params)
@@ -4094,7 +4094,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["from_account_type"]
+        params["from_account_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_account_type'"
@@ -4109,7 +4109,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["to_account_type"]
+        params["to_account_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_account_type'"
@@ -4124,7 +4124,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.universal_transfer(**params)
@@ -4137,7 +4137,7 @@ class TestAssetManagementApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.universal_transfer(**params)

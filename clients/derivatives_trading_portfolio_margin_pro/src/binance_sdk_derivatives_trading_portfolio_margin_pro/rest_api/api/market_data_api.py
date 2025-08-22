@@ -118,7 +118,7 @@ class MarketDataApi:
         Weight: 50
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PortfolioMarginProTieredCollateralRateResponse]
@@ -156,7 +156,7 @@ class MarketDataApi:
         Weight: 1 if send asset or 50 if not send asset
 
                 Args:
-                    asset (Optional[str]):
+                    asset (Optional[str] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginAssetIndexPriceResponse]

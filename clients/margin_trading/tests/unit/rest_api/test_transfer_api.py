@@ -319,7 +319,7 @@ class TestTransferApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_max_transfer_out_amount(**params)

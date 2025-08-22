@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0 - 2025-08-22
+
+### Changed (1)
+
+- Standardized type hints for required parameters by replacing `default = None` annotations with `Union[..., None]`
+
 ## 1.2.0 - 2025-08-07
 
 ### Changed (1)

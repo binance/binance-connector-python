@@ -35,7 +35,7 @@ class IndividualSymbolBookTickerStreamsResponse(BaseModel):
     B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
     A: Optional[StrictStr] = Field(default=None, alias="A")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     E: Optional[StrictInt] = Field(default=None, alias="E")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

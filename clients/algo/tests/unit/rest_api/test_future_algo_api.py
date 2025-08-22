@@ -147,7 +147,7 @@ class TestFutureAlgoApi:
         params = {
             "algo_id": 1,
         }
-        del params["algo_id"]
+        params["algo_id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo_id'"):
             self.client.cancel_algo_order_future_algo(**params)
@@ -582,7 +582,7 @@ class TestFutureAlgoApi:
         params = {
             "algo_id": 1,
         }
-        del params["algo_id"]
+        params["algo_id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'algo_id'"):
             self.client.query_sub_orders_future_algo(**params)
@@ -728,7 +728,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.time_weighted_average_price_future_algo(**params)
@@ -741,7 +741,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.time_weighted_average_price_future_algo(**params)
@@ -756,7 +756,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -773,7 +773,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "duration": 5000,
         }
-        del params["duration"]
+        params["duration"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'duration'"
@@ -924,7 +924,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "urgency": "LOW",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.volume_participation_future_algo(**params)
@@ -937,7 +937,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "urgency": "LOW",
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.volume_participation_future_algo(**params)
@@ -950,7 +950,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "urgency": "LOW",
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -965,7 +965,7 @@ class TestFutureAlgoApi:
             "quantity": 1.0,
             "urgency": "LOW",
         }
-        del params["urgency"]
+        params["urgency"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'urgency'"):
             self.client.volume_participation_future_algo(**params)

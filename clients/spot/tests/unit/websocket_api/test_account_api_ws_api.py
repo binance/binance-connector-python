@@ -63,6 +63,12 @@ class TestWebSocketAccountApi:
                     "buyer": "0.00000030",
                     "seller": "0.00000040",
                 },
+                "specialCommission": {
+                    "maker": "0.01000000",
+                    "taker": "0.02000000",
+                    "buyer": "0.03000000",
+                    "seller": "0.04000000",
+                },
                 "taxCommission": {
                     "maker": "0.00000112",
                     "taker": "0.00000114",
@@ -140,6 +146,12 @@ class TestWebSocketAccountApi:
                     "buyer": "0.00000030",
                     "seller": "0.00000040",
                 },
+                "specialCommission": {
+                    "maker": "0.01000000",
+                    "taker": "0.02000000",
+                    "buyer": "0.03000000",
+                    "seller": "0.04000000",
+                },
                 "taxCommission": {
                     "maker": "0.00000112",
                     "taker": "0.00000114",
@@ -204,7 +216,7 @@ class TestWebSocketAccountApi:
         """Test that account_commission() raises RequiredError when 'symbol' is missing."""
 
         params = {"symbol": "BNBUSDT", "id": "e9d6b4349871b40611412680b3445fac"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.account_commission(**params)
@@ -875,7 +887,7 @@ class TestWebSocketAccountApi:
             "limit": 100,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.all_orders(**params)
@@ -1060,7 +1072,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.my_allocations(**params)
@@ -1244,7 +1256,7 @@ class TestWebSocketAccountApi:
             "limit": 100,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.my_prevented_matches(**params)
@@ -1457,7 +1469,7 @@ class TestWebSocketAccountApi:
             "limit": 100,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.my_trades(**params)
@@ -1951,7 +1963,7 @@ class TestWebSocketAccountApi:
             "limit": 100,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_amendments(**params)
@@ -1968,7 +1980,7 @@ class TestWebSocketAccountApi:
             "limit": 100,
             "recv_window": 5000,
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"
@@ -2325,7 +2337,7 @@ class TestWebSocketAccountApi:
             "orig_client_order_id": "orig_client_order_id_example",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_status(**params)

@@ -53,10 +53,10 @@ class RebateApi:
         Weight: 12000
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSpotRebateHistoryRecordsResponse]

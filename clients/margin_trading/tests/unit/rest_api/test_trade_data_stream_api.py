@@ -105,7 +105,7 @@ class TestTradeDataStreamApi:
     def test_close_isolated_margin_user_data_stream_missing_required_param_symbol(self):
         """Test that close_isolated_margin_user_data_stream() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example", "listenkey": "listenkey_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.close_isolated_margin_user_data_stream(**params)
@@ -115,7 +115,7 @@ class TestTradeDataStreamApi:
     ):
         """Test that close_isolated_margin_user_data_stream() raises RequiredError when 'listenkey' is missing."""
         params = {"symbol": "symbol_example", "listenkey": "listenkey_example"}
-        del params["listenkey"]
+        params["listenkey"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listenkey'"
@@ -185,7 +185,7 @@ class TestTradeDataStreamApi:
     def test_close_margin_user_data_stream_missing_required_param_listenkey(self):
         """Test that close_margin_user_data_stream() raises RequiredError when 'listenkey' is missing."""
         params = {"listenkey": "listenkey_example"}
-        del params["listenkey"]
+        params["listenkey"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listenkey'"
@@ -258,7 +258,7 @@ class TestTradeDataStreamApi:
     ):
         """Test that keepalive_isolated_margin_user_data_stream() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example", "listen_key": "listen_key_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.keepalive_isolated_margin_user_data_stream(**params)
@@ -268,7 +268,7 @@ class TestTradeDataStreamApi:
     ):
         """Test that keepalive_isolated_margin_user_data_stream() raises RequiredError when 'listen_key' is missing."""
         params = {"symbol": "symbol_example", "listen_key": "listen_key_example"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"
@@ -338,7 +338,7 @@ class TestTradeDataStreamApi:
     def test_keepalive_margin_user_data_stream_missing_required_param_listen_key(self):
         """Test that keepalive_margin_user_data_stream() raises RequiredError when 'listen_key' is missing."""
         params = {"listen_key": "listen_key_example"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"
@@ -448,7 +448,7 @@ class TestTradeDataStreamApi:
     def test_start_isolated_margin_user_data_stream_missing_required_param_symbol(self):
         """Test that start_isolated_margin_user_data_stream() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.start_isolated_margin_user_data_stream(**params)

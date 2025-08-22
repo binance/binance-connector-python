@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -91,9 +91,9 @@ class DualInvestmentRestAPI:
 
     def get_dual_investment_product_list(
         self,
-        option_type: str = None,
-        exercised_coin: str = None,
-        invest_coin: str = None,
+        option_type: Union[str, None],
+        exercised_coin: Union[str, None],
+        invest_coin: Union[str, None],
         page_size: Optional[int] = None,
         page_index: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -106,12 +106,12 @@ class DualInvestmentRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    option_type (str): Input CALL or PUT
-                    exercised_coin (str): Target exercised asset, e.g.: if you subscribe to a high sell product (call option), you should input: `optionType`:CALL,`exercisedCoin`:USDT,`investCoin`:BNB; if you subscribe to a low buy product (put option), you should input: `optionType`:PUT,`exercisedCoin`:BNB,`investCoin`:USDT
-                    invest_coin (str): Asset used for subscribing, e.g.: if you subscribe to a high sell product (call option), you should input: `optionType`:CALL,`exercisedCoin`:USDT,`investCoin`:BNB; if you subscribe to a low buy product (put option), you should input: `optionType`:PUT,`exercisedCoin`:BNB,`investCoin`:USDT
-                    page_size (Optional[int]): Default: 10, Maximum: 100
-                    page_index (Optional[int]): Default: 1
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    option_type (Union[str, None]): Input CALL or PUT
+                    exercised_coin (Union[str, None]): Target exercised asset, e.g.: if you subscribe to a high sell product (call option), you should input: `optionType`:CALL,`exercisedCoin`:USDT,`investCoin`:BNB; if you subscribe to a low buy product (put option), you should input: `optionType`:PUT,`exercisedCoin`:BNB,`investCoin`:USDT
+                    invest_coin (Union[str, None]): Asset used for subscribing, e.g.: if you subscribe to a high sell product (call option), you should input: `optionType`:CALL,`exercisedCoin`:USDT,`investCoin`:BNB; if you subscribe to a low buy product (put option), you should input: `optionType`:PUT,`exercisedCoin`:BNB,`investCoin`:USDT
+                    page_size (Optional[int] = None): Default: 10, Maximum: 100
+                    page_index (Optional[int] = None): Default: 1
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[GetDualInvestmentProductListResponse]
@@ -127,7 +127,7 @@ class DualInvestmentRestAPI:
 
     def change_auto_compound_status(
         self,
-        position_id: str = None,
+        position_id: Union[str, None],
         auto_compound_plan: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeAutoCompoundStatusResponse]:
@@ -139,9 +139,9 @@ class DualInvestmentRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    position_id (str): Get positionId from `/sapi/v1/dci/product/positions`
-                    auto_compound_plan (Optional[str]):
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    position_id (Union[str, None]): Get positionId from `/sapi/v1/dci/product/positions`
+                    auto_compound_plan (Optional[str] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[ChangeAutoCompoundStatusResponse]
@@ -167,7 +167,7 @@ class DualInvestmentRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[CheckDualInvestmentAccountsResponse]
@@ -194,10 +194,10 @@ class DualInvestmentRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    status (Optional[str]): `PENDING`:Products are purchasing, will give results later;`PURCHASE_SUCCESS`:purchase successfully;`SETTLED`: Products are finish settling;`PURCHASE_FAIL`:fail to purchase;`REFUNDING`:refund ongoing;`REFUND_SUCCESS`:refund to spot account successfully; `SETTLING`:Products are settling. If don't fill this field, will response all the position status.
-                    page_size (Optional[int]): Default: 10, Maximum: 100
-                    page_index (Optional[int]): Default: 1
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    status (Optional[str] = None): `PENDING`:Products are purchasing, will give results later;`PURCHASE_SUCCESS`:purchase successfully;`SETTLED`: Products are finish settling;`PURCHASE_FAIL`:fail to purchase;`REFUNDING`:refund ongoing;`REFUND_SUCCESS`:refund to spot account successfully; `SETTLING`:Products are settling. If don't fill this field, will response all the position status.
+                    page_size (Optional[int] = None): Default: 10, Maximum: 100
+                    page_index (Optional[int] = None): Default: 1
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[GetDualInvestmentPositionsResponse]
@@ -213,10 +213,10 @@ class DualInvestmentRestAPI:
 
     def subscribe_dual_investment_products(
         self,
-        id: str = None,
-        order_id: str = None,
-        deposit_amount: float = None,
-        auto_compound_plan: str = None,
+        id: Union[str, None],
+        order_id: Union[str, None],
+        deposit_amount: Union[float, None],
+        auto_compound_plan: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SubscribeDualInvestmentProductsResponse]:
         """
@@ -230,11 +230,11 @@ class DualInvestmentRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    id (str): get id from `/sapi/v1/dci/product/list`
-                    order_id (str): get orderId from `/sapi/v1/dci/product/list`
-                    deposit_amount (float): the amount for subscribing
-                    auto_compound_plan (str): `NONE`: switch off the plan, `STANDARD`:standard plan,`ADVANCED`:advanced plan
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    id (Union[str, None]): get id from `/sapi/v1/dci/product/list`
+                    order_id (Union[str, None]): get orderId from `/sapi/v1/dci/product/list`
+                    deposit_amount (Union[float, None]): the amount for subscribing
+                    auto_compound_plan (Union[str, None]): `NONE`: switch off the plan, `STANDARD`:standard plan,`ADVANCED`:advanced plan
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[SubscribeDualInvestmentProductsResponse]

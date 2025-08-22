@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -136,7 +136,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[EthStakingAccountResponse]
@@ -160,7 +160,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCurrentEthStakingQuotaResponse]
@@ -193,11 +193,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetEthRedemptionHistoryResponse]
@@ -232,11 +232,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetEthStakingHistoryResponse]
@@ -271,11 +271,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetWbethRateHistoryResponse]
@@ -310,11 +310,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetWbethRewardsHistoryResponse]
@@ -349,11 +349,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetWbethUnwrapHistoryResponse]
@@ -388,11 +388,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetWbethWrapHistoryResponse]
@@ -408,7 +408,7 @@ class StakingRestAPI:
 
     def redeem_eth(
         self,
-        amount: float = None,
+        amount: Union[float, None],
         asset: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemEthResponse]:
@@ -422,9 +422,9 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    amount (float): Amount in SOL.
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]): Amount in SOL.
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemEthResponse]
@@ -438,7 +438,7 @@ class StakingRestAPI:
 
     def subscribe_eth_staking(
         self,
-        amount: float = None,
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SubscribeEthStakingResponse]:
         """
@@ -451,8 +451,8 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    amount (float): Amount in SOL.
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]): Amount in SOL.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubscribeEthStakingResponse]
@@ -466,7 +466,7 @@ class StakingRestAPI:
 
     def wrap_beth(
         self,
-        amount: float = None,
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[WrapBethResponse]:
         """
@@ -479,8 +479,8 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    amount (float): Amount in SOL.
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]): Amount in SOL.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WrapBethResponse]
@@ -494,7 +494,7 @@ class StakingRestAPI:
 
     def get_on_chain_yields_locked_personal_left_quota(
         self,
-        project_id: str = None,
+        project_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetOnChainYieldsLockedPersonalLeftQuotaResponse]:
         """
@@ -505,8 +505,8 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    project_id (str):
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedPersonalLeftQuotaResponse]
@@ -537,10 +537,10 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedProductListResponse]
@@ -571,12 +571,12 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    position_id (Optional[int]):
-                    project_id (Optional[str]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    position_id (Optional[int] = None):
+                    project_id (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedProductPositionResponse]
@@ -614,14 +614,14 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    position_id (Optional[int]):
-                    redeem_id (Optional[str]):
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    position_id (Optional[int] = None):
+                    redeem_id (Optional[str] = None):
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedRedemptionRecordResponse]
@@ -665,13 +665,13 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    position_id (Optional[str]):
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    position_id (Optional[str] = None):
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedRewardsHistoryResponse]
@@ -687,8 +687,8 @@ class StakingRestAPI:
 
     def get_on_chain_yields_locked_subscription_preview(
         self,
-        project_id: str = None,
-        amount: float = None,
+        project_id: Union[str, None],
+        amount: Union[float, None],
         auto_subscribe: Optional[bool] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetOnChainYieldsLockedSubscriptionPreviewResponse]:
@@ -700,10 +700,10 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    project_id (str):
-                    amount (float): Amount in SOL.
-                    auto_subscribe (Optional[bool]): true or false, default true.
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]): Amount in SOL.
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedSubscriptionPreviewResponse]
@@ -741,14 +741,14 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    purchase_id (Optional[str]):
-                    client_id (Optional[str]):
-                    asset (Optional[str]): WBETH or BETH, default to BETH
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    purchase_id (Optional[str] = None):
+                    client_id (Optional[str] = None):
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOnChainYieldsLockedSubscriptionRecordResponse]
@@ -781,7 +781,7 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[OnChainYieldsAccountResponse]
@@ -795,7 +795,7 @@ class StakingRestAPI:
 
     def redeem_on_chain_yields_locked_product(
         self,
-        position_id: str = None,
+        position_id: Union[str, None],
         channel_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemOnChainYieldsLockedProductResponse]:
@@ -809,9 +809,9 @@ class StakingRestAPI:
         Weight: 1/3s per account
 
                 Args:
-                    position_id (str):
-                    channel_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    channel_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemOnChainYieldsLockedProductResponse]
@@ -827,8 +827,8 @@ class StakingRestAPI:
 
     def set_on_chain_yields_locked_auto_subscribe(
         self,
-        position_id: str = None,
-        auto_subscribe: bool = None,
+        position_id: Union[str, None],
+        auto_subscribe: Union[bool, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetOnChainYieldsLockedAutoSubscribeResponse]:
         """
@@ -839,9 +839,9 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    position_id (str):
-                    auto_subscribe (bool): true or false
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    auto_subscribe (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetOnChainYieldsLockedAutoSubscribeResponse]
@@ -857,8 +857,8 @@ class StakingRestAPI:
 
     def set_on_chain_yields_locked_product_redeem_option(
         self,
-        position_id: str = None,
-        redeem_to: str = None,
+        position_id: Union[str, None],
+        redeem_to: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetOnChainYieldsLockedProductRedeemOptionResponse]:
         """
@@ -869,9 +869,9 @@ class StakingRestAPI:
         Weight: 50
 
                 Args:
-                    position_id (str):
-                    redeem_to (str): 'SPOT','FLEXIBLE'
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    redeem_to (Union[str, None]): 'SPOT','FLEXIBLE'
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetOnChainYieldsLockedProductRedeemOptionResponse]
@@ -887,8 +887,8 @@ class StakingRestAPI:
 
     def subscribe_on_chain_yields_locked_product(
         self,
-        project_id: str = None,
-        amount: float = None,
+        project_id: Union[str, None],
+        amount: Union[float, None],
         auto_subscribe: Optional[bool] = None,
         source_account: Optional[str] = None,
         redeem_to: Optional[str] = None,
@@ -906,14 +906,14 @@ class StakingRestAPI:
         Weight: 200
 
                 Args:
-                    project_id (str):
-                    amount (float): Amount in SOL.
-                    auto_subscribe (Optional[bool]): true or false, default true.
-                    source_account (Optional[str]): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    redeem_to (Optional[str]): `SPOT`,`FLEXIBLE`, default `FLEXIBLE` Takes effect when Auto Subscribe is false
-                    channel_id (Optional[str]):
-                    client_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]): Amount in SOL.
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
+                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE` Takes effect when Auto Subscribe is false
+                    channel_id (Optional[str] = None):
+                    client_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubscribeOnChainYieldsLockedProductResponse]
@@ -948,7 +948,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ClaimBoostRewardsResponse]
@@ -981,11 +981,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetBnsolRateHistoryResponse]
@@ -1020,11 +1020,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetBnsolRewardsHistoryResponse]
@@ -1040,7 +1040,7 @@ class StakingRestAPI:
 
     def get_boost_rewards_history(
         self,
-        type: str = None,
+        type: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -1060,12 +1060,12 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    type (str): "CLAIM", "DISTRIBUTE", default "CLAIM"
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    type (Union[str, None]): "CLAIM", "DISTRIBUTE", default "CLAIM"
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetBoostRewardsHistoryResponse]
@@ -1100,11 +1100,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSolRedemptionHistoryResponse]
@@ -1139,11 +1139,11 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSolStakingHistoryResponse]
@@ -1169,7 +1169,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSolStakingQuotaDetailsResponse]
@@ -1198,7 +1198,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUnclaimedRewardsResponse]
@@ -1212,7 +1212,7 @@ class StakingRestAPI:
 
     def redeem_sol(
         self,
-        amount: float = None,
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemSolResponse]:
         """
@@ -1225,8 +1225,8 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    amount (float): Amount in SOL.
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]): Amount in SOL.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemSolResponse]
@@ -1250,7 +1250,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SolStakingAccountResponse]
@@ -1264,7 +1264,7 @@ class StakingRestAPI:
 
     def subscribe_sol_staking(
         self,
-        amount: float = None,
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SubscribeSolStakingResponse]:
         """
@@ -1277,8 +1277,8 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
-                    amount (float): Amount in SOL.
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]): Amount in SOL.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubscribeSolStakingResponse]

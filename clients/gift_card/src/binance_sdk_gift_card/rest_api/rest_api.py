@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -90,15 +90,15 @@ class GiftCardRestAPI:
 
     def create_a_dual_token_gift_card(
         self,
-        base_token: str = None,
-        face_token: str = None,
-        base_token_amount: float = None,
+        base_token: Union[str, None],
+        face_token: Union[str, None],
+        base_token_amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CreateADualTokenGiftCardResponse]:
         """
                 Create a dual-token gift card(fixed value, discount feature)(TRADE)
 
-                * This API is for creating a dual-token ( stablecoin-denominated) Binance Gift Card. You may create a gift card using USDT as baseToken, that is redeemable to another designated token (faceToken). For example, you can create a fixed-value BTC gift card and pay with 100 USDT plus 1 USDT fee. This gift card can keep the value fixed at 100 USDT before redemption, and will be redeemable to BTC equivalent to 100 USDT upon redemption.
+                * This API is for creating a dual-token ( stablecoin-denominated) Binance Gift Card. You may create a gift card using USDT as baseToken, that is redeemable to another designated token (faceToken). For example, you can create a fixed-value BTC gift card and pay with 100 USDT plus minting fee. This gift card can keep the value fixed at 100 USDT before redemption, and will be redeemable to BTC equivalent to 100 USDT upon redemption.
         * Once successfully created, the amount of baseToken (e.g. USDT) in the fixed-value gift card along with the fee would be deducted from your funding wallet.
 
 
@@ -111,10 +111,10 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    base_token (str): The token you want to pay, example: BUSD
-                    face_token (str): The token you want to buy, example: BNB. If faceToken = baseToken, it's the same as createCode endpoint.
-                    base_token_amount (float): The base token asset quantity, example : 1.002
-                    recv_window (Optional[int]):
+                    base_token (Union[str, None]): The token you want to pay, example: BUSD
+                    face_token (Union[str, None]): The token you want to buy, example: BNB. If faceToken = baseToken, it's the same as createCode endpoint.
+                    base_token_amount (Union[float, None]): The base token asset quantity, example : 1.002
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CreateADualTokenGiftCardResponse]
@@ -130,8 +130,8 @@ class GiftCardRestAPI:
 
     def create_a_single_token_gift_card(
         self,
-        token: str = None,
-        amount: float = None,
+        token: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CreateASingleTokenGiftCardResponse]:
         """
@@ -149,9 +149,9 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    token (str): The token type contained in the Binance Gift Card
-                    amount (float): The amount of the token contained in the Binance Gift Card
-                    recv_window (Optional[int]):
+                    token (Union[str, None]): The token type contained in the Binance Gift Card
+                    amount (Union[float, None]): The amount of the token contained in the Binance Gift Card
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CreateASingleTokenGiftCardResponse]
@@ -180,7 +180,7 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FetchRsaPublicKeyResponse]
@@ -194,7 +194,7 @@ class GiftCardRestAPI:
 
     def fetch_token_limit(
         self,
-        base_token: str = None,
+        base_token: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FetchTokenLimitResponse]:
         """
@@ -205,8 +205,8 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    base_token (str): The token you want to pay, example: BUSD
-                    recv_window (Optional[int]):
+                    base_token (Union[str, None]): The token you want to pay, example: BUSD
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FetchTokenLimitResponse]
@@ -220,7 +220,7 @@ class GiftCardRestAPI:
 
     def redeem_a_binance_gift_card(
         self,
-        code: str = None,
+        code: Union[str, None],
         external_uid: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemABinanceGiftCardResponse]:
@@ -242,9 +242,9 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    code (str): Redemption code of Binance Gift Card to be redeemed, supports both Plaintext & Encrypted code.
-                    external_uid (Optional[str]): Each external unique ID represents a unique user on the partner platform. The function helps you to identify the redemption behavior of different users, such as redemption frequency and amount. It also helps risk and limit control of a single account, such as daily limit on redemption volume, frequency, and incorrect number of entries. This will also prevent a single user account reach the partner's daily redemption limits. We strongly recommend you to use this feature and transfer us the User ID of your users if you have different users redeeming Binance Gift Cards on your platform. To protect user data privacy, you may choose to transfer the user id in any desired format (max. 400 characters).
-                    recv_window (Optional[int]):
+                    code (Union[str, None]): Redemption code of Binance Gift Card to be redeemed, supports both Plaintext & Encrypted code.
+                    external_uid (Optional[str] = None): Each external unique ID represents a unique user on the partner platform. The function helps you to identify the redemption behavior of different users, such as redemption frequency and amount. It also helps risk and limit control of a single account, such as daily limit on redemption volume, frequency, and incorrect number of entries. This will also prevent a single user account reach the partner's daily redemption limits. We strongly recommend you to use this feature and transfer us the User ID of your users if you have different users redeeming Binance Gift Cards on your platform. To protect user data privacy, you may choose to transfer the user id in any desired format (max. 400 characters).
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemABinanceGiftCardResponse]
@@ -260,7 +260,7 @@ class GiftCardRestAPI:
 
     def verify_binance_gift_card_by_gift_card_number(
         self,
-        reference_no: str = None,
+        reference_no: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[VerifyBinanceGiftCardByGiftCardNumberResponse]:
         """
@@ -273,8 +273,8 @@ class GiftCardRestAPI:
         Weight: 1
 
                 Args:
-                    reference_no (str): Enter the Gift Card Number
-                    recv_window (Optional[int]):
+                    reference_no (Union[str, None]): Enter the Gift Card Number
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VerifyBinanceGiftCardByGiftCardNumberResponse]

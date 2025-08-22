@@ -282,7 +282,7 @@ class TestMarketDataApi:
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.basis(**params)
@@ -294,7 +294,7 @@ class TestMarketDataApi:
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
         }
-        del params["contract_type"]
+        params["contract_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'contract_type'"
@@ -308,7 +308,7 @@ class TestMarketDataApi:
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.basis(**params)
@@ -489,7 +489,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.compressed_aggregate_trades_list(**params)
@@ -666,7 +666,7 @@ class TestMarketDataApi:
                 "INTERVAL_1m"
             ].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.continuous_contract_kline_candlestick_data(**params)
@@ -684,7 +684,7 @@ class TestMarketDataApi:
                 "INTERVAL_1m"
             ].value,
         }
-        del params["contract_type"]
+        params["contract_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'contract_type'"
@@ -704,7 +704,7 @@ class TestMarketDataApi:
                 "INTERVAL_1m"
             ].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -778,7 +778,7 @@ class TestMarketDataApi:
                             "filterType": "PERCENT_PRICE",
                             "multiplierUp": "1.0500",
                             "multiplierDown": "0.9500",
-                            "multiplierDecimal": 4,
+                            "multiplierDecimal": "4",
                         },
                     ],
                     "OrderType": [
@@ -981,7 +981,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_funding_rate_history_of_perpetual_futures(**params)
@@ -1314,7 +1314,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.index_price_kline_candlestick_data(**params)
@@ -1325,7 +1325,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1476,7 +1476,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.kline_candlestick_data(**params)
@@ -1487,7 +1487,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1633,7 +1633,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "period": LongShortRatioPeriodEnum["PERIOD_5m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.long_short_ratio(**params)
@@ -1644,7 +1644,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "period": LongShortRatioPeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.long_short_ratio(**params)
@@ -1795,7 +1795,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.mark_price_kline_candlestick_data(**params)
@@ -1806,7 +1806,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1933,7 +1933,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.old_trades_lookup(**params)
@@ -2045,7 +2045,7 @@ class TestMarketDataApi:
     def test_open_interest_missing_required_param_symbol(self):
         """Test that open_interest() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.open_interest(**params)
@@ -2195,7 +2195,7 @@ class TestMarketDataApi:
             "contract_type": OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.open_interest_statistics(**params)
@@ -2207,7 +2207,7 @@ class TestMarketDataApi:
             "contract_type": OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["contract_type"]
+        params["contract_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'contract_type'"
@@ -2221,7 +2221,7 @@ class TestMarketDataApi:
             "contract_type": OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.open_interest_statistics(**params)
@@ -2343,7 +2343,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_book(**params)
@@ -2489,7 +2489,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.premium_index_kline_data(**params)
@@ -2500,7 +2500,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -2621,7 +2621,7 @@ class TestMarketDataApi:
     def test_query_index_price_constituents_missing_required_param_symbol(self):
         """Test that query_index_price_constituents() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_index_price_constituents(**params)
@@ -2741,7 +2741,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.recent_trades_list(**params)
@@ -3099,7 +3099,7 @@ class TestMarketDataApi:
             "contract_type": TakerBuySellVolumeContractTypeEnum["PERPETUAL"].value,
             "period": TakerBuySellVolumePeriodEnum["PERIOD_5m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.taker_buy_sell_volume(**params)
@@ -3111,7 +3111,7 @@ class TestMarketDataApi:
             "contract_type": TakerBuySellVolumeContractTypeEnum["PERPETUAL"].value,
             "period": TakerBuySellVolumePeriodEnum["PERIOD_5m"].value,
         }
-        del params["contract_type"]
+        params["contract_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'contract_type'"
@@ -3125,7 +3125,7 @@ class TestMarketDataApi:
             "contract_type": TakerBuySellVolumeContractTypeEnum["PERPETUAL"].value,
             "period": TakerBuySellVolumePeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.taker_buy_sell_volume(**params)
@@ -3434,7 +3434,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.top_trader_long_short_ratio_accounts(**params)
@@ -3445,7 +3445,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.top_trader_long_short_ratio_accounts(**params)
@@ -3598,7 +3598,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "period": TopTraderLongShortRatioPositionsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["pair"]
+        params["pair"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.top_trader_long_short_ratio_positions(**params)
@@ -3609,7 +3609,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "period": TopTraderLongShortRatioPositionsPeriodEnum["PERIOD_5m"].value,
         }
-        del params["period"]
+        params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
             self.client.top_trader_long_short_ratio_positions(**params)

@@ -33,7 +33,7 @@ from ..models import OrderListStatusResponse
 from ..models import OrderStatusResponse
 
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class AccountApi:
@@ -49,7 +49,7 @@ class AccountApi:
 
     async def account_commission(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
     ) -> WebsocketApiResponse[AccountCommissionResponse]:
         """
@@ -61,8 +61,8 @@ class AccountApi:
         Weight: 20
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[AccountCommissionResponse]
@@ -107,8 +107,8 @@ class AccountApi:
         Weight: 40
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[AccountRateLimitsOrdersResponse]
@@ -149,9 +149,9 @@ class AccountApi:
         Weight: 20
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                omit_zero_balances (Optional[bool]): When set to `true`, emits only the non-zero balances of an account. <br>Default value: false
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: false
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[AccountStatusResponse]
@@ -198,12 +198,12 @@ class AccountApi:
         Weight: 20
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                from_id (Optional[int]): Aggregate trade ID to begin at
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[AllOrderListsResponse]
@@ -233,7 +233,7 @@ class AccountApi:
 
     async def all_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -250,13 +250,13 @@ class AccountApi:
         Weight: 20
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[AllOrdersResponse]
@@ -292,7 +292,7 @@ class AccountApi:
 
     async def my_allocations(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -310,14 +310,14 @@ class AccountApi:
         Weight: 20
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                from_allocation_id (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    from_allocation_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[MyAllocationsResponse]
@@ -358,7 +358,7 @@ class AccountApi:
 
     async def my_prevented_matches(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         prevented_match_id: Optional[int] = None,
         order_id: Optional[int] = None,
@@ -386,13 +386,13 @@ class AccountApi:
         Querying by `orderId`           | 20
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                prevented_match_id (Optional[int]):
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                from_prevented_match_id (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    prevented_match_id (Optional[int] = None):
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    from_prevented_match_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[MyPreventedMatchesResponse]
@@ -438,7 +438,7 @@ class AccountApi:
 
     async def my_trades(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -459,14 +459,14 @@ class AccountApi:
         |With orderId|5|
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                from_id (Optional[int]): Aggregate trade ID to begin at
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[MyTradesResponse]
@@ -520,8 +520,8 @@ class AccountApi:
         Weight: 6
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OpenOrderListsStatusResponse]
@@ -572,9 +572,9 @@ class AccountApi:
         | none      |     80 |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OpenOrdersStatusResponse]
@@ -601,8 +601,8 @@ class AccountApi:
 
     async def order_amendments(
         self,
-        symbol: str = None,
-        order_id: int = None,
+        symbol: Union[str, None],
+        order_id: Union[int, None],
         id: Optional[str] = None,
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
@@ -617,12 +617,12 @@ class AccountApi:
         Weight: 4
 
             Args:
-                symbol (str):
-                order_id (int):
-                id (Optional[str]): Unique WebSocket request ID.
-                from_execution_id (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Union[int, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    from_execution_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderAmendmentsResponse]
@@ -681,10 +681,10 @@ class AccountApi:
         Weight: 4
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
-                order_list_id (Optional[int]): Cancel order list by orderListId
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
+                    order_list_id (Optional[int] = None): Cancel order list by orderListId
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListStatusResponse]
@@ -716,7 +716,7 @@ class AccountApi:
 
     async def order_status(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -731,11 +731,11 @@ class AccountApi:
         Weight: 4
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderStatusResponse]

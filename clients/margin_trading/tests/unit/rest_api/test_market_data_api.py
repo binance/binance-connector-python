@@ -29,6 +29,7 @@ from binance_sdk_margin_trading.rest_api.models import (
 )
 from binance_sdk_margin_trading.rest_api.models import GetAllMarginAssetsResponse
 from binance_sdk_margin_trading.rest_api.models import GetDelistScheduleResponse
+from binance_sdk_margin_trading.rest_api.models import GetLimitPricePairsResponse
 from binance_sdk_margin_trading.rest_api.models import GetListScheduleResponse
 from binance_sdk_margin_trading.rest_api.models import (
     QueryIsolatedMarginTierDataResponse,
@@ -612,6 +613,61 @@ class TestMarketDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_delist_schedule()
 
+    def test_get_limit_price_pairs_success(self):
+        """Test get_limit_price_pairs() successfully with required parameters only."""
+
+        expected_response = {
+            "crossMarginSymbols": [
+                "BLURUSDC",
+                "SANDBTC",
+                "QKCBTC",
+                "SEIFDUSD",
+                "NEOUSDC",
+                "ARBFDUSD",
+                "ORDIUSDC",
+            ]
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_limit_price_pairs()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v1/margin/limit-price-pairs" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetLimitPricePairsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = GetLimitPricePairsResponse.from_dict(expected_response)
+        else:
+            expected = GetLimitPricePairsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_limit_price_pairs_server_error(self):
+        """Test that get_limit_price_pairs() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_limit_price_pairs = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_limit_price_pairs()
+
     def test_get_list_schedule_success(self):
         """Test get_list_schedule() successfully with required parameters only."""
 
@@ -829,7 +885,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_isolated_margin_tier_data(**params)
@@ -1036,7 +1092,7 @@ class TestMarketDataApi:
     def test_query_margin_available_inventory_missing_required_param_type(self):
         """Test that query_margin_available_inventory() raises RequiredError when 'type' is missing."""
         params = {"type": "type_example"}
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.query_margin_available_inventory(**params)
@@ -1142,7 +1198,7 @@ class TestMarketDataApi:
     def test_query_margin_priceindex_missing_required_param_symbol(self):
         """Test that query_margin_priceindex() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "symbol_example"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_margin_priceindex(**params)

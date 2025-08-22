@@ -162,7 +162,7 @@ class TestAccountManagementApi:
         params = {
             "sub_account_string": "sub_account_string_example",
         }
-        del params["sub_account_string"]
+        params["sub_account_string"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'sub_account_string'"
@@ -275,7 +275,7 @@ class TestAccountManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.enable_futures_for_sub_account(**params)
@@ -386,7 +386,7 @@ class TestAccountManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.enable_options_for_sub_account(**params)
@@ -525,7 +525,7 @@ class TestAccountManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_futures_position_risk_of_sub_account(**params)
@@ -709,7 +709,7 @@ class TestAccountManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_futures_position_risk_of_sub_account_v2(**params)
@@ -722,7 +722,7 @@ class TestAccountManagementApi:
             "email": "sub-account-email@email.com",
             "futures_type": 56,
         }
-        del params["futures_type"]
+        params["futures_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'futures_type'"
@@ -1180,7 +1180,7 @@ class TestAccountManagementApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_sub_account_transaction_statistics(**params)

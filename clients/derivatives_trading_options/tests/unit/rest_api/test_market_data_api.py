@@ -465,7 +465,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": "interval_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.kline_candlestick_data(**params)
@@ -476,7 +476,7 @@ class TestMarketDataApi:
             "symbol": "symbol_example",
             "interval": "interval_example",
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -603,7 +603,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.old_trades_lookup(**params)
@@ -727,7 +727,7 @@ class TestMarketDataApi:
             "underlying_asset": "underlying_asset_example",
             "expiration": "expiration_example",
         }
-        del params["underlying_asset"]
+        params["underlying_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying_asset'"
@@ -740,7 +740,7 @@ class TestMarketDataApi:
             "underlying_asset": "underlying_asset_example",
             "expiration": "expiration_example",
         }
-        del params["expiration"]
+        params["expiration"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'expiration'"
@@ -969,7 +969,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_book(**params)
@@ -1217,7 +1217,7 @@ class TestMarketDataApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.recent_trades_list(**params)
@@ -1317,7 +1317,7 @@ class TestMarketDataApi:
     def test_symbol_price_ticker_missing_required_param_underlying(self):
         """Test that symbol_price_ticker() raises RequiredError when 'underlying' is missing."""
         params = {"underlying": "underlying_example"}
-        del params["underlying"]
+        params["underlying"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying'"

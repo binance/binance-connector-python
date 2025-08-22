@@ -9,12 +9,13 @@ Do not edit the class manually.
 """
 
 from pydantic import BaseModel
-from typing import Callable, Optional, TypeVar
+from typing import Callable, Optional, TypeVar, Union
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.websocket import (
     WebSocketStreamBase,
     WebSocketConnection,
+    RequestStreamHandle,
     RequestStream,
 )
 
@@ -22,26 +23,6 @@ from .models import UserDataStreamEventsResponse
 
 
 from .streams.websocket_market_streams_api import WebsocketMarketStreamsApi
-
-from .models import AggregateTradeStreamsResponse
-from .models import AllBookTickersStreamResponse
-from .models import AllMarketLiquidationOrderStreamsResponse
-from .models import AllMarketMiniTickersStreamResponse
-from .models import AllMarketTickersStreamsResponse
-from .models import ContinuousContractKlineCandlestickStreamsResponse
-from .models import ContractInfoStreamResponse
-from .models import DiffBookDepthStreamsResponse
-from .models import IndexKlineCandlestickStreamsResponse
-from .models import IndexPriceStreamResponse
-from .models import IndividualSymbolBookTickerStreamsResponse
-from .models import IndividualSymbolMiniTickerStreamResponse
-from .models import IndividualSymbolTickerStreamsResponse
-from .models import KlineCandlestickStreamsResponse
-from .models import LiquidationOrderStreamsResponse
-from .models import MarkPriceKlineCandlestickStreamsResponse
-from .models import MarkPriceOfAllSymbolsOfAPairResponse
-from .models import MarkPriceStreamResponse
-from .models import PartialBookDepthStreamsResponse
 
 
 T = TypeVar("T", bound=BaseModel)
@@ -120,13 +101,13 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
         await super().close_connection(connection, close_session)
 
-    async def user_data(self, listenKey: str) -> UserDataStreamEventsResponse:
+    async def user_data(self, listenKey: str) -> RequestStreamHandle:
         """Subscribe to User Data Stream (USER_STREAM)
 
         Args:
             listenKey (str): The listen key for the user data stream.
         Returns:
-            UserDataStreamEventsResponse: The response model containing user data stream events.
+            RequestStreamHandle: An instance of RequestStream that provides the on() and unsubscribe() methods.
         """
 
         return await RequestStream(
@@ -135,9 +116,9 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def aggregate_trade_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> AggregateTradeStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Aggregate Trade Streams
 
@@ -146,11 +127,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 100ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    AggregateTradeStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -162,7 +143,7 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
     async def all_book_tickers_stream(
         self,
         id: Optional[str] = None,
-    ) -> AllBookTickersStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 All Book Tickers Stream
 
@@ -171,10 +152,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: Real-time
 
                 Args:
-                    id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    AllBookTickersStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -186,7 +167,7 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
     async def all_market_liquidation_order_streams(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketLiquidationOrderStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 All Market Liquidation Order Streams
 
@@ -196,10 +177,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 1000ms
 
                 Args:
-                    id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    AllMarketLiquidationOrderStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -215,7 +196,7 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
     async def all_market_mini_tickers_stream(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketMiniTickersStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 All Market Mini Tickers Stream
 
@@ -224,10 +205,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 1000ms
 
                 Args:
-                    id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    AllMarketMiniTickersStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -239,7 +220,7 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
     async def all_market_tickers_streams(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketTickersStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 All Market Tickers Streams
 
@@ -248,10 +229,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 1000ms
 
                 Args:
-                    id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    AllMarketTickersStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -262,11 +243,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def continuous_contract_kline_candlestick_streams(
         self,
-        pair: str = None,
-        contract_type: str = None,
-        interval: str = None,
+        pair: Union[str, None],
+        contract_type: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> ContinuousContractKlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Continuous Contract Kline/Candlestick Streams
 
@@ -275,13 +256,13 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms
 
                 Args:
-                    pair (str): The pair parameter
-                    contract_type (str): The contractType parameter
-                    interval (str): The interval parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    pair (Union[str, None]): The pair parameter
+                    contract_type (Union[str, None]): The contractType parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    ContinuousContractKlineCandlestickStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -295,7 +276,7 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
     async def contract_info_stream(
         self,
         id: Optional[str] = None,
-    ) -> ContractInfoStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Contract Info Stream
 
@@ -304,10 +285,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: Real-time
 
                 Args:
-                    id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    ContractInfoStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -318,10 +299,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def diff_book_depth_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> DiffBookDepthStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Diff. Book Depth Streams
 
@@ -330,12 +311,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms or 500ms or 100ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
-                    update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
                 Returns:
-                    DiffBookDepthStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -348,10 +329,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def index_kline_candlestick_streams(
         self,
-        pair: str = None,
-        interval: str = None,
+        pair: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndexKlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Index Kline/Candlestick Streams
 
@@ -360,12 +341,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms
 
                 Args:
-                    pair (str): The pair parameter
-                    interval (str): The interval parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    pair (Union[str, None]): The pair parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    IndexKlineCandlestickStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -378,10 +359,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def index_price_stream(
         self,
-        pair: str = None,
+        pair: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> IndexPriceStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Index Price Stream
 
@@ -390,12 +371,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 3000ms OR 1000ms
 
                 Args:
-                    pair (str): The pair parameter
-                    id (Optional[str]): Unique WebSocket request ID.
-                    update_speed (Optional[str]): WebSocket stream update speed
+                    pair (Union[str, None]): The pair parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
                 Returns:
-                    IndexPriceStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -408,9 +389,9 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def individual_symbol_book_ticker_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolBookTickerStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Individual Symbol Book Ticker Streams
 
@@ -419,11 +400,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: Real-time
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    IndividualSymbolBookTickerStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -438,9 +419,9 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def individual_symbol_mini_ticker_stream(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolMiniTickerStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Individual Symbol Mini Ticker Stream
 
@@ -449,11 +430,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 500ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    IndividualSymbolMiniTickerStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -468,9 +449,9 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def individual_symbol_ticker_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolTickerStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Individual Symbol Ticker Streams
 
@@ -479,11 +460,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 500ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    IndividualSymbolTickerStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -496,10 +477,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def kline_candlestick_streams(
         self,
-        symbol: str = None,
-        interval: str = None,
+        symbol: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> KlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Kline/Candlestick Streams
 
@@ -508,12 +489,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    interval (str): The interval parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    KlineCandlestickStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -526,9 +507,9 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def liquidation_order_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> LiquidationOrderStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Liquidation Order Streams
 
@@ -539,11 +520,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 1000ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    LiquidationOrderStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -556,10 +537,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def mark_price_kline_candlestick_streams(
         self,
-        symbol: str = None,
-        interval: str = None,
+        symbol: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> MarkPriceKlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Mark Price Kline/Candlestick Streams
 
@@ -568,12 +549,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    interval (str): The interval parameter
-                    id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
                 Returns:
-                    MarkPriceKlineCandlestickStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -588,10 +569,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def mark_price_of_all_symbols_of_a_pair(
         self,
-        pair: str = None,
+        pair: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> MarkPriceOfAllSymbolsOfAPairResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Mark Price of All Symbols of a Pair
 
@@ -600,12 +581,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 3000ms OR 1000ms
 
                 Args:
-                    pair (str): The pair parameter
-                    id (Optional[str]): Unique WebSocket request ID.
-                    update_speed (Optional[str]): WebSocket stream update speed
+                    pair (Union[str, None]): The pair parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
                 Returns:
-                    MarkPriceOfAllSymbolsOfAPairResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -620,10 +601,10 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def mark_price_stream(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> MarkPriceStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Mark Price Stream
 
@@ -632,12 +613,12 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 3000ms OR 1000ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    id (Optional[str]): Unique WebSocket request ID.
-                    update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
                 Returns:
-                    MarkPriceStreamResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -650,11 +631,11 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
 
     async def partial_book_depth_streams(
         self,
-        symbol: str = None,
-        levels: int = None,
+        symbol: Union[str, None],
+        levels: Union[int, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> PartialBookDepthStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
                 Partial Book Depth Streams
 
@@ -663,13 +644,13 @@ class DerivativesTradingCoinFuturesWebSocketStreams(WebSocketStreamBase):
         Update Speed: 250ms, 500ms or 100ms
 
                 Args:
-                    symbol (str): The symbol parameter
-                    levels (int): The levels parameter
-                    id (Optional[str]): Unique WebSocket request ID.
-                    update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    levels (Union[int, None]): The levels parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
                 Returns:
-                    PartialBookDepthStreamsResponse
+                    RequestStreamHandle
 
                 Raises:
                     RequiredError: If a required parameter is missing.

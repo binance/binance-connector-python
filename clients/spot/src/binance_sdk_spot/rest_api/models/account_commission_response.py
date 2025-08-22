@@ -26,6 +26,9 @@ from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_spot.rest_api.models.account_commission_response_discount import (
     AccountCommissionResponseDiscount,
 )
+from binance_sdk_spot.rest_api.models.account_commission_response_special_commission import (
+    AccountCommissionResponseSpecialCommission,
+)
 from binance_sdk_spot.rest_api.models.account_commission_response_standard_commission import (
     AccountCommissionResponseStandardCommission,
 )
@@ -45,6 +48,9 @@ class AccountCommissionResponse(BaseModel):
     standard_commission: Optional[AccountCommissionResponseStandardCommission] = Field(
         default=None, alias="standardCommission"
     )
+    special_commission: Optional[AccountCommissionResponseSpecialCommission] = Field(
+        default=None, alias="specialCommission"
+    )
     tax_commission: Optional[AccountCommissionResponseTaxCommission] = Field(
         default=None, alias="taxCommission"
     )
@@ -53,6 +59,7 @@ class AccountCommissionResponse(BaseModel):
     __properties: ClassVar[List[str]] = [
         "symbol",
         "standardCommission",
+        "specialCommission",
         "taxCommission",
         "discount",
     ]
@@ -106,6 +113,9 @@ class AccountCommissionResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of standard_commission
         if self.standard_commission:
             _dict["standardCommission"] = self.standard_commission.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of special_commission
+        if self.special_commission:
+            _dict["specialCommission"] = self.special_commission.to_dict()
         # override the default output from pydantic by calling `to_dict()` of tax_commission
         if self.tax_commission:
             _dict["taxCommission"] = self.tax_commission.to_dict()
@@ -136,6 +146,13 @@ class AccountCommissionResponse(BaseModel):
                         obj["standardCommission"]
                     )
                     if obj.get("standardCommission") is not None
+                    else None
+                ),
+                "specialCommission": (
+                    AccountCommissionResponseSpecialCommission.from_dict(
+                        obj["specialCommission"]
+                    )
+                    if obj.get("specialCommission") is not None
                     else None
                 ),
                 "taxCommission": (

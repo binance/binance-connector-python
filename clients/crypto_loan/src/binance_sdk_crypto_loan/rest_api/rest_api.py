@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -104,8 +104,8 @@ class CryptoLoanRestAPI:
 
     def check_collateral_repay_rate(
         self,
-        loan_coin: str = None,
-        collateral_coin: str = None,
+        loan_coin: Union[str, None],
+        collateral_coin: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CheckCollateralRepayRateResponse]:
         """
@@ -115,9 +115,9 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    loan_coin (str):
-                    collateral_coin (str):
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CheckCollateralRepayRateResponse]
@@ -133,10 +133,10 @@ class CryptoLoanRestAPI:
 
     def flexible_loan_adjust_ltv(
         self,
-        loan_coin: str = None,
-        collateral_coin: str = None,
-        adjustment_amount: float = None,
-        direction: str = None,
+        loan_coin: Union[str, None],
+        collateral_coin: Union[str, None],
+        adjustment_amount: Union[float, None],
+        direction: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FlexibleLoanAdjustLtvResponse]:
         """
@@ -149,11 +149,11 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    loan_coin (str):
-                    collateral_coin (str):
-                    adjustment_amount (float):
-                    direction (str): "ADDITIONAL", "REDUCED"
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]):
+                    adjustment_amount (Union[float, None]):
+                    direction (Union[str, None]): "ADDITIONAL", "REDUCED"
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FlexibleLoanAdjustLtvResponse]
@@ -169,8 +169,8 @@ class CryptoLoanRestAPI:
 
     def flexible_loan_borrow(
         self,
-        loan_coin: str = None,
-        collateral_coin: str = None,
+        loan_coin: Union[str, None],
+        collateral_coin: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FlexibleLoanBorrowResponse]:
         """
@@ -185,9 +185,9 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    loan_coin (str):
-                    collateral_coin (str):
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FlexibleLoanBorrowResponse]
@@ -203,9 +203,9 @@ class CryptoLoanRestAPI:
 
     def flexible_loan_repay(
         self,
-        loan_coin: str = None,
-        collateral_coin: str = None,
-        repay_amount: float = None,
+        loan_coin: Union[str, None],
+        collateral_coin: Union[str, None],
+        repay_amount: Union[float, None],
         collateral_return: Optional[bool] = None,
         full_repayment: Optional[bool] = None,
         repayment_type: Optional[int] = None,
@@ -222,13 +222,13 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    loan_coin (str):
-                    collateral_coin (str):
-                    repay_amount (float): repay amount of loanCoin
-                    collateral_return (Optional[bool]): Default: TRUE. TRUE: Return extra collateral to spot account; FALSE: Keep extra collateral in the order, and lower LTV.
-                    full_repayment (Optional[bool]): Default: FALSE. TRUE: Full repayment; FALSE: Partial repayment, based on loanAmount
-                    repayment_type (Optional[int]): Default: 1. 1: Repayment with loan asset; 2: Repayment with collateral
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]):
+                    repay_amount (Union[float, None]): repay amount of loanCoin
+                    collateral_return (Optional[bool] = None): Default: TRUE. TRUE: Return extra collateral to spot account; FALSE: Keep extra collateral in the order, and lower LTV.
+                    full_repayment (Optional[bool] = None): Default: FALSE. TRUE: Full repayment; FALSE: Partial repayment, based on loanAmount
+                    repayment_type (Optional[int] = None): Default: 1. 1: Repayment with loan asset; 2: Repayment with collateral
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FlexibleLoanRepayResponse]
@@ -261,8 +261,8 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanAssetsDataResponse]
@@ -297,13 +297,13 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanBorrowHistoryResponse]
@@ -336,8 +336,8 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    collateral_coin (Optional[str]):
-                    recv_window (Optional[int]):
+                    collateral_coin (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanCollateralAssetsDataResponse]
@@ -368,13 +368,13 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanLiquidationHistoryResponse]
@@ -415,13 +415,13 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanLtvAdjustmentHistoryResponse]
@@ -457,11 +457,11 @@ class CryptoLoanRestAPI:
         Weight: 300
 
                 Args:
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanOngoingOrdersResponse]
@@ -496,13 +496,13 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleLoanRepaymentHistoryResponse]
@@ -524,9 +524,9 @@ class CryptoLoanRestAPI:
 
     def check_collateral_repay_rate_stable_rate(
         self,
-        loan_coin: str = None,
-        collateral_coin: str = None,
-        repay_amount: float = None,
+        loan_coin: Union[str, None],
+        collateral_coin: Union[str, None],
+        repay_amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CheckCollateralRepayRateStableRateResponse]:
         """
@@ -537,10 +537,10 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    loan_coin (str):
-                    collateral_coin (str):
-                    repay_amount (float): repay amount of loanCoin
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]):
+                    repay_amount (Union[float, None]): repay amount of loanCoin
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CheckCollateralRepayRateStableRateResponse]
@@ -574,12 +574,12 @@ class CryptoLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    asset (Optional[str]):
-                    type (Optional[str]): All types will be returned by default. Enum：`borrowIn` ,`collateralSpent`, `repayAmount`, `collateralReturn`(Collateral return after repayment), `addCollateral`, `removeCollateral`, `collateralReturnAfterLiquidation`
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    type (Optional[str] = None): All types will be returned by default. Enum：`borrowIn` ,`collateralSpent`, `repayAmount`, `collateralReturn`(Collateral return after repayment), `addCollateral`, `removeCollateral`, `collateralReturnAfterLiquidation`
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCryptoLoansIncomeHistoryResponse]
@@ -615,14 +615,14 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    order_id (Optional[int]): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLoanBorrowHistoryResponse]
@@ -665,14 +665,14 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    order_id (Optional[int]): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLoanLtvAdjustmentHistoryResponse]
@@ -715,14 +715,14 @@ class CryptoLoanRestAPI:
         Weight: 400
 
                 Args:
-                    order_id (Optional[int]): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Current querying page. Start from 1; default: 1; max: 1000
-                    limit (Optional[int]): Default: 10; max: 100
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLoanRepaymentHistoryResponse]

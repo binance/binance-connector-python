@@ -404,7 +404,7 @@ class TestCapitalApi:
         params = {
             "coin": "coin_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.deposit_address(**params)
@@ -720,7 +720,7 @@ class TestCapitalApi:
         params = {
             "coin": "coin_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.fetch_deposit_address_list_with_network(**params)
@@ -1054,7 +1054,7 @@ class TestCapitalApi:
             "address": "address_example",
             "amount": 1.0,
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.withdraw(**params)
@@ -1066,7 +1066,7 @@ class TestCapitalApi:
             "address": "address_example",
             "amount": 1.0,
         }
-        del params["address"]
+        params["address"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'address'"):
             self.client.withdraw(**params)
@@ -1078,7 +1078,7 @@ class TestCapitalApi:
             "address": "address_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.withdraw(**params)

@@ -103,7 +103,7 @@ class TestUserDataStreamApi:
     def test_delete_user_data_stream_missing_required_param_listen_key(self):
         """Test that delete_user_data_stream() raises RequiredError when 'listen_key' is missing."""
         params = {"listen_key": "listenKey"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"
@@ -218,7 +218,7 @@ class TestUserDataStreamApi:
     def test_put_user_data_stream_missing_required_param_listen_key(self):
         """Test that put_user_data_stream() raises RequiredError when 'listen_key' is missing."""
         params = {"listen_key": "listenKey"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"

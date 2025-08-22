@@ -154,7 +154,7 @@ class TestAccountApi:
         params = {
             "product_id": "1",
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"
@@ -402,7 +402,7 @@ class TestAccountApi:
         params = {
             "project_id": "1",
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -613,7 +613,7 @@ class TestAccountApi:
                     "hot": True,
                     "minPurchaseAmount": "0.01000000",
                     "productId": "BTC001",
-                    "subscriptionStartTime": "1646182276000",
+                    "subscriptionStartTime": 1646182276000,
                     "status": "PURCHASING",
                 }
             ],
@@ -681,7 +681,7 @@ class TestAccountApi:
                     "hot": True,
                     "minPurchaseAmount": "0.01000000",
                     "productId": "BTC001",
-                    "subscriptionStartTime": "1646182276000",
+                    "subscriptionStartTime": 1646182276000,
                     "status": "PURCHASING",
                 }
             ],
@@ -748,7 +748,7 @@ class TestAccountApi:
                         "isSoldOut": True,
                         "apr": "1.2069",
                         "status": "CREATED",
-                        "subscriptionStartTime": "1646182276000",
+                        "subscriptionStartTime": 1646182276000,
                         "extraRewardAsset": "BNB",
                         "extraRewardAPR": "0.23",
                         "boostRewardAsset": "AXS",
@@ -821,7 +821,7 @@ class TestAccountApi:
                         "isSoldOut": True,
                         "apr": "1.2069",
                         "status": "CREATED",
-                        "subscriptionStartTime": "1646182276000",
+                        "subscriptionStartTime": 1646182276000,
                         "extraRewardAsset": "BNB",
                         "extraRewardAPR": "0.23",
                         "boostRewardAsset": "AXS",

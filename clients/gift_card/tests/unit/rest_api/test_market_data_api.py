@@ -176,7 +176,7 @@ class TestMarketDataApi:
             "face_token": "face_token_example",
             "base_token_amount": 1.0,
         }
-        del params["base_token"]
+        params["base_token"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'base_token'"
@@ -190,7 +190,7 @@ class TestMarketDataApi:
             "face_token": "face_token_example",
             "base_token_amount": 1.0,
         }
-        del params["face_token"]
+        params["face_token"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'face_token'"
@@ -206,7 +206,7 @@ class TestMarketDataApi:
             "face_token": "face_token_example",
             "base_token_amount": 1.0,
         }
-        del params["base_token_amount"]
+        params["base_token_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'base_token_amount'"
@@ -342,7 +342,7 @@ class TestMarketDataApi:
             "token": "token_example",
             "amount": 1.0,
         }
-        del params["token"]
+        params["token"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'token'"):
             self.client.create_a_single_token_gift_card(**params)
@@ -353,7 +353,7 @@ class TestMarketDataApi:
             "token": "token_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.create_a_single_token_gift_card(**params)
@@ -572,7 +572,7 @@ class TestMarketDataApi:
         params = {
             "base_token": "base_token_example",
         }
-        del params["base_token"]
+        params["base_token"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'base_token'"
@@ -709,7 +709,7 @@ class TestMarketDataApi:
         params = {
             "code": "code_example",
         }
-        del params["code"]
+        params["code"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'code'"):
             self.client.redeem_a_binance_gift_card(**params)
@@ -842,7 +842,7 @@ class TestMarketDataApi:
         params = {
             "reference_no": "reference_no_example",
         }
-        del params["reference_no"]
+        params["reference_no"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'reference_no'"

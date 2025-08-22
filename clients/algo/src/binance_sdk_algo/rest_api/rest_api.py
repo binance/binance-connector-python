@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -97,7 +97,7 @@ class AlgoRestAPI:
 
     def cancel_algo_order_future_algo(
         self,
-        algo_id: int = None,
+        algo_id: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderFutureAlgoResponse]:
         """
@@ -111,8 +111,8 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    algo_id (int): eg. 14511
-                    recv_window (Optional[int]):
+                    algo_id (Union[int, None]): eg. 14511
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAlgoOrderFutureAlgoResponse]
@@ -139,7 +139,7 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentAlgoOpenOrdersFutureAlgoResponse]
@@ -174,13 +174,13 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]): Trading symbol eg. BTCUSDT
-                    side (Optional[str]): BUY or SELL
-                    start_time (Optional[int]): in milliseconds  eg.1641522717552
-                    end_time (Optional[int]): in milliseconds  eg.1641522526562
-                    page (Optional[int]): Default is 1
-                    page_size (Optional[int]): MIN 1, MAX 100; Default 100
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Trading symbol eg. BTCUSDT
+                    side (Optional[str] = None): BUY or SELL
+                    start_time (Optional[int] = None): in milliseconds  eg.1641522717552
+                    end_time (Optional[int] = None): in milliseconds  eg.1641522526562
+                    page (Optional[int] = None): Default is 1
+                    page_size (Optional[int] = None): MIN 1, MAX 100; Default 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryHistoricalAlgoOrdersFutureAlgoResponse]
@@ -196,7 +196,7 @@ class AlgoRestAPI:
 
     def query_sub_orders_future_algo(
         self,
-        algo_id: int = None,
+        algo_id: Union[int, None],
         page: Optional[int] = None,
         page_size: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -212,10 +212,10 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    algo_id (int): eg. 14511
-                    page (Optional[int]): Default is 1
-                    page_size (Optional[int]): MIN 1, MAX 100; Default 100
-                    recv_window (Optional[int]):
+                    algo_id (Union[int, None]): eg. 14511
+                    page (Optional[int] = None): Default is 1
+                    page_size (Optional[int] = None): MIN 1, MAX 100; Default 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubOrdersFutureAlgoResponse]
@@ -231,10 +231,10 @@ class AlgoRestAPI:
 
     def time_weighted_average_price_future_algo(
         self,
-        symbol: str = None,
-        side: str = None,
-        quantity: float = None,
-        duration: int = None,
+        symbol: Union[str, None],
+        side: Union[str, None],
+        quantity: Union[float, None],
+        duration: Union[int, None],
         position_side: Optional[str] = None,
         client_algo_id: Optional[str] = None,
         reduce_only: Optional[bool] = None,
@@ -260,15 +260,15 @@ class AlgoRestAPI:
         Weight: 3000
 
                 Args:
-                    symbol (str): Trading symbol eg. BTCUSDT
-                    side (str): Trading side ( BUY or SELL )
-                    quantity (float): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
-                    duration (int): Duration for TWAP orders in seconds. [300, 86400]
-                    position_side (Optional[str]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    client_algo_id (Optional[str]): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
-                    reduce_only (Optional[bool]): "true" or "false". Default "false"; Cannot be sent in Hedge Mode; Cannot be sent when you open a position
-                    limit_price (Optional[float]): Limit price of the order; If it is not sent, will place order by market price by default
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Trading symbol eg. BTCUSDT
+                    side (Union[str, None]): Trading side ( BUY or SELL )
+                    quantity (Union[float, None]): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
+                    duration (Union[int, None]): Duration for TWAP orders in seconds. [300, 86400]
+                    position_side (Optional[str] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
+                    reduce_only (Optional[bool] = None): "true" or "false". Default "false"; Cannot be sent in Hedge Mode; Cannot be sent when you open a position
+                    limit_price (Optional[float] = None): Limit price of the order; If it is not sent, will place order by market price by default
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TimeWeightedAveragePriceFutureAlgoResponse]
@@ -292,10 +292,10 @@ class AlgoRestAPI:
 
     def volume_participation_future_algo(
         self,
-        symbol: str = None,
-        side: str = None,
-        quantity: float = None,
-        urgency: str = None,
+        symbol: Union[str, None],
+        side: Union[str, None],
+        quantity: Union[float, None],
+        urgency: Union[str, None],
         position_side: Optional[str] = None,
         client_algo_id: Optional[str] = None,
         reduce_only: Optional[bool] = None,
@@ -318,15 +318,15 @@ class AlgoRestAPI:
         Weight: 300
 
                 Args:
-                    symbol (str): Trading symbol eg. BTCUSDT
-                    side (str): Trading side ( BUY or SELL )
-                    quantity (float): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
-                    urgency (str): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
-                    position_side (Optional[str]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    client_algo_id (Optional[str]): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
-                    reduce_only (Optional[bool]): "true" or "false". Default "false"; Cannot be sent in Hedge Mode; Cannot be sent when you open a position
-                    limit_price (Optional[float]): Limit price of the order; If it is not sent, will place order by market price by default
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Trading symbol eg. BTCUSDT
+                    side (Union[str, None]): Trading side ( BUY or SELL )
+                    quantity (Union[float, None]): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
+                    urgency (Union[str, None]): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
+                    position_side (Optional[str] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
+                    reduce_only (Optional[bool] = None): "true" or "false". Default "false"; Cannot be sent in Hedge Mode; Cannot be sent when you open a position
+                    limit_price (Optional[float] = None): Limit price of the order; If it is not sent, will place order by market price by default
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VolumeParticipationFutureAlgoResponse]
@@ -350,7 +350,7 @@ class AlgoRestAPI:
 
     def cancel_algo_order_spot_algo(
         self,
-        algo_id: int = None,
+        algo_id: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderSpotAlgoResponse]:
         """
@@ -361,8 +361,8 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    algo_id (int): eg. 14511
-                    recv_window (Optional[int]):
+                    algo_id (Union[int, None]): eg. 14511
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAlgoOrderSpotAlgoResponse]
@@ -386,7 +386,7 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentAlgoOpenOrdersSpotAlgoResponse]
@@ -416,13 +416,13 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]): Trading symbol eg. BTCUSDT
-                    side (Optional[str]): BUY or SELL
-                    start_time (Optional[int]): in milliseconds  eg.1641522717552
-                    end_time (Optional[int]): in milliseconds  eg.1641522526562
-                    page (Optional[int]): Default is 1
-                    page_size (Optional[int]): MIN 1, MAX 100; Default 100
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Trading symbol eg. BTCUSDT
+                    side (Optional[str] = None): BUY or SELL
+                    start_time (Optional[int] = None): in milliseconds  eg.1641522717552
+                    end_time (Optional[int] = None): in milliseconds  eg.1641522526562
+                    page (Optional[int] = None): Default is 1
+                    page_size (Optional[int] = None): MIN 1, MAX 100; Default 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryHistoricalAlgoOrdersSpotAlgoResponse]
@@ -438,7 +438,7 @@ class AlgoRestAPI:
 
     def query_sub_orders_spot_algo(
         self,
-        algo_id: int = None,
+        algo_id: Union[int, None],
         page: Optional[int] = None,
         page_size: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -451,10 +451,10 @@ class AlgoRestAPI:
         Weight: 1
 
                 Args:
-                    algo_id (int): eg. 14511
-                    page (Optional[int]): Default is 1
-                    page_size (Optional[int]): MIN 1, MAX 100; Default 100
-                    recv_window (Optional[int]):
+                    algo_id (Union[int, None]): eg. 14511
+                    page (Optional[int] = None): Default is 1
+                    page_size (Optional[int] = None): MIN 1, MAX 100; Default 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubOrdersSpotAlgoResponse]
@@ -470,10 +470,10 @@ class AlgoRestAPI:
 
     def time_weighted_average_price_spot_algo(
         self,
-        symbol: str = None,
-        side: str = None,
-        quantity: float = None,
-        duration: int = None,
+        symbol: Union[str, None],
+        side: Union[str, None],
+        quantity: Union[float, None],
+        duration: Union[int, None],
         client_algo_id: Optional[str] = None,
         limit_price: Optional[float] = None,
     ) -> ApiResponse[TimeWeightedAveragePriceSpotAlgoResponse]:
@@ -487,12 +487,12 @@ class AlgoRestAPI:
         Weight: 3000
 
                 Args:
-                    symbol (str): Trading symbol eg. BTCUSDT
-                    side (str): Trading side ( BUY or SELL )
-                    quantity (float): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
-                    duration (int): Duration for TWAP orders in seconds. [300, 86400]
-                    client_algo_id (Optional[str]): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
-                    limit_price (Optional[float]): Limit price of the order; If it is not sent, will place order by market price by default
+                    symbol (Union[str, None]): Trading symbol eg. BTCUSDT
+                    side (Union[str, None]): Trading side ( BUY or SELL )
+                    quantity (Union[float, None]): Quantity of base asset; Maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if you order is above the maximum notional per order.
+                    duration (Union[int, None]): Duration for TWAP orders in seconds. [300, 86400]
+                    client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give default value
+                    limit_price (Optional[float] = None): Limit price of the order; If it is not sent, will place order by market price by default
 
                 Returns:
                     ApiResponse[TimeWeightedAveragePriceSpotAlgoResponse]

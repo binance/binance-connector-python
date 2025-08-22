@@ -1,3 +1,6 @@
+# Compression
+
+```python
 import asyncio
 import logging
 
@@ -32,3 +35,4 @@ async def agg_trade():
 
 if __name__ == "__main__":
     asyncio.run(agg_trade())
+```

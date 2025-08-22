@@ -201,7 +201,7 @@ class TestMarketDataApi:
             "exercised_coin": "exercised_coin_example",
             "invest_coin": "invest_coin_example",
         }
-        del params["option_type"]
+        params["option_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'option_type'"
@@ -217,7 +217,7 @@ class TestMarketDataApi:
             "exercised_coin": "exercised_coin_example",
             "invest_coin": "invest_coin_example",
         }
-        del params["exercised_coin"]
+        params["exercised_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'exercised_coin'"
@@ -231,7 +231,7 @@ class TestMarketDataApi:
             "exercised_coin": "exercised_coin_example",
             "invest_coin": "invest_coin_example",
         }
-        del params["invest_coin"]
+        params["invest_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'invest_coin'"

@@ -466,7 +466,7 @@ class TestAssetApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.dust_transfer(**params)
@@ -1125,7 +1125,7 @@ class TestAssetApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1140,7 +1140,7 @@ class TestAssetApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -1355,7 +1355,7 @@ class TestAssetApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_user_delegation_history(**params)
@@ -1367,7 +1367,7 @@ class TestAssetApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1381,7 +1381,7 @@ class TestAssetApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -1549,7 +1549,7 @@ class TestAssetApi:
         params = {
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.query_user_universal_transfer_history(**params)
@@ -2221,7 +2221,7 @@ class TestAssetApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.user_universal_transfer(**params)
@@ -2233,7 +2233,7 @@ class TestAssetApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.user_universal_transfer(**params)
@@ -2245,7 +2245,7 @@ class TestAssetApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.user_universal_transfer(**params)

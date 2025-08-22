@@ -1694,7 +1694,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1709,7 +1709,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -1846,7 +1846,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1861,7 +1861,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -2002,7 +2002,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -2017,7 +2017,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -2159,7 +2159,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -2294,7 +2294,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -2435,7 +2435,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -3026,7 +3026,7 @@ class TestAccountApi:
         params = {
             "fee_burn": "fee_burn_example",
         }
-        del params["fee_burn"]
+        params["fee_burn"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'fee_burn'"
@@ -3147,7 +3147,7 @@ class TestAccountApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.user_commission_rate(**params)

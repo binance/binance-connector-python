@@ -18,14 +18,16 @@ from binance_common.models import WebsocketApiResponse
 from binance_common.signature import Signers
 from binance_common.websocket import WebSocketAPIBase
 
+from ..models import SessionSubscriptionsResponse
 from ..models import UserDataStreamPingResponse
 from ..models import UserDataStreamStartResponse
 from ..models import UserDataStreamStopResponse
 from ..models import UserDataStreamSubscribeResponse
+from ..models import UserDataStreamSubscribeSignatureResponse
 from ..models import UserDataStreamUnsubscribeResponse
 
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class UserDataStreamApi:
@@ -39,9 +41,48 @@ class UserDataStreamApi:
         self.websocket_api = websocket_api
         self.signer = signer
 
+    async def session_subscriptions(
+        self,
+        id: Optional[str] = None,
+    ) -> WebsocketApiResponse[SessionSubscriptionsResponse]:
+        """
+            WebSocket Listing all subscriptions
+            POST /session.subscriptions
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#listing-all-subscriptions
+
+
+        Weight: 2
+
+        **Data Source**:
+        Memory
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                WebsocketApiResponse[SessionSubscriptionsResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        params = {
+            **({"id": id} if id is not None else {}),
+        }
+
+        payload = {
+            "method": "/session.subscriptions".replace("/", ""),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_message(
+            payload=payload, response_model=SessionSubscriptionsResponse
+        )
+
     async def user_data_stream_ping(
         self,
-        listen_key: str = None,
+        listen_key: Union[str, None],
         id: Optional[str] = None,
     ) -> WebsocketApiResponse[UserDataStreamPingResponse]:
         """
@@ -59,8 +100,8 @@ class UserDataStreamApi:
         Weight: 2
 
             Args:
-                listen_key (str):
-                id (Optional[str]): Unique WebSocket request ID.
+                    listen_key (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamPingResponse]
@@ -103,7 +144,7 @@ class UserDataStreamApi:
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamStartResponse]
@@ -128,7 +169,7 @@ class UserDataStreamApi:
 
     async def user_data_stream_stop(
         self,
-        listen_key: str = None,
+        listen_key: Union[str, None],
         id: Optional[str] = None,
     ) -> WebsocketApiResponse[UserDataStreamStopResponse]:
         """
@@ -140,8 +181,8 @@ class UserDataStreamApi:
         Weight: 2
 
             Args:
-                listen_key (str):
-                id (Optional[str]): Unique WebSocket request ID.
+                    listen_key (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamStopResponse]
@@ -184,7 +225,7 @@ class UserDataStreamApi:
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamSubscribeResponse]
@@ -207,20 +248,62 @@ class UserDataStreamApi:
             payload=payload, response_model=UserDataStreamSubscribeResponse
         )
 
+    async def user_data_stream_subscribe_signature(
+        self,
+        id: Optional[str] = None,
+    ) -> WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]:
+        """
+            WebSocket Subscribe to User Data Stream through signature subscription
+            POST /userDataStream.subscribe.signature
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#subscribe-to-user-data-stream-through-signature-subscription-user_data
+
+
+        Weight: 2
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        params = {
+            **({"id": id} if id is not None else {}),
+        }
+
+        payload = {
+            "method": "/userDataStream.subscribe.signature".replace("/", ""),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_signed_message(
+            payload=payload,
+            response_model=UserDataStreamSubscribeSignatureResponse,
+            signer=self.signer,
+        )
+
     async def user_data_stream_unsubscribe(
         self,
         id: Optional[str] = None,
+        subscription_id: Optional[int] = None,
     ) -> WebsocketApiResponse[UserDataStreamUnsubscribeResponse]:
         """
             WebSocket Unsubscribe from User Data Stream
             POST /userDataStream.unsubscribe
-            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#unsubscribe-from-user-data-stream-user_stream
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#unsubscribe-from-user-data-stream
 
             Stop listening to the User Data Stream in the current WebSocket connection.
+
+        Note that `session.logout` will only close the subscription created with `userdataStream.subscribe` but not subscriptions opened with `userDataStream.subscribe.signature`.
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    subscription_id (Optional[int] = None): When called with no parameter, this will close all subscriptions. <br>When called with the `subscriptionId` parameter, this will attempt to close the subscription with that subscription id, if it exists.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamUnsubscribeResponse]
@@ -232,6 +315,11 @@ class UserDataStreamApi:
 
         params = {
             **({"id": id} if id is not None else {}),
+            **(
+                {"subscription_id": subscription_id}
+                if subscription_id is not None
+                else {}
+            ),
         }
 
         payload = {

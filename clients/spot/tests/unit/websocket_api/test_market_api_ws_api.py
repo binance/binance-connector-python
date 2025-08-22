@@ -157,7 +157,7 @@ class TestWebSocketMarketApi:
         """Test that avg_price() raises RequiredError when 'symbol' is missing."""
 
         params = {"symbol": "BNBUSDT", "id": "e9d6b4349871b40611412680b3445fac"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.avg_price(**params)
@@ -323,7 +323,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.depth(**params)
@@ -502,7 +502,7 @@ class TestWebSocketMarketApi:
             "time_zone": "time_zone_example",
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.klines(**params)
@@ -520,7 +520,7 @@ class TestWebSocketMarketApi:
             "time_zone": "time_zone_example",
             "limit": 100,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1414,7 +1414,7 @@ class TestWebSocketMarketApi:
             "end_time": 1735693200000,
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.trades_aggregate(**params)
@@ -1575,7 +1575,7 @@ class TestWebSocketMarketApi:
             "from_id": 1,
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.trades_historical(**params)
@@ -1729,7 +1729,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.trades_recent(**params)
@@ -1908,7 +1908,7 @@ class TestWebSocketMarketApi:
             "time_zone": "time_zone_example",
             "limit": 100,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.ui_klines(**params)
@@ -1926,7 +1926,7 @@ class TestWebSocketMarketApi:
             "time_zone": "time_zone_example",
             "limit": 100,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"

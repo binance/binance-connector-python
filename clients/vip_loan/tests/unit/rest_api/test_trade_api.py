@@ -181,7 +181,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["loan_account_id"]
+        params["loan_account_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_account_id'"
@@ -198,7 +198,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -215,7 +215,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["loan_amount"]
+        params["loan_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_amount'"
@@ -232,7 +232,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["collateral_account_id"]
+        params["collateral_account_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_account_id'"
@@ -249,7 +249,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -266,7 +266,7 @@ class TestTradeApi:
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
         }
-        del params["is_flexible_rate"]
+        params["is_flexible_rate"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'is_flexible_rate'"
@@ -399,7 +399,7 @@ class TestTradeApi:
             "order_id": 1,
             "loan_term": 56,
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"
@@ -412,7 +412,7 @@ class TestTradeApi:
             "order_id": 1,
             "loan_term": 56,
         }
-        del params["loan_term"]
+        params["loan_term"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_term'"
@@ -543,7 +543,7 @@ class TestTradeApi:
             "order_id": 1,
             "amount": 1.0,
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"
@@ -556,7 +556,7 @@ class TestTradeApi:
             "order_id": 1,
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.vip_loan_repay(**params)

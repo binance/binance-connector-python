@@ -32,57 +32,59 @@ class ExchangeFiltersInner(BaseModel):
     ExchangeFiltersInner
     """  # noqa: E501
 
-    filter_type: Optional[StrictStr] = Field(default=None, alias="filterType")
-    min_price: Optional[StrictStr] = Field(default=None, alias="minPrice")
-    max_price: Optional[StrictStr] = Field(default=None, alias="maxPrice")
-    tick_size: Optional[StrictStr] = Field(default=None, alias="tickSize")
-    multiplier_up: Optional[StrictStr] = Field(default=None, alias="multiplierUp")
-    multiplier_down: Optional[StrictStr] = Field(default=None, alias="multiplierDown")
-    avg_price_mins: Optional[StrictInt] = Field(default=None, alias="avgPriceMins")
-    bid_multiplier_up: Optional[StrictStr] = Field(
-        default=None, alias="bidMultiplierUp"
-    )
-    bid_multiplier_down: Optional[StrictStr] = Field(
+    filterType: Optional[StrictStr] = Field(default=None, alias="filterType")
+    minPrice: Optional[StrictStr] = Field(default=None, alias="minPrice")
+    maxPrice: Optional[StrictStr] = Field(default=None, alias="maxPrice")
+    tickSize: Optional[StrictStr] = Field(default=None, alias="tickSize")
+    multiplierUp: Optional[StrictStr] = Field(default=None, alias="multiplierUp")
+    multiplierDown: Optional[StrictStr] = Field(default=None, alias="multiplierDown")
+    avgPriceMins: Optional[StrictInt] = Field(default=None, alias="avgPriceMins")
+    bidMultiplierUp: Optional[StrictStr] = Field(default=None, alias="bidMultiplierUp")
+    bidMultiplierDown: Optional[StrictStr] = Field(
         default=None, alias="bidMultiplierDown"
     )
-    ask_multiplier_up: Optional[StrictStr] = Field(
-        default=None, alias="askMultiplierUp"
-    )
-    ask_multiplier_down: Optional[StrictStr] = Field(
+    askMultiplierUp: Optional[StrictStr] = Field(default=None, alias="askMultiplierUp")
+    askMultiplierDown: Optional[StrictStr] = Field(
         default=None, alias="askMultiplierDown"
     )
-    min_qty: Optional[StrictStr] = Field(default=None, alias="minQty")
-    max_qty: Optional[StrictStr] = Field(default=None, alias="maxQty")
-    step_size: Optional[StrictStr] = Field(default=None, alias="stepSize")
-    min_notional: Optional[StrictStr] = Field(default=None, alias="minNotional")
-    apply_to_market: Optional[StrictBool] = Field(default=None, alias="applyToMarket")
-    apply_min_to_market: Optional[StrictBool] = Field(
+    minQty: Optional[StrictStr] = Field(default=None, alias="minQty")
+    maxQty: Optional[StrictStr] = Field(default=None, alias="maxQty")
+    stepSize: Optional[StrictStr] = Field(default=None, alias="stepSize")
+    minNotional: Optional[StrictStr] = Field(default=None, alias="minNotional")
+    applyToMarket: Optional[StrictBool] = Field(default=None, alias="applyToMarket")
+    applyMinToMarket: Optional[StrictBool] = Field(
         default=None, alias="applyMinToMarket"
     )
-    max_notional: Optional[StrictStr] = Field(default=None, alias="maxNotional")
-    apply_max_to_market: Optional[StrictBool] = Field(
+    maxNotional: Optional[StrictStr] = Field(default=None, alias="maxNotional")
+    applyMaxToMarket: Optional[StrictBool] = Field(
         default=None, alias="applyMaxToMarket"
     )
     limit: Optional[StrictInt] = None
-    max_num_orders: Optional[StrictInt] = Field(default=None, alias="maxNumOrders")
-    max_num_algo_orders: Optional[StrictInt] = Field(
+    maxNumOrders: Optional[StrictInt] = Field(default=None, alias="maxNumOrders")
+    maxNumAlgoOrders: Optional[StrictInt] = Field(
         default=None, alias="maxNumAlgoOrders"
     )
-    max_num_iceberg_orders: Optional[StrictInt] = Field(
+    maxNumIcebergOrders: Optional[StrictInt] = Field(
         default=None, alias="maxNumIcebergOrders"
     )
-    max_position: Optional[StrictStr] = Field(default=None, alias="maxPosition")
-    min_trailing_above_delta: Optional[StrictInt] = Field(
+    maxPosition: Optional[StrictStr] = Field(default=None, alias="maxPosition")
+    minTrailingAboveDelta: Optional[StrictInt] = Field(
         default=None, alias="minTrailingAboveDelta"
     )
-    max_trailing_above_delta: Optional[StrictInt] = Field(
+    maxTrailingAboveDelta: Optional[StrictInt] = Field(
         default=None, alias="maxTrailingAboveDelta"
     )
-    min_trailing_below_delta: Optional[StrictInt] = Field(
+    minTrailingBelowDelta: Optional[StrictInt] = Field(
         default=None, alias="minTrailingBelowDelta"
     )
-    max_trailing_below_delta: Optional[StrictInt] = Field(
+    maxTrailingBelowDelta: Optional[StrictInt] = Field(
         default=None, alias="maxTrailingBelowDelta"
+    )
+    maxNumOrderAmends: Optional[StrictInt] = Field(
+        default=None, alias="maxNumOrderAmends"
+    )
+    maxNumOrderLists: Optional[StrictInt] = Field(
+        default=None, alias="maxNumOrderLists"
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -114,6 +116,8 @@ class ExchangeFiltersInner(BaseModel):
         "maxTrailingAboveDelta",
         "minTrailingBelowDelta",
         "maxTrailingBelowDelta",
+        "maxNumOrderAmends",
+        "maxNumOrderLists",
     ]
 
     model_config = ConfigDict(
@@ -204,6 +208,8 @@ class ExchangeFiltersInner(BaseModel):
                 "maxTrailingAboveDelta": obj.get("maxTrailingAboveDelta"),
                 "minTrailingBelowDelta": obj.get("minTrailingBelowDelta"),
                 "maxTrailingBelowDelta": obj.get("maxTrailingBelowDelta"),
+                "maxNumOrderAmends": obj.get("maxNumOrderAmends"),
+                "maxNumOrderLists": obj.get("maxNumOrderLists"),
             }
         )
         # store additional fields in additional_properties

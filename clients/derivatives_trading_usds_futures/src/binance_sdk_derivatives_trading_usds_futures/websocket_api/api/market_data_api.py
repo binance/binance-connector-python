@@ -18,7 +18,7 @@ from ..models import SymbolOrderBookTickerResponse
 from ..models import SymbolPriceTickerResponse
 
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class MarketDataApi:
@@ -34,7 +34,7 @@ class MarketDataApi:
 
     async def order_book(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderBookResponse]:
@@ -59,9 +59,9 @@ class MarketDataApi:
         | 1000          | 20     |
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                limit (Optional[int]): Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000]
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    limit (Optional[int] = None): Default 500; Valid limits:[5, 10, 20, 50, 100, 500, 1000]
 
             Returns:
                 WebsocketApiResponse[OrderBookResponse]
@@ -110,8 +110,8 @@ class MarketDataApi:
         5 when the symbol parameter is omitted
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None):
 
             Returns:
                 WebsocketApiResponse[SymbolOrderBookTickerResponse]
@@ -153,8 +153,8 @@ class MarketDataApi:
         2 when the symbol parameter is omitted
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None):
 
             Returns:
                 WebsocketApiResponse[SymbolPriceTickerResponse]

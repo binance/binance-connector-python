@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -109,8 +109,8 @@ class ConvertRestAPI:
         Weight: 3000(IP)
 
                 Args:
-                    from_asset (Optional[str]): User spends coin
-                    to_asset (Optional[str]): User receives coin
+                    from_asset (Optional[str] = None): User spends coin
+                    to_asset (Optional[str] = None): User receives coin
 
                 Returns:
                     ApiResponse[ListAllConvertPairsResponse]
@@ -134,7 +134,7 @@ class ConvertRestAPI:
         Weight: 100(IP)
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[QueryOrderQuantityPrecisionPerAssetResponse]
@@ -148,7 +148,7 @@ class ConvertRestAPI:
 
     def accept_quote(
         self,
-        quote_id: str = None,
+        quote_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AcceptQuoteResponse]:
         """
@@ -159,8 +159,8 @@ class ConvertRestAPI:
         Weight: 500(UID)
 
                 Args:
-                    quote_id (str):
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    quote_id (Union[str, None]):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[AcceptQuoteResponse]
@@ -174,7 +174,7 @@ class ConvertRestAPI:
 
     def cancel_limit_order(
         self,
-        order_id: int = None,
+        order_id: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelLimitOrderResponse]:
         """
@@ -185,8 +185,8 @@ class ConvertRestAPI:
         Weight: 200(UID)
 
                 Args:
-                    order_id (int): The orderId from `placeOrder` api
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    order_id (Union[int, None]): The orderId from `placeOrder` api
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[CancelLimitOrderResponse]
@@ -200,8 +200,8 @@ class ConvertRestAPI:
 
     def get_convert_trade_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetConvertTradeHistoryResponse]:
@@ -215,10 +215,10 @@ class ConvertRestAPI:
         Weight: 3000
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    limit (Optional[int]): Default 100, Max 1000
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    limit (Optional[int] = None): Default 100, Max 1000
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[GetConvertTradeHistoryResponse]
@@ -245,8 +245,8 @@ class ConvertRestAPI:
         Weight: 100(UID)
 
                 Args:
-                    order_id (Optional[str]): Either orderId or quoteId is required
-                    quote_id (Optional[str]): Either orderId or quoteId is required
+                    order_id (Optional[str] = None): Either orderId or quoteId is required
+                    quote_id (Optional[str] = None): Either orderId or quoteId is required
 
                 Returns:
                     ApiResponse[OrderStatusResponse]
@@ -260,11 +260,11 @@ class ConvertRestAPI:
 
     def place_limit_order(
         self,
-        base_asset: str = None,
-        quote_asset: str = None,
-        limit_price: float = None,
-        side: str = None,
-        expired_type: str = None,
+        base_asset: Union[str, None],
+        quote_asset: Union[str, None],
+        limit_price: Union[float, None],
+        side: Union[str, None],
+        expired_type: Union[str, None],
         base_amount: Optional[float] = None,
         quote_amount: Optional[float] = None,
         wallet_type: Optional[str] = None,
@@ -282,15 +282,15 @@ class ConvertRestAPI:
         Weight: 500(UID)
 
                 Args:
-                    base_asset (str): base asset (use the response `fromIsBase` from `GET /sapi/v1/convert/exchangeInfo` api to check which one is baseAsset )
-                    quote_asset (str): quote asset
-                    limit_price (float): Symbol limit price (from baseAsset to quoteAsset)
-                    side (str): `BUY` or `SELL`
-                    expired_type (str): 1_D, 3_D, 7_D, 30_D  (D means day)
-                    base_amount (Optional[float]): Base asset amount.  (One of `baseAmount` or `quoteAmount` is required)
-                    quote_amount (Optional[float]): Quote asset amount.  (One of `baseAmount` or `quoteAmount` is required)
-                    wallet_type (Optional[str]): It is to choose which wallet of assets. The wallet selection is `SPOT`, `FUNDING` and `EARN`. Combination of wallet is supported i.e. `SPOT_FUNDING`, `FUNDING_EARN`, `SPOT_FUNDING_EARN` or `SPOT_EARN`  Default is `SPOT`.
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    base_asset (Union[str, None]): base asset (use the response `fromIsBase` from `GET /sapi/v1/convert/exchangeInfo` api to check which one is baseAsset )
+                    quote_asset (Union[str, None]): quote asset
+                    limit_price (Union[float, None]): Symbol limit price (from baseAsset to quoteAsset)
+                    side (Union[str, None]): `BUY` or `SELL`
+                    expired_type (Union[str, None]): 1_D, 3_D, 7_D, 30_D  (D means day)
+                    base_amount (Optional[float] = None): Base asset amount.  (One of `baseAmount` or `quoteAmount` is required)
+                    quote_amount (Optional[float] = None): Quote asset amount.  (One of `baseAmount` or `quoteAmount` is required)
+                    wallet_type (Optional[str] = None): It is to choose which wallet of assets. The wallet selection is `SPOT`, `FUNDING` and `EARN`. Combination of wallet is supported i.e. `SPOT_FUNDING`, `FUNDING_EARN`, `SPOT_FUNDING_EARN` or `SPOT_EARN`  Default is `SPOT`.
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[PlaceLimitOrderResponse]
@@ -324,7 +324,7 @@ class ConvertRestAPI:
         Weight: 3000(UID)
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[QueryLimitOpenOrdersResponse]
@@ -338,8 +338,8 @@ class ConvertRestAPI:
 
     def send_quote_request(
         self,
-        from_asset: str = None,
-        to_asset: str = None,
+        from_asset: Union[str, None],
+        to_asset: Union[str, None],
         from_amount: Optional[float] = None,
         to_amount: Optional[float] = None,
         wallet_type: Optional[str] = None,
@@ -357,13 +357,13 @@ class ConvertRestAPI:
         Weight: 200(UID)
 
                 Args:
-                    from_asset (str):
-                    to_asset (str):
-                    from_amount (Optional[float]): When specified, it is the amount you will be debited after the conversion
-                    to_amount (Optional[float]): When specified, it is the amount you will be credited after the conversion
-                    wallet_type (Optional[str]): It is to choose which wallet of assets. The wallet selection is `SPOT`, `FUNDING` and `EARN`. Combination of wallet is supported i.e. `SPOT_FUNDING`, `FUNDING_EARN`, `SPOT_FUNDING_EARN` or `SPOT_EARN`  Default is `SPOT`.
-                    valid_time (Optional[str]): 10s, 30s, 1m, default 10s
-                    recv_window (Optional[int]): The value cannot be greater than 60000
+                    from_asset (Union[str, None]):
+                    to_asset (Union[str, None]):
+                    from_amount (Optional[float] = None): When specified, it is the amount you will be debited after the conversion
+                    to_amount (Optional[float] = None): When specified, it is the amount you will be credited after the conversion
+                    wallet_type (Optional[str] = None): It is to choose which wallet of assets. The wallet selection is `SPOT`, `FUNDING` and `EARN`. Combination of wallet is supported i.e. `SPOT_FUNDING`, `FUNDING_EARN`, `SPOT_FUNDING_EARN` or `SPOT_EARN`  Default is `SPOT`.
+                    valid_time (Optional[str] = None): 10s, 30s, 1m, default 10s
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000
 
                 Returns:
                     ApiResponse[SendQuoteRequestResponse]

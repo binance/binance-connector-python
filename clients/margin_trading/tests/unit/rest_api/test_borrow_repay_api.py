@@ -154,7 +154,7 @@ class TestBorrowRepayApi:
     def test_get_future_hourly_interest_rate_missing_required_param_assets(self):
         """Test that get_future_hourly_interest_rate() raises RequiredError when 'assets' is missing."""
         params = {"assets": "assets_example", "is_isolated": False}
-        del params["assets"]
+        params["assets"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'assets'"):
             self.client.get_future_hourly_interest_rate(**params)
@@ -162,7 +162,7 @@ class TestBorrowRepayApi:
     def test_get_future_hourly_interest_rate_missing_required_param_is_isolated(self):
         """Test that get_future_hourly_interest_rate() raises RequiredError when 'is_isolated' is missing."""
         params = {"assets": "assets_example", "is_isolated": False}
-        del params["is_isolated"]
+        params["is_isolated"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'is_isolated'"
@@ -419,7 +419,7 @@ class TestBorrowRepayApi:
             "amount": "amount_example",
             "type": "type_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.margin_account_borrow_repay(**params)
@@ -433,7 +433,7 @@ class TestBorrowRepayApi:
             "amount": "amount_example",
             "type": "type_example",
         }
-        del params["is_isolated"]
+        params["is_isolated"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'is_isolated'"
@@ -449,7 +449,7 @@ class TestBorrowRepayApi:
             "amount": "amount_example",
             "type": "type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_borrow_repay(**params)
@@ -463,7 +463,7 @@ class TestBorrowRepayApi:
             "amount": "amount_example",
             "type": "type_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.margin_account_borrow_repay(**params)
@@ -477,7 +477,7 @@ class TestBorrowRepayApi:
             "amount": "amount_example",
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.margin_account_borrow_repay(**params)
@@ -644,7 +644,7 @@ class TestBorrowRepayApi:
         params = {
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.query_borrow_repay_records_in_margin_account(**params)
@@ -793,7 +793,7 @@ class TestBorrowRepayApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_margin_interest_rate_history(**params)
@@ -908,7 +908,7 @@ class TestBorrowRepayApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_max_borrow(**params)

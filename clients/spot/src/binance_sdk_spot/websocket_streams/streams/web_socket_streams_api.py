@@ -15,7 +15,11 @@ Do not edit the class manually.
 
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
-from binance_common.websocket import WebSocketStreamBase, RequestStream
+from binance_common.websocket import (
+    WebSocketStreamBase,
+    RequestStream,
+    RequestStreamHandle,
+)
 
 from ..models import AggTradeResponse
 from ..models import AllMarketRollingWindowTickerResponse
@@ -39,7 +43,7 @@ from ..models import KlineOffsetIntervalEnum
 from ..models import PartialBookDepthLevelsEnum
 from ..models import RollingWindowTickerWindowSizeEnum
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class WebSocketStreamsApi:
@@ -50,9 +54,9 @@ class WebSocketStreamsApi:
 
     async def agg_trade(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> AggTradeResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Aggregate Trade Streams
         POST /<symbol>@aggTrade
@@ -61,11 +65,11 @@ class WebSocketStreamsApi:
         The Aggregate Trade Streams push trade information that is aggregated for a single taker order.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            AggTradeResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -91,9 +95,9 @@ class WebSocketStreamsApi:
 
     async def all_market_rolling_window_ticker(
         self,
-        window_size: AllMarketRollingWindowTickerWindowSizeEnum = None,
+        window_size: Union[AllMarketRollingWindowTickerWindowSizeEnum, None],
         id: Optional[str] = None,
-    ) -> AllMarketRollingWindowTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
             WebSocket All Market Rolling Window Statistics Streams
             POST /!ticker_<windowSize>@arr
@@ -103,11 +107,11 @@ class WebSocketStreamsApi:
         Note that only tickers that have changed will be present in the array.
 
             Args:
-                window_size (AllMarketRollingWindowTickerWindowSizeEnum):
-                id (Optional[str]): Unique WebSocket request ID.
+                    window_size (Union[AllMarketRollingWindowTickerWindowSizeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AllMarketRollingWindowTickerResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -137,7 +141,7 @@ class WebSocketStreamsApi:
     async def all_mini_ticker(
         self,
         id: Optional[str] = None,
-    ) -> AllMiniTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket All Market Mini Tickers Stream
         POST /!miniTicker@arr
@@ -146,10 +150,10 @@ class WebSocketStreamsApi:
         24hr rolling window mini-ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
 
         Args:
-            id (Optional[str]): Unique WebSocket request ID.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            AllMiniTickerResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -170,7 +174,7 @@ class WebSocketStreamsApi:
     async def all_ticker(
         self,
         id: Optional[str] = None,
-    ) -> AllTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket All Market Tickers Stream
         POST /!ticker@arr
@@ -179,10 +183,10 @@ class WebSocketStreamsApi:
         24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
 
         Args:
-            id (Optional[str]): Unique WebSocket request ID.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            AllTickerResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -202,9 +206,9 @@ class WebSocketStreamsApi:
 
     async def avg_price(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> AvgPriceResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Average Price
         POST /<symbol>@avgPrice
@@ -213,11 +217,11 @@ class WebSocketStreamsApi:
         Average price streams push changes in the average price over a fixed time interval.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            AvgPriceResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -243,9 +247,9 @@ class WebSocketStreamsApi:
 
     async def book_ticker(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> BookTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
             WebSocket Individual Symbol Book Ticker Streams
             POST /<symbol>@bookTicker
@@ -255,11 +259,11 @@ class WebSocketStreamsApi:
         Multiple `<symbol>@bookTicker` streams can be subscribed to over one connection.
 
             Args:
-                symbol (str): Symbol to query
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): Symbol to query
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                BookTickerResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -285,10 +289,10 @@ class WebSocketStreamsApi:
 
     async def diff_book_depth(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> DiffBookDepthResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Diff. Depth Stream
         POST /<symbol>@depth@<updateSpeed>
@@ -297,12 +301,12 @@ class WebSocketStreamsApi:
         Order book price and quantity depth updates used to locally manage an order book.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
-            update_speed (Optional[str]): 1000ms or 100ms
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
+                update_speed (Optional[str] = None): 1000ms or 100ms
 
         Returns:
-            DiffBookDepthResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -329,10 +333,10 @@ class WebSocketStreamsApi:
 
     async def kline(
         self,
-        symbol: str = None,
-        interval: KlineIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[KlineIntervalEnum, None],
         id: Optional[str] = None,
-    ) -> KlineResponse:
+    ) -> RequestStreamHandle:
         r"""
             WebSocket Kline/Candlestick Streams for UTC
             POST /<symbol>@kline_<interval>
@@ -343,12 +347,12 @@ class WebSocketStreamsApi:
         <a id="kline-intervals"></a>
 
             Args:
-                symbol (str): Symbol to query
-                interval (KlineIntervalEnum):
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): Symbol to query
+                    interval (Union[KlineIntervalEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                KlineResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -379,10 +383,10 @@ class WebSocketStreamsApi:
 
     async def kline_offset(
         self,
-        symbol: str = None,
-        interval: KlineOffsetIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[KlineOffsetIntervalEnum, None],
         id: Optional[str] = None,
-    ) -> KlineOffsetResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Kline/Candlestick Streams with timezone offset
         POST /<symbol>@kline_<interval>@+08:00
@@ -391,12 +395,12 @@ class WebSocketStreamsApi:
         The Kline/Candlestick Stream push updates to the current klines/candlestick every second in `UTC+8` timezone
 
         Args:
-            symbol (str): Symbol to query
-            interval (KlineOffsetIntervalEnum):
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                interval (Union[KlineOffsetIntervalEnum, None]):
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            KlineOffsetResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -427,9 +431,9 @@ class WebSocketStreamsApi:
 
     async def mini_ticker(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> MiniTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Mini Ticker Stream
         POST /<symbol>@miniTicker
@@ -438,11 +442,11 @@ class WebSocketStreamsApi:
         24hr rolling window mini-ticker statistics. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            MiniTickerResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -468,11 +472,11 @@ class WebSocketStreamsApi:
 
     async def partial_book_depth(
         self,
-        symbol: str = None,
-        levels: PartialBookDepthLevelsEnum = None,
+        symbol: Union[str, None],
+        levels: Union[PartialBookDepthLevelsEnum, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> PartialBookDepthResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Partial Book Depth Streams
         POST /<symbol>@depth<levels>@<updateSpeed>
@@ -481,13 +485,13 @@ class WebSocketStreamsApi:
         Top **\<levels\>** bids and asks, pushed every second. Valid **\<levels\>** are 5, 10, or 20.
 
         Args:
-            symbol (str): Symbol to query
-            levels (PartialBookDepthLevelsEnum):
-            id (Optional[str]): Unique WebSocket request ID.
-            update_speed (Optional[str]): 1000ms or 100ms
+                symbol (Union[str, None]): Symbol to query
+                levels (Union[PartialBookDepthLevelsEnum, None]):
+                id (Optional[str] = None): Unique WebSocket request ID.
+                update_speed (Optional[str] = None): 1000ms or 100ms
 
         Returns:
-            PartialBookDepthResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -519,10 +523,10 @@ class WebSocketStreamsApi:
 
     async def rolling_window_ticker(
         self,
-        symbol: str = None,
-        window_size: RollingWindowTickerWindowSizeEnum = None,
+        symbol: Union[str, None],
+        window_size: Union[RollingWindowTickerWindowSizeEnum, None],
         id: Optional[str] = None,
-    ) -> RollingWindowTickerResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Rolling Window Statistics Streams
         POST /<symbol>@ticker_<windowSize>
@@ -531,12 +535,12 @@ class WebSocketStreamsApi:
         Rolling window ticker statistics for a single symbol, computed over multiple windows.
 
         Args:
-            symbol (str): Symbol to query
-            window_size (RollingWindowTickerWindowSizeEnum):
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                window_size (Union[RollingWindowTickerWindowSizeEnum, None]):
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            RollingWindowTickerResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -570,9 +574,9 @@ class WebSocketStreamsApi:
 
     async def ticker(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> TickerResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Ticker Streams
         POST /<symbol>@ticker
@@ -581,11 +585,11 @@ class WebSocketStreamsApi:
         24hr rolling window ticker statistics for a single symbol. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            TickerResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.
@@ -611,9 +615,9 @@ class WebSocketStreamsApi:
 
     async def trade(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> TradeResponse:
+    ) -> RequestStreamHandle:
         r"""
         WebSocket Trade Streams
         POST /<symbol>@trade
@@ -622,11 +626,11 @@ class WebSocketStreamsApi:
         The Trade Streams push raw trade information; each trade has a unique buyer and seller.
 
         Args:
-            symbol (str): Symbol to query
-            id (Optional[str]): Unique WebSocket request ID.
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
-            TradeResponse
+            RequestStreamHandle
 
         Raises:
             RequiredError: If a required parameter is missing.

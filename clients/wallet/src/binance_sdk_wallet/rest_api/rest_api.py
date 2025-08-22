@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -145,7 +145,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountApiTradingStatusResponse]
@@ -169,7 +169,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountInfoResponse]
@@ -193,7 +193,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountStatusResponse]
@@ -207,7 +207,7 @@ class WalletRestAPI:
 
     def daily_account_snapshot(
         self,
-        type: str = None,
+        type: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -225,11 +225,11 @@ class WalletRestAPI:
         Weight: 2400
 
                 Args:
-                    type (str):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): min 7, max 30, default 7
-                    recv_window (Optional[int]):
+                    type (Union[str, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DailyAccountSnapshotResponse]
@@ -254,7 +254,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[None]
@@ -281,7 +281,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[None]
@@ -305,7 +305,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetApiKeyPermissionResponse]
@@ -332,7 +332,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AssetDetailResponse]
@@ -363,11 +363,11 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    asset (Optional[str]): If asset is blank, then query all positive assets user have.
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): min 7, max 30, default 7
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AssetDividendRecordResponse]
@@ -383,7 +383,7 @@ class WalletRestAPI:
 
     def dust_transfer(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         account_type: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[DustTransferResponse]:
@@ -397,9 +397,9 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    asset (str):
-                    account_type (Optional[str]): `SPOT` or `MARGIN`,default `SPOT`
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DustTransferResponse]
@@ -428,9 +428,9 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DustlogResponse]
@@ -459,9 +459,9 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    asset (Optional[str]): If asset is blank, then query all positive assets user have.
-                    need_btc_valuation (Optional[str]): true or false
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
+                    need_btc_valuation (Optional[str] = None): true or false
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FundingWalletResponse]
@@ -486,8 +486,8 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    account_type (Optional[str]): `SPOT` or `MARGIN`,default `SPOT`
-                    recv_window (Optional[int]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetAssetsThatCanBeConvertedIntoBnbResponse]
@@ -503,8 +503,8 @@ class WalletRestAPI:
 
     def get_cloud_mining_payment_and_refund_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         tran_id: Optional[int] = None,
         client_tran_id: Optional[str] = None,
         asset: Optional[str] = None,
@@ -522,13 +522,13 @@ class WalletRestAPI:
         Weight: 600
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    tran_id (Optional[int]): The transaction id
-                    client_tran_id (Optional[str]): The unique flag
-                    asset (Optional[str]): If asset is blank, then query all positive assets user have.
-                    current (Optional[int]): current page, default 1, the min value is 1
-                    size (Optional[int]): page size, default 10, the max value is 100
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    tran_id (Optional[int] = None): The transaction id
+                    client_tran_id (Optional[str] = None): The unique flag
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
+                    current (Optional[int] = None): current page, default 1, the min value is 1
+                    size (Optional[int] = None): page size, default 10, the max value is 100
 
                 Returns:
                     ApiResponse[GetCloudMiningPaymentAndRefundHistoryResponse]
@@ -566,9 +566,9 @@ class WalletRestAPI:
 
     def query_user_delegation_history(
         self,
-        email: str = None,
-        start_time: int = None,
-        end_time: int = None,
+        email: Union[str, None],
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         type: Optional[str] = None,
         asset: Optional[str] = None,
         current: Optional[int] = None,
@@ -585,14 +585,14 @@ class WalletRestAPI:
         Weight: 60
 
                 Args:
-                    email (str):
-                    start_time (int):
-                    end_time (int):
-                    type (Optional[str]): Delegate/Undelegate
-                    asset (Optional[str]): If asset is blank, then query all positive assets user have.
-                    current (Optional[int]): current page, default 1, the min value is 1
-                    size (Optional[int]): page size, default 10, the max value is 100
-                    recv_window (Optional[int]):
+                    email (Union[str, None]):
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    type (Optional[str] = None): Delegate/Undelegate
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
+                    current (Optional[int] = None): current page, default 1, the min value is 1
+                    size (Optional[int] = None): page size, default 10, the max value is 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserDelegationHistoryResponse]
@@ -608,7 +608,7 @@ class WalletRestAPI:
 
     def query_user_universal_transfer_history(
         self,
-        type: str = None,
+        type: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -631,14 +631,14 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    type (str):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): current page, default 1, the min value is 1
-                    size (Optional[int]): page size, default 10, the max value is 100
-                    from_symbol (Optional[str]):
-                    to_symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    type (Union[str, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): current page, default 1, the min value is 1
+                    size (Optional[int] = None): page size, default 10, the max value is 100
+                    from_symbol (Optional[str] = None):
+                    to_symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserUniversalTransferHistoryResponse]
@@ -675,8 +675,8 @@ class WalletRestAPI:
         Weight: 60
 
                 Args:
-                    quote_asset (Optional[str]): `USDT`, `ETH`, `USDC`, `BNB`, etc. default `BTC`
-                    recv_window (Optional[int]):
+                    quote_asset (Optional[str] = None): `USDT`, `ETH`, `USDC`, `BNB`, etc. default `BTC`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserWalletBalanceResponse]
@@ -704,9 +704,9 @@ class WalletRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    spot_bnb_burn (Optional[str]): "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
-                    interest_bnb_burn (Optional[str]): "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
-                    recv_window (Optional[int]):
+                    spot_bnb_burn (Optional[str] = None): "true" or "false"; Determines whether to use BNB to pay for trading fees on SPOT
+                    interest_bnb_burn (Optional[str] = None): "true" or "false"; Determines whether to use BNB to pay for margin loan's interest
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ToggleBnbBurnOnSpotTradeAndMarginInterestResponse]
@@ -733,8 +733,8 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TradeFeeResponse]
@@ -763,9 +763,9 @@ class WalletRestAPI:
         Weight: 5
 
                 Args:
-                    asset (Optional[str]): If asset is blank, then query all positive assets user have.
-                    need_btc_valuation (Optional[bool]): Whether need btc valuation or not.
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
+                    need_btc_valuation (Optional[bool] = None): Whether need btc valuation or not.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UserAssetResponse]
@@ -779,9 +779,9 @@ class WalletRestAPI:
 
     def user_universal_transfer(
         self,
-        type: str = None,
-        asset: str = None,
-        amount: float = None,
+        type: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         from_symbol: Optional[str] = None,
         to_symbol: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -829,12 +829,12 @@ class WalletRestAPI:
         Weight: 900
 
                 Args:
-                    type (str):
-                    asset (str):
-                    amount (float):
-                    from_symbol (Optional[str]):
-                    to_symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    type (Union[str, None]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    from_symbol (Optional[str] = None):
+                    to_symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UserUniversalTransferResponse]
@@ -860,7 +860,7 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AllCoinsInformationResponse]
@@ -874,7 +874,7 @@ class WalletRestAPI:
 
     def deposit_address(
         self,
-        coin: str = None,
+        coin: Union[str, None],
         network: Optional[str] = None,
         amount: Optional[float] = None,
         recv_window: Optional[int] = None,
@@ -891,10 +891,10 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    coin (str):
-                    network (Optional[str]):
-                    amount (Optional[float]):
-                    recv_window (Optional[int]):
+                    coin (Union[str, None]):
+                    network (Optional[str] = None):
+                    amount (Optional[float] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DepositAddressResponse]
@@ -930,15 +930,15 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    include_source (Optional[bool]): Default: `false`, return `sourceAddress`field when set to `true`
-                    coin (Optional[str]):
-                    status (Optional[int]): 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    offset (Optional[int]): Default: 0
-                    limit (Optional[int]): min 7, max 30, default 7
-                    recv_window (Optional[int]):
-                    tx_id (Optional[str]):
+                    include_source (Optional[bool] = None): Default: `false`, return `sourceAddress`field when set to `true`
+                    coin (Optional[str] = None):
+                    status (Optional[int] = None): 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    recv_window (Optional[int] = None):
+                    tx_id (Optional[str] = None):
 
                 Returns:
                     ApiResponse[DepositHistoryResponse]
@@ -962,7 +962,7 @@ class WalletRestAPI:
 
     def fetch_deposit_address_list_with_network(
         self,
-        coin: str = None,
+        coin: Union[str, None],
         network: Optional[str] = None,
     ) -> ApiResponse[FetchDepositAddressListWithNetworkResponse]:
         """
@@ -977,8 +977,8 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    coin (str):
-                    network (Optional[str]):
+                    coin (Union[str, None]):
+                    network (Optional[str] = None):
 
                 Returns:
                     ApiResponse[FetchDepositAddressListWithNetworkResponse]
@@ -1051,10 +1051,10 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    deposit_id (Optional[int]): Deposit record Id, priority use
-                    tx_id (Optional[str]):
-                    sub_account_id (Optional[int]): Sub-accountId of Cloud user
-                    sub_user_id (Optional[int]): Sub-userId of parent user
+                    deposit_id (Optional[int] = None): Deposit record Id, priority use
+                    tx_id (Optional[str] = None):
+                    sub_account_id (Optional[int] = None): Sub-accountId of Cloud user
+                    sub_user_id (Optional[int] = None): Sub-userId of parent user
 
                 Returns:
                     ApiResponse[OneClickArrivalDepositApplyResponse]
@@ -1070,9 +1070,9 @@ class WalletRestAPI:
 
     def withdraw(
         self,
-        coin: str = None,
-        address: str = None,
-        amount: float = None,
+        coin: Union[str, None],
+        address: Union[str, None],
+        amount: Union[float, None],
         withdraw_order_id: Optional[str] = None,
         network: Optional[str] = None,
         address_tag: Optional[str] = None,
@@ -1089,20 +1089,21 @@ class WalletRestAPI:
 
         * If `network` not send, return with default network of the coin.
         * You can get `network` and `isDefault` in `networkList` of a coin in the response of `Get /sapi/v1/capital/config/getall (HMAC SHA256)`.
+        * To check if travel rule is required, by using  `GET /sapi/v1/localentity/questionnaire-requirements` and if it returns anything other than `NIL` you will need update SAPI to `POST /sapi/v1/localentity/withdraw/apply` else you can continue `POST /sapi/v1/capital/withdraw/apply`. Please note that if you are required to comply to travel rule please refer to the Travel Rule SAPI.
 
         Weight: 900
 
                 Args:
-                    coin (str):
-                    address (str):
-                    amount (float):
-                    withdraw_order_id (Optional[str]): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
-                    network (Optional[str]):
-                    address_tag (Optional[str]): Secondary address identifier for coins like XRP,XMR etc.
-                    transaction_fee_flag (Optional[bool]): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
-                    name (Optional[str]): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-                    wallet_type (Optional[int]): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
-                    recv_window (Optional[int]):
+                    coin (Union[str, None]):
+                    address (Union[str, None]):
+                    amount (Union[float, None]):
+                    withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
+                    network (Optional[str] = None):
+                    address_tag (Optional[str] = None): Secondary address identifier for coins like XRP,XMR etc.
+                    transaction_fee_flag (Optional[bool] = None): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
+                    name (Optional[str] = None): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
+                    wallet_type (Optional[int] = None): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawResponse]
@@ -1153,15 +1154,15 @@ class WalletRestAPI:
         Request limit: 10 requests per second
 
                 Args:
-                    coin (Optional[str]):
-                    withdraw_order_id (Optional[str]): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
-                    status (Optional[int]): 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
-                    offset (Optional[int]): Default: 0
-                    limit (Optional[int]): min 7, max 30, default 7
-                    id_list (Optional[str]): id list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    recv_window (Optional[int]):
+                    coin (Optional[str] = None):
+                    withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
+                    status (Optional[int] = None): 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    id_list (Optional[str] = None): id list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawHistoryResponse]
@@ -1195,7 +1196,7 @@ class WalletRestAPI:
         Weight: 100
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSymbolsDelistScheduleForSpotResponse]
@@ -1231,13 +1232,13 @@ class WalletRestAPI:
 
     def broker_withdraw(
         self,
-        address: str = None,
-        coin: str = None,
-        amount: float = None,
-        withdraw_order_id: str = None,
-        questionnaire: str = None,
-        originator_pii: str = None,
-        signature: str = None,
+        address: Union[str, None],
+        coin: Union[str, None],
+        amount: Union[float, None],
+        withdraw_order_id: Union[str, None],
+        questionnaire: Union[str, None],
+        originator_pii: Union[str, None],
+        signature: Union[str, None],
         address_tag: Optional[str] = None,
         network: Optional[str] = None,
         address_name: Optional[str] = None,
@@ -1257,18 +1258,18 @@ class WalletRestAPI:
         Weight: 600
 
                 Args:
-                    address (str):
-                    coin (str):
-                    amount (float):
-                    withdraw_order_id (str): withdrawID defined by the client (i.e. client's internal withdrawID)
-                    questionnaire (str): JSON format questionnaire answers.
-                    originator_pii (str): JSON format originator Pii, see StandardPii section below
-                    signature (str): Must be the last parameter.
-                    address_tag (Optional[str]): Secondary address identifier for coins like XRP,XMR etc.
-                    network (Optional[str]):
-                    address_name (Optional[str]): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-                    transaction_fee_flag (Optional[bool]): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
-                    wallet_type (Optional[int]): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
+                    address (Union[str, None]):
+                    coin (Union[str, None]):
+                    amount (Union[float, None]):
+                    withdraw_order_id (Union[str, None]): withdrawID defined by the client (i.e. client's internal withdrawID)
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+                    originator_pii (Union[str, None]): JSON format originator Pii, see StandardPii section below
+                    signature (Union[str, None]): Must be the last parameter.
+                    address_tag (Optional[str] = None): Secondary address identifier for coins like XRP,XMR etc.
+                    network (Optional[str] = None):
+                    address_name (Optional[str] = None): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
+                    transaction_fee_flag (Optional[bool] = None): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
+                    wallet_type (Optional[int] = None): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
 
                 Returns:
                     ApiResponse[BrokerWithdrawResponse]
@@ -1311,7 +1312,7 @@ class WalletRestAPI:
         key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CheckQuestionnaireRequirementsResponse]
@@ -1348,17 +1349,17 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
-                    tr_id (Optional[str]): Comma(,) separated list of travel rule record Ids.
-                    tx_id (Optional[str]):
-                    tran_id (Optional[str]): Comma(,) separated list of wallet tran Ids.
-                    network (Optional[str]):
-                    coin (Optional[str]):
-                    travel_rule_status (Optional[int]): 0:Completed,1:Pending,2:Failed
-                    pending_questionnaire (Optional[bool]): true: Only return records that pending deposit questionnaire. false/not provided: return all records.
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    offset (Optional[int]): Default: 0
-                    limit (Optional[int]): min 7, max 30, default 7
+                    tr_id (Optional[str] = None): Comma(,) separated list of travel rule record Ids.
+                    tx_id (Optional[str] = None):
+                    tran_id (Optional[str] = None): Comma(,) separated list of wallet tran Ids.
+                    network (Optional[str] = None):
+                    coin (Optional[str] = None):
+                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    pending_questionnaire (Optional[bool] = None): true: Only return records that pending deposit questionnaire. false/not provided: return all records.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
 
                 Returns:
                     ApiResponse[DepositHistoryTravelRuleResponse]
@@ -1394,7 +1395,7 @@ class WalletRestAPI:
         Weight: 10
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FetchAddressVerificationListResponse]
@@ -1408,11 +1409,11 @@ class WalletRestAPI:
 
     def submit_deposit_questionnaire(
         self,
-        sub_account_id: str = None,
-        deposit_id: str = None,
-        questionnaire: str = None,
-        beneficiary_pii: str = None,
-        signature: str = None,
+        sub_account_id: Union[str, None],
+        deposit_id: Union[str, None],
+        questionnaire: Union[str, None],
+        beneficiary_pii: Union[str, None],
+        signature: Union[str, None],
         network: Optional[str] = None,
         coin: Optional[str] = None,
         amount: Optional[float] = None,
@@ -1432,16 +1433,16 @@ class WalletRestAPI:
         Weight: 600
 
                 Args:
-                    sub_account_id (str): External user ID.
-                    deposit_id (str): Wallet deposit ID.
-                    questionnaire (str): JSON format questionnaire answers.
-                    beneficiary_pii (str): JSON format beneficiary Pii.
-                    signature (str): Must be the last parameter.
-                    network (Optional[str]):
-                    coin (Optional[str]):
-                    amount (Optional[float]):
-                    address (Optional[str]):
-                    address_tag (Optional[str]): Secondary address identifier for coins like XRP,XMR etc.
+                    sub_account_id (Union[str, None]): External user ID.
+                    deposit_id (Union[str, None]): Wallet deposit ID.
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+                    beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
+                    signature (Union[str, None]): Must be the last parameter.
+                    network (Optional[str] = None):
+                    coin (Optional[str] = None):
+                    amount (Optional[float] = None):
+                    address (Optional[str] = None):
+                    address_tag (Optional[str] = None): Secondary address identifier for coins like XRP,XMR etc.
 
                 Returns:
                     ApiResponse[SubmitDepositQuestionnaireResponse]
@@ -1466,8 +1467,8 @@ class WalletRestAPI:
 
     def submit_deposit_questionnaire_travel_rule(
         self,
-        tran_id: int = None,
-        questionnaire: str = None,
+        tran_id: Union[int, None],
+        questionnaire: Union[str, None],
     ) -> ApiResponse[SubmitDepositQuestionnaireTravelRuleResponse]:
         """
                 Submit Deposit Questionnaire (For local entities that require travel rule) (supporting network) (USER_DATA)
@@ -1482,8 +1483,8 @@ class WalletRestAPI:
         Weight: 600
 
                 Args:
-                    tran_id (int): Wallet tran ID
-                    questionnaire (str): JSON format questionnaire answers.
+                    tran_id (Union[int, None]): Wallet tran ID
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
 
                 Returns:
                     ApiResponse[SubmitDepositQuestionnaireTravelRuleResponse]
@@ -1515,7 +1516,7 @@ class WalletRestAPI:
         key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VaspListResponse]
@@ -1558,17 +1559,17 @@ class WalletRestAPI:
         key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
 
                 Args:
-                    tr_id (Optional[str]): Comma(,) separated list of travel rule record Ids.
-                    tx_id (Optional[str]):
-                    withdraw_order_id (Optional[str]): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
-                    network (Optional[str]):
-                    coin (Optional[str]):
-                    travel_rule_status (Optional[int]): 0:Completed,1:Pending,2:Failed
-                    offset (Optional[int]): Default: 0
-                    limit (Optional[int]): min 7, max 30, default 7
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    recv_window (Optional[int]):
+                    tr_id (Optional[str] = None): Comma(,) separated list of travel rule record Ids.
+                    tx_id (Optional[str] = None):
+                    withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
+                    network (Optional[str] = None):
+                    coin (Optional[str] = None):
+                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawHistoryV1Response]
@@ -1629,17 +1630,17 @@ class WalletRestAPI:
         key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
 
                 Args:
-                    tr_id (Optional[str]): Comma(,) separated list of travel rule record Ids.
-                    tx_id (Optional[str]):
-                    withdraw_order_id (Optional[str]): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
-                    network (Optional[str]):
-                    coin (Optional[str]):
-                    travel_rule_status (Optional[int]): 0:Completed,1:Pending,2:Failed
-                    offset (Optional[int]): Default: 0
-                    limit (Optional[int]): min 7, max 30, default 7
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    recv_window (Optional[int]):
+                    tr_id (Optional[str] = None): Comma(,) separated list of travel rule record Ids.
+                    tx_id (Optional[str] = None):
+                    withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
+                    network (Optional[str] = None):
+                    coin (Optional[str] = None):
+                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawHistoryV2Response]
@@ -1665,10 +1666,10 @@ class WalletRestAPI:
 
     def withdraw_travel_rule(
         self,
-        coin: str = None,
-        address: str = None,
-        amount: float = None,
-        questionnaire: str = None,
+        coin: Union[str, None],
+        address: Union[str, None],
+        amount: Union[float, None],
+        questionnaire: Union[str, None],
         withdraw_order_id: Optional[str] = None,
         network: Optional[str] = None,
         address_tag: Optional[str] = None,
@@ -1690,17 +1691,17 @@ class WalletRestAPI:
         Weight: 600
 
                 Args:
-                    coin (str):
-                    address (str):
-                    amount (float):
-                    questionnaire (str): JSON format questionnaire answers.
-                    withdraw_order_id (Optional[str]): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
-                    network (Optional[str]):
-                    address_tag (Optional[str]): Secondary address identifier for coins like XRP,XMR etc.
-                    transaction_fee_flag (Optional[bool]): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
-                    name (Optional[str]): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
-                    wallet_type (Optional[int]): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
-                    recv_window (Optional[int]):
+                    coin (Union[str, None]):
+                    address (Union[str, None]):
+                    amount (Union[float, None]):
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+                    withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for query.
+                    network (Optional[str] = None):
+                    address_tag (Optional[str] = None): Secondary address identifier for coins like XRP,XMR etc.
+                    transaction_fee_flag (Optional[bool] = None): When making internal transfer, `true` for returning the fee to the destination account; `false` for returning the fee back to the departure account. Default `false`.
+                    name (Optional[str] = None): Description of the address. Address book cap is 200, space in name should be encoded into `%20`
+                    wallet_type (Optional[int] = None): The wallet type for withdraw，0-spot wallet ，1-funding wallet. Default walletType is the current "selected wallet" under wallet->Fiat and Spot/Funding->Deposit
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawTravelRuleResponse]

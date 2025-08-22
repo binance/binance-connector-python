@@ -52,9 +52,9 @@ class UserInformationApi:
         Weight: 6000
 
                 Args:
-                    order_id (Optional[int]):
-                    collateral_account_id (Optional[int]):
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None):
+                    collateral_account_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CheckVIPLoanCollateralAccountResponse]
@@ -102,13 +102,13 @@ class UserInformationApi:
         Weight: 400
 
                 Args:
-                    order_id (Optional[int]):
-                    collateral_account_id (Optional[int]):
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    current (Optional[int]): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int]): Default: 10, Max: 100
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None):
+                    collateral_account_id (Optional[int] = None):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
+                    limit (Optional[int] = None): Default: 10, Max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetVIPLoanOngoingOrdersResponse]
@@ -156,9 +156,9 @@ class UserInformationApi:
         Weight: 400
 
                 Args:
-                    current (Optional[int]): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int]): Default: 10, Max: 100
-                    recv_window (Optional[int]):
+                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
+                    limit (Optional[int] = None): Default: 10, Max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryApplicationStatusResponse]

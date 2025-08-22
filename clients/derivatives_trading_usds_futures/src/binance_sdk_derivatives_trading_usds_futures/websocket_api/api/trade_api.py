@@ -31,7 +31,7 @@ from ..models import NewOrderNewOrderRespTypeEnum
 from ..models import NewOrderPriceMatchEnum
 from ..models import NewOrderSelfTradePreventionModeEnum
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class TradeApi:
@@ -47,7 +47,7 @@ class TradeApi:
 
     async def cancel_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -65,11 +65,11 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]):
-                orig_client_order_id (Optional[str]):
-                recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[CancelOrderResponse]
@@ -107,10 +107,10 @@ class TradeApi:
 
     async def modify_order(
         self,
-        symbol: str = None,
-        side: ModifyOrderSideEnum = None,
-        quantity: float = None,
-        price: float = None,
+        symbol: Union[str, None],
+        side: Union[ModifyOrderSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -137,15 +137,15 @@ class TradeApi:
         1 on IP rate limit(x-mbx-used-weight-1m)
 
             Args:
-                symbol (str):
-                side (ModifyOrderSideEnum): `SELL`, `BUY`
-                quantity (float): Order quantity, cannot be sent with `closePosition=true`
-                price (float):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]):
-                orig_client_order_id (Optional[str]):
-                price_match (Optional[ModifyOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
+                    quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
+                    price (Union[float, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[ModifyOrderResponse]
@@ -199,9 +199,9 @@ class TradeApi:
 
     async def new_order(
         self,
-        symbol: str = None,
-        side: NewOrderSideEnum = None,
-        type: str = None,
+        symbol: Union[str, None],
+        side: Union[NewOrderSideEnum, None],
+        type: Union[str, None],
         id: Optional[str] = None,
         position_side: Optional[NewOrderPositionSideEnum] = None,
         time_in_force: Optional[NewOrderTimeInForceEnum] = None,
@@ -268,27 +268,27 @@ class TradeApi:
         Weight: 0
 
             Args:
-                symbol (str):
-                side (NewOrderSideEnum): `SELL`, `BUY`
-                type (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                position_side (Optional[NewOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                time_in_force (Optional[NewOrderTimeInForceEnum]):
-                quantity (Optional[float]): Cannot be sent with `closePosition`=`true`(Close-All)
-                reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
-                price (Optional[float]):
-                new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
-                stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                close_position (Optional[str]): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-                working_type (Optional[NewOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                price_match (Optional[NewOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
-                good_till_date (Optional[int]): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
-                recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    position_side (Optional[NewOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[NewOrderResponse]
@@ -382,9 +382,9 @@ class TradeApi:
         Weight: 5
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]):
-                recv_window (Optional[int]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[PositionInformationResponse]
@@ -429,9 +429,9 @@ class TradeApi:
         Weight: 5
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]):
-                recv_window (Optional[int]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[PositionInformationV2Response]
@@ -460,7 +460,7 @@ class TradeApi:
 
     async def query_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -483,11 +483,11 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]):
-                orig_client_order_id (Optional[str]):
-                recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[QueryOrderResponse]

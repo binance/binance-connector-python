@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, List, TypeVar
+from typing import Optional, List, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -230,7 +230,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountInformationV2Response]
@@ -254,7 +254,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountInformationV3Response]
@@ -278,7 +278,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FuturesAccountBalanceV2Response]
@@ -302,7 +302,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FuturesAccountBalanceV3Response]
@@ -326,7 +326,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FuturesAccountConfigurationResponse]
@@ -352,8 +352,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         - 10 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FuturesTradingQuantitativeRulesIndicatorsResponse]
@@ -379,7 +379,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetBnbBurnStatusResponse]
@@ -403,7 +403,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCurrentMultiAssetsModeResponse]
@@ -427,7 +427,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCurrentPositionModeResponse]
@@ -441,8 +441,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_download_id_for_futures_order_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForFuturesOrderHistoryResponse]:
         """
@@ -456,9 +456,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1000
 
                 Args:
-                    start_time (int): Timestamp in ms
-                    end_time (int): Timestamp in ms
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForFuturesOrderHistoryResponse]
@@ -474,8 +474,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_download_id_for_futures_trade_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForFuturesTradeHistoryResponse]:
         """
@@ -489,9 +489,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1000
 
                 Args:
-                    start_time (int): Timestamp in ms
-                    end_time (int): Timestamp in ms
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForFuturesTradeHistoryResponse]
@@ -507,8 +507,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_download_id_for_futures_transaction_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForFuturesTransactionHistoryResponse]:
         """
@@ -522,9 +522,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1000
 
                 Args:
-                    start_time (int): Timestamp in ms
-                    end_time (int): Timestamp in ms
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForFuturesTransactionHistoryResponse]
@@ -540,7 +540,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_futures_order_history_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFuturesOrderHistoryDownloadLinkByIdResponse]:
         """
@@ -553,8 +553,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesOrderHistoryDownloadLinkByIdResponse]
@@ -570,7 +570,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_futures_trade_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFuturesTradeDownloadLinkByIdResponse]:
         """
@@ -583,8 +583,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesTradeDownloadLinkByIdResponse]
@@ -600,7 +600,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_futures_transaction_history_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFuturesTransactionHistoryDownloadLinkByIdResponse]:
         """
@@ -613,8 +613,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesTransactionHistoryDownloadLinkByIdResponse]
@@ -651,13 +651,13 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 30
 
                 Args:
-                    symbol (Optional[str]):
-                    income_type (Optional[str]): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER，FEE_RETURN，BFUSD_REWARD
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    income_type (Optional[str] = None): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE, STRATEGY_UMFUTURES_TRANSFER，FEE_RETURN，BFUSD_REWARD
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetIncomeHistoryResponse]
@@ -684,8 +684,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NotionalAndLeverageBracketsResponse]
@@ -709,7 +709,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserRateLimitResponse]
@@ -734,8 +734,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SymbolConfigurationResponse]
@@ -749,7 +749,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def toggle_bnb_burn_on_futures_trade(
         self,
-        fee_burn: str = None,
+        fee_burn: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ToggleBnbBurnOnFuturesTradeResponse]:
         """
@@ -760,8 +760,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    fee_burn (str): "true": Fee Discount On; "false": Fee Discount Off
-                    recv_window (Optional[int]):
+                    fee_burn (Union[str, None]): "true": Fee Discount On; "false": Fee Discount Off
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ToggleBnbBurnOnFuturesTradeResponse]
@@ -775,7 +775,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def user_commission_rate(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[UserCommissionRateResponse]:
         """
@@ -786,8 +786,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UserCommissionRateResponse]
@@ -801,7 +801,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def accept_the_offered_quote(
         self,
-        quote_id: str = None,
+        quote_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AcceptTheOfferedQuoteResponse]:
         """
@@ -812,8 +812,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 200(IP)
 
                 Args:
-                    quote_id (str):
-                    recv_window (Optional[int]):
+                    quote_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AcceptTheOfferedQuoteResponse]
@@ -842,8 +842,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 20(IP)
 
                 Args:
-                    from_asset (Optional[str]): User spends coin
-                    to_asset (Optional[str]): User receives coin
+                    from_asset (Optional[str] = None): User spends coin
+                    to_asset (Optional[str] = None): User receives coin
 
                 Returns:
                     ApiResponse[ListAllConvertPairsResponse]
@@ -868,8 +868,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 50(IP)
 
                 Args:
-                    order_id (Optional[str]): Either orderId or quoteId is required
-                    quote_id (Optional[str]): Either orderId or quoteId is required
+                    order_id (Optional[str] = None): Either orderId or quoteId is required
+                    quote_id (Optional[str] = None): Either orderId or quoteId is required
 
                 Returns:
                     ApiResponse[OrderStatusResponse]
@@ -883,8 +883,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def send_quote_request(
         self,
-        from_asset: str = None,
-        to_asset: str = None,
+        from_asset: Union[str, None],
+        to_asset: Union[str, None],
         from_amount: Optional[float] = None,
         to_amount: Optional[float] = None,
         valid_time: Optional[str] = None,
@@ -901,12 +901,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 50(IP)
 
                 Args:
-                    from_asset (str):
-                    to_asset (str):
-                    from_amount (Optional[float]): When specified, it is the amount you will be debited after the conversion
-                    to_amount (Optional[float]): When specified, it is the amount you will be credited after the conversion
-                    valid_time (Optional[str]): 10s, default 10s
-                    recv_window (Optional[int]):
+                    from_asset (Union[str, None]):
+                    to_asset (Union[str, None]):
+                    from_amount (Optional[float] = None): When specified, it is the amount you will be debited after the conversion
+                    to_amount (Optional[float] = None): When specified, it is the amount you will be credited after the conversion
+                    valid_time (Optional[str] = None): 10s, default 10s
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SendQuoteRequestResponse]
@@ -922,10 +922,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def basis(
         self,
-        pair: str = None,
-        contract_type: BasisContractTypeEnum = None,
-        period: BasisPeriodEnum = None,
-        limit: int = None,
+        pair: Union[str, None],
+        contract_type: Union[BasisContractTypeEnum, None],
+        period: Union[BasisPeriodEnum, None],
+        limit: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
     ) -> ApiResponse[BasisResponse]:
@@ -940,12 +940,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    pair (str):
-                    contract_type (BasisContractTypeEnum):
-                    period (BasisPeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (int): Default 30,Max 500
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    pair (Union[str, None]):
+                    contract_type (Union[BasisContractTypeEnum, None]):
+                    period (Union[BasisPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Union[int, None]): Default 30,Max 500
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[BasisResponse]
@@ -995,7 +995,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[CompositeIndexSymbolInformationResponse]
@@ -1009,7 +1009,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def compressed_aggregate_trades_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         from_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1030,11 +1030,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[CompressedAggregateTradesListResponse]
@@ -1050,9 +1050,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def continuous_contract_kline_candlestick_data(
         self,
-        pair: str = None,
-        contract_type: ContinuousContractKlineCandlestickDataContractTypeEnum = None,
-        interval: ContinuousContractKlineCandlestickDataIntervalEnum = None,
+        pair: Union[str, None],
+        contract_type: Union[
+            ContinuousContractKlineCandlestickDataContractTypeEnum, None
+        ],
+        interval: Union[ContinuousContractKlineCandlestickDataIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1078,12 +1080,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    pair (str):
-                    contract_type (ContinuousContractKlineCandlestickDataContractTypeEnum):
-                    interval (ContinuousContractKlineCandlestickDataIntervalEnum):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    pair (Union[str, None]):
+                    contract_type (Union[ContinuousContractKlineCandlestickDataContractTypeEnum, None]):
+                    interval (Union[ContinuousContractKlineCandlestickDataIntervalEnum, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[ContinuousContractKlineCandlestickDataResponse]
@@ -1139,10 +1141,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: share 500/5min/IP rate limit with GET /fapi/v1/fundingInfo
 
                 Args:
-                    symbol (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[GetFundingRateHistoryResponse]
@@ -1181,8 +1183,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def index_price_kline_candlestick_data(
         self,
-        pair: str = None,
-        interval: IndexPriceKlineCandlestickDataIntervalEnum = None,
+        pair: Union[str, None],
+        interval: Union[IndexPriceKlineCandlestickDataIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1205,11 +1207,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    pair (str):
-                    interval (IndexPriceKlineCandlestickDataIntervalEnum):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    pair (Union[str, None]):
+                    interval (Union[IndexPriceKlineCandlestickDataIntervalEnum, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[IndexPriceKlineCandlestickDataResponse]
@@ -1225,8 +1227,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def kline_candlestick_data(
         self,
-        symbol: str = None,
-        interval: KlineCandlestickDataIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[KlineCandlestickDataIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1248,11 +1250,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    symbol (str):
-                    interval (KlineCandlestickDataIntervalEnum):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    interval (Union[KlineCandlestickDataIntervalEnum, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[KlineCandlestickDataResponse]
@@ -1268,8 +1270,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def long_short_ratio(
         self,
-        symbol: str = None,
-        period: LongShortRatioPeriodEnum = None,
+        symbol: Union[str, None],
+        period: Union[LongShortRatioPeriodEnum, None],
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1286,11 +1288,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    period (LongShortRatioPeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Optional[int]): Default 100; max 1000
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    symbol (Union[str, None]):
+                    period (Union[LongShortRatioPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Optional[int] = None): Default 100; max 1000
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[LongShortRatioResponse]
@@ -1316,7 +1318,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[MarkPriceResponse]
@@ -1330,8 +1332,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def mark_price_kline_candlestick_data(
         self,
-        symbol: str = None,
-        interval: MarkPriceKlineCandlestickDataIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[MarkPriceKlineCandlestickDataIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1353,11 +1355,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    symbol (str):
-                    interval (MarkPriceKlineCandlestickDataIntervalEnum):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    interval (Union[MarkPriceKlineCandlestickDataIntervalEnum, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[MarkPriceKlineCandlestickDataResponse]
@@ -1383,7 +1385,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1 for a single symbol; 10 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[MultiAssetsModeAssetIndexResponse]
@@ -1397,7 +1399,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def old_trades_lookup(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
         from_id: Optional[int] = None,
     ) -> ApiResponse[OldTradesLookupResponse]:
@@ -1412,9 +1414,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default 100; max 1000
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
 
                 Returns:
                     ApiResponse[OldTradesLookupResponse]
@@ -1428,7 +1430,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def open_interest(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
     ) -> ApiResponse[OpenInterestResponse]:
         """
                 Open Interest
@@ -1438,7 +1440,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
+                    symbol (Union[str, None]):
 
                 Returns:
                     ApiResponse[OpenInterestResponse]
@@ -1452,8 +1454,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def open_interest_statistics(
         self,
-        symbol: str = None,
-        period: OpenInterestStatisticsPeriodEnum = None,
+        symbol: Union[str, None],
+        period: Union[OpenInterestStatisticsPeriodEnum, None],
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1470,11 +1472,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    period (OpenInterestStatisticsPeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Optional[int]): Default 100; max 1000
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    symbol (Union[str, None]):
+                    period (Union[OpenInterestStatisticsPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Optional[int] = None): Default 100; max 1000
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[OpenInterestStatisticsResponse]
@@ -1490,7 +1492,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def order_book(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[OrderBookResponse]:
         """
@@ -1507,8 +1509,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | 1000          | 20     |
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[OrderBookResponse]
@@ -1522,8 +1524,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def premium_index_kline_data(
         self,
-        symbol: str = None,
-        interval: PremiumIndexKlineDataIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[PremiumIndexKlineDataIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1545,11 +1547,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    symbol (str):
-                    interval (PremiumIndexKlineDataIntervalEnum):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    interval (Union[PremiumIndexKlineDataIntervalEnum, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[PremiumIndexKlineDataResponse]
@@ -1565,7 +1567,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def quarterly_contract_settlement_price(
         self,
-        pair: str = None,
+        pair: Union[str, None],
     ) -> ApiResponse[QuarterlyContractSettlementPriceResponse]:
         """
                 Quarterly Contract Settlement Price
@@ -1575,7 +1577,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    pair (str):
+                    pair (Union[str, None]):
 
                 Returns:
                     ApiResponse[QuarterlyContractSettlementPriceResponse]
@@ -1589,7 +1591,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def query_index_price_constituents(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
     ) -> ApiResponse[QueryIndexPriceConstituentsResponse]:
         """
                 Query Index Price Constituents
@@ -1599,7 +1601,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
+                    symbol (Union[str, None]):
 
                 Returns:
                     ApiResponse[QueryIndexPriceConstituentsResponse]
@@ -1623,7 +1625,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[QueryInsuranceFundBalanceSnapshotResponse]
@@ -1637,7 +1639,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def recent_trades_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[RecentTradesListResponse]:
         """
@@ -1650,8 +1652,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default 100; max 1000
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default 100; max 1000
 
                 Returns:
                     ApiResponse[RecentTradesListResponse]
@@ -1679,7 +1681,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         5 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[SymbolOrderBookTickerResponse]
@@ -1696,7 +1698,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         symbol: Optional[str] = None,
     ) -> ApiResponse[SymbolPriceTickerResponse]:
         """
-                Symbol Price Ticker
+                Symbol Price Ticker(Deprecated)
 
                 Latest price for a symbol or symbols.
 
@@ -1706,7 +1708,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         2 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[SymbolPriceTickerResponse]
@@ -1734,7 +1736,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         2 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[SymbolPriceTickerV2Response]
@@ -1748,8 +1750,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def taker_buy_sell_volume(
         self,
-        symbol: str = None,
-        period: TakerBuySellVolumePeriodEnum = None,
+        symbol: Union[str, None],
+        period: Union[TakerBuySellVolumePeriodEnum, None],
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1766,11 +1768,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    period (TakerBuySellVolumePeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Optional[int]): Default 100; max 1000
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    symbol (Union[str, None]):
+                    period (Union[TakerBuySellVolumePeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Optional[int] = None): Default 100; max 1000
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TakerBuySellVolumeResponse]
@@ -1822,7 +1824,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
+                    symbol (Optional[str] = None):
 
                 Returns:
                     ApiResponse[Ticker24hrPriceChangeStatisticsResponse]
@@ -1836,8 +1838,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def top_trader_long_short_ratio_accounts(
         self,
-        symbol: str = None,
-        period: TopTraderLongShortRatioAccountsPeriodEnum = None,
+        symbol: Union[str, None],
+        period: Union[TopTraderLongShortRatioAccountsPeriodEnum, None],
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1857,11 +1859,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    period (TopTraderLongShortRatioAccountsPeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Optional[int]): Default 100; max 1000
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    symbol (Union[str, None]):
+                    period (Union[TopTraderLongShortRatioAccountsPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Optional[int] = None): Default 100; max 1000
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TopTraderLongShortRatioAccountsResponse]
@@ -1877,8 +1879,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def top_trader_long_short_ratio_positions(
         self,
-        symbol: str = None,
-        period: TopTraderLongShortRatioPositionsPeriodEnum = None,
+        symbol: Union[str, None],
+        period: Union[TopTraderLongShortRatioPositionsPeriodEnum, None],
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1898,11 +1900,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    period (TopTraderLongShortRatioPositionsPeriodEnum): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Optional[int]): Default 100; max 1000
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
+                    symbol (Union[str, None]):
+                    period (Union[TopTraderLongShortRatioPositionsPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
+                    limit (Optional[int] = None): Default 100; max 1000
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TopTraderLongShortRatioPositionsResponse]
@@ -1918,7 +1920,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def classic_portfolio_margin_account_information(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ClassicPortfolioMarginAccountInformationResponse]:
         """
@@ -1932,8 +1934,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    asset (str):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ClassicPortfolioMarginAccountInformationResponse]
@@ -1949,7 +1951,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def account_trade_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1970,13 +1972,13 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountTradeListResponse]
@@ -1992,7 +1994,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def all_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -2014,12 +2016,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AllOrdersResponse]
@@ -2035,8 +2037,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def auto_cancel_all_open_orders(
         self,
-        symbol: str = None,
-        countdown_time: int = None,
+        symbol: Union[str, None],
+        countdown_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AutoCancelAllOpenOrdersResponse]:
         """
@@ -2055,9 +2057,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 10
 
                 Args:
-                    symbol (str):
-                    countdown_time (int): countdown time, 1000 for 1 second. 0 to cancel the timer
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    countdown_time (Union[int, None]): countdown time, 1000 for 1 second. 0 to cancel the timer
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AutoCancelAllOpenOrdersResponse]
@@ -2073,7 +2075,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def cancel_all_open_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllOpenOrdersResponse]:
         """
@@ -2084,8 +2086,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllOpenOrdersResponse]
@@ -2099,7 +2101,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def cancel_multiple_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id_list: Optional[List[int]] = None,
         orig_client_order_id_list: Optional[List[str]] = None,
         recv_window: Optional[int] = None,
@@ -2114,10 +2116,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id_list (Optional[List[int]]): max length 10 <br /> e.g. [1234567,2345678]
-                    orig_client_order_id_list (Optional[List[str]]): max length 10<br /> e.g. ["my_id_1","my_id_2"], encode the double quotes. No space after comma.
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id_list (Optional[List[int]] = None): max length 10 <br /> e.g. [1234567,2345678]
+                    orig_client_order_id_list (Optional[List[str]] = None): max length 10<br /> e.g. ["my_id_1","my_id_2"], encode the double quotes. No space after comma.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelMultipleOrdersResponse]
@@ -2133,7 +2135,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def cancel_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -2148,10 +2150,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelOrderResponse]
@@ -2167,8 +2169,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def change_initial_leverage(
         self,
-        symbol: str = None,
-        leverage: int = None,
+        symbol: Union[str, None],
+        leverage: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeInitialLeverageResponse]:
         """
@@ -2179,9 +2181,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    leverage (int): target initial leverage: int from 1 to 125
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    leverage (Union[int, None]): target initial leverage: int from 1 to 125
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeInitialLeverageResponse]
@@ -2195,8 +2197,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def change_margin_type(
         self,
-        symbol: str = None,
-        margin_type: ChangeMarginTypeMarginTypeEnum = None,
+        symbol: Union[str, None],
+        margin_type: Union[ChangeMarginTypeMarginTypeEnum, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeMarginTypeResponse]:
         """
@@ -2207,9 +2209,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    margin_type (ChangeMarginTypeMarginTypeEnum): ISOLATED, CROSSED
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    margin_type (Union[ChangeMarginTypeMarginTypeEnum, None]): ISOLATED, CROSSED
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeMarginTypeResponse]
@@ -2223,7 +2225,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def change_multi_assets_mode(
         self,
-        multi_assets_margin: str = None,
+        multi_assets_margin: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeMultiAssetsModeResponse]:
         """
@@ -2234,8 +2236,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    multi_assets_margin (str): "true": Multi-Assets Mode; "false": Single-Asset Mode
-                    recv_window (Optional[int]):
+                    multi_assets_margin (Union[str, None]): "true": Multi-Assets Mode; "false": Single-Asset Mode
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeMultiAssetsModeResponse]
@@ -2249,7 +2251,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def change_position_mode(
         self,
-        dual_side_position: str = None,
+        dual_side_position: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangePositionModeResponse]:
         """
@@ -2260,8 +2262,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    dual_side_position (str): "true": Hedge Mode; "false": One-way Mode
-                    recv_window (Optional[int]):
+                    dual_side_position (Union[str, None]): "true": Hedge Mode; "false": One-way Mode
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangePositionModeResponse]
@@ -2289,8 +2291,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Careful when accessing this with no symbol.
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CurrentAllOpenOrdersResponse]
@@ -2304,7 +2306,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_order_modify_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         start_time: Optional[int] = None,
@@ -2323,13 +2325,13 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOrderModifyHistoryResponse]
@@ -2351,7 +2353,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def get_position_margin_change_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         type: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -2369,12 +2371,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    type (Optional[int]): 1: Add position margin，2: Reduce position margin
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    type (Optional[int] = None): 1: Add position margin，2: Reduce position margin
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetPositionMarginChangeHistoryResponse]
@@ -2390,9 +2392,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def modify_isolated_position_margin(
         self,
-        symbol: str = None,
-        amount: float = None,
-        type: str = None,
+        symbol: Union[str, None],
+        amount: Union[float, None],
+        type: Union[str, None],
         position_side: Optional[ModifyIsolatedPositionMarginPositionSideEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifyIsolatedPositionMarginResponse]:
@@ -2407,11 +2409,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    amount (float):
-                    type (str):
-                    position_side (Optional[ModifyIsolatedPositionMarginPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    amount (Union[float, None]):
+                    type (Union[str, None]):
+                    position_side (Optional[ModifyIsolatedPositionMarginPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ModifyIsolatedPositionMarginResponse]
@@ -2427,7 +2429,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def modify_multiple_orders(
         self,
-        batch_orders: List[ModifyMultipleOrdersBatchOrdersParameterInner] = None,
+        batch_orders: Union[List[ModifyMultipleOrdersBatchOrdersParameterInner], None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifyMultipleOrdersResponse]:
         """
@@ -2445,8 +2447,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         5 on IP rate limit(x-mbx-used-weight-1m);
 
                 Args:
-                    batch_orders (List[ModifyMultipleOrdersBatchOrdersParameterInner]): order list. Max 5 orders
-                    recv_window (Optional[int]):
+                    batch_orders (Union[List[ModifyMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ModifyMultipleOrdersResponse]
@@ -2460,10 +2462,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def modify_order(
         self,
-        symbol: str = None,
-        side: ModifyOrderSideEnum = None,
-        quantity: float = None,
-        price: float = None,
+        symbol: Union[str, None],
+        side: Union[ModifyOrderSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
@@ -2488,14 +2490,14 @@ class DerivativesTradingUsdsFuturesRestAPI:
         1 on IP rate limit(x-mbx-used-weight-1m)
 
                 Args:
-                    symbol (str):
-                    side (ModifyOrderSideEnum): `SELL`, `BUY`
-                    quantity (float): Order quantity, cannot be sent with `closePosition=true`
-                    price (float):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    price_match (Optional[ModifyOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
+                    quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
+                    price (Union[float, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ModifyOrderResponse]
@@ -2518,9 +2520,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def new_order(
         self,
-        symbol: str = None,
-        side: NewOrderSideEnum = None,
-        type: str = None,
+        symbol: Union[str, None],
+        side: Union[NewOrderSideEnum, None],
+        type: Union[str, None],
         position_side: Optional[NewOrderPositionSideEnum] = None,
         time_in_force: Optional[NewOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2588,26 +2590,26 @@ class DerivativesTradingUsdsFuturesRestAPI:
         0 on IP rate limit(x-mbx-used-weight-1m)
 
                 Args:
-                    symbol (str):
-                    side (NewOrderSideEnum): `SELL`, `BUY`
-                    type (str):
-                    position_side (Optional[NewOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
-                    time_in_force (Optional[NewOrderTimeInForceEnum]):
-                    quantity (Optional[float]): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
-                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    close_position (Optional[str]): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-                    working_type (Optional[NewOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    price_match (Optional[NewOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
-                    good_till_date (Optional[int]): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    position_side (Optional[NewOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    time_in_force (Optional[NewOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewOrderResponse]
@@ -2642,7 +2644,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def place_multiple_orders(
         self,
-        batch_orders: List[PlaceMultipleOrdersBatchOrdersParameterInner] = None,
+        batch_orders: Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PlaceMultipleOrdersResponse]:
         """
@@ -2659,8 +2661,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         5 on IP rate limit(x-mbx-used-weight-1m);
 
                 Args:
-                    batch_orders (List[PlaceMultipleOrdersBatchOrdersParameterInner]): order list. Max 5 orders
-                    recv_window (Optional[int]):
+                    batch_orders (Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PlaceMultipleOrdersResponse]
@@ -2692,8 +2694,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PositionAdlQuantileEstimationResponse]
@@ -2720,8 +2722,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PositionInformationV2Response]
@@ -2748,8 +2750,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PositionInformationV3Response]
@@ -2763,7 +2765,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def query_current_open_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -2780,10 +2782,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentOpenOrderResponse]
@@ -2799,7 +2801,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def query_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -2819,10 +2821,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryOrderResponse]
@@ -2838,9 +2840,9 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
     def test_order(
         self,
-        symbol: str = None,
-        side: TestOrderSideEnum = None,
-        type: str = None,
+        symbol: Union[str, None],
+        side: Union[TestOrderSideEnum, None],
+        type: Union[str, None],
         position_side: Optional[TestOrderPositionSideEnum] = None,
         time_in_force: Optional[TestOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2906,26 +2908,26 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str):
-                    side (TestOrderSideEnum): `SELL`, `BUY`
-                    type (str):
-                    position_side (Optional[TestOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
-                    time_in_force (Optional[TestOrderTimeInForceEnum]):
-                    quantity (Optional[float]): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
-                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    close_position (Optional[str]): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-                    working_type (Optional[TestOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    price_match (Optional[TestOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
-                    good_till_date (Optional[int]): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[TestOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    position_side (Optional[TestOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    time_in_force (Optional[TestOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    working_type (Optional[TestOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    price_match (Optional[TestOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TestOrderResponse]
@@ -2978,12 +2980,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 20 with symbol, 50 without symbol
 
                 Args:
-                    symbol (Optional[str]):
-                    auto_close_type (Optional[UsersForceOrdersAutoCloseTypeEnum]): "LIQUIDATION" for liquidation orders, "ADL" for ADL orders.
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    auto_close_type (Optional[UsersForceOrdersAutoCloseTypeEnum] = None): "LIQUIDATION" for liquidation orders, "ADL" for ADL orders.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UsersForceOrdersResponse]

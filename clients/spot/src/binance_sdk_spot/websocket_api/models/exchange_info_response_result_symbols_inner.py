@@ -67,6 +67,9 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
         default=None, alias="cancelReplaceAllowed"
     )
     amend_allowed: Optional[StrictBool] = Field(default=None, alias="amendAllowed")
+    peg_instructions_allowed: Optional[StrictBool] = Field(
+        default=None, alias="pegInstructionsAllowed"
+    )
     is_spot_trading_allowed: Optional[StrictBool] = Field(
         default=None, alias="isSpotTradingAllowed"
     )
@@ -107,6 +110,7 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
         "allowTrailingStop",
         "cancelReplaceAllowed",
         "amendAllowed",
+        "pegInstructionsAllowed",
         "isSpotTradingAllowed",
         "isMarginTradingAllowed",
         "filters",
@@ -204,6 +208,7 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
                 "allowTrailingStop": obj.get("allowTrailingStop"),
                 "cancelReplaceAllowed": obj.get("cancelReplaceAllowed"),
                 "amendAllowed": obj.get("amendAllowed"),
+                "pegInstructionsAllowed": obj.get("pegInstructionsAllowed"),
                 "isSpotTradingAllowed": obj.get("isSpotTradingAllowed"),
                 "isMarginTradingAllowed": obj.get("isMarginTradingAllowed"),
                 "filters": (

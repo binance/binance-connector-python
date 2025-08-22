@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0 - 2025-08-22
+
+### Changed (3)
+
+- Standardized type hints for required parameters by replacing `default = None` annotations with `Union[..., None]`
+
+#### REST API
+
+- Modified response for `exchange_information()` method (`GET /dapi/v1/exchangeInfo`):
+  - `symbols`.`filters`.`multiplierDecimal`: type `integer` → `string`
+
+#### WebSocket Streams
+
+- Updated Websocket Streams response type to `RequestStreamHandle`
+
 ## 1.2.0 - 2025-08-07
 
 ### Changed (1)

@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, List, TypeVar
+from typing import Optional, List, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -155,7 +155,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def account_funding_flow(
         self,
-        currency: str = None,
+        currency: Union[str, None],
         record_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -170,12 +170,12 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    currency (str): Asset type, only support USDT  as of now
-                    record_id (Optional[int]): Return the recordId and subsequent data, the latest data is returned by default, e.g 100000
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
-                    recv_window (Optional[int]):
+                    currency (Union[str, None]): Asset type, only support USDT  as of now
+                    record_id (Optional[int] = None): Return the recordId and subsequent data, the latest data is returned by default, e.g 100000
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountFundingFlowResponse]
@@ -191,8 +191,8 @@ class DerivativesTradingOptionsRestAPI:
 
     def get_download_id_for_option_transaction_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]:
         """
@@ -206,9 +206,9 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    start_time (int): Timestamp in ms
-                    end_time (int): Timestamp in ms
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]
@@ -224,7 +224,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def get_option_transaction_history_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]:
         """
@@ -237,8 +237,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]
@@ -264,7 +264,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 3
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[OptionAccountInformationResponse]
@@ -288,7 +288,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 3
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[OptionMarginAccountInformationResponse]
@@ -361,10 +361,10 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 3
 
                 Args:
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[HistoricalExerciseRecordsResponse]
@@ -380,8 +380,8 @@ class DerivativesTradingOptionsRestAPI:
 
     def kline_candlestick_data(
         self,
-        symbol: str = None,
-        interval: str = None,
+        symbol: Union[str, None],
+        interval: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -397,11 +397,11 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    interval (str): Time interval
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    interval (Union[str, None]): Time interval
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[KlineCandlestickDataResponse]
@@ -417,7 +417,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def old_trades_lookup(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
     ) -> ApiResponse[OldTradesLookupResponse]:
@@ -429,9 +429,9 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int]): The UniqueId ID from which to return. The latest deal record is returned by default
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[OldTradesLookupResponse]
@@ -445,8 +445,8 @@ class DerivativesTradingOptionsRestAPI:
 
     def open_interest(
         self,
-        underlying_asset: str = None,
-        expiration: str = None,
+        underlying_asset: Union[str, None],
+        expiration: Union[str, None],
     ) -> ApiResponse[OpenInterestResponse]:
         """
                 Open Interest
@@ -456,8 +456,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 0
 
                 Args:
-                    underlying_asset (str): underlying asset, e.g ETH/BTC
-                    expiration (str): expiration date, e.g 221225
+                    underlying_asset (Union[str, None]): underlying asset, e.g ETH/BTC
+                    expiration (Union[str, None]): expiration date, e.g 221225
 
                 Returns:
                     ApiResponse[OpenInterestResponse]
@@ -481,7 +481,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
 
                 Returns:
                     ApiResponse[OptionMarkPriceResponse]
@@ -495,7 +495,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def order_book(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[OrderBookResponse]:
         """
@@ -511,8 +511,8 @@ class DerivativesTradingOptionsRestAPI:
         1000          | 20
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[OrderBookResponse]
@@ -537,8 +537,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[RecentBlockTradesListResponse]
@@ -552,7 +552,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def recent_trades_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[RecentTradesListResponse]:
         """
@@ -563,8 +563,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
 
                 Returns:
                     ApiResponse[RecentTradesListResponse]
@@ -578,7 +578,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def symbol_price_ticker(
         self,
-        underlying: str = None,
+        underlying: Union[str, None],
     ) -> ApiResponse[SymbolPriceTickerResponse]:
         """
                 Symbol Price Ticker
@@ -588,7 +588,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (str): Option underlying, e.g BTCUSDT
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
 
                 Returns:
                     ApiResponse[SymbolPriceTickerResponse]
@@ -634,7 +634,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
 
                 Returns:
                     ApiResponse[Ticker24hrPriceChangeStatisticsResponse]
@@ -648,7 +648,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def accept_block_trade_order(
         self,
-        block_order_matching_key: str = None,
+        block_order_matching_key: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AcceptBlockTradeOrderResponse]:
         """
@@ -659,8 +659,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    block_order_matching_key (str):
-                    recv_window (Optional[int]):
+                    block_order_matching_key (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AcceptBlockTradeOrderResponse]
@@ -689,10 +689,10 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountBlockTradeListResponse]
@@ -708,7 +708,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def cancel_block_trade_order(
         self,
-        block_order_matching_key: str = None,
+        block_order_matching_key: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[None]:
         """
@@ -719,8 +719,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    block_order_matching_key (str):
-                    recv_window (Optional[int]):
+                    block_order_matching_key (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[None]
@@ -736,7 +736,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def extend_block_trade_order(
         self,
-        block_order_matching_key: str = None,
+        block_order_matching_key: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ExtendBlockTradeOrderResponse]:
         """
@@ -747,8 +747,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    block_order_matching_key (str):
-                    recv_window (Optional[int]):
+                    block_order_matching_key (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ExtendBlockTradeOrderResponse]
@@ -764,12 +764,12 @@ class DerivativesTradingOptionsRestAPI:
 
     def new_block_trade_order(
         self,
-        liquidity: str = None,
-        legs: List[object] = None,
-        symbol: str = None,
-        side: NewBlockTradeOrderSideEnum = None,
-        price: float = None,
-        quantity: float = None,
+        liquidity: Union[str, None],
+        legs: Union[List[object], None],
+        symbol: Union[str, None],
+        side: Union[NewBlockTradeOrderSideEnum, None],
+        price: Union[float, None],
+        quantity: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewBlockTradeOrderResponse]:
         """
@@ -780,13 +780,13 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    liquidity (str): Taker or Maker
-                    legs (List[object]): Max 1 (only single leg supported), list of legs parameters in JSON; example: eapi/v1/block/order/create?orders=[{"symbol":"BTC-210115-35000-C", "price":"100","quantity":"0.0002","side":"BUY","type":"LIMIT"}]
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    side (NewBlockTradeOrderSideEnum): BUY or SELL
-                    price (float): Order Price
-                    quantity (float): Order Quantity
-                    recv_window (Optional[int]):
+                    liquidity (Union[str, None]): Taker or Maker
+                    legs (Union[List[object], None]): Max 1 (only single leg supported), list of legs parameters in JSON; example: eapi/v1/block/order/create?orders=[{"symbol":"BTC-210115-35000-C", "price":"100","quantity":"0.0002","side":"BUY","type":"LIMIT"}]
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    side (Union[NewBlockTradeOrderSideEnum, None]): BUY or SELL
+                    price (Union[float, None]): Order Price
+                    quantity (Union[float, None]): Order Quantity
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewBlockTradeOrderResponse]
@@ -802,7 +802,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def query_block_trade_details(
         self,
-        block_order_matching_key: str = None,
+        block_order_matching_key: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryBlockTradeDetailsResponse]:
         """
@@ -813,8 +813,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    block_order_matching_key (str):
-                    recv_window (Optional[int]):
+                    block_order_matching_key (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryBlockTradeDetailsResponse]
@@ -844,11 +844,11 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    block_order_matching_key (Optional[str]): If specified, returns the specific block trade associated with the blockOrderMatchingKey
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    block_order_matching_key (Optional[str] = None): If specified, returns the specific block trade associated with the blockOrderMatchingKey
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryBlockTradeOrderResponse]
@@ -864,7 +864,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def auto_cancel_all_open_orders(
         self,
-        underlyings: str = None,
+        underlyings: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AutoCancelAllOpenOrdersResponse]:
         """
@@ -877,8 +877,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 10
 
                 Args:
-                    underlyings (str): Option Underlying Symbols, e.g BTCUSDT,ETHUSDT
-                    recv_window (Optional[int]):
+                    underlyings (Union[str, None]): Option Underlying Symbols, e.g BTCUSDT,ETHUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AutoCancelAllOpenOrdersResponse]
@@ -907,8 +907,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetAutoCancelAllOpenOrdersResponse]
@@ -935,8 +935,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetMarketMakerProtectionConfigResponse]
@@ -963,8 +963,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ResetMarketMakerProtectionConfigResponse]
@@ -980,8 +980,8 @@ class DerivativesTradingOptionsRestAPI:
 
     def set_auto_cancel_all_open_orders(
         self,
-        underlying: str = None,
-        countdown_time: int = None,
+        underlying: Union[str, None],
+        countdown_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetAutoCancelAllOpenOrdersResponse]:
         """
@@ -998,9 +998,9 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (str): Option underlying, e.g BTCUSDT
-                    countdown_time (int): Countdown time in milliseconds (ex. 1,000 for 1 second). 0 to disable the timer. Negative values (ex. -10000) are not accepted. Minimum acceptable value is 5,000
-                    recv_window (Optional[int]):
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
+                    countdown_time (Union[int, None]): Countdown time in milliseconds (ex. 1,000 for 1 second). 0 to disable the timer. Negative values (ex. -10000) are not accepted. Minimum acceptable value is 5,000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetAutoCancelAllOpenOrdersResponse]
@@ -1032,12 +1032,12 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (Optional[str]): underlying, e.g BTCUSDT
-                    window_time_in_milliseconds (Optional[int]): MMP Interval in milliseconds; Range (0,5000]
-                    frozen_time_in_milliseconds (Optional[int]): MMP frozen time in milliseconds, if set to 0 manual reset is required
-                    qty_limit (Optional[float]): quantity limit
-                    delta_limit (Optional[float]): net delta limit
-                    recv_window (Optional[int]):
+                    underlying (Optional[str] = None): underlying, e.g BTCUSDT
+                    window_time_in_milliseconds (Optional[int] = None): MMP Interval in milliseconds; Range (0,5000]
+                    frozen_time_in_milliseconds (Optional[int] = None): MMP frozen time in milliseconds, if set to 0 manual reset is required
+                    qty_limit (Optional[float] = None): quantity limit
+                    delta_limit (Optional[float] = None): net delta limit
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetMarketMakerProtectionConfigResponse]
@@ -1073,12 +1073,12 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int]): The UniqueId ID from which to return. The latest deal record is returned by default
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
+                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountTradeListResponse]
@@ -1094,7 +1094,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def cancel_all_option_orders_by_underlying(
         self,
-        underlying: str = None,
+        underlying: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllOptionOrdersByUnderlyingResponse]:
         """
@@ -1105,8 +1105,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    underlying (str): Option underlying, e.g BTCUSDT
-                    recv_window (Optional[int]):
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllOptionOrdersByUnderlyingResponse]
@@ -1122,7 +1122,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def cancel_all_option_orders_on_specific_symbol(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllOptionOrdersOnSpecificSymbolResponse]:
         """
@@ -1133,8 +1133,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllOptionOrdersOnSpecificSymbolResponse]
@@ -1150,7 +1150,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def cancel_multiple_option_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_ids: Optional[List[int]] = None,
         client_order_ids: Optional[List[str]] = None,
         recv_window: Optional[int] = None,
@@ -1165,10 +1165,10 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    order_ids (Optional[List[int]]): Order ID, e.g [4611875134427365377,4611875134427365378]
-                    client_order_ids (Optional[List[str]]): User-defined order ID, e.g ["my_id_1","my_id_2"]
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    order_ids (Optional[List[int]] = None): Order ID, e.g [4611875134427365377,4611875134427365378]
+                    client_order_ids (Optional[List[str]] = None): User-defined order ID, e.g ["my_id_1","my_id_2"]
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelMultipleOptionOrdersResponse]
@@ -1184,7 +1184,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def cancel_option_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1199,10 +1199,10 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    order_id (Optional[int]): Order ID, e.g 4611875134427365377
-                    client_order_id (Optional[str]): User-defined order ID, e.g 10000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
+                    client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelOptionOrderResponse]
@@ -1218,10 +1218,10 @@ class DerivativesTradingOptionsRestAPI:
 
     def new_order(
         self,
-        symbol: str = None,
-        side: NewOrderSideEnum = None,
-        type: NewOrderTypeEnum = None,
-        quantity: float = None,
+        symbol: Union[str, None],
+        side: Union[NewOrderSideEnum, None],
+        type: Union[NewOrderTypeEnum, None],
+        quantity: Union[float, None],
         price: Optional[float] = None,
         time_in_force: Optional[NewOrderTimeInForceEnum] = None,
         reduce_only: Optional[bool] = None,
@@ -1239,18 +1239,18 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 0
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    side (NewOrderSideEnum): BUY or SELL
-                    type (NewOrderTypeEnum): Order Type: LIMIT(only support limit)
-                    quantity (float): Order Quantity
-                    price (Optional[float]): Order Price
-                    time_in_force (Optional[NewOrderTimeInForceEnum]): Time in force method（Default GTC）
-                    reduce_only (Optional[bool]): Reduce Only（Default false）
-                    post_only (Optional[bool]): Post Only（Default false）
-                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]): "ACK", "RESULT", Default "ACK"
-                    client_order_id (Optional[str]): User-defined order ID, e.g 10000
-                    is_mmp (Optional[bool]): is market maker protection order, true/false
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    side (Union[NewOrderSideEnum, None]): BUY or SELL
+                    type (Union[NewOrderTypeEnum, None]): Order Type: LIMIT(only support limit)
+                    quantity (Union[float, None]): Order Quantity
+                    price (Optional[float] = None): Order Price
+                    time_in_force (Optional[NewOrderTimeInForceEnum] = None): Time in force method（Default GTC）
+                    reduce_only (Optional[bool] = None): Reduce Only（Default false）
+                    post_only (Optional[bool] = None): Post Only（Default false）
+                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", Default "ACK"
+                    client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
+                    is_mmp (Optional[bool] = None): is market maker protection order, true/false
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewOrderResponse]
@@ -1288,8 +1288,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[OptionPositionInformationResponse]
@@ -1303,7 +1303,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def place_multiple_orders(
         self,
-        orders: List[PlaceMultipleOrdersOrdersParameterInner] = None,
+        orders: Union[List[PlaceMultipleOrdersOrdersParameterInner], None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PlaceMultipleOrdersResponse]:
         """
@@ -1317,8 +1317,8 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    orders (List[PlaceMultipleOrdersOrdersParameterInner]): order list. Max 5 orders
-                    recv_window (Optional[int]):
+                    orders (Union[List[PlaceMultipleOrdersOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PlaceMultipleOrdersResponse]
@@ -1347,12 +1347,12 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
-                    order_id (Optional[int]): Order ID, e.g 4611875134427365377
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
+                    order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentOpenOptionOrdersResponse]
@@ -1368,7 +1368,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def query_option_order_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1383,12 +1383,12 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 3
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    order_id (Optional[int]): Order ID, e.g 4611875134427365377
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryOptionOrderHistoryResponse]
@@ -1404,7 +1404,7 @@ class DerivativesTradingOptionsRestAPI:
 
     def query_single_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1425,10 +1425,10 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str): Option trading pair, e.g BTC-200730-9000-C
-                    order_id (Optional[int]): Order ID, e.g 4611875134427365377
-                    client_order_id (Optional[str]): User-defined order ID, e.g 10000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
+                    order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
+                    client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySingleOrderResponse]
@@ -1458,11 +1458,11 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]): Option trading pair, e.g BTC-200730-9000-C
-                    start_time (Optional[int]): Start Time, e.g 1593511200000
-                    end_time (Optional[int]): End Time, e.g 1593512200000
-                    limit (Optional[int]): Number of result sets returned Default:100 Max:1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
+                    start_time (Optional[int] = None): Start Time, e.g 1593511200000
+                    end_time (Optional[int] = None): End Time, e.g 1593512200000
+                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UserExerciseRecordResponse]

@@ -4,6 +4,8 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+from binance_sdk_spot.websocket_api.models import OrderTestSideEnum
+from binance_sdk_spot.websocket_api.models import OrderTestTypeEnum
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,7 +26,11 @@ async def order_test():
     try:
         connection = await client.websocket_api.create_connection()
 
-        response = await connection.order_test()
+        response = await connection.order_test(
+            symbol="BNBUSDT",
+            side=OrderTestSideEnum["BUY"].value,
+            type=OrderTestTypeEnum["MARKET"].value,
+        )
 
         rate_limits = response.rate_limits
         logging.info(f"order_test() rate limits: {rate_limits}")

@@ -498,7 +498,7 @@ class TestAccountApi:
             "amount": 1.0,
             "transfer_side": "transfer_side_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.bnb_transfer(**params)
@@ -509,7 +509,7 @@ class TestAccountApi:
             "amount": 1.0,
             "transfer_side": "transfer_side_example",
         }
-        del params["transfer_side"]
+        params["transfer_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_side'"
@@ -623,7 +623,7 @@ class TestAccountApi:
         params = {
             "auto_repay": "True",
         }
-        del params["auto_repay"]
+        params["auto_repay"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_repay'"
@@ -747,7 +747,7 @@ class TestAccountApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.change_cm_initial_leverage(**params)
@@ -758,7 +758,7 @@ class TestAccountApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["leverage"]
+        params["leverage"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'leverage'"
@@ -875,7 +875,7 @@ class TestAccountApi:
         params = {
             "dual_side_position": "dual_side_position_example",
         }
-        del params["dual_side_position"]
+        params["dual_side_position"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'dual_side_position'"
@@ -999,7 +999,7 @@ class TestAccountApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.change_um_initial_leverage(**params)
@@ -1010,7 +1010,7 @@ class TestAccountApi:
             "symbol": "symbol_example",
             "leverage": 56,
         }
-        del params["leverage"]
+        params["leverage"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'leverage'"
@@ -1127,7 +1127,7 @@ class TestAccountApi:
         params = {
             "dual_side_position": "dual_side_position_example",
         }
-        del params["dual_side_position"]
+        params["dual_side_position"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'dual_side_position'"
@@ -1452,7 +1452,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.fund_collection_by_asset(**params)
@@ -2052,7 +2052,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -2067,7 +2067,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -2208,7 +2208,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -2223,7 +2223,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -2368,7 +2368,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -2383,7 +2383,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -3031,7 +3031,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -3168,7 +3168,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -3311,7 +3311,7 @@ class TestAccountApi:
         params = {
             "download_id": "1",
         }
-        del params["download_id"]
+        params["download_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'download_id'"
@@ -3573,7 +3573,7 @@ class TestAccountApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_user_commission_rate_for_cm(**params)
@@ -3692,7 +3692,7 @@ class TestAccountApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_user_commission_rate_for_um(**params)
@@ -3801,7 +3801,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.margin_max_borrow(**params)
@@ -4315,7 +4315,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_margin_loan_record(**params)
@@ -4426,7 +4426,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_margin_max_withdraw(**params)
@@ -4572,7 +4572,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.query_margin_repay_record(**params)
@@ -5066,7 +5066,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -5081,7 +5081,7 @@ class TestAccountApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"

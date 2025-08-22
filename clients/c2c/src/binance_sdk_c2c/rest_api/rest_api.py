@@ -101,10 +101,10 @@ class C2CRestAPI:
         Weight: 1
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetC2CTradeHistoryResponse]

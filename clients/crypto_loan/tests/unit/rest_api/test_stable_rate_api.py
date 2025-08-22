@@ -173,7 +173,7 @@ class TestStableRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -189,7 +189,7 @@ class TestStableRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -205,7 +205,7 @@ class TestStableRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["repay_amount"]
+        params["repay_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'repay_amount'"

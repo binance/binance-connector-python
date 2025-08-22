@@ -166,7 +166,7 @@ class TestPortfolioMarginEndpointsApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.classic_portfolio_margin_account_information(**params)

@@ -185,7 +185,7 @@ class TestMarketApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.agg_trades(**params)
@@ -293,7 +293,7 @@ class TestMarketApi:
     def test_avg_price_missing_required_param_symbol(self):
         """Test that avg_price() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "BNBUSDT"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.avg_price(**params)
@@ -399,7 +399,7 @@ class TestMarketApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.depth(**params)
@@ -523,7 +523,7 @@ class TestMarketApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_trades(**params)
@@ -647,7 +647,7 @@ class TestMarketApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.historical_trades(**params)
@@ -787,7 +787,7 @@ class TestMarketApi:
             "symbol": "BNBUSDT",
             "interval": KlinesIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.klines(**params)
@@ -798,7 +798,7 @@ class TestMarketApi:
             "symbol": "BNBUSDT",
             "interval": KlinesIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1485,7 +1485,7 @@ class TestMarketApi:
             "symbol": "BNBUSDT",
             "interval": UiKlinesIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.ui_klines(**params)
@@ -1496,7 +1496,7 @@ class TestMarketApi:
             "symbol": "BNBUSDT",
             "interval": UiKlinesIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"

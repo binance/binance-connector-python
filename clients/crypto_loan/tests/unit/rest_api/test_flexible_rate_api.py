@@ -173,7 +173,7 @@ class TestFlexibleRateApi:
             "loan_coin": "loan_coin_example",
             "collateral_coin": "collateral_coin_example",
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -186,7 +186,7 @@ class TestFlexibleRateApi:
             "loan_coin": "loan_coin_example",
             "collateral_coin": "collateral_coin_example",
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -329,7 +329,7 @@ class TestFlexibleRateApi:
             "adjustment_amount": 1.0,
             "direction": "direction_example",
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -344,7 +344,7 @@ class TestFlexibleRateApi:
             "adjustment_amount": 1.0,
             "direction": "direction_example",
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -359,7 +359,7 @@ class TestFlexibleRateApi:
             "adjustment_amount": 1.0,
             "direction": "direction_example",
         }
-        del params["adjustment_amount"]
+        params["adjustment_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'adjustment_amount'"
@@ -374,7 +374,7 @@ class TestFlexibleRateApi:
             "adjustment_amount": 1.0,
             "direction": "direction_example",
         }
-        del params["direction"]
+        params["direction"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'direction'"
@@ -509,7 +509,7 @@ class TestFlexibleRateApi:
             "loan_coin": "loan_coin_example",
             "collateral_coin": "collateral_coin_example",
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -522,7 +522,7 @@ class TestFlexibleRateApi:
             "loan_coin": "loan_coin_example",
             "collateral_coin": "collateral_coin_example",
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -664,7 +664,7 @@ class TestFlexibleRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"
@@ -678,7 +678,7 @@ class TestFlexibleRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["collateral_coin"]
+        params["collateral_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'collateral_coin'"
@@ -692,7 +692,7 @@ class TestFlexibleRateApi:
             "collateral_coin": "collateral_coin_example",
             "repay_amount": 1.0,
         }
-        del params["repay_amount"]
+        params["repay_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'repay_amount'"

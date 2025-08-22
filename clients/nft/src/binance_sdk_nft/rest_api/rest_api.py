@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -98,9 +98,9 @@ class NFTRestAPI:
         Weight: 3000
 
                 Args:
-                    limit (Optional[int]): Default 50, Max 50
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    limit (Optional[int] = None): Default 50, Max 50
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetNFTAssetResponse]
@@ -132,11 +132,11 @@ class NFTRestAPI:
         Weight: 3000
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 50, Max 50
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 50, Max 50
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetNFTDepositHistoryResponse]
@@ -152,7 +152,7 @@ class NFTRestAPI:
 
     def get_nft_transaction_history(
         self,
-        order_type: int = None,
+        order_type: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -170,12 +170,12 @@ class NFTRestAPI:
         Weight: 3000
 
                 Args:
-                    order_type (int): 0: purchase order, 1: sell order, 2: royalty income, 3: primary market order, 4: mint fee
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 50, Max 50
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    order_type (Union[int, None]): 0: purchase order, 1: sell order, 2: royalty income, 3: primary market order, 4: mint fee
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 50, Max 50
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetNFTTransactionHistoryResponse]
@@ -208,11 +208,11 @@ class NFTRestAPI:
         Weight: 3000
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default 50, Max 50
-                    page (Optional[int]): Default 1
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default 50, Max 50
+                    page (Optional[int] = None): Default 1
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetNFTWithdrawHistoryResponse]
