@@ -1,6 +1,8 @@
 from typing import List, Optional, Callable, TypeVar, Generic
 from pydantic import BaseModel
 
+from requests import Response
+
 T = TypeVar("T")
 T_Response = TypeVar("T_Response")
 T_Stream = TypeVar("T_Stream")
@@ -36,12 +38,14 @@ class ApiResponse(Generic[T]):
         data_function: Callable[[], T],
         status: int,
         headers: dict,
-        rate_limits: List[RateLimit] = None,
+        rate_limits: List[RateLimit] = [],
+        raw: Optional[Response] = None,
     ):
         self._data_function = data_function
         self.status = status
         self.headers = headers or {}
         self.rate_limits = rate_limits or []
+        self.raw = raw
 
     def data(self) -> T:
         """Lazily retrieves the response data.

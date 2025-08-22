@@ -351,6 +351,7 @@ def send_request(
                 status=response.status_code,
                 headers=response.headers,
                 rate_limits=parse_rate_limit_headers(response.headers),
+                raw=response,
             )
         except requests.RequestException as e:
             attempt += 1
