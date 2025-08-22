@@ -23,6 +23,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_spot.websocket_api.models.user_data_stream_subscribe_response_result import (
+    UserDataStreamSubscribeResponseResult,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -34,7 +37,7 @@ class UserDataStreamSubscribeResponse(BaseModel):
 
     id: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
-    result: Optional[Dict[str, Any]] = None
+    result: Optional[UserDataStreamSubscribeResponseResult] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "status", "result"]
 
@@ -84,6 +87,9 @@ class UserDataStreamSubscribeResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of result
+        if self.result:
+            _dict["result"] = self.result.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -104,7 +110,11 @@ class UserDataStreamSubscribeResponse(BaseModel):
             {
                 "id": obj.get("id"),
                 "status": obj.get("status"),
-                "result": obj.get("result"),
+                "result": (
+                    UserDataStreamSubscribeResponseResult.from_dict(obj["result"])
+                    if obj.get("result") is not None
+                    else None
+                ),
             }
         )
         # store additional fields in additional_properties

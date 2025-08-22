@@ -195,7 +195,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["to_email"]
+        params["to_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_email'"
@@ -211,7 +211,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.deposit_assets_into_the_managed_sub_account(**params)
@@ -225,7 +225,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.deposit_assets_into_the_managed_sub_account(**params)
@@ -363,7 +363,7 @@ class TestManagedSubAccountApi:
             "email": "sub-account-email@email.com",
             "coin": "coin_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_managed_sub_account_deposit_address(**params)
@@ -374,7 +374,7 @@ class TestManagedSubAccountApi:
             "email": "sub-account-email@email.com",
             "coin": "coin_example",
         }
-        del params["coin"]
+        params["coin"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
             self.client.get_managed_sub_account_deposit_address(**params)
@@ -526,7 +526,7 @@ class TestManagedSubAccountApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_asset_details(**params)
@@ -706,7 +706,7 @@ class TestManagedSubAccountApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_futures_asset_details(**params)
@@ -1071,7 +1071,7 @@ class TestManagedSubAccountApi:
         params = {
             "email": "sub-account-email@email.com",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_margin_asset_details(**params)
@@ -1330,7 +1330,7 @@ class TestManagedSubAccountApi:
             "email": "sub-account-email@email.com",
             "type": "type_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_snapshot(**params)
@@ -1341,7 +1341,7 @@ class TestManagedSubAccountApi:
             "email": "sub-account-email@email.com",
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.query_managed_sub_account_snapshot(**params)
@@ -1557,7 +1557,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_transfer_log_master_account_investor(
@@ -1575,7 +1575,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1595,7 +1595,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -1615,7 +1615,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["page"]
+        params["page"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
             self.client.query_managed_sub_account_transfer_log_master_account_investor(
@@ -1633,7 +1633,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["limit"]
+        params["limit"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
             self.client.query_managed_sub_account_transfer_log_master_account_investor(
@@ -1862,7 +1862,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.query_managed_sub_account_transfer_log_master_account_trading(
@@ -1880,7 +1880,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -1900,7 +1900,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -1920,7 +1920,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["page"]
+        params["page"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
             self.client.query_managed_sub_account_transfer_log_master_account_trading(
@@ -1938,7 +1938,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["limit"]
+        params["limit"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
             self.client.query_managed_sub_account_transfer_log_master_account_trading(
@@ -2158,7 +2158,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -2177,7 +2177,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -2196,7 +2196,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["page"]
+        params["page"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
             self.client.query_managed_sub_account_transfer_log_sub_account_trading(
@@ -2213,7 +2213,7 @@ class TestManagedSubAccountApi:
             "page": 56,
             "limit": 56,
         }
-        del params["limit"]
+        params["limit"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
             self.client.query_managed_sub_account_transfer_log_sub_account_trading(
@@ -2359,7 +2359,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["from_email"]
+        params["from_email"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_email'"
@@ -2375,7 +2375,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.withdrawl_assets_from_the_managed_sub_account(**params)
@@ -2389,7 +2389,7 @@ class TestManagedSubAccountApi:
             "asset": "asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.withdrawl_assets_from_the_managed_sub_account(**params)

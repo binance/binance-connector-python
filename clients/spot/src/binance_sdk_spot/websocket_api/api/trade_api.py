@@ -42,6 +42,8 @@ from ..models import OrderCancelReplaceNewOrderRespTypeEnum
 from ..models import OrderCancelReplaceSelfTradePreventionModeEnum
 from ..models import OrderCancelReplaceCancelRestrictionsEnum
 from ..models import OrderCancelReplaceOrderRateLimitExceededModeEnum
+from ..models import OrderCancelReplacePegPriceTypeEnum
+from ..models import OrderCancelReplacePegOffsetTypeEnum
 from ..models import OrderListPlaceSideEnum
 from ..models import OrderListPlaceStopLimitTimeInForceEnum
 from ..models import OrderListPlaceNewOrderRespTypeEnum
@@ -49,7 +51,11 @@ from ..models import OrderListPlaceSelfTradePreventionModeEnum
 from ..models import OrderListPlaceOcoSideEnum
 from ..models import OrderListPlaceOcoAboveTypeEnum
 from ..models import OrderListPlaceOcoBelowTypeEnum
+from ..models import OrderListPlaceOcoAbovePegPriceTypeEnum
+from ..models import OrderListPlaceOcoAbovePegOffsetTypeEnum
 from ..models import OrderListPlaceOcoBelowTimeInForceEnum
+from ..models import OrderListPlaceOcoBelowPegPriceTypeEnum
+from ..models import OrderListPlaceOcoBelowPegOffsetTypeEnum
 from ..models import OrderListPlaceOcoNewOrderRespTypeEnum
 from ..models import OrderListPlaceOcoSelfTradePreventionModeEnum
 from ..models import OrderListPlaceOtoWorkingTypeEnum
@@ -59,7 +65,11 @@ from ..models import OrderListPlaceOtoPendingSideEnum
 from ..models import OrderListPlaceOtoNewOrderRespTypeEnum
 from ..models import OrderListPlaceOtoSelfTradePreventionModeEnum
 from ..models import OrderListPlaceOtoWorkingTimeInForceEnum
+from ..models import OrderListPlaceOtoWorkingPegPriceTypeEnum
+from ..models import OrderListPlaceOtoWorkingPegOffsetTypeEnum
 from ..models import OrderListPlaceOtoPendingTimeInForceEnum
+from ..models import OrderListPlaceOtoPendingPegOffsetTypeEnum
+from ..models import OrderListPlaceOtoPendingPegPriceTypeEnum
 from ..models import OrderListPlaceOtocoWorkingTypeEnum
 from ..models import OrderListPlaceOtocoWorkingSideEnum
 from ..models import OrderListPlaceOtocoPendingSideEnum
@@ -67,21 +77,41 @@ from ..models import OrderListPlaceOtocoPendingAboveTypeEnum
 from ..models import OrderListPlaceOtocoNewOrderRespTypeEnum
 from ..models import OrderListPlaceOtocoSelfTradePreventionModeEnum
 from ..models import OrderListPlaceOtocoWorkingTimeInForceEnum
+from ..models import OrderListPlaceOtocoWorkingPegPriceTypeEnum
+from ..models import OrderListPlaceOtocoWorkingPegOffsetTypeEnum
 from ..models import OrderListPlaceOtocoPendingAboveTimeInForceEnum
+from ..models import OrderListPlaceOtocoPendingAbovePegPriceTypeEnum
+from ..models import OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum
 from ..models import OrderListPlaceOtocoPendingBelowTypeEnum
 from ..models import OrderListPlaceOtocoPendingBelowTimeInForceEnum
+from ..models import OrderListPlaceOtocoPendingBelowPegPriceTypeEnum
+from ..models import OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
 from ..models import OrderPlaceSideEnum
 from ..models import OrderPlaceTypeEnum
 from ..models import OrderPlaceTimeInForceEnum
 from ..models import OrderPlaceNewOrderRespTypeEnum
 from ..models import OrderPlaceSelfTradePreventionModeEnum
+from ..models import OrderPlacePegPriceTypeEnum
+from ..models import OrderPlacePegOffsetTypeEnum
+from ..models import OrderTestSideEnum
+from ..models import OrderTestTypeEnum
+from ..models import OrderTestTimeInForceEnum
+from ..models import OrderTestNewOrderRespTypeEnum
+from ..models import OrderTestSelfTradePreventionModeEnum
+from ..models import OrderTestPegPriceTypeEnum
+from ..models import OrderTestPegOffsetTypeEnum
 from ..models import SorOrderPlaceSideEnum
 from ..models import SorOrderPlaceTypeEnum
 from ..models import SorOrderPlaceTimeInForceEnum
 from ..models import SorOrderPlaceNewOrderRespTypeEnum
 from ..models import SorOrderPlaceSelfTradePreventionModeEnum
+from ..models import SorOrderTestSideEnum
+from ..models import SorOrderTestTypeEnum
+from ..models import SorOrderTestTimeInForceEnum
+from ..models import SorOrderTestNewOrderRespTypeEnum
+from ..models import SorOrderTestSelfTradePreventionModeEnum
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class TradeApi:
@@ -97,7 +127,7 @@ class TradeApi:
 
     async def open_orders_cancel_all(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OpenOrdersCancelAllResponse]:
@@ -111,9 +141,9 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OpenOrdersCancelAllResponse]
@@ -147,8 +177,8 @@ class TradeApi:
 
     async def order_amend_keep_priority(
         self,
-        symbol: str = None,
-        new_qty: float = None,
+        symbol: Union[str, None],
+        new_qty: Union[float, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -168,13 +198,13 @@ class TradeApi:
         Weight: 4
 
             Args:
-                symbol (str):
-                new_qty (float): `newQty` must be greater than 0 and less than the order's quantity.
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    new_qty (Union[float, None]): `newQty` must be greater than 0 and less than the order's quantity.
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderAmendKeepPriorityResponse]
@@ -224,7 +254,7 @@ class TradeApi:
 
     async def order_cancel(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -241,13 +271,13 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_id (Optional[int]): `orderId`or`origClientOrderId`mustbesent
-                orig_client_order_id (Optional[str]): `orderId`or`origClientOrderId`mustbesent
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
+                    orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderCancelResponse]
@@ -295,10 +325,10 @@ class TradeApi:
 
     async def order_cancel_replace(
         self,
-        symbol: str = None,
-        cancel_replace_mode: OrderCancelReplaceCancelReplaceModeEnum = None,
-        side: OrderCancelReplaceSideEnum = None,
-        type: OrderCancelReplaceTypeEnum = None,
+        symbol: Union[str, None],
+        cancel_replace_mode: Union[OrderCancelReplaceCancelReplaceModeEnum, None],
+        side: Union[OrderCancelReplaceSideEnum, None],
+        type: Union[OrderCancelReplaceTypeEnum, None],
         id: Optional[str] = None,
         cancel_order_id: Optional[int] = None,
         cancel_orig_client_order_id: Optional[str] = None,
@@ -321,6 +351,9 @@ class TradeApi:
         order_rate_limit_exceeded_mode: Optional[
             OrderCancelReplaceOrderRateLimitExceededModeEnum
         ] = None,
+        peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
@@ -334,30 +367,34 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                cancel_replace_mode (OrderCancelReplaceCancelReplaceModeEnum):
-                side (OrderCancelReplaceSideEnum):
-                type (OrderCancelReplaceTypeEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                cancel_order_id (Optional[int]): Cancel order by orderId
-                cancel_orig_client_order_id (Optional[str]):
-                cancel_new_client_order_id (Optional[str]): New ID for the canceled order. Automatically generated if not sent
-                time_in_force (Optional[OrderCancelReplaceTimeInForceEnum]):
-                price (Optional[float]):
-                quantity (Optional[float]):
-                quote_order_qty (Optional[float]):
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                new_order_resp_type (Optional[OrderCancelReplaceNewOrderRespTypeEnum]):
-                stop_price (Optional[float]):
-                trailing_delta (Optional[float]): See Trailing Stop order FAQ
-                iceberg_qty (Optional[float]):
-                strategy_id (Optional[int]): Arbitrary numeric value identifying the order within an order strategy.
-                strategy_type (Optional[int]): Arbitrary numeric value identifying the order strategy.
+                    symbol (Union[str, None]):
+                    cancel_replace_mode (Union[OrderCancelReplaceCancelReplaceModeEnum, None]):
+                    side (Union[OrderCancelReplaceSideEnum, None]):
+                    type (Union[OrderCancelReplaceTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    cancel_order_id (Optional[int] = None): Cancel order by orderId
+                    cancel_orig_client_order_id (Optional[str] = None):
+                    cancel_new_client_order_id (Optional[str] = None): New ID for the canceled order. Automatically generated if not sent
+                    time_in_force (Optional[OrderCancelReplaceTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    new_order_resp_type (Optional[OrderCancelReplaceNewOrderRespTypeEnum] = None):
+                    stop_price (Optional[float] = None):
+                    trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
+                    iceberg_qty (Optional[float] = None):
+                    strategy_id (Optional[int] = None): Arbitrary numeric value identifying the order within an order strategy.
+                    strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
-                self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum]):
-                cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum]):
-                order_rate_limit_exceeded_mode (Optional[OrderCancelReplaceOrderRateLimitExceededModeEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum] = None):
+                    cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum] = None):
+                    order_rate_limit_exceeded_mode (Optional[OrderCancelReplaceOrderRateLimitExceededModeEnum] = None):
+                    peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
+             See Pegged Orders
+                    peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderCancelReplaceResponse]
@@ -446,6 +483,19 @@ class TradeApi:
                 if order_rate_limit_exceeded_mode is not None
                 else {}
             ),
+            **(
+                {"peg_price_type": peg_price_type} if peg_price_type is not None else {}
+            ),
+            **(
+                {"peg_offset_value": peg_offset_value}
+                if peg_offset_value is not None
+                else {}
+            ),
+            **(
+                {"peg_offset_type": peg_offset_type}
+                if peg_offset_type is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -462,7 +512,7 @@ class TradeApi:
 
     async def order_list_cancel(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
@@ -478,12 +528,12 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                order_list_id (Optional[int]): Cancel order list by orderListId
-                list_client_order_id (Optional[str]):
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    order_list_id (Optional[int] = None): Cancel order list by orderListId
+                    list_client_order_id (Optional[str] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListCancelResponse]
@@ -526,10 +576,10 @@ class TradeApi:
 
     async def order_list_place(
         self,
-        symbol: str = None,
-        side: OrderListPlaceSideEnum = None,
-        price: float = None,
-        quantity: float = None,
+        symbol: Union[str, None],
+        side: Union[OrderListPlaceSideEnum, None],
+        price: Union[float, None],
+        quantity: Union[float, None],
         id: Optional[str] = None,
         list_client_order_id: Optional[str] = None,
         limit_client_order_id: Optional[str] = None,
@@ -567,27 +617,27 @@ class TradeApi:
         Unfilled Order Count: 1
 
             Args:
-                symbol (str):
-                side (OrderListPlaceSideEnum):
-                price (float): Price for the limit order
-                quantity (float):
-                id (Optional[str]): Unique WebSocket request ID.
-                list_client_order_id (Optional[str]):
-                limit_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the limit order. Automatically generated if not sent
-                limit_iceberg_qty (Optional[float]):
-                limit_strategy_id (Optional[int]): Arbitrary numeric value identifying the limit order within an order strategy.
-                limit_strategy_type (Optional[int]): <p>Arbitrary numeric value identifying the limit order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
-                stop_price (Optional[float]):
-                trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md)
-                stop_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the stop order. Automatically generated if not sent
-                stop_limit_price (Optional[float]):
-                stop_limit_time_in_force (Optional[OrderListPlaceStopLimitTimeInForceEnum]):
-                stop_iceberg_qty (Optional[float]):
-                stop_strategy_id (Optional[int]): Arbitrary numeric value identifying the stop order within an order strategy.
-                stop_strategy_type (Optional[int]): <p>Arbitrary numeric value identifying the stop order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
-                new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum]):
-                self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderListPlaceSideEnum, None]):
+                    price (Union[float, None]): Price for the limit order
+                    quantity (Union[float, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    limit_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the limit order. Automatically generated if not sent
+                    limit_iceberg_qty (Optional[float] = None):
+                    limit_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the limit order within an order strategy.
+                    limit_strategy_type (Optional[int] = None): <p>Arbitrary numeric value identifying the limit order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
+                    stop_price (Optional[float] = None):
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md)
+                    stop_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the stop order. Automatically generated if not sent
+                    stop_limit_price (Optional[float] = None):
+                    stop_limit_time_in_force (Optional[OrderListPlaceStopLimitTimeInForceEnum] = None):
+                    stop_iceberg_qty (Optional[float] = None):
+                    stop_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the stop order within an order strategy.
+                    stop_strategy_type (Optional[int] = None): <p>Arbitrary numeric value identifying the stop order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
+                    new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceResponse]
@@ -703,11 +753,11 @@ class TradeApi:
 
     async def order_list_place_oco(
         self,
-        symbol: str = None,
-        side: OrderListPlaceOcoSideEnum = None,
-        quantity: float = None,
-        above_type: OrderListPlaceOcoAboveTypeEnum = None,
-        below_type: OrderListPlaceOcoBelowTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[OrderListPlaceOcoSideEnum, None],
+        quantity: Union[float, None],
+        above_type: Union[OrderListPlaceOcoAboveTypeEnum, None],
+        below_type: Union[OrderListPlaceOcoBelowTypeEnum, None],
         id: Optional[str] = None,
         list_client_order_id: Optional[str] = None,
         above_client_order_id: Optional[str] = None,
@@ -718,6 +768,9 @@ class TradeApi:
         above_time_in_force: Optional[float] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
+        above_peg_price_type: Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None,
+        above_peg_offset_type: Optional[OrderListPlaceOcoAbovePegOffsetTypeEnum] = None,
+        above_peg_offset_value: Optional[int] = None,
         below_client_order_id: Optional[str] = None,
         below_iceberg_qty: Optional[int] = None,
         below_price: Optional[float] = None,
@@ -726,6 +779,9 @@ class TradeApi:
         below_time_in_force: Optional[OrderListPlaceOcoBelowTimeInForceEnum] = None,
         below_strategy_id: Optional[int] = None,
         below_strategy_type: Optional[int] = None,
+        below_peg_price_type: Optional[OrderListPlaceOcoBelowPegPriceTypeEnum] = None,
+        below_peg_offset_type: Optional[OrderListPlaceOcoBelowPegOffsetTypeEnum] = None,
+        below_peg_offset_value: Optional[int] = None,
         new_order_resp_type: Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None,
         self_trade_prevention_mode: Optional[
             OrderListPlaceOcoSelfTradePreventionModeEnum
@@ -754,32 +810,38 @@ class TradeApi:
         Unfilled Order Count: 2
 
             Args:
-                symbol (str):
-                side (OrderListPlaceOcoSideEnum):
-                quantity (float):
-                above_type (OrderListPlaceOcoAboveTypeEnum):
-                below_type (OrderListPlaceOcoBelowTypeEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                list_client_order_id (Optional[str]):
-                above_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the above order. Automatically generated if not sent
-                above_iceberg_qty (Optional[int]): Note that this can only be used if `aboveTimeInForce` is `GTC`.
-                above_price (Optional[float]): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                above_stop_price (Optional[float]): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
-                above_trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                above_time_in_force (Optional[float]): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
-                above_strategy_id (Optional[int]): Arbitrary numeric value identifying the above order within an order strategy.
-                above_strategy_type (Optional[int]): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
-                below_client_order_id (Optional[str]):
-                below_iceberg_qty (Optional[int]): Note that this can only be used if `belowTimeInForce` is `GTC`.
-                below_price (Optional[float]): Can be used if `belowType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                below_stop_price (Optional[float]): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT` or `TAKE_PROFIT_LIMIT`. <br>Either `belowStopPrice` or `belowTrailingDelta` or both, must be specified.
-                below_trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                below_time_in_force (Optional[OrderListPlaceOcoBelowTimeInForceEnum]):
-                below_strategy_id (Optional[int]): Arbitrary numeric value identifying the below order within an order strategy.
-                below_strategy_type (Optional[int]): Arbitrary numeric value identifying the below order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
-                new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum]):
-                self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderListPlaceOcoSideEnum, None]):
+                    quantity (Union[float, None]):
+                    above_type (Union[OrderListPlaceOcoAboveTypeEnum, None]):
+                    below_type (Union[OrderListPlaceOcoBelowTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the above order. Automatically generated if not sent
+                    above_iceberg_qty (Optional[int] = None): Note that this can only be used if `aboveTimeInForce` is `GTC`.
+                    above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
+                    above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
+                    above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
+                    above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
+                    above_peg_price_type (Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None):
+                    above_peg_offset_type (Optional[OrderListPlaceOcoAbovePegOffsetTypeEnum] = None):
+                    above_peg_offset_value (Optional[int] = None):
+                    below_client_order_id (Optional[str] = None):
+                    below_iceberg_qty (Optional[int] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
+                    below_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT` or `TAKE_PROFIT_LIMIT`. <br>Either `belowStopPrice` or `belowTrailingDelta` or both, must be specified.
+                    below_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    below_time_in_force (Optional[OrderListPlaceOcoBelowTimeInForceEnum] = None):
+                    below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the below order within an order strategy.
+                    below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the below order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
+                    below_peg_price_type (Optional[OrderListPlaceOcoBelowPegPriceTypeEnum] = None):
+                    below_peg_offset_type (Optional[OrderListPlaceOcoBelowPegOffsetTypeEnum] = None):
+                    below_peg_offset_value (Optional[int] = None):
+                    new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOcoResponse]
@@ -861,6 +923,21 @@ class TradeApi:
                 else {}
             ),
             **(
+                {"above_peg_price_type": above_peg_price_type}
+                if above_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"above_peg_offset_type": above_peg_offset_type}
+                if above_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"above_peg_offset_value": above_peg_offset_value}
+                if above_peg_offset_value is not None
+                else {}
+            ),
+            **(
                 {"below_client_order_id": below_client_order_id}
                 if below_client_order_id is not None
                 else {}
@@ -897,6 +974,21 @@ class TradeApi:
                 else {}
             ),
             **(
+                {"below_peg_price_type": below_peg_price_type}
+                if below_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"below_peg_offset_type": below_peg_offset_type}
+                if below_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"below_peg_offset_value": below_peg_offset_value}
+                if below_peg_offset_value is not None
+                else {}
+            ),
+            **(
                 {"new_order_resp_type": new_order_resp_type}
                 if new_order_resp_type is not None
                 else {}
@@ -922,14 +1014,14 @@ class TradeApi:
 
     async def order_list_place_oto(
         self,
-        symbol: str = None,
-        working_type: OrderListPlaceOtoWorkingTypeEnum = None,
-        working_side: OrderListPlaceOtoWorkingSideEnum = None,
-        working_price: float = None,
-        working_quantity: float = None,
-        pending_type: OrderListPlaceOtoPendingTypeEnum = None,
-        pending_side: OrderListPlaceOtoPendingSideEnum = None,
-        pending_quantity: float = None,
+        symbol: Union[str, None],
+        working_type: Union[OrderListPlaceOtoWorkingTypeEnum, None],
+        working_side: Union[OrderListPlaceOtoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_type: Union[OrderListPlaceOtoPendingTypeEnum, None],
+        pending_side: Union[OrderListPlaceOtoPendingSideEnum, None],
+        pending_quantity: Union[float, None],
         id: Optional[str] = None,
         list_client_order_id: Optional[str] = None,
         new_order_resp_type: Optional[OrderListPlaceOtoNewOrderRespTypeEnum] = None,
@@ -941,6 +1033,13 @@ class TradeApi:
         working_time_in_force: Optional[OrderListPlaceOtoWorkingTimeInForceEnum] = None,
         working_strategy_id: Optional[int] = None,
         working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[
+            OrderListPlaceOtoWorkingPegPriceTypeEnum
+        ] = None,
+        working_peg_offset_type: Optional[
+            OrderListPlaceOtoWorkingPegOffsetTypeEnum
+        ] = None,
+        working_peg_offset_value: Optional[int] = None,
         pending_client_order_id: Optional[str] = None,
         pending_price: Optional[float] = None,
         pending_stop_price: Optional[float] = None,
@@ -949,6 +1048,13 @@ class TradeApi:
         pending_time_in_force: Optional[OrderListPlaceOtoPendingTimeInForceEnum] = None,
         pending_strategy_id: Optional[int] = None,
         pending_strategy_type: Optional[int] = None,
+        pending_peg_offset_type: Optional[
+            OrderListPlaceOtoPendingPegOffsetTypeEnum
+        ] = None,
+        pending_peg_price_type: Optional[
+            OrderListPlaceOtoPendingPegPriceTypeEnum
+        ] = None,
+        pending_peg_offset_value: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
@@ -969,32 +1075,38 @@ class TradeApi:
         Unfilled Order Count: 2
 
             Args:
-                symbol (str):
-                working_type (OrderListPlaceOtoWorkingTypeEnum):
-                working_side (OrderListPlaceOtoWorkingSideEnum):
-                working_price (float):
-                working_quantity (float): Sets the quantity for the working order.
-                pending_type (OrderListPlaceOtoPendingTypeEnum):
-                pending_side (OrderListPlaceOtoPendingSideEnum):
-                pending_quantity (float): Sets the quantity for the pending order.
-                id (Optional[str]): Unique WebSocket request ID.
-                list_client_order_id (Optional[str]):
-                new_order_resp_type (Optional[OrderListPlaceOtoNewOrderRespTypeEnum]):
-                self_trade_prevention_mode (Optional[OrderListPlaceOtoSelfTradePreventionModeEnum]):
-                working_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
-                working_iceberg_qty (Optional[float]): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                working_time_in_force (Optional[OrderListPlaceOtoWorkingTimeInForceEnum]):
-                working_strategy_id (Optional[int]): Arbitrary numeric value identifying the working order within an order strategy.
-                working_strategy_type (Optional[int]): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                pending_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending order.<br> Automatically generated if not sent.
-                pending_price (Optional[float]):
-                pending_stop_price (Optional[float]):
-                pending_trailing_delta (Optional[float]):
-                pending_iceberg_qty (Optional[float]): This can only be used if `pendingTimeInForce` is `GTC`, or if `pendingType` is `LIMIT_MAKER`.
-                pending_time_in_force (Optional[OrderListPlaceOtoPendingTimeInForceEnum]):
-                pending_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending order within an order strategy.
-                pending_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListPlaceOtoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListPlaceOtoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_type (Union[OrderListPlaceOtoPendingTypeEnum, None]):
+                    pending_side (Union[OrderListPlaceOtoPendingSideEnum, None]):
+                    pending_quantity (Union[float, None]): Sets the quantity for the pending order.
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    new_order_resp_type (Optional[OrderListPlaceOtoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceOtoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListPlaceOtoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListPlaceOtoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListPlaceOtoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order.<br> Automatically generated if not sent.
+                    pending_price (Optional[float] = None):
+                    pending_stop_price (Optional[float] = None):
+                    pending_trailing_delta (Optional[float] = None):
+                    pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC`, or if `pendingType` is `LIMIT_MAKER`.
+                    pending_time_in_force (Optional[OrderListPlaceOtoPendingTimeInForceEnum] = None):
+                    pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
+                    pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
+                    pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None):
+                    pending_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOtoResponse]
@@ -1095,6 +1207,21 @@ class TradeApi:
                 else {}
             ),
             **(
+                {"working_peg_price_type": working_peg_price_type}
+                if working_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"working_peg_offset_type": working_peg_offset_type}
+                if working_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"working_peg_offset_value": working_peg_offset_value}
+                if working_peg_offset_value is not None
+                else {}
+            ),
+            **(
                 {"pending_client_order_id": pending_client_order_id}
                 if pending_client_order_id is not None
                 else {}
@@ -1130,6 +1257,21 @@ class TradeApi:
                 if pending_strategy_type is not None
                 else {}
             ),
+            **(
+                {"pending_peg_offset_type": pending_peg_offset_type}
+                if pending_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"pending_peg_price_type": pending_peg_price_type}
+                if pending_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"pending_peg_offset_value": pending_peg_offset_value}
+                if pending_peg_offset_value is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -1146,14 +1288,14 @@ class TradeApi:
 
     async def order_list_place_otoco(
         self,
-        symbol: str = None,
-        working_type: OrderListPlaceOtocoWorkingTypeEnum = None,
-        working_side: OrderListPlaceOtocoWorkingSideEnum = None,
-        working_price: float = None,
-        working_quantity: float = None,
-        pending_side: OrderListPlaceOtocoPendingSideEnum = None,
-        pending_quantity: float = None,
-        pending_above_type: OrderListPlaceOtocoPendingAboveTypeEnum = None,
+        symbol: Union[str, None],
+        working_type: Union[OrderListPlaceOtocoWorkingTypeEnum, None],
+        working_side: Union[OrderListPlaceOtocoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_side: Union[OrderListPlaceOtocoPendingSideEnum, None],
+        pending_quantity: Union[float, None],
+        pending_above_type: Union[OrderListPlaceOtocoPendingAboveTypeEnum, None],
         id: Optional[str] = None,
         list_client_order_id: Optional[str] = None,
         new_order_resp_type: Optional[OrderListPlaceOtocoNewOrderRespTypeEnum] = None,
@@ -1167,6 +1309,13 @@ class TradeApi:
         ] = None,
         working_strategy_id: Optional[int] = None,
         working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[
+            OrderListPlaceOtocoWorkingPegPriceTypeEnum
+        ] = None,
+        working_peg_offset_type: Optional[
+            OrderListPlaceOtocoWorkingPegOffsetTypeEnum
+        ] = None,
+        working_peg_offset_value: Optional[int] = None,
         pending_above_client_order_id: Optional[str] = None,
         pending_above_price: Optional[float] = None,
         pending_above_stop_price: Optional[float] = None,
@@ -1177,6 +1326,13 @@ class TradeApi:
         ] = None,
         pending_above_strategy_id: Optional[int] = None,
         pending_above_strategy_type: Optional[int] = None,
+        pending_above_peg_price_type: Optional[
+            OrderListPlaceOtocoPendingAbovePegPriceTypeEnum
+        ] = None,
+        pending_above_peg_offset_type: Optional[
+            OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum
+        ] = None,
+        pending_above_peg_offset_value: Optional[int] = None,
         pending_below_type: Optional[OrderListPlaceOtocoPendingBelowTypeEnum] = None,
         pending_below_client_order_id: Optional[str] = None,
         pending_below_price: Optional[float] = None,
@@ -1188,6 +1344,13 @@ class TradeApi:
         ] = None,
         pending_below_strategy_id: Optional[int] = None,
         pending_below_strategy_type: Optional[int] = None,
+        pending_below_peg_price_type: Optional[
+            OrderListPlaceOtocoPendingBelowPegPriceTypeEnum
+        ] = None,
+        pending_below_peg_offset_type: Optional[
+            OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
+        ] = None,
+        pending_below_peg_offset_value: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
@@ -1208,41 +1371,50 @@ class TradeApi:
         Unfilled Order Count: 3
 
             Args:
-                symbol (str):
-                working_type (OrderListPlaceOtocoWorkingTypeEnum):
-                working_side (OrderListPlaceOtocoWorkingSideEnum):
-                working_price (float):
-                working_quantity (float): Sets the quantity for the working order.
-                pending_side (OrderListPlaceOtocoPendingSideEnum):
-                pending_quantity (float): Sets the quantity for the pending order.
-                pending_above_type (OrderListPlaceOtocoPendingAboveTypeEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                list_client_order_id (Optional[str]):
-                new_order_resp_type (Optional[OrderListPlaceOtocoNewOrderRespTypeEnum]):
-                self_trade_prevention_mode (Optional[OrderListPlaceOtocoSelfTradePreventionModeEnum]):
-                working_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
-                working_iceberg_qty (Optional[float]): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                working_time_in_force (Optional[OrderListPlaceOtocoWorkingTimeInForceEnum]):
-                working_strategy_id (Optional[int]): Arbitrary numeric value identifying the working order within an order strategy.
-                working_strategy_type (Optional[int]): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                pending_above_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending above order.<br> Automatically generated if not sent.
-                pending_above_price (Optional[float]): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                pending_above_stop_price (Optional[float]): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
-                pending_above_trailing_delta (Optional[float]): See [Trailing Stop FAQ](faqs/trailing-stop-faq.md)
-                pending_above_iceberg_qty (Optional[float]): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
-                pending_above_time_in_force (Optional[OrderListPlaceOtocoPendingAboveTimeInForceEnum]):
-                pending_above_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending above order within an order strategy.
-                pending_above_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending above order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                pending_below_type (Optional[OrderListPlaceOtocoPendingBelowTypeEnum]):
-                pending_below_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending below order.<br> Automatically generated if not sent.
-                pending_below_price (Optional[float]): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                pending_below_stop_price (Optional[float]): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. <br>Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
-                pending_below_trailing_delta (Optional[float]):
-                pending_below_iceberg_qty (Optional[float]): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
-                pending_below_time_in_force (Optional[OrderListPlaceOtocoPendingBelowTimeInForceEnum]):
-                pending_below_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending below order within an order strategy.
-                pending_below_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending below order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListPlaceOtocoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListPlaceOtocoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_side (Union[OrderListPlaceOtocoPendingSideEnum, None]):
+                    pending_quantity (Union[float, None]): Sets the quantity for the pending order.
+                    pending_above_type (Union[OrderListPlaceOtocoPendingAboveTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    new_order_resp_type (Optional[OrderListPlaceOtocoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceOtocoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListPlaceOtocoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListPlaceOtocoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListPlaceOtocoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order.<br> Automatically generated if not sent.
+                    pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
+                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop FAQ](faqs/trailing-stop-faq.md)
+                    pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
+                    pending_above_time_in_force (Optional[OrderListPlaceOtocoPendingAboveTimeInForceEnum] = None):
+                    pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
+                    pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_above_peg_price_type (Optional[OrderListPlaceOtocoPendingAbovePegPriceTypeEnum] = None):
+                    pending_above_peg_offset_type (Optional[OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum] = None):
+                    pending_above_peg_offset_value (Optional[int] = None):
+                    pending_below_type (Optional[OrderListPlaceOtocoPendingBelowTypeEnum] = None):
+                    pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order.<br> Automatically generated if not sent.
+                    pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. <br>Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
+                    pending_below_trailing_delta (Optional[float] = None):
+                    pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
+                    pending_below_time_in_force (Optional[OrderListPlaceOtocoPendingBelowTimeInForceEnum] = None):
+                    pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
+                    pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None):
+                    pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
+                    pending_below_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOtocoResponse]
@@ -1343,6 +1515,21 @@ class TradeApi:
                 else {}
             ),
             **(
+                {"working_peg_price_type": working_peg_price_type}
+                if working_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"working_peg_offset_type": working_peg_offset_type}
+                if working_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"working_peg_offset_value": working_peg_offset_value}
+                if working_peg_offset_value is not None
+                else {}
+            ),
+            **(
                 {"pending_above_client_order_id": pending_above_client_order_id}
                 if pending_above_client_order_id is not None
                 else {}
@@ -1380,6 +1567,21 @@ class TradeApi:
             **(
                 {"pending_above_strategy_type": pending_above_strategy_type}
                 if pending_above_strategy_type is not None
+                else {}
+            ),
+            **(
+                {"pending_above_peg_price_type": pending_above_peg_price_type}
+                if pending_above_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"pending_above_peg_offset_type": pending_above_peg_offset_type}
+                if pending_above_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"pending_above_peg_offset_value": pending_above_peg_offset_value}
+                if pending_above_peg_offset_value is not None
                 else {}
             ),
             **(
@@ -1427,6 +1629,21 @@ class TradeApi:
                 if pending_below_strategy_type is not None
                 else {}
             ),
+            **(
+                {"pending_below_peg_price_type": pending_below_peg_price_type}
+                if pending_below_peg_price_type is not None
+                else {}
+            ),
+            **(
+                {"pending_below_peg_offset_type": pending_below_peg_offset_type}
+                if pending_below_peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"pending_below_peg_offset_value": pending_below_peg_offset_value}
+                if pending_below_peg_offset_value is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -1443,9 +1660,9 @@ class TradeApi:
 
     async def order_place(
         self,
-        symbol: str = None,
-        side: OrderPlaceSideEnum = None,
-        type: OrderPlaceTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[OrderPlaceSideEnum, None],
+        type: Union[OrderPlaceTypeEnum, None],
         id: Optional[str] = None,
         time_in_force: Optional[OrderPlaceTimeInForceEnum] = None,
         price: Optional[float] = None,
@@ -1461,6 +1678,9 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderPlaceSelfTradePreventionModeEnum
         ] = None,
+        peg_price_type: Optional[OrderPlacePegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[OrderPlacePegOffsetTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
@@ -1474,24 +1694,28 @@ class TradeApi:
         Weight: 1
 
             Args:
-                symbol (str):
-                side (OrderPlaceSideEnum):
-                type (OrderPlaceTypeEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                time_in_force (Optional[OrderPlaceTimeInForceEnum]):
-                price (Optional[float]):
-                quantity (Optional[float]):
-                quote_order_qty (Optional[float]):
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                new_order_resp_type (Optional[OrderPlaceNewOrderRespTypeEnum]):
-                stop_price (Optional[float]):
-                trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md)
-                iceberg_qty (Optional[float]):
-                strategy_id (Optional[int]): Arbitrary numeric value identifying the order within an order strategy.
-                strategy_type (Optional[int]): Arbitrary numeric value identifying the order strategy.
+                    symbol (Union[str, None]):
+                    side (Union[OrderPlaceSideEnum, None]):
+                    type (Union[OrderPlaceTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    time_in_force (Optional[OrderPlaceTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    new_order_resp_type (Optional[OrderPlaceNewOrderRespTypeEnum] = None):
+                    stop_price (Optional[float] = None):
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md)
+                    iceberg_qty (Optional[float] = None):
+                    strategy_id (Optional[int] = None): Arbitrary numeric value identifying the order within an order strategy.
+                    strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
-                self_trade_prevention_mode (Optional[OrderPlaceSelfTradePreventionModeEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    self_trade_prevention_mode (Optional[OrderPlaceSelfTradePreventionModeEnum] = None):
+                    peg_price_type (Optional[OrderPlacePegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
+             See Pegged Orders
+                    peg_offset_type (Optional[OrderPlacePegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderPlaceResponse]
@@ -1549,6 +1773,19 @@ class TradeApi:
                 if self_trade_prevention_mode is not None
                 else {}
             ),
+            **(
+                {"peg_price_type": peg_price_type} if peg_price_type is not None else {}
+            ),
+            **(
+                {"peg_offset_value": peg_offset_value}
+                if peg_offset_value is not None
+                else {}
+            ),
+            **(
+                {"peg_offset_type": peg_offset_type}
+                if peg_offset_type is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -1563,8 +1800,29 @@ class TradeApi:
 
     async def order_test(
         self,
+        symbol: Union[str, None],
+        side: Union[OrderTestSideEnum, None],
+        type: Union[OrderTestTypeEnum, None],
         id: Optional[str] = None,
         compute_commission_rates: Optional[bool] = None,
+        time_in_force: Optional[OrderTestTimeInForceEnum] = None,
+        price: Optional[float] = None,
+        quantity: Optional[float] = None,
+        quote_order_qty: Optional[float] = None,
+        new_client_order_id: Optional[str] = None,
+        new_order_resp_type: Optional[OrderTestNewOrderRespTypeEnum] = None,
+        stop_price: Optional[float] = None,
+        trailing_delta: Optional[int] = None,
+        iceberg_qty: Optional[float] = None,
+        strategy_id: Optional[int] = None,
+        strategy_type: Optional[int] = None,
+        self_trade_prevention_mode: Optional[
+            OrderTestSelfTradePreventionModeEnum
+        ] = None,
+        peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
+        recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
             WebSocket Test new order
@@ -1581,8 +1839,29 @@ class TradeApi:
         |With `computeCommissionRates`|20|
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                compute_commission_rates (Optional[bool]): Default: `false`
+                    symbol (Union[str, None]):
+                    side (Union[OrderTestSideEnum, None]):
+                    type (Union[OrderTestTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See [Commissions FAQ](faqs/commission_faq.md#test-order-diferences) to learn more.
+                    time_in_force (Optional[OrderTestTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum] = None):
+                    stop_price (Optional[float] = None):
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md)
+                    iceberg_qty (Optional[float] = None):
+                    strategy_id (Optional[int] = None): Arbitrary numeric value identifying the order within an order strategy.
+                    strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
+                        Values smaller than 1000000 are reserved and cannot be used.
+                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum] = None):
+                    peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
+             See Pegged Orders
+                    peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[OrderTestResponse]
@@ -1592,13 +1871,73 @@ class TradeApi:
 
         """
 
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
         params = {
+            "symbol": symbol,
+            "side": side,
+            "type": type,
             **({"id": id} if id is not None else {}),
             **(
                 {"compute_commission_rates": compute_commission_rates}
                 if compute_commission_rates is not None
                 else {}
             ),
+            **({"time_in_force": time_in_force} if time_in_force is not None else {}),
+            **({"price": price} if price is not None else {}),
+            **({"quantity": quantity} if quantity is not None else {}),
+            **(
+                {"quote_order_qty": quote_order_qty}
+                if quote_order_qty is not None
+                else {}
+            ),
+            **(
+                {"new_client_order_id": new_client_order_id}
+                if new_client_order_id is not None
+                else {}
+            ),
+            **(
+                {"new_order_resp_type": new_order_resp_type}
+                if new_order_resp_type is not None
+                else {}
+            ),
+            **({"stop_price": stop_price} if stop_price is not None else {}),
+            **(
+                {"trailing_delta": trailing_delta} if trailing_delta is not None else {}
+            ),
+            **({"iceberg_qty": iceberg_qty} if iceberg_qty is not None else {}),
+            **({"strategy_id": strategy_id} if strategy_id is not None else {}),
+            **({"strategy_type": strategy_type} if strategy_type is not None else {}),
+            **(
+                {"self_trade_prevention_mode": self_trade_prevention_mode}
+                if self_trade_prevention_mode is not None
+                else {}
+            ),
+            **(
+                {"peg_price_type": peg_price_type} if peg_price_type is not None else {}
+            ),
+            **(
+                {"peg_offset_value": peg_offset_value}
+                if peg_offset_value is not None
+                else {}
+            ),
+            **(
+                {"peg_offset_type": peg_offset_type}
+                if peg_offset_type is not None
+                else {}
+            ),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
         payload = {
@@ -1612,10 +1951,10 @@ class TradeApi:
 
     async def sor_order_place(
         self,
-        symbol: str = None,
-        side: SorOrderPlaceSideEnum = None,
-        type: SorOrderPlaceTypeEnum = None,
-        quantity: float = None,
+        symbol: Union[str, None],
+        side: Union[SorOrderPlaceSideEnum, None],
+        type: Union[SorOrderPlaceTypeEnum, None],
+        quantity: Union[float, None],
         id: Optional[str] = None,
         time_in_force: Optional[SorOrderPlaceTimeInForceEnum] = None,
         price: Optional[float] = None,
@@ -1644,21 +1983,21 @@ class TradeApi:
         Unfilled Order Count: 1
 
             Args:
-                symbol (str):
-                side (SorOrderPlaceSideEnum):
-                type (SorOrderPlaceTypeEnum):
-                quantity (float):
-                id (Optional[str]): Unique WebSocket request ID.
-                time_in_force (Optional[SorOrderPlaceTimeInForceEnum]):
-                price (Optional[float]):
-                new_client_order_id (Optional[str]): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                new_order_resp_type (Optional[SorOrderPlaceNewOrderRespTypeEnum]):
-                iceberg_qty (Optional[float]):
-                strategy_id (Optional[int]): Arbitrary numeric value identifying the order within an order strategy.
-                strategy_type (Optional[int]): Arbitrary numeric value identifying the order strategy.
+                    symbol (Union[str, None]):
+                    side (Union[SorOrderPlaceSideEnum, None]):
+                    type (Union[SorOrderPlaceTypeEnum, None]):
+                    quantity (Union[float, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    time_in_force (Optional[SorOrderPlaceTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    new_order_resp_type (Optional[SorOrderPlaceNewOrderRespTypeEnum] = None):
+                    iceberg_qty (Optional[float] = None):
+                    strategy_id (Optional[int] = None): Arbitrary numeric value identifying the order within an order strategy.
+                    strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
-                self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum]):
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[SorOrderPlaceResponse]
@@ -1725,8 +2064,23 @@ class TradeApi:
 
     async def sor_order_test(
         self,
+        symbol: Union[str, None],
+        side: Union[SorOrderTestSideEnum, None],
+        type: Union[SorOrderTestTypeEnum, None],
+        quantity: Union[float, None],
         id: Optional[str] = None,
         compute_commission_rates: Optional[bool] = None,
+        time_in_force: Optional[SorOrderTestTimeInForceEnum] = None,
+        price: Optional[float] = None,
+        new_client_order_id: Optional[str] = None,
+        new_order_resp_type: Optional[SorOrderTestNewOrderRespTypeEnum] = None,
+        iceberg_qty: Optional[float] = None,
+        strategy_id: Optional[int] = None,
+        strategy_type: Optional[int] = None,
+        self_trade_prevention_mode: Optional[
+            SorOrderTestSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[SorOrderTestResponse]:
         """
             WebSocket Test new order using SOR
@@ -1741,8 +2095,22 @@ class TradeApi:
         |With `computeCommissionRates`   |20            |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                compute_commission_rates (Optional[bool]): Default: `false`
+                    symbol (Union[str, None]):
+                    side (Union[SorOrderTestSideEnum, None]):
+                    type (Union[SorOrderTestTypeEnum, None]):
+                    quantity (Union[float, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See [Commissions FAQ](faqs/commission_faq.md#test-order-diferences) to learn more.
+                    time_in_force (Optional[SorOrderTestTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
+                    new_order_resp_type (Optional[SorOrderTestNewOrderRespTypeEnum] = None):
+                    iceberg_qty (Optional[float] = None):
+                    strategy_id (Optional[int] = None): Arbitrary numeric value identifying the order within an order strategy.
+                    strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
+                        Values smaller than 1000000 are reserved and cannot be used.
+                    self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[SorOrderTestResponse]
@@ -1752,13 +2120,55 @@ class TradeApi:
 
         """
 
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+        if quantity is None:
+            raise RequiredError(
+                field="quantity", error_message="Missing required parameter 'quantity'"
+            )
+
         params = {
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            "quantity": quantity,
             **({"id": id} if id is not None else {}),
             **(
                 {"compute_commission_rates": compute_commission_rates}
                 if compute_commission_rates is not None
                 else {}
             ),
+            **({"time_in_force": time_in_force} if time_in_force is not None else {}),
+            **({"price": price} if price is not None else {}),
+            **(
+                {"new_client_order_id": new_client_order_id}
+                if new_client_order_id is not None
+                else {}
+            ),
+            **(
+                {"new_order_resp_type": new_order_resp_type}
+                if new_order_resp_type is not None
+                else {}
+            ),
+            **({"iceberg_qty": iceberg_qty} if iceberg_qty is not None else {}),
+            **({"strategy_id": strategy_id} if strategy_id is not None else {}),
+            **({"strategy_type": strategy_type} if strategy_type is not None else {}),
+            **(
+                {"self_trade_prevention_mode": self_trade_prevention_mode}
+                if self_trade_prevention_mode is not None
+                else {}
+            ),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
         payload = {

@@ -40,6 +40,8 @@ from binance_sdk_spot.websocket_api.models import (
 from binance_sdk_spot.websocket_api.models import (
     OrderCancelReplaceOrderRateLimitExceededModeEnum,
 )
+from binance_sdk_spot.websocket_api.models import OrderCancelReplacePegPriceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderCancelReplacePegOffsetTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceSideEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceStopLimitTimeInForceEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceNewOrderRespTypeEnum
@@ -49,7 +51,15 @@ from binance_sdk_spot.websocket_api.models import (
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoSideEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAboveTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAbovePegPriceTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOcoAbovePegOffsetTypeEnum,
+)
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowPegPriceTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOcoBelowPegOffsetTypeEnum,
+)
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoNewOrderRespTypeEnum
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOcoSelfTradePreventionModeEnum,
@@ -66,7 +76,19 @@ from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtoWorkingTimeInForceEnum,
 )
 from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoWorkingPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoWorkingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtoPendingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoPendingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtoPendingPegPriceTypeEnum,
 )
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingSideEnum
@@ -84,7 +106,19 @@ from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoWorkingTimeInForceEnum,
 )
 from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoWorkingPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoWorkingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingAboveTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingAbovePegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum,
 )
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingBelowTypeEnum,
@@ -92,17 +126,39 @@ from binance_sdk_spot.websocket_api.models import (
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingBelowTimeInForceEnum,
 )
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingBelowPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum,
+)
 from binance_sdk_spot.websocket_api.models import OrderPlaceSideEnum
 from binance_sdk_spot.websocket_api.models import OrderPlaceTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderPlaceTimeInForceEnum
 from binance_sdk_spot.websocket_api.models import OrderPlaceNewOrderRespTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderPlaceSelfTradePreventionModeEnum
+from binance_sdk_spot.websocket_api.models import OrderPlacePegPriceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderPlacePegOffsetTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderTestSideEnum
+from binance_sdk_spot.websocket_api.models import OrderTestTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderTestTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import OrderTestNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderTestSelfTradePreventionModeEnum
+from binance_sdk_spot.websocket_api.models import OrderTestPegPriceTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderTestPegOffsetTypeEnum
 from binance_sdk_spot.websocket_api.models import SorOrderPlaceSideEnum
 from binance_sdk_spot.websocket_api.models import SorOrderPlaceTypeEnum
 from binance_sdk_spot.websocket_api.models import SorOrderPlaceTimeInForceEnum
 from binance_sdk_spot.websocket_api.models import SorOrderPlaceNewOrderRespTypeEnum
 from binance_sdk_spot.websocket_api.models import (
     SorOrderPlaceSelfTradePreventionModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import SorOrderTestSideEnum
+from binance_sdk_spot.websocket_api.models import SorOrderTestTypeEnum
+from binance_sdk_spot.websocket_api.models import SorOrderTestTimeInForceEnum
+from binance_sdk_spot.websocket_api.models import SorOrderTestNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    SorOrderTestSelfTradePreventionModeEnum,
 )
 from binance_sdk_spot.websocket_api.models import OpenOrdersCancelAllResponse
 from binance_sdk_spot.websocket_api.models import OrderAmendKeepPriorityResponse
@@ -424,7 +480,7 @@ class TestWebSocketTradeApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.open_orders_cancel_all(**params)
@@ -687,7 +743,7 @@ class TestWebSocketTradeApi:
             "new_client_order_id": "new_client_order_id_example",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_amend_keep_priority(**params)
@@ -705,7 +761,7 @@ class TestWebSocketTradeApi:
             "new_client_order_id": "new_client_order_id_example",
             "recv_window": 5000,
         }
-        del params["new_qty"]
+        params["new_qty"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'new_qty'"):
             await self.websocket_api.order_amend_keep_priority(**params)
@@ -1107,7 +1163,7 @@ class TestWebSocketTradeApi:
             "cancel_restrictions": OrderCancelCancelRestrictionsEnum["ONLY_NEW"].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_cancel(**params)
@@ -1284,6 +1340,9 @@ class TestWebSocketTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
 
@@ -1417,6 +1476,15 @@ class TestWebSocketTradeApi:
             params["order_rate_limit_exceeded_mode"]
             == OrderCancelReplaceOrderRateLimitExceededModeEnum["DO_NOTHING"].value
         )
+        assert (
+            params["peg_price_type"]
+            == OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert params["peg_offset_value"] == 1
+        assert (
+            params["peg_offset_type"]
+            == OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -1465,9 +1533,12 @@ class TestWebSocketTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_cancel_replace(**params)
@@ -1509,9 +1580,12 @@ class TestWebSocketTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["cancel_replace_mode"]
+        params["cancel_replace_mode"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'cancel_replace_mode'"
@@ -1553,9 +1627,12 @@ class TestWebSocketTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.order_cancel_replace(**params)
@@ -1595,9 +1672,12 @@ class TestWebSocketTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             await self.websocket_api.order_cancel_replace(**params)
@@ -1865,7 +1945,7 @@ class TestWebSocketTradeApi:
             "new_client_order_id": "new_client_order_id_example",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_list_cancel(**params)
@@ -2231,7 +2311,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_list_place(**params)
@@ -2267,7 +2347,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.order_list_place(**params)
@@ -2303,7 +2383,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             await self.websocket_api.order_list_place(**params)
@@ -2339,7 +2419,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -2528,6 +2608,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2538,6 +2625,13 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
@@ -2672,6 +2766,15 @@ class TestWebSocketTradeApi:
         assert params["above_time_in_force"] == 1.0
         assert params["above_strategy_id"] == 1
         assert params["above_strategy_type"] == 1
+        assert (
+            params["above_peg_price_type"]
+            == OrderListPlaceOcoAbovePegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["above_peg_offset_type"]
+            == OrderListPlaceOcoAbovePegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["above_peg_offset_value"] == 1
         assert params["below_client_order_id"] == "below_client_order_id_example"
         assert params["below_iceberg_qty"] == 1
         assert params["below_price"] == 1.0
@@ -2683,6 +2786,15 @@ class TestWebSocketTradeApi:
         )
         assert params["below_strategy_id"] == 1
         assert params["below_strategy_type"] == 1
+        assert (
+            params["below_peg_price_type"]
+            == OrderListPlaceOcoBelowPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["below_peg_offset_type"]
+            == OrderListPlaceOcoBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["below_peg_offset_value"] == 1
         assert (
             params["new_order_resp_type"]
             == OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value
@@ -2724,6 +2836,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2734,13 +2853,20 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_list_place_oco(**params)
@@ -2765,6 +2891,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2775,13 +2908,20 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.order_list_place_oco(**params)
@@ -2806,6 +2946,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2816,13 +2963,20 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
             "recv_window": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -2849,6 +3003,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2859,13 +3020,20 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
             "recv_window": 5000,
         }
-        del params["above_type"]
+        params["above_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'above_type'"
@@ -2892,6 +3060,13 @@ class TestWebSocketTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListPlaceOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -2902,13 +3077,20 @@ class TestWebSocketTradeApi:
             ].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListPlaceOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListPlaceOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
             "recv_window": 5000,
         }
-        del params["below_type"]
+        params["below_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'below_type'"
@@ -3102,6 +3284,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3112,6 +3301,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
 
@@ -3242,6 +3438,15 @@ class TestWebSocketTradeApi:
         )
         assert params["working_strategy_id"] == 1
         assert params["working_strategy_type"] == 1
+        assert (
+            params["working_peg_price_type"]
+            == OrderListPlaceOtoWorkingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["working_peg_offset_type"]
+            == OrderListPlaceOtoWorkingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["working_peg_offset_value"] == 1
         assert params["pending_client_order_id"] == "pending_client_order_id_example"
         assert params["pending_price"] == 1.0
         assert params["pending_stop_price"] == 1.0
@@ -3253,6 +3458,15 @@ class TestWebSocketTradeApi:
         )
         assert params["pending_strategy_id"] == 1
         assert params["pending_strategy_type"] == 1
+        assert (
+            params["pending_peg_offset_type"]
+            == OrderListPlaceOtoPendingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert (
+            params["pending_peg_price_type"]
+            == OrderListPlaceOtoPendingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert params["pending_peg_offset_value"] == 1
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -3292,6 +3506,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3302,9 +3523,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_list_place_oto(**params)
@@ -3335,6 +3563,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3345,9 +3580,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -3380,6 +3622,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3390,9 +3639,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -3425,6 +3681,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3435,9 +3698,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -3470,6 +3740,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3480,9 +3757,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -3515,6 +3799,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3525,9 +3816,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_type"]
+        params["pending_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_type'"
@@ -3560,6 +3858,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3570,9 +3875,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -3605,6 +3917,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -3615,9 +3934,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_offset_type": OrderListPlaceOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_price_type": OrderListPlaceOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -3847,6 +4173,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -3857,6 +4190,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -3870,6 +4210,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
 
@@ -4030,6 +4377,15 @@ class TestWebSocketTradeApi:
         assert params["working_strategy_id"] == 1
         assert params["working_strategy_type"] == 1
         assert (
+            params["working_peg_price_type"]
+            == OrderListPlaceOtocoWorkingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["working_peg_offset_type"]
+            == OrderListPlaceOtocoWorkingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["working_peg_offset_value"] == 1
+        assert (
             params["pending_above_client_order_id"]
             == "pending_above_client_order_id_example"
         )
@@ -4043,6 +4399,15 @@ class TestWebSocketTradeApi:
         )
         assert params["pending_above_strategy_id"] == 1
         assert params["pending_above_strategy_type"] == 1
+        assert (
+            params["pending_above_peg_price_type"]
+            == OrderListPlaceOtocoPendingAbovePegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["pending_above_peg_offset_type"]
+            == OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["pending_above_peg_offset_value"] == 1
         assert (
             params["pending_below_type"]
             == OrderListPlaceOtocoPendingBelowTypeEnum["STOP_LOSS"].value
@@ -4061,6 +4426,15 @@ class TestWebSocketTradeApi:
         )
         assert params["pending_below_strategy_id"] == 1
         assert params["pending_below_strategy_type"] == 1
+        assert (
+            params["pending_below_peg_price_type"]
+            == OrderListPlaceOtocoPendingBelowPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["pending_below_peg_offset_type"]
+            == OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["pending_below_peg_offset_value"] == 1
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -4102,6 +4476,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4112,6 +4493,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4125,9 +4513,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_list_place_otoco(**params)
@@ -4160,6 +4555,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4170,6 +4572,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4183,9 +4592,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -4220,6 +4636,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4230,6 +4653,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4243,9 +4673,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -4280,6 +4717,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4290,6 +4734,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4303,9 +4754,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -4340,6 +4798,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4350,6 +4815,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4363,9 +4835,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -4400,6 +4879,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4410,6 +4896,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4423,9 +4916,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -4460,6 +4960,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4470,6 +4977,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4483,9 +4997,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -4522,6 +5043,13 @@ class TestWebSocketTradeApi:
             ].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -4532,6 +5060,13 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListPlaceOtocoPendingBelowTypeEnum[
                 "STOP_LOSS"
             ].value,
@@ -4545,9 +5080,16 @@ class TestWebSocketTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
-        del params["pending_above_type"]
+        params["pending_above_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_above_type'"
@@ -4719,6 +5261,9 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
 
@@ -4838,6 +5383,14 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == OrderPlaceSelfTradePreventionModeEnum["NONE"].value
         )
+        assert (
+            params["peg_price_type"] == OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert params["peg_offset_value"] == 1
+        assert (
+            params["peg_offset_type"]
+            == OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -4871,9 +5424,12 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_place(**params)
@@ -4901,9 +5457,12 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.order_place(**params)
@@ -4931,9 +5490,12 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             await self.websocket_api.order_place(**params)
@@ -4958,6 +5520,12 @@ class TestWebSocketTradeApi:
     async def test_order_test_success(self):
         """Test order_test() successfully with required parameters only."""
 
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
+
         expected_response = {
             "id": "6ffebe91-01d9-43ac-be99-57cf062e0e30",
             "status": 200,
@@ -4965,6 +5533,10 @@ class TestWebSocketTradeApi:
                 "standardCommissionForOrder": {
                     "maker": "0.00000112",
                     "taker": "0.00000114",
+                },
+                "specialCommissionForOrder": {
+                    "maker": "0.05000000",
+                    "taker": "0.06000000",
                 },
                 "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
                 "discount": {
@@ -4995,7 +5567,7 @@ class TestWebSocketTradeApi:
                 ),
             )
         )
-        result = await self.websocket_api.order_test()
+        result = await self.websocket_api.order_test(**params)
 
         actual_call_args = self.mock_websocket_api.send_signed_message.call_args
         request_kwargs = actual_call_args.kwargs
@@ -5004,10 +5576,16 @@ class TestWebSocketTradeApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "")
 
+        assert params["symbol"] == "BNBUSDT"
+
+        assert params["side"] == OrderTestSideEnum["BUY"].value
+
+        assert params["type"] == OrderTestTypeEnum["MARKET"].value
+
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.test".replace("/", ""), "params": {}},
+            payload={"method": "/order.test".replace("/", ""), "params": params},
             response_model=OrderTestResponse,
             signer=None,
         )
@@ -5017,8 +5595,29 @@ class TestWebSocketTradeApi:
         """Test order_test() successfully with optional parameters."""
 
         params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
             "id": "e9d6b4349871b40611412680b3445fac",
             "compute_commission_rates": False,
+            "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "quantity": 1.0,
+            "quote_order_qty": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": OrderTestNewOrderRespTypeEnum["ACK"].value,
+            "stop_price": 1.0,
+            "trailing_delta": 1,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "recv_window": 5000,
         }
 
         expected_response = {
@@ -5028,6 +5627,10 @@ class TestWebSocketTradeApi:
                 "standardCommissionForOrder": {
                     "maker": "0.00000112",
                     "taker": "0.00000114",
+                },
+                "specialCommissionForOrder": {
+                    "maker": "0.05000000",
+                    "taker": "0.06000000",
                 },
                 "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
                 "discount": {
@@ -5067,8 +5670,36 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "")
+        assert params["symbol"] == "BNBUSDT"
+        assert params["side"] == OrderTestSideEnum["BUY"].value
+        assert params["type"] == OrderTestTypeEnum["MARKET"].value
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["compute_commission_rates"] is False
+        assert params["time_in_force"] == OrderTestTimeInForceEnum["GTC"].value
+        assert params["price"] == 1.0
+        assert params["quantity"] == 1.0
+        assert params["quote_order_qty"] == 1.0
+        assert params["new_client_order_id"] == "new_client_order_id_example"
+        assert (
+            params["new_order_resp_type"] == OrderTestNewOrderRespTypeEnum["ACK"].value
+        )
+        assert params["stop_price"] == 1.0
+        assert params["trailing_delta"] == 1
+        assert params["iceberg_qty"] == 1.0
+        assert params["strategy_id"] == 1
+        assert params["strategy_type"] == 1
+        assert (
+            params["self_trade_prevention_mode"]
+            == OrderTestSelfTradePreventionModeEnum["NONE"].value
+        )
+        assert (
+            params["peg_price_type"] == OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert params["peg_offset_value"] == 1
+        assert (
+            params["peg_offset_type"] == OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["recv_window"] == 5000
 
         assert result is not None
         assert result.data() == expected_response
@@ -5079,14 +5710,122 @@ class TestWebSocketTradeApi:
         )
 
     @pytest.mark.asyncio
+    async def test_order_test_missing_required_param_symbol(self):
+        """Test that order_test() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "quantity": 1.0,
+            "quote_order_qty": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": OrderTestNewOrderRespTypeEnum["ACK"].value,
+            "stop_price": 1.0,
+            "trailing_delta": 1,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "recv_window": 5000,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.order_test(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_test_missing_required_param_side(self):
+        """Test that order_test() raises RequiredError when 'side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "quantity": 1.0,
+            "quote_order_qty": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": OrderTestNewOrderRespTypeEnum["ACK"].value,
+            "stop_price": 1.0,
+            "trailing_delta": 1,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "recv_window": 5000,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            await self.websocket_api.order_test(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_test_missing_required_param_type(self):
+        """Test that order_test() raises RequiredError when 'type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "quantity": 1.0,
+            "quote_order_qty": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": OrderTestNewOrderRespTypeEnum["ACK"].value,
+            "stop_price": 1.0,
+            "trailing_delta": 1,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "recv_window": 5000,
+        }
+        params["type"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            await self.websocket_api.order_test(**params)
+
+    @pytest.mark.asyncio
     async def test_order_test_server_error(self):
         """Test that order_test() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": OrderTestSideEnum["BUY"].value,
+            "type": OrderTestTypeEnum["MARKET"].value,
+        }
 
         mock_error = Exception("ResponseError")
         self.mock_websocket_api.send_signed_message.side_effect = mock_error
 
         with pytest.raises(Exception, match="ResponseError"):
-            await self.websocket_api.order_test()
+            await self.websocket_api.order_test(**params)
 
     @pytest.mark.asyncio
     async def test_sor_order_place_success(self):
@@ -5325,7 +6064,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.sor_order_place(**params)
@@ -5352,7 +6091,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.sor_order_place(**params)
@@ -5379,7 +6118,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             await self.websocket_api.sor_order_place(**params)
@@ -5406,7 +6145,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -5433,6 +6172,13 @@ class TestWebSocketTradeApi:
     @pytest.mark.asyncio
     async def test_sor_order_test_success(self):
         """Test sor_order_test() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
 
         expected_response = {
             "id": "3a4437e2-41a3-4c19-897c-9cadc5dce8b6",
@@ -5471,7 +6217,7 @@ class TestWebSocketTradeApi:
                 ),
             )
         )
-        result = await self.websocket_api.sor_order_test()
+        result = await self.websocket_api.sor_order_test(**params)
 
         actual_call_args = self.mock_websocket_api.send_signed_message.call_args
         request_kwargs = actual_call_args.kwargs
@@ -5480,10 +6226,18 @@ class TestWebSocketTradeApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/sor.order.test".replace("/", "")
 
+        assert params["symbol"] == "BNBUSDT"
+
+        assert params["side"] == SorOrderTestSideEnum["BUY"].value
+
+        assert params["type"] == SorOrderTestTypeEnum["MARKET"].value
+
+        assert params["quantity"] == 1.0
+
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/sor.order.test".replace("/", ""), "params": {}},
+            payload={"method": "/sor.order.test".replace("/", ""), "params": params},
             response_model=SorOrderTestResponse,
             signer=None,
         )
@@ -5493,8 +6247,23 @@ class TestWebSocketTradeApi:
         """Test sor_order_test() successfully with optional parameters."""
 
         params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
             "id": "e9d6b4349871b40611412680b3445fac",
             "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
         }
 
         expected_response = {
@@ -5543,8 +6312,27 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/sor.order.test".replace("/", "")
+        assert params["symbol"] == "BNBUSDT"
+        assert params["side"] == SorOrderTestSideEnum["BUY"].value
+        assert params["type"] == SorOrderTestTypeEnum["MARKET"].value
+        assert params["quantity"] == 1.0
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["compute_commission_rates"] is False
+        assert params["time_in_force"] == SorOrderTestTimeInForceEnum["GTC"].value
+        assert params["price"] == 1.0
+        assert params["new_client_order_id"] == "new_client_order_id_example"
+        assert (
+            params["new_order_resp_type"]
+            == SorOrderTestNewOrderRespTypeEnum["ACK"].value
+        )
+        assert params["iceberg_qty"] == 1.0
+        assert params["strategy_id"] == 1
+        assert params["strategy_type"] == 1
+        assert (
+            params["self_trade_prevention_mode"]
+            == SorOrderTestSelfTradePreventionModeEnum["NONE"].value
+        )
+        assert params["recv_window"] == 5000
 
         assert result is not None
         assert result.data() == expected_response
@@ -5555,11 +6343,132 @@ class TestWebSocketTradeApi:
         )
 
     @pytest.mark.asyncio
+    async def test_sor_order_test_missing_required_param_symbol(self):
+        """Test that sor_order_test() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.sor_order_test(**params)
+
+    @pytest.mark.asyncio
+    async def test_sor_order_test_missing_required_param_side(self):
+        """Test that sor_order_test() raises RequiredError when 'side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            await self.websocket_api.sor_order_test(**params)
+
+    @pytest.mark.asyncio
+    async def test_sor_order_test_missing_required_param_type(self):
+        """Test that sor_order_test() raises RequiredError when 'type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
+        params["type"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            await self.websocket_api.sor_order_test(**params)
+
+    @pytest.mark.asyncio
+    async def test_sor_order_test_missing_required_param_quantity(self):
+        """Test that sor_order_test() raises RequiredError when 'quantity' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 1.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "iceberg_qty": 1.0,
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
+        params["quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'quantity'"
+        ):
+            await self.websocket_api.sor_order_test(**params)
+
+    @pytest.mark.asyncio
     async def test_sor_order_test_server_error(self):
         """Test that sor_order_test() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
 
         mock_error = Exception("ResponseError")
         self.mock_websocket_api.send_signed_message.side_effect = mock_error
 
         with pytest.raises(Exception, match="ResponseError"):
-            await self.websocket_api.sor_order_test()
+            await self.websocket_api.sor_order_test(**params)

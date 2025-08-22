@@ -164,7 +164,7 @@ class TestWebSocketMarketDataApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 10,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.order_book(**params)

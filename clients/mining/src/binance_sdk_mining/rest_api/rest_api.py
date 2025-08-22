@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -95,8 +95,8 @@ class MiningRestAPI:
 
     def account_list(
         self,
-        algo: str = None,
-        user_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AccountListResponse]:
         """
@@ -107,9 +107,9 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountListResponse]
@@ -167,8 +167,8 @@ class MiningRestAPI:
 
     def cancel_hashrate_resale_configuration(
         self,
-        config_id: int = None,
-        user_name: str = None,
+        config_id: Union[int, None],
+        user_name: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelHashrateResaleConfigurationResponse]:
         """
@@ -178,9 +178,9 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    config_id (int): Mining ID 168
-                    user_name (str): Mining account test
-                    recv_window (Optional[int]):
+                    config_id (Union[int, None]): Mining ID 168
+                    user_name (Union[str, None]): Mining account test
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelHashrateResaleConfigurationResponse]
@@ -196,8 +196,8 @@ class MiningRestAPI:
 
     def earnings_list(
         self,
-        algo: str = None,
-        user_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
         coin: Optional[str] = None,
         start_date: Optional[int] = None,
         end_date: Optional[int] = None,
@@ -213,14 +213,14 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    coin (Optional[str]): Coin Name
-                    start_date (Optional[int]): Millisecond timestamp
-                    end_date (Optional[int]): Millisecond timestamp
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    page_size (Optional[int]): Min 10,Max 200
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    coin (Optional[str] = None): Coin Name
+                    start_date (Optional[int] = None): Millisecond timestamp
+                    end_date (Optional[int] = None): Millisecond timestamp
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    page_size (Optional[int] = None): Min 10,Max 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[EarningsListResponse]
@@ -243,8 +243,8 @@ class MiningRestAPI:
 
     def extra_bonus_list(
         self,
-        algo: str = None,
-        user_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
         coin: Optional[str] = None,
         start_date: Optional[int] = None,
         end_date: Optional[int] = None,
@@ -260,14 +260,14 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    coin (Optional[str]): Coin Name
-                    start_date (Optional[int]): Millisecond timestamp
-                    end_date (Optional[int]): Millisecond timestamp
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    page_size (Optional[int]): Min 10,Max 200
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    coin (Optional[str] = None): Coin Name
+                    start_date (Optional[int] = None): Millisecond timestamp
+                    end_date (Optional[int] = None): Millisecond timestamp
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    page_size (Optional[int] = None): Min 10,Max 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ExtraBonusListResponse]
@@ -290,8 +290,8 @@ class MiningRestAPI:
 
     def hashrate_resale_detail(
         self,
-        config_id: int = None,
-        user_name: str = None,
+        config_id: Union[int, None],
+        user_name: Union[str, None],
         page_index: Optional[int] = None,
         page_size: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -304,11 +304,11 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    config_id (int): Mining ID 168
-                    user_name (str): Mining account test
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    page_size (Optional[int]): Min 10,Max 200
-                    recv_window (Optional[int]):
+                    config_id (Union[int, None]): Mining ID 168
+                    user_name (Union[str, None]): Mining account test
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    page_size (Optional[int] = None): Min 10,Max 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[HashrateResaleDetailResponse]
@@ -336,9 +336,9 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    page_size (Optional[int]): Min 10,Max 200
-                    recv_window (Optional[int]):
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    page_size (Optional[int] = None): Min 10,Max 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[HashrateResaleListResponse]
@@ -352,12 +352,12 @@ class MiningRestAPI:
 
     def hashrate_resale_request(
         self,
-        user_name: str = None,
-        algo: str = None,
-        end_date: int = None,
-        start_date: int = None,
-        to_pool_user: str = None,
-        hash_rate: int = None,
+        user_name: Union[str, None],
+        algo: Union[str, None],
+        end_date: Union[int, None],
+        start_date: Union[int, None],
+        to_pool_user: Union[str, None],
+        hash_rate: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[HashrateResaleRequestResponse]:
         """
@@ -368,13 +368,13 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    user_name (str): Mining account test
-                    algo (str): Algorithm(sha256) sha256
-                    end_date (int): Resale End Time (Millisecond timestamp) 1617659086000
-                    start_date (int): Resale Start Time(Millisecond timestamp) 1607659086000
-                    to_pool_user (str): Mining Account S19pro
-                    hash_rate (int): Resale hashrate h/s must be transferred (BTC is greater than 500000000000 ETH is greater than 500000) 100000000
-                    recv_window (Optional[int]):
+                    user_name (Union[str, None]): Mining account test
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    end_date (Union[int, None]): Resale End Time (Millisecond timestamp) 1617659086000
+                    start_date (Union[int, None]): Resale Start Time(Millisecond timestamp) 1607659086000
+                    to_pool_user (Union[str, None]): Mining Account S19pro
+                    hash_rate (Union[int, None]): Resale hashrate h/s must be transferred (BTC is greater than 500000000000 ETH is greater than 500000) 100000000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[HashrateResaleRequestResponse]
@@ -390,7 +390,7 @@ class MiningRestAPI:
 
     def mining_account_earning(
         self,
-        algo: str = None,
+        algo: Union[str, None],
         start_date: Optional[int] = None,
         end_date: Optional[int] = None,
         page_index: Optional[int] = None,
@@ -405,12 +405,12 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    start_date (Optional[int]): Millisecond timestamp
-                    end_date (Optional[int]): Millisecond timestamp
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    page_size (Optional[int]): Min 10,Max 200
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    start_date (Optional[int] = None): Millisecond timestamp
+                    end_date (Optional[int] = None): Millisecond timestamp
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    page_size (Optional[int] = None): Min 10,Max 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MiningAccountEarningResponse]
@@ -426,9 +426,9 @@ class MiningRestAPI:
 
     def request_for_detail_miner_list(
         self,
-        algo: str = None,
-        user_name: str = None,
-        worker_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
+        worker_name: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RequestForDetailMinerListResponse]:
         """
@@ -439,10 +439,10 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    worker_name (str): Miner’s name(required) bhdc1.16A10404B
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    worker_name (Union[str, None]): Miner’s name(required) bhdc1.16A10404B
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RequestForDetailMinerListResponse]
@@ -458,8 +458,8 @@ class MiningRestAPI:
 
     def request_for_miner_list(
         self,
-        algo: str = None,
-        user_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
         page_index: Optional[int] = None,
         sort: Optional[int] = None,
         sort_column: Optional[int] = None,
@@ -474,13 +474,13 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    page_index (Optional[int]): Page number, empty default first page, starting from 1
-                    sort (Optional[int]): sort sequence(default=0)0 positive sequence，1 negative sequence
-                    sort_column (Optional[int]): Sort by( default 1): <br></br>1: miner name, <br></br>2: real-time computing power, <br></br>3: daily average computing power, <br></br>4: real-time rejection rate, <br></br>5: last submission time
-                    worker_status (Optional[int]): miners status(default=0),0 all，1 valid，2 invalid，3 failure
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    page_index (Optional[int] = None): Page number, empty default first page, starting from 1
+                    sort (Optional[int] = None): sort sequence(default=0)0 positive sequence，1 negative sequence
+                    sort_column (Optional[int] = None): Sort by( default 1): <br></br>1: miner name, <br></br>2: real-time computing power, <br></br>3: daily average computing power, <br></br>4: real-time rejection rate, <br></br>5: last submission time
+                    worker_status (Optional[int] = None): miners status(default=0),0 all，1 valid，2 invalid，3 failure
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RequestForMinerListResponse]
@@ -496,8 +496,8 @@ class MiningRestAPI:
 
     def statistic_list(
         self,
-        algo: str = None,
-        user_name: str = None,
+        algo: Union[str, None],
+        user_name: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[StatisticListResponse]:
         """
@@ -508,9 +508,9 @@ class MiningRestAPI:
         Weight: 5
 
                 Args:
-                    algo (str): Algorithm(sha256) sha256
-                    user_name (str): Mining account test
-                    recv_window (Optional[int]):
+                    algo (Union[str, None]): Algorithm(sha256) sha256
+                    user_name (Union[str, None]): Mining account test
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[StatisticListResponse]

@@ -1,3 +1,6 @@
+# Compression
+
+```python
 import asyncio
 import logging
 
@@ -28,3 +31,4 @@ async def allBookTickersStream():
 
 if __name__ == "__main__":
     asyncio.run(allBookTickersStream())
+```

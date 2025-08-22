@@ -10,13 +10,12 @@ Do not edit the class manually.
 
 import pytest
 
-from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
-from binance_common.websocket import WebSocketStreamBase
+from binance_common.websocket import WebSocketStreamBase, RequestStreamHandle
 from binance_sdk_derivatives_trading_options.websocket_streams.streams import (
     WebsocketMarketStreamsApi,
 )
@@ -68,7 +67,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.index_price_streams(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -119,7 +118,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "btcusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.index_price_streams(**params)
@@ -184,7 +183,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.kline_candlestick_streams(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -279,7 +278,7 @@ class TestWebSocketStreams:
             "symbol": "btcusdt",
             "interval": "1m",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.kline_candlestick_streams(**params)
@@ -291,7 +290,7 @@ class TestWebSocketStreams:
             "symbol": "btcusdt",
             "interval": "1m",
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -349,7 +348,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.mark_price(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -416,7 +415,7 @@ class TestWebSocketStreams:
         params = {
             "underlying_asset": "ETH",
         }
-        del params["underlying_asset"]
+        params["underlying_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying_asset'"
@@ -467,7 +466,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.new_symbol_info()
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -562,7 +561,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.open_interest(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -625,7 +624,7 @@ class TestWebSocketStreams:
             "underlying_asset": "ETH",
             "expiration_date": "220930",
         }
-        del params["underlying_asset"]
+        params["underlying_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying_asset'"
@@ -639,7 +638,7 @@ class TestWebSocketStreams:
             "underlying_asset": "ETH",
             "expiration_date": "220930",
         }
-        del params["expiration_date"]
+        params["expiration_date"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'expiration_date'"
@@ -694,7 +693,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.partial_book_depth_streams(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -764,7 +763,7 @@ class TestWebSocketStreams:
             "symbol": "btcusdt",
             "levels": 10,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.partial_book_depth_streams(**params)
@@ -776,7 +775,7 @@ class TestWebSocketStreams:
             "symbol": "btcusdt",
             "levels": 10,
         }
-        del params["levels"]
+        params["levels"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'levels'"):
             await self.ws_streams.partial_book_depth_streams(**params)
@@ -851,7 +850,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.ticker24_hour(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -956,7 +955,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "btcusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.ticker24_hour(**params)
@@ -1071,7 +1070,7 @@ class TestWebSocketStreams:
                 **params
             )
         )
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1266,7 +1265,7 @@ class TestWebSocketStreams:
             "underlying_asset": "ETH",
             "expiration_date": "220930",
         }
-        del params["underlying_asset"]
+        params["underlying_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying_asset'"
@@ -1284,7 +1283,7 @@ class TestWebSocketStreams:
             "underlying_asset": "ETH",
             "expiration_date": "220930",
         }
-        del params["expiration_date"]
+        params["expiration_date"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'expiration_date'"
@@ -1349,7 +1348,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.trade_streams(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1414,7 +1413,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "btcusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.trade_streams(**params)

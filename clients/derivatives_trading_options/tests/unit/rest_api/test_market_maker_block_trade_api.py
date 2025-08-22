@@ -200,7 +200,7 @@ class TestMarketMakerBlockTradeApi:
         params = {
             "block_order_matching_key": "block_order_matching_key_example",
         }
-        del params["block_order_matching_key"]
+        params["block_order_matching_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'block_order_matching_key'"
@@ -440,7 +440,7 @@ class TestMarketMakerBlockTradeApi:
         params = {
             "block_order_matching_key": "block_order_matching_key_example",
         }
-        del params["block_order_matching_key"]
+        params["block_order_matching_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'block_order_matching_key'"
@@ -586,7 +586,7 @@ class TestMarketMakerBlockTradeApi:
         params = {
             "block_order_matching_key": "block_order_matching_key_example",
         }
-        del params["block_order_matching_key"]
+        params["block_order_matching_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'block_order_matching_key'"
@@ -778,7 +778,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["liquidity"]
+        params["liquidity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'liquidity'"
@@ -805,7 +805,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["legs"]
+        params["legs"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'legs'"):
             self.client.new_block_trade_order(**params)
@@ -830,7 +830,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.new_block_trade_order(**params)
@@ -855,7 +855,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.new_block_trade_order(**params)
@@ -880,7 +880,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             self.client.new_block_trade_order(**params)
@@ -905,7 +905,7 @@ class TestMarketMakerBlockTradeApi:
             "price": 1.0,
             "quantity": 1.0,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -1066,7 +1066,7 @@ class TestMarketMakerBlockTradeApi:
         params = {
             "block_order_matching_key": "block_order_matching_key_example",
         }
-        del params["block_order_matching_key"]
+        params["block_order_matching_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'block_order_matching_key'"

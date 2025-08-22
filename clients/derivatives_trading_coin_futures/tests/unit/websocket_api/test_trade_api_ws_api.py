@@ -242,7 +242,7 @@ class TestWebSocketTradeApi:
             "orig_client_order_id": "1",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.cancel_order(**params)
@@ -465,7 +465,7 @@ class TestWebSocketTradeApi:
             "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.modify_order(**params)
@@ -485,7 +485,7 @@ class TestWebSocketTradeApi:
             "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.modify_order(**params)
@@ -505,7 +505,7 @@ class TestWebSocketTradeApi:
             "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
             "recv_window": 5000,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -527,7 +527,7 @@ class TestWebSocketTradeApi:
             "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
             "recv_window": 5000,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             await self.websocket_api.modify_order(**params)
@@ -792,7 +792,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.new_order(**params)
@@ -825,7 +825,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             await self.websocket_api.new_order(**params)
@@ -858,7 +858,7 @@ class TestWebSocketTradeApi:
             ].value,
             "recv_window": 5000,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             await self.websocket_api.new_order(**params)
@@ -1208,7 +1208,7 @@ class TestWebSocketTradeApi:
             "orig_client_order_id": "1",
             "recv_window": 5000,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.websocket_api.query_order(**params)

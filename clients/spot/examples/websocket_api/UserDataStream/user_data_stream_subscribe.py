@@ -24,13 +24,19 @@ async def user_data_stream_subscribe():
     try:
         connection = await client.websocket_api.create_connection()
 
-        response = await connection.user_data_stream_subscribe()
+        res = await connection.user_data_stream_subscribe()
+        response = res.response
 
         rate_limits = response.rate_limits
         logging.info(f"user_data_stream_subscribe() rate limits: {rate_limits}")
 
         data = response.data()
         logging.info(f"user_data_stream_subscribe() response: {data}")
+
+        res.stream.on("message", lambda data: print(f"{data}"))
+        await asyncio.sleep(10)
+        await res.stream.unsubscribe()
+
     except Exception as e:
         logging.error(f"user_data_stream_subscribe() error: {e}")
     finally:

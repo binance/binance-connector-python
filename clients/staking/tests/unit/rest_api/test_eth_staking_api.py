@@ -1088,7 +1088,7 @@ class TestEthStakingApi:
         params = {
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.redeem_eth(**params)
@@ -1207,7 +1207,7 @@ class TestEthStakingApi:
         params = {
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.subscribe_eth_staking(**params)
@@ -1324,7 +1324,7 @@ class TestEthStakingApi:
         params = {
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.wrap_beth(**params)

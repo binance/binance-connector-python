@@ -159,7 +159,7 @@ class TestMarketMakerEndpointsApi:
         params = {
             "underlyings": "underlyings_example",
         }
-        del params["underlyings"]
+        params["underlyings"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlyings'"
@@ -590,7 +590,7 @@ class TestMarketMakerEndpointsApi:
             "underlying": "underlying_example",
             "countdown_time": 56,
         }
-        del params["underlying"]
+        params["underlying"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying'"
@@ -605,7 +605,7 @@ class TestMarketMakerEndpointsApi:
             "underlying": "underlying_example",
             "countdown_time": 56,
         }
-        del params["countdown_time"]
+        params["countdown_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'countdown_time'"

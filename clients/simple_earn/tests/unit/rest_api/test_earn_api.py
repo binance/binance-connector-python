@@ -175,7 +175,7 @@ class TestEarnApi:
             "product_id": "1",
             "amount": 1.0,
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"
@@ -188,7 +188,7 @@ class TestEarnApi:
             "product_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.get_flexible_subscription_preview(**params)
@@ -344,7 +344,7 @@ class TestEarnApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -357,7 +357,7 @@ class TestEarnApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.get_locked_subscription_preview(**params)
@@ -475,7 +475,7 @@ class TestEarnApi:
         params = {
             "product_id": "1",
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"
@@ -588,7 +588,7 @@ class TestEarnApi:
         params = {
             "position_id": "1",
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -704,7 +704,7 @@ class TestEarnApi:
             "product_id": "1",
             "auto_subscribe": True,
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"
@@ -717,7 +717,7 @@ class TestEarnApi:
             "product_id": "1",
             "auto_subscribe": True,
         }
-        del params["auto_subscribe"]
+        params["auto_subscribe"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_subscribe'"
@@ -834,7 +834,7 @@ class TestEarnApi:
             "position_id": "1",
             "auto_subscribe": True,
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -847,7 +847,7 @@ class TestEarnApi:
             "position_id": "1",
             "auto_subscribe": True,
         }
-        del params["auto_subscribe"]
+        params["auto_subscribe"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_subscribe'"
@@ -968,7 +968,7 @@ class TestEarnApi:
             "position_id": "1",
             "redeem_to": "redeem_to_example",
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -981,7 +981,7 @@ class TestEarnApi:
             "position_id": "1",
             "redeem_to": "redeem_to_example",
         }
-        del params["redeem_to"]
+        params["redeem_to"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'redeem_to'"
@@ -1104,7 +1104,7 @@ class TestEarnApi:
             "product_id": "1",
             "amount": 1.0,
         }
-        del params["product_id"]
+        params["product_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'product_id'"
@@ -1117,7 +1117,7 @@ class TestEarnApi:
             "product_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.subscribe_flexible_product(**params)
@@ -1247,7 +1247,7 @@ class TestEarnApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["project_id"]
+        params["project_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'project_id'"
@@ -1260,7 +1260,7 @@ class TestEarnApi:
             "project_id": "1",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.subscribe_locked_product(**params)

@@ -32,7 +32,7 @@ class PartialBookDepthResponse(BaseModel):
     PartialBookDepthResponse
     """  # noqa: E501
 
-    last_update_id: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
+    lastUpdateId: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
     bids: Optional[List[List[StrictStr]]] = None
     asks: Optional[List[List[StrictStr]]] = None
     additional_properties: Dict[str, Any] = {}

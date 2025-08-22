@@ -23,10 +23,10 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.order_test_response_result import (
-    OrderTestResponseResult,
-)
 from binance_sdk_spot.websocket_api.models.rate_limits_inner import RateLimitsInner
+from binance_sdk_spot.websocket_api.models.sor_order_test_response_result import (
+    SorOrderTestResponseResult,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -38,7 +38,7 @@ class SorOrderTestResponse(BaseModel):
 
     id: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
-    result: Optional[OrderTestResponseResult] = None
+    result: Optional[SorOrderTestResponseResult] = None
     rate_limits: Optional[List[RateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
@@ -123,7 +123,7 @@ class SorOrderTestResponse(BaseModel):
                 "id": obj.get("id"),
                 "status": obj.get("status"),
                 "result": (
-                    OrderTestResponseResult.from_dict(obj["result"])
+                    SorOrderTestResponseResult.from_dict(obj["result"])
                     if obj.get("result") is not None
                     else None
                 ),

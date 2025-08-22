@@ -46,6 +46,8 @@ from binance_sdk_spot.rest_api.models import NewOrderTypeEnum
 from binance_sdk_spot.rest_api.models import NewOrderTimeInForceEnum
 from binance_sdk_spot.rest_api.models import NewOrderNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import NewOrderSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import NewOrderPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import NewOrderPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceSideEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceCancelReplaceModeEnum
@@ -58,10 +60,16 @@ from binance_sdk_spot.rest_api.models import OrderCancelReplaceCancelRestriction
 from binance_sdk_spot.rest_api.models import (
     OrderCancelReplaceOrderRateLimitExceededModeEnum,
 )
+from binance_sdk_spot.rest_api.models import OrderCancelReplacePegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderCancelReplacePegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoAboveTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingTypeEnum
@@ -71,7 +79,11 @@ from binance_sdk_spot.rest_api.models import OrderListOtoPendingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOtoWorkingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOtoWorkingPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOtoPendingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOtoPendingPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingSideEnum
@@ -79,9 +91,15 @@ from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAboveTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAboveTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAbovePegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAbovePegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderOcoSideEnum
 from binance_sdk_spot.rest_api.models import OrderOcoStopLimitTimeInForceEnum
 from binance_sdk_spot.rest_api.models import OrderOcoNewOrderRespTypeEnum
@@ -91,11 +109,18 @@ from binance_sdk_spot.rest_api.models import OrderTestTypeEnum
 from binance_sdk_spot.rest_api.models import OrderTestTimeInForceEnum
 from binance_sdk_spot.rest_api.models import OrderTestNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderTestSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import OrderTestPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderTestPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderSideEnum
 from binance_sdk_spot.rest_api.models import SorOrderTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderTimeInForceEnum
 from binance_sdk_spot.rest_api.models import SorOrderNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestSideEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestTypeEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestTimeInForceEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestNewOrderRespTypeEnum
+from binance_sdk_spot.rest_api.models import SorOrderTestSelfTradePreventionModeEnum
 
 
 class TestTradeApi:
@@ -411,7 +436,7 @@ class TestTradeApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.delete_open_orders(**params)
@@ -561,7 +586,7 @@ class TestTradeApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.delete_order(**params)
@@ -794,7 +819,7 @@ class TestTradeApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.delete_order_list(**params)
@@ -974,6 +999,9 @@ class TestTradeApi:
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": NewOrderPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": NewOrderPegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
 
@@ -1106,7 +1134,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": NewOrderTypeEnum["MARKET"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.new_order(**params)
@@ -1118,7 +1146,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": NewOrderTypeEnum["MARKET"].value,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.new_order(**params)
@@ -1130,7 +1158,7 @@ class TestTradeApi:
             "side": NewOrderSideEnum["BUY"].value,
             "type": NewOrderTypeEnum["MARKET"].value,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.new_order(**params)
@@ -1355,7 +1383,7 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "new_qty": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_amend_keep_priority(**params)
@@ -1366,7 +1394,7 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "new_qty": 1.0,
         }
-        del params["new_qty"]
+        params["new_qty"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'new_qty'"):
             self.client.order_amend_keep_priority(**params)
@@ -1554,6 +1582,9 @@ class TestTradeApi:
             "order_rate_limit_exceeded_mode": OrderCancelReplaceOrderRateLimitExceededModeEnum[
                 "DO_NOTHING"
             ].value,
+            "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
 
@@ -1675,7 +1706,7 @@ class TestTradeApi:
                 "STOP_ON_FAILURE"
             ].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_cancel_replace(**params)
@@ -1690,7 +1721,7 @@ class TestTradeApi:
                 "STOP_ON_FAILURE"
             ].value,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.order_cancel_replace(**params)
@@ -1705,7 +1736,7 @@ class TestTradeApi:
                 "STOP_ON_FAILURE"
             ].value,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.order_cancel_replace(**params)
@@ -1720,7 +1751,7 @@ class TestTradeApi:
                 "STOP_ON_FAILURE"
             ].value,
         }
-        del params["cancel_replace_mode"]
+        params["cancel_replace_mode"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'cancel_replace_mode'"
@@ -1882,6 +1913,13 @@ class TestTradeApi:
             "above_time_in_force": 1.0,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
+            "above_peg_price_type": OrderListOcoAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "above_peg_offset_type": OrderListOcoAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "above_peg_offset_value": 1,
             "below_client_order_id": "below_client_order_id_example",
             "below_iceberg_qty": 1,
             "below_price": 1.0,
@@ -1890,6 +1928,13 @@ class TestTradeApi:
             "below_time_in_force": OrderListOcoBelowTimeInForceEnum["belowType"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
+            "below_peg_price_type": OrderListOcoBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "below_peg_offset_type": OrderListOcoBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "below_peg_offset_value": 1,
             "new_order_resp_type": OrderListOcoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListOcoSelfTradePreventionModeEnum[
                 "NONE"
@@ -1999,7 +2044,7 @@ class TestTradeApi:
             "above_type": OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_list_oco(**params)
@@ -2013,7 +2058,7 @@ class TestTradeApi:
             "above_type": OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.order_list_oco(**params)
@@ -2027,7 +2072,7 @@ class TestTradeApi:
             "above_type": OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -2043,7 +2088,7 @@ class TestTradeApi:
             "above_type": OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         }
-        del params["above_type"]
+        params["above_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'above_type'"
@@ -2059,7 +2104,7 @@ class TestTradeApi:
             "above_type": OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         }
-        del params["below_type"]
+        params["below_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'below_type'"
@@ -2225,6 +2270,13 @@ class TestTradeApi:
             "working_time_in_force": OrderListOtoWorkingTimeInForceEnum["GTC"].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListOtoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListOtoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_client_order_id": "pending_client_order_id_example",
             "pending_price": 1.0,
             "pending_stop_price": 1.0,
@@ -2233,6 +2285,13 @@ class TestTradeApi:
             "pending_time_in_force": OrderListOtoPendingTimeInForceEnum["GTC"].value,
             "pending_strategy_id": 1,
             "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListOtoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListOtoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
             "recv_window": 5000,
         }
 
@@ -2339,7 +2398,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_list_oto(**params)
@@ -2356,7 +2415,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -2375,7 +2434,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -2394,7 +2453,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -2413,7 +2472,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -2432,7 +2491,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["pending_type"]
+        params["pending_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_type'"
@@ -2451,7 +2510,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -2470,7 +2529,7 @@ class TestTradeApi:
             "pending_side": OrderListOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1.0,
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -2670,6 +2729,13 @@ class TestTradeApi:
             "working_time_in_force": OrderListOtocoWorkingTimeInForceEnum["GTC"].value,
             "working_strategy_id": 1,
             "working_strategy_type": 1,
+            "working_peg_price_type": OrderListOtocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListOtocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
             "pending_above_client_order_id": "pending_above_client_order_id_example",
             "pending_above_price": 1.0,
             "pending_above_stop_price": 1.0,
@@ -2680,6 +2746,13 @@ class TestTradeApi:
             ].value,
             "pending_above_strategy_id": 1,
             "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListOtocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListOtocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
             "pending_below_type": OrderListOtocoPendingBelowTypeEnum["STOP_LOSS"].value,
             "pending_below_client_order_id": "pending_below_client_order_id_example",
             "pending_below_price": 1.0,
@@ -2691,6 +2764,13 @@ class TestTradeApi:
             ].value,
             "pending_below_strategy_id": 1,
             "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListOtocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListOtocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
             "recv_window": 5000,
         }
 
@@ -2823,7 +2903,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_list_otoco(**params)
@@ -2842,7 +2922,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -2863,7 +2943,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -2884,7 +2964,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -2905,7 +2985,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -2926,7 +3006,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -2947,7 +3027,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -2968,7 +3048,7 @@ class TestTradeApi:
                 "STOP_LOSS_LIMIT"
             ].value,
         }
-        del params["pending_above_type"]
+        params["pending_above_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_above_type'"
@@ -3241,7 +3321,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_oco(**params)
@@ -3255,7 +3335,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.order_oco(**params)
@@ -3269,7 +3349,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -3285,7 +3365,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             self.client.order_oco(**params)
@@ -3299,7 +3379,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["stop_price"]
+        params["stop_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'stop_price'"
@@ -3338,6 +3418,7 @@ class TestTradeApi:
                 "maker": "0.00000112",
                 "taker": "0.00000114",
             },
+            "specialCommissionForOrder": {"maker": "0.05000000", "taker": "0.06000000"},
             "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
@@ -3409,6 +3490,9 @@ class TestTradeApi:
             "self_trade_prevention_mode": OrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
+            "peg_offset_value": 1,
+            "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
             "recv_window": 5000,
         }
 
@@ -3417,6 +3501,7 @@ class TestTradeApi:
                 "maker": "0.00000112",
                 "taker": "0.00000114",
             },
+            "specialCommissionForOrder": {"maker": "0.05000000", "taker": "0.06000000"},
             "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
@@ -3464,7 +3549,7 @@ class TestTradeApi:
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_test(**params)
@@ -3476,7 +3561,7 @@ class TestTradeApi:
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.order_test(**params)
@@ -3488,7 +3573,7 @@ class TestTradeApi:
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.order_test(**params)
@@ -3684,7 +3769,7 @@ class TestTradeApi:
             "type": SorOrderTypeEnum["MARKET"].value,
             "quantity": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.sor_order(**params)
@@ -3697,7 +3782,7 @@ class TestTradeApi:
             "type": SorOrderTypeEnum["MARKET"].value,
             "quantity": 1.0,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.sor_order(**params)
@@ -3710,7 +3795,7 @@ class TestTradeApi:
             "type": SorOrderTypeEnum["MARKET"].value,
             "quantity": 1.0,
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.sor_order(**params)
@@ -3723,7 +3808,7 @@ class TestTradeApi:
             "type": SorOrderTypeEnum["MARKET"].value,
             "quantity": 1.0,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -3750,6 +3835,13 @@ class TestTradeApi:
     def test_sor_order_test_success(self, mock_get_signature):
         """Test sor_order_test() successfully with required parameters only."""
 
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
+
         expected_response = {
             "standardCommissionForOrder": {
                 "maker": "0.00000112",
@@ -3766,10 +3858,13 @@ class TestTradeApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.sor_order_test()
+        response = self.client.sor_order_test(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -3778,6 +3873,10 @@ class TestTradeApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/api/v3/sor/order/test" in request_kwargs["url"]
         assert request_kwargs["method"] == "POST"
+        assert normalized["symbol"] == "BNBUSDT"
+        assert normalized["side"] == SorOrderTestSideEnum["BUY"].value
+        assert normalized["type"] == SorOrderTestTypeEnum["MARKET"].value
+        assert normalized["quantity"] == 1.0
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -3801,7 +3900,24 @@ class TestTradeApi:
     def test_sor_order_test_success_with_optional_params(self, mock_get_signature):
         """Test sor_order_test() successfully with optional parameters."""
 
-        params = {"compute_commission_rates": False}
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+            "compute_commission_rates": False,
+            "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
+            "price": 400.0,
+            "new_client_order_id": "new_client_order_id_example",
+            "strategy_id": 1,
+            "strategy_type": 1,
+            "iceberg_qty": 1.0,
+            "new_order_resp_type": SorOrderTestNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "recv_window": 5000,
+        }
 
         expected_response = {
             "standardCommissionForOrder": {
@@ -3848,11 +3964,72 @@ class TestTradeApi:
 
         assert response.data() == expected
 
+    def test_sor_order_test_missing_required_param_symbol(self):
+        """Test that sor_order_test() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.sor_order_test(**params)
+
+    def test_sor_order_test_missing_required_param_side(self):
+        """Test that sor_order_test() raises RequiredError when 'side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            self.client.sor_order_test(**params)
+
+    def test_sor_order_test_missing_required_param_type(self):
+        """Test that sor_order_test() raises RequiredError when 'type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
+        params["type"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            self.client.sor_order_test(**params)
+
+    def test_sor_order_test_missing_required_param_quantity(self):
+        """Test that sor_order_test() raises RequiredError when 'quantity' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
+        params["quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'quantity'"
+        ):
+            self.client.sor_order_test(**params)
+
     def test_sor_order_test_server_error(self):
         """Test that sor_order_test() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "side": SorOrderTestSideEnum["BUY"].value,
+            "type": SorOrderTestTypeEnum["MARKET"].value,
+            "quantity": 1.0,
+        }
 
         mock_error = Exception("ResponseError")
         self.client.sor_order_test = MagicMock(side_effect=mock_error)
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.sor_order_test()
+            self.client.sor_order_test(**params)

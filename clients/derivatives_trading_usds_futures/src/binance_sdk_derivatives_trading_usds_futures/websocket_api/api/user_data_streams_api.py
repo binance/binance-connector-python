@@ -45,7 +45,7 @@ class UserDataStreamsApi:
         Weight: 1
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[CloseUserDataStreamResponse]
@@ -82,7 +82,7 @@ class UserDataStreamsApi:
         Weight: 1
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[KeepaliveUserDataStreamResponse]
@@ -119,7 +119,7 @@ class UserDataStreamsApi:
         Weight: 1
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[StartUserDataStreamResponse]

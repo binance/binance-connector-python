@@ -58,11 +58,11 @@ class GeneralApi:
         Weight: 20
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
-                    permissions (Optional[List[str]]): List of permissions to query
-                    show_permission_sets (Optional[bool]): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`
-                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum]):
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    permissions (Optional[List[str]] = None): List of permissions to query
+                    show_permission_sets (Optional[bool] = None): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`
+                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[ExchangeInfoResponse]

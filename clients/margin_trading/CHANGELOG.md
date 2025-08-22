@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0 - 2025-08-22
+
+### Added (1)
+
+#### REST API
+
+- `get_limit_price_pairs()` (`GET /sapi/v1/margin/limit-price-pairs`)
+
+### Changed (1)
+
+- Standardized type hints for required parameters by replacing `default = None` annotations with `Union[..., None]`
+
 ## 1.2.0 - 2025-08-07
 
 ### Changed (1)

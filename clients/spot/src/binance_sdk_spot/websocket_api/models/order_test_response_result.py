@@ -26,6 +26,9 @@ from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_spot.websocket_api.models.order_test_response_result_discount import (
     OrderTestResponseResultDiscount,
 )
+from binance_sdk_spot.websocket_api.models.order_test_response_result_special_commission_for_order import (
+    OrderTestResponseResultSpecialCommissionForOrder,
+)
 from binance_sdk_spot.websocket_api.models.order_test_response_result_standard_commission_for_order import (
     OrderTestResponseResultStandardCommissionForOrder,
 )
@@ -41,6 +44,9 @@ class OrderTestResponseResult(BaseModel):
     standard_commission_for_order: Optional[
         OrderTestResponseResultStandardCommissionForOrder
     ] = Field(default=None, alias="standardCommissionForOrder")
+    special_commission_for_order: Optional[
+        OrderTestResponseResultSpecialCommissionForOrder
+    ] = Field(default=None, alias="specialCommissionForOrder")
     tax_commission_for_order: Optional[
         OrderTestResponseResultStandardCommissionForOrder
     ] = Field(default=None, alias="taxCommissionForOrder")
@@ -48,6 +54,7 @@ class OrderTestResponseResult(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "standardCommissionForOrder",
+        "specialCommissionForOrder",
         "taxCommissionForOrder",
         "discount",
     ]
@@ -103,6 +110,11 @@ class OrderTestResponseResult(BaseModel):
             _dict["standardCommissionForOrder"] = (
                 self.standard_commission_for_order.to_dict()
             )
+        # override the default output from pydantic by calling `to_dict()` of special_commission_for_order
+        if self.special_commission_for_order:
+            _dict["specialCommissionForOrder"] = (
+                self.special_commission_for_order.to_dict()
+            )
         # override the default output from pydantic by calling `to_dict()` of tax_commission_for_order
         if self.tax_commission_for_order:
             _dict["taxCommissionForOrder"] = self.tax_commission_for_order.to_dict()
@@ -132,6 +144,13 @@ class OrderTestResponseResult(BaseModel):
                         obj["standardCommissionForOrder"]
                     )
                     if obj.get("standardCommissionForOrder") is not None
+                    else None
+                ),
+                "specialCommissionForOrder": (
+                    OrderTestResponseResultSpecialCommissionForOrder.from_dict(
+                        obj["specialCommissionForOrder"]
+                    )
+                    if obj.get("specialCommissionForOrder") is not None
                     else None
                 ),
                 "taxCommissionForOrder": (

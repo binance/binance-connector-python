@@ -32,9 +32,9 @@ class RateLimitsInner(BaseModel):
     RateLimitsInner
     """  # noqa: E501
 
-    rate_limit_type: Optional[StrictStr] = Field(default=None, alias="rateLimitType")
+    rateLimitType: Optional[StrictStr] = Field(default=None, alias="rateLimitType")
     interval: Optional[StrictStr] = None
-    interval_num: Optional[StrictInt] = Field(default=None, alias="intervalNum")
+    intervalNum: Optional[StrictInt] = Field(default=None, alias="intervalNum")
     limit: Optional[StrictInt] = None
     count: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}

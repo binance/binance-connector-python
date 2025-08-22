@@ -78,6 +78,12 @@ class TestAccountApi:
                 "buyer": "0.00000030",
                 "seller": "0.00000040",
             },
+            "specialCommission": {
+                "maker": "0.01000000",
+                "taker": "0.02000000",
+                "buyer": "0.03000000",
+                "seller": "0.04000000",
+            },
             "taxCommission": {
                 "maker": "0.00000112",
                 "taker": "0.00000114",
@@ -143,6 +149,12 @@ class TestAccountApi:
                 "buyer": "0.00000030",
                 "seller": "0.00000040",
             },
+            "specialCommission": {
+                "maker": "0.01000000",
+                "taker": "0.02000000",
+                "buyer": "0.03000000",
+                "seller": "0.04000000",
+            },
             "taxCommission": {
                 "maker": "0.00000112",
                 "taker": "0.00000114",
@@ -191,7 +203,7 @@ class TestAccountApi:
     def test_account_commission_missing_required_param_symbol(self):
         """Test that account_commission() raises RequiredError when 'symbol' is missing."""
         params = {"symbol": "BNBUSDT"}
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.account_commission(**params)
@@ -530,7 +542,7 @@ class TestAccountApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.all_orders(**params)
@@ -956,7 +968,7 @@ class TestAccountApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.get_order(**params)
@@ -1238,7 +1250,7 @@ class TestAccountApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.my_allocations(**params)
@@ -1382,7 +1394,7 @@ class TestAccountApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.my_prevented_matches(**params)
@@ -1531,7 +1543,7 @@ class TestAccountApi:
         params = {
             "symbol": "BNBUSDT",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.my_trades(**params)
@@ -1822,7 +1834,7 @@ class TestAccountApi:
             "symbol": "BNBUSDT",
             "order_id": 1,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.order_amendments(**params)
@@ -1833,7 +1845,7 @@ class TestAccountApi:
             "symbol": "BNBUSDT",
             "order_id": 1,
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"

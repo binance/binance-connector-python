@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -99,7 +99,7 @@ class VipLoanRestAPI:
 
     def get_borrow_interest_rate(
         self,
-        loan_coin: str = None,
+        loan_coin: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetBorrowInterestRateResponse]:
         """
@@ -110,8 +110,8 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (str):
-                    recv_window (Optional[int]):
+                    loan_coin (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetBorrowInterestRateResponse]
@@ -136,8 +136,8 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    collateral_coin (Optional[str]):
-                    recv_window (Optional[int]):
+                    collateral_coin (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCollateralAssetDataResponse]
@@ -165,9 +165,9 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    loan_coin (Optional[str]):
-                    vip_level (Optional[int]): default:user's vip level
-                    recv_window (Optional[int]):
+                    loan_coin (Optional[str] = None):
+                    vip_level (Optional[int] = None): default:user's vip level
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLoanableAssetsDataResponse]
@@ -183,12 +183,12 @@ class VipLoanRestAPI:
 
     def vip_loan_borrow(
         self,
-        loan_account_id: int = None,
-        loan_coin: str = None,
-        loan_amount: float = None,
-        collateral_account_id: str = None,
-        collateral_coin: str = None,
-        is_flexible_rate: bool = None,
+        loan_account_id: Union[int, None],
+        loan_coin: Union[str, None],
+        loan_amount: Union[float, None],
+        collateral_account_id: Union[str, None],
+        collateral_coin: Union[str, None],
+        is_flexible_rate: Union[bool, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[VipLoanBorrowResponse]:
         """
@@ -204,13 +204,13 @@ class VipLoanRestAPI:
         Weight: 0
 
                 Args:
-                    loan_account_id (int):
-                    loan_coin (str):
-                    loan_amount (float):
-                    collateral_account_id (str): Multiple split by `,`
-                    collateral_coin (str): Multiple split by `,`
-                    is_flexible_rate (bool): Default: TRUE. TRUE : flexible rate; FALSE: fixed rate
-                    recv_window (Optional[int]):
+                    loan_account_id (Union[int, None]):
+                    loan_coin (Union[str, None]):
+                    loan_amount (Union[float, None]):
+                    collateral_account_id (Union[str, None]): Multiple split by `,`
+                    collateral_coin (Union[str, None]): Multiple split by `,`
+                    is_flexible_rate (Union[bool, None]): Default: TRUE. TRUE : flexible rate; FALSE: fixed rate
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VipLoanBorrowResponse]
@@ -232,8 +232,8 @@ class VipLoanRestAPI:
 
     def vip_loan_renew(
         self,
-        order_id: int = None,
-        loan_term: int = None,
+        order_id: Union[int, None],
+        loan_term: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[VipLoanRenewResponse]:
         """
@@ -244,9 +244,9 @@ class VipLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    order_id (int):
-                    loan_term (int): 30/60 days
-                    recv_window (Optional[int]):
+                    order_id (Union[int, None]):
+                    loan_term (Union[int, None]): 30/60 days
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VipLoanRenewResponse]
@@ -260,8 +260,8 @@ class VipLoanRestAPI:
 
     def vip_loan_repay(
         self,
-        order_id: int = None,
-        amount: float = None,
+        order_id: Union[int, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[VipLoanRepayResponse]:
         """
@@ -272,9 +272,9 @@ class VipLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    order_id (int):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    order_id (Union[int, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[VipLoanRepayResponse]
@@ -303,9 +303,9 @@ class VipLoanRestAPI:
         Weight: 6000
 
                 Args:
-                    order_id (Optional[int]):
-                    collateral_account_id (Optional[int]):
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None):
+                    collateral_account_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CheckVIPLoanCollateralAccountResponse]
@@ -337,13 +337,13 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    order_id (Optional[int]):
-                    collateral_account_id (Optional[int]):
-                    loan_coin (Optional[str]):
-                    collateral_coin (Optional[str]):
-                    current (Optional[int]): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int]): Default: 10, Max: 100
-                    recv_window (Optional[int]):
+                    order_id (Optional[int] = None):
+                    collateral_account_id (Optional[int] = None):
+                    loan_coin (Optional[str] = None):
+                    collateral_coin (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
+                    limit (Optional[int] = None): Default: 10, Max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetVIPLoanOngoingOrdersResponse]
@@ -377,9 +377,9 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    current (Optional[int]): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int]): Default: 10, Max: 100
-                    recv_window (Optional[int]):
+                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
+                    limit (Optional[int] = None): Default: 10, Max: 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryApplicationStatusResponse]

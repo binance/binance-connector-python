@@ -195,7 +195,7 @@ class TestAccountApi:
             "amount": 1.0,
             "transfer_side": "transfer_side_example",
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.bnb_transfer(**params)
@@ -206,7 +206,7 @@ class TestAccountApi:
             "amount": 1.0,
             "transfer_side": "transfer_side_example",
         }
-        del params["transfer_side"]
+        params["transfer_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_side'"
@@ -320,7 +320,7 @@ class TestAccountApi:
         params = {
             "auto_repay": "True",
         }
-        del params["auto_repay"]
+        params["auto_repay"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_repay'"
@@ -522,7 +522,7 @@ class TestAccountApi:
         params = {
             "asset": "asset_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.fund_collection_by_asset(**params)
@@ -1110,7 +1110,7 @@ class TestAccountApi:
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.get_transferable_earn_asset_balance_for_portfolio_margin(
@@ -1125,7 +1125,7 @@ class TestAccountApi:
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
         }
-        del params["transfer_type"]
+        params["transfer_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_type'"
@@ -1270,7 +1270,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["from_asset"]
+        params["from_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_asset'"
@@ -1284,7 +1284,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["target_asset"]
+        params["target_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'target_asset'"
@@ -1298,7 +1298,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.mint_bfusd_for_portfolio_margin(**params)
@@ -1914,7 +1914,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["from_asset"]
+        params["from_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_asset'"
@@ -1930,7 +1930,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["target_asset"]
+        params["target_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'target_asset'"
@@ -1944,7 +1944,7 @@ class TestAccountApi:
             "target_asset": "target_asset_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.redeem_bfusd_for_portfolio_margin(**params)
@@ -2167,7 +2167,7 @@ class TestAccountApi:
             "transfer_type": "transfer_type_example",
             "amount": 1.0,
         }
-        del params["asset"]
+        params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
             self.client.transfer_ldusdt_for_portfolio_margin(**params)
@@ -2181,7 +2181,7 @@ class TestAccountApi:
             "transfer_type": "transfer_type_example",
             "amount": 1.0,
         }
-        del params["transfer_type"]
+        params["transfer_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_type'"
@@ -2195,7 +2195,7 @@ class TestAccountApi:
             "transfer_type": "transfer_type_example",
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.transfer_ldusdt_for_portfolio_margin(**params)

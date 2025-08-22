@@ -182,7 +182,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "status": "status_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.add_ip_restriction_for_sub_account_api_key(**params)
@@ -196,7 +196,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "status": "status_example",
         }
-        del params["sub_account_api_key"]
+        params["sub_account_api_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'sub_account_api_key'"
@@ -212,7 +212,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "status": "status_example",
         }
-        del params["status"]
+        params["status"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'status'"):
             self.client.add_ip_restriction_for_sub_account_api_key(**params)
@@ -360,7 +360,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "ip_address": "ip_address_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.delete_ip_list_for_a_sub_account_api_key(**params)
@@ -374,7 +374,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "ip_address": "ip_address_example",
         }
-        del params["sub_account_api_key"]
+        params["sub_account_api_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'sub_account_api_key'"
@@ -390,7 +390,7 @@ class TestApiManagementApi:
             "sub_account_api_key": "sub_account_api_key_example",
             "ip_address": "ip_address_example",
         }
-        del params["ip_address"]
+        params["ip_address"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'ip_address'"
@@ -536,7 +536,7 @@ class TestApiManagementApi:
             "email": "sub-account-email@email.com",
             "sub_account_api_key": "sub_account_api_key_example",
         }
-        del params["email"]
+        params["email"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
             self.client.get_ip_restriction_for_a_sub_account_api_key(**params)
@@ -549,7 +549,7 @@ class TestApiManagementApi:
             "email": "sub-account-email@email.com",
             "sub_account_api_key": "sub_account_api_key_example",
         }
-        del params["sub_account_api_key"]
+        params["sub_account_api_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'sub_account_api_key'"

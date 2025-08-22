@@ -80,6 +80,9 @@ from .get_interest_history_response import (
 from .get_interest_history_response_rows_inner import (
     GetInterestHistoryResponseRowsInner as GetInterestHistoryResponseRowsInner,
 )
+from .get_limit_price_pairs_response import (
+    GetLimitPricePairsResponse as GetLimitPricePairsResponse,
+)
 from .get_list_schedule_response import (
     GetListScheduleResponse as GetListScheduleResponse,
 )

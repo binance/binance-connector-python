@@ -162,7 +162,7 @@ class TestAccountApi:
     def test_adjust_cross_margin_max_leverage_missing_required_param_max_leverage(self):
         """Test that adjust_cross_margin_max_leverage() raises RequiredError when 'max_leverage' is missing."""
         params = {"max_leverage": 56}
-        del params["max_leverage"]
+        params["max_leverage"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'max_leverage'"
@@ -273,7 +273,7 @@ class TestAccountApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.disable_isolated_margin_account(**params)
@@ -384,7 +384,7 @@ class TestAccountApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.enable_isolated_margin_account(**params)

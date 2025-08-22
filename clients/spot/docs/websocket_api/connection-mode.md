@@ -1,3 +1,6 @@
+# Connection Mode
+
+```python
 import asyncio
 import logging
 
@@ -35,3 +38,4 @@ async def exchange_info():
 
 if __name__ == "__main__":
     asyncio.run(exchange_info())
+```

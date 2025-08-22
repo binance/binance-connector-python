@@ -19,6 +19,9 @@ from .account_commission_response import (
 from .account_commission_response_discount import (
     AccountCommissionResponseDiscount as AccountCommissionResponseDiscount,
 )
+from .account_commission_response_special_commission import (
+    AccountCommissionResponseSpecialCommission as AccountCommissionResponseSpecialCommission,
+)
 from .account_commission_response_standard_commission import (
     AccountCommissionResponseStandardCommission as AccountCommissionResponseStandardCommission,
 )
@@ -176,6 +179,9 @@ from .order_test_response import OrderTestResponse as OrderTestResponse
 from .order_test_response_discount import (
     OrderTestResponseDiscount as OrderTestResponseDiscount,
 )
+from .order_test_response_special_commission_for_order import (
+    OrderTestResponseSpecialCommissionForOrder as OrderTestResponseSpecialCommissionForOrder,
+)
 from .order_test_response_standard_commission_for_order import (
     OrderTestResponseStandardCommissionForOrder as OrderTestResponseStandardCommissionForOrder,
 )
@@ -251,6 +257,8 @@ from .enums import NewOrderNewOrderRespTypeEnum as NewOrderNewOrderRespTypeEnum
 from .enums import (
     NewOrderSelfTradePreventionModeEnum as NewOrderSelfTradePreventionModeEnum,
 )
+from .enums import NewOrderPegPriceTypeEnum as NewOrderPegPriceTypeEnum
+from .enums import NewOrderPegOffsetTypeEnum as NewOrderPegOffsetTypeEnum
 from .enums import OrderCancelReplaceSideEnum as OrderCancelReplaceSideEnum
 from .enums import OrderCancelReplaceTypeEnum as OrderCancelReplaceTypeEnum
 from .enums import (
@@ -271,10 +279,28 @@ from .enums import (
 from .enums import (
     OrderCancelReplaceOrderRateLimitExceededModeEnum as OrderCancelReplaceOrderRateLimitExceededModeEnum,
 )
+from .enums import (
+    OrderCancelReplacePegPriceTypeEnum as OrderCancelReplacePegPriceTypeEnum,
+)
+from .enums import (
+    OrderCancelReplacePegOffsetTypeEnum as OrderCancelReplacePegOffsetTypeEnum,
+)
 from .enums import OrderListOcoSideEnum as OrderListOcoSideEnum
 from .enums import OrderListOcoAboveTypeEnum as OrderListOcoAboveTypeEnum
 from .enums import OrderListOcoBelowTypeEnum as OrderListOcoBelowTypeEnum
+from .enums import (
+    OrderListOcoAbovePegPriceTypeEnum as OrderListOcoAbovePegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOcoAbovePegOffsetTypeEnum as OrderListOcoAbovePegOffsetTypeEnum,
+)
 from .enums import OrderListOcoBelowTimeInForceEnum as OrderListOcoBelowTimeInForceEnum
+from .enums import (
+    OrderListOcoBelowPegPriceTypeEnum as OrderListOcoBelowPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOcoBelowPegOffsetTypeEnum as OrderListOcoBelowPegOffsetTypeEnum,
+)
 from .enums import OrderListOcoNewOrderRespTypeEnum as OrderListOcoNewOrderRespTypeEnum
 from .enums import (
     OrderListOcoSelfTradePreventionModeEnum as OrderListOcoSelfTradePreventionModeEnum,
@@ -291,7 +317,19 @@ from .enums import (
     OrderListOtoWorkingTimeInForceEnum as OrderListOtoWorkingTimeInForceEnum,
 )
 from .enums import (
+    OrderListOtoWorkingPegPriceTypeEnum as OrderListOtoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOtoWorkingPegOffsetTypeEnum as OrderListOtoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
     OrderListOtoPendingTimeInForceEnum as OrderListOtoPendingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOtoPendingPegPriceTypeEnum as OrderListOtoPendingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOtoPendingPegOffsetTypeEnum as OrderListOtoPendingPegOffsetTypeEnum,
 )
 from .enums import OrderListOtocoWorkingTypeEnum as OrderListOtocoWorkingTypeEnum
 from .enums import OrderListOtocoWorkingSideEnum as OrderListOtocoWorkingSideEnum
@@ -309,13 +347,31 @@ from .enums import (
     OrderListOtocoWorkingTimeInForceEnum as OrderListOtocoWorkingTimeInForceEnum,
 )
 from .enums import (
+    OrderListOtocoWorkingPegPriceTypeEnum as OrderListOtocoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOtocoWorkingPegOffsetTypeEnum as OrderListOtocoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
     OrderListOtocoPendingAboveTimeInForceEnum as OrderListOtocoPendingAboveTimeInForceEnum,
+)
+from .enums import (
+    OrderListOtocoPendingAbovePegPriceTypeEnum as OrderListOtocoPendingAbovePegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOtocoPendingAbovePegOffsetTypeEnum as OrderListOtocoPendingAbovePegOffsetTypeEnum,
 )
 from .enums import (
     OrderListOtocoPendingBelowTypeEnum as OrderListOtocoPendingBelowTypeEnum,
 )
 from .enums import (
     OrderListOtocoPendingBelowTimeInForceEnum as OrderListOtocoPendingBelowTimeInForceEnum,
+)
+from .enums import (
+    OrderListOtocoPendingBelowPegPriceTypeEnum as OrderListOtocoPendingBelowPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOtocoPendingBelowPegOffsetTypeEnum as OrderListOtocoPendingBelowPegOffsetTypeEnum,
 )
 from .enums import OrderOcoSideEnum as OrderOcoSideEnum
 from .enums import OrderOcoStopLimitTimeInForceEnum as OrderOcoStopLimitTimeInForceEnum
@@ -330,10 +386,19 @@ from .enums import OrderTestNewOrderRespTypeEnum as OrderTestNewOrderRespTypeEnu
 from .enums import (
     OrderTestSelfTradePreventionModeEnum as OrderTestSelfTradePreventionModeEnum,
 )
+from .enums import OrderTestPegPriceTypeEnum as OrderTestPegPriceTypeEnum
+from .enums import OrderTestPegOffsetTypeEnum as OrderTestPegOffsetTypeEnum
 from .enums import SorOrderSideEnum as SorOrderSideEnum
 from .enums import SorOrderTypeEnum as SorOrderTypeEnum
 from .enums import SorOrderTimeInForceEnum as SorOrderTimeInForceEnum
 from .enums import SorOrderNewOrderRespTypeEnum as SorOrderNewOrderRespTypeEnum
 from .enums import (
     SorOrderSelfTradePreventionModeEnum as SorOrderSelfTradePreventionModeEnum,
+)
+from .enums import SorOrderTestSideEnum as SorOrderTestSideEnum
+from .enums import SorOrderTestTypeEnum as SorOrderTestTypeEnum
+from .enums import SorOrderTestTimeInForceEnum as SorOrderTestTimeInForceEnum
+from .enums import SorOrderTestNewOrderRespTypeEnum as SorOrderTestNewOrderRespTypeEnum
+from .enums import (
+    SorOrderTestSelfTradePreventionModeEnum as SorOrderTestSelfTradePreventionModeEnum,
 )

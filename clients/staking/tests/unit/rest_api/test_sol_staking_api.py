@@ -518,7 +518,7 @@ class TestSolStakingApi:
         params = {
             "type": "CLAIM",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.get_boost_rewards_history(**params)
@@ -1103,7 +1103,7 @@ class TestSolStakingApi:
         params = {
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.redeem_sol(**params)
@@ -1317,7 +1317,7 @@ class TestSolStakingApi:
         params = {
             "amount": 1.0,
         }
-        del params["amount"]
+        params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
             self.client.subscribe_sol_staking(**params)

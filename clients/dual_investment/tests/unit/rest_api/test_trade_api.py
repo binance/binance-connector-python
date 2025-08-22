@@ -153,7 +153,7 @@ class TestTradeApi:
         params = {
             "position_id": "1",
         }
-        del params["position_id"]
+        params["position_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'position_id'"
@@ -540,7 +540,7 @@ class TestTradeApi:
             "deposit_amount": 1.0,
             "auto_compound_plan": "NONE",
         }
-        del params["id"]
+        params["id"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'id'"):
             self.client.subscribe_dual_investment_products(**params)
@@ -553,7 +553,7 @@ class TestTradeApi:
             "deposit_amount": 1.0,
             "auto_compound_plan": "NONE",
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"
@@ -570,7 +570,7 @@ class TestTradeApi:
             "deposit_amount": 1.0,
             "auto_compound_plan": "NONE",
         }
-        del params["deposit_amount"]
+        params["deposit_amount"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'deposit_amount'"
@@ -587,7 +587,7 @@ class TestTradeApi:
             "deposit_amount": 1.0,
             "auto_compound_plan": "NONE",
         }
-        del params["auto_compound_plan"]
+        params["auto_compound_plan"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'auto_compound_plan'"

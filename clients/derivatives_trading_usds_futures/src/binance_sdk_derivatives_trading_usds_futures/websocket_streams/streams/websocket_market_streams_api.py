@@ -10,7 +10,11 @@ Do not edit the class manually.
 
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
-from binance_common.websocket import WebSocketStreamBase, RequestStream
+from binance_common.websocket import (
+    WebSocketStreamBase,
+    RequestStream,
+    RequestStreamHandle,
+)
 
 from ..models import AggregateTradeStreamsResponse
 from ..models import AllBookTickersStreamResponse
@@ -32,7 +36,7 @@ from ..models import MultiAssetsModeAssetIndexResponse
 from ..models import PartialBookDepthStreamsResponse
 
 
-from typing import Optional
+from typing import Optional, Union
 
 
 class WebsocketMarketStreamsApi:
@@ -43,9 +47,9 @@ class WebsocketMarketStreamsApi:
 
     async def aggregate_trade_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> AggregateTradeStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Aggregate Trade Streams
             POST /<symbol>@aggTrade
@@ -56,11 +60,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 100ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AggregateTradeStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -89,7 +93,7 @@ class WebsocketMarketStreamsApi:
     async def all_book_tickers_stream(
         self,
         id: Optional[str] = None,
-    ) -> AllBookTickersStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
             All Book Tickers Stream
             POST /!bookTicker
@@ -100,10 +104,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: 5s
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AllBookTickersStreamResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -126,7 +130,7 @@ class WebsocketMarketStreamsApi:
     async def all_market_liquidation_order_streams(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketLiquidationOrderStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             All Market Liquidation Order Streams
             POST /!forceOrder@arr
@@ -138,10 +142,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1000ms
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AllMarketLiquidationOrderStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -164,7 +168,7 @@ class WebsocketMarketStreamsApi:
     async def all_market_mini_tickers_stream(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketMiniTickersStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
             All Market Mini Tickers Stream
             POST /!miniTicker@arr
@@ -175,10 +179,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1000ms
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AllMarketMiniTickersStreamResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -201,7 +205,7 @@ class WebsocketMarketStreamsApi:
     async def all_market_tickers_streams(
         self,
         id: Optional[str] = None,
-    ) -> AllMarketTickersStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             All Market Tickers Streams
             POST /!ticker@arr
@@ -212,10 +216,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1000ms
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                AllMarketTickersStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -237,9 +241,9 @@ class WebsocketMarketStreamsApi:
 
     async def composite_index_symbol_information_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> CompositeIndexSymbolInformationStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Composite Index Symbol Information Streams
             POST /<symbol>@compositeIndex
@@ -250,11 +254,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1000ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                CompositeIndexSymbolInformationStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -282,11 +286,11 @@ class WebsocketMarketStreamsApi:
 
     async def continuous_contract_kline_candlestick_streams(
         self,
-        pair: str = None,
-        contract_type: str = None,
-        interval: str = None,
+        pair: Union[str, None],
+        contract_type: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> ContinuousContractKlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Continuous Contract Kline/Candlestick Streams
             POST /<pair>_<contractType>@continuousKline_<interval>
@@ -296,13 +300,13 @@ class WebsocketMarketStreamsApi:
         Update Speed: 250ms
 
             Args:
-                pair (str): The pair parameter
-                contract_type (str): The contractType parameter
-                interval (str): The interval parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    pair (Union[str, None]): The pair parameter
+                    contract_type (Union[str, None]): The contractType parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                ContinuousContractKlineCandlestickStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -342,7 +346,7 @@ class WebsocketMarketStreamsApi:
     async def contract_info_stream(
         self,
         id: Optional[str] = None,
-    ) -> ContractInfoStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
             Contract Info Stream
             POST /!contractInfo
@@ -353,10 +357,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: Real-time
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                ContractInfoStreamResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -378,10 +382,10 @@ class WebsocketMarketStreamsApi:
 
     async def diff_book_depth_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> DiffBookDepthStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Diff. Book Depth Streams
             POST /<symbol>@depth@<updateSpeed>
@@ -392,12 +396,12 @@ class WebsocketMarketStreamsApi:
         Update Speed: 250ms, 500ms, 100ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
-                update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
             Returns:
-                DiffBookDepthStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -426,9 +430,9 @@ class WebsocketMarketStreamsApi:
 
     async def individual_symbol_book_ticker_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolBookTickerStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Individual Symbol Book Ticker Streams
             POST /<symbol>@bookTicker
@@ -439,11 +443,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: Real-time
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                IndividualSymbolBookTickerStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -471,9 +475,9 @@ class WebsocketMarketStreamsApi:
 
     async def individual_symbol_mini_ticker_stream(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolMiniTickerStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
             Individual Symbol Mini Ticker Stream
             POST /<symbol>@miniTicker
@@ -484,11 +488,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 2s
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                IndividualSymbolMiniTickerStreamResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -516,9 +520,9 @@ class WebsocketMarketStreamsApi:
 
     async def individual_symbol_ticker_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> IndividualSymbolTickerStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Individual Symbol Ticker Streams
             POST /<symbol>@ticker
@@ -529,11 +533,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 2000ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                IndividualSymbolTickerStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -561,10 +565,10 @@ class WebsocketMarketStreamsApi:
 
     async def kline_candlestick_streams(
         self,
-        symbol: str = None,
-        interval: str = None,
+        symbol: Union[str, None],
+        interval: Union[str, None],
         id: Optional[str] = None,
-    ) -> KlineCandlestickStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Kline/Candlestick Streams
             POST /<symbol>@kline_<interval>
@@ -575,12 +579,12 @@ class WebsocketMarketStreamsApi:
         Update Speed: 250ms
 
             Args:
-                symbol (str): The symbol parameter
-                interval (str): The interval parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    interval (Union[str, None]): The interval parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                KlineCandlestickStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -613,9 +617,9 @@ class WebsocketMarketStreamsApi:
 
     async def liquidation_order_streams(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
-    ) -> LiquidationOrderStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Liquidation Order Streams
             POST /<symbol>@forceOrder
@@ -627,11 +631,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1000ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                LiquidationOrderStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -659,10 +663,10 @@ class WebsocketMarketStreamsApi:
 
     async def mark_price_stream(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> MarkPriceStreamResponse:
+    ) -> RequestStreamHandle:
         r"""
             Mark Price Stream
             POST /<symbol>@markPrice@<updateSpeed>
@@ -673,12 +677,12 @@ class WebsocketMarketStreamsApi:
         Update Speed: 3000ms or 1000ms
 
             Args:
-                symbol (str): The symbol parameter
-                id (Optional[str]): Unique WebSocket request ID.
-                update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
             Returns:
-                MarkPriceStreamResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -707,7 +711,7 @@ class WebsocketMarketStreamsApi:
         self,
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> MarkPriceStreamForAllMarketResponse:
+    ) -> RequestStreamHandle:
         r"""
             Mark Price Stream for All market
             POST /!markPrice@arr@<updateSpeed>
@@ -718,11 +722,11 @@ class WebsocketMarketStreamsApi:
         Update Speed: 3000ms or 1000ms
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                update_speed (Optional[str]): WebSocket stream update speed
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
             Returns:
-                MarkPriceStreamForAllMarketResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -746,7 +750,7 @@ class WebsocketMarketStreamsApi:
     async def multi_assets_mode_asset_index(
         self,
         id: Optional[str] = None,
-    ) -> MultiAssetsModeAssetIndexResponse:
+    ) -> RequestStreamHandle:
         r"""
             Multi-Assets Mode Asset Index
             POST /!assetIndex@arr
@@ -757,10 +761,10 @@ class WebsocketMarketStreamsApi:
         Update Speed: 1s
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
-                MultiAssetsModeAssetIndexResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.
@@ -782,11 +786,11 @@ class WebsocketMarketStreamsApi:
 
     async def partial_book_depth_streams(
         self,
-        symbol: str = None,
-        levels: int = None,
+        symbol: Union[str, None],
+        levels: Union[int, None],
         id: Optional[str] = None,
         update_speed: Optional[str] = None,
-    ) -> PartialBookDepthStreamsResponse:
+    ) -> RequestStreamHandle:
         r"""
             Partial Book Depth Streams
             POST /<symbol>@depth<levels>@<updateSpeed>
@@ -797,13 +801,13 @@ class WebsocketMarketStreamsApi:
         Update Speed: 250ms, 500ms or 100ms
 
             Args:
-                symbol (str): The symbol parameter
-                levels (int): The levels parameter
-                id (Optional[str]): Unique WebSocket request ID.
-                update_speed (Optional[str]): WebSocket stream update speed
+                    symbol (Union[str, None]): The symbol parameter
+                    levels (Union[int, None]): The levels parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
 
             Returns:
-                PartialBookDepthStreamsResponse
+                RequestStreamHandle
 
             Raises:
                 RequiredError: If a required parameter is missing.

@@ -137,10 +137,10 @@ class PayRestAPI:
         Weight: 3000
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): default 100, max 100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): default 100, max 100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetPayTradeHistoryResponse]

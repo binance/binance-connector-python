@@ -211,7 +211,7 @@ class TestTradeApi:
         params = {
             "api_name": "api_name_example",
         }
-        del params["api_name"]
+        params["api_name"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'api_name'"
@@ -355,7 +355,7 @@ class TestTradeApi:
         params = {
             "ip": "ip_example",
         }
-        del params["ip"]
+        params["ip"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'ip'"):
             self.client.edit_ip_for_special_key(**params)
@@ -746,7 +746,7 @@ class TestTradeApi:
             "current": 1,
             "size": 10,
         }
-        del params["current"]
+        params["current"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'current'"):
             self.client.get_small_liability_exchange_history(**params)
@@ -757,7 +757,7 @@ class TestTradeApi:
             "current": 1,
             "size": 10,
         }
-        del params["size"]
+        params["size"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'size'"):
             self.client.get_small_liability_exchange_history(**params)
@@ -1075,7 +1075,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_cancel_all_open_orders_on_a_symbol(**params)
@@ -1307,7 +1307,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_cancel_oco(**params)
@@ -1453,7 +1453,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_cancel_order(**params)
@@ -1711,7 +1711,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_new_oco(**params)
@@ -1725,7 +1725,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.margin_account_new_oco(**params)
@@ -1739,7 +1739,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["quantity"]
+        params["quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
@@ -1755,7 +1755,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["price"]
+        params["price"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             self.client.margin_account_new_oco(**params)
@@ -1769,7 +1769,7 @@ class TestTradeApi:
             "price": 1.0,
             "stop_price": 1.0,
         }
-        del params["stop_price"]
+        params["stop_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'stop_price'"
@@ -1963,7 +1963,7 @@ class TestTradeApi:
             "side": MarginAccountNewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_new_order(**params)
@@ -1975,7 +1975,7 @@ class TestTradeApi:
             "side": MarginAccountNewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.margin_account_new_order(**params)
@@ -1987,7 +1987,7 @@ class TestTradeApi:
             "side": MarginAccountNewOrderSideEnum["BUY"].value,
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.margin_account_new_order(**params)
@@ -2258,7 +2258,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_new_oto(**params)
@@ -2276,7 +2276,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -2296,7 +2296,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -2316,7 +2316,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -2336,7 +2336,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -2356,7 +2356,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["working_iceberg_qty"]
+        params["working_iceberg_qty"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_iceberg_qty'"
@@ -2376,7 +2376,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["pending_type"]
+        params["pending_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_type'"
@@ -2396,7 +2396,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -2416,7 +2416,7 @@ class TestTradeApi:
             "pending_side": "pending_side_example",
             "pending_quantity": 1.0,
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -2745,7 +2745,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.margin_account_new_otoco(**params)
@@ -2762,7 +2762,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["working_type"]
+        params["working_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_type'"
@@ -2781,7 +2781,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["working_side"]
+        params["working_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_side'"
@@ -2800,7 +2800,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["working_price"]
+        params["working_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_price'"
@@ -2819,7 +2819,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["working_quantity"]
+        params["working_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'working_quantity'"
@@ -2838,7 +2838,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["pending_side"]
+        params["pending_side"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_side'"
@@ -2857,7 +2857,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["pending_quantity"]
+        params["pending_quantity"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_quantity'"
@@ -2876,7 +2876,7 @@ class TestTradeApi:
             "pending_quantity": 1.0,
             "pending_above_type": "pending_above_type_example",
         }
-        del params["pending_above_type"]
+        params["pending_above_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'pending_above_type'"
@@ -3012,7 +3012,7 @@ class TestTradeApi:
         params = {
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.margin_manual_liquidation(**params)
@@ -3527,7 +3527,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_margin_accounts_all_orders(**params)
@@ -4099,7 +4099,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_margin_accounts_order(**params)
@@ -4249,7 +4249,7 @@ class TestTradeApi:
         params = {
             "symbol": "symbol_example",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             self.client.query_margin_accounts_trade_list(**params)
@@ -4548,7 +4548,7 @@ class TestTradeApi:
         params = {
             "asset_names": ["BTC"],
         }
-        del params["asset_names"]
+        params["asset_names"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'asset_names'"

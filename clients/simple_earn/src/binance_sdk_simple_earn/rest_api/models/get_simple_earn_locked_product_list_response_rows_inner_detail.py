@@ -34,7 +34,7 @@ class GetSimpleEarnLockedProductListResponseRowsInnerDetail(BaseModel):
     is_sold_out: Optional[StrictBool] = Field(default=None, alias="isSoldOut")
     apr: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
-    subscription_start_time: Optional[StrictStr] = Field(
+    subscription_start_time: Optional[StrictInt] = Field(
         default=None, alias="subscriptionStartTime"
     )
     extra_reward_asset: Optional[StrictStr] = Field(

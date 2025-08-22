@@ -140,12 +140,15 @@ class TestGeneralApi:
                     "minTrailingBelowDelta": 10,
                     "maxTrailingBelowDelta": 2000,
                 },
+                {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
+                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
                 {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
                 {"filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 200},
                 {
                     "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
                     "maxNumIcebergOrders": 10000,
                 },
+                {"filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
             ],
             "symbols": [
                 {
@@ -168,6 +171,7 @@ class TestGeneralApi:
                     "allowTrailingStop": False,
                     "cancelReplaceAllowed": False,
                     "amendAllowed": False,
+                    "pegInstructionsAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
                     "filters": [
@@ -232,6 +236,8 @@ class TestGeneralApi:
                             "minTrailingBelowDelta": 10,
                             "maxTrailingBelowDelta": 2000,
                         },
+                        {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
+                        {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
                         {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
                         {
                             "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
@@ -240,6 +246,10 @@ class TestGeneralApi:
                         {
                             "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
                             "maxNumIcebergOrders": 10000,
+                        },
+                        {
+                            "filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS",
+                            "maxNumOrderLists": 20,
                         },
                     ],
                     "permissions": [],
@@ -374,12 +384,15 @@ class TestGeneralApi:
                     "minTrailingBelowDelta": 10,
                     "maxTrailingBelowDelta": 2000,
                 },
+                {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
+                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
                 {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
                 {"filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 200},
                 {
                     "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
                     "maxNumIcebergOrders": 10000,
                 },
+                {"filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
             ],
             "symbols": [
                 {
@@ -402,6 +415,7 @@ class TestGeneralApi:
                     "allowTrailingStop": False,
                     "cancelReplaceAllowed": False,
                     "amendAllowed": False,
+                    "pegInstructionsAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
                     "filters": [
@@ -466,6 +480,8 @@ class TestGeneralApi:
                             "minTrailingBelowDelta": 10,
                             "maxTrailingBelowDelta": 2000,
                         },
+                        {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
+                        {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
                         {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
                         {
                             "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
@@ -474,6 +490,10 @@ class TestGeneralApi:
                         {
                             "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
                             "maxNumIcebergOrders": 10000,
+                        },
+                        {
+                            "filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS",
+                            "maxNumOrderLists": 20,
                         },
                     ],
                     "permissions": [],

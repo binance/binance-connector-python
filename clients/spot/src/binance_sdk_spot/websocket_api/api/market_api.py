@@ -39,7 +39,7 @@ from ..models import Ticker24hrTypeEnum
 from ..models import TickerTradingDayTypeEnum
 from ..models import UiKlinesIntervalEnum
 
-from typing import List, Optional
+from typing import List, Optional, Union
 
 
 class MarketApi:
@@ -55,7 +55,7 @@ class MarketApi:
 
     async def avg_price(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
     ) -> WebsocketApiResponse[AvgPriceResponse]:
         """
@@ -67,8 +67,8 @@ class MarketApi:
         Weight: 2
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[AvgPriceResponse]
@@ -99,7 +99,7 @@ class MarketApi:
 
     async def depth(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> WebsocketApiResponse[DepthResponse]:
@@ -128,9 +128,9 @@ class MarketApi:
         | 1001–5000 |     250 |
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[DepthResponse]
@@ -162,8 +162,8 @@ class MarketApi:
 
     async def klines(
         self,
-        symbol: str = None,
-        interval: KlinesIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[KlinesIntervalEnum, None],
         id: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -188,13 +188,13 @@ class MarketApi:
         Weight: 2
 
             Args:
-                symbol (str):
-                interval (KlinesIntervalEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                time_zone (Optional[str]): Default: 0 (UTC)
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    interval (Union[KlinesIntervalEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[KlinesResponse]
@@ -257,11 +257,11 @@ class MarketApi:
         |  51–100 |    200 |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
-                type (Optional[TickerTypeEnum]):
-                window_size (Optional[TickerWindowSizeEnum]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    type (Optional[TickerTypeEnum] = None):
+                    window_size (Optional[TickerWindowSizeEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerResponse]
@@ -319,10 +319,10 @@ class MarketApi:
         | all symbols |     80 |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
-                type (Optional[Ticker24hrTypeEnum]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    type (Optional[Ticker24hrTypeEnum] = None):
 
             Returns:
                 WebsocketApiResponse[Ticker24hrResponse]
@@ -373,9 +373,9 @@ class MarketApi:
         | none      |      4 |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
 
             Returns:
                 WebsocketApiResponse[TickerBookResponse]
@@ -426,9 +426,9 @@ class MarketApi:
         | none      |      4 |
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
 
             Returns:
                 WebsocketApiResponse[TickerPriceResponse]
@@ -470,11 +470,11 @@ class MarketApi:
         Weight: 4 for each requested <tt>symbol</tt>. <br/><br/> The weight for this request will cap at 200 once the number of `symbols` in the request is more than 50.
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                symbol (Optional[str]): Describe a single symbol
-                symbols (Optional[List[str]]): List of symbols to query
-                time_zone (Optional[str]): Default: 0 (UTC)
-                type (Optional[TickerTradingDayTypeEnum]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    type (Optional[TickerTradingDayTypeEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerTradingDayResponse]
@@ -503,7 +503,7 @@ class MarketApi:
 
     async def trades_aggregate(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         from_id: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -530,12 +530,12 @@ class MarketApi:
         Weight: 4
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                from_id (Optional[int]): Aggregate trade ID to begin at
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[TradesAggregateResponse]
@@ -570,7 +570,7 @@ class MarketApi:
 
     async def trades_historical(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
@@ -584,10 +584,10 @@ class MarketApi:
         Weight: 25
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                from_id (Optional[int]): Aggregate trade ID to begin at
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[TradesHistoricalResponse]
@@ -620,7 +620,7 @@ class MarketApi:
 
     async def trades_recent(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> WebsocketApiResponse[TradesRecentResponse]:
@@ -637,9 +637,9 @@ class MarketApi:
         Weight: 25
 
             Args:
-                symbol (str):
-                id (Optional[str]): Unique WebSocket request ID.
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[TradesRecentResponse]
@@ -671,8 +671,8 @@ class MarketApi:
 
     async def ui_klines(
         self,
-        symbol: str = None,
-        interval: UiKlinesIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[UiKlinesIntervalEnum, None],
         id: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -691,13 +691,13 @@ class MarketApi:
         Weight: 2
 
             Args:
-                symbol (str):
-                interval (UiKlinesIntervalEnum):
-                id (Optional[str]): Unique WebSocket request ID.
-                start_time (Optional[int]):
-                end_time (Optional[int]):
-                time_zone (Optional[str]): Default: 0 (UTC)
-                limit (Optional[int]): Default: 100; Maximum: 5000
+                    symbol (Union[str, None]):
+                    interval (Union[UiKlinesIntervalEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:
                 WebsocketApiResponse[UiKlinesResponse]

@@ -159,7 +159,7 @@ class TestConvertApi:
         params = {
             "quote_id": "1",
         }
-        del params["quote_id"]
+        params["quote_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quote_id'"
@@ -501,7 +501,7 @@ class TestConvertApi:
             "from_asset": "from_asset_example",
             "to_asset": "to_asset_example",
         }
-        del params["from_asset"]
+        params["from_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_asset'"
@@ -514,7 +514,7 @@ class TestConvertApi:
             "from_asset": "from_asset_example",
             "to_asset": "to_asset_example",
         }
-        del params["to_asset"]
+        params["to_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_asset'"

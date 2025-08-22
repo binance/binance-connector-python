@@ -84,6 +84,12 @@ class ExchangeFilters(BaseModel):
     max_trailing_below_delta: Optional[StrictInt] = Field(
         default=None, alias="maxTrailingBelowDelta"
     )
+    max_num_order_amends: Optional[StrictInt] = Field(
+        default=None, alias="maxNumOrderAmends"
+    )
+    max_num_order_lists: Optional[StrictInt] = Field(
+        default=None, alias="maxNumOrderLists"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "filterType",
@@ -114,6 +120,8 @@ class ExchangeFilters(BaseModel):
         "maxTrailingAboveDelta",
         "minTrailingBelowDelta",
         "maxTrailingBelowDelta",
+        "maxNumOrderAmends",
+        "maxNumOrderLists",
     ]
 
     model_config = ConfigDict(
@@ -208,6 +216,8 @@ class ExchangeFilters(BaseModel):
                 "maxTrailingAboveDelta": obj.get("maxTrailingAboveDelta"),
                 "minTrailingBelowDelta": obj.get("minTrailingBelowDelta"),
                 "maxTrailingBelowDelta": obj.get("maxTrailingBelowDelta"),
+                "maxNumOrderAmends": obj.get("maxNumOrderAmends"),
+                "maxNumOrderLists": obj.get("maxNumOrderLists"),
             }
         )
         # store additional fields in additional_properties

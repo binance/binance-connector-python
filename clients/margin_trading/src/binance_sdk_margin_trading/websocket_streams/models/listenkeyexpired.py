@@ -27,8 +27,8 @@ class Listenkeyexpired(BaseModel):
     Listenkeyexpired
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, alias="E")
-    listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
+    E: Optional[StrictStr] = Field(default=None, alias="E")
+    listenKey: Optional[StrictStr] = Field(default=None, alias="listenKey")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "listenKey"]
 

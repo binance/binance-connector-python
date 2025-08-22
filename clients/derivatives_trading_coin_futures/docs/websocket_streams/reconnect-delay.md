@@ -1,3 +1,6 @@
+# Reconnect Delay
+
+```python
 import asyncio
 import logging
 
@@ -30,3 +33,4 @@ async def all_book_tickers_stream():
 
 if __name__ == "__main__":
     asyncio.run(all_book_tickers_stream())
+```

@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -248,8 +248,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20
 
                 Args:
-                    asset (Optional[str]):
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountBalanceResponse]
@@ -273,7 +273,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AccountInformationResponse]
@@ -287,8 +287,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def bnb_transfer(
         self,
-        amount: float = None,
-        transfer_side: str = None,
+        amount: Union[float, None],
+        transfer_side: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[BnbTransferResponse]:
         """
@@ -301,9 +301,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 750
 
                 Args:
-                    amount (float):
-                    transfer_side (str): "TO_UM","FROM_UM"
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]):
+                    transfer_side (Union[str, None]): "TO_UM","FROM_UM"
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[BnbTransferResponse]
@@ -317,7 +317,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def change_auto_repay_futures_status(
         self,
-        auto_repay: str = None,
+        auto_repay: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeAutoRepayFuturesStatusResponse]:
         """
@@ -328,8 +328,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 750
 
                 Args:
-                    auto_repay (str): Default: `true`; `false` for turn off the auto-repay futures negative balance function
-                    recv_window (Optional[int]):
+                    auto_repay (Union[str, None]): Default: `true`; `false` for turn off the auto-repay futures negative balance function
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeAutoRepayFuturesStatusResponse]
@@ -345,8 +345,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def change_cm_initial_leverage(
         self,
-        symbol: str = None,
-        leverage: int = None,
+        symbol: Union[str, None],
+        leverage: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeCmInitialLeverageResponse]:
         """
@@ -357,9 +357,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    leverage (int): target initial leverage: int from 1 to 125
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    leverage (Union[int, None]): target initial leverage: int from 1 to 125
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeCmInitialLeverageResponse]
@@ -375,7 +375,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def change_cm_position_mode(
         self,
-        dual_side_position: str = None,
+        dual_side_position: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeCmPositionModeResponse]:
         """
@@ -386,8 +386,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    dual_side_position (str): "true": Hedge Mode; "false": One-way Mode
-                    recv_window (Optional[int]):
+                    dual_side_position (Union[str, None]): "true": Hedge Mode; "false": One-way Mode
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeCmPositionModeResponse]
@@ -401,8 +401,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def change_um_initial_leverage(
         self,
-        symbol: str = None,
-        leverage: int = None,
+        symbol: Union[str, None],
+        leverage: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeUmInitialLeverageResponse]:
         """
@@ -413,9 +413,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    leverage (int): target initial leverage: int from 1 to 125
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    leverage (Union[int, None]): target initial leverage: int from 1 to 125
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeUmInitialLeverageResponse]
@@ -431,7 +431,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def change_um_position_mode(
         self,
-        dual_side_position: str = None,
+        dual_side_position: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeUmPositionModeResponse]:
         """
@@ -442,8 +442,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    dual_side_position (str): "true": Hedge Mode; "false": One-way Mode
-                    recv_window (Optional[int]):
+                    dual_side_position (Union[str, None]): "true": Hedge Mode; "false": One-way Mode
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeUmPositionModeResponse]
@@ -468,8 +468,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CmNotionalAndLeverageBracketsResponse]
@@ -496,7 +496,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 750
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FundAutoCollectionResponse]
@@ -510,7 +510,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def fund_collection_by_asset(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FundCollectionByAssetResponse]:
         """
@@ -523,8 +523,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    asset (str):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FundCollectionByAssetResponse]
@@ -548,7 +548,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetAutoRepayFuturesStatusResponse]
@@ -572,7 +572,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCmAccountDetailResponse]
@@ -596,7 +596,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCmCurrentPositionModeResponse]
@@ -632,13 +632,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    symbol (Optional[str]):
-                    income_type (Optional[str]): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    income_type (Optional[str] = None): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    page (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCmIncomeHistoryResponse]
@@ -654,8 +654,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_download_id_for_um_futures_order_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForUmFuturesOrderHistoryResponse]:
         """
@@ -669,9 +669,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1500
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForUmFuturesOrderHistoryResponse]
@@ -687,8 +687,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_download_id_for_um_futures_trade_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForUmFuturesTradeHistoryResponse]:
         """
@@ -702,9 +702,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1500
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForUmFuturesTradeHistoryResponse]
@@ -720,8 +720,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_download_id_for_um_futures_transaction_history(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDownloadIdForUmFuturesTransactionHistoryResponse]:
         """
@@ -735,9 +735,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1500
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDownloadIdForUmFuturesTransactionHistoryResponse]
@@ -782,13 +782,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    asset (Optional[str]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10 Max:100
-                    archived (Optional[str]): Default: `false`. Set to `true` for archived data from 6 months ago
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10 Max:100
+                    archived (Optional[str] = None): Default: `false`. Set to `true` for archived data from 6 months ago
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetMarginBorrowLoanInterestHistoryResponse]
@@ -814,7 +814,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmAccountDetailResponse]
@@ -838,7 +838,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmAccountDetailV2Response]
@@ -862,7 +862,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmCurrentPositionModeResponse]
@@ -876,7 +876,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_um_futures_order_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUmFuturesOrderDownloadLinkByIdResponse]:
         """
@@ -889,8 +889,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmFuturesOrderDownloadLinkByIdResponse]
@@ -906,7 +906,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_um_futures_trade_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUmFuturesTradeDownloadLinkByIdResponse]:
         """
@@ -919,8 +919,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmFuturesTradeDownloadLinkByIdResponse]
@@ -936,7 +936,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_um_futures_transaction_download_link_by_id(
         self,
-        download_id: str = None,
+        download_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUmFuturesTransactionDownloadLinkByIdResponse]:
         """
@@ -949,8 +949,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    download_id (str): get by download id api
-                    recv_window (Optional[int]):
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmFuturesTransactionDownloadLinkByIdResponse]
@@ -987,13 +987,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    symbol (Optional[str]):
-                    income_type (Optional[str]): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int]):
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    income_type (Optional[str] = None): TRANSFER, WELCOME_BONUS, REALIZED_PNL, FUNDING_FEE, COMMISSION, INSURANCE_CLEAR, REFERRAL_KICKBACK, COMMISSION_REBATE, API_REBATE, CONTEST_REWARD, CROSS_COLLATERAL_TRANSFER, OPTIONS_PREMIUM_FEE, OPTIONS_SETTLE_PROFIT, INTERNAL_TRANSFER, AUTO_EXCHANGE, DELIVERED_SETTELMENT, COIN_SWAP_DEPOSIT, COIN_SWAP_WITHDRAW, POSITION_LIMIT_INCREASE_FEE
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    page (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmIncomeHistoryResponse]
@@ -1009,7 +1009,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_user_commission_rate_for_cm(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUserCommissionRateForCmResponse]:
         """
@@ -1020,8 +1020,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUserCommissionRateForCmResponse]
@@ -1035,7 +1035,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def get_user_commission_rate_for_um(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUserCommissionRateForUmResponse]:
         """
@@ -1046,8 +1046,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUserCommissionRateForUmResponse]
@@ -1061,7 +1061,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_max_borrow(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MarginMaxBorrowResponse]:
         """
@@ -1072,8 +1072,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    asset (str):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginMaxBorrowResponse]
@@ -1099,8 +1099,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         10 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PortfolioMarginUmTradingQuantitativeRulesIndicatorsResponse]
@@ -1135,9 +1135,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    margin_asset (Optional[str]):
-                    pair (Optional[str]):
-                    recv_window (Optional[int]):
+                    margin_asset (Optional[str] = None):
+                    pair (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCmPositionInformationResponse]
@@ -1153,7 +1153,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_margin_loan_record(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         tx_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1176,14 +1176,14 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    asset (str):
-                    tx_id (Optional[int]): the `tranId` in `POST/papi/v1/marginLoan`
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10 Max:100
-                    archived (Optional[str]): Default: `false`. Set to `true` for archived data from 6 months ago
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    tx_id (Optional[int] = None): the `tranId` in `POST/papi/v1/marginLoan`
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10 Max:100
+                    archived (Optional[str] = None): Default: `false`. Set to `true` for archived data from 6 months ago
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginLoanRecordResponse]
@@ -1199,7 +1199,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_margin_max_withdraw(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryMarginMaxWithdrawResponse]:
         """
@@ -1210,8 +1210,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    asset (str):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginMaxWithdrawResponse]
@@ -1225,7 +1225,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_margin_repay_record(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         tx_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1248,14 +1248,14 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    asset (str):
-                    tx_id (Optional[int]): the `tranId` in `POST/papi/v1/marginLoan`
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10 Max:100
-                    archived (Optional[str]): Default: `false`. Set to `true` for archived data from 6 months ago
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    tx_id (Optional[int] = None): the `tranId` in `POST/papi/v1/marginLoan`
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10 Max:100
+                    archived (Optional[str] = None): Default: `false`. Set to `true` for archived data from 6 months ago
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginRepayRecordResponse]
@@ -1291,11 +1291,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 50
 
                 Args:
-                    asset (Optional[str]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    size (Optional[int]): Default:10 Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    size (Optional[int] = None): Default:10 Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginNegativeBalanceInterestHistoryResponse]
@@ -1328,8 +1328,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUmPositionInformationResponse]
@@ -1343,8 +1343,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_user_negative_balance_auto_exchange_record(
         self,
-        start_time: int = None,
-        end_time: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryUserNegativeBalanceAutoExchangeRecordResponse]:
         """
@@ -1358,9 +1358,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 100
 
                 Args:
-                    start_time (int):
-                    end_time (int):
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]):
+                    end_time (Union[int, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserNegativeBalanceAutoExchangeRecordResponse]
@@ -1386,7 +1386,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUserRateLimitResponse]
@@ -1410,7 +1410,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 750
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RepayFuturesNegativeBalanceResponse]
@@ -1434,7 +1434,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UmFuturesAccountConfigurationResponse]
@@ -1459,8 +1459,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UmFuturesSymbolConfigurationResponse]
@@ -1485,8 +1485,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UmNotionalAndLeverageBracketsResponse]
@@ -1522,7 +1522,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_all_cm_open_conditional_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllCmOpenConditionalOrdersResponse]:
         """
@@ -1533,8 +1533,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllCmOpenConditionalOrdersResponse]
@@ -1548,7 +1548,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_all_cm_open_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllCmOpenOrdersResponse]:
         """
@@ -1559,8 +1559,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllCmOpenOrdersResponse]
@@ -1574,7 +1574,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_all_um_open_conditional_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllUmOpenConditionalOrdersResponse]:
         """
@@ -1585,8 +1585,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllUmOpenConditionalOrdersResponse]
@@ -1600,7 +1600,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_all_um_open_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllUmOpenOrdersResponse]:
         """
@@ -1611,8 +1611,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelAllUmOpenOrdersResponse]
@@ -1626,7 +1626,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_cm_conditional_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1641,10 +1641,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelCmConditionalOrderResponse]
@@ -1660,7 +1660,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_cm_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1675,10 +1675,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelCmOrderResponse]
@@ -1694,7 +1694,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_margin_account_all_open_orders_on_a_symbol(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelMarginAccountAllOpenOrdersOnASymbolResponse]:
         """
@@ -1705,8 +1705,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelMarginAccountAllOpenOrdersOnASymbolResponse]
@@ -1722,7 +1722,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_margin_account_oco_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
@@ -1738,11 +1738,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
-                    order_list_id (Optional[int]): Either `orderListId` or `listClientOrderId` must be provided
-                    list_client_order_id (Optional[str]): Either `orderListId` or `listClientOrderId` must be provided
-                    new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelMarginAccountOcoOrdersResponse]
@@ -1762,7 +1762,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_margin_account_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
@@ -1778,11 +1778,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelMarginAccountOrderResponse]
@@ -1798,7 +1798,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_um_conditional_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1813,10 +1813,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelUmConditionalOrderResponse]
@@ -1832,7 +1832,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def cancel_um_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1847,10 +1847,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CancelUmOrderResponse]
@@ -1891,13 +1891,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20 with symbol, 40 with pair
 
                 Args:
-                    symbol (Optional[str]):
-                    pair (Optional[str]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    from_id (Optional[int]): Trade id to fetch from. Default gets most recent trades.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    pair (Optional[str] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CmAccountTradeListResponse]
@@ -1930,8 +1930,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CmPositionAdlQuantileEstimationResponse]
@@ -1955,7 +1955,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetUmFuturesBnbBurnStatusResponse]
@@ -1969,8 +1969,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_account_borrow(
         self,
-        asset: str = None,
-        amount: float = None,
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MarginAccountBorrowResponse]:
         """
@@ -1981,9 +1981,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 100
 
                 Args:
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginAccountBorrowResponse]
@@ -1997,11 +1997,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_account_new_oco(
         self,
-        symbol: str = None,
-        side: MarginAccountNewOcoSideEnum = None,
-        quantity: float = None,
-        price: float = None,
-        stop_price: float = None,
+        symbol: Union[str, None],
+        side: Union[MarginAccountNewOcoSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
+        stop_price: Union[float, None],
         list_client_order_id: Optional[str] = None,
         limit_client_order_id: Optional[str] = None,
         limit_iceberg_qty: Optional[float] = None,
@@ -2032,21 +2032,21 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (MarginAccountNewOcoSideEnum):
-                    quantity (float): Order quantity
-                    price (float):
-                    stop_price (float):
-                    list_client_order_id (Optional[str]): Either `orderListId` or `listClientOrderId` must be provided
-                    limit_client_order_id (Optional[str]): A unique Id for the limit order
-                    limit_iceberg_qty (Optional[float]):
-                    stop_client_order_id (Optional[str]): A unique Id for the stop loss/stop loss limit leg
-                    stop_limit_price (Optional[float]): If provided, stopLimitTimeInForce is required.
-                    stop_iceberg_qty (Optional[float]):
-                    stop_limit_time_in_force (Optional[MarginAccountNewOcoStopLimitTimeInForceEnum]): Valid values are `GTC/FOK/IOC`
-                    new_order_resp_type (Optional[MarginAccountNewOcoNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    side_effect_type (Optional[MarginAccountNewOcoSideEffectTypeEnum]): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[MarginAccountNewOcoSideEnum, None]):
+                    quantity (Union[float, None]): Order quantity
+                    price (Union[float, None]):
+                    stop_price (Union[float, None]):
+                    list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    limit_client_order_id (Optional[str] = None): A unique Id for the limit order
+                    limit_iceberg_qty (Optional[float] = None):
+                    stop_client_order_id (Optional[str] = None): A unique Id for the stop loss/stop loss limit leg
+                    stop_limit_price (Optional[float] = None): If provided, stopLimitTimeInForce is required.
+                    stop_iceberg_qty (Optional[float] = None):
+                    stop_limit_time_in_force (Optional[MarginAccountNewOcoStopLimitTimeInForceEnum] = None): Valid values are `GTC/FOK/IOC`
+                    new_order_resp_type (Optional[MarginAccountNewOcoNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    side_effect_type (Optional[MarginAccountNewOcoSideEffectTypeEnum] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginAccountNewOcoResponse]
@@ -2076,8 +2076,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_account_repay(
         self,
-        asset: str = None,
-        amount: float = None,
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MarginAccountRepayResponse]:
         """
@@ -2088,9 +2088,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 100
 
                 Args:
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginAccountRepayResponse]
@@ -2104,7 +2104,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_account_repay_debt(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         amount: Optional[str] = None,
         specify_repay_assets: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -2122,10 +2122,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 3000
 
                 Args:
-                    asset (str):
-                    amount (Optional[str]):
-                    specify_repay_assets (Optional[str]): Specific asset list to repay debt; Can be added in batch, separated by commas
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    amount (Optional[str] = None):
+                    specify_repay_assets (Optional[str] = None): Specific asset list to repay debt; Can be added in batch, separated by commas
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginAccountRepayDebtResponse]
@@ -2141,7 +2141,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def margin_account_trade_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -2157,13 +2157,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    from_id (Optional[int]): Trade id to fetch from. Default gets most recent trades.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginAccountTradeListResponse]
@@ -2179,10 +2179,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def modify_cm_order(
         self,
-        symbol: str = None,
-        side: ModifyCmOrderSideEnum = None,
-        quantity: float = None,
-        price: float = None,
+        symbol: Union[str, None],
+        side: Union[ModifyCmOrderSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyCmOrderPriceMatchEnum] = None,
@@ -2203,14 +2203,14 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (ModifyCmOrderSideEnum):
-                    quantity (float): Order quantity
-                    price (float):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    price_match (Optional[ModifyCmOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[ModifyCmOrderSideEnum, None]):
+                    quantity (Union[float, None]): Order quantity
+                    price (Union[float, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    price_match (Optional[ModifyCmOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ModifyCmOrderResponse]
@@ -2233,10 +2233,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def modify_um_order(
         self,
-        symbol: str = None,
-        side: ModifyUmOrderSideEnum = None,
-        quantity: float = None,
-        price: float = None,
+        symbol: Union[str, None],
+        side: Union[ModifyUmOrderSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyUmOrderPriceMatchEnum] = None,
@@ -2257,14 +2257,14 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (ModifyUmOrderSideEnum):
-                    quantity (float): Order quantity
-                    price (float):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    price_match (Optional[ModifyUmOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[ModifyUmOrderSideEnum, None]):
+                    quantity (Union[float, None]): Order quantity
+                    price (Union[float, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    price_match (Optional[ModifyUmOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ModifyUmOrderResponse]
@@ -2287,9 +2287,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def new_cm_conditional_order(
         self,
-        symbol: str = None,
-        side: NewCmConditionalOrderSideEnum = None,
-        strategy_type: NewCmConditionalOrderStrategyTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewCmConditionalOrderSideEnum, None],
+        strategy_type: Union[NewCmConditionalOrderStrategyTypeEnum, None],
         position_side: Optional[NewCmConditionalOrderPositionSideEnum] = None,
         time_in_force: Optional[NewCmConditionalOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2336,21 +2336,21 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewCmConditionalOrderSideEnum):
-                    strategy_type (NewCmConditionalOrderStrategyTypeEnum): "STOP", "STOP_MARKET", "TAKE_PROFIT", "TAKE_PROFIT_MARKET", and "TRAILING_STOP_MARKET"
-                    position_side (Optional[NewCmConditionalOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewCmConditionalOrderTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode .
-                    price (Optional[float]):
-                    working_type (Optional[NewCmConditionalOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
-                    new_client_strategy_id (Optional[str]):
-                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the mark price
-                    callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewCmConditionalOrderSideEnum, None]):
+                    strategy_type (Union[NewCmConditionalOrderStrategyTypeEnum, None]): "STOP", "STOP_MARKET", "TAKE_PROFIT", "TAKE_PROFIT_MARKET", and "TRAILING_STOP_MARKET"
+                    position_side (Optional[NewCmConditionalOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewCmConditionalOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
+                    price (Optional[float] = None):
+                    working_type (Optional[NewCmConditionalOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    new_client_strategy_id (Optional[str] = None):
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the mark price
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewCmConditionalOrderResponse]
@@ -2380,9 +2380,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def new_cm_order(
         self,
-        symbol: str = None,
-        side: NewCmOrderSideEnum = None,
-        type: NewCmOrderTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewCmOrderSideEnum, None],
+        type: Union[NewCmOrderTypeEnum, None],
         position_side: Optional[NewCmOrderPositionSideEnum] = None,
         time_in_force: Optional[NewCmOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2405,18 +2405,18 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewCmOrderSideEnum):
-                    type (NewCmOrderTypeEnum): `LIMIT`, `MARKET`
-                    position_side (Optional[NewCmOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewCmOrderTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode .
-                    price (Optional[float]):
-                    price_match (Optional[NewCmOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default
-                    new_order_resp_type (Optional[NewCmOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewCmOrderSideEnum, None]):
+                    type (Union[NewCmOrderTypeEnum, None]): `LIMIT`, `MARKET`
+                    position_side (Optional[NewCmOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewCmOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
+                    price (Optional[float] = None):
+                    price_match (Optional[NewCmOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
+                    new_order_resp_type (Optional[NewCmOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewCmOrderResponse]
@@ -2443,9 +2443,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def new_margin_order(
         self,
-        symbol: str = None,
-        side: NewMarginOrderSideEnum = None,
-        type: NewMarginOrderTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewMarginOrderSideEnum, None],
+        type: Union[NewMarginOrderTypeEnum, None],
         quantity: Optional[float] = None,
         quote_order_qty: Optional[float] = None,
         price: Optional[float] = None,
@@ -2469,21 +2469,21 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewMarginOrderSideEnum):
-                    type (NewMarginOrderTypeEnum): `LIMIT`, `MARKET`
-                    quantity (Optional[float]):
-                    quote_order_qty (Optional[float]):
-                    price (Optional[float]):
-                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default
-                    new_order_resp_type (Optional[NewMarginOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order
-                    side_effect_type (Optional[NewMarginOrderSideEffectTypeEnum]): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
-                    time_in_force (Optional[NewMarginOrderTimeInForceEnum]):
-                    self_trade_prevention_mode (Optional[NewMarginOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
-                    auto_repay_at_cancel (Optional[bool]): 只有在自动借款单或者自动借还单生效，true表示的是撤单后需要把订单产生的借款归还，默认为true
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewMarginOrderSideEnum, None]):
+                    type (Union[NewMarginOrderTypeEnum, None]): `LIMIT`, `MARKET`
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    price (Optional[float] = None):
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
+                    new_order_resp_type (Optional[NewMarginOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order
+                    side_effect_type (Optional[NewMarginOrderSideEffectTypeEnum] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY; default NO_SIDE_EFFECT.
+                    time_in_force (Optional[NewMarginOrderTimeInForceEnum] = None):
+                    self_trade_prevention_mode (Optional[NewMarginOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
+                    auto_repay_at_cancel (Optional[bool] = None): 只有在自动借款单或者自动借还单生效，true表示的是撤单后需要把订单产生的借款归还，默认为true
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewMarginOrderResponse]
@@ -2513,9 +2513,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def new_um_conditional_order(
         self,
-        symbol: str = None,
-        side: NewUmConditionalOrderSideEnum = None,
-        strategy_type: NewUmConditionalOrderStrategyTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewUmConditionalOrderSideEnum, None],
+        strategy_type: Union[NewUmConditionalOrderStrategyTypeEnum, None],
         position_side: Optional[NewUmConditionalOrderPositionSideEnum] = None,
         time_in_force: Optional[NewUmConditionalOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2569,24 +2569,24 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewUmConditionalOrderSideEnum):
-                    strategy_type (NewUmConditionalOrderStrategyTypeEnum): "STOP", "STOP_MARKET", "TAKE_PROFIT", "TAKE_PROFIT_MARKET", and "TRAILING_STOP_MARKET"
-                    position_side (Optional[NewUmConditionalOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewUmConditionalOrderTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode .
-                    price (Optional[float]):
-                    working_type (Optional[NewUmConditionalOrderWorkingTypeEnum]): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str]): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
-                    new_client_strategy_id (Optional[str]):
-                    stop_price (Optional[float]): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    activation_price (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, default as the mark price
-                    callback_rate (Optional[float]): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
-                    price_match (Optional[NewUmConditionalOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewUmConditionalOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
-                    good_till_date (Optional[int]): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewUmConditionalOrderSideEnum, None]):
+                    strategy_type (Union[NewUmConditionalOrderStrategyTypeEnum, None]): "STOP", "STOP_MARKET", "TAKE_PROFIT", "TAKE_PROFIT_MARKET", and "TRAILING_STOP_MARKET"
+                    position_side (Optional[NewUmConditionalOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewUmConditionalOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
+                    price (Optional[float] = None):
+                    working_type (Optional[NewUmConditionalOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    new_client_strategy_id (Optional[str] = None):
+                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the mark price
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
+                    price_match (Optional[NewUmConditionalOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[NewUmConditionalOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewUmConditionalOrderResponse]
@@ -2619,9 +2619,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def new_um_order(
         self,
-        symbol: str = None,
-        side: NewUmOrderSideEnum = None,
-        type: NewUmOrderTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewUmOrderSideEnum, None],
+        type: Union[NewUmOrderTypeEnum, None],
         position_side: Optional[NewUmOrderPositionSideEnum] = None,
         time_in_force: Optional[NewUmOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -2650,20 +2650,20 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewUmOrderSideEnum):
-                    type (NewUmOrderTypeEnum): `LIMIT`, `MARKET`
-                    position_side (Optional[NewUmOrderPositionSideEnum]): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewUmOrderTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    reduce_only (Optional[str]): "true" or "false". default "false". Cannot be sent in Hedge Mode .
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default
-                    new_order_resp_type (Optional[NewUmOrderNewOrderRespTypeEnum]): "ACK", "RESULT", default "ACK"
-                    price_match (Optional[NewUmOrderPriceMatchEnum]): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewUmOrderSelfTradePreventionModeEnum]): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
-                    good_till_date (Optional[int]): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    side (Union[NewUmOrderSideEnum, None]):
+                    type (Union[NewUmOrderTypeEnum, None]): `LIMIT`, `MARKET`
+                    position_side (Optional[NewUmOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewUmOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
+                    new_order_resp_type (Optional[NewUmOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    price_match (Optional[NewUmOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    self_trade_prevention_mode (Optional[NewUmOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[NewUmOrderResponse]
@@ -2713,12 +2713,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    strategy_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    strategy_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCmConditionalOrdersResponse]
@@ -2734,7 +2734,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_all_cm_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         pair: Optional[str] = None,
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -2757,13 +2757,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20 with symbol, 40 with pair
 
                 Args:
-                    symbol (str):
-                    pair (Optional[str]):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    pair (Optional[str] = None):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCmOrdersResponse]
@@ -2792,8 +2792,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCurrentCmOpenConditionalOrdersResponse]
@@ -2824,9 +2824,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Careful when accessing this with no symbol.
 
                 Args:
-                    symbol (Optional[str]):
-                    pair (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    pair (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCurrentCmOpenOrdersResponse]
@@ -2856,8 +2856,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Careful when accessing this with no symbol.
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCurrentUmOpenConditionalOrdersResponse]
@@ -2887,8 +2887,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllCurrentUmOpenOrdersResponse]
@@ -2902,7 +2902,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_all_margin_account_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -2917,12 +2917,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 100
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllMarginAccountOrdersResponse]
@@ -2959,12 +2959,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]):
-                    strategy_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    strategy_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllUmConditionalOrdersResponse]
@@ -2980,7 +2980,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_all_um_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -3002,12 +3002,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryAllUmOrdersResponse]
@@ -3023,7 +3023,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_cm_conditional_order_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3044,10 +3044,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCmConditionalOrderHistoryResponse]
@@ -3063,7 +3063,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_cm_modify_order_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         start_time: Optional[int] = None,
@@ -3081,13 +3081,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCmModifyOrderHistoryResponse]
@@ -3109,7 +3109,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_cm_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3128,10 +3128,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCmOrderResponse]
@@ -3147,7 +3147,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_current_cm_open_conditional_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3163,10 +3163,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentCmOpenConditionalOrderResponse]
@@ -3182,7 +3182,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_current_cm_open_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3198,10 +3198,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentCmOpenOrderResponse]
@@ -3217,7 +3217,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_current_margin_open_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryCurrentMarginOpenOrderResponse]:
         """
@@ -3228,8 +3228,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentMarginOpenOrderResponse]
@@ -3243,7 +3243,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_current_um_open_conditional_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3259,10 +3259,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentUmOpenConditionalOrderResponse]
@@ -3278,7 +3278,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_current_um_open_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3295,10 +3295,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryCurrentUmOpenOrderResponse]
@@ -3314,7 +3314,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_margin_account_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3327,10 +3327,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 10
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginAccountOrderResponse]
@@ -3360,11 +3360,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 100
 
                 Args:
-                    from_id (Optional[int]): Trade id to fetch from. Default gets most recent trades.
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades.
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginAccountsAllOcoResponse]
@@ -3392,9 +3392,9 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    order_list_id (Optional[int]): Either `orderListId` or `listClientOrderId` must be provided
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginAccountsOcoResponse]
@@ -3420,7 +3420,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryMarginAccountsOpenOcoResponse]
@@ -3434,7 +3434,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_um_conditional_order_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         strategy_id: Optional[int] = None,
         new_client_strategy_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3454,10 +3454,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    strategy_id (Optional[int]):
-                    new_client_strategy_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    strategy_id (Optional[int] = None):
+                    new_client_strategy_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUmConditionalOrderHistoryResponse]
@@ -3473,7 +3473,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_um_modify_order_history(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         start_time: Optional[int] = None,
@@ -3491,13 +3491,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUmModifyOrderHistoryResponse]
@@ -3519,7 +3519,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def query_um_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -3538,10 +3538,10 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUmOrderResponse]
@@ -3575,12 +3575,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20 with symbol, 50 without symbol
 
                 Args:
-                    symbol (Optional[str]):
-                    auto_close_type (Optional[QueryUsersCmForceOrdersAutoCloseTypeEnum]): `LIQUIDATION` for liquidation orders, `ADL` for ADL orders.
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    auto_close_type (Optional[QueryUsersCmForceOrdersAutoCloseTypeEnum] = None): `LIQUIDATION` for liquidation orders, `ADL` for ADL orders.
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUsersCmForceOrdersResponse]
@@ -3610,11 +3610,11 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10 Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10 Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUsersMarginForceOrdersResponse]
@@ -3648,12 +3648,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 20 with symbol, 50 without symbol
 
                 Args:
-                    symbol (Optional[str]):
-                    auto_close_type (Optional[QueryUsersUmForceOrdersAutoCloseTypeEnum]): `LIQUIDATION` for liquidation orders, `ADL` for ADL orders.
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    auto_close_type (Optional[QueryUsersUmForceOrdersAutoCloseTypeEnum] = None): `LIQUIDATION` for liquidation orders, `ADL` for ADL orders.
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUsersUmForceOrdersResponse]
@@ -3669,7 +3669,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def toggle_bnb_burn_on_um_futures_trade(
         self,
-        fee_burn: str = None,
+        fee_burn: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ToggleBnbBurnOnUmFuturesTradeResponse]:
         """
@@ -3683,8 +3683,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 1
 
                 Args:
-                    fee_burn (str): "true": Fee Discount On; "false": Fee Discount Off
-                    recv_window (Optional[int]):
+                    fee_burn (Union[str, None]): "true": Fee Discount On; "false": Fee Discount Off
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ToggleBnbBurnOnUmFuturesTradeResponse]
@@ -3698,7 +3698,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
     def um_account_trade_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         from_id: Optional[int] = None,
@@ -3718,12 +3718,12 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (str):
-                    start_time (Optional[int]): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get funding until INCLUSIVE.
-                    from_id (Optional[int]): Trade id to fetch from. Default gets most recent trades.
-                    limit (Optional[int]): Default 100; max 1000
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UmAccountTradeListResponse]
@@ -3757,8 +3757,8 @@ class DerivativesTradingPortfolioMarginRestAPI:
         Weight: 5
 
                 Args:
-                    symbol (Optional[str]):
-                    recv_window (Optional[int]):
+                    symbol (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UmPositionAdlQuantileEstimationResponse]

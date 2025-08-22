@@ -573,7 +573,7 @@ class TestAccountApi:
         params = {
             "type": "type_example",
         }
-        del params["type"]
+        params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
             self.client.daily_account_snapshot(**params)

@@ -15,13 +15,12 @@ Do not edit the class manually.
 
 import pytest
 
-from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
 from binance_common.utils import ws_streams_placeholder
-from binance_common.websocket import WebSocketStreamBase
+from binance_common.websocket import WebSocketStreamBase, RequestStreamHandle
 from binance_sdk_spot.websocket_streams.streams import WebSocketStreamsApi
 
 
@@ -85,7 +84,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.agg_trade(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -150,7 +149,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.agg_trade(**params)
@@ -214,7 +213,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.all_market_rolling_window_ticker(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -310,7 +309,7 @@ class TestWebSocketStreams:
                 "WINDOW_SIZE_1h"
             ].value,
         }
-        del params["window_size"]
+        params["window_size"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'window_size'"
@@ -366,7 +365,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.all_mini_ticker()
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -476,7 +475,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.all_ticker()
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -599,7 +598,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.avg_price(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -654,7 +653,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.avg_price(**params)
@@ -703,7 +702,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.book_ticker(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -758,7 +757,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.book_ticker(**params)
@@ -808,7 +807,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.diff_book_depth(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -869,7 +868,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.diff_book_depth(**params)
@@ -935,7 +934,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.kline(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1028,7 +1027,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "interval": KlineIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.kline(**params)
@@ -1040,7 +1039,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "interval": KlineIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1109,7 +1108,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.kline_offset(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1202,7 +1201,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "interval": KlineOffsetIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.kline_offset(**params)
@@ -1214,7 +1213,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "interval": KlineOffsetIntervalEnum["INTERVAL_1s"].value,
         }
-        del params["interval"]
+        params["interval"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'interval'"
@@ -1269,7 +1268,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.mini_ticker(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1330,7 +1329,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.mini_ticker(**params)
@@ -1377,7 +1376,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.partial_book_depth(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1433,7 +1432,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "levels": PartialBookDepthLevelsEnum["LEVELS_5"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.partial_book_depth(**params)
@@ -1445,7 +1444,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "levels": PartialBookDepthLevelsEnum["LEVELS_5"].value,
         }
-        del params["levels"]
+        params["levels"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'levels'"):
             await self.ws_streams.partial_book_depth(**params)
@@ -1507,7 +1506,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.rolling_window_ticker(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1594,7 +1593,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "window_size": RollingWindowTickerWindowSizeEnum["WINDOW_SIZE_1h"].value,
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.rolling_window_ticker(**params)
@@ -1606,7 +1605,7 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
             "window_size": RollingWindowTickerWindowSizeEnum["WINDOW_SIZE_1h"].value,
         }
-        del params["window_size"]
+        params["window_size"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'window_size'"
@@ -1675,7 +1674,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.ticker(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1764,7 +1763,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.ticker(**params)
@@ -1816,7 +1815,7 @@ class TestWebSocketStreams:
         mock_callback = MagicMock()
 
         stream = await self.ws_streams.trade(**params)
-        assert isinstance(stream, SimpleNamespace)
+        assert isinstance(stream, RequestStreamHandle)
         assert callable(stream.on)
         assert callable(stream.unsubscribe)
         stream.on("message", mock_callback)
@@ -1877,7 +1876,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "bnbusdt",
         }
-        del params["symbol"]
+        params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
             await self.ws_streams.trade(**params)

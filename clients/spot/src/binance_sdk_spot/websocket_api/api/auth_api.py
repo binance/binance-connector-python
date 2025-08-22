@@ -55,8 +55,8 @@ class AuthApi:
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]): The value cannot be greater than `60000`
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
             Returns:
                 WebsocketApiResponse[SessionLogonResponse]
@@ -98,7 +98,7 @@ class AuthApi:
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[SessionLogoutResponse]
@@ -135,7 +135,7 @@ class AuthApi:
         Weight: 2
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
+                    id (Optional[str] = None): Unique WebSocket request ID.
 
             Returns:
                 WebsocketApiResponse[SessionStatusResponse]

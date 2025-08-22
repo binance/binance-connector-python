@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -84,7 +84,7 @@ class FiatRestAPI:
 
     def get_fiat_deposit_withdraw_history(
         self,
-        transaction_type: str = None,
+        transaction_type: Union[str, None],
         begin_time: Optional[int] = None,
         end_time: Optional[int] = None,
         page: Optional[int] = None,
@@ -101,12 +101,12 @@ class FiatRestAPI:
         Weight: 90000
 
                 Args:
-                    transaction_type (str): 0-buy,1-sell
-                    begin_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): default 1
-                    rows (Optional[int]): default 100, max 500
-                    recv_window (Optional[int]):
+                    transaction_type (Union[str, None]): 0-buy,1-sell
+                    begin_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): default 1
+                    rows (Optional[int] = None): default 100, max 500
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFiatDepositWithdrawHistoryResponse]
@@ -122,7 +122,7 @@ class FiatRestAPI:
 
     def get_fiat_payments_history(
         self,
-        transaction_type: str = None,
+        transaction_type: Union[str, None],
         begin_time: Optional[int] = None,
         end_time: Optional[int] = None,
         page: Optional[int] = None,
@@ -144,12 +144,12 @@ class FiatRestAPI:
         Weight: 1
 
                 Args:
-                    transaction_type (str): 0-buy,1-sell
-                    begin_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): default 1
-                    rows (Optional[int]): default 100, max 500
-                    recv_window (Optional[int]):
+                    transaction_type (Union[str, None]): 0-buy,1-sell
+                    begin_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): default 1
+                    rows (Optional[int] = None): default 100, max 500
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFiatPaymentsHistoryResponse]

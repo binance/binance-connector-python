@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, List, TypeVar
+from typing import Optional, List, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -141,7 +141,7 @@ class SubAccountRestAPI:
 
     def create_a_virtual_sub_account(
         self,
-        sub_account_string: str = None,
+        sub_account_string: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CreateAVirtualSubAccountResponse]:
         """
@@ -155,8 +155,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    sub_account_string (str): Please input a string. We will create a virtual email using that string for you to register
-                    recv_window (Optional[int]):
+                    sub_account_string (Union[str, None]): Please input a string. We will create a virtual email using that string for you to register
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[CreateAVirtualSubAccountResponse]
@@ -172,7 +172,7 @@ class SubAccountRestAPI:
 
     def enable_futures_for_sub_account(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[EnableFuturesForSubAccountResponse]:
         """
@@ -183,8 +183,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[EnableFuturesForSubAccountResponse]
@@ -200,7 +200,7 @@ class SubAccountRestAPI:
 
     def enable_options_for_sub_account(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[EnableOptionsForSubAccountResponse]:
         """
@@ -211,8 +211,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[EnableOptionsForSubAccountResponse]
@@ -228,7 +228,7 @@ class SubAccountRestAPI:
 
     def get_futures_position_risk_of_sub_account(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFuturesPositionRiskOfSubAccountResponse]:
         """
@@ -239,8 +239,8 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesPositionRiskOfSubAccountResponse]
@@ -256,8 +256,8 @@ class SubAccountRestAPI:
 
     def get_futures_position_risk_of_sub_account_v2(
         self,
-        email: str = None,
-        futures_type: int = None,
+        email: Union[str, None],
+        futures_type: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFuturesPositionRiskOfSubAccountV2Response]:
         """
@@ -268,9 +268,9 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    futures_type (int): 1:USDT-margined Futures，2: Coin-margined Futures
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesPositionRiskOfSubAccountV2Response]
@@ -299,8 +299,8 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    email (Optional[str]): Managed sub-account email
-                    recv_window (Optional[int]):
+                    email (Optional[str] = None): Managed sub-account email
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSubAccountsStatusOnMarginOrFuturesResponse]
@@ -330,11 +330,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (Optional[str]): Managed sub-account email
-                    is_freeze (Optional[str]): true or false
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    email (Optional[str] = None): Managed sub-account email
+                    is_freeze (Optional[str] = None): true or false
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountListResponse]
@@ -350,7 +350,7 @@ class SubAccountRestAPI:
 
     def query_sub_account_transaction_statistics(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySubAccountTransactionStatisticsResponse]:
         """
@@ -361,8 +361,8 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountTransactionStatisticsResponse]
@@ -378,9 +378,9 @@ class SubAccountRestAPI:
 
     def add_ip_restriction_for_sub_account_api_key(
         self,
-        email: str = None,
-        sub_account_api_key: str = None,
-        status: str = None,
+        email: Union[str, None],
+        sub_account_api_key: Union[str, None],
+        status: Union[str, None],
         ip_address: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AddIpRestrictionForSubAccountApiKeyResponse]:
@@ -394,11 +394,11 @@ class SubAccountRestAPI:
         Weight: 3000
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    sub_account_api_key (str):
-                    status (str): IP Restriction status. 1 = IP Unrestricted. 2 = Restrict access to trusted IPs only.
-                    ip_address (Optional[str]): Insert static IP in batch, separated by commas.
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    sub_account_api_key (Union[str, None]):
+                    status (Union[str, None]): IP Restriction status. 1 = IP Unrestricted. 2 = Restrict access to trusted IPs only.
+                    ip_address (Optional[str] = None): Insert static IP in batch, separated by commas.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[AddIpRestrictionForSubAccountApiKeyResponse]
@@ -414,9 +414,9 @@ class SubAccountRestAPI:
 
     def delete_ip_list_for_a_sub_account_api_key(
         self,
-        email: str = None,
-        sub_account_api_key: str = None,
-        ip_address: str = None,
+        email: Union[str, None],
+        sub_account_api_key: Union[str, None],
+        ip_address: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[DeleteIpListForASubAccountApiKeyResponse]:
         """
@@ -429,10 +429,10 @@ class SubAccountRestAPI:
         Weight: 3000
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    sub_account_api_key (str):
-                    ip_address (str): IPs to be deleted. Can be added in batches, separated by commas
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    sub_account_api_key (Union[str, None]):
+                    ip_address (Union[str, None]): IPs to be deleted. Can be added in batches, separated by commas
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DeleteIpListForASubAccountApiKeyResponse]
@@ -448,8 +448,8 @@ class SubAccountRestAPI:
 
     def get_ip_restriction_for_a_sub_account_api_key(
         self,
-        email: str = None,
-        sub_account_api_key: str = None,
+        email: Union[str, None],
+        sub_account_api_key: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetIpRestrictionForASubAccountApiKeyResponse]:
         """
@@ -460,9 +460,9 @@ class SubAccountRestAPI:
         Weight: 3000
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    sub_account_api_key (str):
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    sub_account_api_key (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetIpRestrictionForASubAccountApiKeyResponse]
@@ -478,10 +478,10 @@ class SubAccountRestAPI:
 
     def futures_transfer_for_sub_account(
         self,
-        email: str = None,
-        asset: str = None,
-        amount: float = None,
-        type: int = None,
+        email: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
+        type: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FuturesTransferForSubAccountResponse]:
         """
@@ -494,11 +494,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    asset (str):
-                    amount (float):
-                    type (int): 1: transfer from subaccount's  spot account to margin account 2: transfer from subaccount's margin account to its spot account
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    type (Union[int, None]): 1: transfer from subaccount's  spot account to margin account 2: transfer from subaccount's margin account to its spot account
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FuturesTransferForSubAccountResponse]
@@ -514,7 +514,7 @@ class SubAccountRestAPI:
 
     def get_detail_on_sub_accounts_futures_account(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDetailOnSubAccountsFuturesAccountResponse]:
         """
@@ -525,8 +525,8 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDetailOnSubAccountsFuturesAccountResponse]
@@ -542,8 +542,8 @@ class SubAccountRestAPI:
 
     def get_detail_on_sub_accounts_futures_account_v2(
         self,
-        email: str = None,
-        futures_type: int = None,
+        email: Union[str, None],
+        futures_type: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDetailOnSubAccountsFuturesAccountV2Response]:
         """
@@ -554,9 +554,9 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    futures_type (int): 1:USDT-margined Futures，2: Coin-margined Futures
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDetailOnSubAccountsFuturesAccountV2Response]
@@ -572,7 +572,7 @@ class SubAccountRestAPI:
 
     def get_detail_on_sub_accounts_margin_account(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetDetailOnSubAccountsMarginAccountResponse]:
         """
@@ -583,8 +583,8 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetDetailOnSubAccountsMarginAccountResponse]
@@ -600,9 +600,9 @@ class SubAccountRestAPI:
 
     def get_move_position_history_for_sub_account(
         self,
-        symbol: str = None,
-        page: int = None,
-        row: int = None,
+        symbol: Union[str, None],
+        page: Union[int, None],
+        row: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -619,12 +619,12 @@ class SubAccountRestAPI:
         Weight: 150
 
                 Args:
-                    symbol (str):
-                    page (int): Page
-                    row (int):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    recv_window (Optional[int]):
+                    symbol (Union[str, None]):
+                    page (Union[int, None]): Page
+                    row (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetMovePositionHistoryForSubAccountResponse]
@@ -640,8 +640,8 @@ class SubAccountRestAPI:
 
     def get_sub_account_deposit_address(
         self,
-        email: str = None,
-        coin: str = None,
+        email: Union[str, None],
+        coin: Union[str, None],
         network: Optional[str] = None,
         amount: Optional[float] = None,
         recv_window: Optional[int] = None,
@@ -656,11 +656,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    coin (str):
-                    network (Optional[str]): networks can be found in `GET /sapi/v1/capital/deposit/address`
-                    amount (Optional[float]):
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    coin (Union[str, None]):
+                    network (Optional[str] = None): networks can be found in `GET /sapi/v1/capital/deposit/address`
+                    amount (Optional[float] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSubAccountDepositAddressResponse]
@@ -676,7 +676,7 @@ class SubAccountRestAPI:
 
     def get_sub_account_deposit_history(
         self,
-        email: str = None,
+        email: Union[str, None],
         coin: Optional[str] = None,
         status: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -694,15 +694,15 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    coin (Optional[str]):
-                    status (Optional[int]): 0(0:pending,6: credited but cannot withdraw,7:Wrong Deposit,8:Waiting User confirm,1:success)
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    offset (Optional[int]): default:0
-                    recv_window (Optional[int]):
-                    tx_id (Optional[str]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    coin (Optional[str] = None):
+                    status (Optional[int] = None): 0(0:pending,6: credited but cannot withdraw,7:Wrong Deposit,8:Waiting User confirm,1:success)
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    offset (Optional[int] = None): default:0
+                    recv_window (Optional[int] = None):
+                    tx_id (Optional[str] = None):
 
                 Returns:
                     ApiResponse[GetSubAccountDepositHistoryResponse]
@@ -728,7 +728,7 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSummaryOfSubAccountsFuturesAccountResponse]
@@ -744,7 +744,7 @@ class SubAccountRestAPI:
 
     def get_summary_of_sub_accounts_futures_account_v2(
         self,
-        futures_type: int = None,
+        futures_type: Union[int, None],
         page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -757,10 +757,10 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    futures_type (int): 1:USDT-margined Futures，2: Coin-margined Futures
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSummaryOfSubAccountsFuturesAccountV2Response]
@@ -786,7 +786,7 @@ class SubAccountRestAPI:
         Weight: 10
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSummaryOfSubAccountsMarginAccountResponse]
@@ -802,10 +802,10 @@ class SubAccountRestAPI:
 
     def margin_transfer_for_sub_account(
         self,
-        email: str = None,
-        asset: str = None,
-        amount: float = None,
-        type: int = None,
+        email: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
+        type: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MarginTransferForSubAccountResponse]:
         """
@@ -818,11 +818,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    asset (str):
-                    amount (float):
-                    type (int): 1: transfer from subaccount's  spot account to margin account 2: transfer from subaccount's margin account to its spot account
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    type (Union[int, None]): 1: transfer from subaccount's  spot account to margin account 2: transfer from subaccount's margin account to its spot account
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MarginTransferForSubAccountResponse]
@@ -838,10 +838,10 @@ class SubAccountRestAPI:
 
     def move_position_for_sub_account(
         self,
-        from_user_email: str = None,
-        to_user_email: str = None,
-        product_type: str = None,
-        order_args: List[object] = None,
+        from_user_email: Union[str, None],
+        to_user_email: Union[str, None],
+        product_type: Union[str, None],
+        order_args: Union[List[object], None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MovePositionForSubAccountResponse]:
         """
@@ -864,11 +864,11 @@ class SubAccountRestAPI:
         Weight: 150
 
                 Args:
-                    from_user_email (str):
-                    to_user_email (str):
-                    product_type (str): Only support UM
-                    order_args (List[object]): Max 10 positions supported. When input request parameter,orderArgs.symbol should be STRING, orderArgs.quantity should be BIGDECIMAL, and orderArgs.positionSide should be STRING, positionSide support BOTH,LONG and SHORT. Each entry should be like orderArgs[0].symbol=BTCUSDT,orderArgs[0].quantity=0.001,orderArgs[0].positionSide=BOTH. Example of the request parameter array: orderArgs[0].symbol=BTCUSDT orderArgs[0].quantity=0.001 orderArgs[0].positionSide=BOTH orderArgs[1].symbol=ETHUSDT orderArgs[1].quantity=0.01 orderArgs[1].positionSide=BOTH
-                    recv_window (Optional[int]):
+                    from_user_email (Union[str, None]):
+                    to_user_email (Union[str, None]):
+                    product_type (Union[str, None]): Only support UM
+                    order_args (Union[List[object], None]): Max 10 positions supported. When input request parameter,orderArgs.symbol should be STRING, orderArgs.quantity should be BIGDECIMAL, and orderArgs.positionSide should be STRING, positionSide support BOTH,LONG and SHORT. Each entry should be like orderArgs[0].symbol=BTCUSDT,orderArgs[0].quantity=0.001,orderArgs[0].positionSide=BOTH. Example of the request parameter array: orderArgs[0].symbol=BTCUSDT orderArgs[0].quantity=0.001 orderArgs[0].positionSide=BOTH orderArgs[1].symbol=ETHUSDT orderArgs[1].quantity=0.01 orderArgs[1].positionSide=BOTH
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MovePositionForSubAccountResponse]
@@ -884,7 +884,7 @@ class SubAccountRestAPI:
 
     def query_sub_account_assets(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySubAccountAssetsResponse]:
         """
@@ -895,8 +895,8 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountAssetsResponse]
@@ -910,7 +910,7 @@ class SubAccountRestAPI:
 
     def query_sub_account_assets_asset_management(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySubAccountAssetsAssetManagementResponse]:
         """
@@ -921,8 +921,8 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountAssetsAssetManagementResponse]
@@ -938,8 +938,8 @@ class SubAccountRestAPI:
 
     def query_sub_account_futures_asset_transfer_history(
         self,
-        email: str = None,
-        futures_type: int = None,
+        email: Union[str, None],
+        futures_type: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         page: Optional[int] = None,
@@ -954,13 +954,13 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    futures_type (int): 1:USDT-margined Futures，2: Coin-margined Futures
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountFuturesAssetTransferHistoryResponse]
@@ -997,13 +997,13 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    from_email (Optional[str]):
-                    to_email (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    from_email (Optional[str] = None):
+                    to_email (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountSpotAssetTransferHistoryResponse]
@@ -1032,10 +1032,10 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (Optional[str]): Managed sub-account email
-                    page (Optional[int]): Default value: 1
-                    size (Optional[int]): default 10, max 20
-                    recv_window (Optional[int]):
+                    email (Optional[str] = None): Managed sub-account email
+                    page (Optional[int] = None): Default value: 1
+                    size (Optional[int] = None): default 10, max 20
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QuerySubAccountSpotAssetsSummaryResponse]
@@ -1073,14 +1073,14 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    from_email (Optional[str]):
-                    to_email (Optional[str]):
-                    client_tran_id (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    from_email (Optional[str] = None):
+                    to_email (Optional[str] = None):
+                    client_tran_id (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryUniversalTransferHistoryResponse]
@@ -1103,11 +1103,11 @@ class SubAccountRestAPI:
 
     def sub_account_futures_asset_transfer(
         self,
-        from_email: str = None,
-        to_email: str = None,
-        futures_type: int = None,
-        asset: str = None,
-        amount: float = None,
+        from_email: Union[str, None],
+        to_email: Union[str, None],
+        futures_type: Union[int, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SubAccountFuturesAssetTransferResponse]:
         """
@@ -1122,12 +1122,12 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    from_email (str):
-                    to_email (str):
-                    futures_type (int): 1:USDT-margined Futures，2: Coin-margined Futures
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    from_email (Union[str, None]):
+                    to_email (Union[str, None]):
+                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubAccountFuturesAssetTransferResponse]
@@ -1162,13 +1162,13 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    asset (Optional[str]): If not sent, result of all assets will be returned
-                    type (Optional[int]): 1: transfer in, 2: transfer out
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    return_fail_history (Optional[bool]): Default `False`, return PROCESS and SUCCESS status history; If `True`,return PROCESS and SUCCESS and FAILURE status history
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None): If not sent, result of all assets will be returned
+                    type (Optional[int] = None): 1: transfer in, 2: transfer out
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    return_fail_history (Optional[bool] = None): Default `False`, return PROCESS and SUCCESS status history; If `True`,return PROCESS and SUCCESS and FAILURE status history
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubAccountTransferHistoryResponse]
@@ -1184,8 +1184,8 @@ class SubAccountRestAPI:
 
     def transfer_to_master(
         self,
-        asset: str = None,
-        amount: float = None,
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TransferToMasterResponse]:
         """
@@ -1198,9 +1198,9 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TransferToMasterResponse]
@@ -1214,9 +1214,9 @@ class SubAccountRestAPI:
 
     def transfer_to_sub_account_of_same_master(
         self,
-        to_email: str = None,
-        asset: str = None,
-        amount: float = None,
+        to_email: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TransferToSubAccountOfSameMasterResponse]:
         """
@@ -1229,10 +1229,10 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    to_email (str):
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    to_email (Union[str, None]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TransferToSubAccountOfSameMasterResponse]
@@ -1248,10 +1248,10 @@ class SubAccountRestAPI:
 
     def universal_transfer(
         self,
-        from_account_type: str = None,
-        to_account_type: str = None,
-        asset: str = None,
-        amount: float = None,
+        from_account_type: Union[str, None],
+        to_account_type: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         from_email: Optional[str] = None,
         to_email: Optional[str] = None,
         client_tran_id: Optional[str] = None,
@@ -1278,15 +1278,15 @@ class SubAccountRestAPI:
         Weight: 360
 
                 Args:
-                    from_account_type (str): "SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN","ALPHA"
-                    to_account_type (str): "SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN","ALPHA"
-                    asset (str):
-                    amount (float):
-                    from_email (Optional[str]):
-                    to_email (Optional[str]):
-                    client_tran_id (Optional[str]):
-                    symbol (Optional[str]): Only supported under ISOLATED_MARGIN type
-                    recv_window (Optional[int]):
+                    from_account_type (Union[str, None]): "SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN"
+                    to_account_type (Union[str, None]): "SPOT","USDT_FUTURE","COIN_FUTURE","MARGIN"(Cross),"ISOLATED_MARGIN"
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    from_email (Optional[str] = None):
+                    to_email (Optional[str] = None):
+                    client_tran_id (Optional[str] = None):
+                    symbol (Optional[str] = None): Only supported under ISOLATED_MARGIN type
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[UniversalTransferResponse]
@@ -1310,9 +1310,9 @@ class SubAccountRestAPI:
 
     def deposit_assets_into_the_managed_sub_account(
         self,
-        to_email: str = None,
-        asset: str = None,
-        amount: float = None,
+        to_email: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[DepositAssetsIntoTheManagedSubAccountResponse]:
         """
@@ -1325,10 +1325,10 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    to_email (str):
-                    asset (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    to_email (Union[str, None]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[DepositAssetsIntoTheManagedSubAccountResponse]
@@ -1344,8 +1344,8 @@ class SubAccountRestAPI:
 
     def get_managed_sub_account_deposit_address(
         self,
-        email: str = None,
-        coin: str = None,
+        email: Union[str, None],
+        coin: Union[str, None],
         network: Optional[str] = None,
         amount: Optional[float] = None,
         recv_window: Optional[int] = None,
@@ -1361,11 +1361,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    coin (str):
-                    network (Optional[str]): networks can be found in `GET /sapi/v1/capital/deposit/address`
-                    amount (Optional[float]):
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    coin (Union[str, None]):
+                    network (Optional[str] = None): networks can be found in `GET /sapi/v1/capital/deposit/address`
+                    amount (Optional[float] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetManagedSubAccountDepositAddressResponse]
@@ -1381,7 +1381,7 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_asset_details(
         self,
-        email: str = None,
+        email: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryManagedSubAccountAssetDetailsResponse]:
         """
@@ -1392,8 +1392,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountAssetDetailsResponse]
@@ -1409,7 +1409,7 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_futures_asset_details(
         self,
-        email: str = None,
+        email: Union[str, None],
         account_type: Optional[str] = None,
     ) -> ApiResponse[QueryManagedSubAccountFuturesAssetDetailsResponse]:
         """
@@ -1420,8 +1420,8 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    account_type (Optional[str]): No input or input "MARGIN" to get Cross Margin account details. Input "ISOLATED_MARGIN" to get Isolated Margin account details.
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    account_type (Optional[str] = None): No input or input "MARGIN" to get Cross Margin account details. Input "ISOLATED_MARGIN" to get Isolated Margin account details.
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountFuturesAssetDetailsResponse]
@@ -1452,10 +1452,10 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (Optional[str]): Managed sub-account email
-                    page (Optional[int]): Default value: 1
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    email (Optional[str] = None): Managed sub-account email
+                    page (Optional[int] = None): Default value: 1
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountListResponse]
@@ -1471,7 +1471,7 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_margin_asset_details(
         self,
-        email: str = None,
+        email: Union[str, None],
         account_type: Optional[str] = None,
     ) -> ApiResponse[QueryManagedSubAccountMarginAssetDetailsResponse]:
         """
@@ -1482,8 +1482,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    account_type (Optional[str]): No input or input "MARGIN" to get Cross Margin account details. Input "ISOLATED_MARGIN" to get Isolated Margin account details.
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    account_type (Optional[str] = None): No input or input "MARGIN" to get Cross Margin account details. Input "ISOLATED_MARGIN" to get Isolated Margin account details.
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountMarginAssetDetailsResponse]
@@ -1501,8 +1501,8 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_snapshot(
         self,
-        email: str = None,
-        type: str = None,
+        email: Union[str, None],
+        type: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
@@ -1520,12 +1520,12 @@ class SubAccountRestAPI:
         Weight: 2400
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    type (str): "SPOT", "MARGIN"（cross）, "FUTURES"（UM）
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    limit (Optional[int]): Default value: 1, Max value: 200
-                    recv_window (Optional[int]):
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    type (Union[str, None]): "SPOT", "MARGIN"（cross）, "FUTURES"（UM）
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None): Default value: 1, Max value: 200
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountSnapshotResponse]
@@ -1541,11 +1541,11 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_transfer_log_master_account_investor(
         self,
-        email: str = None,
-        start_time: int = None,
-        end_time: int = None,
-        page: int = None,
-        limit: int = None,
+        email: Union[str, None],
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        page: Union[int, None],
+        limit: Union[int, None],
         transfers: Optional[str] = None,
         transfer_function_account_type: Optional[str] = None,
     ) -> ApiResponse[QueryManagedSubAccountTransferLogMasterAccountInvestorResponse]:
@@ -1558,13 +1558,13 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    start_time (int): Start Time
-                    end_time (int): End Time (The start time and end time interval cannot exceed half a year)
-                    page (int): Page
-                    limit (int): Limit (Max: 500)
-                    transfers (Optional[str]): Transfer Direction (FROM/TO)
-                    transfer_function_account_type (Optional[str]): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    start_time (Union[int, None]): Start Time
+                    end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
+                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountTransferLogMasterAccountInvestorResponse]
@@ -1586,11 +1586,11 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_transfer_log_master_account_trading(
         self,
-        email: str = None,
-        start_time: int = None,
-        end_time: int = None,
-        page: int = None,
-        limit: int = None,
+        email: Union[str, None],
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        page: Union[int, None],
+        limit: Union[int, None],
         transfers: Optional[str] = None,
         transfer_function_account_type: Optional[str] = None,
     ) -> ApiResponse[QueryManagedSubAccountTransferLogMasterAccountTradingResponse]:
@@ -1603,13 +1603,13 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (str): [Sub-account email](#email-address)
-                    start_time (int): Start Time
-                    end_time (int): End Time (The start time and end time interval cannot exceed half a year)
-                    page (int): Page
-                    limit (int): Limit (Max: 500)
-                    transfers (Optional[str]): Transfer Direction (FROM/TO)
-                    transfer_function_account_type (Optional[str]): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
+                    email (Union[str, None]): [Sub-account email](#email-address)
+                    start_time (Union[int, None]): Start Time
+                    end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
+                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountTransferLogMasterAccountTradingResponse]
@@ -1631,10 +1631,10 @@ class SubAccountRestAPI:
 
     def query_managed_sub_account_transfer_log_sub_account_trading(
         self,
-        start_time: int = None,
-        end_time: int = None,
-        page: int = None,
-        limit: int = None,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        page: Union[int, None],
+        limit: Union[int, None],
         transfers: Optional[str] = None,
         transfer_function_account_type: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -1647,13 +1647,13 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    start_time (int): Start Time
-                    end_time (int): End Time (The start time and end time interval cannot exceed half a year)
-                    page (int): Page
-                    limit (int): Limit (Max: 500)
-                    transfers (Optional[str]): Transfer Direction (FROM/TO)
-                    transfer_function_account_type (Optional[str]): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
-                    recv_window (Optional[int]):
+                    start_time (Union[int, None]): Start Time
+                    end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
+                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryManagedSubAccountTransferLogSubAccountTradingResponse]
@@ -1675,9 +1675,9 @@ class SubAccountRestAPI:
 
     def withdrawl_assets_from_the_managed_sub_account(
         self,
-        from_email: str = None,
-        asset: str = None,
-        amount: float = None,
+        from_email: Union[str, None],
+        asset: Union[str, None],
+        amount: Union[float, None],
         transfer_date: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[WithdrawlAssetsFromTheManagedSubAccountResponse]:
@@ -1691,11 +1691,11 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
-                    from_email (str):
-                    asset (str):
-                    amount (float):
-                    transfer_date (Optional[int]): Withdrawals is automatically occur on the transfer date(UTC0). If a date is not selected, the withdrawal occurs right now
-                    recv_window (Optional[int]):
+                    from_email (Union[str, None]):
+                    asset (Union[str, None]):
+                    amount (Union[float, None]):
+                    transfer_date (Optional[int] = None): Withdrawals is automatically occur on the transfer date(UTC0). If a date is not selected, the withdrawal occurs right now
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[WithdrawlAssetsFromTheManagedSubAccountResponse]

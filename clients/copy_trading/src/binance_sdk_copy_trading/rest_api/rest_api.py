@@ -96,7 +96,7 @@ class CopyTradingRestAPI:
         Weight: 20
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesLeadTraderStatusResponse]
@@ -120,7 +120,7 @@ class CopyTradingRestAPI:
         Weight: 20
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFuturesLeadTradingSymbolWhitelistResponse]

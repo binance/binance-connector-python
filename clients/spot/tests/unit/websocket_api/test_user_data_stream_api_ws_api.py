@@ -23,10 +23,14 @@ from binance_common.errors import RequiredError
 from binance_sdk_spot.websocket_api.api import UserDataStreamApi
 
 
+from binance_sdk_spot.websocket_api.models import SessionSubscriptionsResponse
 from binance_sdk_spot.websocket_api.models import UserDataStreamPingResponse
 from binance_sdk_spot.websocket_api.models import UserDataStreamStartResponse
 from binance_sdk_spot.websocket_api.models import UserDataStreamStopResponse
 from binance_sdk_spot.websocket_api.models import UserDataStreamSubscribeResponse
+from binance_sdk_spot.websocket_api.models import (
+    UserDataStreamSubscribeSignatureResponse,
+)
 from binance_sdk_spot.websocket_api.models import UserDataStreamUnsubscribeResponse
 
 
@@ -35,6 +39,101 @@ class TestWebSocketUserDataStreamApi:
     def setup_method(self):
         self.mock_websocket_api = MagicMock()
         self.websocket_api = UserDataStreamApi(websocket_api=self.mock_websocket_api)
+
+    @pytest.mark.asyncio
+    async def test_session_subscriptions_success(self):
+        """Test session_subscriptions() successfully with required parameters only."""
+
+        expected_response = {
+            "id": "d3df5a22-88ea-4fe0-9f4e-0fcea5d418b7",
+            "status": 200,
+            "result": [{"subscriptionId": 1}, {"subscriptionId": 0}],
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.session_subscriptions()
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/session.subscriptions".replace(
+            "/", ""
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={"method": "/session.subscriptions".replace("/", ""), "params": {}},
+            response_model=SessionSubscriptionsResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_session_subscriptions_success_with_optional_params(self):
+        """Test session_subscriptions() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "id": "d3df5a22-88ea-4fe0-9f4e-0fcea5d418b7",
+            "status": 200,
+            "result": [{"subscriptionId": 1}, {"subscriptionId": 0}],
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.session_subscriptions(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/session.subscriptions".replace(
+            "/", ""
+        )
+        assert "params" in request_kwargs["payload"]
+        params = request_kwargs["payload"]["params"]
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={
+                "method": "/session.subscriptions".replace("/", ""),
+                "params": params,
+            },
+            response_model=SessionSubscriptionsResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_session_subscriptions_server_error(self):
+        """Test that session_subscriptions() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.session_subscriptions()
 
     @pytest.mark.asyncio
     async def test_user_data_stream_ping_success(self):
@@ -80,8 +179,6 @@ class TestWebSocketUserDataStreamApi:
             "/", ""
         )
 
-        assert "params" in request_kwargs["payload"]
-        params = request_kwargs["payload"]["params"]
         assert params["listen_key"] == "listenKey"
 
         assert result is not None
@@ -154,7 +251,7 @@ class TestWebSocketUserDataStreamApi:
         """Test that user_data_stream_ping() raises RequiredError when 'listen_key' is missing."""
 
         params = {"listen_key": "listenKey", "id": "e9d6b4349871b40611412680b3445fac"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"
@@ -406,7 +503,7 @@ class TestWebSocketUserDataStreamApi:
         """Test that user_data_stream_stop() raises RequiredError when 'listen_key' is missing."""
 
         params = {"listen_key": "listenKey", "id": "e9d6b4349871b40611412680b3445fac"}
-        del params["listen_key"]
+        params["listen_key"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'listen_key'"
@@ -434,7 +531,7 @@ class TestWebSocketUserDataStreamApi:
         expected_response = {
             "id": "d3df8a21-98ea-4fe0-8f4e-0fcea5d418b7",
             "status": 200,
-            "result": {},
+            "result": {"subscriptionId": 0},
         }
 
         self.mock_websocket_api.send_message = AsyncMock(
@@ -477,7 +574,7 @@ class TestWebSocketUserDataStreamApi:
         expected_response = {
             "id": "d3df8a21-98ea-4fe0-8f4e-0fcea5d418b7",
             "status": 200,
-            "result": {},
+            "result": {"subscriptionId": 0},
         }
 
         self.mock_websocket_api.send_message = AsyncMock(
@@ -524,6 +621,106 @@ class TestWebSocketUserDataStreamApi:
             await self.websocket_api.user_data_stream_subscribe()
 
     @pytest.mark.asyncio
+    async def test_user_data_stream_subscribe_signature_success(self):
+        """Test user_data_stream_subscribe_signature() successfully with required parameters only."""
+
+        expected_response = {
+            "id": "d3df8a22-98ea-4fe0-9f4e-0fcea5d418b7",
+            "status": 200,
+            "result": {"subscriptionId": 0},
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.user_data_stream_subscribe_signature()
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"][
+            "method"
+        ] == "/userDataStream.subscribe.signature".replace("/", "")
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/userDataStream.subscribe.signature".replace("/", ""),
+                "params": {},
+            },
+            response_model=UserDataStreamSubscribeSignatureResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_user_data_stream_subscribe_signature_success_with_optional_params(
+        self,
+    ):
+        """Test user_data_stream_subscribe_signature() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "id": "d3df8a22-98ea-4fe0-9f4e-0fcea5d418b7",
+            "status": 200,
+            "result": {"subscriptionId": 0},
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.user_data_stream_subscribe_signature(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"][
+            "method"
+        ] == "/userDataStream.subscribe.signature".replace("/", "")
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/userDataStream.subscribe.signature".replace("/", ""),
+                "params": params,
+            },
+            response_model=UserDataStreamSubscribeSignatureResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_user_data_stream_subscribe_signature_server_error(self):
+        """Test that user_data_stream_subscribe_signature() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.user_data_stream_subscribe_signature()
+
+    @pytest.mark.asyncio
     async def test_user_data_stream_unsubscribe_success(self):
         """Test user_data_stream_unsubscribe() successfully with required parameters only."""
 
@@ -568,7 +765,7 @@ class TestWebSocketUserDataStreamApi:
     async def test_user_data_stream_unsubscribe_success_with_optional_params(self):
         """Test user_data_stream_unsubscribe() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"id": "e9d6b4349871b40611412680b3445fac", "subscription_id": 1}
 
         expected_response = {
             "id": "d3df8a21-98ea-4fe0-8f4e-0fcea5d418b7",
@@ -598,6 +795,7 @@ class TestWebSocketUserDataStreamApi:
             "method"
         ] == "/userDataStream.unsubscribe".replace("/", "")
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["subscription_id"] == 1
 
         assert result is not None
         assert result.data() == expected_response

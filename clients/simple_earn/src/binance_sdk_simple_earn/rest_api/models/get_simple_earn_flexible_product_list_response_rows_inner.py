@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_simple_earn.rest_api.models.get_flexible_product_position_response_rows_inner_tier_annual_percentage_rate import (
     GetFlexibleProductPositionResponseRowsInnerTierAnnualPercentageRate,
@@ -48,7 +48,7 @@ class GetSimpleEarnFlexibleProductListResponseRowsInner(BaseModel):
         default=None, alias="minPurchaseAmount"
     )
     product_id: Optional[StrictStr] = Field(default=None, alias="productId")
-    subscription_start_time: Optional[StrictStr] = Field(
+    subscription_start_time: Optional[StrictInt] = Field(
         default=None, alias="subscriptionStartTime"
     )
     status: Optional[StrictStr] = None

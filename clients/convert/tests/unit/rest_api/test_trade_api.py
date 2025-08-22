@@ -152,7 +152,7 @@ class TestTradeApi:
         params = {
             "quote_id": "1",
         }
-        del params["quote_id"]
+        params["quote_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quote_id'"
@@ -263,7 +263,7 @@ class TestTradeApi:
         params = {
             "order_id": 1,
         }
-        del params["order_id"]
+        params["order_id"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'order_id'"
@@ -422,7 +422,7 @@ class TestTradeApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["start_time"]
+        params["start_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'start_time'"
@@ -435,7 +435,7 @@ class TestTradeApi:
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
-        del params["end_time"]
+        params["end_time"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'end_time'"
@@ -690,7 +690,7 @@ class TestTradeApi:
             "side": "BUY",
             "expired_type": "expired_type_example",
         }
-        del params["base_asset"]
+        params["base_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'base_asset'"
@@ -706,7 +706,7 @@ class TestTradeApi:
             "side": "BUY",
             "expired_type": "expired_type_example",
         }
-        del params["quote_asset"]
+        params["quote_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quote_asset'"
@@ -722,7 +722,7 @@ class TestTradeApi:
             "side": "BUY",
             "expired_type": "expired_type_example",
         }
-        del params["limit_price"]
+        params["limit_price"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'limit_price'"
@@ -738,7 +738,7 @@ class TestTradeApi:
             "side": "BUY",
             "expired_type": "expired_type_example",
         }
-        del params["side"]
+        params["side"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
             self.client.place_limit_order(**params)
@@ -752,7 +752,7 @@ class TestTradeApi:
             "side": "BUY",
             "expired_type": "expired_type_example",
         }
-        del params["expired_type"]
+        params["expired_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'expired_type'"
@@ -1013,7 +1013,7 @@ class TestTradeApi:
             "from_asset": "from_asset_example",
             "to_asset": "to_asset_example",
         }
-        del params["from_asset"]
+        params["from_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'from_asset'"
@@ -1026,7 +1026,7 @@ class TestTradeApi:
             "from_asset": "from_asset_example",
             "to_asset": "to_asset_example",
         }
-        del params["to_asset"]
+        params["to_asset"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'to_asset'"

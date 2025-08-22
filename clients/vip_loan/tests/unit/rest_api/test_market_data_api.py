@@ -168,7 +168,7 @@ class TestMarketDataApi:
         params = {
             "loan_coin": "loan_coin_example",
         }
-        del params["loan_coin"]
+        params["loan_coin"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'loan_coin'"

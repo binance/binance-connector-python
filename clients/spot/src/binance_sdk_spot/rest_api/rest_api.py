@@ -14,7 +14,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, List, TypeVar
+from typing import Optional, List, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -83,6 +83,8 @@ from .models import NewOrderTypeEnum
 from .models import NewOrderTimeInForceEnum
 from .models import NewOrderNewOrderRespTypeEnum
 from .models import NewOrderSelfTradePreventionModeEnum
+from .models import NewOrderPegPriceTypeEnum
+from .models import NewOrderPegOffsetTypeEnum
 from .models import OrderCancelReplaceSideEnum
 from .models import OrderCancelReplaceTypeEnum
 from .models import OrderCancelReplaceCancelReplaceModeEnum
@@ -91,10 +93,16 @@ from .models import OrderCancelReplaceNewOrderRespTypeEnum
 from .models import OrderCancelReplaceSelfTradePreventionModeEnum
 from .models import OrderCancelReplaceCancelRestrictionsEnum
 from .models import OrderCancelReplaceOrderRateLimitExceededModeEnum
+from .models import OrderCancelReplacePegPriceTypeEnum
+from .models import OrderCancelReplacePegOffsetTypeEnum
 from .models import OrderListOcoSideEnum
 from .models import OrderListOcoAboveTypeEnum
 from .models import OrderListOcoBelowTypeEnum
+from .models import OrderListOcoAbovePegPriceTypeEnum
+from .models import OrderListOcoAbovePegOffsetTypeEnum
 from .models import OrderListOcoBelowTimeInForceEnum
+from .models import OrderListOcoBelowPegPriceTypeEnum
+from .models import OrderListOcoBelowPegOffsetTypeEnum
 from .models import OrderListOcoNewOrderRespTypeEnum
 from .models import OrderListOcoSelfTradePreventionModeEnum
 from .models import OrderListOtoWorkingTypeEnum
@@ -104,7 +112,11 @@ from .models import OrderListOtoPendingSideEnum
 from .models import OrderListOtoNewOrderRespTypeEnum
 from .models import OrderListOtoSelfTradePreventionModeEnum
 from .models import OrderListOtoWorkingTimeInForceEnum
+from .models import OrderListOtoWorkingPegPriceTypeEnum
+from .models import OrderListOtoWorkingPegOffsetTypeEnum
 from .models import OrderListOtoPendingTimeInForceEnum
+from .models import OrderListOtoPendingPegPriceTypeEnum
+from .models import OrderListOtoPendingPegOffsetTypeEnum
 from .models import OrderListOtocoWorkingTypeEnum
 from .models import OrderListOtocoWorkingSideEnum
 from .models import OrderListOtocoPendingSideEnum
@@ -112,9 +124,15 @@ from .models import OrderListOtocoPendingAboveTypeEnum
 from .models import OrderListOtocoNewOrderRespTypeEnum
 from .models import OrderListOtocoSelfTradePreventionModeEnum
 from .models import OrderListOtocoWorkingTimeInForceEnum
+from .models import OrderListOtocoWorkingPegPriceTypeEnum
+from .models import OrderListOtocoWorkingPegOffsetTypeEnum
 from .models import OrderListOtocoPendingAboveTimeInForceEnum
+from .models import OrderListOtocoPendingAbovePegPriceTypeEnum
+from .models import OrderListOtocoPendingAbovePegOffsetTypeEnum
 from .models import OrderListOtocoPendingBelowTypeEnum
 from .models import OrderListOtocoPendingBelowTimeInForceEnum
+from .models import OrderListOtocoPendingBelowPegPriceTypeEnum
+from .models import OrderListOtocoPendingBelowPegOffsetTypeEnum
 from .models import OrderOcoSideEnum
 from .models import OrderOcoStopLimitTimeInForceEnum
 from .models import OrderOcoNewOrderRespTypeEnum
@@ -124,11 +142,18 @@ from .models import OrderTestTypeEnum
 from .models import OrderTestTimeInForceEnum
 from .models import OrderTestNewOrderRespTypeEnum
 from .models import OrderTestSelfTradePreventionModeEnum
+from .models import OrderTestPegPriceTypeEnum
+from .models import OrderTestPegOffsetTypeEnum
 from .models import SorOrderSideEnum
 from .models import SorOrderTypeEnum
 from .models import SorOrderTimeInForceEnum
 from .models import SorOrderNewOrderRespTypeEnum
 from .models import SorOrderSelfTradePreventionModeEnum
+from .models import SorOrderTestSideEnum
+from .models import SorOrderTestTypeEnum
+from .models import SorOrderTestTimeInForceEnum
+from .models import SorOrderTestNewOrderRespTypeEnum
+from .models import SorOrderTestSelfTradePreventionModeEnum
 
 
 T = TypeVar("T")
@@ -217,7 +242,7 @@ class SpotRestAPI:
 
     def account_commission(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
     ) -> ApiResponse[AccountCommissionResponse]:
         """
                 Query Commission Rates
@@ -226,7 +251,7 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
+                    symbol (Union[str, None]):
 
                 Returns:
                     ApiResponse[AccountCommissionResponse]
@@ -255,11 +280,11 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[AllOrderListResponse]
@@ -275,7 +300,7 @@ class SpotRestAPI:
 
     def all_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -289,12 +314,12 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[AllOrdersResponse]
@@ -320,8 +345,8 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    omit_zero_balances (Optional[bool]): When set to `true`, emits only the non-zero balances of an account. <br>Default value: `false`
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: `false`
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[GetAccountResponse]
@@ -345,8 +370,8 @@ class SpotRestAPI:
         Weight: 6 for a single symbol; **80** when the symbol parameter is omitted
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Optional[str] = None): Symbol to query
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[GetOpenOrdersResponse]
@@ -360,7 +385,7 @@ class SpotRestAPI:
 
     def get_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -372,10 +397,10 @@ class SpotRestAPI:
         Weight: 4
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[GetOrderResponse]
@@ -402,9 +427,9 @@ class SpotRestAPI:
         Weight: 4
 
                 Args:
-                    order_list_id (Optional[int]): Either `orderListId` or `listClientOrderId` must be provided
-                    orig_client_order_id (Optional[str]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    orig_client_order_id (Optional[str] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[GetOrderListResponse]
@@ -420,7 +445,7 @@ class SpotRestAPI:
 
     def my_allocations(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         from_allocation_id: Optional[int] = None,
@@ -435,13 +460,13 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (str):
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    from_allocation_id (Optional[int]):
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    order_id (Optional[int]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    from_allocation_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    order_id (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[MyAllocationsResponse]
@@ -463,7 +488,7 @@ class SpotRestAPI:
 
     def my_prevented_matches(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         prevented_match_id: Optional[int] = None,
         order_id: Optional[int] = None,
         from_prevented_match_id: Optional[int] = None,
@@ -488,12 +513,12 @@ class SpotRestAPI:
         Querying by `orderId`           | 20
 
                 Args:
-                    symbol (str):
-                    prevented_match_id (Optional[int]):
-                    order_id (Optional[int]):
-                    from_prevented_match_id (Optional[int]):
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    prevented_match_id (Optional[int] = None):
+                    order_id (Optional[int] = None):
+                    from_prevented_match_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[MyPreventedMatchesResponse]
@@ -514,7 +539,7 @@ class SpotRestAPI:
 
     def my_trades(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -532,13 +557,13 @@ class SpotRestAPI:
         |With orderId|5|
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[MyTradesResponse]
@@ -563,7 +588,7 @@ class SpotRestAPI:
         Weight: 6
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OpenOrderListResponse]
@@ -577,8 +602,8 @@ class SpotRestAPI:
 
     def order_amendments(
         self,
-        symbol: str = None,
-        order_id: int = None,
+        symbol: Union[str, None],
+        order_id: Union[int, None],
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -590,11 +615,11 @@ class SpotRestAPI:
         Weight: 4
 
                 Args:
-                    symbol (str):
-                    order_id (int):
-                    from_execution_id (Optional[int]):
-                    limit (Optional[int]): Default:500; Maximum: 1000
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Union[int, None]):
+                    from_execution_id (Optional[int] = None):
+                    limit (Optional[int] = None): Default:500; Maximum: 1000
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderAmendmentsResponse]
@@ -619,7 +644,7 @@ class SpotRestAPI:
         Weight: 40
 
                 Args:
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[RateLimitOrderResponse]
@@ -646,11 +671,11 @@ class SpotRestAPI:
         Weight: 20
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
-                    permissions (Optional[List[str]]): List of permissions to query
-                    show_permission_sets (Optional[bool]): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`
-                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum]):
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    permissions (Optional[List[str]] = None): List of permissions to query
+                    show_permission_sets (Optional[bool] = None): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`
+                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[ExchangeInfoResponse]
@@ -708,7 +733,7 @@ class SpotRestAPI:
 
     def agg_trades(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         from_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -721,11 +746,11 @@ class SpotRestAPI:
         Weight: 4
 
                 Args:
-                    symbol (str):
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
+                    symbol (Union[str, None]):
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
 
                 Returns:
                     ApiResponse[AggTradesResponse]
@@ -739,7 +764,7 @@ class SpotRestAPI:
 
     def avg_price(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
     ) -> ApiResponse[AvgPriceResponse]:
         """
                 Current average price
@@ -748,7 +773,7 @@ class SpotRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
+                    symbol (Union[str, None]):
 
                 Returns:
                     ApiResponse[AvgPriceResponse]
@@ -762,7 +787,7 @@ class SpotRestAPI:
 
     def depth(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[DepthResponse]:
         """
@@ -779,8 +804,8 @@ class SpotRestAPI:
         1001-5000| 250
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
 
                 Returns:
                     ApiResponse[DepthResponse]
@@ -794,7 +819,7 @@ class SpotRestAPI:
 
     def get_trades(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
     ) -> ApiResponse[GetTradesResponse]:
         """
@@ -804,8 +829,8 @@ class SpotRestAPI:
         Weight: 25
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
 
                 Returns:
                     ApiResponse[GetTradesResponse]
@@ -819,7 +844,7 @@ class SpotRestAPI:
 
     def historical_trades(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         limit: Optional[int] = None,
         from_id: Optional[int] = None,
     ) -> ApiResponse[HistoricalTradesResponse]:
@@ -830,9 +855,9 @@ class SpotRestAPI:
         Weight: 25
 
                 Args:
-                    symbol (str):
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
-                    from_id (Optional[int]): ID to get aggregate trades from INCLUSIVE.
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
 
                 Returns:
                     ApiResponse[HistoricalTradesResponse]
@@ -846,8 +871,8 @@ class SpotRestAPI:
 
     def klines(
         self,
-        symbol: str = None,
-        interval: KlinesIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[KlinesIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         time_zone: Optional[str] = None,
@@ -861,12 +886,12 @@ class SpotRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
-                    interval (KlinesIntervalEnum):
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    time_zone (Optional[str]): Default: 0 (UTC)
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
+                    symbol (Union[str, None]):
+                    interval (Union[KlinesIntervalEnum, None]):
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
 
                 Returns:
                     ApiResponse[KlinesResponse]
@@ -894,10 +919,10 @@ class SpotRestAPI:
         Weight: 4 for each requested <tt>symbol</tt> regardless of <tt>windowSize</tt>. <br/><br/> The weight for this request will cap at 200 once the number of `symbols` in the request is more than 50.
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
-                    window_size (Optional[TickerWindowSizeEnum]):
-                    type (Optional[TickerTypeEnum]):
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    window_size (Optional[TickerWindowSizeEnum] = None):
+                    type (Optional[TickerTypeEnum] = None):
 
                 Returns:
                     ApiResponse[TickerResponse]
@@ -958,9 +983,9 @@ class SpotRestAPI:
         </table>
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
-                    type (Optional[Ticker24hrTypeEnum]):
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    type (Optional[Ticker24hrTypeEnum] = None):
 
                 Returns:
                     ApiResponse[Ticker24hrResponse]
@@ -1008,8 +1033,8 @@ class SpotRestAPI:
         </table>
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
 
                 Returns:
                     ApiResponse[TickerBookTickerResponse]
@@ -1057,8 +1082,8 @@ class SpotRestAPI:
         </table>
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
 
                 Returns:
                     ApiResponse[TickerPriceResponse]
@@ -1084,10 +1109,10 @@ class SpotRestAPI:
         Weight: 4 for each requested <tt>symbol</tt>. <br/><br/> The weight for this request will cap at 200 once the number of `symbols` in the request is more than 50.
 
                 Args:
-                    symbol (Optional[str]): Symbol to query
-                    symbols (Optional[List[str]]): List of symbols to query
-                    time_zone (Optional[str]): Default: 0 (UTC)
-                    type (Optional[TickerTradingDayTypeEnum]):
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    type (Optional[TickerTradingDayTypeEnum] = None):
 
                 Returns:
                     ApiResponse[TickerTradingDayResponse]
@@ -1101,8 +1126,8 @@ class SpotRestAPI:
 
     def ui_klines(
         self,
-        symbol: str = None,
-        interval: UiKlinesIntervalEnum = None,
+        symbol: Union[str, None],
+        interval: Union[UiKlinesIntervalEnum, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         time_zone: Optional[str] = None,
@@ -1117,12 +1142,12 @@ class SpotRestAPI:
         Weight: 2
 
                 Args:
-                    symbol (str):
-                    interval (UiKlinesIntervalEnum):
-                    start_time (Optional[int]): Timestamp in ms to get aggregate trades from INCLUSIVE.
-                    end_time (Optional[int]): Timestamp in ms to get aggregate trades until INCLUSIVE.
-                    time_zone (Optional[str]): Default: 0 (UTC)
-                    limit (Optional[int]): Default: 500; Maximum: 1000.
+                    symbol (Union[str, None]):
+                    interval (Union[UiKlinesIntervalEnum, None]):
+                    start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
+                    time_zone (Optional[str] = None): Default: 0 (UTC)
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000.
 
                 Returns:
                     ApiResponse[UiKlinesResponse]
@@ -1138,7 +1163,7 @@ class SpotRestAPI:
 
     def delete_open_orders(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[DeleteOpenOrdersResponse]:
         """
@@ -1149,8 +1174,8 @@ class SpotRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[DeleteOpenOrdersResponse]
@@ -1164,7 +1189,7 @@ class SpotRestAPI:
 
     def delete_order(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
@@ -1178,12 +1203,12 @@ class SpotRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    cancel_restrictions (Optional[DeleteOrderCancelRestrictionsEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    cancel_restrictions (Optional[DeleteOrderCancelRestrictionsEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[DeleteOrderResponse]
@@ -1204,7 +1229,7 @@ class SpotRestAPI:
 
     def delete_order_list(
         self,
-        symbol: str = None,
+        symbol: Union[str, None],
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
@@ -1217,11 +1242,11 @@ class SpotRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    order_list_id (Optional[int]): Either `orderListId` or `listClientOrderId` must be provided
-                    list_client_order_id (Optional[str]): A unique Id for the entire orderList
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
+                    list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[DeleteOrderListResponse]
@@ -1241,9 +1266,9 @@ class SpotRestAPI:
 
     def new_order(
         self,
-        symbol: str = None,
-        side: NewOrderSideEnum = None,
-        type: NewOrderTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[NewOrderSideEnum, None],
+        type: Union[NewOrderTypeEnum, None],
         time_in_force: Optional[NewOrderTimeInForceEnum] = None,
         quantity: Optional[float] = None,
         quote_order_qty: Optional[float] = None,
@@ -1258,6 +1283,9 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             NewOrderSelfTradePreventionModeEnum
         ] = None,
+        peg_price_type: Optional[NewOrderPegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[NewOrderPegOffsetTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
@@ -1269,22 +1297,25 @@ class SpotRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (NewOrderSideEnum):
-                    type (NewOrderTypeEnum):
-                    time_in_force (Optional[NewOrderTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    quote_order_qty (Optional[float]):
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    strategy_id (Optional[int]):
-                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    stop_price (Optional[float]): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
-                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
-                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[NewOrderSideEnum, None]):
+                    type (Union[NewOrderTypeEnum, None]):
+                    time_in_force (Optional[NewOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int] = None):
+                    strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    stop_price (Optional[float] = None): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None):
+                    peg_price_type (Optional[NewOrderPegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
+                    peg_offset_type (Optional[NewOrderPegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[NewOrderResponse]
@@ -1310,13 +1341,16 @@ class SpotRestAPI:
             iceberg_qty,
             new_order_resp_type,
             self_trade_prevention_mode,
+            peg_price_type,
+            peg_offset_value,
+            peg_offset_type,
             recv_window,
         )
 
     def order_amend_keep_priority(
         self,
-        symbol: str = None,
-        new_qty: float = None,
+        symbol: Union[str, None],
+        new_qty: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
@@ -1333,12 +1367,12 @@ class SpotRestAPI:
         Weight: 4
 
                 Args:
-                    symbol (str):
-                    new_qty (float): `newQty` must be greater than 0 and less than the order's quantity.
-                    order_id (Optional[int]):
-                    orig_client_order_id (Optional[str]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    new_qty (Union[float, None]): `newQty` must be greater than 0 and less than the order's quantity.
+                    order_id (Optional[int] = None):
+                    orig_client_order_id (Optional[str] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderAmendKeepPriorityResponse]
@@ -1359,10 +1393,10 @@ class SpotRestAPI:
 
     def order_cancel_replace(
         self,
-        symbol: str = None,
-        side: OrderCancelReplaceSideEnum = None,
-        type: OrderCancelReplaceTypeEnum = None,
-        cancel_replace_mode: OrderCancelReplaceCancelReplaceModeEnum = None,
+        symbol: Union[str, None],
+        side: Union[OrderCancelReplaceSideEnum, None],
+        type: Union[OrderCancelReplaceTypeEnum, None],
+        cancel_replace_mode: Union[OrderCancelReplaceCancelReplaceModeEnum, None],
         time_in_force: Optional[OrderCancelReplaceTimeInForceEnum] = None,
         quantity: Optional[float] = None,
         quote_order_qty: Optional[float] = None,
@@ -1384,6 +1418,9 @@ class SpotRestAPI:
         order_rate_limit_exceeded_mode: Optional[
             OrderCancelReplaceOrderRateLimitExceededModeEnum
         ] = None,
+        peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderCancelReplaceResponse]:
         """
@@ -1397,28 +1434,31 @@ class SpotRestAPI:
         Weight: 1
 
                 Args:
-                    symbol (str):
-                    side (OrderCancelReplaceSideEnum):
-                    type (OrderCancelReplaceTypeEnum):
-                    cancel_replace_mode (OrderCancelReplaceCancelReplaceModeEnum):
-                    time_in_force (Optional[OrderCancelReplaceTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    quote_order_qty (Optional[float]):
-                    price (Optional[float]):
-                    cancel_new_client_order_id (Optional[str]): Used to uniquely identify this cancel. Automatically generated by default.
-                    cancel_orig_client_order_id (Optional[str]): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br> If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br> If both conditions are not met the request will be rejected.
-                    cancel_order_id (Optional[int]): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br>If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br>If both conditions are not met the request will be rejected.
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    strategy_id (Optional[int]):
-                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    stop_price (Optional[float]): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
-                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
-                    new_order_resp_type (Optional[OrderCancelReplaceNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum]):
-                    cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum]):
-                    order_rate_limit_exceeded_mode (Optional[OrderCancelReplaceOrderRateLimitExceededModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderCancelReplaceSideEnum, None]):
+                    type (Union[OrderCancelReplaceTypeEnum, None]):
+                    cancel_replace_mode (Union[OrderCancelReplaceCancelReplaceModeEnum, None]):
+                    time_in_force (Optional[OrderCancelReplaceTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    price (Optional[float] = None):
+                    cancel_new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default.
+                    cancel_orig_client_order_id (Optional[str] = None): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br> If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br> If both conditions are not met the request will be rejected.
+                    cancel_order_id (Optional[int] = None): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br>If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br>If both conditions are not met the request will be rejected.
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int] = None):
+                    strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    stop_price (Optional[float] = None): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[OrderCancelReplaceNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum] = None):
+                    cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum] = None):
+                    order_rate_limit_exceeded_mode (Optional[OrderCancelReplaceOrderRateLimitExceededModeEnum] = None):
+                    peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
+                    peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderCancelReplaceResponse]
@@ -1450,16 +1490,19 @@ class SpotRestAPI:
             self_trade_prevention_mode,
             cancel_restrictions,
             order_rate_limit_exceeded_mode,
+            peg_price_type,
+            peg_offset_value,
+            peg_offset_type,
             recv_window,
         )
 
     def order_list_oco(
         self,
-        symbol: str = None,
-        side: OrderListOcoSideEnum = None,
-        quantity: float = None,
-        above_type: OrderListOcoAboveTypeEnum = None,
-        below_type: OrderListOcoBelowTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[OrderListOcoSideEnum, None],
+        quantity: Union[float, None],
+        above_type: Union[OrderListOcoAboveTypeEnum, None],
+        below_type: Union[OrderListOcoBelowTypeEnum, None],
         list_client_order_id: Optional[str] = None,
         above_client_order_id: Optional[str] = None,
         above_iceberg_qty: Optional[int] = None,
@@ -1469,6 +1512,9 @@ class SpotRestAPI:
         above_time_in_force: Optional[float] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
+        above_peg_price_type: Optional[OrderListOcoAbovePegPriceTypeEnum] = None,
+        above_peg_offset_type: Optional[OrderListOcoAbovePegOffsetTypeEnum] = None,
+        above_peg_offset_value: Optional[int] = None,
         below_client_order_id: Optional[str] = None,
         below_iceberg_qty: Optional[int] = None,
         below_price: Optional[float] = None,
@@ -1477,6 +1523,9 @@ class SpotRestAPI:
         below_time_in_force: Optional[OrderListOcoBelowTimeInForceEnum] = None,
         below_strategy_id: Optional[int] = None,
         below_strategy_type: Optional[int] = None,
+        below_peg_price_type: Optional[OrderListOcoBelowPegPriceTypeEnum] = None,
+        below_peg_offset_type: Optional[OrderListOcoBelowPegOffsetTypeEnum] = None,
+        below_peg_offset_value: Optional[int] = None,
         new_order_resp_type: Optional[OrderListOcoNewOrderRespTypeEnum] = None,
         self_trade_prevention_mode: Optional[
             OrderListOcoSelfTradePreventionModeEnum
@@ -1503,31 +1552,37 @@ class SpotRestAPI:
         Unfilled Order Count: 2
 
                 Args:
-                    symbol (str):
-                    side (OrderListOcoSideEnum):
-                    quantity (float):
-                    above_type (OrderListOcoAboveTypeEnum):
-                    below_type (OrderListOcoBelowTypeEnum):
-                    list_client_order_id (Optional[str]): A unique Id for the entire orderList
-                    above_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the above order. Automatically generated if not sent
-                    above_iceberg_qty (Optional[int]): Note that this can only be used if `aboveTimeInForce` is `GTC`.
-                    above_price (Optional[float]): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                    above_stop_price (Optional[float]): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
-                    above_trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    above_time_in_force (Optional[float]): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`
-                    above_strategy_id (Optional[int]): Arbitrary numeric value identifying the above order within an order strategy.
-                    above_strategy_type (Optional[int]): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
-                    below_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the below order. Automatically generated if not sent
-                    below_iceberg_qty (Optional[int]): Note that this can only be used if `belowTimeInForce` is `GTC`.
-                    below_price (Optional[float]): Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                    below_stop_price (Optional[float]): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT` or `TAKE_PROFIT_LIMIT` <br>Either belowStopPrice or belowTrailingDelta or both, must be specified.
-                    below_trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    below_time_in_force (Optional[OrderListOcoBelowTimeInForceEnum]):
-                    below_strategy_id (Optional[int]): Arbitrary numeric value identifying the below order within an order strategy.
-                    below_strategy_type (Optional[int]): Arbitrary numeric value identifying the below order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
-                    new_order_resp_type (Optional[OrderListOcoNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderListOcoSelfTradePreventionModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderListOcoSideEnum, None]):
+                    quantity (Union[float, None]):
+                    above_type (Union[OrderListOcoAboveTypeEnum, None]):
+                    below_type (Union[OrderListOcoBelowTypeEnum, None]):
+                    list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
+                    above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the above order. Automatically generated if not sent
+                    above_iceberg_qty (Optional[int] = None): Note that this can only be used if `aboveTimeInForce` is `GTC`.
+                    above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
+                    above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`
+                    above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
+                    above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
+                    above_peg_price_type (Optional[OrderListOcoAbovePegPriceTypeEnum] = None):
+                    above_peg_offset_type (Optional[OrderListOcoAbovePegOffsetTypeEnum] = None):
+                    above_peg_offset_value (Optional[int] = None):
+                    below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the below order. Automatically generated if not sent
+                    below_iceberg_qty (Optional[int] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
+                    below_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT` or `TAKE_PROFIT_LIMIT` <br>Either belowStopPrice or belowTrailingDelta or both, must be specified.
+                    below_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    below_time_in_force (Optional[OrderListOcoBelowTimeInForceEnum] = None):
+                    below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the below order within an order strategy.
+                    below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the below order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
+                    below_peg_price_type (Optional[OrderListOcoBelowPegPriceTypeEnum] = None):
+                    below_peg_offset_type (Optional[OrderListOcoBelowPegOffsetTypeEnum] = None):
+                    below_peg_offset_value (Optional[int] = None):
+                    new_order_resp_type (Optional[OrderListOcoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListOcoSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderListOcoResponse]
@@ -1552,6 +1607,9 @@ class SpotRestAPI:
             above_time_in_force,
             above_strategy_id,
             above_strategy_type,
+            above_peg_price_type,
+            above_peg_offset_type,
+            above_peg_offset_value,
             below_client_order_id,
             below_iceberg_qty,
             below_price,
@@ -1560,6 +1618,9 @@ class SpotRestAPI:
             below_time_in_force,
             below_strategy_id,
             below_strategy_type,
+            below_peg_price_type,
+            below_peg_offset_type,
+            below_peg_offset_value,
             new_order_resp_type,
             self_trade_prevention_mode,
             recv_window,
@@ -1567,14 +1628,14 @@ class SpotRestAPI:
 
     def order_list_oto(
         self,
-        symbol: str = None,
-        working_type: OrderListOtoWorkingTypeEnum = None,
-        working_side: OrderListOtoWorkingSideEnum = None,
-        working_price: float = None,
-        working_quantity: float = None,
-        pending_type: OrderListOtoPendingTypeEnum = None,
-        pending_side: OrderListOtoPendingSideEnum = None,
-        pending_quantity: float = None,
+        symbol: Union[str, None],
+        working_type: Union[OrderListOtoWorkingTypeEnum, None],
+        working_side: Union[OrderListOtoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_type: Union[OrderListOtoPendingTypeEnum, None],
+        pending_side: Union[OrderListOtoPendingSideEnum, None],
+        pending_quantity: Union[float, None],
         list_client_order_id: Optional[str] = None,
         new_order_resp_type: Optional[OrderListOtoNewOrderRespTypeEnum] = None,
         self_trade_prevention_mode: Optional[
@@ -1585,6 +1646,9 @@ class SpotRestAPI:
         working_time_in_force: Optional[OrderListOtoWorkingTimeInForceEnum] = None,
         working_strategy_id: Optional[int] = None,
         working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[OrderListOtoWorkingPegPriceTypeEnum] = None,
+        working_peg_offset_type: Optional[OrderListOtoWorkingPegOffsetTypeEnum] = None,
+        working_peg_offset_value: Optional[int] = None,
         pending_client_order_id: Optional[str] = None,
         pending_price: Optional[float] = None,
         pending_stop_price: Optional[float] = None,
@@ -1593,6 +1657,9 @@ class SpotRestAPI:
         pending_time_in_force: Optional[OrderListOtoPendingTimeInForceEnum] = None,
         pending_strategy_id: Optional[int] = None,
         pending_strategy_type: Optional[int] = None,
+        pending_peg_price_type: Optional[OrderListOtoPendingPegPriceTypeEnum] = None,
+        pending_peg_offset_type: Optional[OrderListOtoPendingPegOffsetTypeEnum] = None,
+        pending_peg_offset_value: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderListOtoResponse]:
         """
@@ -1611,31 +1678,37 @@ class SpotRestAPI:
         Unfilled Order Count: 2
 
                 Args:
-                    symbol (str):
-                    working_type (OrderListOtoWorkingTypeEnum):
-                    working_side (OrderListOtoWorkingSideEnum):
-                    working_price (float):
-                    working_quantity (float): Sets the quantity for the working order.
-                    pending_type (OrderListOtoPendingTypeEnum):
-                    pending_side (OrderListOtoPendingSideEnum):
-                    pending_quantity (float): Sets the quantity for the pending order.
-                    list_client_order_id (Optional[str]): A unique Id for the entire orderList
-                    new_order_resp_type (Optional[OrderListOtoNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderListOtoSelfTradePreventionModeEnum]):
-                    working_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
-                    working_iceberg_qty (Optional[float]): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListOtoWorkingTimeInForceEnum]):
-                    working_strategy_id (Optional[int]): Arbitrary numeric value identifying the working order within an order strategy.
-                    working_strategy_type (Optional[int]): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                    pending_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending order.<br> Automatically generated if not sent.
-                    pending_price (Optional[float]):
-                    pending_stop_price (Optional[float]):
-                    pending_trailing_delta (Optional[float]):
-                    pending_iceberg_qty (Optional[float]): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
-                    pending_time_in_force (Optional[OrderListOtoPendingTimeInForceEnum]):
-                    pending_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending order within an order strategy.
-                    pending_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListOtoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListOtoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_type (Union[OrderListOtoPendingTypeEnum, None]):
+                    pending_side (Union[OrderListOtoPendingSideEnum, None]):
+                    pending_quantity (Union[float, None]): Sets the quantity for the pending order.
+                    list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
+                    new_order_resp_type (Optional[OrderListOtoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListOtoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListOtoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListOtoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListOtoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order.<br> Automatically generated if not sent.
+                    pending_price (Optional[float] = None):
+                    pending_stop_price (Optional[float] = None):
+                    pending_trailing_delta (Optional[float] = None):
+                    pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
+                    pending_time_in_force (Optional[OrderListOtoPendingTimeInForceEnum] = None):
+                    pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
+                    pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_peg_price_type (Optional[OrderListOtoPendingPegPriceTypeEnum] = None):
+                    pending_peg_offset_type (Optional[OrderListOtoPendingPegOffsetTypeEnum] = None):
+                    pending_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderListOtoResponse]
@@ -1662,6 +1735,9 @@ class SpotRestAPI:
             working_time_in_force,
             working_strategy_id,
             working_strategy_type,
+            working_peg_price_type,
+            working_peg_offset_type,
+            working_peg_offset_value,
             pending_client_order_id,
             pending_price,
             pending_stop_price,
@@ -1670,19 +1746,22 @@ class SpotRestAPI:
             pending_time_in_force,
             pending_strategy_id,
             pending_strategy_type,
+            pending_peg_price_type,
+            pending_peg_offset_type,
+            pending_peg_offset_value,
             recv_window,
         )
 
     def order_list_otoco(
         self,
-        symbol: str = None,
-        working_type: OrderListOtocoWorkingTypeEnum = None,
-        working_side: OrderListOtocoWorkingSideEnum = None,
-        working_price: float = None,
-        working_quantity: float = None,
-        pending_side: OrderListOtocoPendingSideEnum = None,
-        pending_quantity: float = None,
-        pending_above_type: OrderListOtocoPendingAboveTypeEnum = None,
+        symbol: Union[str, None],
+        working_type: Union[OrderListOtocoWorkingTypeEnum, None],
+        working_side: Union[OrderListOtocoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_side: Union[OrderListOtocoPendingSideEnum, None],
+        pending_quantity: Union[float, None],
+        pending_above_type: Union[OrderListOtocoPendingAboveTypeEnum, None],
         list_client_order_id: Optional[str] = None,
         new_order_resp_type: Optional[OrderListOtocoNewOrderRespTypeEnum] = None,
         self_trade_prevention_mode: Optional[
@@ -1693,6 +1772,11 @@ class SpotRestAPI:
         working_time_in_force: Optional[OrderListOtocoWorkingTimeInForceEnum] = None,
         working_strategy_id: Optional[int] = None,
         working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[OrderListOtocoWorkingPegPriceTypeEnum] = None,
+        working_peg_offset_type: Optional[
+            OrderListOtocoWorkingPegOffsetTypeEnum
+        ] = None,
+        working_peg_offset_value: Optional[int] = None,
         pending_above_client_order_id: Optional[str] = None,
         pending_above_price: Optional[float] = None,
         pending_above_stop_price: Optional[float] = None,
@@ -1703,6 +1787,13 @@ class SpotRestAPI:
         ] = None,
         pending_above_strategy_id: Optional[int] = None,
         pending_above_strategy_type: Optional[int] = None,
+        pending_above_peg_price_type: Optional[
+            OrderListOtocoPendingAbovePegPriceTypeEnum
+        ] = None,
+        pending_above_peg_offset_type: Optional[
+            OrderListOtocoPendingAbovePegOffsetTypeEnum
+        ] = None,
+        pending_above_peg_offset_value: Optional[int] = None,
         pending_below_type: Optional[OrderListOtocoPendingBelowTypeEnum] = None,
         pending_below_client_order_id: Optional[str] = None,
         pending_below_price: Optional[float] = None,
@@ -1714,6 +1805,13 @@ class SpotRestAPI:
         ] = None,
         pending_below_strategy_id: Optional[int] = None,
         pending_below_strategy_type: Optional[int] = None,
+        pending_below_peg_price_type: Optional[
+            OrderListOtocoPendingBelowPegPriceTypeEnum
+        ] = None,
+        pending_below_peg_offset_type: Optional[
+            OrderListOtocoPendingBelowPegOffsetTypeEnum
+        ] = None,
+        pending_below_peg_offset_value: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderListOtocoResponse]:
         """
@@ -1732,40 +1830,49 @@ class SpotRestAPI:
         Unfilled Order Count: 3
 
                 Args:
-                    symbol (str):
-                    working_type (OrderListOtocoWorkingTypeEnum):
-                    working_side (OrderListOtocoWorkingSideEnum):
-                    working_price (float):
-                    working_quantity (float): Sets the quantity for the working order.
-                    pending_side (OrderListOtocoPendingSideEnum):
-                    pending_quantity (float): Sets the quantity for the pending order.
-                    pending_above_type (OrderListOtocoPendingAboveTypeEnum):
-                    list_client_order_id (Optional[str]): A unique Id for the entire orderList
-                    new_order_resp_type (Optional[OrderListOtocoNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderListOtocoSelfTradePreventionModeEnum]):
-                    working_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
-                    working_iceberg_qty (Optional[float]): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListOtocoWorkingTimeInForceEnum]):
-                    working_strategy_id (Optional[int]): Arbitrary numeric value identifying the working order within an order strategy.
-                    working_strategy_type (Optional[int]): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                    pending_above_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending above order.<br> Automatically generated if not sent.
-                    pending_above_price (Optional[float]): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                    pending_above_stop_price (Optional[float]): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
-                    pending_above_trailing_delta (Optional[float]): See [Trailing Stop FAQ](faqs/trailing-stop-faq.md)
-                    pending_above_iceberg_qty (Optional[float]): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
-                    pending_above_time_in_force (Optional[OrderListOtocoPendingAboveTimeInForceEnum]):
-                    pending_above_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending above order within an order strategy.
-                    pending_above_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending above order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                    pending_below_type (Optional[OrderListOtocoPendingBelowTypeEnum]):
-                    pending_below_client_order_id (Optional[str]): Arbitrary unique ID among open orders for the pending below order.<br> Automatically generated if not sent.
-                    pending_below_price (Optional[float]): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price
-                    pending_below_stop_price (Optional[float]): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. <br>Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
-                    pending_below_trailing_delta (Optional[float]):
-                    pending_below_iceberg_qty (Optional[float]): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
-                    pending_below_time_in_force (Optional[OrderListOtocoPendingBelowTimeInForceEnum]):
-                    pending_below_strategy_id (Optional[int]): Arbitrary numeric value identifying the pending below order within an order strategy.
-                    pending_below_strategy_type (Optional[int]): Arbitrary numeric value identifying the pending below order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListOtocoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListOtocoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_side (Union[OrderListOtocoPendingSideEnum, None]):
+                    pending_quantity (Union[float, None]): Sets the quantity for the pending order.
+                    pending_above_type (Union[OrderListOtocoPendingAboveTypeEnum, None]):
+                    list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
+                    new_order_resp_type (Optional[OrderListOtocoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListOtocoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListOtocoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListOtocoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListOtocoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order.<br> Automatically generated if not sent.
+                    pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
+                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop FAQ](faqs/trailing-stop-faq.md)
+                    pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
+                    pending_above_time_in_force (Optional[OrderListOtocoPendingAboveTimeInForceEnum] = None):
+                    pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
+                    pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_above_peg_price_type (Optional[OrderListOtocoPendingAbovePegPriceTypeEnum] = None):
+                    pending_above_peg_offset_type (Optional[OrderListOtocoPendingAbovePegOffsetTypeEnum] = None):
+                    pending_above_peg_offset_value (Optional[int] = None):
+                    pending_below_type (Optional[OrderListOtocoPendingBelowTypeEnum] = None):
+                    pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order.<br> Automatically generated if not sent.
+                    pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price
+                    pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. <br>Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
+                    pending_below_trailing_delta (Optional[float] = None):
+                    pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
+                    pending_below_time_in_force (Optional[OrderListOtocoPendingBelowTimeInForceEnum] = None):
+                    pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
+                    pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_below_peg_price_type (Optional[OrderListOtocoPendingBelowPegPriceTypeEnum] = None):
+                    pending_below_peg_offset_type (Optional[OrderListOtocoPendingBelowPegOffsetTypeEnum] = None):
+                    pending_below_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderListOtocoResponse]
@@ -1792,6 +1899,9 @@ class SpotRestAPI:
             working_time_in_force,
             working_strategy_id,
             working_strategy_type,
+            working_peg_price_type,
+            working_peg_offset_type,
+            working_peg_offset_value,
             pending_above_client_order_id,
             pending_above_price,
             pending_above_stop_price,
@@ -1800,6 +1910,9 @@ class SpotRestAPI:
             pending_above_time_in_force,
             pending_above_strategy_id,
             pending_above_strategy_type,
+            pending_above_peg_price_type,
+            pending_above_peg_offset_type,
+            pending_above_peg_offset_value,
             pending_below_type,
             pending_below_client_order_id,
             pending_below_price,
@@ -1809,16 +1922,19 @@ class SpotRestAPI:
             pending_below_time_in_force,
             pending_below_strategy_id,
             pending_below_strategy_type,
+            pending_below_peg_price_type,
+            pending_below_peg_offset_type,
+            pending_below_peg_offset_value,
             recv_window,
         )
 
     def order_oco(
         self,
-        symbol: str = None,
-        side: OrderOcoSideEnum = None,
-        quantity: float = None,
-        price: float = None,
-        stop_price: float = None,
+        symbol: Union[str, None],
+        side: Union[OrderOcoSideEnum, None],
+        quantity: Union[float, None],
+        price: Union[float, None],
+        stop_price: Union[float, None],
         list_client_order_id: Optional[str] = None,
         limit_client_order_id: Optional[str] = None,
         limit_strategy_id: Optional[int] = None,
@@ -1854,26 +1970,26 @@ class SpotRestAPI:
         Unfilled Order Count: 2
 
                 Args:
-                    symbol (str):
-                    side (OrderOcoSideEnum):
-                    quantity (float):
-                    price (float):
-                    stop_price (float):
-                    list_client_order_id (Optional[str]): A unique Id for the entire orderList
-                    limit_client_order_id (Optional[str]): A unique Id for the limit order
-                    limit_strategy_id (Optional[int]):
-                    limit_strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    limit_iceberg_qty (Optional[float]): Used to make the `LIMIT_MAKER` leg an iceberg order.
-                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    stop_client_order_id (Optional[str]): A unique Id for the stop loss/stop loss limit leg
-                    stop_strategy_id (Optional[int]):
-                    stop_strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    stop_limit_price (Optional[float]): If provided, `stopLimitTimeInForce` is required.
-                    stop_iceberg_qty (Optional[float]): Used with `STOP_LOSS_LIMIT` leg to make an iceberg order.
-                    stop_limit_time_in_force (Optional[OrderOcoStopLimitTimeInForceEnum]):
-                    new_order_resp_type (Optional[OrderOcoNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderOcoSelfTradePreventionModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderOcoSideEnum, None]):
+                    quantity (Union[float, None]):
+                    price (Union[float, None]):
+                    stop_price (Union[float, None]):
+                    list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
+                    limit_client_order_id (Optional[str] = None): A unique Id for the limit order
+                    limit_strategy_id (Optional[int] = None):
+                    limit_strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    limit_iceberg_qty (Optional[float] = None): Used to make the `LIMIT_MAKER` leg an iceberg order.
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    stop_client_order_id (Optional[str] = None): A unique Id for the stop loss/stop loss limit leg
+                    stop_strategy_id (Optional[int] = None):
+                    stop_strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    stop_limit_price (Optional[float] = None): If provided, `stopLimitTimeInForce` is required.
+                    stop_iceberg_qty (Optional[float] = None): Used with `STOP_LOSS_LIMIT` leg to make an iceberg order.
+                    stop_limit_time_in_force (Optional[OrderOcoStopLimitTimeInForceEnum] = None):
+                    new_order_resp_type (Optional[OrderOcoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderOcoSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderOcoResponse]
@@ -1908,9 +2024,9 @@ class SpotRestAPI:
 
     def order_test(
         self,
-        symbol: str = None,
-        side: OrderTestSideEnum = None,
-        type: OrderTestTypeEnum = None,
+        symbol: Union[str, None],
+        side: Union[OrderTestSideEnum, None],
+        type: Union[OrderTestTypeEnum, None],
         compute_commission_rates: Optional[bool] = None,
         time_in_force: Optional[OrderTestTimeInForceEnum] = None,
         quantity: Optional[float] = None,
@@ -1926,6 +2042,9 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             OrderTestSelfTradePreventionModeEnum
         ] = None,
+        peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
+        peg_offset_value: Optional[int] = None,
+        peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
@@ -1939,23 +2058,26 @@ class SpotRestAPI:
         |With `computeCommissionRates`|20|
 
                 Args:
-                    symbol (str):
-                    side (OrderTestSideEnum):
-                    type (OrderTestTypeEnum):
-                    compute_commission_rates (Optional[bool]): Default: `false`
-                    time_in_force (Optional[OrderTestTimeInForceEnum]):
-                    quantity (Optional[float]):
-                    quote_order_qty (Optional[float]):
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    strategy_id (Optional[int]):
-                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    stop_price (Optional[float]): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
-                    trailing_delta (Optional[int]): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
-                    new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[OrderTestSideEnum, None]):
+                    type (Union[OrderTestTypeEnum, None]):
+                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See [Commissions FAQ](faqs/commission_faq.md#test-order-diferences) to learn more.
+                    time_in_force (Optional[OrderTestTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    quote_order_qty (Optional[float] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int] = None):
+                    strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    stop_price (Optional[float] = None): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
+                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum] = None):
+                    peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None):
+                    peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
+                    peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[OrderTestResponse]
@@ -1982,15 +2104,18 @@ class SpotRestAPI:
             iceberg_qty,
             new_order_resp_type,
             self_trade_prevention_mode,
+            peg_price_type,
+            peg_offset_value,
+            peg_offset_type,
             recv_window,
         )
 
     def sor_order(
         self,
-        symbol: str = None,
-        side: SorOrderSideEnum = None,
-        type: SorOrderTypeEnum = None,
-        quantity: float = None,
+        symbol: Union[str, None],
+        side: Union[SorOrderSideEnum, None],
+        type: Union[SorOrderTypeEnum, None],
+        quantity: Union[float, None],
         time_in_force: Optional[SorOrderTimeInForceEnum] = None,
         price: Optional[float] = None,
         new_client_order_id: Optional[str] = None,
@@ -2016,19 +2141,19 @@ class SpotRestAPI:
         Unfilled Order Count: 1
 
                 Args:
-                    symbol (str):
-                    side (SorOrderSideEnum):
-                    type (SorOrderTypeEnum):
-                    quantity (float):
-                    time_in_force (Optional[SorOrderTimeInForceEnum]):
-                    price (Optional[float]):
-                    new_client_order_id (Optional[str]): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    strategy_id (Optional[int]):
-                    strategy_type (Optional[int]): The value cannot be less than `1000000`.
-                    iceberg_qty (Optional[float]): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
-                    new_order_resp_type (Optional[SorOrderNewOrderRespTypeEnum]):
-                    self_trade_prevention_mode (Optional[SorOrderSelfTradePreventionModeEnum]):
-                    recv_window (Optional[int]): The value cannot be greater than `60000`
+                    symbol (Union[str, None]):
+                    side (Union[SorOrderSideEnum, None]):
+                    type (Union[SorOrderTypeEnum, None]):
+                    quantity (Union[float, None]):
+                    time_in_force (Optional[SorOrderTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int] = None):
+                    strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[SorOrderNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[SorOrderSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[SorOrderResponse]
@@ -2056,7 +2181,22 @@ class SpotRestAPI:
 
     def sor_order_test(
         self,
+        symbol: Union[str, None],
+        side: Union[SorOrderTestSideEnum, None],
+        type: Union[SorOrderTestTypeEnum, None],
+        quantity: Union[float, None],
         compute_commission_rates: Optional[bool] = None,
+        time_in_force: Optional[SorOrderTestTimeInForceEnum] = None,
+        price: Optional[float] = None,
+        new_client_order_id: Optional[str] = None,
+        strategy_id: Optional[int] = None,
+        strategy_type: Optional[int] = None,
+        iceberg_qty: Optional[float] = None,
+        new_order_resp_type: Optional[SorOrderTestNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            SorOrderTestSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
     ) -> ApiResponse[SorOrderTestResponse]:
         """
                 Test new order using SOR
@@ -2069,7 +2209,20 @@ class SpotRestAPI:
         | With `computeCommissionRates`     | 20 |
 
                 Args:
-                    compute_commission_rates (Optional[bool]): Default: `false`
+                    symbol (Union[str, None]):
+                    side (Union[SorOrderTestSideEnum, None]):
+                    type (Union[SorOrderTestTypeEnum, None]):
+                    quantity (Union[float, None]):
+                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See [Commissions FAQ](faqs/commission_faq.md#test-order-diferences) to learn more.
+                    time_in_force (Optional[SorOrderTestTimeInForceEnum] = None):
+                    price (Optional[float] = None):
+                    new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
+                    strategy_id (Optional[int] = None):
+                    strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
+                    iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
+                    new_order_resp_type (Optional[SorOrderTestNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
 
                 Returns:
                     ApiResponse[SorOrderTestResponse]
@@ -2079,11 +2232,26 @@ class SpotRestAPI:
 
         """
 
-        return self._tradeApi.sor_order_test(compute_commission_rates)
+        return self._tradeApi.sor_order_test(
+            symbol,
+            side,
+            type,
+            quantity,
+            compute_commission_rates,
+            time_in_force,
+            price,
+            new_client_order_id,
+            strategy_id,
+            strategy_type,
+            iceberg_qty,
+            new_order_resp_type,
+            self_trade_prevention_mode,
+            recv_window,
+        )
 
     def delete_user_data_stream(
         self,
-        listen_key: str = None,
+        listen_key: Union[str, None],
     ) -> ApiResponse[None]:
         """
                 Close user data stream
@@ -2092,7 +2260,7 @@ class SpotRestAPI:
         Weight: 2
 
                 Args:
-                    listen_key (str):
+                    listen_key (Union[str, None]):
 
                 Returns:
                     ApiResponse[None]
@@ -2127,7 +2295,7 @@ class SpotRestAPI:
 
     def put_user_data_stream(
         self,
-        listen_key: str = None,
+        listen_key: Union[str, None],
     ) -> ApiResponse[None]:
         """
                 Keepalive user data stream
@@ -2136,7 +2304,7 @@ class SpotRestAPI:
         Weight: 2
 
                 Args:
-                    listen_key (str):
+                    listen_key (Union[str, None]):
 
                 Returns:
                     ApiResponse[None]

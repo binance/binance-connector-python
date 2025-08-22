@@ -45,8 +45,8 @@ class AccountApi:
         Weight: 5
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[AccountInformationResponse]
@@ -87,8 +87,8 @@ class AccountApi:
         Weight: 5
 
             Args:
-                id (Optional[str]): Unique WebSocket request ID.
-                recv_window (Optional[int]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[int] = None):
 
             Returns:
                 WebsocketApiResponse[FuturesAccountBalanceResponse]

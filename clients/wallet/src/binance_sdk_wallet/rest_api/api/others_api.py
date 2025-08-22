@@ -46,7 +46,7 @@ class OthersApi:
         Weight: 100
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSymbolsDelistScheduleForSpotResponse]

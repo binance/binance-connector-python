@@ -190,7 +190,7 @@ class TestFiatApi:
         params = {
             "transaction_type": "transaction_type_example",
         }
-        del params["transaction_type"]
+        params["transaction_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transaction_type'"
@@ -352,7 +352,7 @@ class TestFiatApi:
         params = {
             "transaction_type": "transaction_type_example",
         }
-        del params["transaction_type"]
+        params["transaction_type"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transaction_type'"

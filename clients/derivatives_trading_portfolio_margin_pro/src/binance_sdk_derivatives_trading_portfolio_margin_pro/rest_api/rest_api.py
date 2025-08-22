@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -107,8 +107,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def bnb_transfer(
         self,
-        amount: float = None,
-        transfer_side: str = None,
+        amount: Union[float, None],
+        transfer_side: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[BnbTransferResponse]:
         """
@@ -122,9 +122,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    amount (float):
-                    transfer_side (str): "TO_UM","FROM_UM"
-                    recv_window (Optional[int]):
+                    amount (Union[float, None]):
+                    transfer_side (Union[str, None]): "TO_UM","FROM_UM"
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[BnbTransferResponse]
@@ -138,7 +138,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def change_auto_repay_futures_status(
         self,
-        auto_repay: str = None,
+        auto_repay: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ChangeAutoRepayFuturesStatusResponse]:
         """
@@ -149,8 +149,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    auto_repay (str): Default: `true`; `false` for turn off the auto-repay futures negative balance function
-                    recv_window (Optional[int]):
+                    auto_repay (Union[str, None]): Default: `true`; `false` for turn off the auto-repay futures negative balance function
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[ChangeAutoRepayFuturesStatusResponse]
@@ -179,7 +179,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FundAutoCollectionResponse]
@@ -193,7 +193,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def fund_collection_by_asset(
         self,
-        asset: str = None,
+        asset: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FundCollectionByAssetResponse]:
         """
@@ -206,8 +206,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 60
 
                 Args:
-                    asset (str): `LDUSDT` only
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]): `LDUSDT` only
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[FundCollectionByAssetResponse]
@@ -231,7 +231,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 30
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetAutoRepayFuturesStatusResponse]
@@ -256,8 +256,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 20
 
                 Args:
-                    asset (Optional[str]):
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetPortfolioMarginProAccountBalanceResponse]
@@ -283,7 +283,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetPortfolioMarginProAccountInfoResponse]
@@ -307,7 +307,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 5
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetPortfolioMarginProSpanAccountInfoResponse]
@@ -321,8 +321,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def get_transferable_earn_asset_balance_for_portfolio_margin(
         self,
-        asset: str = None,
-        transfer_type: str = None,
+        asset: Union[str, None],
+        transfer_type: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetTransferableEarnAssetBalanceForPortfolioMarginResponse]:
         """
@@ -333,9 +333,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    asset (str): `LDUSDT` only
-                    transfer_type (str): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]): `LDUSDT` only
+                    transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetTransferableEarnAssetBalanceForPortfolioMarginResponse]
@@ -353,9 +353,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def mint_bfusd_for_portfolio_margin(
         self,
-        from_asset: str = None,
-        target_asset: str = None,
-        amount: float = None,
+        from_asset: Union[str, None],
+        target_asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MintBfusdForPortfolioMarginResponse]:
         """
@@ -366,10 +366,10 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    from_asset (str): `BFUSD` only
-                    target_asset (str): `USDT` `USDC`
-                    amount (float):
-                    recv_window (Optional[int]):
+                    from_asset (Union[str, None]): `BFUSD` only
+                    target_asset (Union[str, None]): `USDT` `USDC`
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[MintBfusdForPortfolioMarginResponse]
@@ -396,8 +396,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 3000
 
                 Args:
-                    var_from (Optional[str]): SPOT or MARGIN，default SPOT
-                    recv_window (Optional[int]):
+                    var_from (Optional[str] = None): SPOT or MARGIN，default SPOT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PortfolioMarginProBankruptcyLoanRepayResponse]
@@ -425,7 +425,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 500
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginProBankruptcyLoanAmountResponse]
@@ -460,11 +460,11 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 500
 
                 Args:
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying page. Start from 1. Default:1
-                    size (Optional[int]): Default:10 Max:100
-                    recv_window (Optional[int]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10 Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse]
@@ -496,11 +496,11 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 50
 
                 Args:
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    size (Optional[int]): Default:10 Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    size (Optional[int] = None): Default:10 Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse]
@@ -516,9 +516,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def redeem_bfusd_for_portfolio_margin(
         self,
-        from_asset: str = None,
-        target_asset: str = None,
-        amount: float = None,
+        from_asset: Union[str, None],
+        target_asset: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemBfusdForPortfolioMarginResponse]:
         """
@@ -529,10 +529,10 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    from_asset (str): `BFUSD` only
-                    target_asset (str): `USDT` `USDC`
-                    amount (float):
-                    recv_window (Optional[int]):
+                    from_asset (Union[str, None]): `BFUSD` only
+                    target_asset (Union[str, None]): `USDT` `USDC`
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemBfusdForPortfolioMarginResponse]
@@ -559,8 +559,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    var_from (Optional[str]): SPOT or MARGIN，default SPOT
-                    recv_window (Optional[int]):
+                    var_from (Optional[str] = None): SPOT or MARGIN，default SPOT
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RepayFuturesNegativeBalanceResponse]
@@ -574,9 +574,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def transfer_ldusdt_for_portfolio_margin(
         self,
-        asset: str = None,
-        transfer_type: str = None,
-        amount: float = None,
+        asset: Union[str, None],
+        transfer_type: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TransferLdusdtForPortfolioMarginResponse]:
         """
@@ -587,10 +587,10 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    asset (str): `LDUSDT` only
-                    transfer_type (str): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
-                    amount (float):
-                    recv_window (Optional[int]):
+                    asset (Union[str, None]): `LDUSDT` only
+                    transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[TransferLdusdtForPortfolioMarginResponse]
@@ -660,7 +660,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 50
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[PortfolioMarginProTieredCollateralRateResponse]
@@ -686,7 +686,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1 if send asset or 50 if not send asset
 
                 Args:
-                    asset (Optional[str]):
+                    asset (Optional[str] = None):
 
                 Returns:
                     ApiResponse[QueryPortfolioMarginAssetIndexPriceResponse]

@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 import requests
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Union
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
@@ -110,7 +110,7 @@ class SimpleEarnRestAPI:
 
     def get_flexible_personal_left_quota(
         self,
-        product_id: str = None,
+        product_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFlexiblePersonalLeftQuotaResponse]:
         """
@@ -121,8 +121,8 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (str):
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexiblePersonalLeftQuotaResponse]
@@ -152,11 +152,11 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    asset (Optional[str]):
-                    product_id (Optional[str]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    product_id (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleProductPositionResponse]
@@ -172,7 +172,7 @@ class SimpleEarnRestAPI:
 
     def get_locked_personal_left_quota(
         self,
-        project_id: str = None,
+        project_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetLockedPersonalLeftQuotaResponse]:
         """
@@ -183,8 +183,8 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    project_id (str):
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedPersonalLeftQuotaResponse]
@@ -213,12 +213,12 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    asset (Optional[str]):
-                    position_id (Optional[int]):
-                    project_id (Optional[str]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    position_id (Optional[int] = None):
+                    project_id (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedProductPositionResponse]
@@ -247,10 +247,10 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    asset (Optional[str]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSimpleEarnFlexibleProductListResponse]
@@ -281,10 +281,10 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    asset (Optional[str]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    asset (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetSimpleEarnLockedProductListResponse]
@@ -310,7 +310,7 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SimpleAccountResponse]
@@ -324,8 +324,8 @@ class SimpleEarnRestAPI:
 
     def get_flexible_subscription_preview(
         self,
-        product_id: str = None,
-        amount: float = None,
+        product_id: Union[str, None],
+        amount: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetFlexibleSubscriptionPreviewResponse]:
         """
@@ -336,9 +336,9 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (str):
-                    amount (float):
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionPreviewResponse]
@@ -354,8 +354,8 @@ class SimpleEarnRestAPI:
 
     def get_locked_subscription_preview(
         self,
-        project_id: str = None,
-        amount: float = None,
+        project_id: Union[str, None],
+        amount: Union[float, None],
         auto_subscribe: Optional[bool] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetLockedSubscriptionPreviewResponse]:
@@ -367,10 +367,10 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    project_id (str):
-                    amount (float):
-                    auto_subscribe (Optional[bool]): true or false, default true.
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]):
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionPreviewResponse]
@@ -386,7 +386,7 @@ class SimpleEarnRestAPI:
 
     def redeem_flexible_product(
         self,
-        product_id: str = None,
+        product_id: Union[str, None],
         redeem_all: Optional[bool] = None,
         amount: Optional[float] = None,
         dest_account: Optional[str] = None,
@@ -402,11 +402,11 @@ class SimpleEarnRestAPI:
         Weight: 1
 
                 Args:
-                    product_id (str):
-                    redeem_all (Optional[bool]): true or false, default to false
-                    amount (Optional[float]): if redeemAll is false, amount is mandatory
-                    dest_account (Optional[str]): `SPOT`,`FUND`, default `SPOT`
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    redeem_all (Optional[bool] = None): true or false, default to false
+                    amount (Optional[float] = None): if redeemAll is false, amount is mandatory
+                    dest_account (Optional[str] = None): `SPOT`,`FUND`, default `SPOT`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemFlexibleProductResponse]
@@ -422,7 +422,7 @@ class SimpleEarnRestAPI:
 
     def redeem_locked_product(
         self,
-        position_id: str = None,
+        position_id: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RedeemLockedProductResponse]:
         """
@@ -435,8 +435,8 @@ class SimpleEarnRestAPI:
         Weight: 1/3s per account
 
                 Args:
-                    position_id (str):
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[RedeemLockedProductResponse]
@@ -450,8 +450,8 @@ class SimpleEarnRestAPI:
 
     def set_flexible_auto_subscribe(
         self,
-        product_id: str = None,
-        auto_subscribe: bool = None,
+        product_id: Union[str, None],
+        auto_subscribe: Union[bool, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetFlexibleAutoSubscribeResponse]:
         """
@@ -462,9 +462,9 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (str):
-                    auto_subscribe (bool): true or false
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    auto_subscribe (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetFlexibleAutoSubscribeResponse]
@@ -480,8 +480,8 @@ class SimpleEarnRestAPI:
 
     def set_locked_auto_subscribe(
         self,
-        position_id: str = None,
-        auto_subscribe: bool = None,
+        position_id: Union[str, None],
+        auto_subscribe: Union[bool, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetLockedAutoSubscribeResponse]:
         """
@@ -492,9 +492,9 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    position_id (str):
-                    auto_subscribe (bool): true or false
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    auto_subscribe (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetLockedAutoSubscribeResponse]
@@ -510,8 +510,8 @@ class SimpleEarnRestAPI:
 
     def set_locked_product_redeem_option(
         self,
-        position_id: str = None,
-        redeem_to: str = None,
+        position_id: Union[str, None],
+        redeem_to: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[SetLockedProductRedeemOptionResponse]:
         """
@@ -522,9 +522,9 @@ class SimpleEarnRestAPI:
         Weight: 50
 
                 Args:
-                    position_id (str):
-                    redeem_to (str): `SPOT`,'FLEXIBLE'
-                    recv_window (Optional[int]):
+                    position_id (Union[str, None]):
+                    redeem_to (Union[str, None]): `SPOT`,'FLEXIBLE'
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SetLockedProductRedeemOptionResponse]
@@ -540,8 +540,8 @@ class SimpleEarnRestAPI:
 
     def subscribe_flexible_product(
         self,
-        product_id: str = None,
-        amount: float = None,
+        product_id: Union[str, None],
+        amount: Union[float, None],
         auto_subscribe: Optional[bool] = None,
         source_account: Optional[str] = None,
         recv_window: Optional[int] = None,
@@ -556,11 +556,11 @@ class SimpleEarnRestAPI:
         Weight: 1
 
                 Args:
-                    product_id (str):
-                    amount (float):
-                    auto_subscribe (Optional[bool]): true or false, default true.
-                    source_account (Optional[str]): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    amount (Union[float, None]):
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubscribeFlexibleProductResponse]
@@ -576,8 +576,8 @@ class SimpleEarnRestAPI:
 
     def subscribe_locked_product(
         self,
-        project_id: str = None,
-        amount: float = None,
+        project_id: Union[str, None],
+        amount: Union[float, None],
         auto_subscribe: Optional[bool] = None,
         source_account: Optional[str] = None,
         redeem_to: Optional[str] = None,
@@ -593,12 +593,12 @@ class SimpleEarnRestAPI:
         Weight: 1
 
                 Args:
-                    project_id (str):
-                    amount (float):
-                    auto_subscribe (Optional[bool]): true or false, default true.
-                    source_account (Optional[str]): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    redeem_to (Optional[str]): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
-                    recv_window (Optional[int]):
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]):
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
+                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[SubscribeLockedProductResponse]
@@ -634,12 +634,12 @@ class SimpleEarnRestAPI:
         Weight: 1
 
                 Args:
-                    product_id (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    product_id (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetCollateralRecordResponse]
@@ -677,14 +677,14 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (Optional[str]):
-                    redeem_id (Optional[str]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    product_id (Optional[str] = None):
+                    redeem_id (Optional[str] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleRedemptionRecordResponse]
@@ -707,7 +707,7 @@ class SimpleEarnRestAPI:
 
     def get_flexible_rewards_history(
         self,
-        type: str = None,
+        type: Union[str, None],
         product_id: Optional[str] = None,
         asset: Optional[str] = None,
         start_time: Optional[int] = None,
@@ -729,14 +729,14 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    type (str): `Bonus` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
-                    product_id (Optional[str]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    type (Union[str, None]): `BONUS` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
+                    product_id (Optional[str] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleRewardsHistoryResponse]
@@ -774,14 +774,14 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (Optional[str]):
-                    purchase_id (Optional[str]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    product_id (Optional[str] = None):
+                    purchase_id (Optional[str] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionRecordResponse]
@@ -826,14 +826,14 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    position_id (Optional[int]):
-                    redeem_id (Optional[str]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    position_id (Optional[int] = None):
+                    redeem_id (Optional[str] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedRedemptionRecordResponse]
@@ -877,13 +877,13 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    position_id (Optional[int]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    position_id (Optional[int] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedRewardsHistoryResponse]
@@ -920,13 +920,13 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    purchase_id (Optional[str]):
-                    asset (Optional[str]):
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    purchase_id (Optional[str] = None):
+                    asset (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionRecordResponse]
@@ -942,7 +942,7 @@ class SimpleEarnRestAPI:
 
     def get_rate_history(
         self,
-        product_id: str = None,
+        product_id: Union[str, None],
         apr_period: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -963,13 +963,13 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    product_id (str):
-                    apr_period (Optional[str]): "DAY","YEAR",default"DAY"
-                    start_time (Optional[int]):
-                    end_time (Optional[int]):
-                    current (Optional[int]): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int]): Default:10, Max:100
-                    recv_window (Optional[int]):
+                    product_id (Union[str, None]):
+                    apr_period (Optional[str] = None): "DAY","YEAR",default"DAY"
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
 
                 Returns:
                     ApiResponse[GetRateHistoryResponse]
