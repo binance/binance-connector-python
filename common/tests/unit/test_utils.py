@@ -45,6 +45,7 @@ from binance_common.utils import (
     parse_ws_rate_limit_headers,
     normalize_query_values,
 )
+from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
 
 
@@ -1082,6 +1083,81 @@ class TestNormalizeQueryValues(unittest.TestCase):
         parsed = {"flag": ["  FaLsE  "]}
         result = normalize_query_values(parsed)
         self.assertEqual(result["flag"], False)
+
+class TestSanitizeHeaderValue(unittest.TestCase):
+    def test_returns_simple_string_unchanged(self):
+        self.assertEqual(sanitize_header_value("foo-bar"), "foo-bar")
+
+    def test_throws_on_string_containing_CR(self):
+        with self.assertRaises(ValueError) as context:
+            sanitize_header_value("bad\rvalue")
+        self.assertEqual(
+            str(context.exception),
+            'Invalid header value (contains CR/LF): "bad\rvalue"',
+        )
+
+    def test_throws_on_string_containing_LF(self):
+        with self.assertRaises(ValueError) as context:
+            sanitize_header_value("bad\nvalue")
+        self.assertEqual(
+            str(context.exception),
+            'Invalid header value (contains CR/LF): "bad\nvalue"',
+        )
+
+    def test_returns_array_of_strings_when_clean(self):
+        arr: List[str] = ["one", "two", "three"]
+        self.assertEqual([sanitize_header_value(v) for v in arr], arr)
+
+    def test_throws_if_any_element_in_array_contains_CRLF(self):
+        arr: List[str] = ["good", "bad\nvalue", "also-good"]
+        with self.assertRaises(ValueError) as context:
+            [sanitize_header_value(v) for v in arr]
+        self.assertEqual(
+            str(context.exception),
+            'Invalid header value (contains CR/LF): "bad\nvalue"',
+        )
+
+
+class TestParseCustomHeaders:
+    def test_returns_empty_dict_when_input_is_empty_or_none(self):
+        assert parse_custom_headers({}) == {}
+        assert parse_custom_headers(None) == {}
+
+    def test_keeps_a_single_safe_header(self):
+        input_data = {"X-Test": "ok"}
+        assert parse_custom_headers(input_data) == {"X-Test": "ok"}
+
+    def test_trims_whitespace_around_header_names(self):
+        input_data = {"  X-Trim  ": "value"}
+        assert parse_custom_headers(input_data) == {"X-Trim": "value"}
+
+    def test_filters_out_forbidden_header_names_case_insensitive(self):
+        input_data = {
+            "Host": "example.com",
+            "authorization": "token",
+            "CoOkIe": "id=123",
+            ":METHOD": "DELETE",
+            "Good": "yes",
+        }
+        assert parse_custom_headers(input_data) == {"Good": "yes"}
+
+    def test_drops_headers_whose_values_contain_CRLF(self):
+        input_data = {
+            "X-Bad": "evil\r\ninject",
+            "X-Good": "safe",
+        }
+        assert parse_custom_headers(input_data) == {"X-Good": "safe"}
+
+    def test_drops_entire_header_when_array_value_has_any_bad_entry(self):
+        input_data = {
+            "X-Mixed": ["clean", "bad\nentry"],
+            "X-Also-Good": ["ok1", "ok2"],
+        }
+        assert parse_custom_headers(input_data) == {"X-Also-Good": ["ok1", "ok2"]}
+
+    def test_allows_array_values_when_all_entries_are_clean(self):
+        input_data = {"X-Array": ["one", "two", "three"]}
+        assert parse_custom_headers(input_data) == {"X-Array": ["one", "two", "three"]}
 
 if __name__ == "__main__":
     unittest.main()

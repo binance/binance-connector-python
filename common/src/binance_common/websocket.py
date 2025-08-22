@@ -6,7 +6,7 @@ import platform
 
 from collections import OrderedDict
 from pydantic import BaseModel
-from typing import Callable, Optional, Dict, Union, TypeVar, Type
+from typing import Callable, Optional, Dict, Generic, Union, TypeVar, Type
 from types import SimpleNamespace
 from urllib.parse import urlencode
 
@@ -193,29 +193,35 @@ class WebSocketCommon:
                         raise ValueError(f"Error received from server: {data['error']}")
 
                     stream = data.get("stream")
-                    callbacks = (
-                        connection.stream_callback_map.get(stream) if stream else None
-                    )
-                    response_model = (
-                        connection.response_types.get(stream) if stream else None
-                    )
+                    subscription_id = data.get("subscriptionId")
+
+                    key = stream or subscription_id
+                    callbacks = connection.stream_callback_map.get(key) if key is not None else None
+
                     if callbacks:
                         try:
-                            for callback in callbacks:
-                                if response_model is None:
-                                    callback(data)
-                                else:
-                                    data = data["data"]
-                                    if isinstance(data, list):
-                                        callback(
-                                            [response_model.model_validate_json(json.dumps(item)) for item in data]
-                                        )
+                            if stream:
+                                response_model = connection.response_types.get(stream)
+                                payload = data["data"] if response_model else data
+
+                                for callback in callbacks:
+                                    if response_model:
+                                        if isinstance(payload, list):
+                                            parsed = [
+                                                response_model.model_validate_json(json.dumps(item))
+                                                for item in payload
+                                            ]
+                                            callback(parsed)
+                                        else:
+                                            callback(response_model.model_validate_json(json.dumps(payload)))
                                     else:
-                                        callback(response_model.model_validate_json(json.dumps(data)))
+                                        callback(payload)
+                            else:
+                                payload = data["event"]
+                                for callback in callbacks:
+                                    callback(payload)
                         except Exception as e:
-                            raise ValueError(
-                                f"Error in callback for stream {stream}: {e}"
-                            )
+                            raise ValueError(f"Error in callback for key {key}: {e}")
                     else:
                         logging.info(f"Received message: {data}")
             elif msg.type == aiohttp.WSMsgType.PING:
@@ -723,22 +729,111 @@ class WebSocketAPIBase(WebSocketCommon):
 
         await super().ping(connection)
 
+    async def subscribe_user_data(self, id: str):
+        if self.configuration.mode == WebsocketMode.SINGLE:
+            connection = self.connections[0]
+        else:
+            connection = self.connections[
+                self.round_robin_index % len(self.connections)
+            ]
+            self.round_robin_index = (self.round_robin_index + 1) % len(
+                self.connections
+            )
+        global_stream_connections.stream_connections_map[id] = connection
+        connection.stream_callback_map.update({id: []})
+
+    def on(self, event: str, callback: Callable[[T], None], id: str) -> None:
+        """Set the callback function for incoming messages on a specific ID.
+
+        Args:
+            event (str): Event type.
+            callback (Callable): Callback function.
+            id (str): User Data ID.
+        """
+
+        if event != "message":
+            raise ValueError(f"Unsupported event: {event}")
+
+        connection = (
+            global_stream_connections.stream_connections_map[id]
+            if id in global_stream_connections.stream_connections_map
+            else None
+        )
+
+        if connection:
+            connection.stream_callback_map[id].append(callback)
+        else:
+            logging.warning(f"Stream {id} not connected.")
+
+    async def unsubscribe(self, id: str):
+        """Unsubscribe from a user data ID.
+
+        Args:
+            id (str): user data ID to unsubscribe from.
+        """
+
+        if self.connections is None or len(self.connections) == 0:
+            logging.warning("No user data connections available for unsubscription.")
+            return
+
+        if id not in global_stream_connections.stream_connections_map:
+            logging.warning(f"Stream {id} is not subscribed.")
+            return
+
+        connection = (
+            global_stream_connections.stream_connections_map[id]
+            if id in global_stream_connections.stream_connections_map
+            else None
+        )
+        if connection:
+            global_stream_connections.stream_connections_map.pop(id, None)
+            logging.info(f"Unsubscribed from stream: {id}")
+        else:
+            raise ValueError(f"Subscription id {id} not connected.")
+
+
+class RequestStreamHandle(Generic[T]):
+    """A wrapper for Request Stream Method.
+
+    :param websocket_base: WebSocket base.
+    :param stream: Stream name.
+    :param response_model: The Pydantic model to validate the response data.
+    """
+
+    def __init__(
+        self,
+        websocket_base: WebSocketStreamBase | WebSocketAPIBase,
+        stream: str,
+        response_model: Type[T] = None,
+    ):
+        self._websocket_base = websocket_base
+        self._stream = stream
+        self._response_model = response_model
+
+    async def unsubscribe(self) -> None:
+        if isinstance(self._websocket_base, WebSocketStreamBase):
+            await self._websocket_base.unsubscribe(streams=self._stream)
+        else:
+            await self._websocket_base.unsubscribe(id=self._stream)
+
+    def on(self, event: str, callback: Callable[[T], None]) -> None:
+        self._websocket_base.on(event, callback, self._stream)
+
 
 async def RequestStream(
-    websocket_base: WebSocketStreamBase, stream: str, response_model: Type[T] = None
-) -> SimpleNamespace:
+    websocket_base: WebSocketStreamBase | WebSocketAPIBase, stream: str, response_model: Type[T] = None
+) -> RequestStreamHandle[T]:
     """Decorator to create a request stream for a specific stream.
 
     Args:
-        websocket_base (WebSocketStreamBase): WebSocket stream base.
+        websocket_base (WebSocketStreamBase | WebSocketAPIBase): WebSocket base.
         stream (str): Stream name.
+        response_model (Type[T], optional): Response model for the stream.
     """
-    await websocket_base.subscribe(streams=[stream], response_model=response_model)
 
-    def on(event: str, callback: Callable[[T], None]):
-        websocket_base.on(event, callback, stream)
+    if isinstance(websocket_base, WebSocketStreamBase):
+        await websocket_base.subscribe(streams=[stream], response_model=response_model)
+    else:
+        await websocket_base.subscribe_user_data(id=stream)
 
-    async def unsubscribe():
-        await websocket_base.unsubscribe(streams=stream)
-
-    return SimpleNamespace(on=on, unsubscribe=unsubscribe)
+    return RequestStreamHandle(websocket_base, stream, response_model)

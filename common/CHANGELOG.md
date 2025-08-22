@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 - 2025-08-22
+
+### Changed (3)
+
+- Added custom REST headers
+- Added `subscribe_user_data`, `on` and `unsubscribe` method to `WebSocketAPIBase`
+- Updated `RequestStream` response type to `RequestStreamHandle`
+
 ## 1.2.0 - 2025-08-07
 
 ### Changed (1)
