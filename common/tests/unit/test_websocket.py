@@ -256,9 +256,9 @@ class TestWebSocketCommon:
         await ws_common.connect("wss://test.com/ws", config)
         connection = ws_common.connections[0]
 
-        callback = {"foo": lambda x: x}
+        callback = {"foo": lambda x: x, "bar": lambda x: x + 1}
 
-        mock_registry.stream_connections_map = {"foo": connection}
+        mock_registry.stream_connections_map = {"foo": connection, "bar": connection}
         connection.stream_callback_map = callback
 
         await ws_common.schedule_reconnect(connection, config, delay=0)
