@@ -322,12 +322,12 @@ class WebSocketCommon:
                         "id": connection.id,
                     }
                     await self.send_message(json_msg, new_connection)
-                    for stream in global_stream_connections.stream_connections_map:
+                    for stream_ in global_stream_connections.stream_connections_map:
                         if (
-                            global_stream_connections.stream_connections_map[stream]
+                            global_stream_connections.stream_connections_map[stream_]
                             == conn
                         ):
-                            global_stream_connections.stream_connections_map[stream] = (
+                            global_stream_connections.stream_connections_map[stream_] = (
                                 new_connection
                             )
 
