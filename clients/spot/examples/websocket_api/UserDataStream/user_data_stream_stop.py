@@ -33,6 +33,7 @@ async def user_data_stream_stop():
 
         data = response.data()
         logging.info(f"user_data_stream_stop() response: {data}")
+
     except Exception as e:
         logging.error(f"user_data_stream_stop() error: {e}")
     finally:

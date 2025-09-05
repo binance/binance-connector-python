@@ -40,6 +40,7 @@ async def order_list_place_oco():
 
         data = response.data()
         logging.info(f"order_list_place_oco() response: {data}")
+
     except Exception as e:
         logging.error(f"order_list_place_oco() error: {e}")
     finally:

@@ -43,7 +43,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Index Price Streams
-            POST /<symbol>@index
+            /<symbol>@index
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Index-Price-Streams
 
             Underlying(e.g ETHUSDT) index stream.
@@ -87,7 +87,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Kline/Candlestick Streams
-            POST /<symbol>@kline_<interval>
+            /<symbol>@kline_<interval>
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Kline-Candlestick-Streams
 
             The Kline/Candlestick Stream push updates to the current klines/candlestick every 1000 milliseconds (if existing).
@@ -138,7 +138,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Mark Price
-            POST /<underlyingAsset>@markPrice
+            /<underlyingAsset>@markPrice
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Mark-Price
 
             The mark price for all option symbols on specific underlying asset. E.g.[ETH@markPrice](wss://nbstream.binance.com/eoptions/stream?streams=ETH@markPrice)
@@ -181,7 +181,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             New Symbol Info
-            POST /option_pair
+            /option_pair
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/New-Symbol-Info
 
             New symbol listing stream.
@@ -218,7 +218,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Open Interest
-            POST /<underlyingAsset>@openInterest@<expirationDate>
+            /<underlyingAsset>@openInterest@<expirationDate>
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Open-Interest
 
             Option open interest for specific underlying asset on specific expiration date. E.g.[ETH@openInterest@221125](wss://nbstream.binance.com/eoptions/stream?streams=ETH@openInterest@221125)
@@ -271,7 +271,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Partial Book Depth Streams
-            POST /<symbol>@depth<levels>@<updateSpeed>
+            /<symbol>@depth<levels>@<updateSpeed>
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Partial-Book-Depth-Streams
 
             Top **<levels\>** bids and asks, Valid levels are **<levels\>** are 10, 20, 50, 100.
@@ -324,7 +324,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             24-hour TICKER
-            POST /<symbol>@ticker
+            /<symbol>@ticker
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/24-hour-TICKER
 
             24hr ticker info for all symbols. Only symbols whose ticker info changed will be sent.
@@ -368,7 +368,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             24-hour TICKER by underlying asset and expiration data
-            POST /<underlyingAsset>@ticker@<expirationDate>
+            /<underlyingAsset>@ticker@<expirationDate>
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/24-hour-TICKER-by-underlying-asset-and-expiration-data
 
             24hr ticker info by underlying asset and expiration date. E.g.[ETH@ticker@220930](wss://nbstream.binance.com/eoptions/stream?streams=ETH@ticker@220930)
@@ -421,7 +421,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Trade Streams
-            POST /<symbol>@trade
+            /<symbol>@trade
             https://developers.binance.com/docs/derivatives/option/websocket-market-streams/Trade-Streams
 
             The Trade Streams push raw trade information for specific symbol or underlying asset. E.g.[ETH@trade](wss://nbstream.binance.com/eoptions/stream?streams=ETH@trade)

@@ -39,6 +39,7 @@ async def query_order():
 
         data = response.data()
         logging.info(f"query_order() response: {data}")
+
     except Exception as e:
         logging.error(f"query_order() error: {e}")
     finally:

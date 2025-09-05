@@ -33,6 +33,7 @@ async def my_prevented_matches():
 
         data = response.data()
         logging.info(f"my_prevented_matches() response: {data}")
+
     except Exception as e:
         logging.error(f"my_prevented_matches() error: {e}")
     finally:

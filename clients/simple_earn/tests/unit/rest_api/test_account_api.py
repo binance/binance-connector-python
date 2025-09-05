@@ -753,7 +753,7 @@ class TestAccountApi:
                         "extraRewardAPR": "0.23",
                         "boostRewardAsset": "AXS",
                         "boostApr": "0.0121",
-                        "boostEndTime": "1646182276000",
+                        "boostEndTime": 1646182276000,
                     },
                     "quota": {"totalPersonalQuota": "2", "minimum": "0.001"},
                 }
@@ -826,7 +826,7 @@ class TestAccountApi:
                         "extraRewardAPR": "0.23",
                         "boostRewardAsset": "AXS",
                         "boostApr": "0.0121",
-                        "boostEndTime": "1646182276000",
+                        "boostEndTime": 1646182276000,
                     },
                     "quota": {"totalPersonalQuota": "2", "minimum": "0.001"},
                 }

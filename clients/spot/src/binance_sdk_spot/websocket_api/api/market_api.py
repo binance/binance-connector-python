@@ -60,7 +60,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[AvgPriceResponse]:
         """
             WebSocket Current average price
-            POST /avgPrice
+            /avgPrice
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#current-average-price
 
             Get current average price for a symbol.
@@ -105,7 +105,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[DepthResponse]:
         """
             WebSocket Order book
-            POST /depth
+            /depth
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#order-book
 
             Get current order book.
@@ -172,7 +172,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[KlinesResponse]:
         """
             WebSocket Klines
-            POST /klines
+            /klines
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#klines
 
             Get klines (candlestick bars).
@@ -242,7 +242,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TickerResponse]:
         """
             WebSocket Rolling window price change statistics
-            POST /ticker
+            /ticker
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#rolling-window-price-change-statistics
 
             Get rolling window price change statistics with a custom window.
@@ -297,7 +297,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[Ticker24hrResponse]:
         """
             WebSocket 24hr ticker price change statistics
-            POST /ticker.24hr
+            /ticker.24hr
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#24hr-ticker-price-change-statistics
 
             Get 24-hour rolling window price change statistics.
@@ -356,7 +356,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TickerBookResponse]:
         """
             WebSocket Symbol order book ticker
-            POST /ticker.book
+            /ticker.book
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#symbol-order-book-ticker
 
             Get the current best price and quantity on the order book.
@@ -408,7 +408,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TickerPriceResponse]:
         """
             WebSocket Symbol price ticker
-            POST /ticker.price
+            /ticker.price
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#symbol-price-ticker
 
             Get the latest market price for a symbol.
@@ -463,7 +463,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TickerTradingDayResponse]:
         """
             WebSocket Trading Day Ticker
-            POST /ticker.tradingDay
+            /ticker.tradingDay
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#trading-day-ticker
 
             Price change statistics for a trading day.
@@ -512,7 +512,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TradesAggregateResponse]:
         """
             WebSocket Aggregate trades
-            POST /trades.aggregate
+            /trades.aggregate
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#aggregate-trades
 
             Get aggregate trades.
@@ -577,7 +577,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TradesHistoricalResponse]:
         """
             WebSocket Historical trades
-            POST /trades.historical
+            /trades.historical
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#historical-trades
 
             Get historical trades.
@@ -626,7 +626,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[TradesRecentResponse]:
         """
             WebSocket Recent trades
-            POST /trades.recent
+            /trades.recent
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#recent-trades
 
             Get recent trades.
@@ -681,7 +681,7 @@ class MarketApi:
     ) -> WebsocketApiResponse[UiKlinesResponse]:
         """
             WebSocket UI Klines
-            POST /uiKlines
+            /uiKlines
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#ui-klines
 
             Get klines (candlestick bars) optimized for presentation.

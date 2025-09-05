@@ -37,6 +37,7 @@ async def futures_account_balance():
 
         data = response.data()
         logging.info(f"futures_account_balance() response: {data}")
+
     except Exception as e:
         logging.error(f"futures_account_balance() error: {e}")
     finally:

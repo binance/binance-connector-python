@@ -45,7 +45,7 @@ class GetSimpleEarnLockedProductListResponseRowsInnerDetail(BaseModel):
         default=None, alias="boostRewardAsset"
     )
     boost_apr: Optional[StrictStr] = Field(default=None, alias="boostApr")
-    boost_end_time: Optional[StrictStr] = Field(default=None, alias="boostEndTime")
+    boost_end_time: Optional[StrictInt] = Field(default=None, alias="boostEndTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

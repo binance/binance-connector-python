@@ -59,7 +59,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Aggregate Trade Streams
-        POST /<symbol>@aggTrade
+        /<symbol>@aggTrade
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#aggregate-trade-streams
 
         The Aggregate Trade Streams push trade information that is aggregated for a single taker order.
@@ -100,7 +100,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             WebSocket All Market Rolling Window Statistics Streams
-            POST /!ticker_<windowSize>@arr
+            /!ticker_<windowSize>@arr
             https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-rolling-window-statistics-streams
 
             Rolling window ticker statistics for all market symbols, computed over multiple windows.
@@ -144,7 +144,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket All Market Mini Tickers Stream
-        POST /!miniTicker@arr
+        /!miniTicker@arr
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-mini-tickers-stream
 
         24hr rolling window mini-ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
@@ -177,7 +177,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket All Market Tickers Stream
-        POST /!ticker@arr
+        /!ticker@arr
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-tickers-stream
 
         24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
@@ -211,7 +211,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Average Price
-        POST /<symbol>@avgPrice
+        /<symbol>@avgPrice
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#average-price
 
         Average price streams push changes in the average price over a fixed time interval.
@@ -252,7 +252,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             WebSocket Individual Symbol Book Ticker Streams
-            POST /<symbol>@bookTicker
+            /<symbol>@bookTicker
             https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#individual-symbol-book-ticker-streams
 
             Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
@@ -295,7 +295,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Diff. Depth Stream
-        POST /<symbol>@depth@<updateSpeed>
+        /<symbol>@depth@<updateSpeed>
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#diff-depth-stream
 
         Order book price and quantity depth updates used to locally manage an order book.
@@ -339,7 +339,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             WebSocket Kline/Candlestick Streams for UTC
-            POST /<symbol>@kline_<interval>
+            /<symbol>@kline_<interval>
             https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#klinecandlestick-streams-for-utc
 
             The Kline/Candlestick Stream push updates to the current klines/candlestick every second in `UTC+0` timezone
@@ -389,7 +389,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Kline/Candlestick Streams with timezone offset
-        POST /<symbol>@kline_<interval>@+08:00
+        /<symbol>@kline_<interval>@+08:00
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#klinecandlestick-streams-with-timezone-offset
 
         The Kline/Candlestick Stream push updates to the current klines/candlestick every second in `UTC+8` timezone
@@ -436,7 +436,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Mini Ticker Stream
-        POST /<symbol>@miniTicker
+        /<symbol>@miniTicker
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#individual-symbol-mini-ticker-stream
 
         24hr rolling window mini-ticker statistics. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs.
@@ -479,7 +479,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Partial Book Depth Streams
-        POST /<symbol>@depth<levels>@<updateSpeed>
+        /<symbol>@depth<levels>@<updateSpeed>
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#partial-book-depth-streams
 
         Top **\<levels\>** bids and asks, pushed every second. Valid **\<levels\>** are 5, 10, or 20.
@@ -529,7 +529,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Rolling Window Statistics Streams
-        POST /<symbol>@ticker_<windowSize>
+        /<symbol>@ticker_<windowSize>
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#individual-symbol-rolling-window-statistics-streams
 
         Rolling window ticker statistics for a single symbol, computed over multiple windows.
@@ -579,7 +579,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Individual Symbol Ticker Streams
-        POST /<symbol>@ticker
+        /<symbol>@ticker
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#individual-symbol-ticker-streams
 
         24hr rolling window ticker statistics for a single symbol. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs.
@@ -620,7 +620,7 @@ class WebSocketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
         WebSocket Trade Streams
-        POST /<symbol>@trade
+        /<symbol>@trade
         https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#trade-streams
 
         The Trade Streams push raw trade information; each trade has a unique buyer and seller.

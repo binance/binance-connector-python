@@ -81,6 +81,7 @@ class TestWebSocketUserDataStreamsApi:
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={"method": "/userDataStream.stop".replace("/", ""), "params": {}},
             response_model=CloseUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -137,6 +138,7 @@ class TestWebSocketUserDataStreamsApi:
                 "params": params,
             },
             response_model=CloseUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -196,6 +198,7 @@ class TestWebSocketUserDataStreamsApi:
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={"method": "/userDataStream.ping".replace("/", ""), "params": {}},
             response_model=KeepaliveUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -252,6 +255,7 @@ class TestWebSocketUserDataStreamsApi:
                 "params": params,
             },
             response_model=KeepaliveUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -311,6 +315,7 @@ class TestWebSocketUserDataStreamsApi:
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={"method": "/userDataStream.start".replace("/", ""), "params": {}},
             response_model=StartUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -367,6 +372,7 @@ class TestWebSocketUserDataStreamsApi:
                 "params": params,
             },
             response_model=StartUserDataStreamResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio

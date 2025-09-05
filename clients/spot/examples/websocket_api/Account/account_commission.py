@@ -33,6 +33,7 @@ async def account_commission():
 
         data = response.data()
         logging.info(f"account_commission() response: {data}")
+
     except Exception as e:
         logging.error(f"account_commission() error: {e}")
     finally:

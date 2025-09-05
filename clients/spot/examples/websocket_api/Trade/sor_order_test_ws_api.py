@@ -38,6 +38,7 @@ async def sor_order_test():
 
         data = response.data()
         logging.info(f"sor_order_test() response: {data}")
+
     except Exception as e:
         logging.error(f"sor_order_test() error: {e}")
     finally:

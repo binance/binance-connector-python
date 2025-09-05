@@ -31,6 +31,7 @@ async def open_orders_status():
 
         data = response.data()
         logging.info(f"open_orders_status() response: {data}")
+
     except Exception as e:
         logging.error(f"open_orders_status() error: {e}")
     finally:

@@ -47,7 +47,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[SessionSubscriptionsResponse]:
         """
             WebSocket Listing all subscriptions
-            POST /session.subscriptions
+            /session.subscriptions
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#listing-all-subscriptions
 
 
@@ -87,7 +87,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamPingResponse]:
         """
             WebSocket Ping user data stream
-            POST /userDataStream.ping
+            /userDataStream.ping
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#ping-user-data-stream-user_stream
 
             Ping a user data stream to keep it alive.
@@ -128,7 +128,7 @@ class UserDataStreamApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=UserDataStreamPingResponse
+            payload=payload, response_model=UserDataStreamPingResponse, api_key=True
         )
 
     async def user_data_stream_start(
@@ -137,7 +137,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamStartResponse]:
         """
             WebSocket Start user data stream
-            POST /userDataStream.start
+            /userDataStream.start
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#start-user-data-stream-user_stream
 
             Start a new user data stream.
@@ -164,7 +164,7 @@ class UserDataStreamApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=UserDataStreamStartResponse
+            payload=payload, response_model=UserDataStreamStartResponse, api_key=True
         )
 
     async def user_data_stream_stop(
@@ -174,7 +174,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamStopResponse]:
         """
             WebSocket Stop user data stream
-            POST /userDataStream.stop
+            /userDataStream.stop
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#stop-user-data-stream-user_stream
 
             Explicitly stop and close the user data stream.
@@ -209,7 +209,7 @@ class UserDataStreamApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=UserDataStreamStopResponse
+            payload=payload, response_model=UserDataStreamStopResponse, api_key=True
         )
 
     async def user_data_stream_subscribe(
@@ -218,7 +218,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamSubscribeResponse]:
         """
             WebSocket Subscribe to User Data Stream
-            POST /userDataStream.subscribe
+            /userDataStream.subscribe
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#subscribe-to-user-data-stream-user_stream
 
             Subscribe to the User Data Stream in the current WebSocket connection.
@@ -254,7 +254,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]:
         """
             WebSocket Subscribe to User Data Stream through signature subscription
-            POST /userDataStream.subscribe.signature
+            /userDataStream.subscribe.signature
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#subscribe-to-user-data-stream-through-signature-subscription-user_data
 
 
@@ -293,7 +293,7 @@ class UserDataStreamApi:
     ) -> WebsocketApiResponse[UserDataStreamUnsubscribeResponse]:
         """
             WebSocket Unsubscribe from User Data Stream
-            POST /userDataStream.unsubscribe
+            /userDataStream.unsubscribe
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#unsubscribe-from-user-data-stream
 
             Stop listening to the User Data Stream in the current WebSocket connection.

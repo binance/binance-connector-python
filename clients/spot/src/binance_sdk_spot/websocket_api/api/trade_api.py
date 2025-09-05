@@ -133,7 +133,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OpenOrdersCancelAllResponse]:
         """
             WebSocket Cancel open orders
-            POST /openOrders.cancelAll
+            /openOrders.cancelAll
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#cancel-open-orders-trade
 
             Cancel all open orders on a symbol.
@@ -187,7 +187,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderAmendKeepPriorityResponse]:
         """
             WebSocket Order Amend Keep Priority
-            POST /order.amend.keepPriority
+            /order.amend.keepPriority
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#order-amend-keep-priority-trade
 
             Reduce the quantity of an existing open order.
@@ -264,7 +264,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderCancelResponse]:
         """
             WebSocket Cancel order
-            POST /order.cancel
+            /order.cancel
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#cancel-order-trade
 
             Cancel an active order.
@@ -358,7 +358,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
             WebSocket Cancel and replace order
-            POST /order.cancelReplace
+            /order.cancelReplace
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#cancel-and-replace-order-trade
 
             Cancel an existing order and immediately place a new order instead of the canceled one.
@@ -521,7 +521,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderListCancelResponse]:
         """
             WebSocket Cancel Order list
-            POST /orderList.cancel
+            /orderList.cancel
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#cancel-order-list-trade
 
             Cancel an active order list.
@@ -604,7 +604,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderListPlaceResponse]:
         """
             WebSocket Place new OCO - Deprecated
-            POST /orderList.place
+            /orderList.place
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-oco---deprecated-trade
 
             Send in a new one-cancels-the-other (OCO) pair:
@@ -790,7 +790,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderListPlaceOcoResponse]:
         """
             WebSocket Place new Order list - OCO
-            POST /orderList.place.oco
+            /orderList.place.oco
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-order-list---oco-trade
 
             Send in an one-cancels-the-other (OCO) pair, where activation of one order immediately cancels the other.
@@ -1059,7 +1059,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
             WebSocket Place new Order list - OTO
-            POST /orderList.place.oto
+            /orderList.place.oto
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-order-list---oto-trade
 
             Places an OTO.
@@ -1355,7 +1355,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
             WebSocket Place new Order list - OTOCO
-            POST /orderList.place.otoco
+            /orderList.place.otoco
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-order-list---otoco-trade
 
             Place an OTOCO.
@@ -1685,7 +1685,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
             WebSocket Place new order
-            POST /order.place
+            /order.place
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-order-trade
 
             Send in a new order.
@@ -1826,7 +1826,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
             WebSocket Test new order
-            POST /order.test
+            /order.test
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#test-new-order-trade
 
             Test order placement.
@@ -1970,7 +1970,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[SorOrderPlaceResponse]:
         """
             WebSocket Place new order using SOR
-            POST /sor.order.place
+            /sor.order.place
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#place-new-order-using-sor-trade
 
             Places an order using smart order routing (SOR).
@@ -2084,7 +2084,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[SorOrderTestResponse]:
         """
             WebSocket Test new order using SOR
-            POST /sor.order.test
+            /sor.order.test
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/trading-requests#test-new-order-using-sor-trade
 
             Test new order creation and signature/recvWindow using smart order routing (SOR).

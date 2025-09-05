@@ -31,6 +31,7 @@ async def ticker_trading_day():
 
         data = response.data()
         logging.info(f"ticker_trading_day() response: {data}")
+
     except Exception as e:
         logging.error(f"ticker_trading_day() error: {e}")
     finally:

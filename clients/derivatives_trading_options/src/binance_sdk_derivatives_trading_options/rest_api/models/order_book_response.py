@@ -33,7 +33,7 @@ class OrderBookResponse(BaseModel):
     OrderBookResponse
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     u: Optional[StrictInt] = None
     bids: Optional[List[OrderBookResponseBidsItem]] = None
     asks: Optional[List[OrderBookResponseAsksItem]] = None

@@ -40,7 +40,7 @@ class MarketDataApi:
     ) -> WebsocketApiResponse[OrderBookResponse]:
         """
             Order Book
-            POST /depth
+            /depth
             https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/websocket-api/Order-Book
 
             Get current order book. Note that this request returns limited market depth.
@@ -98,7 +98,7 @@ class MarketDataApi:
     ) -> WebsocketApiResponse[SymbolOrderBookTickerResponse]:
         """
             Symbol Order Book Ticker
-            POST /ticker.book
+            /ticker.book
             https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/websocket-api/Symbol-Order-Book-Ticker
 
             Best price/qty on the order book for a symbol or symbols.
@@ -142,7 +142,7 @@ class MarketDataApi:
     ) -> WebsocketApiResponse[SymbolPriceTickerResponse]:
         """
             Symbol Price Ticker
-            POST /ticker.price
+            /ticker.price
             https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/websocket-api/Symbol-Price-Ticker
 
             Latest price for a symbol or symbols.

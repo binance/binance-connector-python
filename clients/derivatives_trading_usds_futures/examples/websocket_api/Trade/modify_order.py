@@ -45,6 +45,7 @@ async def modify_order():
 
         data = response.data()
         logging.info(f"modify_order() response: {data}")
+
     except Exception as e:
         logging.error(f"modify_order() error: {e}")
     finally:

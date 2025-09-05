@@ -31,6 +31,7 @@ async def session_subscriptions():
 
         data = response.data()
         logging.info(f"session_subscriptions() response: {data}")
+
     except Exception as e:
         logging.error(f"session_subscriptions() error: {e}")
     finally:

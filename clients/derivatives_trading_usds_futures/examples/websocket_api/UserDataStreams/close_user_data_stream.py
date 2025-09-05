@@ -37,6 +37,7 @@ async def close_user_data_stream():
 
         data = response.data()
         logging.info(f"close_user_data_stream() response: {data}")
+
     except Exception as e:
         logging.error(f"close_user_data_stream() error: {e}")
     finally:

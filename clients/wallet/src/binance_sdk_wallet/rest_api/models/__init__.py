@@ -73,6 +73,15 @@ from .deposit_history_travel_rule_response import (
 from .deposit_history_travel_rule_response_inner import (
     DepositHistoryTravelRuleResponseInner as DepositHistoryTravelRuleResponseInner,
 )
+from .deposit_history_v2_response import (
+    DepositHistoryV2Response as DepositHistoryV2Response,
+)
+from .deposit_history_v2_response_inner import (
+    DepositHistoryV2ResponseInner as DepositHistoryV2ResponseInner,
+)
+from .deposit_history_v2_response_inner_questionnaire import (
+    DepositHistoryV2ResponseInnerQuestionnaire as DepositHistoryV2ResponseInnerQuestionnaire,
+)
 from .dust_transfer_response import DustTransferResponse as DustTransferResponse
 from .dust_transfer_response_transfer_result_inner import (
     DustTransferResponseTransferResultInner as DustTransferResponseTransferResultInner,

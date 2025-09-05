@@ -461,6 +461,8 @@ class TestFlexibleRateApi:
         params = {
             "loan_coin": "loan_coin_example",
             "collateral_coin": "collateral_coin_example",
+            "loan_amount": 1.0,
+            "collateral_amount": 1.0,
             "recv_window": 5000,
         }
 
@@ -560,7 +562,7 @@ class TestFlexibleRateApi:
             "remainingCollateral": "5.253",
             "fullRepayment": False,
             "currentLTV": "0.25",
-            "repayStatus": "Repaid",
+            "repayStatus": "REPAID",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -623,7 +625,7 @@ class TestFlexibleRateApi:
             "remainingCollateral": "5.253",
             "fullRepayment": False,
             "currentLTV": "0.25",
-            "repayStatus": "Repaid",
+            "repayStatus": "REPAID",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1451,7 +1453,7 @@ class TestFlexibleRateApi:
                     "repayAmount": "10000",
                     "collateralCoin": "BNB",
                     "collateralReturn": "49.27565492",
-                    "repayStatus": "Repaid",
+                    "repayStatus": "REPAID",
                     "repayTime": 1575018510000,
                 }
             ],
@@ -1516,7 +1518,7 @@ class TestFlexibleRateApi:
                     "repayAmount": "10000",
                     "collateralCoin": "BNB",
                     "collateralReturn": "49.27565492",
-                    "repayStatus": "Repaid",
+                    "repayStatus": "REPAID",
                     "repayTime": 1575018510000,
                 }
             ],

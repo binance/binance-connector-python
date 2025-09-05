@@ -31,6 +31,7 @@ async def ping():
 
         data = response.data()
         logging.info(f"ping() response: {data}")
+
     except Exception as e:
         logging.error(f"ping() error: {e}")
     finally:

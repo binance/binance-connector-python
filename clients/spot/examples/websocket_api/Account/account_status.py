@@ -31,6 +31,7 @@ async def account_status():
 
         data = response.data()
         logging.info(f"account_status() response: {data}")
+
     except Exception as e:
         logging.error(f"account_status() error: {e}")
     finally:

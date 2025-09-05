@@ -75,6 +75,7 @@ class TestWebSocketAuthApi:
             payload={"method": "/session.logon".replace("/", ""), "params": {}},
             response_model=SessionLogonResponse,
             signer=None,
+            session_logon=True,
         )
 
     @pytest.mark.asyncio
@@ -126,6 +127,7 @@ class TestWebSocketAuthApi:
             payload={"method": "/session.logon".replace("/", ""), "params": params},
             response_model=SessionLogonResponse,
             signer=None,
+            session_logon=True,
         )
 
     @pytest.mark.asyncio
@@ -179,6 +181,7 @@ class TestWebSocketAuthApi:
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={"method": "/session.logout".replace("/", ""), "params": {}},
             response_model=SessionLogoutResponse,
+            session_logout=True,
         )
 
     @pytest.mark.asyncio
@@ -226,6 +229,7 @@ class TestWebSocketAuthApi:
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={"method": "/session.logout".replace("/", ""), "params": params},
             response_model=SessionLogoutResponse,
+            session_logout=True,
         )
 
     @pytest.mark.asyncio

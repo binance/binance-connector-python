@@ -37,6 +37,7 @@ async def position_information_v2():
 
         data = response.data()
         logging.info(f"position_information_v2() response: {data}")
+
     except Exception as e:
         logging.error(f"position_information_v2() error: {e}")
     finally:

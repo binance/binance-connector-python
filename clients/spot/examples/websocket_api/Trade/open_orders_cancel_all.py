@@ -33,6 +33,7 @@ async def open_orders_cancel_all():
 
         data = response.data()
         logging.info(f"open_orders_cancel_all() response: {data}")
+
     except Exception as e:
         logging.error(f"open_orders_cancel_all() error: {e}")
     finally:

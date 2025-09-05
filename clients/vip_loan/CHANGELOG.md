@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0 - 2025-09-05
+
+### Changed (2)
+
+- Added parameter `loanTerm`
+  - affected methods:
+    - `vip_loan_borrow()` (`POST /sapi/v1/loan/vip/borrow`)
+- Updated `binance-common` library to version `3.0.0`
+
 ## 1.3.0 - 2025-08-22
 
 ### Changed (1)

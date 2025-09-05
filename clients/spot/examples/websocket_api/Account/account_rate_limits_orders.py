@@ -31,6 +31,7 @@ async def account_rate_limits_orders():
 
         data = response.data()
         logging.info(f"account_rate_limits_orders() response: {data}")
+
     except Exception as e:
         logging.error(f"account_rate_limits_orders() error: {e}")
     finally:
