@@ -8,10 +8,12 @@ from pydantic import BaseModel
 import requests
 
 from base64 import b64decode, b64encode
+from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, ECC
 from Crypto.Signature import pkcs1_15, eddsa
-from typing import ClassVar, List
+from types import SimpleNamespace
+from typing import ClassVar, List, Optional, Union
 from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
@@ -27,7 +29,7 @@ from binance_common.errors import (
     ServerError,
     NetworkError,
 )
-from binance_common.models import RateLimit
+from binance_common.models import RateLimit, WebsocketApiOptions
 from binance_common.utils import (
     hmac_hashing,
     cleanNoneValue,
@@ -44,6 +46,11 @@ from binance_common.utils import (
     ws_streams_placeholder,
     parse_ws_rate_limit_headers,
     normalize_query_values,
+    ws_api_payload,
+    websocket_api_signature,
+    get_validator_field_map,
+    resolve_model_from_event,
+    parse_user_event,
 )
 from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
@@ -1118,7 +1125,7 @@ class TestSanitizeHeaderValue(unittest.TestCase):
         )
 
 
-class TestParseCustomHeaders:
+class TestParseCustomHeaders(unittest.TestCase):
     def test_returns_empty_dict_when_input_is_empty_or_none(self):
         assert parse_custom_headers({}) == {}
         assert parse_custom_headers(None) == {}
@@ -1158,6 +1165,141 @@ class TestParseCustomHeaders:
     def test_allows_array_values_when_all_entries_are_clean(self):
         input_data = {"X-Array": ["one", "two", "three"]}
         assert parse_custom_headers(input_data) == {"X-Array": ["one", "two", "three"]}
+
+
+class TestWsApiPayload(unittest.TestCase):
+    def setUp(self):
+        self.dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        self.base_payload = {
+            "id": "123",
+            "params": {
+                "some_param": "value",
+                "list_param": [1, 2, 3],
+                "dict_param": {"nested": "data"}
+            }
+        }
+
+    def test_payload_with_api_key_and_signed(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=True, signer=None)
+        
+        with patch("binance_common.utils.websocket_api_signature", return_value={"signed": True}) as mock_signature:
+            result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+            mock_signature.assert_called_once()
+
+            assert result["id"] == self.base_payload["id"]
+            assert result["params"] == {"signed": True}
+
+    def test_payload_without_api_key(self):
+        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert "apiKey" not in result["params"]
+        assert result["id"] == self.base_payload["id"]
+        assert isinstance(result["params"]["listParam"], str)
+        assert isinstance(result["params"]["dictParam"], str)
+        assert result["params"]["someParam"] == "value"
+
+    def test_payload_generates_new_id_if_missing(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=False, signer=None)
+        payload_without_id = {"params": {}}
+
+        with patch("binance_common.utils.get_uuid", return_value="generated-id"):
+            result = ws_api_payload(self.dummy_config, payload_without_id, websocket_options)
+
+            assert result["id"] == "generated-id"
+
+    def test_payload_skips_auth_when_flagged(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=True, is_signed=False, signer=None)
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert "apiKey" not in result["params"]
+
+    def test_params_serialization(self):
+        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert result["params"]["listParam"] == json.dumps([1, 2, 3], separators=(",", ":"))
+        assert result["params"]["dictParam"] == json.dumps({"nested": "data"}, separators=(",", ":"))
+
+
+
+class TestWebsocketApiSignature(unittest.TestCase):
+    def test_websocket_api_signature(self):
+        dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        payload = {"foo": "bar"}
+
+        with patch("binance_common.utils.get_timestamp", return_value=1234567890), \
+            patch("binance_common.utils.get_signature", return_value="mocked-signature") as mock_get_signature:
+
+            result = websocket_api_signature(dummy_config, payload)
+
+            assert isinstance(result, OrderedDict)
+            assert result["apiKey"] == "test-api-key"
+            assert result["timestamp"] == 1234567890
+            assert result["foo"] == "bar"
+            assert result["signature"] == "mocked-signature"
+
+            mock_get_signature.assert_called_once()
+            called_config, called_params, called_signer = mock_get_signature.call_args[0]
+            assert called_config == dummy_config
+            assert "apiKey=test-api-key" in called_params
+            assert "timestamp=1234567890" in called_params
+
+
+class EventA(BaseModel):
+    x: int
+    y: str
+
+class EventB(BaseModel):
+    a: float
+    b: Optional[str]
+
+class UserResponse(BaseModel):
+    one_of_schemas: list[str] = ["EventA", "EventB"]
+    oneof_schema_eventa_validator: Optional[EventA] = None
+    oneof_schema_eventb_validator: Optional[EventB] = None
+    actual_instance: Union[EventA, EventB, dict]
+
+
+class TestGetValidatorFieldMap(unittest.TestCase):
+
+    def test_field_map(self):
+        field_map = get_validator_field_map(UserResponse)
+        self.assertIn(EventA, field_map)
+        self.assertIn(EventB, field_map)
+        self.assertEqual(field_map[EventA], "oneof_schema_eventa_validator")
+        self.assertEqual(field_map[EventB], "oneof_schema_eventb_validator")
+
+
+class TestResolveModelFromEvent(unittest.TestCase):
+
+    def test_valid_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "eventA")
+        self.assertIs(model_cls, EventA)
+
+    def test_invalid_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "nonexistent")
+        self.assertIsNone(model_cls)
+
+    def test_empty_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "")
+        self.assertIsNone(model_cls)
+
+
+class TestParseUserEvent(unittest.TestCase):
+
+    def test_invalid_event(self):
+        payload = {"e": "unknown", "data": 123}
+        instance = parse_user_event(payload, UserResponse)
+        self.assertIsInstance(instance, UserResponse)
+        self.assertEqual(instance.actual_instance["data"], 123)
+
+    def test_invalid_payload(self):
+        payload = {"e": "eventA", "x": "wrong_type", "y": "hello"}
+        instance = parse_user_event(payload, UserResponse)
+        self.assertIsInstance(instance, UserResponse)
+        self.assertEqual(instance.actual_instance["x"], "wrong_type")
 
 if __name__ == "__main__":
     unittest.main()
