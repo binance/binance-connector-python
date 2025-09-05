@@ -39,6 +39,7 @@ async def cancel_order():
 
         data = response.data()
         logging.info(f"cancel_order() response: {data}")
+
     except Exception as e:
         logging.error(f"cancel_order() error: {e}")
     finally:

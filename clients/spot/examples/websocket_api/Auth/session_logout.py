@@ -31,6 +31,7 @@ async def session_logout():
 
         data = response.data()
         logging.info(f"session_logout() response: {data}")
+
     except Exception as e:
         logging.error(f"session_logout() error: {e}")
     finally:

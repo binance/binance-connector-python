@@ -502,7 +502,6 @@ class TestAccountApi:
                     "crossUnPnl": "0.00000000",
                     "availableBalance": "126.72469206",
                     "maxWithdrawAmount": "23.72469206",
-                    "marginAvailable": True,
                     "updateTime": 1625474304765,
                 },
                 {
@@ -518,7 +517,6 @@ class TestAccountApi:
                     "crossUnPnl": "0.00000000",
                     "availableBalance": "126.72469206",
                     "maxWithdrawAmount": "103.12345678",
-                    "marginAvailable": True,
                     "updateTime": 1625474304765,
                 },
             ],
@@ -647,7 +645,6 @@ class TestAccountApi:
                     "crossUnPnl": "0.00000000",
                     "availableBalance": "126.72469206",
                     "maxWithdrawAmount": "23.72469206",
-                    "marginAvailable": True,
                     "updateTime": 1625474304765,
                 },
                 {
@@ -663,7 +660,6 @@ class TestAccountApi:
                     "crossUnPnl": "0.00000000",
                     "availableBalance": "126.72469206",
                     "maxWithdrawAmount": "103.12345678",
-                    "marginAvailable": True,
                     "updateTime": 1625474304765,
                 },
             ],

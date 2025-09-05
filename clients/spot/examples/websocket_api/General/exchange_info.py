@@ -31,6 +31,7 @@ async def exchange_info():
 
         data = response.data()
         logging.info(f"exchange_info() response: {data}")
+
     except Exception as e:
         logging.error(f"exchange_info() error: {e}")
     finally:

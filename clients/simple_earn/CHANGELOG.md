@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0 - 2025-09-05
+
+### Changed (2)
+
+- Modified response for `get_simple_earn_locked_product_list()` (`GET /sapi/v1/simple-earn/locked/list`):
+  - `rows`.`detail`.`boostEndTime`: type `string` → `integer`
+- Updated `binance-common` library to version `3.0.0`
+
 ## 2.0.0 - 2025-08-22
 
 ### Changed (3)

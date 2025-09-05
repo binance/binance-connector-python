@@ -34,6 +34,7 @@ async def order_amendments():
 
         data = response.data()
         logging.info(f"order_amendments() response: {data}")
+
     except Exception as e:
         logging.error(f"order_amendments() error: {e}")
     finally:

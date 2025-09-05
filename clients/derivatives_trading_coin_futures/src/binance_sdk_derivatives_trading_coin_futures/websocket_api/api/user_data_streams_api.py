@@ -37,7 +37,7 @@ class UserDataStreamsApi:
     ) -> WebsocketApiResponse[CloseUserDataStreamResponse]:
         """
             Close User Data Stream (USER_STREAM)
-            POST /userDataStream.stop
+            /userDataStream.stop
             https://developers.binance.com/docs/derivatives/coin-margined-futures/user-data-streams/Close-User-Data-Stream-Wsp
 
             Close out a user data stream.
@@ -65,7 +65,7 @@ class UserDataStreamsApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=CloseUserDataStreamResponse
+            payload=payload, response_model=CloseUserDataStreamResponse, api_key=True
         )
 
     async def keepalive_user_data_stream(
@@ -74,7 +74,7 @@ class UserDataStreamsApi:
     ) -> WebsocketApiResponse[KeepaliveUserDataStreamResponse]:
         """
             Keepalive User Data Stream (USER_STREAM)
-            POST /userDataStream.ping
+            /userDataStream.ping
             https://developers.binance.com/docs/derivatives/coin-margined-futures/user-data-streams/Keepalive-User-Data-Stream-Wsp
 
             Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 60 minutes.
@@ -102,7 +102,9 @@ class UserDataStreamsApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=KeepaliveUserDataStreamResponse
+            payload=payload,
+            response_model=KeepaliveUserDataStreamResponse,
+            api_key=True,
         )
 
     async def start_user_data_stream(
@@ -111,7 +113,7 @@ class UserDataStreamsApi:
     ) -> WebsocketApiResponse[StartUserDataStreamResponse]:
         """
             Start User Data Stream (USER_STREAM)
-            POST /userDataStream.start
+            /userDataStream.start
             https://developers.binance.com/docs/derivatives/coin-margined-futures/user-data-streams/Start-User-Data-Stream-Wsp
 
             Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active `listenKey`, that `listenKey` will be returned and its validity will be extended for 60 minutes.
@@ -139,5 +141,5 @@ class UserDataStreamsApi:
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=StartUserDataStreamResponse
+            payload=payload, response_model=StartUserDataStreamResponse, api_key=True
         )

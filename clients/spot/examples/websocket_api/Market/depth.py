@@ -33,6 +33,7 @@ async def depth():
 
         data = response.data()
         logging.info(f"depth() response: {data}")
+
     except Exception as e:
         logging.error(f"depth() error: {e}")
     finally:

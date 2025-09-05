@@ -23,6 +23,7 @@ from binance_sdk_wallet.rest_api.api import TravelRuleApi
 from binance_sdk_wallet.rest_api.models import BrokerWithdrawResponse
 from binance_sdk_wallet.rest_api.models import CheckQuestionnaireRequirementsResponse
 from binance_sdk_wallet.rest_api.models import DepositHistoryTravelRuleResponse
+from binance_sdk_wallet.rest_api.models import DepositHistoryV2Response
 from binance_sdk_wallet.rest_api.models import FetchAddressVerificationListResponse
 from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireResponse
 from binance_sdk_wallet.rest_api.models import (
@@ -433,7 +434,7 @@ class TestTravelRuleApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
-                "requireQuestionnaire": True,
+                "requireQuestionnaire": False,
                 "questionnaire": None,
             },
             {
@@ -527,7 +528,7 @@ class TestTravelRuleApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
-                "requireQuestionnaire": True,
+                "requireQuestionnaire": False,
                 "questionnaire": None,
             },
             {
@@ -590,6 +591,137 @@ class TestTravelRuleApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.deposit_history_travel_rule()
+
+    @patch("binance_common.utils.get_signature")
+    def test_deposit_history_v2_success(self, mock_get_signature):
+        """Test deposit_history_v2() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "depositId": "4615328107052018945",
+                "amount": "0.01",
+                "network": "AVAXC",
+                "coin": "AVAX",
+                "depositStatus": 1,
+                "travelRuleReqStatus": 0,
+                "address": "0x0010627ab66d69232f4080d54e0f838b4dc3894a",
+                "addressTag": "",
+                "txId": "0xdde578983015741eed764e7ca10defb5a2caafdca3db5f92872d24a96beb1879",
+                "transferType": 0,
+                "confirmTimes": "12/12",
+                "requireQuestionnaire": False,
+                "questionnaire": {"vaspName": "BINANCE", "depositOriginator": 0},
+                "insertTime": 1753053392000,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.deposit_history_v2()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/localentity/deposit/history" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DepositHistoryV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = DepositHistoryV2Response.from_dict(expected_response)
+        else:
+            expected = DepositHistoryV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_deposit_history_v2_success_with_optional_params(self, mock_get_signature):
+        """Test deposit_history_v2() successfully with optional parameters."""
+
+        params = {
+            "deposit_id": "1",
+            "tx_id": "1",
+            "network": "network_example",
+            "coin": "coin_example",
+            "retrieve_questionnaire": True,
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "offset": 0,
+            "limit": 7,
+        }
+
+        expected_response = [
+            {
+                "depositId": "4615328107052018945",
+                "amount": "0.01",
+                "network": "AVAXC",
+                "coin": "AVAX",
+                "depositStatus": 1,
+                "travelRuleReqStatus": 0,
+                "address": "0x0010627ab66d69232f4080d54e0f838b4dc3894a",
+                "addressTag": "",
+                "txId": "0xdde578983015741eed764e7ca10defb5a2caafdca3db5f92872d24a96beb1879",
+                "transferType": 0,
+                "confirmTimes": "12/12",
+                "requireQuestionnaire": False,
+                "questionnaire": {"vaspName": "BINANCE", "depositOriginator": 0},
+                "insertTime": 1753053392000,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.deposit_history_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/localentity/deposit/history" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DepositHistoryV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list:
+            expected = DepositHistoryV2Response.from_dict(expected_response)
+        else:
+            expected = DepositHistoryV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_deposit_history_v2_server_error(self):
+        """Test that deposit_history_v2() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.deposit_history_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.deposit_history_v2()
 
     @patch("binance_common.utils.get_signature")
     def test_fetch_address_verification_list_success(self, mock_get_signature):

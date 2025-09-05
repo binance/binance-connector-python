@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -52,9 +52,6 @@ class AccountInformationV3ResponseAssetsInner(BaseModel):
         default=None, alias="maxWithdrawAmount"
     )
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
-    margin_available: Optional[StrictBool] = Field(
-        default=None, alias="marginAvailable"
-    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",
@@ -70,7 +67,6 @@ class AccountInformationV3ResponseAssetsInner(BaseModel):
         "availableBalance",
         "maxWithdrawAmount",
         "updateTime",
-        "marginAvailable",
     ]
 
     model_config = ConfigDict(
@@ -150,7 +146,6 @@ class AccountInformationV3ResponseAssetsInner(BaseModel):
                 "availableBalance": obj.get("availableBalance"),
                 "maxWithdrawAmount": obj.get("maxWithdrawAmount"),
                 "updateTime": obj.get("updateTime"),
-                "marginAvailable": obj.get("marginAvailable"),
             }
         )
         # store additional fields in additional_properties

@@ -31,6 +31,7 @@ async def time():
 
         data = response.data()
         logging.info(f"time() response: {data}")
+
     except Exception as e:
         logging.error(f"time() error: {e}")
     finally:

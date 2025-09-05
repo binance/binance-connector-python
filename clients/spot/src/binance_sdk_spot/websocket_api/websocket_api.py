@@ -19,6 +19,7 @@ from pydantic import BaseModel
 from binance_common.configuration import ConfigurationWebSocketAPI
 from binance_common.models import (
     WebsocketApiResponse,
+    WebsocketApiUserDataEndpoints,
     WebsocketApiUserDataStreamResponse,
 )
 from binance_common.signature import Signers
@@ -183,7 +184,11 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self,
         configuration: ConfigurationWebSocketAPI,
     ) -> None:
-        super().__init__(configuration)
+        self.user_data_endpoints = WebsocketApiUserDataEndpoints(
+            user_data_stream_subscribe="userDataStream.subscribe",
+            user_data_stream_logout="/session.logout".replace("/", ""),
+        )
+        super().__init__(configuration, self.user_data_endpoints)
         self.configuration = configuration
         self.signer = (
             Signers.get_signer(
@@ -212,7 +217,13 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             raise ValueError("WebSocket session is not initialized.")
 
     async def send_message(
-        self, payload: Dict, promised: bool = True, response_model: Type[T] = None
+        self,
+        payload: Dict,
+        promised: bool = True,
+        response_model: Type[T] = None,
+        api_key: Optional[bool] = False,
+        session_logon: Optional[bool] = False,
+        session_logout: Optional[bool] = False,
     ) -> WebsocketApiResponse[T]:
         """Sends a message to the WebSocket server.
 
@@ -220,11 +231,16 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             payload (Dict): The message payload to send.
             promised (bool): Whether the message is promised or not.
             response_model (Type[T]): The expected response model type.
+            api_key (Optional[bool]): Whether to include the API key in the request.
+            session_logon (Optional[bool]): Whether the message is for session logon.
+            session_logout (Optional[bool]): Whether the message is for session logout.
         Returns:
             WebsocketApiResponse[T]: The response from the WebSocket server.
         """
 
-        return await super().send_message(payload, promised, response_model)
+        return await super().send_message(
+            payload, promised, response_model, api_key, session_logon, session_logout
+        )
 
     async def send_signed_message(
         self,
@@ -232,6 +248,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         signer: Optional[Signers] = None,
         promised: bool = True,
         response_model: Type[T] = None,
+        api_key: Optional[bool] = False,
+        session_logon: Optional[bool] = False,
+        session_logout: Optional[bool] = False,
     ):
         """Sends a signed message to the WebSocket server.
 
@@ -240,12 +259,21 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             signer (Optional[Signers]): The signer to use for signing the message.
             promised (bool): Whether the message is promised or not.
             response_model (Type[T]): The expected response model type.
+            api_key (Optional[bool]): Whether to include the API key in the request.
+            session_logon (Optional[bool]): Whether the message is for session logon.
+            session_logout (Optional[bool]): Whether the message is for session logout.
         Returns:
             WebsocketApiResponse[T]: The response from the WebSocket server.
         """
 
         return await super().send_signed_message(
-            payload, signer, promised, response_model
+            payload,
+            signer,
+            promised,
+            response_model,
+            api_key=api_key,
+            session_logon=session_logon,
+            session_logout=session_logout,
         )
 
     async def close_connection(

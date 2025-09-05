@@ -35,6 +35,7 @@ async def ui_klines():
 
         data = response.data()
         logging.info(f"ui_klines() response: {data}")
+
     except Exception as e:
         logging.error(f"ui_klines() error: {e}")
     finally:

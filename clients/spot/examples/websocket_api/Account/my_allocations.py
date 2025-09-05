@@ -33,6 +33,7 @@ async def my_allocations():
 
         data = response.data()
         logging.info(f"my_allocations() response: {data}")
+
     except Exception as e:
         logging.error(f"my_allocations() error: {e}")
     finally:

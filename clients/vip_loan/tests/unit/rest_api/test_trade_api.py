@@ -126,6 +126,7 @@ class TestTradeApi:
             "collateral_account_id": "1",
             "collateral_coin": "collateral_coin_example",
             "is_flexible_rate": True,
+            "loan_term": 56,
             "recv_window": 5000,
         }
 

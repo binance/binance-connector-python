@@ -33,6 +33,7 @@ async def trades_historical():
 
         data = response.data()
         logging.info(f"trades_historical() response: {data}")
+
     except Exception as e:
         logging.error(f"trades_historical() error: {e}")
     finally:

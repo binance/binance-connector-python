@@ -31,6 +31,7 @@ async def ticker():
 
         data = response.data()
         logging.info(f"ticker() response: {data}")
+
     except Exception as e:
         logging.error(f"ticker() error: {e}")
     finally:

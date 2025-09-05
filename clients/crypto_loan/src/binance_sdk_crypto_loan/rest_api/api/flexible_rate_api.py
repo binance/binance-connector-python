@@ -177,6 +177,8 @@ class FlexibleRateApi:
         self,
         loan_coin: Union[str, None],
         collateral_coin: Union[str, None],
+        loan_amount: Optional[float] = None,
+        collateral_amount: Optional[float] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FlexibleLoanBorrowResponse]:
         """
@@ -195,6 +197,8 @@ class FlexibleRateApi:
                 Args:
                     loan_coin (Union[str, None]):
                     collateral_coin (Union[str, None]):
+                    loan_amount (Optional[float] = None): Mandatory when collateralAmount is empty
+                    collateral_amount (Optional[float] = None): Mandatory when loanAmount is empty
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -219,6 +223,8 @@ class FlexibleRateApi:
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
+            "loan_amount": loan_amount,
+            "collateral_amount": collateral_amount,
             "recv_window": recv_window,
         }
 
