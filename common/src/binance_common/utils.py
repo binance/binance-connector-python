@@ -1,5 +1,7 @@
+import copy
 import hashlib
 import hmac
+import importlib
 import json
 import re
 import requests
@@ -9,11 +11,12 @@ import time
 import uuid
 
 from base64 import b64encode
+from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 from enum import Enum
 from pydantic import BaseModel
-from typing import Dict, List, Optional, Type, TypeVar, Union
+from typing import Dict, List, Optional, Type, TypeVar, Union, get_args
 from urllib.parse import urlencode
 from urllib3.util.ssl_ import create_urllib3_context
 
@@ -30,7 +33,12 @@ from binance_common.errors import (
     TooManyRequestsError,
     UnauthorizedError,
 )
-from binance_common.models import ApiResponse, RateLimit, WebsocketApiRateLimit
+from binance_common.models import (
+    ApiResponse,
+    RateLimit,
+    WebsocketApiOptions,
+    WebsocketApiRateLimit
+)
 from binance_common.signature import Signers
 
 
@@ -346,8 +354,14 @@ def send_request(
             else:
                 data_function = lambda: response_model.model_validate(parsed)
 
+            try:
+                data_function()  
+                final_data_function = data_function
+            except Exception:
+                final_data_function = lambda: parsed
+
             return ApiResponse[T](
-                data_function=data_function,
+                data_function=final_data_function,
                 status=response.status_code,
                 headers=response.headers,
                 rate_limits=parse_rate_limit_headers(response.headers),
@@ -506,6 +520,7 @@ def ws_streams_placeholder(stream: str, params: dict = {}) -> str:
         stream,
     )
 
+
 def parse_ws_rate_limit_headers(
     headers: List[Dict[str, Union[str, int]]],
 ) -> List[WebsocketApiRateLimit]:
@@ -521,6 +536,7 @@ def parse_ws_rate_limit_headers(
     for header in headers:
         rate_limits.append(WebsocketApiRateLimit(**header))
     return rate_limits
+
 
 def normalize_query_values(parsed, expected_types=None):
     """Normalizes the values in a parsed query dictionary.
@@ -563,3 +579,144 @@ def normalize_query_values(parsed, expected_types=None):
         normalized[k] = converted[0] if len(converted) == 1 else converted
 
     return normalized
+
+
+def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions):
+    """Generate payload for websocket API
+
+    Args:
+        config: The API configuration.
+        payload (Dict): The payload to send.
+        websocket_options (WebsocketApiOptions): The WebSocket API options.
+
+    Returns:
+        Dict: The generated payload for the WebSocket API.
+    """
+
+    payload = copy.copy(payload)
+
+    if websocket_options.api_key and websocket_options.skip_auth is False:
+        payload["params"]["apiKey"] = config.api_key
+
+    payload["id"] = payload["id"] if "id" in payload else get_uuid()
+
+    payload["params"] = {
+        snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":"))
+        if isinstance(v, (list, dict))
+        else make_serializable(v)
+        for k, v in payload["params"].items()
+    }
+
+    if websocket_options.is_signed:
+        if websocket_options.skip_auth is True:
+            payload["params"]["timestamp"] = get_timestamp()
+        else:
+            payload["params"] = websocket_api_signature(config, payload["params"], websocket_options.signer)
+
+    return payload
+
+
+def websocket_api_signature(config, payload: Optional[Dict] = {}, signer: Signers = None) -> dict:
+    """Generate signature for websocket API
+
+    Args:
+        payload (Optional[Dict]): Payload.
+        signer (Signers): Signer for the payload.
+    Returns:
+        dict: The generated signature for the WebSocket API.
+    """
+
+    payload["apiKey"] = config.api_key
+    payload["timestamp"] = get_timestamp()
+    parameters = OrderedDict(sorted(payload.items()))
+    parameters["signature"] = get_signature(
+        config, urlencode(parameters), signer
+    )
+    return parameters
+
+
+def get_validator_field_map(response_model_cls: Type[BaseModel]) -> dict[str, str]:
+    """Map User Data response schema class name to oneof_schema_N_validator field dynamically
+
+    Args:
+        response_model_cls (Type[BaseModel]): The response model class.
+
+    Returns:
+        dict[str, str]: The mapping of field names to validator field names.
+    """
+
+    field_map = {}
+    annotations = getattr(response_model_cls, "__annotations__", {})
+
+    for field_name, annotation in annotations.items():
+        if field_name.startswith("oneof_schema_") and field_name.endswith("_validator"):
+            if getattr(annotation, "__origin__", None) is Union:
+                type_ = next((arg for arg in get_args(annotation) if arg is not type(None)), None)
+            else:
+                type_ = annotation
+            if isinstance(type_, str):
+                type_ = re.sub(r'^Optional\[(.*)\]$', r'\1', type_)
+
+            if type_:
+                field_map[type_] = field_name
+
+    return field_map
+
+
+def resolve_model_from_event(response_model_cls: Type[BaseModel], event_name: str) -> Type[BaseModel]:
+    """Resolve the correct model class for the websocket event dynamically.
+
+    Args:
+        response_model_cls (Type[BaseModel]): The response model class.
+        event_name (str): The name of the event.
+
+    Returns:
+        Type[BaseModel]: The resolved model class or None.
+    """
+
+    if not event_name:
+        return None
+
+    one_of_schemas_field = response_model_cls.__pydantic_fields__.get("one_of_schemas")
+    if not one_of_schemas_field:
+        return None
+
+    one_of_schemas = list(one_of_schemas_field.default)
+    event_to_class_map = {name[0].lower() + name[1:]: name for name in one_of_schemas}
+
+    class_name = event_to_class_map.get(event_name)
+    if not class_name:
+        return None
+
+    module = importlib.import_module(response_model_cls.__module__)
+    return getattr(module, class_name, None)
+
+
+def parse_user_event(payload: dict, response_model_cls: Type[BaseModel]) -> BaseModel:
+    """Parse user event to response model.
+
+    Args:
+        payload (dict): The payload dictionary containing event data.
+        response_model_cls (Type[BaseModel]): The response model class.
+
+    Returns:
+        BaseModel: The parsed response model instance.
+    """
+
+    event_name = payload.get("e")
+    model_cls = resolve_model_from_event(response_model_cls, event_name)
+
+    if not model_cls:
+        return response_model_cls(actual_instance=payload)
+
+    try:
+        instance = model_cls.model_validate(payload)
+        validator_field_map = get_validator_field_map(response_model_cls)
+        kwargs = {"actual_instance": instance}
+        if validator_field := validator_field_map.get(model_cls.__name__):
+            kwargs[validator_field] = instance
+        return response_model_cls(**kwargs)
+
+    except Exception as e:
+        print(f"Failed to parse {event_name}: {e}")
+        return response_model_cls(actual_instance=payload)
