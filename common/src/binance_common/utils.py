@@ -608,7 +608,10 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
     }
 
     if websocket_options.is_signed:
-        payload["params"] = websocket_api_signature(config, payload["params"], websocket_options.signer)
+        if websocket_options.skip_auth is True:
+            payload["params"]["timestamp"] = get_timestamp()
+        else:
+            payload["params"] = websocket_api_signature(config, payload["params"], websocket_options.signer)
 
     return payload
 
