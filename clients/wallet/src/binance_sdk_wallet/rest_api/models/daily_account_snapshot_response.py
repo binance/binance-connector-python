@@ -32,7 +32,7 @@ class DailyAccountSnapshotResponse(BaseModel):
 
     code: Optional[StrictInt] = None
     msg: Optional[StrictStr] = None
-    snapshot_vos: Optional[List[DailyAccountSnapshotResponseSnapshotVosInner]] = Field(
+    snapshotVos: Optional[List[DailyAccountSnapshotResponseSnapshotVosInner]] = Field(
         default=None, alias="snapshotVos"
     )
     additional_properties: Dict[str, Any] = {}

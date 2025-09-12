@@ -27,22 +27,22 @@ class OnChainYieldsAccountResponse(BaseModel):
     OnChainYieldsAccountResponse
     """  # noqa: E501
 
-    total_amount_in_btc: Optional[StrictStr] = Field(
+    totalAmountInBTC: Optional[StrictStr] = Field(
         default=None, alias="totalAmountInBTC"
     )
-    total_amount_in_usdt: Optional[StrictStr] = Field(
+    totalAmountInUSDT: Optional[StrictStr] = Field(
         default=None, alias="totalAmountInUSDT"
     )
-    total_flexible_amount_in_btc: Optional[StrictStr] = Field(
+    totalFlexibleAmountInBTC: Optional[StrictStr] = Field(
         default=None, alias="totalFlexibleAmountInBTC"
     )
-    total_flexible_amount_in_usdt: Optional[StrictStr] = Field(
+    totalFlexibleAmountInUSDT: Optional[StrictStr] = Field(
         default=None, alias="totalFlexibleAmountInUSDT"
     )
-    total_locked_in_btc: Optional[StrictStr] = Field(
+    totalLockedInBTC: Optional[StrictStr] = Field(
         default=None, alias="totalLockedInBTC"
     )
-    total_locked_in_usdt: Optional[StrictStr] = Field(
+    totalLockedInUSDT: Optional[StrictStr] = Field(
         default=None, alias="totalLockedInUSDT"
     )
     additional_properties: Dict[str, Any] = {}

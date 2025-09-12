@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0 - 2025-09-12
+
+### Changed (2)
+
+- Modified response for `all_coins_information()` (`GET /sapi/v1/capital/config/getall`):
+  - `networkList`: item property `withdrawTag` added
+- Updated `binance-common` library to version `3.1.0`
+
 ## 2.0.0 - 2025-09-05
 
 ### Added (1)

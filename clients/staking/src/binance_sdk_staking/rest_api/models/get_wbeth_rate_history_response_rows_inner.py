@@ -27,10 +27,10 @@ class GetWbethRateHistoryResponseRowsInner(BaseModel):
     GetWbethRateHistoryResponseRowsInner
     """  # noqa: E501
 
-    annual_percentage_rate: Optional[StrictStr] = Field(
+    annualPercentageRate: Optional[StrictStr] = Field(
         default=None, alias="annualPercentageRate"
     )
-    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     time: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["annualPercentageRate", "exchangeRate", "time"]

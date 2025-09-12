@@ -27,33 +27,33 @@ class GetApiKeyPermissionResponse(BaseModel):
     GetApiKeyPermissionResponse
     """  # noqa: E501
 
-    ip_restrict: Optional[StrictBool] = Field(default=None, alias="ipRestrict")
-    create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
-    enable_reading: Optional[StrictBool] = Field(default=None, alias="enableReading")
-    enable_withdrawals: Optional[StrictBool] = Field(
+    ipRestrict: Optional[StrictBool] = Field(default=None, alias="ipRestrict")
+    createTime: Optional[StrictInt] = Field(default=None, alias="createTime")
+    enableReading: Optional[StrictBool] = Field(default=None, alias="enableReading")
+    enableWithdrawals: Optional[StrictBool] = Field(
         default=None, alias="enableWithdrawals"
     )
-    enable_internal_transfer: Optional[StrictBool] = Field(
+    enableInternalTransfer: Optional[StrictBool] = Field(
         default=None, alias="enableInternalTransfer"
     )
-    enable_margin: Optional[StrictBool] = Field(default=None, alias="enableMargin")
-    enable_futures: Optional[StrictBool] = Field(default=None, alias="enableFutures")
-    permits_universal_transfer: Optional[StrictBool] = Field(
+    enableMargin: Optional[StrictBool] = Field(default=None, alias="enableMargin")
+    enableFutures: Optional[StrictBool] = Field(default=None, alias="enableFutures")
+    permitsUniversalTransfer: Optional[StrictBool] = Field(
         default=None, alias="permitsUniversalTransfer"
     )
-    enable_vanilla_options: Optional[StrictBool] = Field(
+    enableVanillaOptions: Optional[StrictBool] = Field(
         default=None, alias="enableVanillaOptions"
     )
-    enable_fix_api_trade: Optional[StrictBool] = Field(
+    enableFixApiTrade: Optional[StrictBool] = Field(
         default=None, alias="enableFixApiTrade"
     )
-    enable_fix_read_only: Optional[StrictBool] = Field(
+    enableFixReadOnly: Optional[StrictBool] = Field(
         default=None, alias="enableFixReadOnly"
     )
-    enable_spot_and_margin_trading: Optional[StrictBool] = Field(
+    enableSpotAndMarginTrading: Optional[StrictBool] = Field(
         default=None, alias="enableSpotAndMarginTrading"
     )
-    enable_portfolio_margin_trading: Optional[StrictBool] = Field(
+    enablePortfolioMarginTrading: Optional[StrictBool] = Field(
         default=None, alias="enablePortfolioMarginTrading"
     )
     additional_properties: Dict[str, Any] = {}

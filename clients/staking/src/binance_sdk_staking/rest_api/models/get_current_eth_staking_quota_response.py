@@ -27,10 +27,10 @@ class GetCurrentEthStakingQuotaResponse(BaseModel):
     GetCurrentEthStakingQuotaResponse
     """  # noqa: E501
 
-    left_staking_personal_quota: Optional[StrictStr] = Field(
+    leftStakingPersonalQuota: Optional[StrictStr] = Field(
         default=None, alias="leftStakingPersonalQuota"
     )
-    left_redemption_personal_quota: Optional[StrictStr] = Field(
+    leftRedemptionPersonalQuota: Optional[StrictStr] = Field(
         default=None, alias="leftRedemptionPersonalQuota"
     )
     additional_properties: Dict[str, Any] = {}

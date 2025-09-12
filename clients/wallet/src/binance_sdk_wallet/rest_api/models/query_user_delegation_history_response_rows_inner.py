@@ -27,8 +27,8 @@ class QueryUserDelegationHistoryResponseRowsInner(BaseModel):
     QueryUserDelegationHistoryResponseRowsInner
     """  # noqa: E501
 
-    client_tran_id: Optional[StrictStr] = Field(default=None, alias="clientTranId")
-    transfer_type: Optional[StrictStr] = Field(default=None, alias="transferType")
+    clientTranId: Optional[StrictStr] = Field(default=None, alias="clientTranId")
+    transferType: Optional[StrictStr] = Field(default=None, alias="transferType")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
     time: Optional[StrictInt] = None

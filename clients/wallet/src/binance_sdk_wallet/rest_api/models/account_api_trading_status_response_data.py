@@ -30,14 +30,14 @@ class AccountApiTradingStatusResponseData(BaseModel):
     AccountApiTradingStatusResponseData
     """  # noqa: E501
 
-    is_locked: Optional[StrictBool] = Field(default=None, alias="isLocked")
-    planned_recover_time: Optional[StrictInt] = Field(
+    isLocked: Optional[StrictBool] = Field(default=None, alias="isLocked")
+    plannedRecoverTime: Optional[StrictInt] = Field(
         default=None, alias="plannedRecoverTime"
     )
-    trigger_condition: Optional[AccountApiTradingStatusResponseDataTriggerCondition] = (
+    triggerCondition: Optional[AccountApiTradingStatusResponseDataTriggerCondition] = (
         Field(default=None, alias="triggerCondition")
     )
-    update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
+    updateTime: Optional[StrictInt] = Field(default=None, alias="updateTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "isLocked",

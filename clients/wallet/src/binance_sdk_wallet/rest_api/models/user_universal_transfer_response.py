@@ -27,7 +27,7 @@ class UserUniversalTransferResponse(BaseModel):
     UserUniversalTransferResponse
     """  # noqa: E501
 
-    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
+    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["tranId"]
 

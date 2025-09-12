@@ -32,7 +32,7 @@ class DailyAccountSnapshotResponseSnapshotVosInner(BaseModel):
 
     data: Optional[DailyAccountSnapshotResponseSnapshotVosInnerData] = None
     type: Optional[StrictStr] = None
-    update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
+    updateTime: Optional[StrictInt] = Field(default=None, alias="updateTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["data", "type", "updateTime"]
 

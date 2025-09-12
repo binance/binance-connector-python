@@ -2237,7 +2237,6 @@ class TestAssetManagementApi:
         assert normalized["fromUserEmail"] == "from_user_email_example"
         assert normalized["toUserEmail"] == "to_user_email_example"
         assert normalized["productType"] == "product_type_example"
-        assert "orderArgs" in normalized
 
         assert response is not None
         is_list = isinstance(expected_response, list)

@@ -28,11 +28,11 @@ class GetAssetsThatCanBeConvertedIntoBnbResponseDetailsInner(BaseModel):
     """  # noqa: E501
 
     asset: Optional[StrictStr] = None
-    asset_full_name: Optional[StrictStr] = Field(default=None, alias="assetFullName")
-    amount_free: Optional[StrictStr] = Field(default=None, alias="amountFree")
-    to_btc: Optional[StrictStr] = Field(default=None, alias="toBTC")
-    to_bnb: Optional[StrictStr] = Field(default=None, alias="toBNB")
-    to_bnb_off_exchange: Optional[StrictStr] = Field(
+    assetFullName: Optional[StrictStr] = Field(default=None, alias="assetFullName")
+    amountFree: Optional[StrictStr] = Field(default=None, alias="amountFree")
+    toBTC: Optional[StrictStr] = Field(default=None, alias="toBTC")
+    toBNB: Optional[StrictStr] = Field(default=None, alias="toBNB")
+    toBNBOffExchange: Optional[StrictStr] = Field(
         default=None, alias="toBNBOffExchange"
     )
     exchange: Optional[StrictStr] = None

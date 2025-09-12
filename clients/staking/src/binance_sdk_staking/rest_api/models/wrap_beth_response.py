@@ -28,8 +28,8 @@ class WrapBethResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = None
-    wbeth_amount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
-    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    wbethAmount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
+    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["success", "wbethAmount", "exchangeRate"]
 

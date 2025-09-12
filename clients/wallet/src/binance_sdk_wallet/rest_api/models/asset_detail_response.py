@@ -33,8 +33,8 @@ class AssetDetailResponse(BaseModel):
     AssetDetailResponse
     """  # noqa: E501
 
-    ctr: Optional[AssetDetailResponseCTR] = Field(default=None, alias="CTR")
-    sky: Optional[AssetDetailResponseSKY] = Field(default=None, alias="SKY")
+    CTR: Optional[AssetDetailResponseCTR] = Field(default=None, alias="CTR")
+    SKY: Optional[AssetDetailResponseSKY] = Field(default=None, alias="SKY")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["CTR", "SKY"]
 
