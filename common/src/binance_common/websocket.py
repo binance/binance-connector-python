@@ -212,14 +212,16 @@ class WebSocketCommon:
 
                                 for callback in callbacks:
                                     if response_model:
-                                        if isinstance(payload, list):
+                                        if response_model.__pydantic_fields__.get("one_of_schemas"):
+                                            parsed = payload
+                                        elif isinstance(payload, list):
                                             parsed = [
                                                 response_model.model_validate_json(json.dumps(item))
                                                 for item in payload
                                             ]
-                                            callback(parsed)
                                         else:
-                                            callback(response_model.model_validate_json(json.dumps(payload)))
+                                            parsed = response_model.model_validate_json(json.dumps(payload))
+                                        callback(parsed)
                                     else:
                                         callback(payload)
                             else:

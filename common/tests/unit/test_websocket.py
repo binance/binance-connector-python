@@ -446,8 +446,10 @@ class TestWebSocketCommon:
         assert old_conn.reconnect is False
 
     @pytest.mark.asyncio
-    async def test__resubscribe_user_streams(self, mock_connection, mock_user_registry):
+    async def test_resubscribe_user_streams(self, mock_connection, mock_user_registry):
         ws_common = WebSocketCommon(MagicMock())
+        ws_common.user_data_endpoints = MagicMock()
+        ws_common.user_data_endpoints.user_data_stream_subscribe = "userDataStream.subscribe"
 
         old_conn = mock_connection
         old_conn.id = "abc"
@@ -470,7 +472,7 @@ class TestWebSocketCommon:
             assert mock_user_registry.stream_connections_map["user_stream"] == new_conn
 
     @pytest.mark.asyncio
-    async def test__resubscribe_global_streams(self, mock_connection, mock_registry):
+    async def test_resubscribe_global_streams(self, mock_connection, mock_registry):
         ws_common = WebSocketCommon(MagicMock())
 
         old_conn = mock_connection
