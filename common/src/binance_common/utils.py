@@ -78,7 +78,7 @@ def hmac_hashing(api_secret: str, payload: str) -> str:
     return m.hexdigest()
 
 
-def cleanNoneValue(d: dict) -> dict:
+def clean_none_value(d: dict) -> dict:
     """Removes any `None` values from the input dictionary `d` and returns a new
     dictionary with only non-`None` values.
 
@@ -89,11 +89,24 @@ def cleanNoneValue(d: dict) -> dict:
         dict: A new dictionary with only non-`None` values from the input dictionary.
     """
 
-    out = {}
-    for k in d.keys():
-        if d[k] is not None:
-            out[k] = d[k]
-    return out
+    if isinstance(d, dict):
+        out = {}
+        for k, v in d.items():
+            cleaned = clean_none_value(v)
+            if cleaned not in (None, {}, []):
+                out[k] = cleaned
+        return out
+    elif isinstance(d, list):
+        out_list = []
+        for item in d:
+            cleaned_item = clean_none_value(item)
+            if cleaned_item not in (None, {}, []):
+                out_list.append(cleaned_item)
+        return out_list
+    elif hasattr(d, "__dict__"):
+        return clean_none_value(d.__dict__)
+    else:
+        return d
 
 
 def get_timestamp() -> int:
@@ -128,9 +141,33 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
         return [v.__dict__ if hasattr(v, "__dict__") else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
-    if isinstance(val , Enum):
+    if isinstance(val, float):
+        return str(val)
+    if isinstance(val, Enum):
         return val.value
+    if hasattr(val, "__dict__"):
+        return transform_query(val.__dict__)
     return val
+
+
+def transform_query(data: Union[dict, list, str, int, float, bool]) -> Union[dict, list, str, int, float, bool]:
+    """Recursively transform keys to camelCase and values to serializable.
+
+    Args:
+        data (Union[dict, list, str, int, float, bool]): The data to transform.
+    Returns:
+        Union[dict, list, str, int, float, bool]: The transformed data.
+    """
+
+    if isinstance(data, dict):
+        return {
+            snake_to_camel(k): transform_query(v)
+            for k, v in data.items()
+        }
+    elif isinstance(data, list):
+        return [transform_query(v) for v in data]
+    else:
+        return make_serializable(data)
 
 
 def encoded_string(query: str) -> str:
@@ -143,10 +180,9 @@ def encoded_string(query: str) -> str:
         str: The encoded query string.
     """
 
+    query = transform_query(query)
     query = {
-        snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":"))
-        if isinstance(v, (list, dict))
-        else make_serializable(v)
+        k: json.dumps(v, separators=(",", ":")) if isinstance(v, (dict, list)) else v
         for k, v in query.items()
     }
     return urlencode(query, True)
@@ -263,7 +299,7 @@ def send_request(
         payload = {}
 
     if is_signed:
-        cleaned_payload = cleanNoneValue(payload)
+        cleaned_payload = clean_none_value(payload)
         cleaned_payload["timestamp"] = get_timestamp()
         query_string = encoded_string(cleaned_payload)
         cleaned_payload["signature"] = get_signature(configuration, query_string, signer)
@@ -305,7 +341,7 @@ def send_request(
             response = session.request(
                 method=method,
                 url=url,
-                params=encoded_string(cleanNoneValue(payload)),
+                params=encoded_string(clean_none_value(payload)),
                 headers=headers,
                 timeout=timeout,
                 proxies=proxies,

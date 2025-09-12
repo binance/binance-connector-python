@@ -12,6 +12,7 @@ from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, ECC
 from Crypto.Signature import pkcs1_15, eddsa
+from enum import Enum
 from types import SimpleNamespace
 from typing import ClassVar, List, Optional, Union
 from unittest.mock import Mock, patch
@@ -31,26 +32,28 @@ from binance_common.errors import (
 )
 from binance_common.models import RateLimit, WebsocketApiOptions
 from binance_common.utils import (
-    hmac_hashing,
-    cleanNoneValue,
-    get_timestamp,
+    clean_none_value,
     encoded_string,
-    is_one_of_model,
-    get_uuid,
-    validate_time_unit,
     get_signature,
-    should_retry_request,
-    send_request,
-    parse_rate_limit_headers,
-    parse_proxies,
-    ws_streams_placeholder,
-    parse_ws_rate_limit_headers,
-    normalize_query_values,
-    ws_api_payload,
-    websocket_api_signature,
+    get_timestamp,
+    get_uuid,
     get_validator_field_map,
-    resolve_model_from_event,
+    hmac_hashing,
+    is_one_of_model,
+    make_serializable,
+    normalize_query_values,
+    parse_proxies,
     parse_user_event,
+    parse_rate_limit_headers,
+    parse_ws_rate_limit_headers,
+    resolve_model_from_event,
+    send_request,
+    should_retry_request,
+    transform_query,
+    validate_time_unit,
+    websocket_api_signature,
+    ws_api_payload,
+    ws_streams_placeholder,
 )
 from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
@@ -193,27 +196,58 @@ class TestCleanNoneValue(unittest.TestCase):
     def test_remove_none_values(self):
         input_dict = {"a": 1, "b": None, "c": 3, "d": None}
         expected_output = {"a": 1, "c": 3}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_all_none_values(self):
         input_dict = {"a": None, "b": None, "c": None}
         expected_output = {}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_no_none_values(self):
         input_dict = {"a": 1, "b": 2, "c": 3}
         expected_output = {"a": 1, "b": 2, "c": 3}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_empty_dictionary(self):
         input_dict = {}
         expected_output = {}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_mixed_types(self):
         input_dict = {"a": 0, "b": False, "c": None, "d": "", "e": [], "f": {}}
-        expected_output = {"a": 0, "b": False, "d": "", "e": [], "f": {}}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        expected_output = {"a": 0, "b": False, "d": ""}
+        self.assertEqual(clean_none_value(input_dict), expected_output)
+
+    def test_clean_none_value_with_class(self):
+        class Dummy:
+            def __init__(self):
+                self.a = 0
+                self.b = False
+                self.c = ""
+                self.d = None
+                self.e = []
+                self.f = {}
+
+        obj = Dummy()
+        cleaned = clean_none_value(obj)
+
+        expected = {
+            "a": 0,
+            "b": False,
+            "c": ""
+        }
+
+        assert cleaned == expected
+
+    def test_clean_none_value_with_array_of_dicts(self):
+        input_list = [
+            {"a": 0, "b": False, "c": None, "d": "", "e": [], "f": {}},
+        ]
+        expected_output = [
+            {"a": 0, "b": False, "d": ""}
+        ]
+
+        assert clean_none_value(input_list) == expected_output
 
 
 class TestGetTimestamp(unittest.TestCase):
@@ -235,6 +269,111 @@ class TestGetTimestamp(unittest.TestCase):
         timestamp2 = get_timestamp()
 
         self.assertGreater(timestamp2, timestamp1)
+
+
+class Dummy:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+
+class TestMakeSerializable(unittest.TestCase):
+
+    def test_list_of_objects(self):
+        obj1 = Dummy(1, 2)
+        obj2 = Dummy(3, 4)
+        result = make_serializable([obj1, obj2])
+        self.assertEqual(result, [obj1.__dict__, obj2.__dict__])
+
+    def test_boolean(self):
+        self.assertEqual(make_serializable(True), "true")
+        self.assertEqual(make_serializable(False), "false")
+
+    def test_float(self):
+        self.assertEqual(make_serializable(3.14), "3.14")
+        self.assertEqual(make_serializable(-2.5), "-2.5")
+
+    def test_enum(self):
+        class Color(Enum):
+            RED = "red"
+            BLUE = "blue"
+        self.assertEqual(make_serializable(Color.RED), "red")
+        self.assertEqual(make_serializable(Color.BLUE), "blue")
+
+    def test_object_with_dict(self):
+        obj = Dummy(5, 6)
+        result = make_serializable(obj)
+        self.assertEqual(result, obj.__dict__)
+
+    def test_int_and_string(self):
+        self.assertEqual(make_serializable(42), 42)
+        self.assertEqual(make_serializable("hello"), "hello")
+
+    def test_list_of_mixed(self):
+        obj = Dummy(1, 2)
+        lst = [obj, 10, "test", True]
+        result = make_serializable(lst)
+        expected = [obj.__dict__, 10, "test", True]
+        self.assertEqual(result, expected)
+
+
+class TestTransformQuery(unittest.TestCase):
+
+    def test_transform_dict(self):
+        data = {
+            "first_name": "John",
+            "last_name": "Doe",
+            "age": 30
+        }
+        expected = {
+            "firstName": "John",
+            "lastName": "Doe",
+            "age": 30
+        }
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_nested_dict(self):
+        data = {
+            "user_info": {
+                "first_name": "Alice",
+                "last_name": "Smith"
+            },
+            "is_active": True
+        }
+        expected = {
+            "userInfo": {
+                "firstName": "Alice",
+                "lastName": "Smith"
+            },
+            "isActive": "true"
+        }
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_list_of_dicts(self):
+        data = [
+            {"first_name": "John"},
+            {"first_name": "Jane"}
+        ]
+        expected = [
+            {"firstName": "John"},
+            {"firstName": "Jane"}
+        ]
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_mixed_list(self):
+        data = [1, "two", {"three_four": 4}]
+        expected = [1, "two", {"threeFour": 4}]
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_primitive_types(self):
+        self.assertEqual(transform_query(42), 42)
+        self.assertEqual(transform_query(3.14), "3.14")
+        self.assertEqual(transform_query(True), "true")
+        self.assertEqual(transform_query("hello"), "hello")
+
+    def test_empty_structures(self):
+        self.assertEqual(transform_query({}), {})
+        self.assertEqual(transform_query([]), [])
 
 
 class TestEncodedString(unittest.TestCase):
@@ -492,7 +631,7 @@ class TestSendRequest(unittest.TestCase):
         self.url = f"{self.configuration.base_path}{self.path}"
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     @patch("binance_common.utils.get_timestamp", return_value=1234567890)
     @patch("binance_common.utils.get_signature", return_value="signed_signature")
@@ -534,7 +673,7 @@ class TestSendRequest(unittest.TestCase):
         self.assertEqual(kwargs["params"]["signature"], "signed_signature")
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     def test_successful_request(
         self, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
@@ -568,7 +707,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     def test_successful_request_empty_array_response(
         self, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
@@ -602,7 +741,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_client_errors(self, mock_clean_none, mock_encoded_string):
         """Test 400-499 errors raising appropriate exceptions."""
         error_cases = {
@@ -643,7 +782,7 @@ class TestSendRequest(unittest.TestCase):
                 )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_server_errors(self, mock_clean_none, mock_encoded_string):
         """Test 500-599 server errors raising ServerError."""
         for status in [500, 502, 503, 504]:
@@ -660,7 +799,7 @@ class TestSendRequest(unittest.TestCase):
                 self.assertEqual(str(context.exception), f"Server error: {status}")
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch(
         "binance_common.utils.should_retry_request",
         side_effect=lambda e, m, r: r > 0
@@ -682,7 +821,7 @@ class TestSendRequest(unittest.TestCase):
             send_request(self.session, self.configuration, self.method, self.path, {})
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.should_retry_request", return_value=False)
     def test_network_error_no_retry(
         self, mock_should_retry, mock_clean_none, mock_encoded_string
@@ -697,7 +836,7 @@ class TestSendRequest(unittest.TestCase):
         self.assertEqual(mock_should_retry.call_count, 1)
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_correct_headers_and_proxies(self, mock_clean_none, mock_encoded_string):
         """Ensure correct headers and proxies are used in request."""
         self.configuration.proxy = {
@@ -725,7 +864,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.should_retry_request", return_value=False)
     def test_request_fails_after_retries(
         self, mock_should_retry, mock_clean_none, mock_encoded_string

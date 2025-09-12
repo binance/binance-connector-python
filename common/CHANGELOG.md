@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.0 - 2025-09-12
+
+### Changed (3)
+
+- Updated WebsocketStream user data stream response handler
+- Updated Encoded request matrix handler
+- Fix decimal type in request parameters
+
 ## 3.0.0 - 2025-09-05
 
 ### Added (2)
