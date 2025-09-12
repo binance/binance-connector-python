@@ -27,7 +27,7 @@ class GetOpenSymbolListResponseInner(BaseModel):
     GetOpenSymbolListResponseInner
     """  # noqa: E501
 
-    open_time: Optional[StrictInt] = Field(default=None, alias="openTime")
+    openTime: Optional[StrictInt] = Field(default=None, alias="openTime")
     symbols: Optional[List[StrictStr]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["openTime", "symbols"]

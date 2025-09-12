@@ -27,9 +27,9 @@ class SolStakingAccountResponse(BaseModel):
     SolStakingAccountResponse
     """  # noqa: E501
 
-    bnsol_amount: Optional[StrictStr] = Field(default=None, alias="bnsolAmount")
-    holding_in_sol: Optional[StrictStr] = Field(default=None, alias="holdingInSOL")
-    thirty_days_profit_in_sol: Optional[StrictStr] = Field(
+    bnsolAmount: Optional[StrictStr] = Field(default=None, alias="bnsolAmount")
+    holdingInSOL: Optional[StrictStr] = Field(default=None, alias="holdingInSOL")
+    thirtyDaysProfitInSOL: Optional[StrictStr] = Field(
         default=None, alias="thirtyDaysProfitInSOL"
     )
     additional_properties: Dict[str, Any] = {}

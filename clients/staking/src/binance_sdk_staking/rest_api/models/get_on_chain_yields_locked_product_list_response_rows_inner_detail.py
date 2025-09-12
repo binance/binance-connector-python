@@ -28,18 +28,16 @@ class GetOnChainYieldsLockedProductListResponseRowsInnerDetail(BaseModel):
     """  # noqa: E501
 
     asset: Optional[StrictStr] = None
-    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
+    rewardAsset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
     duration: Optional[StrictInt] = None
     renewable: Optional[StrictBool] = None
-    is_sold_out: Optional[StrictBool] = Field(default=None, alias="isSoldOut")
+    isSoldOut: Optional[StrictBool] = Field(default=None, alias="isSoldOut")
     apr: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
-    subscription_start_time: Optional[StrictInt] = Field(
+    subscriptionStartTime: Optional[StrictInt] = Field(
         default=None, alias="subscriptionStartTime"
     )
-    can_redeem_to_flex: Optional[StrictBool] = Field(
-        default=None, alias="canRedeemToFlex"
-    )
+    canRedeemToFlex: Optional[StrictBool] = Field(default=None, alias="canRedeemToFlex")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

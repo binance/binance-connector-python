@@ -30,9 +30,7 @@ class GetBnsolRewardsHistoryResponse(BaseModel):
     GetBnsolRewardsHistoryResponse
     """  # noqa: E501
 
-    est_rewards_in_sol: Optional[StrictStr] = Field(
-        default=None, alias="estRewardsInSOL"
-    )
+    estRewardsInSOL: Optional[StrictStr] = Field(default=None, alias="estRewardsInSOL")
     rows: Optional[List[GetBnsolRewardsHistoryResponseRowsInner]] = None
     total: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}

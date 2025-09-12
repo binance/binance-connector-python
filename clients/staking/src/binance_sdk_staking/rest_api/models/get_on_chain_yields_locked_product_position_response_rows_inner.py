@@ -27,29 +27,29 @@ class GetOnChainYieldsLockedProductPositionResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedProductPositionResponseRowsInner
     """  # noqa: E501
 
-    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
-    project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
+    positionId: Optional[StrictStr] = Field(default=None, alias="positionId")
+    projectId: Optional[StrictStr] = Field(default=None, alias="projectId")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    purchase_time: Optional[StrictStr] = Field(default=None, alias="purchaseTime")
+    purchaseTime: Optional[StrictStr] = Field(default=None, alias="purchaseTime")
     duration: Optional[StrictStr] = None
-    accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
-    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    apy: Optional[StrictStr] = Field(default=None, alias="APY")
-    reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
-    next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
-    next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
-    pay_period: Optional[StrictStr] = Field(default=None, alias="payPeriod")
-    rewards_pay_date: Optional[StrictStr] = Field(default=None, alias="rewardsPayDate")
-    rewards_end_date: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
-    next_subscription_date: Optional[StrictStr] = Field(
+    accrualDays: Optional[StrictStr] = Field(default=None, alias="accrualDays")
+    rewardAsset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
+    APY: Optional[StrictStr] = Field(default=None, alias="APY")
+    rewardAmt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
+    nextPay: Optional[StrictStr] = Field(default=None, alias="nextPay")
+    nextPayDate: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
+    payPeriod: Optional[StrictStr] = Field(default=None, alias="payPeriod")
+    rewardsPayDate: Optional[StrictStr] = Field(default=None, alias="rewardsPayDate")
+    rewardsEndDate: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
+    deliverDate: Optional[StrictStr] = Field(default=None, alias="deliverDate")
+    nextSubscriptionDate: Optional[StrictStr] = Field(
         default=None, alias="nextSubscriptionDate"
     )
-    redeeming_amt: Optional[StrictStr] = Field(default=None, alias="redeemingAmt")
-    redeem_to: Optional[StrictStr] = Field(default=None, alias="redeemTo")
-    can_redeem_early: Optional[StrictBool] = Field(default=None, alias="canRedeemEarly")
-    auto_subscribe: Optional[StrictBool] = Field(default=None, alias="autoSubscribe")
+    redeemingAmt: Optional[StrictStr] = Field(default=None, alias="redeemingAmt")
+    redeemTo: Optional[StrictStr] = Field(default=None, alias="redeemTo")
+    canRedeemEarly: Optional[StrictBool] = Field(default=None, alias="canRedeemEarly")
+    autoSubscribe: Optional[StrictBool] = Field(default=None, alias="autoSubscribe")
     type: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

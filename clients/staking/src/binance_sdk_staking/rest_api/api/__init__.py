@@ -10,4 +10,5 @@ Do not edit the class manually.
 
 from .eth_staking_api import EthStakingApi as EthStakingApi
 from .on_chain_yields_api import OnChainYieldsApi as OnChainYieldsApi
+from .soft_staking_api import SoftStakingApi as SoftStakingApi
 from .sol_staking_api import SolStakingApi as SolStakingApi

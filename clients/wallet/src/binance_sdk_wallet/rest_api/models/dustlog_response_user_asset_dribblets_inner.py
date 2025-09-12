@@ -30,15 +30,15 @@ class DustlogResponseUserAssetDribbletsInner(BaseModel):
     DustlogResponseUserAssetDribbletsInner
     """  # noqa: E501
 
-    operate_time: Optional[StrictInt] = Field(default=None, alias="operateTime")
-    total_transfered_amount: Optional[StrictStr] = Field(
+    operateTime: Optional[StrictInt] = Field(default=None, alias="operateTime")
+    totalTransferedAmount: Optional[StrictStr] = Field(
         default=None, alias="totalTransferedAmount"
     )
-    total_service_charge_amount: Optional[StrictStr] = Field(
+    totalServiceChargeAmount: Optional[StrictStr] = Field(
         default=None, alias="totalServiceChargeAmount"
     )
-    trans_id: Optional[StrictInt] = Field(default=None, alias="transId")
-    user_asset_dribblet_details: Optional[
+    transId: Optional[StrictInt] = Field(default=None, alias="transId")
+    userAssetDribbletDetails: Optional[
         List[DustlogResponseUserAssetDribbletsInnerUserAssetDribbletDetailsInner]
     ] = Field(default=None, alias="userAssetDribbletDetails")
     additional_properties: Dict[str, Any] = {}

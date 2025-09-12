@@ -27,10 +27,8 @@ class ToggleBnbBurnOnSpotTradeAndMarginInterestResponse(BaseModel):
     ToggleBnbBurnOnSpotTradeAndMarginInterestResponse
     """  # noqa: E501
 
-    spot_bnb_burn: Optional[StrictBool] = Field(default=None, alias="spotBNBBurn")
-    interest_bnb_burn: Optional[StrictBool] = Field(
-        default=None, alias="interestBNBBurn"
-    )
+    spotBNBBurn: Optional[StrictBool] = Field(default=None, alias="spotBNBBurn")
+    interestBNBBurn: Optional[StrictBool] = Field(default=None, alias="interestBNBBurn")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["spotBNBBurn", "interestBNBBurn"]
 

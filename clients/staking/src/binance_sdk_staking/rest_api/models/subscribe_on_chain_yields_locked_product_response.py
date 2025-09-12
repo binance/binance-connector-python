@@ -27,8 +27,8 @@ class SubscribeOnChainYieldsLockedProductResponse(BaseModel):
     SubscribeOnChainYieldsLockedProductResponse
     """  # noqa: E501
 
-    purchase_id: Optional[StrictInt] = Field(default=None, alias="purchaseId")
-    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    purchaseId: Optional[StrictInt] = Field(default=None, alias="purchaseId")
+    positionId: Optional[StrictStr] = Field(default=None, alias="positionId")
     amount: Optional[StrictStr] = None
     success: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}

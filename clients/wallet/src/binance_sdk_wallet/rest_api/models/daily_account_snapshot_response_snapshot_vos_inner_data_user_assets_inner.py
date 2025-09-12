@@ -32,7 +32,7 @@ class DailyAccountSnapshotResponseSnapshotVosInnerDataUserAssetsInner(BaseModel)
     free: Optional[StrictStr] = None
     interest: Optional[StrictStr] = None
     locked: Optional[StrictStr] = None
-    net_asset: Optional[StrictStr] = Field(default=None, alias="netAsset")
+    netAsset: Optional[StrictStr] = Field(default=None, alias="netAsset")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

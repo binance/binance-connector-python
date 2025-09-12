@@ -33,13 +33,13 @@ class GetAssetsThatCanBeConvertedIntoBnbResponse(BaseModel):
     details: Optional[List[GetAssetsThatCanBeConvertedIntoBnbResponseDetailsInner]] = (
         None
     )
-    total_transfer_btc: Optional[StrictStr] = Field(
+    totalTransferBtc: Optional[StrictStr] = Field(
         default=None, alias="totalTransferBtc"
     )
-    total_transfer_bnb: Optional[StrictStr] = Field(
+    totalTransferBNB: Optional[StrictStr] = Field(
         default=None, alias="totalTransferBNB"
     )
-    dribblet_percentage: Optional[StrictStr] = Field(
+    dribbletPercentage: Optional[StrictStr] = Field(
         default=None, alias="dribbletPercentage"
     )
     additional_properties: Dict[str, Any] = {}

@@ -30,7 +30,7 @@ class FetchDepositAddressListWithNetworkResponseInner(BaseModel):
     coin: Optional[StrictStr] = None
     address: Optional[StrictStr] = None
     tag: Optional[StrictStr] = None
-    is_default: Optional[StrictInt] = Field(default=None, alias="isDefault")
+    isDefault: Optional[StrictInt] = Field(default=None, alias="isDefault")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["coin", "address", "tag", "isDefault"]
 

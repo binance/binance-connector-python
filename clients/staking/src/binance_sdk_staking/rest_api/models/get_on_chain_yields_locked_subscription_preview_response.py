@@ -27,15 +27,15 @@ class GetOnChainYieldsLockedSubscriptionPreviewResponse(BaseModel):
     GetOnChainYieldsLockedSubscriptionPreviewResponse
     """  # noqa: E501
 
-    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    total_reward_amt: Optional[StrictStr] = Field(default=None, alias="totalRewardAmt")
-    next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
-    next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
-    rewards_pay_date: Optional[StrictStr] = Field(default=None, alias="rewardsPayDate")
-    value_date: Optional[StrictStr] = Field(default=None, alias="valueDate")
-    rewards_end_date: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
-    next_subscription_date: Optional[StrictStr] = Field(
+    rewardAsset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
+    totalRewardAmt: Optional[StrictStr] = Field(default=None, alias="totalRewardAmt")
+    nextPay: Optional[StrictStr] = Field(default=None, alias="nextPay")
+    nextPayDate: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
+    rewardsPayDate: Optional[StrictStr] = Field(default=None, alias="rewardsPayDate")
+    valueDate: Optional[StrictStr] = Field(default=None, alias="valueDate")
+    rewardsEndDate: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
+    deliverDate: Optional[StrictStr] = Field(default=None, alias="deliverDate")
+    nextSubscriptionDate: Optional[StrictStr] = Field(
         default=None, alias="nextSubscriptionDate"
     )
     additional_properties: Dict[str, Any] = {}

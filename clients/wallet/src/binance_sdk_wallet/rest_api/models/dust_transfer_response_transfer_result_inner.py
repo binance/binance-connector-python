@@ -28,13 +28,13 @@ class DustTransferResponseTransferResultInner(BaseModel):
     """  # noqa: E501
 
     amount: Optional[StrictStr] = None
-    from_asset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
-    operate_time: Optional[StrictInt] = Field(default=None, alias="operateTime")
-    service_charge_amount: Optional[StrictStr] = Field(
+    fromAsset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
+    operateTime: Optional[StrictInt] = Field(default=None, alias="operateTime")
+    serviceChargeAmount: Optional[StrictStr] = Field(
         default=None, alias="serviceChargeAmount"
     )
-    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
-    transfered_amount: Optional[StrictStr] = Field(
+    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
+    transferedAmount: Optional[StrictStr] = Field(
         default=None, alias="transferedAmount"
     )
     additional_properties: Dict[str, Any] = {}
