@@ -89,7 +89,9 @@ def clean_none_value(d: dict) -> dict:
         dict: A new dictionary with only non-`None` values from the input dictionary.
     """
 
-    if isinstance(d, dict):
+    if isinstance(d, Enum):
+        return d.value
+    elif isinstance(d, dict):
         out = {}
         for k, v in d.items():
             cleaned = clean_none_value(v)
@@ -182,7 +184,7 @@ def encoded_string(query: str) -> str:
 
     query = transform_query(query)
     query = {
-        k: json.dumps(v, separators=(",", ":")) if isinstance(v, (dict, list)) else v
+        snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":")) if isinstance(v, (dict, list)) else make_serializable(v)
         for k, v in query.items()
     }
     return urlencode(query, True)

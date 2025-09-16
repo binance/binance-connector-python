@@ -249,6 +249,20 @@ class TestCleanNoneValue(unittest.TestCase):
 
         assert clean_none_value(input_list) == expected_output
 
+    def test_clean_none_value_with_enum(self):
+        class BasisPeriodEnum(Enum):
+            TEST_A = "TEST_A"
+            TEST_B = "TEST_B"
+
+        input_list = [
+            {"a": 0, "b": False, "c": BasisPeriodEnum.TEST_A, "d": "", "e": [], "f": {}},
+        ]
+        expected_output = [
+            {"a": 0, "b": False, "c": "TEST_A", "d": ""}
+        ]
+
+        assert clean_none_value(input_list) == expected_output
+
 
 class TestGetTimestamp(unittest.TestCase):
     def test_timestamp_is_integer(self):
@@ -413,6 +427,16 @@ class TestEncodedString(unittest.TestCase):
 
         expected_value = urlencode({
             "items": json.dumps([{"a": "value1", "b": 123}], separators=(",", ":"))
+        }, doseq=True)
+
+        self.assertEqual(encoded_string(query), expected_value)
+
+    def test_encode_with_snake_case(self):
+        query = {"user_email": "test@example.com", "admin_email": "admin@domain.com"}
+
+        expected_value = urlencode({
+            "userEmail": "test@example.com",
+            "adminEmail": "admin@domain.com"
         }, doseq=True)
 
         self.assertEqual(encoded_string(query), expected_value)
