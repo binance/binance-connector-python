@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.0 - 2025-09-16
+
+### Changed (2)
+
+- Modified response for `deposit_history()` (`GET /sapi/v1/capital/deposit/hisrec`):
+  - item property `travelRuleStatus` added
+- Updated `binance-common` library to version `3.1.1`
+
 ## 3.0.0 - 2025-09-12
 
 ### Changed (2)

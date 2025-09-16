@@ -29,10 +29,9 @@ class GetPayTradeHistoryResponseDataInnerPayerInfo(BaseModel):
 
     name: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    binance_id: Optional[StrictStr] = Field(default=None, alias="binanceId")
-    account_id: Optional[StrictStr] = Field(default=None, alias="accountId")
+    binanceId: Optional[StrictStr] = Field(default=None, alias="binanceId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "type", "binanceId", "accountId"]
+    __properties: ClassVar[List[str]] = ["name", "type", "binanceId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,7 +100,6 @@ class GetPayTradeHistoryResponseDataInnerPayerInfo(BaseModel):
                 "name": obj.get("name"),
                 "type": obj.get("type"),
                 "binanceId": obj.get("binanceId"),
-                "accountId": obj.get("accountId"),
             }
         )
         # store additional fields in additional_properties
