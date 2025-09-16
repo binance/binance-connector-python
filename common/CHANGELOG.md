@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.1 - 2025-09-16
+
+### Changed (1)
+
+- Fixed missing enum check in `clean_none_value`.
+
 ## 3.1.0 - 2025-09-12
 
 ### Changed (3)
