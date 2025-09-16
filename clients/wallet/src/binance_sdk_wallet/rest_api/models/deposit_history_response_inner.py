@@ -41,6 +41,9 @@ class DepositHistoryResponseInner(BaseModel):
     confirmTimes: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
     unlockConfirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
     walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
+    travelRuleStatus: Optional[StrictInt] = Field(
+        default=None, alias="travelRuleStatus"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
@@ -57,6 +60,7 @@ class DepositHistoryResponseInner(BaseModel):
         "confirmTimes",
         "unlockConfirm",
         "walletType",
+        "travelRuleStatus",
     ]
 
     model_config = ConfigDict(
@@ -137,6 +141,7 @@ class DepositHistoryResponseInner(BaseModel):
                 "confirmTimes": obj.get("confirmTimes"),
                 "unlockConfirm": obj.get("unlockConfirm"),
                 "walletType": obj.get("walletType"),
+                "travelRuleStatus": obj.get("travelRuleStatus"),
             }
         )
         # store additional fields in additional_properties

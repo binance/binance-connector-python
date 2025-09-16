@@ -33,11 +33,11 @@ class GetPayTradeHistoryResponseDataInnerReceiverInfo(BaseModel):
     name: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
     email: Optional[StrictStr] = None
-    binance_id: Optional[StrictStr] = Field(default=None, alias="binanceId")
-    account_id: Optional[StrictStr] = Field(default=None, alias="accountId")
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    phone_number: Optional[StrictStr] = Field(default=None, alias="phoneNumber")
-    mobile_code: Optional[StrictStr] = Field(default=None, alias="mobileCode")
+    binanceId: Optional[StrictStr] = Field(default=None, alias="binanceId")
+    accountId: Optional[StrictStr] = Field(default=None, alias="accountId")
+    countryCode: Optional[StrictStr] = Field(default=None, alias="countryCode")
+    phoneNumber: Optional[StrictStr] = Field(default=None, alias="phoneNumber")
+    mobileCode: Optional[StrictStr] = Field(default=None, alias="mobileCode")
     extend: Optional[GetPayTradeHistoryResponseDataInnerReceiverInfoExtend] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

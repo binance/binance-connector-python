@@ -446,6 +446,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 0,
             },
             {
                 "id": "769754833590042625",
@@ -462,6 +463,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 1,
             },
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -530,6 +532,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 0,
             },
             {
                 "id": "769754833590042625",
@@ -546,6 +549,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 1,
             },
         ]
         mock_get_signature.return_value = "mocked_signature"

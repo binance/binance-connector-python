@@ -27,11 +27,9 @@ class GetPayTradeHistoryResponseDataInnerReceiverInfoExtend(BaseModel):
     GetPayTradeHistoryResponseDataInnerReceiverInfoExtend
     """  # noqa: E501
 
-    institution_name: Optional[StrictStr] = Field(default=None, alias="institutionName")
-    card_number: Optional[StrictStr] = Field(default=None, alias="cardNumber")
-    digital_wallet_id: Optional[StrictStr] = Field(
-        default=None, alias="digitalWalletId"
-    )
+    institutionName: Optional[StrictStr] = Field(default=None, alias="institutionName")
+    cardNumber: Optional[StrictStr] = Field(default=None, alias="cardNumber")
+    digitalWalletId: Optional[StrictStr] = Field(default=None, alias="digitalWalletId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "institutionName",
