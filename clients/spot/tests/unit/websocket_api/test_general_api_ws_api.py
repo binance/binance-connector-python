@@ -309,12 +309,14 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/exchangeInfo".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/exchangeInfo".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/exchangeInfo".replace("/", ""), "params": {}},
+            payload={"method": "/exchangeInfo".replace("/", "", 1), "params": {}},
             response_model=ExchangeInfoResponse,
         )
 
@@ -603,7 +605,9 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/exchangeInfo".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/exchangeInfo".replace(
+            "/", "", 1
+        )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -616,7 +620,7 @@ class TestWebSocketGeneralApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/exchangeInfo".replace("/", ""), "params": params},
+            payload={"method": "/exchangeInfo".replace("/", "", 1), "params": params},
             response_model=ExchangeInfoResponse,
         )
 
@@ -666,12 +670,12 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ping".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ping".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ping".replace("/", ""), "params": {}},
+            payload={"method": "/ping".replace("/", "", 1), "params": {}},
             response_model=PingResponse,
         )
 
@@ -714,13 +718,13 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ping".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ping".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ping".replace("/", ""), "params": params},
+            payload={"method": "/ping".replace("/", "", 1), "params": params},
             response_model=PingResponse,
         )
 
@@ -770,12 +774,12 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/time".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/time".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/time".replace("/", ""), "params": {}},
+            payload={"method": "/time".replace("/", "", 1), "params": {}},
             response_model=TimeResponse,
         )
 
@@ -818,13 +822,13 @@ class TestWebSocketGeneralApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/time".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/time".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/time".replace("/", ""), "params": params},
+            payload={"method": "/time".replace("/", "", 1), "params": params},
             response_model=TimeResponse,
         )
 

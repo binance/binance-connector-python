@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0 - 2025-09-24
+
+### Changed (1)
+
+- Modified method for removing slashes (`/`) in endpoints
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)

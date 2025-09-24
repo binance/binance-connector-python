@@ -134,7 +134,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.cancel".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.cancel".replace(
+            "/", "", 1
+        )
 
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
@@ -143,7 +145,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.cancel".replace("/", ""), "params": params},
+            payload={"method": "/order.cancel".replace("/", "", 1), "params": params},
             response_model=CancelOrderResponse,
             signer=None,
         )
@@ -216,7 +218,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.cancel".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.cancel".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "symbol_example"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
@@ -226,7 +230,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.cancel".replace("/", ""), "params": params},
+            payload={"method": "/order.cancel".replace("/", "", 1), "params": params},
             response_model=CancelOrderResponse,
             signer=None,
         )
@@ -334,7 +338,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.modify".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.modify".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "symbol_example"
 
@@ -347,7 +353,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.modify".replace("/", ""), "params": params},
+            payload={"method": "/order.modify".replace("/", "", 1), "params": params},
             response_model=ModifyOrderResponse,
             signer=None,
         )
@@ -431,7 +437,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.modify".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.modify".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "symbol_example"
         assert params["side"] == ModifyOrderSideEnum["BUY"].value
         assert params["quantity"] == 1.0
@@ -445,7 +453,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.modify".replace("/", ""), "params": params},
+            payload={"method": "/order.modify".replace("/", "", 1), "params": params},
             response_model=ModifyOrderResponse,
             signer=None,
         )
@@ -621,7 +629,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "", 1)
 
         assert params["symbol"] == "symbol_example"
 
@@ -632,7 +640,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.place".replace("/", ""), "params": params},
+            payload={"method": "/order.place".replace("/", "", 1), "params": params},
             response_model=NewOrderResponse,
             signer=None,
         )
@@ -729,7 +737,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "", 1)
         assert params["symbol"] == "symbol_example"
         assert params["side"] == NewOrderSideEnum["BUY"].value
         assert params["type"] == NewOrderTypeEnum["LIMIT"].value
@@ -759,7 +767,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.place".replace("/", ""), "params": params},
+            payload={"method": "/order.place".replace("/", "", 1), "params": params},
             response_model=NewOrderResponse,
             signer=None,
         )
@@ -935,13 +943,13 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.position".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.position".replace("/", ""), "params": {}},
+            payload={"method": "/account.position".replace("/", "", 1), "params": {}},
             response_model=PositionInformationResponse,
             signer=None,
         )
@@ -1010,7 +1018,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.position".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["margin_asset"] == "margin_asset_example"
@@ -1020,7 +1028,10 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.position".replace("/", ""), "params": params},
+            payload={
+                "method": "/account.position".replace("/", "", 1),
+                "params": params,
+            },
             response_model=PositionInformationResponse,
             signer=None,
         )
@@ -1100,14 +1111,16 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.status".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "symbol_example"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.status".replace("/", ""), "params": params},
+            payload={"method": "/order.status".replace("/", "", 1), "params": params},
             response_model=QueryOrderResponse,
             signer=None,
         )
@@ -1182,7 +1195,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.status".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "symbol_example"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
@@ -1192,7 +1207,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.status".replace("/", ""), "params": params},
+            payload={"method": "/order.status".replace("/", "", 1), "params": params},
             response_model=QueryOrderResponse,
             signer=None,
         )

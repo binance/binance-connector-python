@@ -89,7 +89,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/avgPrice".replace("/", ""),
+            "method": "/avgPrice".replace("/", "", 1),
             "params": params,
         }
 
@@ -152,7 +152,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/depth".replace("/", ""),
+            "method": "/depth".replace("/", "", 1),
             "params": params,
         }
 
@@ -224,7 +224,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/klines".replace("/", ""),
+            "method": "/klines".replace("/", "", 1),
             "params": params,
         }
 
@@ -280,7 +280,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/ticker".replace("/", ""),
+            "method": "/ticker".replace("/", "", 1),
             "params": params,
         }
 
@@ -340,7 +340,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/ticker.24hr".replace("/", ""),
+            "method": "/ticker.24hr".replace("/", "", 1),
             "params": params,
         }
 
@@ -392,7 +392,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/ticker.book".replace("/", ""),
+            "method": "/ticker.book".replace("/", "", 1),
             "params": params,
         }
 
@@ -445,7 +445,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/ticker.price".replace("/", ""),
+            "method": "/ticker.price".replace("/", "", 1),
             "params": params,
         }
 
@@ -493,7 +493,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/ticker.tradingDay".replace("/", ""),
+            "method": "/ticker.tradingDay".replace("/", "", 1),
             "params": params,
         }
 
@@ -560,7 +560,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/trades.aggregate".replace("/", ""),
+            "method": "/trades.aggregate".replace("/", "", 1),
             "params": params,
         }
 
@@ -610,7 +610,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/trades.historical".replace("/", ""),
+            "method": "/trades.historical".replace("/", "", 1),
             "params": params,
         }
 
@@ -661,7 +661,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/trades.recent".replace("/", ""),
+            "method": "/trades.recent".replace("/", "", 1),
             "params": params,
         }
 
@@ -727,7 +727,7 @@ class MarketApi:
         }
 
         payload = {
-            "method": "/uiKlines".replace("/", ""),
+            "method": "/uiKlines".replace("/", "", 1),
             "params": params,
         }
 

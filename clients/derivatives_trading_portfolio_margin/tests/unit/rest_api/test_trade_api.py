@@ -4096,7 +4096,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "MARKET",
             "side": "SELL",
-            "marginBuyBorrowAmount": 5,
+            "marginBuyBorrowAmount": "5",
             "marginBuyBorrowAsset": "BTC",
             "fills": [
                 {
@@ -4192,7 +4192,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "MARKET",
             "side": "SELL",
-            "marginBuyBorrowAmount": 5,
+            "marginBuyBorrowAmount": "5",
             "marginBuyBorrowAsset": "BTC",
             "fills": [
                 {

@@ -44,7 +44,7 @@ class NewMarginOrderResponse(BaseModel):
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
-    margin_buy_borrow_amount: Optional[StrictInt] = Field(
+    margin_buy_borrow_amount: Optional[StrictStr] = Field(
         default=None, alias="marginBuyBorrowAmount"
     )
     margin_buy_borrow_asset: Optional[StrictStr] = Field(

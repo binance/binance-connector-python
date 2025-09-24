@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0 - 2025-09-24
+
+### Changed (1)
+
+- Fixed `/sapi/v1/convert/limit/queryOpenOrders` endpoint http request
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)

@@ -165,7 +165,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/openOrders.cancelAll".replace("/", ""),
+            "method": "/openOrders.cancelAll".replace("/", "", 1),
             "params": params,
         }
 
@@ -242,7 +242,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.amend.keepPriority".replace("/", ""),
+            "method": "/order.amend.keepPriority".replace("/", "", 1),
             "params": params,
         }
 
@@ -315,7 +315,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.cancel".replace("/", ""),
+            "method": "/order.cancel".replace("/", "", 1),
             "params": params,
         }
 
@@ -500,7 +500,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.cancelReplace".replace("/", ""),
+            "method": "/order.cancelReplace".replace("/", "", 1),
             "params": params,
         }
 
@@ -566,7 +566,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/orderList.cancel".replace("/", ""),
+            "method": "/orderList.cancel".replace("/", "", 1),
             "params": params,
         }
 
@@ -743,7 +743,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/orderList.place".replace("/", ""),
+            "method": "/orderList.place".replace("/", "", 1),
             "params": params,
         }
 
@@ -1002,7 +1002,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/orderList.place.oco".replace("/", ""),
+            "method": "/orderList.place.oco".replace("/", "", 1),
             "params": params,
         }
 
@@ -1276,7 +1276,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/orderList.place.oto".replace("/", ""),
+            "method": "/orderList.place.oto".replace("/", "", 1),
             "params": params,
         }
 
@@ -1648,7 +1648,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/orderList.place.otoco".replace("/", ""),
+            "method": "/orderList.place.otoco".replace("/", "", 1),
             "params": params,
         }
 
@@ -1790,7 +1790,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.place".replace("/", ""),
+            "method": "/order.place".replace("/", "", 1),
             "params": params,
         }
 
@@ -1941,7 +1941,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.test".replace("/", ""),
+            "method": "/order.test".replace("/", "", 1),
             "params": params,
         }
 
@@ -2054,7 +2054,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/sor.order.place".replace("/", ""),
+            "method": "/sor.order.place".replace("/", "", 1),
             "params": params,
         }
 
@@ -2172,7 +2172,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/sor.order.test".replace("/", ""),
+            "method": "/sor.order.test".replace("/", "", 1),
             "params": params,
         }
 

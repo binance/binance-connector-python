@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0 - 2025-09-24
+
+### Changed (2)
+
+- Modified parameter `email`:
+  - required: `true` → `false`
+  - affected methods:
+    - `query_sub_account_transaction_statistics()` (`GET /sapi/v1/sub-account/transaction-statistics`)
+
+- Add missing example field `order_args` to endpoint `POST /sapi/v1/sub-account/futures/move-position`
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)

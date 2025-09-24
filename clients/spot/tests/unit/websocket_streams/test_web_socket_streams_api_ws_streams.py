@@ -71,7 +71,7 @@ class TestWebSocketStreams:
             "M": True,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@aggTrade".replace("/", ""),
+            "/<symbol>@aggTrade".replace("/", "", 1),
             params,
         )
 
@@ -200,7 +200,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/!ticker_<windowSize>@arr".replace("/", ""),
+            "/!ticker_<windowSize>@arr".replace("/", "", 1),
             params,
         )
 
@@ -352,7 +352,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/!miniTicker@arr".replace("/", ""),
+            "/!miniTicker@arr".replace("/", "", 1),
             {},
         )
 
@@ -462,7 +462,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", ""),
+            "/!ticker@arr".replace("/", "", 1),
             {},
         )
 
@@ -585,7 +585,7 @@ class TestWebSocketStreams:
             "T": 1693907032213,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@avgPrice".replace("/", ""),
+            "/<symbol>@avgPrice".replace("/", "", 1),
             params,
         )
 
@@ -689,7 +689,7 @@ class TestWebSocketStreams:
             "A": "40.66000000",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@bookTicker".replace("/", ""),
+            "/<symbol>@bookTicker".replace("/", "", 1),
             params,
         )
 
@@ -794,7 +794,7 @@ class TestWebSocketStreams:
             "a": [["0.0026", "100"]],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@depth@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -921,7 +921,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -1095,7 +1095,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>@+08:00".replace("/", ""),
+            "/<symbol>@kline_<interval>@+08:00".replace("/", "", 1),
             params,
         )
 
@@ -1255,7 +1255,7 @@ class TestWebSocketStreams:
             "q": "18",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@miniTicker".replace("/", ""),
+            "/<symbol>@miniTicker".replace("/", "", 1),
             params,
         )
 
@@ -1363,7 +1363,7 @@ class TestWebSocketStreams:
             "asks": [["0.0026", "100"]],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -1493,7 +1493,7 @@ class TestWebSocketStreams:
             "n": 18151,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@ticker_<windowSize>".replace("/", ""),
+            "/<symbol>@ticker_<windowSize>".replace("/", "", 1),
             params,
         )
 
@@ -1661,7 +1661,7 @@ class TestWebSocketStreams:
             "n": 18151,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             params,
         )
 
@@ -1802,7 +1802,7 @@ class TestWebSocketStreams:
             "M": True,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@trade".replace("/", ""),
+            "/<symbol>@trade".replace("/", "", 1),
             params,
         )
 

@@ -328,7 +328,7 @@ class TradeApi:
     ) -> ApiResponse[QueryLimitOpenOrdersResponse]:
         """
                 Query limit open orders (USER_DATA)
-                POST /sapi/v1/convert/limit/queryOpenOrders
+                GET /sapi/v1/convert/limit/queryOpenOrders
                 https://developers.binance.com/docs/convert/trade/Query-Order
 
                 Request a quote for the requested token pairs
@@ -351,7 +351,7 @@ class TradeApi:
         return send_request(
             self._session,
             self._configuration,
-            method="POST",
+            method="GET",
             path="/sapi/v1/convert/limit/queryOpenOrders",
             payload=payload,
             time_unit=self._configuration.time_unit,

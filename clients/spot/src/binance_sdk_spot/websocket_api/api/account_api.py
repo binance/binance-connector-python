@@ -83,7 +83,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.commission".replace("/", ""),
+            "method": "/account.commission".replace("/", "", 1),
             "params": params,
         }
 
@@ -124,7 +124,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.rateLimits.orders".replace("/", ""),
+            "method": "/account.rateLimits.orders".replace("/", "", 1),
             "params": params,
         }
 
@@ -172,7 +172,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.status".replace("/", ""),
+            "method": "/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -223,7 +223,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/allOrderLists".replace("/", ""),
+            "method": "/allOrderLists".replace("/", "", 1),
             "params": params,
         }
 
@@ -282,7 +282,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/allOrders".replace("/", ""),
+            "method": "/allOrders".replace("/", "", 1),
             "params": params,
         }
 
@@ -348,7 +348,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myAllocations".replace("/", ""),
+            "method": "/myAllocations".replace("/", "", 1),
             "params": params,
         }
 
@@ -426,7 +426,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myPreventedMatches".replace("/", ""),
+            "method": "/myPreventedMatches".replace("/", "", 1),
             "params": params,
         }
 
@@ -493,7 +493,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myTrades".replace("/", ""),
+            "method": "/myTrades".replace("/", "", 1),
             "params": params,
         }
 
@@ -537,7 +537,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/openOrderLists.status".replace("/", ""),
+            "method": "/openOrderLists.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -591,7 +591,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/openOrders.status".replace("/", ""),
+            "method": "/openOrders.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -655,7 +655,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/order.amendments".replace("/", ""),
+            "method": "/order.amendments".replace("/", "", 1),
             "params": params,
         }
 
@@ -706,7 +706,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/orderList.status".replace("/", ""),
+            "method": "/orderList.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -763,7 +763,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/order.status".replace("/", ""),
+            "method": "/order.status".replace("/", "", 1),
             "params": params,
         }
 

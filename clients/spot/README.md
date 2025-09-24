@@ -45,7 +45,7 @@ pip install binance-sdk-spot
 
 ## Documentation
 
-For detailed information, refer to the [Binance API Documentation](https://developers.binance.com/docs/binance-sdk-spot-api-docs).
+For detailed information, refer to the [Binance API Documentation](https://developers.binance.com/docs/binance-spot-api-docs/README).
 
 ### REST APIs
 

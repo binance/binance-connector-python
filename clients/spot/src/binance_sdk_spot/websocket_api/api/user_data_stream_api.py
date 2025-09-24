@@ -72,7 +72,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/session.subscriptions".replace("/", ""),
+            "method": "/session.subscriptions".replace("/", "", 1),
             "params": params,
         }
 
@@ -97,6 +97,8 @@ class UserDataStreamApi:
         In order to keep the stream open, you have to regularly send pings using the `userDataStream.ping` request.
 
         It is recommended to send a ping once every 30 minutes.
+
+        This request does not require `signature`.
         Weight: 2
 
             Args:
@@ -123,7 +125,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.ping".replace("/", ""),
+            "method": "/userDataStream.ping".replace("/", "", 1),
             "params": params,
         }
 
@@ -141,6 +143,8 @@ class UserDataStreamApi:
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#start-user-data-stream-user_stream
 
             Start a new user data stream.
+        Note the stream will close in 60 minutes unless `userDataStream.ping` requests are sent regularly.
+        This request does not require `signature`.
         Weight: 2
 
             Args:
@@ -159,7 +163,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.start".replace("/", ""),
+            "method": "/userDataStream.start".replace("/", "", 1),
             "params": params,
         }
 
@@ -178,6 +182,7 @@ class UserDataStreamApi:
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/user-Data-Stream-requests#stop-user-data-stream-user_stream
 
             Explicitly stop and close the user data stream.
+        This request does not require `signature`.
         Weight: 2
 
             Args:
@@ -204,7 +209,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.stop".replace("/", ""),
+            "method": "/userDataStream.stop".replace("/", "", 1),
             "params": params,
         }
 
@@ -240,7 +245,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.subscribe".replace("/", ""),
+            "method": "/userDataStream.subscribe".replace("/", "", 1),
             "params": params,
         }
 
@@ -276,7 +281,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.subscribe.signature".replace("/", ""),
+            "method": "/userDataStream.subscribe.signature".replace("/", "", 1),
             "params": params,
         }
 
@@ -323,7 +328,7 @@ class UserDataStreamApi:
         }
 
         payload = {
-            "method": "/userDataStream.unsubscribe".replace("/", ""),
+            "method": "/userDataStream.unsubscribe".replace("/", "", 1),
             "params": params,
         }
 

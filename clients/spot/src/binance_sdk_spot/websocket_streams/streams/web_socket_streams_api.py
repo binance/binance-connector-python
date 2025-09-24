@@ -82,7 +82,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@aggTrade".replace("/", ""),
+            "/<symbol>@aggTrade".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -125,7 +125,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/!ticker_<windowSize>@arr".replace("/", ""),
+            "/!ticker_<windowSize>@arr".replace("/", "", 1),
             {
                 "window_size": window_size,
                 "id": id,
@@ -161,7 +161,7 @@ class WebSocketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!miniTicker@arr".replace("/", ""),
+            "/!miniTicker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -194,7 +194,7 @@ class WebSocketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", ""),
+            "/!ticker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -234,7 +234,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@avgPrice".replace("/", ""),
+            "/<symbol>@avgPrice".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -276,7 +276,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@bookTicker".replace("/", ""),
+            "/<symbol>@bookTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -319,7 +319,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -369,7 +369,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -417,7 +417,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>@+08:00".replace("/", ""),
+            "/<symbol>@kline_<interval>@+08:00".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -459,7 +459,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@miniTicker".replace("/", ""),
+            "/<symbol>@miniTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -508,7 +508,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "levels": levels,
@@ -558,7 +558,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@ticker_<windowSize>".replace("/", ""),
+            "/<symbol>@ticker_<windowSize>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "window_size": window_size,
@@ -602,7 +602,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -643,7 +643,7 @@ class WebSocketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@trade".replace("/", ""),
+            "/<symbol>@trade".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,

@@ -62,7 +62,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.status".replace("/", ""),
+            "method": "/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -104,7 +104,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.balance".replace("/", ""),
+            "method": "/account.balance".replace("/", "", 1),
             "params": params,
         }
 

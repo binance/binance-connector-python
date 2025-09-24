@@ -68,7 +68,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@index".replace("/", ""),
+            "/<symbol>@index".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -117,7 +117,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -164,7 +164,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<underlyingAsset>@markPrice".replace("/", ""),
+            "/<underlyingAsset>@markPrice".replace("/", "", 1),
             {
                 "underlying_asset": underlying_asset,
                 "id": id,
@@ -200,7 +200,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/option_pair".replace("/", ""),
+            "/option_pair".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -250,7 +250,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<underlyingAsset>@openInterest@<expirationDate>".replace("/", ""),
+            "/<underlyingAsset>@openInterest@<expirationDate>".replace("/", "", 1),
             {
                 "underlying_asset": underlying_asset,
                 "expiration_date": expiration_date,
@@ -302,7 +302,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "levels": levels,
@@ -349,7 +349,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -400,7 +400,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<underlyingAsset>@ticker@<expirationDate>".replace("/", ""),
+            "/<underlyingAsset>@ticker@<expirationDate>".replace("/", "", 1),
             {
                 "underlying_asset": underlying_asset,
                 "expiration_date": expiration_date,
@@ -446,7 +446,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@trade".replace("/", ""),
+            "/<symbol>@trade".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,

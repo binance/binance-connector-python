@@ -811,7 +811,7 @@ class TestTradeApi:
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/convert/limit/queryOpenOrders" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
+        assert request_kwargs["method"] == "GET"
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -867,7 +867,7 @@ class TestTradeApi:
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/convert/limit/queryOpenOrders" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
+        assert request_kwargs["method"] == "GET"
 
         self.mock_session.request.assert_called_once()
         assert response is not None

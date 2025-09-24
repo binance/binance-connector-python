@@ -72,7 +72,7 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.logon".replace("/", ""),
+            "method": "/session.logon".replace("/", "", 1),
             "params": params,
         }
 
@@ -116,7 +116,7 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.logout".replace("/", ""),
+            "method": "/session.logout".replace("/", "", 1),
             "params": params,
         }
 
@@ -153,7 +153,7 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.status".replace("/", ""),
+            "method": "/session.status".replace("/", "", 1),
             "params": params,
         }
 
