@@ -186,7 +186,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     ) -> None:
         self.user_data_endpoints = WebsocketApiUserDataEndpoints(
             user_data_stream_subscribe="userDataStream.subscribe",
-            user_data_stream_logout="/session.logout".replace("/", ""),
+            user_data_stream_logout="/session.logout".replace("/", "", 1),
         )
         super().__init__(configuration, self.user_data_endpoints)
         self.configuration = configuration
@@ -2548,6 +2548,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         In order to keep the stream open, you have to regularly send pings using the `userDataStream.ping` request.
 
         It is recommended to send a ping once every 30 minutes.
+
+        This request does not require `signature`.
         Weight: 2
 
                 Args:
@@ -2572,6 +2574,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 WebSocket Start user data stream
 
                 Start a new user data stream.
+        Note the stream will close in 60 minutes unless `userDataStream.ping` requests are sent regularly.
+        This request does not require `signature`.
         Weight: 2
 
                 Args:
@@ -2596,6 +2600,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 WebSocket Stop user data stream
 
                 Explicitly stop and close the user data stream.
+        This request does not require `signature`.
         Weight: 2
 
                 Args:
@@ -2639,7 +2644,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         data = response.data()
         stream = await RequestStream(
             self,
-            data.result.subscription_id,
+            data.result.subscriptionId,
             response_model=UserDataStreamEventsResponse,
         )
         return WebsocketApiUserDataStreamResponse(response=response, stream=stream)
@@ -2674,7 +2679,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         data = response.data()
         stream = await RequestStream(
             self,
-            data.result.subscription_id,
+            data.result.subscriptionId,
             response_model=UserDataStreamEventsResponse,
         )
         return WebsocketApiUserDataStreamResponse(response=response, stream=stream)

@@ -66,6 +66,8 @@ from .models import QueryManagedSubAccountTransferLogSubAccountTradingResponse
 from .models import WithdrawlAssetsFromTheManagedSubAccountResponse
 
 
+from .models import MovePositionForSubAccountOrderArgsParameterInner
+
 T = TypeVar("T")
 
 
@@ -350,7 +352,7 @@ class SubAccountRestAPI:
 
     def query_sub_account_transaction_statistics(
         self,
-        email: Union[str, None],
+        email: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySubAccountTransactionStatisticsResponse]:
         """
@@ -361,7 +363,7 @@ class SubAccountRestAPI:
         Weight: 60
 
                 Args:
-                    email (Union[str, None]): [Sub-account email](#email-address)
+                    email (Optional[str] = None): Managed sub-account email
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -841,7 +843,7 @@ class SubAccountRestAPI:
         from_user_email: Union[str, None],
         to_user_email: Union[str, None],
         product_type: Union[str, None],
-        order_args: Union[List[object], None],
+        order_args: Union[List[MovePositionForSubAccountOrderArgsParameterInner], None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[MovePositionForSubAccountResponse]:
         """
@@ -867,7 +869,7 @@ class SubAccountRestAPI:
                     from_user_email (Union[str, None]):
                     to_user_email (Union[str, None]):
                     product_type (Union[str, None]): Only support UM
-                    order_args (Union[List[object], None]): Max 10 positions supported. When input request parameter,orderArgs.symbol should be STRING, orderArgs.quantity should be BIGDECIMAL, and orderArgs.positionSide should be STRING, positionSide support BOTH,LONG and SHORT. Each entry should be like orderArgs[0].symbol=BTCUSDT,orderArgs[0].quantity=0.001,orderArgs[0].positionSide=BOTH. Example of the request parameter array: orderArgs[0].symbol=BTCUSDT orderArgs[0].quantity=0.001 orderArgs[0].positionSide=BOTH orderArgs[1].symbol=ETHUSDT orderArgs[1].quantity=0.01 orderArgs[1].positionSide=BOTH
+                    order_args (Union[List[MovePositionForSubAccountOrderArgsParameterInner], None]): Max 10 positions supported. When input request parameter,orderArgs.symbol should be STRING, orderArgs.quantity should be BIGDECIMAL, and orderArgs.positionSide should be STRING, positionSide support BOTH,LONG and SHORT. Each entry should be like orderArgs[0].symbol=BTCUSDT,orderArgs[0].quantity=0.001,orderArgs[0].positionSide=BOTH. Example of the request parameter array: orderArgs[0].symbol=BTCUSDT orderArgs[0].quantity=0.001 orderArgs[0].positionSide=BOTH orderArgs[1].symbol=ETHUSDT orderArgs[1].quantity=0.01 orderArgs[1].positionSide=BOTH
                     recv_window (Optional[int] = None):
 
                 Returns:

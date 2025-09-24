@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.INFO)
 
 # Create configuration for the REST API
 configuration_rest_api = ConfigurationRestAPI(
-    api_key="CVp5zsxL61CJRCV7UJMZpDw4sgsDP1EUiLDLJvUFrrUXIdiAGYybe0gMDdB9pppG",
-    api_secret="LIRgrJxa9vTw6gOxxheCLYDYpuMTiftdtwB8CUW09wlZVKrCswE7jWpWOiu9hEk0",
+    api_key=os.getenv("API_KEY", ""),
+    api_secret=os.getenv("API_SECRET", ""),
     base_path=os.getenv("BASE_PATH", CONVERT_REST_API_PROD_URL),
 )
 

@@ -64,7 +64,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.status".replace("/", ""),
+            "method": "/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -106,7 +106,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/v2/account.status".replace("/", ""),
+            "method": "/v2/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -148,7 +148,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.balance".replace("/", ""),
+            "method": "/account.balance".replace("/", "", 1),
             "params": params,
         }
 
@@ -190,7 +190,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/v2/account.balance".replace("/", ""),
+            "method": "/v2/account.balance".replace("/", "", 1),
             "params": params,
         }
 

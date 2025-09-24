@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.0 - 2025-09-24
+
+### Changed (2)
+
+- Modified response for `notional_and_leverage_brackets` (`GET /fapi/v1/leverageBracket`)
+- Modified method for removing slashes (`/`) in endpoints
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)

@@ -85,7 +85,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/exchangeInfo".replace("/", ""),
+            "method": "/exchangeInfo".replace("/", "", 1),
             "params": params,
         }
 
@@ -121,7 +121,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/ping".replace("/", ""),
+            "method": "/ping".replace("/", "", 1),
             "params": params,
         }
 
@@ -157,7 +157,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/time".replace("/", ""),
+            "method": "/time".replace("/", "", 1),
             "params": params,
         }
 

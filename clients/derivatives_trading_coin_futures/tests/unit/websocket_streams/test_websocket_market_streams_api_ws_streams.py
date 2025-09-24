@@ -60,7 +60,7 @@ class TestWebSocketStreams:
             "m": False,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@aggTrade".replace("/", ""),
+            "/<symbol>@aggTrade".replace("/", "", 1),
             params,
         )
 
@@ -176,7 +176,7 @@ class TestWebSocketStreams:
             "E": 1591268628166,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/!bookTicker".replace("/", ""),
+            "/!bookTicker".replace("/", "", 1),
             {},
         )
 
@@ -279,7 +279,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/!forceOrder@arr".replace("/", ""),
+            "/!forceOrder@arr".replace("/", "", 1),
             {},
         )
 
@@ -394,7 +394,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/!miniTicker@arr".replace("/", ""),
+            "/!miniTicker@arr".replace("/", "", 1),
             {},
         )
 
@@ -508,7 +508,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", ""),
+            "/!ticker@arr".replace("/", "", 1),
             {},
         )
 
@@ -645,7 +645,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", ""),
+            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -868,7 +868,7 @@ class TestWebSocketStreams:
             ],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/!contractInfo".replace("/", ""),
+            "/!contractInfo".replace("/", "", 1),
             {},
         )
 
@@ -1001,7 +1001,7 @@ class TestWebSocketStreams:
             "a": [["9518.5", "45"]],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@depth@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -1138,7 +1138,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<pair>@indexPriceKline_<interval>".replace("/", ""),
+            "/<pair>@indexPriceKline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -1301,7 +1301,7 @@ class TestWebSocketStreams:
             "p": "9636.57860000",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<pair>@indexPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@indexPrice@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -1409,7 +1409,7 @@ class TestWebSocketStreams:
             "E": 1591268628166,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@bookTicker".replace("/", ""),
+            "/<symbol>@bookTicker".replace("/", "", 1),
             params,
         )
 
@@ -1535,7 +1535,7 @@ class TestWebSocketStreams:
             "q": "33264343847.22378500",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@miniTicker".replace("/", ""),
+            "/<symbol>@miniTicker".replace("/", "", 1),
             params,
         )
 
@@ -1670,7 +1670,7 @@ class TestWebSocketStreams:
             "n": 103272,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             params,
         )
 
@@ -1823,7 +1823,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -1994,7 +1994,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@forceOrder".replace("/", ""),
+            "/<symbol>@forceOrder".replace("/", "", 1),
             params,
         )
 
@@ -2139,7 +2139,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@markPriceKline_<interval>".replace("/", ""),
+            "/<symbol>@markPriceKline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -2322,7 +2322,7 @@ class TestWebSocketStreams:
             },
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/<pair>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@markPrice@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -2470,7 +2470,7 @@ class TestWebSocketStreams:
             "T": 0,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<symbol>@markPrice@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -2599,7 +2599,7 @@ class TestWebSocketStreams:
             ],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             params,
         )
 

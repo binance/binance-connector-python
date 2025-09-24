@@ -78,7 +78,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@aggTrade".replace("/", ""),
+            "/<symbol>@aggTrade".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -116,7 +116,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!bookTicker".replace("/", ""),
+            "/!bookTicker".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -154,7 +154,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!forceOrder@arr".replace("/", ""),
+            "/!forceOrder@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -191,7 +191,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!miniTicker@arr".replace("/", ""),
+            "/!miniTicker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -228,7 +228,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", ""),
+            "/!ticker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -285,7 +285,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", ""),
+            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", "", 1),
             {
                 "pair": pair,
                 "contract_type": contract_type,
@@ -325,7 +325,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!contractInfo".replace("/", ""),
+            "/!contractInfo".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -371,7 +371,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -423,7 +423,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@indexPriceKline_<interval>".replace("/", ""),
+            "/<pair>@indexPriceKline_<interval>".replace("/", "", 1),
             {
                 "pair": pair,
                 "interval": interval,
@@ -471,7 +471,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@indexPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@indexPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "pair": pair,
                 "id": id,
@@ -515,7 +515,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@bookTicker".replace("/", ""),
+            "/<symbol>@bookTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -560,7 +560,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@miniTicker".replace("/", ""),
+            "/<symbol>@miniTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -605,7 +605,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -656,7 +656,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -704,7 +704,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@forceOrder".replace("/", ""),
+            "/<symbol>@forceOrder".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -755,7 +755,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@markPriceKline_<interval>".replace("/", ""),
+            "/<symbol>@markPriceKline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -803,7 +803,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@markPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "pair": pair,
                 "id": id,
@@ -851,7 +851,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<symbol>@markPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -903,7 +903,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "levels": levels,

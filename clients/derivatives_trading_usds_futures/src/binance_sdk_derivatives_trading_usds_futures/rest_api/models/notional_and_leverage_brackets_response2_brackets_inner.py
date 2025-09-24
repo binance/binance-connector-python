@@ -22,9 +22,9 @@ from typing import Set
 from typing_extensions import Self
 
 
-class NotionalAndLeverageBracketsResponse1InnerBracketsInner(BaseModel):
+class NotionalAndLeverageBracketsResponse2BracketsInner(BaseModel):
     """
-    NotionalAndLeverageBracketsResponse1InnerBracketsInner
+    NotionalAndLeverageBracketsResponse2BracketsInner
     """  # noqa: E501
 
     bracket: Optional[StrictInt] = None
@@ -34,7 +34,7 @@ class NotionalAndLeverageBracketsResponse1InnerBracketsInner(BaseModel):
     maint_margin_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="maintMarginRatio"
     )
-    cum: Optional[Union[StrictFloat, StrictInt]] = None
+    cum: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "bracket",
@@ -66,7 +66,7 @@ class NotionalAndLeverageBracketsResponse1InnerBracketsInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NotionalAndLeverageBracketsResponse1InnerBracketsInner from a JSON string"""
+        """Create an instance of NotionalAndLeverageBracketsResponse2BracketsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -100,7 +100,7 @@ class NotionalAndLeverageBracketsResponse1InnerBracketsInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NotionalAndLeverageBracketsResponse1InnerBracketsInner from a dict"""
+        """Create an instance of NotionalAndLeverageBracketsResponse2BracketsInner from a dict"""
         if obj is None:
             return None
 

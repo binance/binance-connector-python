@@ -60,7 +60,7 @@ class UserDataStreamsApi:
         }
 
         payload = {
-            "method": "/userDataStream.stop".replace("/", ""),
+            "method": "/userDataStream.stop".replace("/", "", 1),
             "params": params,
         }
 
@@ -97,7 +97,7 @@ class UserDataStreamsApi:
         }
 
         payload = {
-            "method": "/userDataStream.ping".replace("/", ""),
+            "method": "/userDataStream.ping".replace("/", "", 1),
             "params": params,
         }
 
@@ -136,7 +136,7 @@ class UserDataStreamsApi:
         }
 
         payload = {
-            "method": "/userDataStream.start".replace("/", ""),
+            "method": "/userDataStream.start".replace("/", "", 1),
             "params": params,
         }
 

@@ -73,6 +73,11 @@ from binance_sdk_sub_account.rest_api.models import (
 from binance_sdk_sub_account.rest_api.models import UniversalTransferResponse
 
 
+from binance_sdk_sub_account.rest_api.models import (
+    MovePositionForSubAccountOrderArgsParameterInner,
+)
+
+
 class TestAssetManagementApi:
     @pytest.fixture(autouse=True)
     def setup_client(self):
@@ -2185,7 +2190,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
 
         expected_response = {
@@ -2237,6 +2248,7 @@ class TestAssetManagementApi:
         assert normalized["fromUserEmail"] == "from_user_email_example"
         assert normalized["toUserEmail"] == "to_user_email_example"
         assert normalized["productType"] == "product_type_example"
+        assert "orderArgs" in normalized
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -2266,7 +2278,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
             "recv_window": 5000,
         }
 
@@ -2336,7 +2354,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
         params["from_user_email"] = None
 
@@ -2351,7 +2375,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
         params["to_user_email"] = None
 
@@ -2366,7 +2396,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
         params["product_type"] = None
 
@@ -2381,7 +2417,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
         params["order_args"] = None
 
@@ -2397,7 +2439,13 @@ class TestAssetManagementApi:
             "from_user_email": "from_user_email_example",
             "to_user_email": "to_user_email_example",
             "product_type": "product_type_example",
-            "order_args": [None],
+            "order_args": [
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         }
 
         mock_error = Exception("ResponseError")

@@ -289,6 +289,9 @@ from .notional_and_leverage_brackets_response1_inner_brackets_inner import (
 from .notional_and_leverage_brackets_response2 import (
     NotionalAndLeverageBracketsResponse2 as NotionalAndLeverageBracketsResponse2,
 )
+from .notional_and_leverage_brackets_response2_brackets_inner import (
+    NotionalAndLeverageBracketsResponse2BracketsInner as NotionalAndLeverageBracketsResponse2BracketsInner,
+)
 from .old_trades_lookup_response import (
     OldTradesLookupResponse as OldTradesLookupResponse,
 )

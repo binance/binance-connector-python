@@ -83,7 +83,7 @@ class MarketDataApi:
         }
 
         payload = {
-            "method": "/depth".replace("/", ""),
+            "method": "/depth".replace("/", "", 1),
             "params": params,
         }
 
@@ -127,7 +127,7 @@ class MarketDataApi:
         }
 
         payload = {
-            "method": "/ticker.book".replace("/", ""),
+            "method": "/ticker.book".replace("/", "", 1),
             "params": params,
         }
 
@@ -170,7 +170,7 @@ class MarketDataApi:
         }
 
         payload = {
-            "method": "/ticker.price".replace("/", ""),
+            "method": "/ticker.price".replace("/", "", 1),
             "params": params,
         }
 

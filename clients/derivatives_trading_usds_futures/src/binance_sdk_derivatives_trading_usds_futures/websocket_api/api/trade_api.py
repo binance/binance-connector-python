@@ -97,7 +97,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.cancel".replace("/", ""),
+            "method": "/order.cancel".replace("/", "", 1),
             "params": params,
         }
 
@@ -189,7 +189,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.modify".replace("/", ""),
+            "method": "/order.modify".replace("/", "", 1),
             "params": params,
         }
 
@@ -356,7 +356,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.place".replace("/", ""),
+            "method": "/order.place".replace("/", "", 1),
             "params": params,
         }
 
@@ -401,7 +401,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/account.position".replace("/", ""),
+            "method": "/account.position".replace("/", "", 1),
             "params": params,
         }
 
@@ -448,7 +448,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/v2/account.position".replace("/", ""),
+            "method": "/v2/account.position".replace("/", "", 1),
             "params": params,
         }
 
@@ -515,7 +515,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.status".replace("/", ""),
+            "method": "/order.status".replace("/", "", 1),
             "params": params,
         }
 

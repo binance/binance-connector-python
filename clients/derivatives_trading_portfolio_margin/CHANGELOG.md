@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.0 - 2025-09-24
+
+### Changed (2)
+
+#### REST API
+
+- Modified response for `margin_max_borrow()` (`GET /papi/v1/margin/maxBorrowable`):
+  - `amount`: type `number` → `string`
+  - `borrowLimit`: type `integer` → `string`
+
+- Modified response for `new_margin_order()` (`POST /papi/v1/margin/order`):
+  - `marginBuyBorrowAmount`: type `integer` → `string`
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)
