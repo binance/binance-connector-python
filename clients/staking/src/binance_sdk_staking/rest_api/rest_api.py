@@ -16,6 +16,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 from .api.eth_staking_api import EthStakingApi
 from .api.on_chain_yields_api import OnChainYieldsApi
+from .api.soft_staking_api import SoftStakingApi
 from .api.sol_staking_api import SolStakingApi
 
 from .models import EthStakingAccountResponse
@@ -41,6 +42,9 @@ from .models import RedeemOnChainYieldsLockedProductResponse
 from .models import SetOnChainYieldsLockedAutoSubscribeResponse
 from .models import SetOnChainYieldsLockedProductRedeemOptionResponse
 from .models import SubscribeOnChainYieldsLockedProductResponse
+from .models import GetSoftStakingProductListResponse
+from .models import GetSoftStakingRewardsHistoryResponse
+from .models import SetSoftStakingResponse
 from .models import ClaimBoostRewardsResponse
 from .models import GetBnsolRateHistoryResponse
 from .models import GetBnsolRewardsHistoryResponse
@@ -76,6 +80,9 @@ class StakingRestAPI:
             self.configuration, self._session, self._signer
         )
         self._onChainYieldsApi = OnChainYieldsApi(
+            self.configuration, self._session, self._signer
+        )
+        self._softStakingApi = SoftStakingApi(
             self.configuration, self._session, self._signer
         )
         self._solStakingApi = SolStakingApi(
@@ -933,6 +940,103 @@ class StakingRestAPI:
             client_id,
             recv_window,
         )
+
+    def get_soft_staking_product_list(
+        self,
+        asset: Optional[str] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetSoftStakingProductListResponse]:
+        """
+                Get Soft Staking Product List (USER_DATA)
+
+                Get the available Soft Staking product list.
+
+        Weight: 50
+
+                Args:
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetSoftStakingProductListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._softStakingApi.get_soft_staking_product_list(
+            asset, current, size, recv_window
+        )
+
+    def get_soft_staking_rewards_history(
+        self,
+        asset: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetSoftStakingRewardsHistoryResponse]:
+        """
+                Get Soft Staking Rewards History(USER_DATA)
+
+                * The time between `startTime` and `endTime` cannot be longer than 3 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, the next 30 days' data beginning from `startTime` will be returned.
+        * If `endTime` is sent but `startTime` is not sent, the 30 days' data before `endTime` will be returned.
+
+        Weight: 50
+
+                Args:
+                    asset (Optional[str] = None): WBETH or BETH, default to BETH
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetSoftStakingRewardsHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._softStakingApi.get_soft_staking_rewards_history(
+            asset, start_time, end_time, current, size, recv_window
+        )
+
+    def set_soft_staking(
+        self,
+        soft_staking: Union[bool, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetSoftStakingResponse]:
+        """
+                Set Soft Staking (USER_DATA)
+
+                Enable or disable Soft Staking.
+
+        Weight: 50
+
+                Args:
+                    soft_staking (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetSoftStakingResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._softStakingApi.set_soft_staking(soft_staking, recv_window)
 
     def claim_boost_rewards(
         self,

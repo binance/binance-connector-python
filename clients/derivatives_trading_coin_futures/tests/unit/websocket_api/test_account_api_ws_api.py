@@ -110,12 +110,14 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/account.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/account.status".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.status".replace("/", ""), "params": {}},
+            payload={"method": "/account.status".replace("/", "", 1), "params": {}},
             response_model=AccountInformationResponse,
             signer=None,
         )
@@ -202,7 +204,9 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/account.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/account.status".replace(
+            "/", "", 1
+        )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -211,7 +215,7 @@ class TestWebSocketAccountApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.status".replace("/", ""), "params": params},
+            payload={"method": "/account.status".replace("/", "", 1), "params": params},
             response_model=AccountInformationResponse,
             signer=None,
         )
@@ -274,13 +278,13 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.balance".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.balance".replace("/", ""), "params": {}},
+            payload={"method": "/account.balance".replace("/", "", 1), "params": {}},
             response_model=FuturesAccountBalanceResponse,
             signer=None,
         )
@@ -336,7 +340,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.balance".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["recv_window"] == 5000
@@ -344,7 +348,10 @@ class TestWebSocketAccountApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.balance".replace("/", ""), "params": params},
+            payload={
+                "method": "/account.balance".replace("/", "", 1),
+                "params": params,
+            },
             response_model=FuturesAccountBalanceResponse,
             signer=None,
         )

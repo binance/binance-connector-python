@@ -33,6 +33,7 @@ async def user_data_stream_ping():
 
         data = response.data()
         logging.info(f"user_data_stream_ping() response: {data}")
+
     except Exception as e:
         logging.error(f"user_data_stream_ping() error: {e}")
     finally:

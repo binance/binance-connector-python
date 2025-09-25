@@ -24,9 +24,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 
 def query_sub_account_transaction_statistics():
     try:
-        response = client.rest_api.query_sub_account_transaction_statistics(
-            email="sub-account-email@email.com",
-        )
+        response = client.rest_api.query_sub_account_transaction_statistics()
 
         rate_limits = response.rate_limits
         logging.info(

@@ -8,10 +8,13 @@ from pydantic import BaseModel
 import requests
 
 from base64 import b64decode, b64encode
+from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, ECC
 from Crypto.Signature import pkcs1_15, eddsa
-from typing import ClassVar, List
+from enum import Enum
+from types import SimpleNamespace
+from typing import ClassVar, List, Optional, Union
 from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
@@ -27,23 +30,30 @@ from binance_common.errors import (
     ServerError,
     NetworkError,
 )
-from binance_common.models import RateLimit
+from binance_common.models import RateLimit, WebsocketApiOptions
 from binance_common.utils import (
-    hmac_hashing,
-    cleanNoneValue,
-    get_timestamp,
+    clean_none_value,
     encoded_string,
-    is_one_of_model,
-    get_uuid,
-    validate_time_unit,
     get_signature,
-    should_retry_request,
-    send_request,
-    parse_rate_limit_headers,
-    parse_proxies,
-    ws_streams_placeholder,
-    parse_ws_rate_limit_headers,
+    get_timestamp,
+    get_uuid,
+    get_validator_field_map,
+    hmac_hashing,
+    is_one_of_model,
+    make_serializable,
     normalize_query_values,
+    parse_proxies,
+    parse_user_event,
+    parse_rate_limit_headers,
+    parse_ws_rate_limit_headers,
+    resolve_model_from_event,
+    send_request,
+    should_retry_request,
+    transform_query,
+    validate_time_unit,
+    websocket_api_signature,
+    ws_api_payload,
+    ws_streams_placeholder,
 )
 from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
@@ -186,27 +196,72 @@ class TestCleanNoneValue(unittest.TestCase):
     def test_remove_none_values(self):
         input_dict = {"a": 1, "b": None, "c": 3, "d": None}
         expected_output = {"a": 1, "c": 3}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_all_none_values(self):
         input_dict = {"a": None, "b": None, "c": None}
         expected_output = {}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_no_none_values(self):
         input_dict = {"a": 1, "b": 2, "c": 3}
         expected_output = {"a": 1, "b": 2, "c": 3}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_empty_dictionary(self):
         input_dict = {}
         expected_output = {}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        self.assertEqual(clean_none_value(input_dict), expected_output)
 
     def test_mixed_types(self):
         input_dict = {"a": 0, "b": False, "c": None, "d": "", "e": [], "f": {}}
-        expected_output = {"a": 0, "b": False, "d": "", "e": [], "f": {}}
-        self.assertEqual(cleanNoneValue(input_dict), expected_output)
+        expected_output = {"a": 0, "b": False, "d": ""}
+        self.assertEqual(clean_none_value(input_dict), expected_output)
+
+    def test_clean_none_value_with_class(self):
+        class Dummy:
+            def __init__(self):
+                self.a = 0
+                self.b = False
+                self.c = ""
+                self.d = None
+                self.e = []
+                self.f = {}
+
+        obj = Dummy()
+        cleaned = clean_none_value(obj)
+
+        expected = {
+            "a": 0,
+            "b": False,
+            "c": ""
+        }
+
+        assert cleaned == expected
+
+    def test_clean_none_value_with_array_of_dicts(self):
+        input_list = [
+            {"a": 0, "b": False, "c": None, "d": "", "e": [], "f": {}},
+        ]
+        expected_output = [
+            {"a": 0, "b": False, "d": ""}
+        ]
+
+        assert clean_none_value(input_list) == expected_output
+
+    def test_clean_none_value_with_enum(self):
+        class BasisPeriodEnum(Enum):
+            TEST_A = "TEST_A"
+            TEST_B = "TEST_B"
+
+        input_list = [
+            {"a": 0, "b": False, "c": BasisPeriodEnum.TEST_A, "d": "", "e": [], "f": {}},
+        ]
+        expected_output = [
+            {"a": 0, "b": False, "c": "TEST_A", "d": ""}
+        ]
+
+        assert clean_none_value(input_list) == expected_output
 
 
 class TestGetTimestamp(unittest.TestCase):
@@ -228,6 +283,111 @@ class TestGetTimestamp(unittest.TestCase):
         timestamp2 = get_timestamp()
 
         self.assertGreater(timestamp2, timestamp1)
+
+
+class Dummy:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+
+class TestMakeSerializable(unittest.TestCase):
+
+    def test_list_of_objects(self):
+        obj1 = Dummy(1, 2)
+        obj2 = Dummy(3, 4)
+        result = make_serializable([obj1, obj2])
+        self.assertEqual(result, [obj1.__dict__, obj2.__dict__])
+
+    def test_boolean(self):
+        self.assertEqual(make_serializable(True), "true")
+        self.assertEqual(make_serializable(False), "false")
+
+    def test_float(self):
+        self.assertEqual(make_serializable(3.14), "3.14")
+        self.assertEqual(make_serializable(-2.5), "-2.5")
+
+    def test_enum(self):
+        class Color(Enum):
+            RED = "red"
+            BLUE = "blue"
+        self.assertEqual(make_serializable(Color.RED), "red")
+        self.assertEqual(make_serializable(Color.BLUE), "blue")
+
+    def test_object_with_dict(self):
+        obj = Dummy(5, 6)
+        result = make_serializable(obj)
+        self.assertEqual(result, obj.__dict__)
+
+    def test_int_and_string(self):
+        self.assertEqual(make_serializable(42), 42)
+        self.assertEqual(make_serializable("hello"), "hello")
+
+    def test_list_of_mixed(self):
+        obj = Dummy(1, 2)
+        lst = [obj, 10, "test", True]
+        result = make_serializable(lst)
+        expected = [obj.__dict__, 10, "test", True]
+        self.assertEqual(result, expected)
+
+
+class TestTransformQuery(unittest.TestCase):
+
+    def test_transform_dict(self):
+        data = {
+            "first_name": "John",
+            "last_name": "Doe",
+            "age": 30
+        }
+        expected = {
+            "firstName": "John",
+            "lastName": "Doe",
+            "age": 30
+        }
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_nested_dict(self):
+        data = {
+            "user_info": {
+                "first_name": "Alice",
+                "last_name": "Smith"
+            },
+            "is_active": True
+        }
+        expected = {
+            "userInfo": {
+                "firstName": "Alice",
+                "lastName": "Smith"
+            },
+            "isActive": "true"
+        }
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_list_of_dicts(self):
+        data = [
+            {"first_name": "John"},
+            {"first_name": "Jane"}
+        ]
+        expected = [
+            {"firstName": "John"},
+            {"firstName": "Jane"}
+        ]
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_mixed_list(self):
+        data = [1, "two", {"three_four": 4}]
+        expected = [1, "two", {"threeFour": 4}]
+        self.assertEqual(transform_query(data), expected)
+
+    def test_transform_primitive_types(self):
+        self.assertEqual(transform_query(42), 42)
+        self.assertEqual(transform_query(3.14), "3.14")
+        self.assertEqual(transform_query(True), "true")
+        self.assertEqual(transform_query("hello"), "hello")
+
+    def test_empty_structures(self):
+        self.assertEqual(transform_query({}), {})
+        self.assertEqual(transform_query([]), [])
 
 
 class TestEncodedString(unittest.TestCase):
@@ -267,6 +427,16 @@ class TestEncodedString(unittest.TestCase):
 
         expected_value = urlencode({
             "items": json.dumps([{"a": "value1", "b": 123}], separators=(",", ":"))
+        }, doseq=True)
+
+        self.assertEqual(encoded_string(query), expected_value)
+
+    def test_encode_with_snake_case(self):
+        query = {"user_email": "test@example.com", "admin_email": "admin@domain.com"}
+
+        expected_value = urlencode({
+            "userEmail": "test@example.com",
+            "adminEmail": "admin@domain.com"
         }, doseq=True)
 
         self.assertEqual(encoded_string(query), expected_value)
@@ -485,7 +655,7 @@ class TestSendRequest(unittest.TestCase):
         self.url = f"{self.configuration.base_path}{self.path}"
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     @patch("binance_common.utils.get_timestamp", return_value=1234567890)
     @patch("binance_common.utils.get_signature", return_value="signed_signature")
@@ -527,7 +697,7 @@ class TestSendRequest(unittest.TestCase):
         self.assertEqual(kwargs["params"]["signature"], "signed_signature")
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     def test_successful_request(
         self, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
@@ -561,7 +731,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
     def test_successful_request_empty_array_response(
         self, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
@@ -595,7 +765,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_client_errors(self, mock_clean_none, mock_encoded_string):
         """Test 400-499 errors raising appropriate exceptions."""
         error_cases = {
@@ -636,7 +806,7 @@ class TestSendRequest(unittest.TestCase):
                 )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_server_errors(self, mock_clean_none, mock_encoded_string):
         """Test 500-599 server errors raising ServerError."""
         for status in [500, 502, 503, 504]:
@@ -653,7 +823,7 @@ class TestSendRequest(unittest.TestCase):
                 self.assertEqual(str(context.exception), f"Server error: {status}")
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch(
         "binance_common.utils.should_retry_request",
         side_effect=lambda e, m, r: r > 0
@@ -675,7 +845,7 @@ class TestSendRequest(unittest.TestCase):
             send_request(self.session, self.configuration, self.method, self.path, {})
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.should_retry_request", return_value=False)
     def test_network_error_no_retry(
         self, mock_should_retry, mock_clean_none, mock_encoded_string
@@ -690,7 +860,7 @@ class TestSendRequest(unittest.TestCase):
         self.assertEqual(mock_should_retry.call_count, 1)
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_correct_headers_and_proxies(self, mock_clean_none, mock_encoded_string):
         """Ensure correct headers and proxies are used in request."""
         self.configuration.proxy = {
@@ -718,7 +888,7 @@ class TestSendRequest(unittest.TestCase):
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
-    @patch("binance_common.utils.cleanNoneValue", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.should_retry_request", return_value=False)
     def test_request_fails_after_retries(
         self, mock_should_retry, mock_clean_none, mock_encoded_string
@@ -1118,7 +1288,7 @@ class TestSanitizeHeaderValue(unittest.TestCase):
         )
 
 
-class TestParseCustomHeaders:
+class TestParseCustomHeaders(unittest.TestCase):
     def test_returns_empty_dict_when_input_is_empty_or_none(self):
         assert parse_custom_headers({}) == {}
         assert parse_custom_headers(None) == {}
@@ -1158,6 +1328,141 @@ class TestParseCustomHeaders:
     def test_allows_array_values_when_all_entries_are_clean(self):
         input_data = {"X-Array": ["one", "two", "three"]}
         assert parse_custom_headers(input_data) == {"X-Array": ["one", "two", "three"]}
+
+
+class TestWsApiPayload(unittest.TestCase):
+    def setUp(self):
+        self.dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        self.base_payload = {
+            "id": "123",
+            "params": {
+                "some_param": "value",
+                "list_param": [1, 2, 3],
+                "dict_param": {"nested": "data"}
+            }
+        }
+
+    def test_payload_with_api_key_and_signed(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=True, signer=None)
+        
+        with patch("binance_common.utils.websocket_api_signature", return_value={"signed": True}) as mock_signature:
+            result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+            mock_signature.assert_called_once()
+
+            assert result["id"] == self.base_payload["id"]
+            assert result["params"] == {"signed": True}
+
+    def test_payload_without_api_key(self):
+        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert "apiKey" not in result["params"]
+        assert result["id"] == self.base_payload["id"]
+        assert isinstance(result["params"]["listParam"], str)
+        assert isinstance(result["params"]["dictParam"], str)
+        assert result["params"]["someParam"] == "value"
+
+    def test_payload_generates_new_id_if_missing(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=False, signer=None)
+        payload_without_id = {"params": {}}
+
+        with patch("binance_common.utils.get_uuid", return_value="generated-id"):
+            result = ws_api_payload(self.dummy_config, payload_without_id, websocket_options)
+
+            assert result["id"] == "generated-id"
+
+    def test_payload_skips_auth_when_flagged(self):
+        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=True, is_signed=False, signer=None)
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert "apiKey" not in result["params"]
+
+    def test_params_serialization(self):
+        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+
+        result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+
+        assert result["params"]["listParam"] == json.dumps([1, 2, 3], separators=(",", ":"))
+        assert result["params"]["dictParam"] == json.dumps({"nested": "data"}, separators=(",", ":"))
+
+
+
+class TestWebsocketApiSignature(unittest.TestCase):
+    def test_websocket_api_signature(self):
+        dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        payload = {"foo": "bar"}
+
+        with patch("binance_common.utils.get_timestamp", return_value=1234567890), \
+            patch("binance_common.utils.get_signature", return_value="mocked-signature") as mock_get_signature:
+
+            result = websocket_api_signature(dummy_config, payload)
+
+            assert isinstance(result, OrderedDict)
+            assert result["apiKey"] == "test-api-key"
+            assert result["timestamp"] == 1234567890
+            assert result["foo"] == "bar"
+            assert result["signature"] == "mocked-signature"
+
+            mock_get_signature.assert_called_once()
+            called_config, called_params, called_signer = mock_get_signature.call_args[0]
+            assert called_config == dummy_config
+            assert "apiKey=test-api-key" in called_params
+            assert "timestamp=1234567890" in called_params
+
+
+class EventA(BaseModel):
+    x: int
+    y: str
+
+class EventB(BaseModel):
+    a: float
+    b: Optional[str]
+
+class UserResponse(BaseModel):
+    one_of_schemas: list[str] = ["EventA", "EventB"]
+    oneof_schema_eventa_validator: Optional[EventA] = None
+    oneof_schema_eventb_validator: Optional[EventB] = None
+    actual_instance: Union[EventA, EventB, dict]
+
+
+class TestGetValidatorFieldMap(unittest.TestCase):
+
+    def test_field_map(self):
+        field_map = get_validator_field_map(UserResponse)
+        self.assertIn(EventA, field_map)
+        self.assertIn(EventB, field_map)
+        self.assertEqual(field_map[EventA], "oneof_schema_eventa_validator")
+        self.assertEqual(field_map[EventB], "oneof_schema_eventb_validator")
+
+
+class TestResolveModelFromEvent(unittest.TestCase):
+
+    def test_valid_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "eventA")
+        self.assertIs(model_cls, EventA)
+
+    def test_invalid_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "nonexistent")
+        self.assertIsNone(model_cls)
+
+    def test_empty_event(self):
+        model_cls = resolve_model_from_event(UserResponse, "")
+        self.assertIsNone(model_cls)
+
+
+class TestParseUserEvent(unittest.TestCase):
+
+    def test_invalid_event(self):
+        payload = {"e": "unknown", "data": 123}
+        instance = parse_user_event(payload, UserResponse)
+        self.assertIsInstance(instance, UserResponse)
+        self.assertEqual(instance.actual_instance["data"], 123)
+
+    def test_invalid_payload(self):
+        payload = {"e": "eventA", "x": "wrong_type", "y": "hello"}
+        instance = parse_user_event(payload, UserResponse)
+        self.assertIsInstance(instance, UserResponse)
+        self.assertEqual(instance.actual_instance["x"], "wrong_type")
 
 if __name__ == "__main__":
     unittest.main()

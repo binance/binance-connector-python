@@ -28,10 +28,10 @@ class GetWbethRewardsHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     time: Optional[StrictInt] = None
-    amount_in_eth: Optional[StrictStr] = Field(default=None, alias="amountInETH")
+    amountInETH: Optional[StrictStr] = Field(default=None, alias="amountInETH")
     holding: Optional[StrictStr] = None
-    holding_in_eth: Optional[StrictStr] = Field(default=None, alias="holdingInETH")
-    annual_percentage_rate: Optional[StrictStr] = Field(
+    holdingInETH: Optional[StrictStr] = Field(default=None, alias="holdingInETH")
+    annualPercentageRate: Optional[StrictStr] = Field(
         default=None, alias="annualPercentageRate"
     )
     additional_properties: Dict[str, Any] = {}

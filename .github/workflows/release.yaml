@@ -27,6 +27,7 @@ jobs:
     needs: detect-clients
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 3
       matrix:
         client: ${{ fromJson(needs.detect-clients.outputs.clients) }}
     steps:

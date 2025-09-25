@@ -94,6 +94,7 @@ class ConfigurationWebSocketAPI:
     - WebSocket Pool
     - Time Unit
     - Proxy support
+    - Session re-logon
     """
 
     def __init__(
@@ -111,6 +112,7 @@ class ConfigurationWebSocketAPI:
         pool_size: int = 2,
         time_unit: TimeUnit = None,
         https_agent: Optional[ssl.SSLContext] = None,
+        session_re_logon: Optional[bool] = True,
     ):
         """
         Initialize the API configuration.
@@ -129,6 +131,7 @@ class ConfigurationWebSocketAPI:
             pool_size (int): Number of WebSocket connections in pool (default: 2).
             time_unit (Optional[TimeUnit]): Time unit for time-based responses (default: None).
             https_agent (Optional[ssl.SSLContext]): Custom HTTPS Agent (default: None).
+            session_re_logon (Optional[bool]): Enable session re-logon (default: True).
         """
 
         self.api_key = api_key
@@ -145,6 +148,7 @@ class ConfigurationWebSocketAPI:
         self.time_unit = time_unit
         self.https_agent = https_agent
         self.user_agent = ""
+        self.session_re_logon = session_re_logon
 
 
 class ConfigurationWebSocketStreams:

@@ -28,7 +28,7 @@ class GetUnclaimedRewardsResponseInner(BaseModel):
     """  # noqa: E501
 
     amount: Optional[StrictStr] = None
-    rewards_asset: Optional[StrictStr] = Field(default=None, alias="rewardsAsset")
+    rewardsAsset: Optional[StrictStr] = Field(default=None, alias="rewardsAsset")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["amount", "rewardsAsset"]
 

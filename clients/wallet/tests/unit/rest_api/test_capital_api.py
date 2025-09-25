@@ -100,6 +100,7 @@ class TestCapitalApi:
                         "minConfirm": 5,
                         "unLockConfirm": 0,
                         "sameAddress": False,
+                        "withdrawTag": False,
                         "estimatedArrivalTime": 1,
                         "busy": False,
                         "contractAddressUrl": "https://bscscan.com/token/",
@@ -129,6 +130,7 @@ class TestCapitalApi:
                         "minConfirm": 6,
                         "unLockConfirm": 64,
                         "sameAddress": False,
+                        "withdrawTag": False,
                         "estimatedArrivalTime": 2,
                         "busy": False,
                         "contractAddressUrl": "https://etherscan.io/address/",
@@ -219,6 +221,7 @@ class TestCapitalApi:
                         "minConfirm": 5,
                         "unLockConfirm": 0,
                         "sameAddress": False,
+                        "withdrawTag": False,
                         "estimatedArrivalTime": 1,
                         "busy": False,
                         "contractAddressUrl": "https://bscscan.com/token/",
@@ -248,6 +251,7 @@ class TestCapitalApi:
                         "minConfirm": 6,
                         "unLockConfirm": 64,
                         "sameAddress": False,
+                        "withdrawTag": False,
                         "estimatedArrivalTime": 2,
                         "busy": False,
                         "contractAddressUrl": "https://etherscan.io/address/",
@@ -442,6 +446,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 0,
             },
             {
                 "id": "769754833590042625",
@@ -458,6 +463,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 1,
             },
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -526,6 +532,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 0,
             },
             {
                 "id": "769754833590042625",
@@ -542,6 +549,7 @@ class TestCapitalApi:
                 "confirmTimes": "1/1",
                 "unlockConfirm": 0,
                 "walletType": 0,
+                "travelRuleStatus": 1,
             },
         ]
         mock_get_signature.return_value = "mocked_signature"

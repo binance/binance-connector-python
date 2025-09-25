@@ -67,21 +67,24 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.logon".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.logon".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/session.logon".replace("/", ""), "params": {}},
+            payload={"method": "/session.logon".replace("/", "", 1), "params": {}},
             response_model=SessionLogonResponse,
             signer=None,
+            session_logon=True,
         )
 
     @pytest.mark.asyncio
     async def test_session_logon_success_with_optional_params(self):
         """Test session_logon() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000}
+        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000.0}
 
         expected_response = {
             "id": "c174a2b1-3f51-4580-b200-8528bd237cb7",
@@ -114,18 +117,21 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.logon".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.logon".replace(
+            "/", "", 1
+        )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/session.logon".replace("/", ""), "params": params},
+            payload={"method": "/session.logon".replace("/", "", 1), "params": params},
             response_model=SessionLogonResponse,
             signer=None,
+            session_logon=True,
         )
 
     @pytest.mark.asyncio
@@ -172,13 +178,16 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.logout".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.logout".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/session.logout".replace("/", ""), "params": {}},
+            payload={"method": "/session.logout".replace("/", "", 1), "params": {}},
             response_model=SessionLogoutResponse,
+            session_logout=True,
         )
 
     @pytest.mark.asyncio
@@ -218,14 +227,17 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.logout".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.logout".replace(
+            "/", "", 1
+        )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/session.logout".replace("/", ""), "params": params},
+            payload={"method": "/session.logout".replace("/", "", 1), "params": params},
             response_model=SessionLogoutResponse,
+            session_logout=True,
         )
 
     @pytest.mark.asyncio
@@ -272,12 +284,14 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.status".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/session.status".replace("/", ""), "params": {}},
+            payload={"method": "/session.status".replace("/", "", 1), "params": {}},
             response_model=SessionStatusResponse,
         )
 
@@ -318,13 +332,15 @@ class TestWebSocketAuthApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/session.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/session.status".replace(
+            "/", "", 1
+        )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/session.status".replace("/", ""), "params": params},
+            payload={"method": "/session.status".replace("/", "", 1), "params": params},
             response_model=SessionStatusResponse,
         )
 

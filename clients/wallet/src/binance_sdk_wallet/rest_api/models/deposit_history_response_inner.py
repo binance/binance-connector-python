@@ -33,14 +33,17 @@ class DepositHistoryResponseInner(BaseModel):
     network: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     address: Optional[StrictStr] = None
-    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
-    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
-    insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")
-    complete_time: Optional[StrictInt] = Field(default=None, alias="completeTime")
-    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
-    confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
-    unlock_confirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
-    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    addressTag: Optional[StrictStr] = Field(default=None, alias="addressTag")
+    txId: Optional[StrictStr] = Field(default=None, alias="txId")
+    insertTime: Optional[StrictInt] = Field(default=None, alias="insertTime")
+    completeTime: Optional[StrictInt] = Field(default=None, alias="completeTime")
+    transferType: Optional[StrictInt] = Field(default=None, alias="transferType")
+    confirmTimes: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
+    unlockConfirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
+    walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
+    travelRuleStatus: Optional[StrictInt] = Field(
+        default=None, alias="travelRuleStatus"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
@@ -57,6 +60,7 @@ class DepositHistoryResponseInner(BaseModel):
         "confirmTimes",
         "unlockConfirm",
         "walletType",
+        "travelRuleStatus",
     ]
 
     model_config = ConfigDict(
@@ -137,6 +141,7 @@ class DepositHistoryResponseInner(BaseModel):
                 "confirmTimes": obj.get("confirmTimes"),
                 "unlockConfirm": obj.get("unlockConfirm"),
                 "walletType": obj.get("walletType"),
+                "travelRuleStatus": obj.get("travelRuleStatus"),
             }
         )
         # store additional fields in additional_properties

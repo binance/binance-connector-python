@@ -48,6 +48,7 @@ async def order_list_place_otoco():
 
         data = response.data()
         logging.info(f"order_list_place_otoco() response: {data}")
+
     except Exception as e:
         logging.error(f"order_list_place_otoco() error: {e}")
     finally:

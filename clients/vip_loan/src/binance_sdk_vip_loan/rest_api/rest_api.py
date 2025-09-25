@@ -189,6 +189,7 @@ class VipLoanRestAPI:
         collateral_account_id: Union[str, None],
         collateral_coin: Union[str, None],
         is_flexible_rate: Union[bool, None],
+        loan_term: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[VipLoanBorrowResponse]:
         """
@@ -210,6 +211,7 @@ class VipLoanRestAPI:
                     collateral_account_id (Union[str, None]): Multiple split by `,`
                     collateral_coin (Union[str, None]): Multiple split by `,`
                     is_flexible_rate (Union[bool, None]): Default: TRUE. TRUE : flexible rate; FALSE: fixed rate
+                    loan_term (Optional[int] = None): Mandatory for fixed rate. Optional for fixed interest rate. Eg: 30/60 days
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -227,6 +229,7 @@ class VipLoanRestAPI:
             collateral_account_id,
             collateral_coin,
             is_flexible_rate,
+            loan_term,
             recv_window,
         )
 

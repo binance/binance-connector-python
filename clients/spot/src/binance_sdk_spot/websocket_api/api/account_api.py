@@ -54,7 +54,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AccountCommissionResponse]:
         """
             WebSocket Account Commission Rates
-            POST /account.commission
+            /account.commission
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-commission-rates-user_data
 
             Get current account commission rates.
@@ -83,7 +83,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.commission".replace("/", ""),
+            "method": "/account.commission".replace("/", "", 1),
             "params": params,
         }
 
@@ -100,7 +100,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AccountRateLimitsOrdersResponse]:
         """
             WebSocket Unfilled Order Count
-            POST /account.rateLimits.orders
+            /account.rateLimits.orders
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#unfilled-order-count-user_data
 
             Query your current unfilled order count for all intervals.
@@ -124,7 +124,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.rateLimits.orders".replace("/", ""),
+            "method": "/account.rateLimits.orders".replace("/", "", 1),
             "params": params,
         }
 
@@ -142,7 +142,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AccountStatusResponse]:
         """
             WebSocket Account information
-            POST /account.status
+            /account.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-information-user_data
 
             Query information about your account.
@@ -172,7 +172,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.status".replace("/", ""),
+            "method": "/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -191,7 +191,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AllOrderListsResponse]:
         """
             WebSocket Account order list history
-            POST /allOrderLists
+            /allOrderLists
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-order-list-history-user_data
 
             Query information about all your order lists, filtered by time range.
@@ -223,7 +223,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/allOrderLists".replace("/", ""),
+            "method": "/allOrderLists".replace("/", "", 1),
             "params": params,
         }
 
@@ -243,7 +243,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AllOrdersResponse]:
         """
             WebSocket Account order history
-            POST /allOrders
+            /allOrders
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-order-history-user_data
 
             Query information about all your orders – active, canceled, filled – filtered by time range.
@@ -282,7 +282,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/allOrders".replace("/", ""),
+            "method": "/allOrders".replace("/", "", 1),
             "params": params,
         }
 
@@ -303,7 +303,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[MyAllocationsResponse]:
         """
             WebSocket Account allocations
-            POST /myAllocations
+            /myAllocations
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-allocations-user_data
 
             Retrieves allocations resulting from SOR order placement.
@@ -348,7 +348,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myAllocations".replace("/", ""),
+            "method": "/myAllocations".replace("/", "", 1),
             "params": params,
         }
 
@@ -368,7 +368,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[MyPreventedMatchesResponse]:
         """
             WebSocket Account prevented matches
-            POST /myPreventedMatches
+            /myPreventedMatches
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-prevented-matches-user_data
 
             Displays the list of orders that were expired due to STP.
@@ -426,7 +426,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myPreventedMatches".replace("/", ""),
+            "method": "/myPreventedMatches".replace("/", "", 1),
             "params": params,
         }
 
@@ -449,7 +449,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[MyTradesResponse]:
         """
             WebSocket Account trade history
-            POST /myTrades
+            /myTrades
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#account-trade-history-user_data
 
             Query information about all your trades, filtered by time range.
@@ -493,7 +493,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/myTrades".replace("/", ""),
+            "method": "/myTrades".replace("/", "", 1),
             "params": params,
         }
 
@@ -508,7 +508,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[OpenOrderListsStatusResponse]:
         """
             WebSocket Current open Order lists
-            POST /openOrderLists.status
+            /openOrderLists.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#current-open-order-lists-user_data
 
             Query execution status of all open order lists.
@@ -537,7 +537,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/openOrderLists.status".replace("/", ""),
+            "method": "/openOrderLists.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -555,7 +555,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[OpenOrdersStatusResponse]:
         """
             WebSocket Current open orders
-            POST /openOrders.status
+            /openOrders.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#current-open-orders-user_data
 
             Query execution status of all open orders.
@@ -591,7 +591,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/openOrders.status".replace("/", ""),
+            "method": "/openOrders.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -610,7 +610,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[OrderAmendmentsResponse]:
         """
             WebSocket Query Order Amendments
-            POST /order.amendments
+            /order.amendments
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-order-amendments-user_data
 
             Queries all amendments of a single order.
@@ -655,7 +655,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/order.amendments".replace("/", ""),
+            "method": "/order.amendments".replace("/", "", 1),
             "params": params,
         }
 
@@ -672,7 +672,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[OrderListStatusResponse]:
         """
             WebSocket Query Order list
-            POST /orderList.status
+            /orderList.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-order-list-user_data
 
             Check execution status of an Order list.
@@ -706,7 +706,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/orderList.status".replace("/", ""),
+            "method": "/orderList.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -724,7 +724,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[OrderStatusResponse]:
         """
             WebSocket Query order
-            POST /order.status
+            /order.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-order-user_data
 
             Check execution status of an order.
@@ -763,7 +763,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/order.status".replace("/", ""),
+            "method": "/order.status".replace("/", "", 1),
             "params": params,
         }
 

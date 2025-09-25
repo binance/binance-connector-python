@@ -22,20 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = SimpleEarn(config_rest_api=configuration_rest_api)
 
 
-def get_flexible_rewards_history():
+def get_rwusd_rewards_history():
     try:
-        response = client.rest_api.get_flexible_rewards_history(
-            type="BONUS",
-        )
+        response = client.rest_api.get_rwusd_rewards_history()
 
         rate_limits = response.rate_limits
-        logging.info(f"get_flexible_rewards_history() rate limits: {rate_limits}")
+        logging.info(f"get_rwusd_rewards_history() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"get_flexible_rewards_history() response: {data}")
+        logging.info(f"get_rwusd_rewards_history() response: {data}")
     except Exception as e:
-        logging.error(f"get_flexible_rewards_history() error: {e}")
+        logging.error(f"get_rwusd_rewards_history() error: {e}")
 
 
 if __name__ == "__main__":
-    get_flexible_rewards_history()
+    get_rwusd_rewards_history()

@@ -34,6 +34,7 @@ async def order_amend_keep_priority():
 
         data = response.data()
         logging.info(f"order_amend_keep_priority() response: {data}")
+
     except Exception as e:
         logging.error(f"order_amend_keep_priority() error: {e}")
     finally:

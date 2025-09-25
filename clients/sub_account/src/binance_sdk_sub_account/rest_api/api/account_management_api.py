@@ -375,7 +375,7 @@ class AccountManagementApi:
 
     def query_sub_account_transaction_statistics(
         self,
-        email: Union[str, None],
+        email: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySubAccountTransactionStatisticsResponse]:
         """
@@ -388,7 +388,7 @@ class AccountManagementApi:
         Weight: 60
 
                 Args:
-                    email (Union[str, None]): [Sub-account email](#email-address)
+                    email (Optional[str] = None): Managed sub-account email
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -398,11 +398,6 @@ class AccountManagementApi:
                     RequiredError: If a required parameter is missing.
 
         """
-
-        if email is None:
-            raise RequiredError(
-                field="email", error_message="Missing required parameter 'email'"
-            )
 
         payload = {"email": email, "recv_window": recv_window}
 

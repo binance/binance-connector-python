@@ -1,6 +1,8 @@
 from typing import List, Optional, Callable, TypeVar, Generic
 from pydantic import BaseModel
 
+from binance_common.signature import Signers
+
 T = TypeVar("T")
 T_Response = TypeVar("T_Response")
 T_Stream = TypeVar("T_Stream")
@@ -107,3 +109,31 @@ class WebsocketApiUserDataStreamResponse(Generic[T_Response, T_Stream]):
     ):
         self.response = response
         self.stream = stream
+
+
+class WebsocketApiOptions(Generic[T]):
+    """Options for configuring WebSocket API connections.
+
+    :param api_key: A boolean flag indicating whether to include the API key in the request.
+    :param is_signed: A boolean flag indicating whether the request should be signed.
+    :param skip_auth: A boolean flag indicating whether to skip authentication.
+    :param signer: An optional Signers instance for signing requests.
+    """
+
+    def __init__(
+        self,
+        api_key: bool = False,
+        is_signed: bool = True,
+        skip_auth: bool = True,
+        signer: Optional[Signers] = None,
+    ):
+        self.signer = signer
+        self.api_key = api_key
+        self.is_signed = is_signed
+        self.skip_auth = skip_auth
+
+class WebsocketApiUserDataEndpoints(BaseModel):
+    """Represents the WebSocket user data endpoints."""
+
+    user_data_stream_subscribe: str
+    user_data_stream_logout: str

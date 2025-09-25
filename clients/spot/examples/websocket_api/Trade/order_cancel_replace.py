@@ -43,6 +43,7 @@ async def order_cancel_replace():
 
         data = response.data()
         logging.info(f"order_cancel_replace() response: {data}")
+
     except Exception as e:
         logging.error(f"order_cancel_replace() error: {e}")
     finally:

@@ -89,7 +89,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/avgPrice".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/avgPrice".replace("/", "", 1)
 
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
@@ -98,7 +98,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/avgPrice".replace("/", ""), "params": params},
+            payload={"method": "/avgPrice".replace("/", "", 1), "params": params},
             response_model=AvgPriceResponse,
         )
 
@@ -141,14 +141,14 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/avgPrice".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/avgPrice".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/avgPrice".replace("/", ""), "params": params},
+            payload={"method": "/avgPrice".replace("/", "", 1), "params": params},
             response_model=AvgPriceResponse,
         )
 
@@ -232,14 +232,14 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/depth".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/depth".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/depth".replace("/", ""), "params": params},
+            payload={"method": "/depth".replace("/", "", 1), "params": params},
             response_model=DepthResponse,
         )
 
@@ -302,7 +302,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/depth".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/depth".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["limit"] == 100
@@ -310,7 +310,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/depth".replace("/", ""), "params": params},
+            payload={"method": "/depth".replace("/", "", 1), "params": params},
             response_model=DepthResponse,
         )
 
@@ -398,7 +398,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/klines".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/klines".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -407,7 +407,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/klines".replace("/", ""), "params": params},
+            payload={"method": "/klines".replace("/", "", 1), "params": params},
             response_model=KlinesResponse,
         )
 
@@ -473,7 +473,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/klines".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/klines".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["interval"] == KlinesIntervalEnum["INTERVAL_1s"].value
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -485,7 +485,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/klines".replace("/", ""), "params": params},
+            payload={"method": "/klines".replace("/", "", 1), "params": params},
             response_model=KlinesResponse,
         )
 
@@ -594,12 +594,12 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker".replace("/", ""), "params": {}},
+            payload={"method": "/ticker".replace("/", "", 1), "params": {}},
             response_model=TickerResponse,
         )
 
@@ -664,7 +664,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
@@ -674,7 +674,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker".replace("/", ""), "params": params},
+            payload={"method": "/ticker".replace("/", "", 1), "params": params},
             response_model=TickerResponse,
         )
 
@@ -746,12 +746,12 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.24hr".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.24hr".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.24hr".replace("/", ""), "params": {}},
+            payload={"method": "/ticker.24hr".replace("/", "", 1), "params": {}},
             response_model=Ticker24hrResponse,
         )
 
@@ -821,7 +821,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.24hr".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.24hr".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
@@ -830,7 +830,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.24hr".replace("/", ""), "params": params},
+            payload={"method": "/ticker.24hr".replace("/", "", 1), "params": params},
             response_model=Ticker24hrResponse,
         )
 
@@ -886,12 +886,12 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.book".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.book".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.book".replace("/", ""), "params": {}},
+            payload={"method": "/ticker.book".replace("/", "", 1), "params": {}},
             response_model=TickerBookResponse,
         )
 
@@ -944,7 +944,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.book".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.book".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
@@ -952,7 +952,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.book".replace("/", ""), "params": params},
+            payload={"method": "/ticker.book".replace("/", "", 1), "params": params},
             response_model=TickerBookResponse,
         )
 
@@ -1002,12 +1002,14 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.price".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.price".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.price".replace("/", ""), "params": {}},
+            payload={"method": "/ticker.price".replace("/", "", 1), "params": {}},
             response_model=TickerPriceResponse,
         )
 
@@ -1054,7 +1056,9 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/ticker.price".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/ticker.price".replace(
+            "/", "", 1
+        )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
@@ -1062,7 +1066,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.price".replace("/", ""), "params": params},
+            payload={"method": "/ticker.price".replace("/", "", 1), "params": params},
             response_model=TickerPriceResponse,
         )
 
@@ -1148,13 +1152,13 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ticker.tradingDay".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.tradingDay".replace("/", ""), "params": {}},
+            payload={"method": "/ticker.tradingDay".replace("/", "", 1), "params": {}},
             response_model=TickerTradingDayResponse,
         )
 
@@ -1239,7 +1243,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ticker.tradingDay".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
@@ -1250,7 +1254,10 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/ticker.tradingDay".replace("/", ""), "params": params},
+            payload={
+                "method": "/ticker.tradingDay".replace("/", "", 1),
+                "params": params,
+            },
             response_model=TickerTradingDayResponse,
         )
 
@@ -1316,7 +1323,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/trades.aggregate".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1324,7 +1331,10 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.aggregate".replace("/", ""), "params": params},
+            payload={
+                "method": "/trades.aggregate".replace("/", "", 1),
+                "params": params,
+            },
             response_model=TradesAggregateResponse,
         )
 
@@ -1386,7 +1396,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/trades.aggregate".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -1398,7 +1408,10 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.aggregate".replace("/", ""), "params": params},
+            payload={
+                "method": "/trades.aggregate".replace("/", "", 1),
+                "params": params,
+            },
             response_model=TradesAggregateResponse,
         )
 
@@ -1484,7 +1497,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/trades.historical".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1492,7 +1505,10 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.historical".replace("/", ""), "params": params},
+            payload={
+                "method": "/trades.historical".replace("/", "", 1),
+                "params": params,
+            },
             response_model=TradesHistoricalResponse,
         )
 
@@ -1551,7 +1567,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/trades.historical".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -1561,7 +1577,10 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.historical".replace("/", ""), "params": params},
+            payload={
+                "method": "/trades.historical".replace("/", "", 1),
+                "params": params,
+            },
             response_model=TradesHistoricalResponse,
         )
 
@@ -1644,14 +1663,16 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/trades.recent".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/trades.recent".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.recent".replace("/", ""), "params": params},
+            payload={"method": "/trades.recent".replace("/", "", 1), "params": params},
             response_model=TradesRecentResponse,
         )
 
@@ -1708,7 +1729,9 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/trades.recent".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/trades.recent".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["limit"] == 100
@@ -1716,7 +1739,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/trades.recent".replace("/", ""), "params": params},
+            payload={"method": "/trades.recent".replace("/", "", 1), "params": params},
             response_model=TradesRecentResponse,
         )
 
@@ -1804,7 +1827,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/uiKlines".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/uiKlines".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -1813,7 +1836,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/uiKlines".replace("/", ""), "params": params},
+            payload={"method": "/uiKlines".replace("/", "", 1), "params": params},
             response_model=UiKlinesResponse,
         )
 
@@ -1879,7 +1902,7 @@ class TestWebSocketMarketApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/uiKlines".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/uiKlines".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["interval"] == UiKlinesIntervalEnum["INTERVAL_1s"].value
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -1891,7 +1914,7 @@ class TestWebSocketMarketApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/uiKlines".replace("/", ""), "params": params},
+            payload={"method": "/uiKlines".replace("/", "", 1), "params": params},
             response_model=UiKlinesResponse,
         )
 

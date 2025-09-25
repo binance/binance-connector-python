@@ -78,7 +78,6 @@ class TestPayApi:
                         "name": "Jack",
                         "type": "USER",
                         "binanceId": "12345678",
-                        "accountId": "67736251",
                     },
                     "receiverInfo": {
                         "name": "Alan",
@@ -174,7 +173,6 @@ class TestPayApi:
                         "name": "Jack",
                         "type": "USER",
                         "binanceId": "12345678",
-                        "accountId": "67736251",
                     },
                     "receiverInfo": {
                         "name": "Alan",

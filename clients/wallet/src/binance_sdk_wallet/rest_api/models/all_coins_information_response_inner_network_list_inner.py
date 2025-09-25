@@ -29,42 +29,43 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
 
     network: Optional[StrictStr] = None
     coin: Optional[StrictStr] = None
-    withdraw_integer_multiple: Optional[StrictStr] = Field(
+    withdrawIntegerMultiple: Optional[StrictStr] = Field(
         default=None, alias="withdrawIntegerMultiple"
     )
-    is_default: Optional[StrictBool] = Field(default=None, alias="isDefault")
-    deposit_enable: Optional[StrictBool] = Field(default=None, alias="depositEnable")
-    withdraw_enable: Optional[StrictBool] = Field(default=None, alias="withdrawEnable")
-    deposit_desc: Optional[StrictStr] = Field(default=None, alias="depositDesc")
-    withdraw_desc: Optional[StrictStr] = Field(default=None, alias="withdrawDesc")
-    special_tips: Optional[StrictStr] = Field(default=None, alias="specialTips")
-    special_withdraw_tips: Optional[StrictStr] = Field(
+    isDefault: Optional[StrictBool] = Field(default=None, alias="isDefault")
+    depositEnable: Optional[StrictBool] = Field(default=None, alias="depositEnable")
+    withdrawEnable: Optional[StrictBool] = Field(default=None, alias="withdrawEnable")
+    depositDesc: Optional[StrictStr] = Field(default=None, alias="depositDesc")
+    withdrawDesc: Optional[StrictStr] = Field(default=None, alias="withdrawDesc")
+    specialTips: Optional[StrictStr] = Field(default=None, alias="specialTips")
+    specialWithdrawTips: Optional[StrictStr] = Field(
         default=None, alias="specialWithdrawTips"
     )
     name: Optional[StrictStr] = None
-    reset_address_status: Optional[StrictBool] = Field(
+    resetAddressStatus: Optional[StrictBool] = Field(
         default=None, alias="resetAddressStatus"
     )
-    address_regex: Optional[StrictStr] = Field(default=None, alias="addressRegex")
-    memo_regex: Optional[StrictStr] = Field(default=None, alias="memoRegex")
-    withdraw_fee: Optional[StrictStr] = Field(default=None, alias="withdrawFee")
-    withdraw_min: Optional[StrictStr] = Field(default=None, alias="withdrawMin")
-    withdraw_max: Optional[StrictStr] = Field(default=None, alias="withdrawMax")
-    withdraw_internal_min: Optional[StrictStr] = Field(
+    addressRegex: Optional[StrictStr] = Field(default=None, alias="addressRegex")
+    memoRegex: Optional[StrictStr] = Field(default=None, alias="memoRegex")
+    withdrawFee: Optional[StrictStr] = Field(default=None, alias="withdrawFee")
+    withdrawMin: Optional[StrictStr] = Field(default=None, alias="withdrawMin")
+    withdrawMax: Optional[StrictStr] = Field(default=None, alias="withdrawMax")
+    withdrawInternalMin: Optional[StrictStr] = Field(
         default=None, alias="withdrawInternalMin"
     )
-    deposit_dust: Optional[StrictStr] = Field(default=None, alias="depositDust")
-    min_confirm: Optional[StrictInt] = Field(default=None, alias="minConfirm")
-    un_lock_confirm: Optional[StrictInt] = Field(default=None, alias="unLockConfirm")
-    same_address: Optional[StrictBool] = Field(default=None, alias="sameAddress")
-    estimated_arrival_time: Optional[StrictInt] = Field(
+    depositDust: Optional[StrictStr] = Field(default=None, alias="depositDust")
+    minConfirm: Optional[StrictInt] = Field(default=None, alias="minConfirm")
+    unLockConfirm: Optional[StrictInt] = Field(default=None, alias="unLockConfirm")
+    sameAddress: Optional[StrictBool] = Field(default=None, alias="sameAddress")
+    withdrawTag: Optional[StrictBool] = Field(default=None, alias="withdrawTag")
+    estimatedArrivalTime: Optional[StrictInt] = Field(
         default=None, alias="estimatedArrivalTime"
     )
     busy: Optional[StrictBool] = None
-    contract_address_url: Optional[StrictStr] = Field(
+    contractAddressUrl: Optional[StrictStr] = Field(
         default=None, alias="contractAddressUrl"
     )
-    contract_address: Optional[StrictStr] = Field(default=None, alias="contractAddress")
+    contractAddress: Optional[StrictStr] = Field(default=None, alias="contractAddress")
     denomination: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -90,6 +91,7 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
         "minConfirm",
         "unLockConfirm",
         "sameAddress",
+        "withdrawTag",
         "estimatedArrivalTime",
         "busy",
         "contractAddressUrl",
@@ -183,6 +185,7 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
                 "minConfirm": obj.get("minConfirm"),
                 "unLockConfirm": obj.get("unLockConfirm"),
                 "sameAddress": obj.get("sameAddress"),
+                "withdrawTag": obj.get("withdrawTag"),
                 "estimatedArrivalTime": obj.get("estimatedArrivalTime"),
                 "busy": obj.get("busy"),
                 "contractAddressUrl": obj.get("contractAddressUrl"),

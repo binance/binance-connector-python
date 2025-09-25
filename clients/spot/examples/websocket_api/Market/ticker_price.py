@@ -31,6 +31,7 @@ async def ticker_price():
 
         data = response.data()
         logging.info(f"ticker_price() response: {data}")
+
     except Exception as e:
         logging.error(f"ticker_price() error: {e}")
     finally:

@@ -14,34 +14,41 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
-from .api.account_api import AccountApi
-from .api.earn_api import EarnApi
-from .api.history_api import HistoryApi
+from .api.flexible_locked_api import FlexibleLockedApi
+from .api.rwusd_api import RwusdApi
 
+from .models import GetCollateralRecordResponse
 from .models import GetFlexiblePersonalLeftQuotaResponse
 from .models import GetFlexibleProductPositionResponse
+from .models import GetFlexibleRedemptionRecordResponse
+from .models import GetFlexibleRewardsHistoryResponse
+from .models import GetFlexibleSubscriptionPreviewResponse
+from .models import GetFlexibleSubscriptionRecordResponse
 from .models import GetLockedPersonalLeftQuotaResponse
 from .models import GetLockedProductPositionResponse
+from .models import GetLockedRedemptionRecordResponse
+from .models import GetLockedRewardsHistoryResponse
+from .models import GetLockedSubscriptionPreviewResponse
+from .models import GetLockedSubscriptionRecordResponse
+from .models import GetRateHistoryResponse
 from .models import GetSimpleEarnFlexibleProductListResponse
 from .models import GetSimpleEarnLockedProductListResponse
-from .models import SimpleAccountResponse
-from .models import GetFlexibleSubscriptionPreviewResponse
-from .models import GetLockedSubscriptionPreviewResponse
 from .models import RedeemFlexibleProductResponse
 from .models import RedeemLockedProductResponse
 from .models import SetFlexibleAutoSubscribeResponse
 from .models import SetLockedAutoSubscribeResponse
 from .models import SetLockedProductRedeemOptionResponse
+from .models import SimpleAccountResponse
 from .models import SubscribeFlexibleProductResponse
 from .models import SubscribeLockedProductResponse
-from .models import GetCollateralRecordResponse
-from .models import GetFlexibleRedemptionRecordResponse
-from .models import GetFlexibleRewardsHistoryResponse
-from .models import GetFlexibleSubscriptionRecordResponse
-from .models import GetLockedRedemptionRecordResponse
-from .models import GetLockedRewardsHistoryResponse
-from .models import GetLockedSubscriptionRecordResponse
-from .models import GetRateHistoryResponse
+from .models import GetRwusdAccountResponse
+from .models import GetRwusdQuotaDetailsResponse
+from .models import GetRwusdRateHistoryResponse
+from .models import GetRwusdRedemptionHistoryResponse
+from .models import GetRwusdRewardsHistoryResponse
+from .models import GetRwusdSubscriptionHistoryResponse
+from .models import RedeemRwusdResponse
+from .models import SubscribeRwusdResponse
 
 
 T = TypeVar("T")
@@ -62,9 +69,10 @@ class SimpleEarnRestAPI:
             else None
         )
 
-        self._accountApi = AccountApi(self.configuration, self._session, self._signer)
-        self._earnApi = EarnApi(self.configuration, self._session, self._signer)
-        self._historyApi = HistoryApi(self.configuration, self._session, self._signer)
+        self._flexibleLockedApi = FlexibleLockedApi(
+            self.configuration, self._session, self._signer
+        )
+        self._rwusdApi = RwusdApi(self.configuration, self._session, self._signer)
 
     def send_request(
         self, endpoint: str, method: str, params: Optional[dict] = None
@@ -108,510 +116,6 @@ class SimpleEarnRestAPI:
             signer=self._signer,
         )
 
-    def get_flexible_personal_left_quota(
-        self,
-        product_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetFlexiblePersonalLeftQuotaResponse]:
-        """
-                Get Flexible Personal Left Quota(USER_DATA)
-
-                Get Flexible Personal Left Quota
-
-        Weight: 150
-
-                Args:
-                    product_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetFlexiblePersonalLeftQuotaResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_flexible_personal_left_quota(
-            product_id, recv_window
-        )
-
-    def get_flexible_product_position(
-        self,
-        asset: Optional[str] = None,
-        product_id: Optional[str] = None,
-        current: Optional[int] = None,
-        size: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetFlexibleProductPositionResponse]:
-        """
-                Get Flexible Product Position(USER_DATA)
-
-                Get Flexible Product Position
-
-        Weight: 150
-
-                Args:
-                    asset (Optional[str] = None):
-                    product_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetFlexibleProductPositionResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_flexible_product_position(
-            asset, product_id, current, size, recv_window
-        )
-
-    def get_locked_personal_left_quota(
-        self,
-        project_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLockedPersonalLeftQuotaResponse]:
-        """
-                Get Locked Personal Left Quota(USER_DATA)
-
-                Get Locked Personal Left Quota
-
-        Weight: 150
-
-                Args:
-                    project_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetLockedPersonalLeftQuotaResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_locked_personal_left_quota(project_id, recv_window)
-
-    def get_locked_product_position(
-        self,
-        asset: Optional[str] = None,
-        position_id: Optional[int] = None,
-        project_id: Optional[str] = None,
-        current: Optional[int] = None,
-        size: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLockedProductPositionResponse]:
-        """
-                Get Locked Product Position
-
-                Get Locked Product Position
-
-        Weight: 150
-
-                Args:
-                    asset (Optional[str] = None):
-                    position_id (Optional[int] = None):
-                    project_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetLockedProductPositionResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_locked_product_position(
-            asset, position_id, project_id, current, size, recv_window
-        )
-
-    def get_simple_earn_flexible_product_list(
-        self,
-        asset: Optional[str] = None,
-        current: Optional[int] = None,
-        size: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetSimpleEarnFlexibleProductListResponse]:
-        """
-                Get Simple Earn Flexible Product List(USER_DATA)
-
-                Get available Simple Earn flexible product list
-
-        Weight: 150
-
-                Args:
-                    asset (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetSimpleEarnFlexibleProductListResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_simple_earn_flexible_product_list(
-            asset, current, size, recv_window
-        )
-
-    def get_simple_earn_locked_product_list(
-        self,
-        asset: Optional[str] = None,
-        current: Optional[int] = None,
-        size: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetSimpleEarnLockedProductListResponse]:
-        """
-                Get Simple Earn Locked Product List(USER_DATA)
-
-                Get Simple Earn Locked Product List
-
-        * Get available Simple Earn locked product list
-
-        Weight: 150
-
-                Args:
-                    asset (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetSimpleEarnLockedProductListResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_simple_earn_locked_product_list(
-            asset, current, size, recv_window
-        )
-
-    def simple_account(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SimpleAccountResponse]:
-        """
-                Simple Account(USER_DATA)
-
-                Simple Account query
-
-        Weight: 150
-
-                Args:
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SimpleAccountResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.simple_account(recv_window)
-
-    def get_flexible_subscription_preview(
-        self,
-        product_id: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetFlexibleSubscriptionPreviewResponse]:
-        """
-                Get Flexible Subscription Preview(USER_DATA)
-
-                Get Flexible Subscription Preview
-
-        Weight: 150
-
-                Args:
-                    product_id (Union[str, None]):
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetFlexibleSubscriptionPreviewResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.get_flexible_subscription_preview(
-            product_id, amount, recv_window
-        )
-
-    def get_locked_subscription_preview(
-        self,
-        project_id: Union[str, None],
-        amount: Union[float, None],
-        auto_subscribe: Optional[bool] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLockedSubscriptionPreviewResponse]:
-        """
-                Get Locked Subscription Preview(USER_DATA)
-
-                Get Locked Subscription Preview
-
-        Weight: 150
-
-                Args:
-                    project_id (Union[str, None]):
-                    amount (Union[float, None]):
-                    auto_subscribe (Optional[bool] = None): true or false, default true.
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetLockedSubscriptionPreviewResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.get_locked_subscription_preview(
-            project_id, amount, auto_subscribe, recv_window
-        )
-
-    def redeem_flexible_product(
-        self,
-        product_id: Union[str, None],
-        redeem_all: Optional[bool] = None,
-        amount: Optional[float] = None,
-        dest_account: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemFlexibleProductResponse]:
-        """
-                Redeem Flexible Product(TRADE)
-
-                Redeem Flexible Product
-
-        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-
-        Weight: 1
-
-                Args:
-                    product_id (Union[str, None]):
-                    redeem_all (Optional[bool] = None): true or false, default to false
-                    amount (Optional[float] = None): if redeemAll is false, amount is mandatory
-                    dest_account (Optional[str] = None): `SPOT`,`FUND`, default `SPOT`
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemFlexibleProductResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.redeem_flexible_product(
-            product_id, redeem_all, amount, dest_account, recv_window
-        )
-
-    def redeem_locked_product(
-        self,
-        position_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemLockedProductResponse]:
-        """
-                Redeem Locked Product(TRADE)
-
-                Redeem Locked Product
-
-        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-
-        Weight: 1/3s per account
-
-                Args:
-                    position_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemLockedProductResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.redeem_locked_product(position_id, recv_window)
-
-    def set_flexible_auto_subscribe(
-        self,
-        product_id: Union[str, None],
-        auto_subscribe: Union[bool, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SetFlexibleAutoSubscribeResponse]:
-        """
-                Set Flexible Auto Subscribe(USER_DATA)
-
-                Set Flexible Auto Subscribe
-
-        Weight: 150
-
-                Args:
-                    product_id (Union[str, None]):
-                    auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SetFlexibleAutoSubscribeResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.set_flexible_auto_subscribe(
-            product_id, auto_subscribe, recv_window
-        )
-
-    def set_locked_auto_subscribe(
-        self,
-        position_id: Union[str, None],
-        auto_subscribe: Union[bool, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SetLockedAutoSubscribeResponse]:
-        """
-                Set Locked Auto Subscribe(USER_DATA)
-
-                Set locked auto subscribe
-
-        Weight: 150
-
-                Args:
-                    position_id (Union[str, None]):
-                    auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SetLockedAutoSubscribeResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.set_locked_auto_subscribe(
-            position_id, auto_subscribe, recv_window
-        )
-
-    def set_locked_product_redeem_option(
-        self,
-        position_id: Union[str, None],
-        redeem_to: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SetLockedProductRedeemOptionResponse]:
-        """
-                Set Locked Product Redeem Option(USER_DATA)
-
-                Set redeem option for Locked product
-
-        Weight: 50
-
-                Args:
-                    position_id (Union[str, None]):
-                    redeem_to (Union[str, None]): `SPOT`,'FLEXIBLE'
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SetLockedProductRedeemOptionResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.set_locked_product_redeem_option(
-            position_id, redeem_to, recv_window
-        )
-
-    def subscribe_flexible_product(
-        self,
-        product_id: Union[str, None],
-        amount: Union[float, None],
-        auto_subscribe: Optional[bool] = None,
-        source_account: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SubscribeFlexibleProductResponse]:
-        """
-                Subscribe Flexible Product(TRADE)
-
-                Subscribe Flexible Product
-
-        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-
-        Weight: 1
-
-                Args:
-                    product_id (Union[str, None]):
-                    amount (Union[float, None]):
-                    auto_subscribe (Optional[bool] = None): true or false, default true.
-                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SubscribeFlexibleProductResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.subscribe_flexible_product(
-            product_id, amount, auto_subscribe, source_account, recv_window
-        )
-
-    def subscribe_locked_product(
-        self,
-        project_id: Union[str, None],
-        amount: Union[float, None],
-        auto_subscribe: Optional[bool] = None,
-        source_account: Optional[str] = None,
-        redeem_to: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[SubscribeLockedProductResponse]:
-        """
-                Subscribe Locked Product(TRADE)
-
-                Subscribe Locked Product
-
-        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
-
-        Weight: 1
-
-                Args:
-                    project_id (Union[str, None]):
-                    amount (Union[float, None]):
-                    auto_subscribe (Optional[bool] = None): true or false, default true.
-                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[SubscribeLockedProductResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._earnApi.subscribe_locked_product(
-            project_id, amount, auto_subscribe, source_account, redeem_to, recv_window
-        )
-
     def get_collateral_record(
         self,
         product_id: Optional[str] = None,
@@ -649,8 +153,70 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_collateral_record(
+        return self._flexibleLockedApi.get_collateral_record(
             product_id, start_time, end_time, current, size, recv_window
+        )
+
+    def get_flexible_personal_left_quota(
+        self,
+        product_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetFlexiblePersonalLeftQuotaResponse]:
+        """
+                Get Flexible Personal Left Quota(USER_DATA)
+
+                Get Flexible Personal Left Quota
+
+        Weight: 150
+
+                Args:
+                    product_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetFlexiblePersonalLeftQuotaResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_flexible_personal_left_quota(
+            product_id, recv_window
+        )
+
+    def get_flexible_product_position(
+        self,
+        asset: Optional[str] = None,
+        product_id: Optional[str] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetFlexibleProductPositionResponse]:
+        """
+                Get Flexible Product Position(USER_DATA)
+
+                Get Flexible Product Position
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    product_id (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetFlexibleProductPositionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_flexible_product_position(
+            asset, product_id, current, size, recv_window
         )
 
     def get_flexible_redemption_record(
@@ -679,7 +245,7 @@ class SimpleEarnRestAPI:
                 Args:
                     product_id (Optional[str] = None):
                     redeem_id (Optional[str] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -694,7 +260,7 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_flexible_redemption_record(
+        return self._flexibleLockedApi.get_flexible_redemption_record(
             product_id,
             redeem_id,
             asset,
@@ -729,9 +295,9 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    type (Union[str, None]): `BONUS` - Bonus tiered APR, `REALTIME` Real-time APR, `REWARDS` Historical rewards,`ALL`(set to default)
+                    type (Union[str, None]): FAST or STANDARD, defaults to STANDARD
                     product_id (Optional[str] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -746,8 +312,38 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_flexible_rewards_history(
+        return self._flexibleLockedApi.get_flexible_rewards_history(
             type, product_id, asset, start_time, end_time, current, size, recv_window
+        )
+
+    def get_flexible_subscription_preview(
+        self,
+        product_id: Union[str, None],
+        amount: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetFlexibleSubscriptionPreviewResponse]:
+        """
+                Get Flexible Subscription Preview(USER_DATA)
+
+                Get Flexible Subscription Preview
+
+        Weight: 150
+
+                Args:
+                    product_id (Union[str, None]):
+                    amount (Union[float, None]): Amount
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetFlexibleSubscriptionPreviewResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_flexible_subscription_preview(
+            product_id, amount, recv_window
         )
 
     def get_flexible_subscription_record(
@@ -776,7 +372,7 @@ class SimpleEarnRestAPI:
                 Args:
                     product_id (Optional[str] = None):
                     purchase_id (Optional[str] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -791,7 +387,7 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_flexible_subscription_record(
+        return self._flexibleLockedApi.get_flexible_subscription_record(
             product_id,
             purchase_id,
             asset,
@@ -800,6 +396,70 @@ class SimpleEarnRestAPI:
             current,
             size,
             recv_window,
+        )
+
+    def get_locked_personal_left_quota(
+        self,
+        project_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetLockedPersonalLeftQuotaResponse]:
+        """
+                Get Locked Personal Left Quota(USER_DATA)
+
+                Get Locked Personal Left Quota
+
+        Weight: 150
+
+                Args:
+                    project_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetLockedPersonalLeftQuotaResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_locked_personal_left_quota(
+            project_id, recv_window
+        )
+
+    def get_locked_product_position(
+        self,
+        asset: Optional[str] = None,
+        position_id: Optional[int] = None,
+        project_id: Optional[str] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetLockedProductPositionResponse]:
+        """
+                Get Locked Product Position
+
+                Get Locked Product Position
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    position_id (Optional[int] = None):
+                    project_id (Optional[str] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetLockedProductPositionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_locked_product_position(
+            asset, position_id, project_id, current, size, recv_window
         )
 
     def get_locked_redemption_record(
@@ -828,7 +488,7 @@ class SimpleEarnRestAPI:
                 Args:
                     position_id (Optional[int] = None):
                     redeem_id (Optional[str] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -843,7 +503,7 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_locked_redemption_record(
+        return self._flexibleLockedApi.get_locked_redemption_record(
             position_id,
             redeem_id,
             asset,
@@ -878,7 +538,7 @@ class SimpleEarnRestAPI:
 
                 Args:
                     position_id (Optional[int] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -893,8 +553,40 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_locked_rewards_history(
+        return self._flexibleLockedApi.get_locked_rewards_history(
             position_id, asset, start_time, end_time, current, size, recv_window
+        )
+
+    def get_locked_subscription_preview(
+        self,
+        project_id: Union[str, None],
+        amount: Union[float, None],
+        auto_subscribe: Optional[bool] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetLockedSubscriptionPreviewResponse]:
+        """
+                Get Locked Subscription Preview(USER_DATA)
+
+                Get Locked Subscription Preview
+
+        Weight: 150
+
+                Args:
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]): Amount
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetLockedSubscriptionPreviewResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_locked_subscription_preview(
+            project_id, amount, auto_subscribe, recv_window
         )
 
     def get_locked_subscription_record(
@@ -921,7 +613,7 @@ class SimpleEarnRestAPI:
 
                 Args:
                     purchase_id (Optional[str] = None):
-                    asset (Optional[str] = None):
+                    asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
@@ -936,7 +628,7 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_locked_subscription_record(
+        return self._flexibleLockedApi.get_locked_subscription_record(
             purchase_id, asset, start_time, end_time, current, size, recv_window
         )
 
@@ -979,6 +671,590 @@ class SimpleEarnRestAPI:
 
         """
 
-        return self._historyApi.get_rate_history(
+        return self._flexibleLockedApi.get_rate_history(
             product_id, apr_period, start_time, end_time, current, size, recv_window
         )
+
+    def get_simple_earn_flexible_product_list(
+        self,
+        asset: Optional[str] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetSimpleEarnFlexibleProductListResponse]:
+        """
+                Get Simple Earn Flexible Product List(USER_DATA)
+
+                Get available Simple Earn flexible product list
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetSimpleEarnFlexibleProductListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_simple_earn_flexible_product_list(
+            asset, current, size, recv_window
+        )
+
+    def get_simple_earn_locked_product_list(
+        self,
+        asset: Optional[str] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetSimpleEarnLockedProductListResponse]:
+        """
+                Get Simple Earn Locked Product List(USER_DATA)
+
+                Get Simple Earn Locked Product List
+
+        * Get available Simple Earn locked product list
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetSimpleEarnLockedProductListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.get_simple_earn_locked_product_list(
+            asset, current, size, recv_window
+        )
+
+    def redeem_flexible_product(
+        self,
+        product_id: Union[str, None],
+        redeem_all: Optional[bool] = None,
+        amount: Optional[float] = None,
+        dest_account: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[RedeemFlexibleProductResponse]:
+        """
+                Redeem Flexible Product(TRADE)
+
+                Redeem Flexible Product
+
+        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+
+        Weight: 1
+
+                Args:
+                    product_id (Union[str, None]):
+                    redeem_all (Optional[bool] = None): true or false, default to false
+                    amount (Optional[float] = None): if redeemAll is false, amount is mandatory
+                    dest_account (Optional[str] = None): `SPOT`,`FUND`, default `SPOT`
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[RedeemFlexibleProductResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.redeem_flexible_product(
+            product_id, redeem_all, amount, dest_account, recv_window
+        )
+
+    def redeem_locked_product(
+        self,
+        position_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[RedeemLockedProductResponse]:
+        """
+                Redeem Locked Product(TRADE)
+
+                Redeem Locked Product
+
+        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+
+        Weight: 1/3s per account
+
+                Args:
+                    position_id (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[RedeemLockedProductResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.redeem_locked_product(position_id, recv_window)
+
+    def set_flexible_auto_subscribe(
+        self,
+        product_id: Union[str, None],
+        auto_subscribe: Union[bool, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetFlexibleAutoSubscribeResponse]:
+        """
+                Set Flexible Auto Subscribe(USER_DATA)
+
+                Set Flexible Auto Subscribe
+
+        Weight: 150
+
+                Args:
+                    product_id (Union[str, None]):
+                    auto_subscribe (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetFlexibleAutoSubscribeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.set_flexible_auto_subscribe(
+            product_id, auto_subscribe, recv_window
+        )
+
+    def set_locked_auto_subscribe(
+        self,
+        position_id: Union[str, None],
+        auto_subscribe: Union[bool, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetLockedAutoSubscribeResponse]:
+        """
+                Set Locked Auto Subscribe(USER_DATA)
+
+                Set locked auto subscribe
+
+        Weight: 150
+
+                Args:
+                    position_id (Union[str, None]):
+                    auto_subscribe (Union[bool, None]): true or false
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetLockedAutoSubscribeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.set_locked_auto_subscribe(
+            position_id, auto_subscribe, recv_window
+        )
+
+    def set_locked_product_redeem_option(
+        self,
+        position_id: Union[str, None],
+        redeem_to: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetLockedProductRedeemOptionResponse]:
+        """
+                Set Locked Product Redeem Option(USER_DATA)
+
+                Set redeem option for Locked product
+
+        Weight: 50
+
+                Args:
+                    position_id (Union[str, None]):
+                    redeem_to (Union[str, None]): `SPOT`,'FLEXIBLE'
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetLockedProductRedeemOptionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.set_locked_product_redeem_option(
+            position_id, redeem_to, recv_window
+        )
+
+    def simple_account(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SimpleAccountResponse]:
+        """
+                Simple Account(USER_DATA)
+
+                Simple Account query
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SimpleAccountResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.simple_account(recv_window)
+
+    def subscribe_flexible_product(
+        self,
+        product_id: Union[str, None],
+        amount: Union[float, None],
+        auto_subscribe: Optional[bool] = None,
+        source_account: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SubscribeFlexibleProductResponse]:
+        """
+                Subscribe Flexible Product(TRADE)
+
+                Subscribe Flexible Product
+
+        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+
+        Weight: 1
+
+                Args:
+                    product_id (Union[str, None]):
+                    amount (Union[float, None]): Amount
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SubscribeFlexibleProductResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.subscribe_flexible_product(
+            product_id, amount, auto_subscribe, source_account, recv_window
+        )
+
+    def subscribe_locked_product(
+        self,
+        project_id: Union[str, None],
+        amount: Union[float, None],
+        auto_subscribe: Optional[bool] = None,
+        source_account: Optional[str] = None,
+        redeem_to: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SubscribeLockedProductResponse]:
+        """
+                Subscribe Locked Product(TRADE)
+
+                Subscribe Locked Product
+
+        * You need to open `Enable Spot & Margin Trading` permission for the API Key which requests this endpoint.
+
+        Weight: 1
+
+                Args:
+                    project_id (Union[str, None]):
+                    amount (Union[float, None]): Amount
+                    auto_subscribe (Optional[bool] = None): true or false, default true.
+                    source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
+                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SubscribeLockedProductResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleLockedApi.subscribe_locked_product(
+            project_id, amount, auto_subscribe, source_account, redeem_to, recv_window
+        )
+
+    def get_rwusd_account(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdAccountResponse]:
+        """
+                Get RWUSD Account (USER_DATA)
+
+                Get RWUSD account information.
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdAccountResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_account(recv_window)
+
+    def get_rwusd_quota_details(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdQuotaDetailsResponse]:
+        """
+                Get RWUSD Quota Details (USER_DATA)
+
+                Get RWUSD quota details including subscription quota, fast redemption quota, and standard redemption quota.
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdQuotaDetailsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_quota_details(recv_window)
+
+    def get_rwusd_rate_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdRateHistoryResponse]:
+        """
+                Get RWUSD Rate History (USER_DATA)
+
+                Get RWUSD rate history sorted by descending order.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_rate_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_rwusd_redemption_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdRedemptionHistoryResponse]:
+        """
+                Get RWUSD Redemption History (USER_DATA)
+
+                Get RWUSD redemption history.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdRedemptionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_redemption_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_rwusd_rewards_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdRewardsHistoryResponse]:
+        """
+                Get RWUSD Rewards History (USER_DATA)
+
+                Get RWUSD rewards history.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdRewardsHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_rewards_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_rwusd_subscription_history(
+        self,
+        asset: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetRwusdSubscriptionHistoryResponse]:
+        """
+                Get RWUSD subscription history(USER_DATA)
+
+                Get RWUSD subscription history
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time advanced by one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
+                    size (Optional[int] = None): Default:10, Max:100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetRwusdSubscriptionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.get_rwusd_subscription_history(
+            asset, start_time, end_time, current, size, recv_window
+        )
+
+    def redeem_rwusd(
+        self,
+        amount: Union[float, None],
+        type: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[RedeemRwusdResponse]:
+        """
+                Redeem RWUSD(TRADE)
+
+                Redeem RWUSD to USDC
+
+        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+
+        Weight: 150
+
+                Args:
+                    amount (Union[float, None]): Amount
+                    type (Union[str, None]): FAST or STANDARD, defaults to STANDARD
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[RedeemRwusdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.redeem_rwusd(amount, type, recv_window)
+
+    def subscribe_rwusd(
+        self,
+        asset: Union[str, None],
+        amount: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SubscribeRwusdResponse]:
+        """
+                Subscribe RWUSD(TRADE)
+
+                Subscribe RWUSD
+
+        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+
+        Weight: 150
+
+                Args:
+                    asset (Union[str, None]): USDT or USDC (whichever is eligible)
+                    amount (Union[float, None]): Amount
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SubscribeRwusdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._rwusdApi.subscribe_rwusd(asset, amount, recv_window)

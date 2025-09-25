@@ -33,6 +33,7 @@ async def avg_price():
 
         data = response.data()
         logging.info(f"avg_price() response: {data}")
+
     except Exception as e:
         logging.error(f"avg_price() error: {e}")
     finally:

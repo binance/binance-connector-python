@@ -27,7 +27,7 @@ class SubmitDepositQuestionnaireResponse(BaseModel):
     SubmitDepositQuestionnaireResponse
     """  # noqa: E501
 
-    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
+    trId: Optional[StrictInt] = Field(default=None, alias="trId")
     accepted: Optional[StrictBool] = None
     info: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from binance_sdk_derivatives_trading_usds_futures.rest_api.models.notional_and_leverage_brackets_response1_inner_brackets_inner import (
-    NotionalAndLeverageBracketsResponse1InnerBracketsInner,
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models.notional_and_leverage_brackets_response2_brackets_inner import (
+    NotionalAndLeverageBracketsResponse2BracketsInner,
 )
 from typing import Set
 from typing_extensions import Self
@@ -34,9 +34,7 @@ class NotionalAndLeverageBracketsResponse2(BaseModel):
     notional_coef: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="notionalCoef"
     )
-    brackets: Optional[List[NotionalAndLeverageBracketsResponse1InnerBracketsInner]] = (
-        None
-    )
+    brackets: Optional[List[NotionalAndLeverageBracketsResponse2BracketsInner]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "notionalCoef", "brackets"]
 
@@ -115,7 +113,7 @@ class NotionalAndLeverageBracketsResponse2(BaseModel):
                 "notionalCoef": obj.get("notionalCoef"),
                 "brackets": (
                     [
-                        NotionalAndLeverageBracketsResponse1InnerBracketsInner.from_dict(
+                        NotionalAndLeverageBracketsResponse2BracketsInner.from_dict(
                             _item
                         )
                         for _item in obj["brackets"]

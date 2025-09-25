@@ -54,7 +54,7 @@ class TestWebSocketStreams:
             "p": "1707.89008607",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@index".replace("/", ""),
+            "/<symbol>@index".replace("/", "", 1),
             params,
         )
 
@@ -170,7 +170,7 @@ class TestWebSocketStreams:
             },
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             params,
         )
 
@@ -335,7 +335,7 @@ class TestWebSocketStreams:
             },
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/<underlyingAsset>@markPrice".replace("/", ""),
+            "/<underlyingAsset>@markPrice".replace("/", "", 1),
             params,
         )
 
@@ -453,7 +453,7 @@ class TestWebSocketStreams:
             "ed": 1668585600000,
         }
         stream_endpoint = ws_streams_placeholder(
-            "/option_pair".replace("/", ""),
+            "/option_pair".replace("/", "", 1),
             {},
         )
 
@@ -548,7 +548,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/<underlyingAsset>@openInterest@<expirationDate>".replace("/", ""),
+            "/<underlyingAsset>@openInterest@<expirationDate>".replace("/", "", 1),
             params,
         )
 
@@ -680,7 +680,7 @@ class TestWebSocketStreams:
             "a": [["1000", "89"]],
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             params,
         )
 
@@ -837,7 +837,7 @@ class TestWebSocketStreams:
             "eep": "0",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             params,
         )
 
@@ -1053,7 +1053,7 @@ class TestWebSocketStreams:
             },
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/<underlyingAsset>@ticker@<expirationDate>".replace("/", ""),
+            "/<underlyingAsset>@ticker@<expirationDate>".replace("/", "", 1),
             params,
         )
 
@@ -1335,7 +1335,7 @@ class TestWebSocketStreams:
             "X": "MARKET",
         }
         stream_endpoint = ws_streams_placeholder(
-            "/<symbol>@trade".replace("/", ""),
+            "/<symbol>@trade".replace("/", "", 1),
             params,
         )
 

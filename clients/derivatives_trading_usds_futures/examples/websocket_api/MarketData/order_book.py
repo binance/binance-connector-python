@@ -39,6 +39,7 @@ async def order_book():
 
         data = response.data()
         logging.info(f"order_book() response: {data}")
+
     except Exception as e:
         logging.error(f"order_book() error: {e}")
     finally:

@@ -34,7 +34,7 @@ class NotionalAndLeverageBracketsResponse1InnerBracketsInner(BaseModel):
     maint_margin_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="maintMarginRatio"
     )
-    cum: Optional[StrictInt] = None
+    cum: Optional[Union[StrictFloat, StrictInt]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "bracket",

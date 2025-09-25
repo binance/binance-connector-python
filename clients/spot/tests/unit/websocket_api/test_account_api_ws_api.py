@@ -111,7 +111,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.commission".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert "params" in request_kwargs["payload"]
@@ -122,7 +122,7 @@ class TestWebSocketAccountApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/account.commission".replace("/", ""),
+                "method": "/account.commission".replace("/", "", 1),
                 "params": params,
             },
             response_model=AccountCommissionResponse,
@@ -195,7 +195,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/account.commission".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -204,7 +204,7 @@ class TestWebSocketAccountApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/account.commission".replace("/", ""),
+                "method": "/account.commission".replace("/", "", 1),
                 "params": params,
             },
             response_model=AccountCommissionResponse,
@@ -288,13 +288,13 @@ class TestWebSocketAccountApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/account.rateLimits.orders".replace("/", "")
+        ] == "/account.rateLimits.orders".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/account.rateLimits.orders".replace("/", ""),
+                "method": "/account.rateLimits.orders".replace("/", "", 1),
                 "params": {},
             },
             response_model=AccountRateLimitsOrdersResponse,
@@ -305,7 +305,7 @@ class TestWebSocketAccountApi:
     async def test_account_rate_limits_orders_success_with_optional_params(self):
         """Test account_rate_limits_orders() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000}
+        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000.0}
 
         expected_response = {
             "id": "d3783d8d-f8d1-4d2c-b8a0-b7596af5a664",
@@ -357,15 +357,15 @@ class TestWebSocketAccountApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/account.rateLimits.orders".replace("/", "")
+        ] == "/account.rateLimits.orders".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/account.rateLimits.orders".replace("/", ""),
+                "method": "/account.rateLimits.orders".replace("/", "", 1),
                 "params": params,
             },
             response_model=AccountRateLimitsOrdersResponse,
@@ -444,12 +444,14 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/account.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/account.status".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.status".replace("/", ""), "params": {}},
+            payload={"method": "/account.status".replace("/", "", 1), "params": {}},
             response_model=AccountStatusResponse,
             signer=None,
         )
@@ -461,7 +463,7 @@ class TestWebSocketAccountApi:
         params = {
             "id": "e9d6b4349871b40611412680b3445fac",
             "omit_zero_balances": False,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -523,15 +525,17 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/account.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/account.status".replace(
+            "/", "", 1
+        )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["omit_zero_balances"] is False
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/account.status".replace("/", ""), "params": params},
+            payload={"method": "/account.status".replace("/", "", 1), "params": params},
             response_model=AccountStatusResponse,
             signer=None,
         )
@@ -604,12 +608,14 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/allOrderLists".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/allOrderLists".replace(
+            "/", "", 1
+        )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/allOrderLists".replace("/", ""), "params": {}},
+            payload={"method": "/allOrderLists".replace("/", "", 1), "params": {}},
             response_model=AllOrderListsResponse,
             signer=None,
         )
@@ -624,7 +630,7 @@ class TestWebSocketAccountApi:
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -682,18 +688,20 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/allOrderLists".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/allOrderLists".replace(
+            "/", "", 1
+        )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["from_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
         assert params["limit"] == 100
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/allOrderLists".replace("/", ""), "params": params},
+            payload={"method": "/allOrderLists".replace("/", "", 1), "params": params},
             response_model=AllOrderListsResponse,
             signer=None,
         )
@@ -773,14 +781,14 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/allOrders".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/allOrders".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/allOrders".replace("/", ""), "params": params},
+            payload={"method": "/allOrders".replace("/", "", 1), "params": params},
             response_model=AllOrdersResponse,
             signer=None,
         )
@@ -796,7 +804,7 @@ class TestWebSocketAccountApi:
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -857,19 +865,19 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/allOrders".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/allOrders".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
         assert params["limit"] == 100
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/allOrders".replace("/", ""), "params": params},
+            payload={"method": "/allOrders".replace("/", "", 1), "params": params},
             response_model=AllOrdersResponse,
             signer=None,
         )
@@ -885,7 +893,7 @@ class TestWebSocketAccountApi:
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -963,14 +971,16 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/myAllocations".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/myAllocations".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/myAllocations".replace("/", ""), "params": params},
+            payload={"method": "/myAllocations".replace("/", "", 1), "params": params},
             response_model=MyAllocationsResponse,
             signer=None,
         )
@@ -987,7 +997,7 @@ class TestWebSocketAccountApi:
             "from_allocation_id": 1,
             "limit": 100,
             "order_id": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1040,7 +1050,9 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/myAllocations".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/myAllocations".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["start_time"] == 1735693200000
@@ -1048,12 +1060,12 @@ class TestWebSocketAccountApi:
         assert params["from_allocation_id"] == 1
         assert params["limit"] == 100
         assert params["order_id"] == 1
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/myAllocations".replace("/", ""), "params": params},
+            payload={"method": "/myAllocations".replace("/", "", 1), "params": params},
             response_model=MyAllocationsResponse,
             signer=None,
         )
@@ -1070,7 +1082,7 @@ class TestWebSocketAccountApi:
             "from_allocation_id": 1,
             "limit": 100,
             "order_id": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1145,7 +1157,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/myPreventedMatches".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1154,7 +1166,7 @@ class TestWebSocketAccountApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/myPreventedMatches".replace("/", ""),
+                "method": "/myPreventedMatches".replace("/", "", 1),
                 "params": params,
             },
             response_model=MyPreventedMatchesResponse,
@@ -1172,7 +1184,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "from_prevented_match_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1222,7 +1234,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/myPreventedMatches".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -1230,13 +1242,13 @@ class TestWebSocketAccountApi:
         assert params["order_id"] == 1
         assert params["from_prevented_match_id"] == 1
         assert params["limit"] == 100
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/myPreventedMatches".replace("/", ""),
+                "method": "/myPreventedMatches".replace("/", "", 1),
                 "params": params,
             },
             response_model=MyPreventedMatchesResponse,
@@ -1254,7 +1266,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "from_prevented_match_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1346,14 +1358,14 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/myTrades".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/myTrades".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/myTrades".replace("/", ""), "params": params},
+            payload={"method": "/myTrades".replace("/", "", 1), "params": params},
             response_model=MyTradesResponse,
             signer=None,
         )
@@ -1370,7 +1382,7 @@ class TestWebSocketAccountApi:
             "end_time": 1735693200000,
             "from_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1437,7 +1449,7 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/myTrades".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/myTrades".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
@@ -1445,12 +1457,12 @@ class TestWebSocketAccountApi:
         assert params["end_time"] == 1735693200000
         assert params["from_id"] == 1
         assert params["limit"] == 100
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/myTrades".replace("/", ""), "params": params},
+            payload={"method": "/myTrades".replace("/", "", 1), "params": params},
             response_model=MyTradesResponse,
             signer=None,
         )
@@ -1467,7 +1479,7 @@ class TestWebSocketAccountApi:
             "end_time": 1735693200000,
             "from_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1547,13 +1559,16 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrderLists.status".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/openOrderLists.status".replace("/", ""), "params": {}},
+            payload={
+                "method": "/openOrderLists.status".replace("/", "", 1),
+                "params": {},
+            },
             response_model=OpenOrderListsStatusResponse,
             signer=None,
         )
@@ -1562,7 +1577,7 @@ class TestWebSocketAccountApi:
     async def test_open_order_lists_status_success_with_optional_params(self):
         """Test open_order_lists_status() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000}
+        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000.0}
 
         expected_response = {
             "id": "3a4437e2-41a3-4c19-897c-9cadc5dce8b6",
@@ -1620,16 +1635,16 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrderLists.status".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/openOrderLists.status".replace("/", ""),
+                "method": "/openOrderLists.status".replace("/", "", 1),
                 "params": params,
             },
             response_model=OpenOrderListsStatusResponse,
@@ -1706,13 +1721,13 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrders.status".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/openOrders.status".replace("/", ""), "params": {}},
+            payload={"method": "/openOrders.status".replace("/", "", 1), "params": {}},
             response_model=OpenOrdersStatusResponse,
             signer=None,
         )
@@ -1724,7 +1739,7 @@ class TestWebSocketAccountApi:
         params = {
             "id": "e9d6b4349871b40611412680b3445fac",
             "symbol": "BNBUSDT",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1784,16 +1799,19 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrders.status".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/openOrders.status".replace("/", ""), "params": params},
+            payload={
+                "method": "/openOrders.status".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OpenOrdersStatusResponse,
             signer=None,
         )
@@ -1861,7 +1879,7 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.amendments".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1871,7 +1889,10 @@ class TestWebSocketAccountApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.amendments".replace("/", ""), "params": params},
+            payload={
+                "method": "/order.amendments".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderAmendmentsResponse,
             signer=None,
         )
@@ -1886,7 +1907,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1934,19 +1955,22 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.amendments".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["order_id"] == 1
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["from_execution_id"] == 1
         assert params["limit"] == 100
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.amendments".replace("/", ""), "params": params},
+            payload={
+                "method": "/order.amendments".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderAmendmentsResponse,
             signer=None,
         )
@@ -1961,7 +1985,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1978,7 +2002,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
             "limit": 100,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["order_id"] = None
 
@@ -2059,13 +2083,13 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.status".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.status".replace("/", ""), "params": {}},
+            payload={"method": "/orderList.status".replace("/", "", 1), "params": {}},
             response_model=OrderListStatusResponse,
             signer=None,
         )
@@ -2078,7 +2102,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "orig_client_order_id": "orig_client_order_id_example",
             "order_list_id": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2135,17 +2159,20 @@ class TestWebSocketAccountApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.status".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["orig_client_order_id"] == "orig_client_order_id_example"
         assert params["order_list_id"] == 1
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.status".replace("/", ""), "params": params},
+            payload={
+                "method": "/orderList.status".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderListStatusResponse,
             signer=None,
         )
@@ -2227,14 +2254,16 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.status".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.status".replace("/", ""), "params": params},
+            payload={"method": "/order.status".replace("/", "", 1), "params": params},
             response_model=OrderStatusResponse,
             signer=None,
         )
@@ -2248,7 +2277,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2311,17 +2340,19 @@ class TestWebSocketAccountApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.status".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.status".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "orig_client_order_id_example"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.status".replace("/", ""), "params": params},
+            payload={"method": "/order.status".replace("/", "", 1), "params": params},
             response_model=OrderStatusResponse,
             signer=None,
         )
@@ -2335,7 +2366,7 @@ class TestWebSocketAccountApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 

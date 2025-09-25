@@ -42,17 +42,15 @@ class DailyAccountSnapshotResponseSnapshotVosInnerData(BaseModel):
     balances: Optional[
         List[DailyAccountSnapshotResponseSnapshotVosInnerDataBalancesInner]
     ] = None
-    total_asset_of_btc: Optional[StrictStr] = Field(
-        default=None, alias="totalAssetOfBtc"
-    )
-    margin_level: Optional[StrictStr] = Field(default=None, alias="marginLevel")
-    total_liability_of_btc: Optional[StrictStr] = Field(
+    totalAssetOfBtc: Optional[StrictStr] = Field(default=None, alias="totalAssetOfBtc")
+    marginLevel: Optional[StrictStr] = Field(default=None, alias="marginLevel")
+    totalLiabilityOfBtc: Optional[StrictStr] = Field(
         default=None, alias="totalLiabilityOfBtc"
     )
-    total_net_asset_of_btc: Optional[StrictStr] = Field(
+    totalNetAssetOfBtc: Optional[StrictStr] = Field(
         default=None, alias="totalNetAssetOfBtc"
     )
-    user_assets: Optional[
+    userAssets: Optional[
         List[DailyAccountSnapshotResponseSnapshotVosInnerDataUserAssetsInner]
     ] = Field(default=None, alias="userAssets")
     assets: Optional[

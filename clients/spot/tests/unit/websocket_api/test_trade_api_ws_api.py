@@ -307,7 +307,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrders.cancelAll".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert "params" in request_kwargs["payload"]
@@ -318,7 +318,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/openOrders.cancelAll".replace("/", ""),
+                "method": "/openOrders.cancelAll".replace("/", "", 1),
                 "params": params,
             },
             response_model=OpenOrdersCancelAllResponse,
@@ -332,7 +332,7 @@ class TestWebSocketTradeApi:
         params = {
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -454,17 +454,17 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/openOrders.cancelAll".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/openOrders.cancelAll".replace("/", ""),
+                "method": "/openOrders.cancelAll".replace("/", "", 1),
                 "params": params,
             },
             response_model=OpenOrdersCancelAllResponse,
@@ -478,7 +478,7 @@ class TestWebSocketTradeApi:
         params = {
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -593,7 +593,7 @@ class TestWebSocketTradeApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/order.amend.keepPriority".replace("/", "")
+        ] == "/order.amend.keepPriority".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -603,7 +603,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/order.amend.keepPriority".replace("/", ""),
+                "method": "/order.amend.keepPriority".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderAmendKeepPriorityResponse,
@@ -621,7 +621,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -710,20 +710,20 @@ class TestWebSocketTradeApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/order.amend.keepPriority".replace("/", "")
+        ] == "/order.amend.keepPriority".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["new_qty"] == 1.0
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "orig_client_order_id_example"
         assert params["new_client_order_id"] == "new_client_order_id_example"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/order.amend.keepPriority".replace("/", ""),
+                "method": "/order.amend.keepPriority".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderAmendKeepPriorityResponse,
@@ -741,7 +741,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -759,7 +759,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["new_qty"] = None
 
@@ -946,14 +946,16 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.cancel".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.cancel".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "BNBUSDT"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.cancel".replace("/", ""), "params": params},
+            payload={"method": "/order.cancel".replace("/", "", 1), "params": params},
             response_model=OrderCancelResponse,
             signer=None,
         )
@@ -969,7 +971,7 @@ class TestWebSocketTradeApi:
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
             "cancel_restrictions": OrderCancelCancelRestrictionsEnum["ONLY_NEW"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1130,7 +1132,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.cancel".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.cancel".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_id"] == 1
@@ -1140,12 +1144,12 @@ class TestWebSocketTradeApi:
             params["cancel_restrictions"]
             == OrderCancelCancelRestrictionsEnum["ONLY_NEW"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.cancel".replace("/", ""), "params": params},
+            payload={"method": "/order.cancel".replace("/", "", 1), "params": params},
             response_model=OrderCancelResponse,
             signer=None,
         )
@@ -1161,7 +1165,7 @@ class TestWebSocketTradeApi:
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
             "cancel_restrictions": OrderCancelCancelRestrictionsEnum["ONLY_NEW"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1280,7 +1284,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.cancelReplace".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1298,7 +1302,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/order.cancelReplace".replace("/", ""),
+                "method": "/order.cancelReplace".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderCancelReplaceResponse,
@@ -1343,7 +1347,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1432,7 +1436,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/order.cancelReplace".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert (
@@ -1485,13 +1489,13 @@ class TestWebSocketTradeApi:
             params["peg_offset_type"]
             == OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/order.cancelReplace".replace("/", ""),
+                "method": "/order.cancelReplace".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderCancelReplaceResponse,
@@ -1536,7 +1540,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -1583,7 +1587,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["cancel_replace_mode"] = None
 
@@ -1630,7 +1634,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -1675,7 +1679,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["type"] = None
 
@@ -1799,7 +1803,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.cancel".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -1807,7 +1811,10 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.cancel".replace("/", ""), "params": params},
+            payload={
+                "method": "/orderList.cancel".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderListCancelResponse,
             signer=None,
         )
@@ -1822,7 +1829,7 @@ class TestWebSocketTradeApi:
             "order_list_id": 1,
             "list_client_order_id": "list_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1916,19 +1923,22 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.cancel".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["order_list_id"] == 1
         assert params["list_client_order_id"] == "list_client_order_id_example"
         assert params["new_client_order_id"] == "new_client_order_id_example"
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.cancel".replace("/", ""), "params": params},
+            payload={
+                "method": "/orderList.cancel".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderListCancelResponse,
             signer=None,
         )
@@ -1943,7 +1953,7 @@ class TestWebSocketTradeApi:
             "order_list_id": 1,
             "list_client_order_id": "list_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -2081,7 +2091,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -2095,7 +2105,10 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.place".replace("/", ""), "params": params},
+            payload={
+                "method": "/orderList.place".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderListPlaceResponse,
             signer=None,
         )
@@ -2129,7 +2142,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2239,7 +2252,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderListPlaceSideEnum["BUY"].value
@@ -2270,12 +2283,15 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == OrderListPlaceSelfTradePreventionModeEnum["NONE"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/orderList.place".replace("/", ""), "params": params},
+            payload={
+                "method": "/orderList.place".replace("/", "", 1),
+                "params": params,
+            },
             response_model=OrderListPlaceResponse,
             signer=None,
         )
@@ -2309,7 +2325,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -2345,7 +2361,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -2381,7 +2397,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["price"] = None
 
@@ -2417,7 +2433,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["quantity"] = None
 
@@ -2561,7 +2577,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.oco".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -2581,7 +2597,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.oco".replace("/", ""),
+                "method": "/orderList.place.oco".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOcoResponse,
@@ -2636,7 +2652,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2746,7 +2762,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.oco".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderListPlaceOcoSideEnum["BUY"].value
@@ -2803,13 +2819,13 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == OrderListPlaceOcoSelfTradePreventionModeEnum["NONE"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.oco".replace("/", ""),
+                "method": "/orderList.place.oco".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOcoResponse,
@@ -2864,7 +2880,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -2919,7 +2935,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -2974,7 +2990,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["quantity"] = None
 
@@ -3031,7 +3047,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["above_type"] = None
 
@@ -3088,7 +3104,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["below_type"] = None
 
@@ -3228,7 +3244,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.oto".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -3251,7 +3267,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.oto".replace("/", ""),
+                "method": "/orderList.place.oto".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOtoResponse,
@@ -3308,7 +3324,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -3410,7 +3426,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.oto".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["working_type"] == OrderListPlaceOtoWorkingTypeEnum["LIMIT"].value
@@ -3467,13 +3483,13 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOtoPendingPegPriceTypeEnum["PRIMARY_PEG"].value
         )
         assert params["pending_peg_offset_value"] == 1
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.oto".replace("/", ""),
+                "method": "/orderList.place.oto".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOtoResponse,
@@ -3530,7 +3546,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -3587,7 +3603,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_type"] = None
 
@@ -3646,7 +3662,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_side"] = None
 
@@ -3705,7 +3721,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_price"] = None
 
@@ -3764,7 +3780,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_quantity"] = None
 
@@ -3823,7 +3839,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_type"] = None
 
@@ -3882,7 +3898,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_side"] = None
 
@@ -3941,7 +3957,7 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_quantity"] = None
 
@@ -4110,7 +4126,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.otoco".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -4138,7 +4154,7 @@ class TestWebSocketTradeApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.otoco".replace("/", ""),
+                "method": "/orderList.place.otoco".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOtocoResponse,
@@ -4217,7 +4233,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -4343,7 +4359,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/orderList.place.otoco".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert (
@@ -4435,13 +4451,13 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
         assert params["pending_below_peg_offset_value"] == 1
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/orderList.place.otoco".replace("/", ""),
+                "method": "/orderList.place.otoco".replace("/", "", 1),
                 "params": params,
             },
             response_model=OrderListPlaceOtocoResponse,
@@ -4520,7 +4536,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -4599,7 +4615,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_type"] = None
 
@@ -4680,7 +4696,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_side"] = None
 
@@ -4761,7 +4777,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_price"] = None
 
@@ -4842,7 +4858,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["working_quantity"] = None
 
@@ -4923,7 +4939,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_side"] = None
 
@@ -5004,7 +5020,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_quantity"] = None
 
@@ -5087,7 +5103,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["pending_above_type"] = None
 
@@ -5222,7 +5238,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -5233,7 +5249,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.place".replace("/", ""), "params": params},
+            payload={"method": "/order.place".replace("/", "", 1), "params": params},
             response_model=OrderPlaceResponse,
             signer=None,
         )
@@ -5264,7 +5280,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -5361,7 +5377,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.place".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderPlaceSideEnum["BUY"].value
         assert params["type"] == OrderPlaceTypeEnum["MARKET"].value
@@ -5391,12 +5407,12 @@ class TestWebSocketTradeApi:
             params["peg_offset_type"]
             == OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.place".replace("/", ""), "params": params},
+            payload={"method": "/order.place".replace("/", "", 1), "params": params},
             response_model=OrderPlaceResponse,
             signer=None,
         )
@@ -5427,7 +5443,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -5460,7 +5476,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -5493,7 +5509,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["type"] = None
 
@@ -5574,7 +5590,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "", 1)
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -5585,7 +5601,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.test".replace("/", ""), "params": params},
+            payload={"method": "/order.test".replace("/", "", 1), "params": params},
             response_model=OrderTestResponse,
             signer=None,
         )
@@ -5617,7 +5633,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -5669,7 +5685,7 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/order.test".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderTestSideEnum["BUY"].value
         assert params["type"] == OrderTestTypeEnum["MARKET"].value
@@ -5699,12 +5715,12 @@ class TestWebSocketTradeApi:
         assert (
             params["peg_offset_type"] == OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/order.test".replace("/", ""), "params": params},
+            payload={"method": "/order.test".replace("/", "", 1), "params": params},
             response_model=OrderTestResponse,
             signer=None,
         )
@@ -5736,7 +5752,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -5770,7 +5786,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -5804,7 +5820,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["type"] = None
 
@@ -5903,7 +5919,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/sor.order.place".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["symbol"] == "BNBUSDT"
@@ -5917,7 +5933,10 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/sor.order.place".replace("/", ""), "params": params},
+            payload={
+                "method": "/sor.order.place".replace("/", "", 1),
+                "params": params,
+            },
             response_model=SorOrderPlaceResponse,
             signer=None,
         )
@@ -5942,7 +5961,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -6011,7 +6030,7 @@ class TestWebSocketTradeApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/sor.order.place".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == SorOrderPlaceSideEnum["BUY"].value
@@ -6032,12 +6051,15 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == SorOrderPlaceSelfTradePreventionModeEnum["NONE"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/sor.order.place".replace("/", ""), "params": params},
+            payload={
+                "method": "/sor.order.place".replace("/", "", 1),
+                "params": params,
+            },
             response_model=SorOrderPlaceResponse,
             signer=None,
         )
@@ -6062,7 +6084,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -6089,7 +6111,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -6116,7 +6138,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["type"] = None
 
@@ -6143,7 +6165,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderPlaceSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["quantity"] = None
 
@@ -6224,7 +6246,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/sor.order.test".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/sor.order.test".replace(
+            "/", "", 1
+        )
 
         assert params["symbol"] == "BNBUSDT"
 
@@ -6237,7 +6261,7 @@ class TestWebSocketTradeApi:
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/sor.order.test".replace("/", ""), "params": params},
+            payload={"method": "/sor.order.test".replace("/", "", 1), "params": params},
             response_model=SorOrderTestResponse,
             signer=None,
         )
@@ -6263,7 +6287,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -6311,7 +6335,9 @@ class TestWebSocketTradeApi:
 
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
-        assert request_kwargs["payload"]["method"] == "/sor.order.test".replace("/", "")
+        assert request_kwargs["payload"]["method"] == "/sor.order.test".replace(
+            "/", "", 1
+        )
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == SorOrderTestSideEnum["BUY"].value
         assert params["type"] == SorOrderTestTypeEnum["MARKET"].value
@@ -6332,12 +6358,12 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == SorOrderTestSelfTradePreventionModeEnum["NONE"].value
         )
-        assert params["recv_window"] == 5000
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
-            payload={"method": "/sor.order.test".replace("/", ""), "params": params},
+            payload={"method": "/sor.order.test".replace("/", "", 1), "params": params},
             response_model=SorOrderTestResponse,
             signer=None,
         )
@@ -6363,7 +6389,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["symbol"] = None
 
@@ -6391,7 +6417,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["side"] = None
 
@@ -6419,7 +6445,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["type"] = None
 
@@ -6447,7 +6473,7 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
         params["quantity"] = None
 

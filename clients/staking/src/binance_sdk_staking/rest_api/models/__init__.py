@@ -98,6 +98,18 @@ from .get_on_chain_yields_locked_subscription_record_response import (
 from .get_on_chain_yields_locked_subscription_record_response_rows_inner import (
     GetOnChainYieldsLockedSubscriptionRecordResponseRowsInner as GetOnChainYieldsLockedSubscriptionRecordResponseRowsInner,
 )
+from .get_soft_staking_product_list_response import (
+    GetSoftStakingProductListResponse as GetSoftStakingProductListResponse,
+)
+from .get_soft_staking_product_list_response_rows_inner import (
+    GetSoftStakingProductListResponseRowsInner as GetSoftStakingProductListResponseRowsInner,
+)
+from .get_soft_staking_rewards_history_response import (
+    GetSoftStakingRewardsHistoryResponse as GetSoftStakingRewardsHistoryResponse,
+)
+from .get_soft_staking_rewards_history_response_rows_inner import (
+    GetSoftStakingRewardsHistoryResponseRowsInner as GetSoftStakingRewardsHistoryResponseRowsInner,
+)
 from .get_sol_redemption_history_response import (
     GetSolRedemptionHistoryResponse as GetSolRedemptionHistoryResponse,
 )
@@ -157,6 +169,7 @@ from .set_on_chain_yields_locked_auto_subscribe_response import (
 from .set_on_chain_yields_locked_product_redeem_option_response import (
     SetOnChainYieldsLockedProductRedeemOptionResponse as SetOnChainYieldsLockedProductRedeemOptionResponse,
 )
+from .set_soft_staking_response import SetSoftStakingResponse as SetSoftStakingResponse
 from .sol_staking_account_response import (
     SolStakingAccountResponse as SolStakingAccountResponse,
 )

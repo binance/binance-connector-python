@@ -122,6 +122,9 @@ from .get_summary_of_sub_accounts_margin_account_response_sub_account_list_inner
 from .margin_transfer_for_sub_account_response import (
     MarginTransferForSubAccountResponse as MarginTransferForSubAccountResponse,
 )
+from .move_position_for_sub_account_order_args_parameter_inner import (
+    MovePositionForSubAccountOrderArgsParameterInner as MovePositionForSubAccountOrderArgsParameterInner,
+)
 from .move_position_for_sub_account_response import (
     MovePositionForSubAccountResponse as MovePositionForSubAccountResponse,
 )

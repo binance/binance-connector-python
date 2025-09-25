@@ -1007,10 +1007,6 @@ class TestAccountManagementApi:
     def test_query_sub_account_transaction_statistics_success(self, mock_get_signature):
         """Test query_sub_account_transaction_statistics() successfully with required parameters only."""
 
-        params = {
-            "email": "sub-account-email@email.com",
-        }
-
         expected_response = {
             "recent30BtcTotal": "0",
             "recent30BtcFuturesTotal": "0",
@@ -1054,13 +1050,10 @@ class TestAccountManagementApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.query_sub_account_transaction_statistics(**params)
+        response = self.client.query_sub_account_transaction_statistics()
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -1069,7 +1062,6 @@ class TestAccountManagementApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/sub-account/transaction-statistics" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
-        assert normalized["email"] == "sub-account-email@email.com"
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -1097,7 +1089,7 @@ class TestAccountManagementApi:
     ):
         """Test query_sub_account_transaction_statistics() successfully with optional parameters."""
 
-        params = {"email": "sub-account-email@email.com", "recv_window": 5000}
+        params = {"email": "email_example", "recv_window": 5000}
 
         expected_response = {
             "recent30BtcTotal": "0",
@@ -1173,24 +1165,8 @@ class TestAccountManagementApi:
 
         assert response.data() == expected
 
-    def test_query_sub_account_transaction_statistics_missing_required_param_email(
-        self,
-    ):
-        """Test that query_sub_account_transaction_statistics() raises RequiredError when 'email' is missing."""
-        params = {
-            "email": "sub-account-email@email.com",
-        }
-        params["email"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
-            self.client.query_sub_account_transaction_statistics(**params)
-
     def test_query_sub_account_transaction_statistics_server_error(self):
         """Test that query_sub_account_transaction_statistics() raises an error when the server returns an error."""
-
-        params = {
-            "email": "sub-account-email@email.com",
-        }
 
         mock_error = Exception("ResponseError")
         self.client.query_sub_account_transaction_statistics = MagicMock(
@@ -1198,4 +1174,4 @@ class TestAccountManagementApi:
         )
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.query_sub_account_transaction_statistics(**params)
+            self.client.query_sub_account_transaction_statistics()

@@ -55,7 +55,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[CancelOrderResponse]:
         """
             Cancel Order (TRADE)
-            POST /order.cancel
+            /order.cancel
             https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/websocket-api/Cancel-Order
 
             Cancel an active order.
@@ -97,7 +97,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.cancel".replace("/", ""),
+            "method": "/order.cancel".replace("/", "", 1),
             "params": params,
         }
 
@@ -119,7 +119,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[ModifyOrderResponse]:
         """
             Modify Order (TRADE)
-            POST /order.modify
+            /order.modify
             https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/websocket-api/Modify-Order
 
             Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
@@ -189,7 +189,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.modify".replace("/", ""),
+            "method": "/order.modify".replace("/", "", 1),
             "params": params,
         }
 
@@ -224,7 +224,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[NewOrderResponse]:
         """
             New Order(TRADE)
-            POST /order.place
+            /order.place
             https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/websocket-api/New-Order
 
             Send in a new order.
@@ -344,7 +344,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.place".replace("/", ""),
+            "method": "/order.place".replace("/", "", 1),
             "params": params,
         }
 
@@ -361,7 +361,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[PositionInformationResponse]:
         """
             Position Information(USER_DATA)
-            POST /account.position
+            /account.position
             https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/websocket-api/Position-Information
 
             Get current position information.
@@ -392,7 +392,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/account.position".replace("/", ""),
+            "method": "/account.position".replace("/", "", 1),
             "params": params,
         }
 
@@ -412,7 +412,7 @@ class TradeApi:
     ) -> WebsocketApiResponse[QueryOrderResponse]:
         """
             Query Order (USER_DATA)
-            POST /order.status
+            /order.status
             https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/websocket-api/Query-Order
 
             Check an order's status.
@@ -459,7 +459,7 @@ class TradeApi:
         }
 
         payload = {
-            "method": "/order.status".replace("/", ""),
+            "method": "/order.status".replace("/", "", 1),
             "params": params,
         }
 

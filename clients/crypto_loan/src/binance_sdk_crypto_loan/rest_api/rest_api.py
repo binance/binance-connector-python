@@ -171,6 +171,8 @@ class CryptoLoanRestAPI:
         self,
         loan_coin: Union[str, None],
         collateral_coin: Union[str, None],
+        loan_amount: Optional[float] = None,
+        collateral_amount: Optional[float] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FlexibleLoanBorrowResponse]:
         """
@@ -187,6 +189,8 @@ class CryptoLoanRestAPI:
                 Args:
                     loan_coin (Union[str, None]):
                     collateral_coin (Union[str, None]):
+                    loan_amount (Optional[float] = None): Mandatory when collateralAmount is empty
+                    collateral_amount (Optional[float] = None): Mandatory when loanAmount is empty
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -198,7 +202,7 @@ class CryptoLoanRestAPI:
         """
 
         return self._flexibleRateApi.flexible_loan_borrow(
-            loan_coin, collateral_coin, recv_window
+            loan_coin, collateral_coin, loan_amount, collateral_amount, recv_window
         )
 
     def flexible_loan_repay(

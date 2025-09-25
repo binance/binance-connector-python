@@ -33,6 +33,7 @@ async def trades_recent():
 
         data = response.data()
         logging.info(f"trades_recent() response: {data}")
+
     except Exception as e:
         logging.error(f"trades_recent() error: {e}")
     finally:

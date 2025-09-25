@@ -56,6 +56,7 @@ from .models import SystemStatusResponse
 from .models import BrokerWithdrawResponse
 from .models import CheckQuestionnaireRequirementsResponse
 from .models import DepositHistoryTravelRuleResponse
+from .models import DepositHistoryV2Response
 from .models import FetchAddressVerificationListResponse
 from .models import SubmitDepositQuestionnaireResponse
 from .models import SubmitDepositQuestionnaireTravelRuleResponse
@@ -668,9 +669,6 @@ class WalletRestAPI:
                 Query User Wallet Balance (USER_DATA)
 
                 Query User Wallet Balance
-
-
-        * You need to open Permits Universal Transfer permission for the API Key which requests this endpoint.
 
         Weight: 60
 
@@ -1303,13 +1301,7 @@ class WalletRestAPI:
 
                 This API will return user-specific Travel Rule questionnaire requirement information in reference to the current API key.
 
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+        Weight: 1
 
                 Args:
                     recv_window (Optional[int] = None):
@@ -1383,6 +1375,59 @@ class WalletRestAPI:
             limit,
         )
 
+    def deposit_history_v2(
+        self,
+        deposit_id: Optional[str] = None,
+        tx_id: Optional[str] = None,
+        network: Optional[str] = None,
+        coin: Optional[str] = None,
+        retrieve_questionnaire: Optional[bool] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[DepositHistoryV2Response]:
+        """
+                Deposit History V2 (for local entities that required travel rule) (supporting network) (USER_DATA)
+
+                Fetch deposit history for local entities that with required travel rule information.
+
+        * Please notice the default `startTime` and `endTime` to make sure that time interval is within
+        * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+
+        Weight: 1
+
+                Args:
+                    deposit_id (Optional[str] = None): Comma(,) separated list of wallet tran Ids.
+                    tx_id (Optional[str] = None):
+                    network (Optional[str] = None):
+                    coin (Optional[str] = None):
+                    retrieve_questionnaire (Optional[bool] = None): true: return `questionnaire` within response.
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    offset (Optional[int] = None): Default: 0
+                    limit (Optional[int] = None): min 7, max 30, default 7
+
+                Returns:
+                    ApiResponse[DepositHistoryV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.deposit_history_v2(
+            deposit_id,
+            tx_id,
+            network,
+            coin,
+            retrieve_questionnaire,
+            start_time,
+            end_time,
+            offset,
+            limit,
+        )
+
     def fetch_address_verification_list(
         self,
         recv_window: Optional[int] = None,
@@ -1390,9 +1435,9 @@ class WalletRestAPI:
         """
                 Fetch address verification list (USER_DATA)
 
-                Fetch address verification list
+                Fetch address verification list for user to check on status and other details for the addresses stored in Address Book.
 
-        Weight: 10
+        Weight: 1
 
                 Args:
                     recv_window (Optional[int] = None):
@@ -1507,13 +1552,7 @@ class WalletRestAPI:
 
                 Fetch the VASP list for local entities.
 
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+        Weight: 1
 
                 Args:
                     recv_window (Optional[int] = None):
@@ -1547,16 +1586,11 @@ class WalletRestAPI:
 
                 Fetch withdraw history for local entities that required travel rule.
 
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
         * `network` may not be in the response for old withdraw.
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both `startTime` and `endTime`are sent, time between `startTime`and `endTime`must be less
 
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+        Weight: 1
 
                 Args:
                     tr_id (Optional[str] = None): Comma(,) separated list of travel rule record Ids.
@@ -1612,7 +1646,6 @@ class WalletRestAPI:
 
                 Fetch withdraw history for local entities that required travel rule.
 
-        * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
         * `network` may not be in the response for old withdraw.
         * Withdrawal made through /sapi/v1/capital/withdraw/apply may not be in the response.
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
@@ -1623,11 +1656,7 @@ class WalletRestAPI:
         * WithdrawOrderId only support 1.
         * If responsible does not include withdrawalStatus, please input trId or txId retrieve the data.
 
-        Weight: 18000
-        Request limit: 10 requests per second
-        > * This endpoint specifically uses per second IP rate limit, user's total second level IP rate
-        limit is 180000/second. Response from the endpoint contains header
-        key X-SAPI-USED-IP-WEIGHT-1S, which defines weight used by the current IP.
+        Weight: 1
 
                 Args:
                     tr_id (Optional[str] = None): Comma(,) separated list of travel rule record Ids.

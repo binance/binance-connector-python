@@ -27,7 +27,7 @@ class RedeemOnChainYieldsLockedProductResponse(BaseModel):
     RedeemOnChainYieldsLockedProductResponse
     """  # noqa: E501
 
-    redeem_id: Optional[StrictInt] = Field(default=None, alias="redeemId")
+    redeemId: Optional[StrictInt] = Field(default=None, alias="redeemId")
     success: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["redeemId", "success"]

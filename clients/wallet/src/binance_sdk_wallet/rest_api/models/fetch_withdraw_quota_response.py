@@ -27,8 +27,8 @@ class FetchWithdrawQuotaResponse(BaseModel):
     FetchWithdrawQuotaResponse
     """  # noqa: E501
 
-    wd_quota: Optional[StrictStr] = Field(default=None, alias="wdQuota")
-    used_wd_quota: Optional[StrictStr] = Field(default=None, alias="usedWdQuota")
+    wdQuota: Optional[StrictStr] = Field(default=None, alias="wdQuota")
+    usedWdQuota: Optional[StrictStr] = Field(default=None, alias="usedWdQuota")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["wdQuota", "usedWdQuota"]
 

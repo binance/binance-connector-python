@@ -3718,7 +3718,7 @@ class TestAccountApi:
             "asset": "asset_example",
         }
 
-        expected_response = {"amount": 1.69248805, "borrowLimit": 60}
+        expected_response = {"amount": "1.69248805", "borrowLimit": "60"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -3763,7 +3763,7 @@ class TestAccountApi:
 
         params = {"asset": "asset_example", "recv_window": 5000}
 
-        expected_response = {"amount": 1.69248805, "borrowLimit": 60}
+        expected_response = {"amount": "1.69248805", "borrowLimit": "60"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 

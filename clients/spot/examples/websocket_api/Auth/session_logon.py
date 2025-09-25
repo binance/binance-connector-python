@@ -31,6 +31,7 @@ async def session_logon():
 
         data = response.data()
         logging.info(f"session_logon() response: {data}")
+
     except Exception as e:
         logging.error(f"session_logon() error: {e}")
     finally:

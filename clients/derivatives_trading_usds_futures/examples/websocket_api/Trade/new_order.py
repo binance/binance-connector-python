@@ -44,6 +44,7 @@ async def new_order():
 
         data = response.data()
         logging.info(f"new_order() response: {data}")
+
     except Exception as e:
         logging.error(f"new_order() error: {e}")
     finally:

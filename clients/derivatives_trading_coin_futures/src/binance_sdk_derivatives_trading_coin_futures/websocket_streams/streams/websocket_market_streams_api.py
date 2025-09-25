@@ -53,7 +53,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Aggregate Trade Streams
-            POST /<symbol>@aggTrade
+            /<symbol>@aggTrade
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Aggregate-Trade-Streams
 
             The Aggregate Trade Streams push market trade information that is aggregated for fills with same price and taking side every 100 milliseconds.
@@ -78,7 +78,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@aggTrade".replace("/", ""),
+            "/<symbol>@aggTrade".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -97,7 +97,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             All Book Tickers Stream
-            POST /!bookTicker
+            /!bookTicker
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/All-Book-Tickers-Stream
 
             Pushes any update to the best bid or ask's price or quantity in real-time for all symbols.
@@ -116,7 +116,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!bookTicker".replace("/", ""),
+            "/!bookTicker".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -134,7 +134,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             All Market Liquidation Order Streams
-            POST /!forceOrder@arr
+            /!forceOrder@arr
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/All-Market-Liquidation-Order-Streams
 
             The All Liquidation Order Snapshot Streams push force liquidation order information for all symbols in the market.
@@ -154,7 +154,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!forceOrder@arr".replace("/", ""),
+            "/!forceOrder@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -172,7 +172,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             All Market Mini Tickers Stream
-            POST /!miniTicker@arr
+            /!miniTicker@arr
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/All-Market-Mini-Tickers-Stream
 
             24hr rolling window mini-ticker statistics for all symbols. These are NOT the statistics of the UTC day, but a 24hr rolling window from requestTime to 24hrs before. Note that only tickers that have changed will be present in the array.
@@ -191,7 +191,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!miniTicker@arr".replace("/", ""),
+            "/!miniTicker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -209,7 +209,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             All Market Tickers Streams
-            POST /!ticker@arr
+            /!ticker@arr
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/All-Market-Tickers-Streams
 
             24hr rolling window ticker statistics for all symbols. These are NOT the statistics of the UTC day, but a 24hr rolling window from requestTime to 24hrs before. Note that only tickers that have changed will be present in the array.
@@ -228,7 +228,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", ""),
+            "/!ticker@arr".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -249,7 +249,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Continuous Contract Kline/Candlestick Streams
-            POST /<pair>_<contractType>@continuousKline_<interval>
+            /<pair>_<contractType>@continuousKline_<interval>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Continuous-Contract-Kline-Candlestick-Streams
 
             Kline update every second
@@ -285,7 +285,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", ""),
+            "/<pair>_<contractType>@continuousKline_<interval>".replace("/", "", 1),
             {
                 "pair": pair,
                 "contract_type": contract_type,
@@ -306,7 +306,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Contract Info Stream
-            POST /!contractInfo
+            /!contractInfo
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Contract-Info-Stream
 
             ContractInfo stream pushes when contract info updates(listing/settlement/contract bracket update). `bks` field only shows up when bracket gets updated.
@@ -325,7 +325,7 @@ class WebsocketMarketStreamsApi:
         """
 
         stream = ws_streams_placeholder(
-            "/!contractInfo".replace("/", ""),
+            "/!contractInfo".replace("/", "", 1),
             {
                 "id": id,
             },
@@ -345,7 +345,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Diff. Book Depth Streams
-            POST /<symbol>@depth@<updateSpeed>
+            /<symbol>@depth@<updateSpeed>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Diff-Book-Depth-Streams
 
             Bids and asks, pushed every 250 milliseconds, 500 milliseconds, or 100 milliseconds
@@ -371,7 +371,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -393,7 +393,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Index Kline/Candlestick Streams
-            POST /<pair>@indexPriceKline_<interval>
+            /<pair>@indexPriceKline_<interval>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Index-Kline-Candlestick-Streams
 
             Index Kline/Candlestick Streams
@@ -423,7 +423,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@indexPriceKline_<interval>".replace("/", ""),
+            "/<pair>@indexPriceKline_<interval>".replace("/", "", 1),
             {
                 "pair": pair,
                 "interval": interval,
@@ -445,7 +445,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Index Price Stream
-            POST /<pair>@indexPrice@<updateSpeed>
+            /<pair>@indexPrice@<updateSpeed>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Index-Price-Stream
 
             Index Price Stream
@@ -471,7 +471,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@indexPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@indexPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "pair": pair,
                 "id": id,
@@ -490,7 +490,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Individual Symbol Book Ticker Streams
-            POST /<symbol>@bookTicker
+            /<symbol>@bookTicker
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Individual-Symbol-Book-Ticker-Streams
 
             Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
@@ -515,7 +515,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@bookTicker".replace("/", ""),
+            "/<symbol>@bookTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -535,7 +535,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Individual Symbol Mini Ticker Stream
-            POST /<symbol>@miniTicker
+            /<symbol>@miniTicker
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Individual-Symbol-Mini-Ticker-Stream
 
             24hr rolling window mini-ticker statistics for a single symbol. These are NOT the statistics of the UTC day, but a 24hr rolling window from requestTime to 24hrs before.
@@ -560,7 +560,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@miniTicker".replace("/", ""),
+            "/<symbol>@miniTicker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -580,7 +580,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Individual Symbol Ticker Streams
-            POST /<symbol>@ticker
+            /<symbol>@ticker
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Individual-Symbol-Ticker-Streams
 
             24hr rolling window ticker statistics for a single symbol. These are NOT the statistics of the UTC day, but a 24hr rolling window from requestTime to 24hrs before.
@@ -605,7 +605,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@ticker".replace("/", ""),
+            "/<symbol>@ticker".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -626,7 +626,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Kline/Candlestick Streams
-            POST /<symbol>@kline_<interval>
+            /<symbol>@kline_<interval>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Kline-Candlestick-Streams
 
             The Kline/Candlestick Stream push updates to the current klines/candlestick every 250 milliseconds (if existing).
@@ -656,7 +656,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@kline_<interval>".replace("/", ""),
+            "/<symbol>@kline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -677,7 +677,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Liquidation Order Streams
-            POST /<symbol>@forceOrder
+            /<symbol>@forceOrder
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Liquidation-Order-Streams
 
             The Liquidation Order Snapshot Streams push force liquidation order information for specific symbol.
@@ -704,7 +704,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@forceOrder".replace("/", ""),
+            "/<symbol>@forceOrder".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -725,7 +725,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Mark Price Kline/Candlestick Streams
-            POST /<symbol>@markPriceKline_<interval>
+            /<symbol>@markPriceKline_<interval>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Mark-Price-Kline-Candlestick-Streams
 
             Mark Price Kline/Candlestick Streams
@@ -755,7 +755,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@markPriceKline_<interval>".replace("/", ""),
+            "/<symbol>@markPriceKline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "interval": interval,
@@ -777,7 +777,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Mark Price of All Symbols of a Pair
-            POST /<pair>@markPrice@<updateSpeed>
+            /<pair>@markPrice@<updateSpeed>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Mark-Price-of-All-Symbols-of-a-Pair
 
             Mark Price of All Symbols of a Pair
@@ -803,7 +803,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<pair>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<pair>@markPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "pair": pair,
                 "id": id,
@@ -825,7 +825,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Mark Price Stream
-            POST /<symbol>@markPrice@<updateSpeed>
+            /<symbol>@markPrice@<updateSpeed>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Mark-Price-Stream
 
             Mark price update stream
@@ -851,7 +851,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@markPrice@<updateSpeed>".replace("/", ""),
+            "/<symbol>@markPrice@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "id": id,
@@ -872,7 +872,7 @@ class WebsocketMarketStreamsApi:
     ) -> RequestStreamHandle:
         r"""
             Partial Book Depth Streams
-            POST /<symbol>@depth<levels>@<updateSpeed>
+            /<symbol>@depth<levels>@<updateSpeed>
             https://developers.binance.com/docs/derivatives/coin-margined-futures/websocket-market-streams/Partial-Book-Depth-Streams
 
             Top **<levels\>** bids and asks, Valid **<levels\>** are 5, 10, or 20.
@@ -903,7 +903,7 @@ class WebsocketMarketStreamsApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", ""),
+            "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
             {
                 "symbol": symbol,
                 "levels": levels,

@@ -32,7 +32,7 @@ class EventStreamTerminated(BaseModel):
     EventStreamTerminated
     """  # noqa: E501
 
-    e: Optional[StrictInt] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E"]
 

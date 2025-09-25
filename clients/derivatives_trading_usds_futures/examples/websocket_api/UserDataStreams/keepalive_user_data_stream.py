@@ -37,6 +37,7 @@ async def keepalive_user_data_stream():
 
         data = response.data()
         logging.info(f"keepalive_user_data_stream() response: {data}")
+
     except Exception as e:
         logging.error(f"keepalive_user_data_stream() error: {e}")
     finally:

@@ -28,10 +28,10 @@ class GetBnsolRewardsHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     time: Optional[StrictInt] = None
-    amount_in_sol: Optional[StrictStr] = Field(default=None, alias="amountInSOL")
+    amountInSOL: Optional[StrictStr] = Field(default=None, alias="amountInSOL")
     holding: Optional[StrictStr] = None
-    holding_in_sol: Optional[StrictStr] = Field(default=None, alias="holdingInSOL")
-    annual_percentage_rate: Optional[StrictStr] = Field(
+    holdingInSOL: Optional[StrictStr] = Field(default=None, alias="holdingInSOL")
+    annualPercentageRate: Optional[StrictStr] = Field(
         default=None, alias="annualPercentageRate"
     )
     additional_properties: Dict[str, Any] = {}

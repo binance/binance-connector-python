@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-common"
-version = "2.0.0"
+version = "3.1.1"
 description = "Binance Common Types and Utilities for Binance Connectors"
 authors = ["Binance"]
 license = "MIT"

@@ -43,7 +43,7 @@ class AuthApi:
     ) -> WebsocketApiResponse[SessionLogonResponse]:
         """
             WebSocket Log in with API key
-            POST /session.logon
+            /session.logon
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/authentication-requests#log-in-with-api-key-signed
 
             Authenticate WebSocket connection using the provided API key.
@@ -72,12 +72,15 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.logon".replace("/", ""),
+            "method": "/session.logon".replace("/", "", 1),
             "params": params,
         }
 
         return await self.websocket_api.send_signed_message(
-            payload=payload, response_model=SessionLogonResponse, signer=self.signer
+            payload=payload,
+            response_model=SessionLogonResponse,
+            signer=self.signer,
+            session_logon=True,
         )
 
     async def session_logout(
@@ -86,7 +89,7 @@ class AuthApi:
     ) -> WebsocketApiResponse[SessionLogoutResponse]:
         """
             WebSocket Log out of the session
-            POST /session.logout
+            /session.logout
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/authentication-requests#log-out-of-the-session
 
             Forget the API key previously authenticated.
@@ -113,12 +116,12 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.logout".replace("/", ""),
+            "method": "/session.logout".replace("/", "", 1),
             "params": params,
         }
 
         return await self.websocket_api.send_message(
-            payload=payload, response_model=SessionLogoutResponse
+            payload=payload, response_model=SessionLogoutResponse, session_logout=True
         )
 
     async def session_status(
@@ -127,7 +130,7 @@ class AuthApi:
     ) -> WebsocketApiResponse[SessionStatusResponse]:
         """
             WebSocket Query session status
-            POST /session.status
+            /session.status
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/authentication-requests#query-session-status
 
             Query the status of the WebSocket connection,
@@ -150,7 +153,7 @@ class AuthApi:
         }
 
         payload = {
-            "method": "/session.status".replace("/", ""),
+            "method": "/session.status".replace("/", "", 1),
             "params": params,
         }
 

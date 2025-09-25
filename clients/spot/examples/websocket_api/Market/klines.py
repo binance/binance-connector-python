@@ -35,6 +35,7 @@ async def klines():
 
         data = response.data()
         logging.info(f"klines() response: {data}")
+
     except Exception as e:
         logging.error(f"klines() error: {e}")
     finally:

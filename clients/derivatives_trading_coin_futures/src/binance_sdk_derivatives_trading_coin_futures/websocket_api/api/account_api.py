@@ -37,7 +37,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[AccountInformationResponse]:
         """
             Account Information(USER_DATA)
-            POST /account.status
+            /account.status
             https://developers.binance.com/docs/derivatives/coin-margined-futures/account/websocket-api/Account-Information
 
             Get current account information. User in single-asset/ multi-assets mode will see different value, see comments in response section for detail.
@@ -62,7 +62,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.status".replace("/", ""),
+            "method": "/account.status".replace("/", "", 1),
             "params": params,
         }
 
@@ -79,7 +79,7 @@ class AccountApi:
     ) -> WebsocketApiResponse[FuturesAccountBalanceResponse]:
         """
             Futures Account Balance(USER_DATA)
-            POST /account.balance
+            /account.balance
             https://developers.binance.com/docs/derivatives/coin-margined-futures/account/websocket-api/Futures-Account-Balance
 
             Query account balance info
@@ -104,7 +104,7 @@ class AccountApi:
         }
 
         payload = {
-            "method": "/account.balance".replace("/", ""),
+            "method": "/account.balance".replace("/", "", 1),
             "params": params,
         }
 

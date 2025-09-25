@@ -49,7 +49,7 @@ class GeneralApi:
     ) -> WebsocketApiResponse[ExchangeInfoResponse]:
         """
             WebSocket Exchange information
-            POST /exchangeInfo
+            /exchangeInfo
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/general-requests#exchange-information
 
             Query current exchange trading rules, rate limits, and symbol information.
@@ -85,7 +85,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/exchangeInfo".replace("/", ""),
+            "method": "/exchangeInfo".replace("/", "", 1),
             "params": params,
         }
 
@@ -99,7 +99,7 @@ class GeneralApi:
     ) -> WebsocketApiResponse[PingResponse]:
         """
             WebSocket Test connectivity
-            POST /ping
+            /ping
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/general-requests#test-connectivity
 
             Test connectivity to the WebSocket API.
@@ -121,7 +121,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/ping".replace("/", ""),
+            "method": "/ping".replace("/", "", 1),
             "params": params,
         }
 
@@ -135,7 +135,7 @@ class GeneralApi:
     ) -> WebsocketApiResponse[TimeResponse]:
         """
             WebSocket Check server time
-            POST /time
+            /time
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/general-requests#check-server-time
 
             Test connectivity to the WebSocket API and get the current server time.
@@ -157,7 +157,7 @@ class GeneralApi:
         }
 
         payload = {
-            "method": "/time".replace("/", ""),
+            "method": "/time".replace("/", "", 1),
             "params": params,
         }
 

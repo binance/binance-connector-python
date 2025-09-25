@@ -68,13 +68,16 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/session.subscriptions".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/session.subscriptions".replace("/", ""), "params": {}},
+            payload={
+                "method": "/session.subscriptions".replace("/", "", 1),
+                "params": {},
+            },
             response_model=SessionSubscriptionsResponse,
         )
 
@@ -109,7 +112,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/session.subscriptions".replace(
-            "/", ""
+            "/", "", 1
         )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
@@ -119,7 +122,7 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/session.subscriptions".replace("/", ""),
+                "method": "/session.subscriptions".replace("/", "", 1),
                 "params": params,
             },
             response_model=SessionSubscriptionsResponse,
@@ -176,7 +179,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.ping".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["listen_key"] == "listenKey"
@@ -185,10 +188,11 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.ping".replace("/", ""),
+                "method": "/userDataStream.ping".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamPingResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -231,7 +235,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.ping".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["listen_key"] == "listenKey"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -240,10 +244,11 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.ping".replace("/", ""),
+                "method": "/userDataStream.ping".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamPingResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -311,14 +316,18 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.start".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
-            payload={"method": "/userDataStream.start".replace("/", ""), "params": {}},
+            payload={
+                "method": "/userDataStream.start".replace("/", "", 1),
+                "params": {},
+            },
             response_model=UserDataStreamStartResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -363,7 +372,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.start".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
@@ -371,10 +380,11 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.start".replace("/", ""),
+                "method": "/userDataStream.start".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamStartResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -428,7 +438,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.stop".replace(
-            "/", ""
+            "/", "", 1
         )
 
         assert params["listen_key"] == "listenKey"
@@ -437,10 +447,11 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.stop".replace("/", ""),
+                "method": "/userDataStream.stop".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamStopResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -483,7 +494,7 @@ class TestWebSocketUserDataStreamApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/userDataStream.stop".replace(
-            "/", ""
+            "/", "", 1
         )
         assert params["listen_key"] == "listenKey"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
@@ -492,10 +503,11 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.stop".replace("/", ""),
+                "method": "/userDataStream.stop".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamStopResponse,
+            api_key=True,
         )
 
     @pytest.mark.asyncio
@@ -553,13 +565,13 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.subscribe".replace("/", "")
+        ] == "/userDataStream.subscribe".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.subscribe".replace("/", ""),
+                "method": "/userDataStream.subscribe".replace("/", "", 1),
                 "params": {},
             },
             response_model=UserDataStreamSubscribeResponse,
@@ -597,14 +609,14 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.subscribe".replace("/", "")
+        ] == "/userDataStream.subscribe".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.subscribe".replace("/", ""),
+                "method": "/userDataStream.subscribe".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamSubscribeResponse,
@@ -649,13 +661,13 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.subscribe.signature".replace("/", "")
+        ] == "/userDataStream.subscribe.signature".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.subscribe.signature".replace("/", ""),
+                "method": "/userDataStream.subscribe.signature".replace("/", "", 1),
                 "params": {},
             },
             response_model=UserDataStreamSubscribeSignatureResponse,
@@ -696,14 +708,14 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.subscribe.signature".replace("/", "")
+        ] == "/userDataStream.subscribe.signature".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_signed_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.subscribe.signature".replace("/", ""),
+                "method": "/userDataStream.subscribe.signature".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamSubscribeSignatureResponse,
@@ -749,13 +761,13 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.unsubscribe".replace("/", "")
+        ] == "/userDataStream.unsubscribe".replace("/", "", 1)
 
         assert result is not None
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.unsubscribe".replace("/", ""),
+                "method": "/userDataStream.unsubscribe".replace("/", "", 1),
                 "params": {},
             },
             response_model=UserDataStreamUnsubscribeResponse,
@@ -793,7 +805,7 @@ class TestWebSocketUserDataStreamApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"][
             "method"
-        ] == "/userDataStream.unsubscribe".replace("/", "")
+        ] == "/userDataStream.unsubscribe".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["subscription_id"] == 1
 
@@ -801,7 +813,7 @@ class TestWebSocketUserDataStreamApi:
         assert result.data() == expected_response
         self.mock_websocket_api.send_message.assert_called_once_with(
             payload={
-                "method": "/userDataStream.unsubscribe".replace("/", ""),
+                "method": "/userDataStream.unsubscribe".replace("/", "", 1),
                 "params": params,
             },
             response_model=UserDataStreamUnsubscribeResponse,

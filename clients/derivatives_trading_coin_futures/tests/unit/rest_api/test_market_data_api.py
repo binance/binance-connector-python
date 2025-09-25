@@ -1006,7 +1006,7 @@ class TestMarketDataApi:
 
         expected_response = [
             {
-                "symbol": "BLZUSDT",
+                "symbol": "BTCUSD_PERP",
                 "adjustedFundingRateCap": "0.02500000",
                 "adjustedFundingRateFloor": "-0.02500000",
                 "fundingIntervalHours": 8,
