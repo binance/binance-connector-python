@@ -51,6 +51,10 @@ class UserDataStreamSubscribeResponseResult(BaseModel):
         # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
+    @property
+    def subscriptionId(self):
+        return self.subscription_id
+
     @classmethod
     def is_array(cls) -> bool:
         return False
