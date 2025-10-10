@@ -27,18 +27,18 @@ class GetOnChainYieldsLockedSubscriptionRecordResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedSubscriptionRecordResponseRowsInner
     """  # noqa: E501
 
-    positionId: Optional[StrictStr] = Field(default=None, alias="positionId")
-    purchaseId: Optional[StrictStr] = Field(default=None, alias="purchaseId")
-    projectId: Optional[StrictStr] = Field(default=None, alias="projectId")
-    clientId: Optional[StrictStr] = Field(default=None, alias="clientId")
+    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    purchase_id: Optional[StrictStr] = Field(default=None, alias="purchaseId")
+    project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
+    client_id: Optional[StrictStr] = Field(default=None, alias="clientId")
     time: Optional[StrictInt] = None
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    lockPeriod: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
+    lock_period: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
     type: Optional[StrictStr] = None
-    sourceAccount: Optional[StrictStr] = Field(default=None, alias="sourceAccount")
-    amtFromSpot: Optional[StrictStr] = Field(default=None, alias="amtFromSpot")
-    amtFromFunding: Optional[StrictStr] = Field(default=None, alias="amtFromFunding")
+    source_account: Optional[StrictStr] = Field(default=None, alias="sourceAccount")
+    amt_from_spot: Optional[StrictStr] = Field(default=None, alias="amtFromSpot")
+    amt_from_funding: Optional[StrictStr] = Field(default=None, alias="amtFromFunding")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

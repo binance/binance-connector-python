@@ -99,7 +99,7 @@ class TestC2CApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetC2CTradeHistoryResponse, "from_dict"):
             expected = GetC2CTradeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetC2CTradeHistoryResponse.model_validate_json(
@@ -168,7 +168,7 @@ class TestC2CApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetC2CTradeHistoryResponse, "from_dict"):
             expected = GetC2CTradeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetC2CTradeHistoryResponse.model_validate_json(

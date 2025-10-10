@@ -109,7 +109,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(AdjustCrossMarginMaxLeverageResponse, "from_dict")
+        ):
             expected = AdjustCrossMarginMaxLeverageResponse.from_dict(expected_response)
         else:
             expected = AdjustCrossMarginMaxLeverageResponse.model_validate_json(
@@ -150,7 +154,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(AdjustCrossMarginMaxLeverageResponse, "from_dict")
+        ):
             expected = AdjustCrossMarginMaxLeverageResponse.from_dict(expected_response)
         else:
             expected = AdjustCrossMarginMaxLeverageResponse.model_validate_json(
@@ -218,7 +226,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DisableIsolatedMarginAccountResponse, "from_dict")
+        ):
             expected = DisableIsolatedMarginAccountResponse.from_dict(expected_response)
         else:
             expected = DisableIsolatedMarginAccountResponse.model_validate_json(
@@ -259,7 +271,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DisableIsolatedMarginAccountResponse, "from_dict")
+        ):
             expected = DisableIsolatedMarginAccountResponse.from_dict(expected_response)
         else:
             expected = DisableIsolatedMarginAccountResponse.model_validate_json(
@@ -329,7 +345,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableIsolatedMarginAccountResponse, "from_dict")
+        ):
             expected = EnableIsolatedMarginAccountResponse.from_dict(expected_response)
         else:
             expected = EnableIsolatedMarginAccountResponse.model_validate_json(
@@ -370,7 +390,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableIsolatedMarginAccountResponse, "from_dict")
+        ):
             expected = EnableIsolatedMarginAccountResponse.from_dict(expected_response)
         else:
             expected = EnableIsolatedMarginAccountResponse.model_validate_json(
@@ -432,7 +456,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBnbBurnStatusResponse, "from_dict"):
             expected = GetBnbBurnStatusResponse.from_dict(expected_response)
         else:
             expected = GetBnbBurnStatusResponse.model_validate_json(
@@ -471,7 +495,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBnbBurnStatusResponse, "from_dict"):
             expected = GetBnbBurnStatusResponse.from_dict(expected_response)
         else:
             expected = GetBnbBurnStatusResponse.model_validate_json(
@@ -523,7 +547,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSummaryOfMarginAccountResponse, "from_dict")
+        ):
             expected = GetSummaryOfMarginAccountResponse.from_dict(expected_response)
         else:
             expected = GetSummaryOfMarginAccountResponse.model_validate_json(
@@ -568,7 +596,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSummaryOfMarginAccountResponse, "from_dict")
+        ):
             expected = GetSummaryOfMarginAccountResponse.from_dict(expected_response)
         else:
             expected = GetSummaryOfMarginAccountResponse.model_validate_json(
@@ -635,7 +667,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCrossIsolatedMarginCapitalFlowResponse, "from_dict")
+        ):
             expected = QueryCrossIsolatedMarginCapitalFlowResponse.from_dict(
                 expected_response
             )
@@ -706,7 +742,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCrossIsolatedMarginCapitalFlowResponse, "from_dict")
+        ):
             expected = QueryCrossIsolatedMarginCapitalFlowResponse.from_dict(
                 expected_response
             )
@@ -806,7 +846,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCrossMarginAccountDetailsResponse, "from_dict")
+        ):
             expected = QueryCrossMarginAccountDetailsResponse.from_dict(
                 expected_response
             )
@@ -897,7 +941,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCrossMarginAccountDetailsResponse, "from_dict")
+        ):
             expected = QueryCrossMarginAccountDetailsResponse.from_dict(
                 expected_response
             )
@@ -960,7 +1008,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryCrossMarginFeeDataResponse, "from_dict")
+        ):
             expected = QueryCrossMarginFeeDataResponse.from_dict(expected_response)
         else:
             expected = QueryCrossMarginFeeDataResponse.model_validate_json(
@@ -1012,7 +1062,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryCrossMarginFeeDataResponse, "from_dict")
+        ):
             expected = QueryCrossMarginFeeDataResponse.from_dict(expected_response)
         else:
             expected = QueryCrossMarginFeeDataResponse.model_validate_json(
@@ -1062,7 +1114,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryEnabledIsolatedMarginAccountLimitResponse, "from_dict")
+        ):
             expected = QueryEnabledIsolatedMarginAccountLimitResponse.from_dict(
                 expected_response
             )
@@ -1107,7 +1163,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryEnabledIsolatedMarginAccountLimitResponse, "from_dict")
+        ):
             expected = QueryEnabledIsolatedMarginAccountLimitResponse.from_dict(
                 expected_response
             )
@@ -1239,7 +1299,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryIsolatedMarginAccountInfoResponse, "from_dict")
+        ):
             expected = QueryIsolatedMarginAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -1360,7 +1424,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryIsolatedMarginAccountInfoResponse, "from_dict")
+        ):
             expected = QueryIsolatedMarginAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -1430,7 +1498,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryIsolatedMarginFeeDataResponse, "from_dict")
+        ):
             expected = QueryIsolatedMarginFeeDataResponse.from_dict(expected_response)
         else:
             expected = QueryIsolatedMarginFeeDataResponse.model_validate_json(
@@ -1489,7 +1561,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryIsolatedMarginFeeDataResponse, "from_dict")
+        ):
             expected = QueryIsolatedMarginFeeDataResponse.from_dict(expected_response)
         else:
             expected = QueryIsolatedMarginFeeDataResponse.model_validate_json(

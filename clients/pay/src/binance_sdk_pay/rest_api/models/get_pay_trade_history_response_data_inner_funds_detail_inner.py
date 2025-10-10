@@ -32,7 +32,7 @@ class GetPayTradeHistoryResponseDataInnerFundsDetailInner(BaseModel):
 
     currency: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    walletAssetCost: Optional[
+    wallet_asset_cost: Optional[
         List[GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCostInner]
     ] = Field(default=None, alias="walletAssetCost")
     additional_properties: Dict[str, Any] = {}

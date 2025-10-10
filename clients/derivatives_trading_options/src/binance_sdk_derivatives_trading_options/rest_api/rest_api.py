@@ -69,7 +69,6 @@ from .models import UserExerciseRecordResponse
 from .models import StartUserDataStreamResponse
 
 
-from .models import NewBlockTradeOrderSideEnum
 from .models import NewOrderSideEnum
 from .models import NewOrderTypeEnum
 from .models import NewOrderTimeInForceEnum
@@ -766,10 +765,6 @@ class DerivativesTradingOptionsRestAPI:
         self,
         liquidity: Union[str, None],
         legs: Union[List[object], None],
-        symbol: Union[str, None],
-        side: Union[NewBlockTradeOrderSideEnum, None],
-        price: Union[float, None],
-        quantity: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewBlockTradeOrderResponse]:
         """
@@ -782,10 +777,6 @@ class DerivativesTradingOptionsRestAPI:
                 Args:
                     liquidity (Union[str, None]): Taker or Maker
                     legs (Union[List[object], None]): Max 1 (only single leg supported), list of legs parameters in JSON; example: eapi/v1/block/order/create?orders=[{"symbol":"BTC-210115-35000-C", "price":"100","quantity":"0.0002","side":"BUY","type":"LIMIT"}]
-                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    side (Union[NewBlockTradeOrderSideEnum, None]): BUY or SELL
-                    price (Union[float, None]): Order Price
-                    quantity (Union[float, None]): Order Quantity
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -797,7 +788,7 @@ class DerivativesTradingOptionsRestAPI:
         """
 
         return self._marketMakerBlockTradeApi.new_block_trade_order(
-            liquidity, legs, symbol, side, price, quantity, recv_window
+            liquidity, legs, recv_window
         )
 
     def query_block_trade_details(
@@ -1130,7 +1121,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 Cancel all active order on a symbol.
 
-        Weight: 1
+        Weight: 5
 
                 Args:
                     symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
@@ -1240,7 +1231,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 Args:
                     symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    side (Union[NewOrderSideEnum, None]): BUY or SELL
+                    side (Union[NewOrderSideEnum, None]): Buy/sell direction: SELL, BUY
                     type (Union[NewOrderTypeEnum, None]): Order Type: LIMIT(only support limit)
                     quantity (Union[float, None]): Order Quantity
                     price (Optional[float] = None): Order Price
@@ -1317,7 +1308,7 @@ class DerivativesTradingOptionsRestAPI:
         Weight: 5
 
                 Args:
-                    orders (Union[List[PlaceMultipleOrdersOrdersParameterInner], None]): order list. Max 5 orders
+                    orders (Union[List[PlaceMultipleOrdersOrdersParameterInner], None]): order list. Max 10 orders
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -1336,7 +1327,6 @@ class DerivativesTradingOptionsRestAPI:
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryCurrentOpenOptionOrdersResponse]:
         """
@@ -1351,7 +1341,6 @@ class DerivativesTradingOptionsRestAPI:
                     order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
-                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -1363,7 +1352,7 @@ class DerivativesTradingOptionsRestAPI:
         """
 
         return self._tradeApi.query_current_open_option_orders(
-            symbol, order_id, start_time, end_time, limit, recv_window
+            symbol, order_id, start_time, end_time, recv_window
         )
 
     def query_option_order_history(

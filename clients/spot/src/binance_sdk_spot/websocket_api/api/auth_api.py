@@ -39,7 +39,7 @@ class AuthApi:
     async def session_logon(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SessionLogonResponse]:
         """
             WebSocket Log in with API key
@@ -56,7 +56,7 @@ class AuthApi:
 
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[SessionLogonResponse]

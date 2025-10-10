@@ -17,212 +17,181 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
-import pprint
-import re  # noqa: F401
 import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+import pprint
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    ValidationError,
+)
+from typing import Any, Optional
+from binance_sdk_spot.rest_api.models.exchange_max_num_algo_orders_filter import (
+    ExchangeMaxNumAlgoOrdersFilter,
+)
+from binance_sdk_spot.rest_api.models.exchange_max_num_iceberg_orders_filter import (
+    ExchangeMaxNumIcebergOrdersFilter,
+)
+from binance_sdk_spot.rest_api.models.exchange_max_num_order_lists_filter import (
+    ExchangeMaxNumOrderListsFilter,
+)
+from binance_sdk_spot.rest_api.models.exchange_max_num_orders_filter import (
+    ExchangeMaxNumOrdersFilter,
+)
+from typing import Union, Set, Dict
 from typing_extensions import Self
+
+EXCHANGEFILTERS_ONE_OF_SCHEMAS = [
+    "ExchangeMaxNumAlgoOrdersFilter",
+    "ExchangeMaxNumIcebergOrdersFilter",
+    "ExchangeMaxNumOrderListsFilter",
+    "ExchangeMaxNumOrdersFilter",
+]
 
 
 class ExchangeFilters(BaseModel):
     """
     ExchangeFilters
-    """  # noqa: E501
+    """
 
-    filter_type: Optional[StrictStr] = Field(default=None, alias="filterType")
-    min_price: Optional[StrictStr] = Field(default=None, alias="minPrice")
-    max_price: Optional[StrictStr] = Field(default=None, alias="maxPrice")
-    tick_size: Optional[StrictStr] = Field(default=None, alias="tickSize")
-    multiplier_up: Optional[StrictStr] = Field(default=None, alias="multiplierUp")
-    multiplier_down: Optional[StrictStr] = Field(default=None, alias="multiplierDown")
-    avg_price_mins: Optional[StrictInt] = Field(default=None, alias="avgPriceMins")
-    bid_multiplier_up: Optional[StrictStr] = Field(
-        default=None, alias="bidMultiplierUp"
-    )
-    bid_multiplier_down: Optional[StrictStr] = Field(
-        default=None, alias="bidMultiplierDown"
-    )
-    ask_multiplier_up: Optional[StrictStr] = Field(
-        default=None, alias="askMultiplierUp"
-    )
-    ask_multiplier_down: Optional[StrictStr] = Field(
-        default=None, alias="askMultiplierDown"
-    )
-    min_qty: Optional[StrictStr] = Field(default=None, alias="minQty")
-    max_qty: Optional[StrictStr] = Field(default=None, alias="maxQty")
-    step_size: Optional[StrictStr] = Field(default=None, alias="stepSize")
-    min_notional: Optional[StrictStr] = Field(default=None, alias="minNotional")
-    apply_to_market: Optional[StrictBool] = Field(default=None, alias="applyToMarket")
-    apply_min_to_market: Optional[StrictBool] = Field(
-        default=None, alias="applyMinToMarket"
-    )
-    max_notional: Optional[StrictStr] = Field(default=None, alias="maxNotional")
-    apply_max_to_market: Optional[StrictBool] = Field(
-        default=None, alias="applyMaxToMarket"
-    )
-    limit: Optional[StrictInt] = None
-    max_num_orders: Optional[StrictInt] = Field(default=None, alias="maxNumOrders")
-    max_num_algo_orders: Optional[StrictInt] = Field(
-        default=None, alias="maxNumAlgoOrders"
-    )
-    max_num_iceberg_orders: Optional[StrictInt] = Field(
-        default=None, alias="maxNumIcebergOrders"
-    )
-    max_position: Optional[StrictStr] = Field(default=None, alias="maxPosition")
-    min_trailing_above_delta: Optional[StrictInt] = Field(
-        default=None, alias="minTrailingAboveDelta"
-    )
-    max_trailing_above_delta: Optional[StrictInt] = Field(
-        default=None, alias="maxTrailingAboveDelta"
-    )
-    min_trailing_below_delta: Optional[StrictInt] = Field(
-        default=None, alias="minTrailingBelowDelta"
-    )
-    max_trailing_below_delta: Optional[StrictInt] = Field(
-        default=None, alias="maxTrailingBelowDelta"
-    )
-    max_num_order_amends: Optional[StrictInt] = Field(
-        default=None, alias="maxNumOrderAmends"
-    )
-    max_num_order_lists: Optional[StrictInt] = Field(
-        default=None, alias="maxNumOrderLists"
-    )
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "filterType",
-        "minPrice",
-        "maxPrice",
-        "tickSize",
-        "multiplierUp",
-        "multiplierDown",
-        "avgPriceMins",
-        "bidMultiplierUp",
-        "bidMultiplierDown",
-        "askMultiplierUp",
-        "askMultiplierDown",
-        "minQty",
-        "maxQty",
-        "stepSize",
-        "minNotional",
-        "applyToMarket",
-        "applyMinToMarket",
-        "maxNotional",
-        "applyMaxToMarket",
-        "limit",
-        "maxNumOrders",
-        "maxNumAlgoOrders",
-        "maxNumIcebergOrders",
-        "maxPosition",
-        "minTrailingAboveDelta",
-        "maxTrailingAboveDelta",
-        "minTrailingBelowDelta",
-        "maxTrailingBelowDelta",
-        "maxNumOrderAmends",
-        "maxNumOrderLists",
-    ]
+    # data type: ExchangeMaxNumOrdersFilter
+    oneof_schema_1_validator: Optional[ExchangeMaxNumOrdersFilter] = None
+    # data type: ExchangeMaxNumAlgoOrdersFilter
+    oneof_schema_2_validator: Optional[ExchangeMaxNumAlgoOrdersFilter] = None
+    # data type: ExchangeMaxNumIcebergOrdersFilter
+    oneof_schema_3_validator: Optional[ExchangeMaxNumIcebergOrdersFilter] = None
+    # data type: ExchangeMaxNumOrderListsFilter
+    oneof_schema_4_validator: Optional[ExchangeMaxNumOrderListsFilter] = None
+    actual_instance: Optional[
+        Union[
+            ExchangeMaxNumOrdersFilter,
+            ExchangeMaxNumAlgoOrdersFilter,
+            ExchangeMaxNumIcebergOrdersFilter,
+            ExchangeMaxNumOrderListsFilter,
+        ]
+    ] = None
+    one_of_schemas: Set[str] = {
+        "ExchangeMaxNumAlgoOrdersFilter",
+        "ExchangeMaxNumIcebergOrdersFilter",
+        "ExchangeMaxNumOrderListsFilter",
+        "ExchangeMaxNumOrdersFilter",
+    }
 
     model_config = ConfigDict(
-        populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
 
-    def to_str(self) -> str:
-        """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.model_dump(by_alias=True))
+    discriminator_value_class_map: Dict[str, str] = {}
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
-
-    @classmethod
-    def is_array(cls) -> bool:
-        return False
-
-    @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExchangeFilters from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
-        """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
-
-        _dict = self.model_dump(
-            by_alias=True,
-            exclude=excluded_fields,
-            exclude_none=True,
-        )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
-        return _dict
+    def __init__(self, *args, **kwargs) -> None:
+        if args:
+            if len(args) > 1:
+                raise ValueError(
+                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
+                )
+            if kwargs:
+                raise ValueError(
+                    "If a position argument is used, keyword arguments cannot be used."
+                )
+            super().__init__(actual_instance=args[0])
+        else:
+            super().__init__(**kwargs)
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExchangeFilters from a dict"""
-        if obj is None:
+    def is_oneof_model(cls) -> bool:
+        return True
+
+    @classmethod
+    def from_dict(cls, parsed) -> Self:
+        """Returns the object represented by the json string"""
+        if parsed is None:
             return None
 
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate(
-            {
-                "filterType": obj.get("filterType"),
-                "minPrice": obj.get("minPrice"),
-                "maxPrice": obj.get("maxPrice"),
-                "tickSize": obj.get("tickSize"),
-                "multiplierUp": obj.get("multiplierUp"),
-                "multiplierDown": obj.get("multiplierDown"),
-                "avgPriceMins": obj.get("avgPriceMins"),
-                "bidMultiplierUp": obj.get("bidMultiplierUp"),
-                "bidMultiplierDown": obj.get("bidMultiplierDown"),
-                "askMultiplierUp": obj.get("askMultiplierUp"),
-                "askMultiplierDown": obj.get("askMultiplierDown"),
-                "minQty": obj.get("minQty"),
-                "maxQty": obj.get("maxQty"),
-                "stepSize": obj.get("stepSize"),
-                "minNotional": obj.get("minNotional"),
-                "applyToMarket": obj.get("applyToMarket"),
-                "applyMinToMarket": obj.get("applyMinToMarket"),
-                "maxNotional": obj.get("maxNotional"),
-                "applyMaxToMarket": obj.get("applyMaxToMarket"),
-                "limit": obj.get("limit"),
-                "maxNumOrders": obj.get("maxNumOrders"),
-                "maxNumAlgoOrders": obj.get("maxNumAlgoOrders"),
-                "maxNumIcebergOrders": obj.get("maxNumIcebergOrders"),
-                "maxPosition": obj.get("maxPosition"),
-                "minTrailingAboveDelta": obj.get("minTrailingAboveDelta"),
-                "maxTrailingAboveDelta": obj.get("maxTrailingAboveDelta"),
-                "minTrailingBelowDelta": obj.get("minTrailingBelowDelta"),
-                "maxTrailingBelowDelta": obj.get("maxTrailingBelowDelta"),
-                "maxNumOrderAmends": obj.get("maxNumOrderAmends"),
-                "maxNumOrderLists": obj.get("maxNumOrderLists"),
+        if isinstance(parsed, dict) and "filterType" in parsed:
+            filter_type_map = {
+                "EXCHANGE_MAX_NUM_ORDERS": ExchangeMaxNumOrdersFilter,
+                "EXCHANGE_MAX_NUM_ALGO_ORDERS": ExchangeMaxNumAlgoOrdersFilter,
+                "EXCHANGE_MAX_NUM_ICEBERG_ORDERS": ExchangeMaxNumIcebergOrdersFilter,
+                "EXCHANGE_MAX_NUM_ORDER_LISTS": ExchangeMaxNumOrderListsFilter,
             }
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
 
-        return _obj
+            ft = parsed.get("filterType")
+            target_cls = filter_type_map.get(ft)
+
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
+        instance = cls.model_construct()
+        error_messages = []
+        match = 0
+        is_list = isinstance(parsed, list)
+
+        for subcls in [
+            "ExchangeMaxNumAlgoOrdersFilter",
+            "ExchangeMaxNumIcebergOrdersFilter",
+            "ExchangeMaxNumOrderListsFilter",
+            "ExchangeMaxNumOrdersFilter",
+        ]:
+            if is_list == subcls.is_array():
+                try:
+                    instance.actual_instance = subcls.from_dict(parsed)
+                    match += 1
+                except (ValidationError, ValueError) as e:
+                    error_messages.append(str(e))
+
+        if match > 1:
+            # more than 1 match
+            raise ValueError(
+                "Multiple matches found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
+                + ", ".join(error_messages)
+            )
+        elif match == 0:
+            # no match
+            raise ValueError(
+                "No match found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
+                + ", ".join(error_messages)
+            )
+        else:
+            return instance
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the actual instance"""
+        if self.actual_instance is None:
+            return "null"
+
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json
+        ):
+            return self.actual_instance.to_json()
+        else:
+            return json.dumps(self.actual_instance)
+
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            ExchangeMaxNumAlgoOrdersFilter,
+            ExchangeMaxNumIcebergOrdersFilter,
+            ExchangeMaxNumOrderListsFilter,
+            ExchangeMaxNumOrdersFilter,
+        ]
+    ]:
+        """Returns the dict representation of the actual instance"""
+        if self.actual_instance is None:
+            return None
+
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict
+        ):
+            return self.actual_instance.to_dict()
+        else:
+            # primitive type
+            return self.actual_instance
+
+    def to_str(self) -> str:
+        """Returns the string representation of the actual instance"""
+        return pprint.pformat(self.model_dump())

@@ -31,8 +31,8 @@ class DustlogResponse(BaseModel):
     """  # noqa: E501
 
     total: Optional[StrictInt] = None
-    userAssetDribblets: Optional[List[DustlogResponseUserAssetDribbletsInner]] = Field(
-        default=None, alias="userAssetDribblets"
+    user_asset_dribblets: Optional[List[DustlogResponseUserAssetDribbletsInner]] = (
+        Field(default=None, alias="userAssetDribblets")
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["total", "userAssetDribblets"]

@@ -100,7 +100,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcceptTheOfferedQuoteResponse, "from_dict"):
             expected = AcceptTheOfferedQuoteResponse.from_dict(expected_response)
         else:
             expected = AcceptTheOfferedQuoteResponse.model_validate_json(
@@ -145,7 +145,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcceptTheOfferedQuoteResponse, "from_dict"):
             expected = AcceptTheOfferedQuoteResponse.from_dict(expected_response)
         else:
             expected = AcceptTheOfferedQuoteResponse.model_validate_json(
@@ -215,7 +215,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ListAllConvertPairsResponse, "from_dict"):
             expected = ListAllConvertPairsResponse.from_dict(expected_response)
         else:
             expected = ListAllConvertPairsResponse.model_validate_json(
@@ -261,7 +261,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ListAllConvertPairsResponse, "from_dict"):
             expected = ListAllConvertPairsResponse.from_dict(expected_response)
         else:
             expected = ListAllConvertPairsResponse.model_validate_json(
@@ -319,7 +319,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderStatusResponse, "from_dict"):
             expected = OrderStatusResponse.from_dict(expected_response)
         else:
             expected = OrderStatusResponse.model_validate_json(
@@ -368,7 +368,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderStatusResponse, "from_dict"):
             expected = OrderStatusResponse.from_dict(expected_response)
         else:
             expected = OrderStatusResponse.model_validate_json(
@@ -433,7 +433,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SendQuoteRequestResponse, "from_dict"):
             expected = SendQuoteRequestResponse.from_dict(expected_response)
         else:
             expected = SendQuoteRequestResponse.model_validate_json(
@@ -486,7 +486,7 @@ class TestConvertApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SendQuoteRequestResponse, "from_dict"):
             expected = SendQuoteRequestResponse.from_dict(expected_response)
         else:
             expected = SendQuoteRequestResponse.model_validate_json(

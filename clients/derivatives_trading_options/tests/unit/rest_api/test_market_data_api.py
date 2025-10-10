@@ -106,7 +106,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(CheckServerTimeResponse, "from_dict"):
             expected = CheckServerTimeResponse.from_dict(expected_response)
         else:
             expected = CheckServerTimeResponse.model_validate_json(
@@ -219,7 +219,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExchangeInformationResponse, "from_dict"):
             expected = ExchangeInformationResponse.from_dict(expected_response)
         else:
             expected = ExchangeInformationResponse.model_validate_json(
@@ -272,7 +272,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(HistoricalExerciseRecordsResponse, "from_dict")
+        ):
             expected = HistoricalExerciseRecordsResponse.from_dict(expected_response)
         else:
             expected = HistoricalExerciseRecordsResponse.model_validate_json(
@@ -322,7 +326,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(HistoricalExerciseRecordsResponse, "from_dict")
+        ):
             expected = HistoricalExerciseRecordsResponse.from_dict(expected_response)
         else:
             expected = HistoricalExerciseRecordsResponse.model_validate_json(
@@ -392,7 +400,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(KlineCandlestickDataResponse, "from_dict"):
             expected = KlineCandlestickDataResponse.from_dict(expected_response)
         else:
             expected = KlineCandlestickDataResponse.model_validate_json(
@@ -450,7 +458,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(KlineCandlestickDataResponse, "from_dict"):
             expected = KlineCandlestickDataResponse.from_dict(expected_response)
         else:
             expected = KlineCandlestickDataResponse.model_validate_json(
@@ -542,7 +550,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OldTradesLookupResponse, "from_dict"):
             expected = OldTradesLookupResponse.from_dict(expected_response)
         else:
             expected = OldTradesLookupResponse.model_validate_json(
@@ -589,7 +597,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OldTradesLookupResponse, "from_dict"):
             expected = OldTradesLookupResponse.from_dict(expected_response)
         else:
             expected = OldTradesLookupResponse.model_validate_json(
@@ -665,7 +673,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OpenInterestResponse, "from_dict"):
             expected = OpenInterestResponse.from_dict(expected_response)
         else:
             expected = OpenInterestResponse.model_validate_json(
@@ -712,7 +720,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OpenInterestResponse, "from_dict"):
             expected = OpenInterestResponse.from_dict(expected_response)
         else:
             expected = OpenInterestResponse.model_validate_json(
@@ -803,7 +811,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OptionMarkPriceResponse, "from_dict"):
             expected = OptionMarkPriceResponse.from_dict(expected_response)
         else:
             expected = OptionMarkPriceResponse.model_validate_json(
@@ -855,7 +863,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OptionMarkPriceResponse, "from_dict"):
             expected = OptionMarkPriceResponse.from_dict(expected_response)
         else:
             expected = OptionMarkPriceResponse.model_validate_json(
@@ -913,7 +921,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderBookResponse, "from_dict"):
             expected = OrderBookResponse.from_dict(expected_response)
         else:
             expected = OrderBookResponse.model_validate_json(
@@ -955,7 +963,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderBookResponse, "from_dict"):
             expected = OrderBookResponse.from_dict(expected_response)
         else:
             expected = OrderBookResponse.model_validate_json(
@@ -1035,7 +1043,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RecentBlockTradesListResponse, "from_dict"):
             expected = RecentBlockTradesListResponse.from_dict(expected_response)
         else:
             expected = RecentBlockTradesListResponse.model_validate_json(
@@ -1093,7 +1101,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RecentBlockTradesListResponse, "from_dict"):
             expected = RecentBlockTradesListResponse.from_dict(expected_response)
         else:
             expected = RecentBlockTradesListResponse.model_validate_json(
@@ -1156,7 +1164,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RecentTradesListResponse, "from_dict"):
             expected = RecentTradesListResponse.from_dict(expected_response)
         else:
             expected = RecentTradesListResponse.model_validate_json(
@@ -1203,7 +1211,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RecentTradesListResponse, "from_dict"):
             expected = RecentTradesListResponse.from_dict(expected_response)
         else:
             expected = RecentTradesListResponse.model_validate_json(
@@ -1268,7 +1276,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SymbolPriceTickerResponse, "from_dict"):
             expected = SymbolPriceTickerResponse.from_dict(expected_response)
         else:
             expected = SymbolPriceTickerResponse.model_validate_json(
@@ -1305,7 +1313,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SymbolPriceTickerResponse, "from_dict"):
             expected = SymbolPriceTickerResponse.from_dict(expected_response)
         else:
             expected = SymbolPriceTickerResponse.model_validate_json(
@@ -1412,7 +1420,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(Ticker24hrPriceChangeStatisticsResponse, "from_dict")
+        ):
             expected = Ticker24hrPriceChangeStatisticsResponse.from_dict(
                 expected_response
             )
@@ -1472,7 +1484,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(Ticker24hrPriceChangeStatisticsResponse, "from_dict")
+        ):
             expected = Ticker24hrPriceChangeStatisticsResponse.from_dict(
                 expected_response
             )

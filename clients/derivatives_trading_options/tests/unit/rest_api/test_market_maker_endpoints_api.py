@@ -104,7 +104,9 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(AutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = AutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = AutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -145,7 +147,9 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(AutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = AutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = AutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -209,7 +213,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = GetAutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = GetAutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -250,7 +258,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = GetAutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = GetAutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -306,7 +318,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = GetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )
@@ -357,7 +373,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = GetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )
@@ -417,7 +437,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ResetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = ResetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )
@@ -468,7 +492,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ResetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = ResetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )
@@ -530,7 +558,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetAutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = SetAutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = SetAutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -575,7 +607,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetAutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
             expected = SetAutoCancelAllOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = SetAutoCancelAllOpenOrdersResponse.model_validate_json(
@@ -664,7 +700,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = SetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )
@@ -722,7 +762,11 @@ class TestMarketMakerEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetMarketMakerProtectionConfigResponse, "from_dict")
+        ):
             expected = SetMarketMakerProtectionConfigResponse.from_dict(
                 expected_response
             )

@@ -29,8 +29,8 @@ class GetSoftStakingRewardsHistoryResponseRowsInner(BaseModel):
 
     asset: Optional[StrictStr] = None
     rewards: Optional[StrictStr] = None
-    rewardAsset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    avgAmount: Optional[StrictStr] = Field(default=None, alias="avgAmount")
+    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
+    avg_amount: Optional[StrictStr] = Field(default=None, alias="avgAmount")
     time: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -29,20 +29,22 @@ class WithdrawHistoryResponseInner(BaseModel):
 
     id: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    transactionFee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
+    transaction_fee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
     coin: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     address: Optional[StrictStr] = None
-    txId: Optional[StrictStr] = Field(default=None, alias="txId")
-    applyTime: Optional[StrictStr] = Field(default=None, alias="applyTime")
+    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
+    apply_time: Optional[StrictStr] = Field(default=None, alias="applyTime")
     network: Optional[StrictStr] = None
-    transferType: Optional[StrictInt] = Field(default=None, alias="transferType")
-    withdrawOrderId: Optional[StrictStr] = Field(default=None, alias="withdrawOrderId")
+    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
+    withdraw_order_id: Optional[StrictStr] = Field(
+        default=None, alias="withdrawOrderId"
+    )
     info: Optional[StrictStr] = None
-    confirmNo: Optional[StrictInt] = Field(default=None, alias="confirmNo")
-    walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
-    txKey: Optional[StrictStr] = Field(default=None, alias="txKey")
-    completeTime: Optional[StrictStr] = Field(default=None, alias="completeTime")
+    confirm_no: Optional[StrictInt] = Field(default=None, alias="confirmNo")
+    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    tx_key: Optional[StrictStr] = Field(default=None, alias="txKey")
+    complete_time: Optional[StrictStr] = Field(default=None, alias="completeTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

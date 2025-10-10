@@ -27,10 +27,10 @@ class FetchAddressVerificationListResponseInnerAddressQuestionnaire(BaseModel):
     FetchAddressVerificationListResponseInnerAddressQuestionnaire
     """  # noqa: E501
 
-    sendTo: Optional[StrictInt] = Field(default=None, alias="sendTo")
-    satoshiToken: Optional[StrictStr] = Field(default=None, alias="satoshiToken")
-    isAddressOwner: Optional[StrictInt] = Field(default=None, alias="isAddressOwner")
-    verifyMethod: Optional[StrictInt] = Field(default=None, alias="verifyMethod")
+    send_to: Optional[StrictInt] = Field(default=None, alias="sendTo")
+    satoshi_token: Optional[StrictStr] = Field(default=None, alias="satoshiToken")
+    is_address_owner: Optional[StrictInt] = Field(default=None, alias="isAddressOwner")
+    verify_method: Optional[StrictInt] = Field(default=None, alias="verifyMethod")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "sendTo",

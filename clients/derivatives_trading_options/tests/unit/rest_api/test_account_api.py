@@ -121,7 +121,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountFundingFlowResponse, "from_dict"):
             expected = AccountFundingFlowResponse.from_dict(expected_response)
         else:
             expected = AccountFundingFlowResponse.model_validate_json(
@@ -191,7 +191,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountFundingFlowResponse, "from_dict"):
             expected = AccountFundingFlowResponse.from_dict(expected_response)
         else:
             expected = AccountFundingFlowResponse.model_validate_json(
@@ -270,7 +270,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForOptionTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForOptionTransactionHistoryResponse.from_dict(
                 expected_response
             )
@@ -322,7 +326,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForOptionTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForOptionTransactionHistoryResponse.from_dict(
                 expected_response
             )
@@ -430,7 +438,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOptionTransactionHistoryDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetOptionTransactionHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -484,7 +496,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOptionTransactionHistoryDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetOptionTransactionHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -578,7 +594,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OptionAccountInformationResponse, "from_dict")
+        ):
             expected = OptionAccountInformationResponse.from_dict(expected_response)
         else:
             expected = OptionAccountInformationResponse.model_validate_json(
@@ -641,7 +661,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OptionAccountInformationResponse, "from_dict")
+        ):
             expected = OptionAccountInformationResponse.from_dict(expected_response)
         else:
             expected = OptionAccountInformationResponse.model_validate_json(
@@ -712,7 +736,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OptionMarginAccountInformationResponse, "from_dict")
+        ):
             expected = OptionMarginAccountInformationResponse.from_dict(
                 expected_response
             )
@@ -778,7 +806,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OptionMarginAccountInformationResponse, "from_dict")
+        ):
             expected = OptionMarginAccountInformationResponse.from_dict(
                 expected_response
             )

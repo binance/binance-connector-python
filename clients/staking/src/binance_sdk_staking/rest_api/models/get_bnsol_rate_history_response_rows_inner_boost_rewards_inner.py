@@ -27,8 +27,8 @@ class GetBnsolRateHistoryResponseRowsInnerBoostRewardsInner(BaseModel):
     GetBnsolRateHistoryResponseRowsInnerBoostRewardsInner
     """  # noqa: E501
 
-    boostAPR: Optional[StrictStr] = Field(default=None, alias="boostAPR")
-    rewardsAsset: Optional[StrictStr] = Field(default=None, alias="rewardsAsset")
+    boost_apr: Optional[StrictStr] = Field(default=None, alias="boostAPR")
+    rewards_asset: Optional[StrictStr] = Field(default=None, alias="rewardsAsset")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["boostAPR", "rewardsAsset"]
 

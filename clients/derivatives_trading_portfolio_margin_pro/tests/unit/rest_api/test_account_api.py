@@ -137,7 +137,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(BnbTransferResponse, "from_dict"):
             expected = BnbTransferResponse.from_dict(expected_response)
         else:
             expected = BnbTransferResponse.model_validate_json(
@@ -180,7 +180,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(BnbTransferResponse, "from_dict"):
             expected = BnbTransferResponse.from_dict(expected_response)
         else:
             expected = BnbTransferResponse.model_validate_json(
@@ -265,7 +265,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ChangeAutoRepayFuturesStatusResponse, "from_dict")
+        ):
             expected = ChangeAutoRepayFuturesStatusResponse.from_dict(expected_response)
         else:
             expected = ChangeAutoRepayFuturesStatusResponse.model_validate_json(
@@ -306,7 +310,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ChangeAutoRepayFuturesStatusResponse, "from_dict")
+        ):
             expected = ChangeAutoRepayFuturesStatusResponse.from_dict(expected_response)
         else:
             expected = ChangeAutoRepayFuturesStatusResponse.model_validate_json(
@@ -370,7 +378,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundAutoCollectionResponse, "from_dict"):
             expected = FundAutoCollectionResponse.from_dict(expected_response)
         else:
             expected = FundAutoCollectionResponse.model_validate_json(
@@ -411,7 +419,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundAutoCollectionResponse, "from_dict"):
             expected = FundAutoCollectionResponse.from_dict(expected_response)
         else:
             expected = FundAutoCollectionResponse.model_validate_json(
@@ -467,7 +475,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundCollectionByAssetResponse, "from_dict"):
             expected = FundCollectionByAssetResponse.from_dict(expected_response)
         else:
             expected = FundCollectionByAssetResponse.model_validate_json(
@@ -508,7 +516,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundCollectionByAssetResponse, "from_dict"):
             expected = FundCollectionByAssetResponse.from_dict(expected_response)
         else:
             expected = FundCollectionByAssetResponse.model_validate_json(
@@ -570,7 +578,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAutoRepayFuturesStatusResponse, "from_dict")
+        ):
             expected = GetAutoRepayFuturesStatusResponse.from_dict(expected_response)
         else:
             expected = GetAutoRepayFuturesStatusResponse.model_validate_json(
@@ -611,7 +623,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAutoRepayFuturesStatusResponse, "from_dict")
+        ):
             expected = GetAutoRepayFuturesStatusResponse.from_dict(expected_response)
         else:
             expected = GetAutoRepayFuturesStatusResponse.model_validate_json(
@@ -677,7 +693,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProAccountBalanceResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProAccountBalanceResponse.from_dict(
                 expected_response
             )
@@ -738,7 +758,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProAccountBalanceResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProAccountBalanceResponse.from_dict(
                 expected_response
             )
@@ -799,7 +823,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProAccountInfoResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -851,7 +879,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProAccountInfoResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -915,7 +947,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProSpanAccountInfoResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProSpanAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -968,7 +1004,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginProSpanAccountInfoResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginProSpanAccountInfoResponse.from_dict(
                 expected_response
             )
@@ -1036,7 +1076,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                GetTransferableEarnAssetBalanceForPortfolioMarginResponse, "from_dict"
+            )
+        ):
             expected = (
                 GetTransferableEarnAssetBalanceForPortfolioMarginResponse.from_dict(
                     expected_response
@@ -1089,7 +1135,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                GetTransferableEarnAssetBalanceForPortfolioMarginResponse, "from_dict"
+            )
+        ):
             expected = (
                 GetTransferableEarnAssetBalanceForPortfolioMarginResponse.from_dict(
                     expected_response
@@ -1169,7 +1221,7 @@ class TestAccountApi:
             "targetAsset": "BFUSD",
             "fromAssetQty": 10,
             "targetAssetQty": 9.998,
-            "rate": 0.9998,
+            "mintRate": 0.9998,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1202,7 +1254,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MintBfusdForPortfolioMarginResponse, "from_dict")
+        ):
             expected = MintBfusdForPortfolioMarginResponse.from_dict(expected_response)
         else:
             expected = MintBfusdForPortfolioMarginResponse.model_validate_json(
@@ -1229,7 +1285,7 @@ class TestAccountApi:
             "targetAsset": "BFUSD",
             "fromAssetQty": 10,
             "targetAssetQty": 9.998,
-            "rate": 0.9998,
+            "mintRate": 0.9998,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1254,7 +1310,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MintBfusdForPortfolioMarginResponse, "from_dict")
+        ):
             expected = MintBfusdForPortfolioMarginResponse.from_dict(expected_response)
         else:
             expected = MintBfusdForPortfolioMarginResponse.model_validate_json(
@@ -1350,7 +1410,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(PortfolioMarginProBankruptcyLoanRepayResponse, "from_dict")
+        ):
             expected = PortfolioMarginProBankruptcyLoanRepayResponse.from_dict(
                 expected_response
             )
@@ -1395,7 +1459,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(PortfolioMarginProBankruptcyLoanRepayResponse, "from_dict")
+        ):
             expected = PortfolioMarginProBankruptcyLoanRepayResponse.from_dict(
                 expected_response
             )
@@ -1451,7 +1519,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryPortfolioMarginProBankruptcyLoanAmountResponse, "from_dict")
+        ):
             expected = QueryPortfolioMarginProBankruptcyLoanAmountResponse.from_dict(
                 expected_response
             )
@@ -1498,7 +1570,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryPortfolioMarginProBankruptcyLoanAmountResponse, "from_dict")
+        ):
             expected = QueryPortfolioMarginProBankruptcyLoanAmountResponse.from_dict(
                 expected_response
             )
@@ -1568,7 +1644,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse, "from_dict"
+            )
+        ):
             expected = (
                 QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse.from_dict(
                     expected_response
@@ -1633,7 +1715,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse, "from_dict"
+            )
+        ):
             expected = (
                 QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse.from_dict(
                     expected_response
@@ -1703,7 +1791,14 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
+                "from_dict",
+            )
+        ):
             expected = (
                 QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse.from_dict(
                     expected_response
@@ -1768,7 +1863,14 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
+                "from_dict",
+            )
+        ):
             expected = (
                 QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse.from_dict(
                     expected_response
@@ -1809,7 +1911,7 @@ class TestAccountApi:
             "targetAsset": "USDT",
             "fromAssetQty": 9.99800001,
             "targetAssetQty": 9.996000409998,
-            "rate": 0.9998,
+            "redeemRate": 0.9998,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1842,7 +1944,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RedeemBfusdForPortfolioMarginResponse, "from_dict")
+        ):
             expected = RedeemBfusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
@@ -1871,7 +1977,7 @@ class TestAccountApi:
             "targetAsset": "USDT",
             "fromAssetQty": 9.99800001,
             "targetAssetQty": 9.996000409998,
-            "rate": 0.9998,
+            "redeemRate": 0.9998,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1896,7 +2002,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RedeemBfusdForPortfolioMarginResponse, "from_dict")
+        ):
             expected = RedeemBfusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
@@ -1998,7 +2108,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RepayFuturesNegativeBalanceResponse, "from_dict")
+        ):
             expected = RepayFuturesNegativeBalanceResponse.from_dict(expected_response)
         else:
             expected = RepayFuturesNegativeBalanceResponse.model_validate_json(
@@ -2041,7 +2155,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RepayFuturesNegativeBalanceResponse, "from_dict")
+        ):
             expected = RepayFuturesNegativeBalanceResponse.from_dict(expected_response)
         else:
             expected = RepayFuturesNegativeBalanceResponse.model_validate_json(
@@ -2101,7 +2219,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+        ):
             expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
                 expected_response
             )
@@ -2149,7 +2271,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+        ):
             expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
                 expected_response
             )

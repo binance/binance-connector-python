@@ -38,7 +38,7 @@ class GetLockedProductPositionResponseRowsInner(BaseModel):
     duration: Optional[StrictStr] = None
     accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    apy: Optional[StrictStr] = Field(default=None, alias="APY")
+    APY: Optional[StrictStr] = Field(default=None, alias="APY")
     reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
     extra_reward_asset: Optional[StrictStr] = Field(
         default=None, alias="extraRewardAsset"

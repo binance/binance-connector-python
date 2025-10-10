@@ -229,7 +229,6 @@ from .user_exercise_record_response_inner import (
 )
 
 
-from .enums import NewBlockTradeOrderSideEnum as NewBlockTradeOrderSideEnum
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderTypeEnum as NewOrderTypeEnum
 from .enums import NewOrderTimeInForceEnum as NewOrderTimeInForceEnum

@@ -100,7 +100,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckCollateralRepayRateStableRateResponse, "from_dict")
+        ):
             expected = CheckCollateralRepayRateStableRateResponse.from_dict(
                 expected_response
             )
@@ -153,7 +157,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckCollateralRepayRateStableRateResponse, "from_dict")
+        ):
             expected = CheckCollateralRepayRateStableRateResponse.from_dict(
                 expected_response
             )
@@ -274,7 +282,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCryptoLoansIncomeHistoryResponse, "from_dict")
+        ):
             expected = GetCryptoLoansIncomeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetCryptoLoansIncomeHistoryResponse.model_validate_json(
@@ -337,7 +349,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCryptoLoansIncomeHistoryResponse, "from_dict")
+        ):
             expected = GetCryptoLoansIncomeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetCryptoLoansIncomeHistoryResponse.model_validate_json(
@@ -400,7 +416,7 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetLoanBorrowHistoryResponse, "from_dict"):
             expected = GetLoanBorrowHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanBorrowHistoryResponse.model_validate_json(
@@ -465,7 +481,7 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetLoanBorrowHistoryResponse, "from_dict"):
             expected = GetLoanBorrowHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanBorrowHistoryResponse.model_validate_json(
@@ -527,7 +543,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLoanLtvAdjustmentHistoryResponse, "from_dict")
+        ):
             expected = GetLoanLtvAdjustmentHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanLtvAdjustmentHistoryResponse.model_validate_json(
@@ -591,7 +611,11 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLoanLtvAdjustmentHistoryResponse, "from_dict")
+        ):
             expected = GetLoanLtvAdjustmentHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanLtvAdjustmentHistoryResponse.model_validate_json(
@@ -654,7 +678,9 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetLoanRepaymentHistoryResponse, "from_dict")
+        ):
             expected = GetLoanRepaymentHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanRepaymentHistoryResponse.model_validate_json(
@@ -719,7 +745,9 @@ class TestStableRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetLoanRepaymentHistoryResponse, "from_dict")
+        ):
             expected = GetLoanRepaymentHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLoanRepaymentHistoryResponse.model_validate_json(

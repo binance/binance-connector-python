@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.8.0 - 2025-10-10
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### REST API
+
+- Fixed typo for endpoints response `GET /fapi/v1/depth` and `GET /fapi/v1/aggTrades`
+
+#### WebSocket API
+
+- Fixed typo for endpoint response `depth`
+
+#### WebSocket Streams
+
+- Fixed typo for user data stream events response `account_update`
+
 ## 1.7.0 - 2025-09-24
 
 ### Changed (2)

@@ -28,9 +28,9 @@ class RedeemEthResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = None
-    ethAmount: Optional[StrictStr] = Field(default=None, alias="ethAmount")
-    conversionRatio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
-    arrivalTime: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
+    eth_amount: Optional[StrictStr] = Field(default=None, alias="ethAmount")
+    conversion_ratio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
+    arrival_time: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "success",

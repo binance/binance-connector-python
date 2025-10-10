@@ -27,10 +27,10 @@ class GetOnChainYieldsLockedRewardsHistoryResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedRewardsHistoryResponseRowsInner
     """  # noqa: E501
 
-    positionId: Optional[StrictStr] = Field(default=None, alias="positionId")
+    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
     time: Optional[StrictInt] = None
     asset: Optional[StrictStr] = None
-    lockPeriod: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
+    lock_period: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
     amount: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

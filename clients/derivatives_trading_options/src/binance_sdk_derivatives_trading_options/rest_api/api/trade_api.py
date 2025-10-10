@@ -165,7 +165,7 @@ class TradeApi:
 
                 Cancel all active order on a symbol.
 
-        Weight: 1
+        Weight: 5
 
                 Args:
                     symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
@@ -336,7 +336,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    side (Union[NewOrderSideEnum, None]): BUY or SELL
+                    side (Union[NewOrderSideEnum, None]): Buy/sell direction: SELL, BUY
                     type (Union[NewOrderTypeEnum, None]): Order Type: LIMIT(only support limit)
                     quantity (Union[float, None]): Order Quantity
                     price (Optional[float] = None): Order Price
@@ -458,7 +458,7 @@ class TradeApi:
         Weight: 5
 
                 Args:
-                    orders (Union[List[PlaceMultipleOrdersOrdersParameterInner], None]): order list. Max 5 orders
+                    orders (Union[List[PlaceMultipleOrdersOrdersParameterInner], None]): order list. Max 10 orders
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -494,7 +494,6 @@ class TradeApi:
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryCurrentOpenOptionOrdersResponse]:
         """
@@ -511,7 +510,6 @@ class TradeApi:
                     order_id (Optional[int] = None): Order ID, e.g 4611875134427365377
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
-                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -527,7 +525,6 @@ class TradeApi:
             "order_id": order_id,
             "start_time": start_time,
             "end_time": end_time,
-            "limit": limit,
             "recv_window": recv_window,
         }
 

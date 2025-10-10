@@ -27,24 +27,24 @@ class DepositHistoryTravelRuleResponseInner(BaseModel):
     DepositHistoryTravelRuleResponseInner
     """  # noqa: E501
 
-    trId: Optional[StrictInt] = Field(default=None, alias="trId")
-    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
+    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
+    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     amount: Optional[StrictStr] = None
     coin: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
-    depositStatus: Optional[StrictInt] = Field(default=None, alias="depositStatus")
-    travelRuleStatus: Optional[StrictInt] = Field(
+    deposit_status: Optional[StrictInt] = Field(default=None, alias="depositStatus")
+    travel_rule_status: Optional[StrictInt] = Field(
         default=None, alias="travelRuleStatus"
     )
     address: Optional[StrictStr] = None
-    addressTag: Optional[StrictStr] = Field(default=None, alias="addressTag")
-    txId: Optional[StrictStr] = Field(default=None, alias="txId")
-    insertTime: Optional[StrictInt] = Field(default=None, alias="insertTime")
-    transferType: Optional[StrictInt] = Field(default=None, alias="transferType")
-    confirmTimes: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
-    unlockConfirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
-    walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
-    requireQuestionnaire: Optional[StrictBool] = Field(
+    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
+    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
+    insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")
+    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
+    confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
+    unlock_confirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
+    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    require_questionnaire: Optional[StrictBool] = Field(
         default=None, alias="requireQuestionnaire"
     )
     questionnaire: Optional[StrictStr] = None

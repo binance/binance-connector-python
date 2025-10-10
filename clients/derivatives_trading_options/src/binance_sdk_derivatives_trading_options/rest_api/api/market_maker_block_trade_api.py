@@ -25,9 +25,6 @@ from ..models import QueryBlockTradeDetailsResponse
 from ..models import QueryBlockTradeOrderResponse
 
 
-from ..models import NewBlockTradeOrderSideEnum
-
-
 class MarketMakerBlockTradeApi:
     """API Client for MarketMakerBlockTradeApi endpoints."""
 
@@ -240,10 +237,6 @@ class MarketMakerBlockTradeApi:
         self,
         liquidity: Union[str, None],
         legs: Union[List[object], None],
-        symbol: Union[str, None],
-        side: Union[NewBlockTradeOrderSideEnum, None],
-        price: Union[float, None],
-        quantity: Union[float, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewBlockTradeOrderResponse]:
         """
@@ -258,10 +251,6 @@ class MarketMakerBlockTradeApi:
                 Args:
                     liquidity (Union[str, None]): Taker or Maker
                     legs (Union[List[object], None]): Max 1 (only single leg supported), list of legs parameters in JSON; example: eapi/v1/block/order/create?orders=[{"symbol":"BTC-210115-35000-C", "price":"100","quantity":"0.0002","side":"BUY","type":"LIMIT"}]
-                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    side (Union[NewBlockTradeOrderSideEnum, None]): BUY or SELL
-                    price (Union[float, None]): Order Price
-                    quantity (Union[float, None]): Order Quantity
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -281,32 +270,8 @@ class MarketMakerBlockTradeApi:
             raise RequiredError(
                 field="legs", error_message="Missing required parameter 'legs'"
             )
-        if symbol is None:
-            raise RequiredError(
-                field="symbol", error_message="Missing required parameter 'symbol'"
-            )
-        if side is None:
-            raise RequiredError(
-                field="side", error_message="Missing required parameter 'side'"
-            )
-        if price is None:
-            raise RequiredError(
-                field="price", error_message="Missing required parameter 'price'"
-            )
-        if quantity is None:
-            raise RequiredError(
-                field="quantity", error_message="Missing required parameter 'quantity'"
-            )
 
-        payload = {
-            "liquidity": liquidity,
-            "legs": legs,
-            "symbol": symbol,
-            "side": side,
-            "price": price,
-            "quantity": quantity,
-            "recv_window": recv_window,
-        }
+        payload = {"liquidity": liquidity, "legs": legs, "recv_window": recv_window}
 
         return send_request(
             self._session,

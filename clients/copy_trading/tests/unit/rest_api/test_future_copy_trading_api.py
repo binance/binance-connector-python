@@ -86,7 +86,11 @@ class TestFutureCopyTradingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesLeadTraderStatusResponse, "from_dict")
+        ):
             expected = GetFuturesLeadTraderStatusResponse.from_dict(expected_response)
         else:
             expected = GetFuturesLeadTraderStatusResponse.model_validate_json(
@@ -132,7 +136,11 @@ class TestFutureCopyTradingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesLeadTraderStatusResponse, "from_dict")
+        ):
             expected = GetFuturesLeadTraderStatusResponse.from_dict(expected_response)
         else:
             expected = GetFuturesLeadTraderStatusResponse.model_validate_json(
@@ -189,7 +197,11 @@ class TestFutureCopyTradingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesLeadTradingSymbolWhitelistResponse, "from_dict")
+        ):
             expected = GetFuturesLeadTradingSymbolWhitelistResponse.from_dict(
                 expected_response
             )
@@ -239,7 +251,11 @@ class TestFutureCopyTradingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesLeadTradingSymbolWhitelistResponse, "from_dict")
+        ):
             expected = GetFuturesLeadTradingSymbolWhitelistResponse.from_dict(
                 expected_response
             )

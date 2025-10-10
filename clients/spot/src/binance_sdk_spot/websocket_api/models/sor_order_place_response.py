@@ -23,7 +23,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.rate_limits_inner import RateLimitsInner
+from binance_sdk_spot.websocket_api.models.rate_limits import RateLimits
 from binance_sdk_spot.websocket_api.models.sor_order_place_response_result_inner import (
     SorOrderPlaceResponseResultInner,
 )
@@ -42,9 +42,7 @@ class SorOrderPlaceResponse(BaseModel):
         default=None, alias="result"
     )
 
-    rate_limits: Optional[List[RateLimitsInner]] = Field(
-        default=None, alias="rateLimits"
-    )
+    rate_limits: Optional[List[RateLimits]] = Field(default=None, alias="rateLimits")
 
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "status", "result", "rateLimits"]
@@ -138,7 +136,7 @@ class SorOrderPlaceResponse(BaseModel):
                     else None
                 ),
                 "rateLimits": (
-                    [RateLimitsInner.from_dict(_item) for _item in obj["rateLimits"]]
+                    [RateLimits.from_dict(_item) for _item in obj["rateLimits"]]
                     if obj.get("rateLimits") is not None
                     else None
                 ),

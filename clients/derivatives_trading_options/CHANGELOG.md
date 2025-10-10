@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.0.0 - 2025-10-10
+
+### Changed (9)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### REST API
+
+- Deleted parameter `price`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `quantity`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `side`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Deleted parameter `symbol`
+  - affected methods:
+    - `new_block_trade_order()` (`POST /eapi/v1/block/order/create`)
+- Modified parameter `side`:
+  - affected methods:
+    - `new_order()` (`POST /eapi/v1/order`)
+- Deleted parameter `limit`
+  - affected methods:
+    - `query_current_open_option_orders()` (`GET /eapi/v1/openOrders`)
+- Modified parameter `orders`:
+  - affected methods:
+    - `place_multiple_orders()` (`POST /eapi/v1/batchOrders`)
+
+#### WebSocket Streams
+
+- Fixed typo for user data stream events response `account_update`
+
 ## 1.7.0 - 2025-09-24
 
 ### Changed (1)

@@ -76,7 +76,11 @@ class TestOthersApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSymbolsDelistScheduleForSpotResponse, "from_dict")
+        ):
             expected = GetSymbolsDelistScheduleForSpotResponse.from_dict(
                 expected_response
             )
@@ -118,7 +122,11 @@ class TestOthersApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSymbolsDelistScheduleForSpotResponse, "from_dict")
+        ):
             expected = GetSymbolsDelistScheduleForSpotResponse.from_dict(
                 expected_response
             )
@@ -167,7 +175,7 @@ class TestOthersApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SystemStatusResponse, "from_dict"):
             expected = SystemStatusResponse.from_dict(expected_response)
         else:
             expected = SystemStatusResponse.model_validate_json(

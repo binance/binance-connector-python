@@ -28,8 +28,8 @@ class TradeFeeResponseInner(BaseModel):
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = None
-    makerCommission: Optional[StrictStr] = Field(default=None, alias="makerCommission")
-    takerCommission: Optional[StrictStr] = Field(default=None, alias="takerCommission")
+    maker_commission: Optional[StrictStr] = Field(default=None, alias="makerCommission")
+    taker_commission: Optional[StrictStr] = Field(default=None, alias="takerCommission")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "makerCommission", "takerCommission"]
 

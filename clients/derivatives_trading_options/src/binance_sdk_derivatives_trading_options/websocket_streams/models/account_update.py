@@ -86,24 +86,24 @@ class AccountUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in b (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in B (list)
         _items = []
-        if self.b:
-            for _item_b in self.b:
+        if self.B:
+            for _item_b in self.B:
                 if _item_b:
                     _items.append(_item_b.to_dict())
             _dict["B"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in g (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in G (list)
         _items = []
-        if self.g:
-            for _item_g in self.g:
+        if self.G:
+            for _item_g in self.G:
                 if _item_g:
                     _items.append(_item_g.to_dict())
             _dict["G"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in p (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in P (list)
         _items = []
-        if self.p:
-            for _item_p in self.p:
+        if self.P:
+            for _item_p in self.P:
                 if _item_p:
                     _items.append(_item_p.to_dict())
             _dict["P"] = _items

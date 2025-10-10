@@ -87,6 +87,7 @@ class UserDataStreamApi:
                 https://developers.binance.com/docs/binance-spot-api-docs/rest-api/user-data-stream-endpoints---deprecated#start-user-data-stream-user_stream
 
                 Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.
+        This request does not require `signature`.
         Weight: 2
 
                 Args:
@@ -121,6 +122,8 @@ class UserDataStreamApi:
                 https://developers.binance.com/docs/binance-spot-api-docs/rest-api/user-data-stream-endpoints---deprecated#keepalive-user-data-stream-user_stream
 
                 Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.
+
+        This request does not require `signature`.
         Weight: 2
 
                 Args:

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0 - 2025-10-10
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### REST API
+
+- Modified response for `mint_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/mint`):
+  - property `mintRate` added
+  - property `rate` deleted
+
+- Modified response for `redeem_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/redeem`):
+  - property `redeemRate` added
+  - property `rate` deleted
+
 ## 1.6.0 - 2025-09-16
 
 ### Changed (1)

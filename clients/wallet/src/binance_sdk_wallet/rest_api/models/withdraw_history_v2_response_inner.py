@@ -28,29 +28,31 @@ class WithdrawHistoryV2ResponseInner(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = None
-    trId: Optional[StrictInt] = Field(default=None, alias="trId")
+    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
     amount: Optional[StrictStr] = None
-    transactionFee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
+    transaction_fee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
     coin: Optional[StrictStr] = None
-    withdrawalStatus: Optional[StrictInt] = Field(
+    withdrawal_status: Optional[StrictInt] = Field(
         default=None, alias="withdrawalStatus"
     )
-    travelRuleStatus: Optional[StrictInt] = Field(
+    travel_rule_status: Optional[StrictInt] = Field(
         default=None, alias="travelRuleStatus"
     )
     address: Optional[StrictStr] = None
-    addressTag: Optional[StrictStr] = Field(default=None, alias="addressTag")
-    txId: Optional[StrictStr] = Field(default=None, alias="txId")
-    applyTime: Optional[StrictStr] = Field(default=None, alias="applyTime")
+    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
+    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
+    apply_time: Optional[StrictStr] = Field(default=None, alias="applyTime")
     network: Optional[StrictStr] = None
-    transferType: Optional[StrictInt] = Field(default=None, alias="transferType")
-    withdrawOrderId: Optional[StrictStr] = Field(default=None, alias="withdrawOrderId")
+    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
+    withdraw_order_id: Optional[StrictStr] = Field(
+        default=None, alias="withdrawOrderId"
+    )
     info: Optional[StrictStr] = None
-    confirmNo: Optional[StrictInt] = Field(default=None, alias="confirmNo")
-    walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
-    txKey: Optional[StrictStr] = Field(default=None, alias="txKey")
+    confirm_no: Optional[StrictInt] = Field(default=None, alias="confirmNo")
+    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    tx_key: Optional[StrictStr] = Field(default=None, alias="txKey")
     questionnaire: Optional[StrictStr] = None
-    completeTime: Optional[StrictStr] = Field(default=None, alias="completeTime")
+    complete_time: Optional[StrictStr] = Field(default=None, alias="completeTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

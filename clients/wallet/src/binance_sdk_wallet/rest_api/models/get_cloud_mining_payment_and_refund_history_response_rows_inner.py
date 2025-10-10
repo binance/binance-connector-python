@@ -27,8 +27,8 @@ class GetCloudMiningPaymentAndRefundHistoryResponseRowsInner(BaseModel):
     GetCloudMiningPaymentAndRefundHistoryResponseRowsInner
     """  # noqa: E501
 
-    createTime: Optional[StrictInt] = Field(default=None, alias="createTime")
-    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
+    create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
+    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     type: Optional[StrictInt] = None
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None

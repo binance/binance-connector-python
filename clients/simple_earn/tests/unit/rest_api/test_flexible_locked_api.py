@@ -124,7 +124,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetCollateralRecordResponse, "from_dict"):
             expected = GetCollateralRecordResponse.from_dict(expected_response)
         else:
             expected = GetCollateralRecordResponse.model_validate_json(
@@ -188,7 +188,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetCollateralRecordResponse, "from_dict"):
             expected = GetCollateralRecordResponse.from_dict(expected_response)
         else:
             expected = GetCollateralRecordResponse.model_validate_json(
@@ -246,7 +246,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexiblePersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetFlexiblePersonalLeftQuotaResponse.from_dict(expected_response)
         else:
             expected = GetFlexiblePersonalLeftQuotaResponse.model_validate_json(
@@ -289,7 +293,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexiblePersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetFlexiblePersonalLeftQuotaResponse.from_dict(expected_response)
         else:
             expected = GetFlexiblePersonalLeftQuotaResponse.model_validate_json(
@@ -373,7 +381,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleProductPositionResponse, "from_dict")
+        ):
             expected = GetFlexibleProductPositionResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleProductPositionResponse.model_validate_json(
@@ -440,7 +452,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleProductPositionResponse, "from_dict")
+        ):
             expected = GetFlexibleProductPositionResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleProductPositionResponse.model_validate_json(
@@ -504,7 +520,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetFlexibleRedemptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleRedemptionRecordResponse.model_validate_json(
@@ -570,7 +590,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetFlexibleRedemptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleRedemptionRecordResponse.model_validate_json(
@@ -647,7 +671,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleRewardsHistoryResponse.model_validate_json(
@@ -718,7 +746,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleRewardsHistoryResponse.model_validate_json(
@@ -799,7 +831,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetFlexibleSubscriptionPreviewResponse.from_dict(
                 expected_response
             )
@@ -851,7 +887,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetFlexibleSubscriptionPreviewResponse.from_dict(
                 expected_response
             )
@@ -951,7 +991,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetFlexibleSubscriptionRecordResponse.from_dict(
                 expected_response
             )
@@ -1022,7 +1066,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetFlexibleSubscriptionRecordResponse.from_dict(
                 expected_response
             )
@@ -1080,7 +1128,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedPersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetLockedPersonalLeftQuotaResponse.from_dict(expected_response)
         else:
             expected = GetLockedPersonalLeftQuotaResponse.model_validate_json(
@@ -1121,7 +1173,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedPersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetLockedPersonalLeftQuotaResponse.from_dict(expected_response)
         else:
             expected = GetLockedPersonalLeftQuotaResponse.model_validate_json(
@@ -1224,7 +1280,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedProductPositionResponse, "from_dict")
+        ):
             expected = GetLockedProductPositionResponse.from_dict(expected_response)
         else:
             expected = GetLockedProductPositionResponse.model_validate_json(
@@ -1311,7 +1371,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedProductPositionResponse, "from_dict")
+        ):
             expected = GetLockedProductPositionResponse.from_dict(expected_response)
         else:
             expected = GetLockedProductPositionResponse.model_validate_json(
@@ -1384,7 +1448,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetLockedRedemptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetLockedRedemptionRecordResponse.model_validate_json(
@@ -1459,7 +1527,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetLockedRedemptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetLockedRedemptionRecordResponse.model_validate_json(
@@ -1528,7 +1600,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetLockedRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetLockedRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLockedRewardsHistoryResponse.model_validate_json(
@@ -1598,7 +1672,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetLockedRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetLockedRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetLockedRewardsHistoryResponse.model_validate_json(
@@ -1673,7 +1749,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetLockedSubscriptionPreviewResponse.from_dict(expected_response)
         else:
             expected = GetLockedSubscriptionPreviewResponse.model_validate_json(
@@ -1736,7 +1816,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetLockedSubscriptionPreviewResponse.from_dict(expected_response)
         else:
             expected = GetLockedSubscriptionPreviewResponse.model_validate_json(
@@ -1834,7 +1918,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetLockedSubscriptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetLockedSubscriptionRecordResponse.model_validate_json(
@@ -1904,7 +1992,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetLockedSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetLockedSubscriptionRecordResponse.from_dict(expected_response)
         else:
             expected = GetLockedSubscriptionRecordResponse.model_validate_json(
@@ -1972,7 +2064,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRateHistoryResponse, "from_dict"):
             expected = GetRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRateHistoryResponse.model_validate_json(
@@ -2031,7 +2123,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRateHistoryResponse, "from_dict"):
             expected = GetRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRateHistoryResponse.model_validate_json(
@@ -2113,7 +2205,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSimpleEarnFlexibleProductListResponse, "from_dict")
+        ):
             expected = GetSimpleEarnFlexibleProductListResponse.from_dict(
                 expected_response
             )
@@ -2179,7 +2275,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSimpleEarnFlexibleProductListResponse, "from_dict")
+        ):
             expected = GetSimpleEarnFlexibleProductListResponse.from_dict(
                 expected_response
             )
@@ -2254,7 +2354,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSimpleEarnLockedProductListResponse, "from_dict")
+        ):
             expected = GetSimpleEarnLockedProductListResponse.from_dict(
                 expected_response
             )
@@ -2325,7 +2429,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSimpleEarnLockedProductListResponse, "from_dict")
+        ):
             expected = GetSimpleEarnLockedProductListResponse.from_dict(
                 expected_response
             )
@@ -2385,7 +2493,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemFlexibleProductResponse, "from_dict"):
             expected = RedeemFlexibleProductResponse.from_dict(expected_response)
         else:
             expected = RedeemFlexibleProductResponse.model_validate_json(
@@ -2432,7 +2540,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemFlexibleProductResponse, "from_dict"):
             expected = RedeemFlexibleProductResponse.from_dict(expected_response)
         else:
             expected = RedeemFlexibleProductResponse.model_validate_json(
@@ -2504,7 +2612,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemLockedProductResponse, "from_dict"):
             expected = RedeemLockedProductResponse.from_dict(expected_response)
         else:
             expected = RedeemLockedProductResponse.model_validate_json(
@@ -2545,7 +2653,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemLockedProductResponse, "from_dict"):
             expected = RedeemLockedProductResponse.from_dict(expected_response)
         else:
             expected = RedeemLockedProductResponse.model_validate_json(
@@ -2619,7 +2727,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetFlexibleAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetFlexibleAutoSubscribeResponse.from_dict(expected_response)
         else:
             expected = SetFlexibleAutoSubscribeResponse.model_validate_json(
@@ -2660,7 +2772,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetFlexibleAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetFlexibleAutoSubscribeResponse.from_dict(expected_response)
         else:
             expected = SetFlexibleAutoSubscribeResponse.model_validate_json(
@@ -2749,7 +2865,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(SetLockedAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetLockedAutoSubscribeResponse.from_dict(expected_response)
         else:
             expected = SetLockedAutoSubscribeResponse.model_validate_json(
@@ -2790,7 +2908,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(SetLockedAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetLockedAutoSubscribeResponse.from_dict(expected_response)
         else:
             expected = SetLockedAutoSubscribeResponse.model_validate_json(
@@ -2879,7 +2999,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetLockedProductRedeemOptionResponse, "from_dict")
+        ):
             expected = SetLockedProductRedeemOptionResponse.from_dict(expected_response)
         else:
             expected = SetLockedProductRedeemOptionResponse.model_validate_json(
@@ -2924,7 +3048,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetLockedProductRedeemOptionResponse, "from_dict")
+        ):
             expected = SetLockedProductRedeemOptionResponse.from_dict(expected_response)
         else:
             expected = SetLockedProductRedeemOptionResponse.model_validate_json(
@@ -3010,7 +3138,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SimpleAccountResponse, "from_dict"):
             expected = SimpleAccountResponse.from_dict(expected_response)
         else:
             expected = SimpleAccountResponse.model_validate_json(
@@ -3056,7 +3184,7 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SimpleAccountResponse, "from_dict"):
             expected = SimpleAccountResponse.from_dict(expected_response)
         else:
             expected = SimpleAccountResponse.model_validate_json(
@@ -3114,7 +3242,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeFlexibleProductResponse, "from_dict")
+        ):
             expected = SubscribeFlexibleProductResponse.from_dict(expected_response)
         else:
             expected = SubscribeFlexibleProductResponse.model_validate_json(
@@ -3161,7 +3293,11 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeFlexibleProductResponse, "from_dict")
+        ):
             expected = SubscribeFlexibleProductResponse.from_dict(expected_response)
         else:
             expected = SubscribeFlexibleProductResponse.model_validate_json(
@@ -3252,7 +3388,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(SubscribeLockedProductResponse, "from_dict")
+        ):
             expected = SubscribeLockedProductResponse.from_dict(expected_response)
         else:
             expected = SubscribeLockedProductResponse.model_validate_json(
@@ -3304,7 +3442,9 @@ class TestFlexibleLockedApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(SubscribeLockedProductResponse, "from_dict")
+        ):
             expected = SubscribeLockedProductResponse.from_dict(expected_response)
         else:
             expected = SubscribeLockedProductResponse.model_validate_json(

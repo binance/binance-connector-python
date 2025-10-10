@@ -7,6 +7,9 @@ from binance_sdk_sub_account.sub_account import (
     SUB_ACCOUNT_REST_API_PROD_URL,
 )
 
+from binance_sdk_sub_account.rest_api.models import (
+    MovePositionForSubAccountOrderArgsParameterInner,
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +31,13 @@ def move_position_for_sub_account():
             from_user_email="from_user_email_example",
             to_user_email="to_user_email_example",
             product_type="product_type_example",
-            order_args=[None],
+            order_args=[
+                MovePositionForSubAccountOrderArgsParameterInner(
+                    symbol="BTCUSDT",
+                    quantity=0.001,
+                    position_side="BOTH",
+                )
+            ],
         )
 
         rate_limits = response.rate_limits

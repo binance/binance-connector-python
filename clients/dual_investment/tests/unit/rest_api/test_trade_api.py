@@ -94,7 +94,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ChangeAutoCompoundStatusResponse, "from_dict")
+        ):
             expected = ChangeAutoCompoundStatusResponse.from_dict(expected_response)
         else:
             expected = ChangeAutoCompoundStatusResponse.model_validate_json(
@@ -139,7 +143,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ChangeAutoCompoundStatusResponse, "from_dict")
+        ):
             expected = ChangeAutoCompoundStatusResponse.from_dict(expected_response)
         else:
             expected = ChangeAutoCompoundStatusResponse.model_validate_json(
@@ -206,7 +214,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckDualInvestmentAccountsResponse, "from_dict")
+        ):
             expected = CheckDualInvestmentAccountsResponse.from_dict(expected_response)
         else:
             expected = CheckDualInvestmentAccountsResponse.model_validate_json(
@@ -250,7 +262,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckDualInvestmentAccountsResponse, "from_dict")
+        ):
             expected = CheckDualInvestmentAccountsResponse.from_dict(expected_response)
         else:
             expected = CheckDualInvestmentAccountsResponse.model_validate_json(
@@ -317,7 +333,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDualInvestmentPositionsResponse, "from_dict")
+        ):
             expected = GetDualInvestmentPositionsResponse.from_dict(expected_response)
         else:
             expected = GetDualInvestmentPositionsResponse.model_validate_json(
@@ -382,7 +402,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDualInvestmentPositionsResponse, "from_dict")
+        ):
             expected = GetDualInvestmentPositionsResponse.from_dict(expected_response)
         else:
             expected = GetDualInvestmentPositionsResponse.model_validate_json(
@@ -458,7 +482,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeDualInvestmentProductsResponse, "from_dict")
+        ):
             expected = SubscribeDualInvestmentProductsResponse.from_dict(
                 expected_response
             )
@@ -521,7 +549,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeDualInvestmentProductsResponse, "from_dict")
+        ):
             expected = SubscribeDualInvestmentProductsResponse.from_dict(
                 expected_response
             )

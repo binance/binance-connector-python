@@ -86,7 +86,11 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckVIPLoanCollateralAccountResponse, "from_dict")
+        ):
             expected = CheckVIPLoanCollateralAccountResponse.from_dict(
                 expected_response
             )
@@ -135,7 +139,11 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckVIPLoanCollateralAccountResponse, "from_dict")
+        ):
             expected = CheckVIPLoanCollateralAccountResponse.from_dict(
                 expected_response
             )
@@ -205,7 +213,9 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetVIPLoanOngoingOrdersResponse, "from_dict")
+        ):
             expected = GetVIPLoanOngoingOrdersResponse.from_dict(expected_response)
         else:
             expected = GetVIPLoanOngoingOrdersResponse.model_validate_json(
@@ -272,7 +282,9 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetVIPLoanOngoingOrdersResponse, "from_dict")
+        ):
             expected = GetVIPLoanOngoingOrdersResponse.from_dict(expected_response)
         else:
             expected = GetVIPLoanOngoingOrdersResponse.model_validate_json(
@@ -336,7 +348,9 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryApplicationStatusResponse, "from_dict")
+        ):
             expected = QueryApplicationStatusResponse.from_dict(expected_response)
         else:
             expected = QueryApplicationStatusResponse.model_validate_json(
@@ -393,7 +407,9 @@ class TestUserInformationApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryApplicationStatusResponse, "from_dict")
+        ):
             expected = QueryApplicationStatusResponse.from_dict(expected_response)
         else:
             expected = QueryApplicationStatusResponse.model_validate_json(

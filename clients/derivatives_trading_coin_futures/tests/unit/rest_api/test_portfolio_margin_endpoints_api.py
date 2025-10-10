@@ -97,7 +97,11 @@ class TestPortfolioMarginEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ClassicPortfolioMarginAccountInformationResponse, "from_dict")
+        ):
             expected = ClassicPortfolioMarginAccountInformationResponse.from_dict(
                 expected_response
             )
@@ -146,7 +150,11 @@ class TestPortfolioMarginEndpointsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ClassicPortfolioMarginAccountInformationResponse, "from_dict")
+        ):
             expected = ClassicPortfolioMarginAccountInformationResponse.from_dict(
                 expected_response
             )

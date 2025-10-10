@@ -37,6 +37,7 @@ class QueryOrderResponse(BaseModel):
     price: Optional[StrictStr] = None
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
     side: Optional[StrictStr] = None
+    position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
     status: Optional[StrictStr] = None
     stop_price: Optional[StrictStr] = Field(default=None, alias="stopPrice")
     close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
@@ -66,6 +67,7 @@ class QueryOrderResponse(BaseModel):
         "price",
         "reduceOnly",
         "side",
+        "positionSide",
         "status",
         "stopPrice",
         "closePosition",
@@ -157,6 +159,7 @@ class QueryOrderResponse(BaseModel):
                 "price": obj.get("price"),
                 "reduceOnly": obj.get("reduceOnly"),
                 "side": obj.get("side"),
+                "positionSide": obj.get("positionSide"),
                 "status": obj.get("status"),
                 "stopPrice": obj.get("stopPrice"),
                 "closePosition": obj.get("closePosition"),

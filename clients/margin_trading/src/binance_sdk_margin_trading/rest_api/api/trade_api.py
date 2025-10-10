@@ -82,6 +82,17 @@ class TradeApi:
 
         **If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
 
+        **Supported Products:**
+
+        - Cross Margin
+        - Isolated Margin
+        - Portfolio Margin Pro
+        - Cross Margin Pro (Additional agreement required and subject to meeting eligibility criteria)
+
+        **Unsupported Products:**
+
+        - Portfolio Margin
+
         We support several types of API keys:
 
         * Ed25519 (recommended)

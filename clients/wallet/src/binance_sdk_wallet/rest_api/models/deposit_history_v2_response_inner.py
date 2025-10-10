@@ -30,24 +30,24 @@ class DepositHistoryV2ResponseInner(BaseModel):
     DepositHistoryV2ResponseInner
     """  # noqa: E501
 
-    depositId: Optional[StrictStr] = Field(default=None, alias="depositId")
+    deposit_id: Optional[StrictStr] = Field(default=None, alias="depositId")
     amount: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
     coin: Optional[StrictStr] = None
-    depositStatus: Optional[StrictInt] = Field(default=None, alias="depositStatus")
-    travelRuleReqStatus: Optional[StrictInt] = Field(
+    deposit_status: Optional[StrictInt] = Field(default=None, alias="depositStatus")
+    travel_rule_req_status: Optional[StrictInt] = Field(
         default=None, alias="travelRuleReqStatus"
     )
     address: Optional[StrictStr] = None
-    addressTag: Optional[StrictStr] = Field(default=None, alias="addressTag")
-    txId: Optional[StrictStr] = Field(default=None, alias="txId")
-    transferType: Optional[StrictInt] = Field(default=None, alias="transferType")
-    confirmTimes: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
-    requireQuestionnaire: Optional[StrictBool] = Field(
+    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
+    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
+    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
+    confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
+    require_questionnaire: Optional[StrictBool] = Field(
         default=None, alias="requireQuestionnaire"
     )
     questionnaire: Optional[DepositHistoryV2ResponseInnerQuestionnaire] = None
-    insertTime: Optional[StrictInt] = Field(default=None, alias="insertTime")
+    insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "depositId",

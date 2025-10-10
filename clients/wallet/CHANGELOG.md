@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.1.0 - 2025-10-10
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### REST API
+
+- Fixed responses typo
+
 ## 4.0.0 - 2025-09-16
 
 ### Changed (2)

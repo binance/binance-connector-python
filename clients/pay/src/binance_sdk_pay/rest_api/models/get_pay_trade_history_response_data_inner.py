@@ -36,20 +36,20 @@ class GetPayTradeHistoryResponseDataInner(BaseModel):
     GetPayTradeHistoryResponseDataInner
     """  # noqa: E501
 
-    orderType: Optional[StrictStr] = Field(default=None, alias="orderType")
-    transactionId: Optional[StrictStr] = Field(default=None, alias="transactionId")
-    transactionTime: Optional[StrictInt] = Field(default=None, alias="transactionTime")
+    order_type: Optional[StrictStr] = Field(default=None, alias="orderType")
+    transaction_id: Optional[StrictStr] = Field(default=None, alias="transactionId")
+    transaction_time: Optional[StrictInt] = Field(default=None, alias="transactionTime")
     amount: Optional[StrictStr] = None
     currency: Optional[StrictStr] = None
-    walletType: Optional[StrictInt] = Field(default=None, alias="walletType")
-    walletTypes: Optional[List[StrictInt]] = Field(default=None, alias="walletTypes")
-    fundsDetail: Optional[List[GetPayTradeHistoryResponseDataInnerFundsDetailInner]] = (
-        Field(default=None, alias="fundsDetail")
-    )
-    payerInfo: Optional[GetPayTradeHistoryResponseDataInnerPayerInfo] = Field(
+    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    wallet_types: Optional[List[StrictInt]] = Field(default=None, alias="walletTypes")
+    funds_detail: Optional[
+        List[GetPayTradeHistoryResponseDataInnerFundsDetailInner]
+    ] = Field(default=None, alias="fundsDetail")
+    payer_info: Optional[GetPayTradeHistoryResponseDataInnerPayerInfo] = Field(
         default=None, alias="payerInfo"
     )
-    receiverInfo: Optional[GetPayTradeHistoryResponseDataInnerReceiverInfo] = Field(
+    receiver_info: Optional[GetPayTradeHistoryResponseDataInnerReceiverInfo] = Field(
         default=None, alias="receiverInfo"
     )
     additional_properties: Dict[str, Any] = {}
