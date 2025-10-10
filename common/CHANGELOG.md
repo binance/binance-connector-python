@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0 - 2025-10-10
+
+### Changed (1)
+
+- Fixed issue with response model deserialization in `send_request` function in `utils.py`.
+
 ## 3.1.1 - 2025-09-16
 
 ### Changed (1)

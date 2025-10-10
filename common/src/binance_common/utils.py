@@ -387,13 +387,13 @@ def send_request(
             )
             if (is_list and not is_flat_list) or not response_model:
                 data_function = lambda: parsed
-            elif is_oneof or is_list:
+            elif is_oneof or is_list or hasattr(response_model, "from_dict"):
                 data_function = lambda: response_model.from_dict(parsed)
             else:
                 data_function = lambda: response_model.model_validate(parsed)
 
             try:
-                data_function()  
+                data_function()
                 final_data_function = data_function
             except Exception:
                 final_data_function = lambda: parsed
