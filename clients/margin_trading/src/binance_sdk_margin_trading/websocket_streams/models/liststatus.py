@@ -96,10 +96,10 @@ class Liststatus(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in o (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in O (list)
         _items = []
-        if self.o:
-            for _item_o in self.o:
+        if self.O:
+            for _item_o in self.O:
                 if _item_o:
                     _items.append(_item_o.to_dict())
             _dict["O"] = _items

@@ -51,6 +51,7 @@ from binance_sdk_spot.websocket_api.models import (
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoSideEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAboveTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoBelowTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAboveTimeInForceEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoAbovePegPriceTypeEnum
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOcoAbovePegOffsetTypeEnum,
@@ -2621,7 +2622,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -2636,9 +2637,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
@@ -2779,7 +2778,10 @@ class TestWebSocketTradeApi:
         assert params["above_price"] == 1.0
         assert params["above_stop_price"] == 1.0
         assert params["above_trailing_delta"] == 1
-        assert params["above_time_in_force"] == 1.0
+        assert (
+            params["above_time_in_force"]
+            == OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value
+        )
         assert params["above_strategy_id"] == 1
         assert params["above_strategy_type"] == 1
         assert (
@@ -2798,7 +2800,7 @@ class TestWebSocketTradeApi:
         assert params["below_trailing_delta"] == 1
         assert (
             params["below_time_in_force"]
-            == OrderListPlaceOcoBelowTimeInForceEnum["belowType"].value
+            == OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value
         )
         assert params["below_strategy_id"] == 1
         assert params["below_strategy_type"] == 1
@@ -2849,7 +2851,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -2864,9 +2866,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
@@ -2904,7 +2904,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -2919,9 +2919,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
@@ -2959,7 +2957,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -2974,9 +2972,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
@@ -3016,7 +3012,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -3031,9 +3027,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[
@@ -3073,7 +3067,7 @@ class TestWebSocketTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListPlaceOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListPlaceOcoAbovePegPriceTypeEnum[
@@ -3088,9 +3082,7 @@ class TestWebSocketTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum[
-                "belowType"
-            ].value,
+            "below_time_in_force": OrderListPlaceOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListPlaceOcoBelowPegPriceTypeEnum[

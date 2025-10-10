@@ -33,6 +33,7 @@ from binance_sdk_spot.rest_api.models import GetOpenOrdersResponse
 from binance_sdk_spot.rest_api.models import GetOrderResponse
 from binance_sdk_spot.rest_api.models import GetOrderListResponse
 from binance_sdk_spot.rest_api.models import MyAllocationsResponse
+from binance_sdk_spot.rest_api.models import MyFiltersResponse
 from binance_sdk_spot.rest_api.models import MyPreventedMatchesResponse
 from binance_sdk_spot.rest_api.models import MyTradesResponse
 from binance_sdk_spot.rest_api.models import OpenOrderListResponse
@@ -126,7 +127,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountCommissionResponse, "from_dict"):
             expected = AccountCommissionResponse.from_dict(expected_response)
         else:
             expected = AccountCommissionResponse.model_validate_json(
@@ -191,7 +192,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountCommissionResponse, "from_dict"):
             expected = AccountCommissionResponse.from_dict(expected_response)
         else:
             expected = AccountCommissionResponse.model_validate_json(
@@ -292,7 +293,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllOrderListResponse, "from_dict"):
             expected = AllOrderListResponse.from_dict(expected_response)
         else:
             expected = AllOrderListResponse.model_validate_json(
@@ -310,7 +311,7 @@ class TestAccountApi:
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "limit": 500,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -380,7 +381,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllOrderListResponse, "from_dict"):
             expected = AllOrderListResponse.from_dict(expected_response)
         else:
             expected = AllOrderListResponse.model_validate_json(
@@ -459,7 +460,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllOrdersResponse, "from_dict"):
             expected = AllOrdersResponse.from_dict(expected_response)
         else:
             expected = AllOrdersResponse.model_validate_json(
@@ -478,7 +479,7 @@ class TestAccountApi:
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "limit": 500,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -528,7 +529,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllOrdersResponse, "from_dict"):
             expected = AllOrdersResponse.from_dict(expected_response)
         else:
             expected = AllOrdersResponse.model_validate_json(
@@ -615,7 +616,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetAccountResponse, "from_dict"):
             expected = GetAccountResponse.from_dict(expected_response)
         else:
             expected = GetAccountResponse.model_validate_json(
@@ -628,7 +629,7 @@ class TestAccountApi:
     def test_get_account_success_with_optional_params(self, mock_get_signature):
         """Test get_account() successfully with optional parameters."""
 
-        params = {"omit_zero_balances": False, "recv_window": 5000}
+        params = {"omit_zero_balances": False, "recv_window": 5000.0}
 
         expected_response = {
             "makerCommission": 15,
@@ -679,7 +680,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetAccountResponse, "from_dict"):
             expected = GetAccountResponse.from_dict(expected_response)
         else:
             expected = GetAccountResponse.model_validate_json(
@@ -750,7 +751,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOpenOrdersResponse, "from_dict"):
             expected = GetOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = GetOpenOrdersResponse.model_validate_json(
@@ -763,7 +764,7 @@ class TestAccountApi:
     def test_get_open_orders_success_with_optional_params(self, mock_get_signature):
         """Test get_open_orders() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "recv_window": 5000}
+        params = {"symbol": "BNBUSDT", "recv_window": 5000.0}
 
         expected_response = [
             {
@@ -812,7 +813,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOpenOrdersResponse, "from_dict"):
             expected = GetOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = GetOpenOrdersResponse.model_validate_json(
@@ -889,7 +890,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOrderResponse, "from_dict"):
             expected = GetOrderResponse.from_dict(expected_response)
         else:
             expected = GetOrderResponse.model_validate_json(
@@ -906,7 +907,7 @@ class TestAccountApi:
             "symbol": "BNBUSDT",
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -954,7 +955,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOrderResponse, "from_dict"):
             expected = GetOrderResponse.from_dict(expected_response)
         else:
             expected = GetOrderResponse.model_validate_json(
@@ -1036,7 +1037,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOrderListResponse, "from_dict"):
             expected = GetOrderListResponse.from_dict(expected_response)
         else:
             expected = GetOrderListResponse.model_validate_json(
@@ -1052,7 +1053,7 @@ class TestAccountApi:
         params = {
             "order_list_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1099,7 +1100,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOrderListResponse, "from_dict"):
             expected = GetOrderListResponse.from_dict(expected_response)
         else:
             expected = GetOrderListResponse.model_validate_json(
@@ -1172,7 +1173,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyAllocationsResponse, "from_dict"):
             expected = MyAllocationsResponse.from_dict(expected_response)
         else:
             expected = MyAllocationsResponse.model_validate_json(
@@ -1192,7 +1193,7 @@ class TestAccountApi:
             "from_allocation_id": 1,
             "limit": 500,
             "order_id": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -1236,7 +1237,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyAllocationsResponse, "from_dict"):
             expected = MyAllocationsResponse.from_dict(expected_response)
         else:
             expected = MyAllocationsResponse.model_validate_json(
@@ -1267,6 +1268,175 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.my_allocations(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_my_filters_success(self, mock_get_signature):
+        """Test my_filters() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        expected_response = {
+            "exchangeFilters": [
+                {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000}
+            ],
+            "symbolFilters": [
+                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20}
+            ],
+            "assetFilters": [
+                {"filterType": "MAX_ASSET", "asset": "JPY", "limit": "1000000.00000000"}
+            ],
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                },
+                {
+                    "rateLimitType": "RAW_REQUESTS",
+                    "interval": "MINUTE",
+                    "intervalNum": 5,
+                    "limit": 61000,
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.my_filters(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/myFilters" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "BNBUSDT"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(MyFiltersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(MyFiltersResponse, "from_dict"):
+            expected = MyFiltersResponse.from_dict(expected_response)
+        else:
+            expected = MyFiltersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_my_filters_success_with_optional_params(self, mock_get_signature):
+        """Test my_filters() successfully with optional parameters."""
+
+        params = {"symbol": "BNBUSDT", "recv_window": 5000.0}
+
+        expected_response = {
+            "exchangeFilters": [
+                {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000}
+            ],
+            "symbolFilters": [
+                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20}
+            ],
+            "assetFilters": [
+                {"filterType": "MAX_ASSET", "asset": "JPY", "limit": "1000000.00000000"}
+            ],
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                },
+                {
+                    "rateLimitType": "RAW_REQUESTS",
+                    "interval": "MINUTE",
+                    "intervalNum": 5,
+                    "limit": 61000,
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.my_filters(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/myFilters" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(MyFiltersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(MyFiltersResponse, "from_dict"):
+            expected = MyFiltersResponse.from_dict(expected_response)
+        else:
+            expected = MyFiltersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_my_filters_missing_required_param_symbol(self):
+        """Test that my_filters() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.my_filters(**params)
+
+    def test_my_filters_server_error(self):
+        """Test that my_filters() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.my_filters = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.my_filters(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_my_prevented_matches_success(self, mock_get_signature):
@@ -1319,7 +1489,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyPreventedMatchesResponse, "from_dict"):
             expected = MyPreventedMatchesResponse.from_dict(expected_response)
         else:
             expected = MyPreventedMatchesResponse.model_validate_json(
@@ -1340,7 +1510,7 @@ class TestAccountApi:
             "order_id": 1,
             "from_prevented_match_id": 1,
             "limit": 500,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -1380,7 +1550,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyPreventedMatchesResponse, "from_dict"):
             expected = MyPreventedMatchesResponse.from_dict(expected_response)
         else:
             expected = MyPreventedMatchesResponse.model_validate_json(
@@ -1466,7 +1636,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyTradesResponse, "from_dict"):
             expected = MyTradesResponse.from_dict(expected_response)
         else:
             expected = MyTradesResponse.model_validate_json(
@@ -1486,7 +1656,7 @@ class TestAccountApi:
             "end_time": 1735693200000,
             "from_id": 1,
             "limit": 500,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -1529,7 +1699,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MyTradesResponse, "from_dict"):
             expected = MyTradesResponse.from_dict(expected_response)
         else:
             expected = MyTradesResponse.model_validate_json(
@@ -1613,7 +1783,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OpenOrderListResponse, "from_dict"):
             expected = OpenOrderListResponse.from_dict(expected_response)
         else:
             expected = OpenOrderListResponse.model_validate_json(
@@ -1626,7 +1796,7 @@ class TestAccountApi:
     def test_open_order_list_success_with_optional_params(self, mock_get_signature):
         """Test open_order_list() successfully with optional parameters."""
 
-        params = {"recv_window": 5000}
+        params = {"recv_window": 5000.0}
 
         expected_response = [
             {
@@ -1674,7 +1844,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OpenOrderListResponse, "from_dict"):
             expected = OpenOrderListResponse.from_dict(expected_response)
         else:
             expected = OpenOrderListResponse.model_validate_json(
@@ -1753,7 +1923,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderAmendmentsResponse, "from_dict"):
             expected = OrderAmendmentsResponse.from_dict(expected_response)
         else:
             expected = OrderAmendmentsResponse.model_validate_json(
@@ -1771,7 +1941,7 @@ class TestAccountApi:
             "order_id": 1,
             "from_execution_id": 1,
             "limit": 500,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = [
@@ -1819,7 +1989,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderAmendmentsResponse, "from_dict"):
             expected = OrderAmendmentsResponse.from_dict(expected_response)
         else:
             expected = OrderAmendmentsResponse.model_validate_json(
@@ -1911,7 +2081,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RateLimitOrderResponse, "from_dict"):
             expected = RateLimitOrderResponse.from_dict(expected_response)
         else:
             expected = RateLimitOrderResponse.model_validate_json(
@@ -1924,7 +2094,7 @@ class TestAccountApi:
     def test_rate_limit_order_success_with_optional_params(self, mock_get_signature):
         """Test rate_limit_order() successfully with optional parameters."""
 
-        params = {"recv_window": 5000}
+        params = {"recv_window": 5000.0}
 
         expected_response = [
             {
@@ -1965,7 +2135,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RateLimitOrderResponse, "from_dict"):
             expected = RateLimitOrderResponse.from_dict(expected_response)
         else:
             expected = RateLimitOrderResponse.model_validate_json(

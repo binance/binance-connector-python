@@ -27,16 +27,16 @@ class DustlogResponseUserAssetDribbletsInnerUserAssetDribbletDetailsInner(BaseMo
     DustlogResponseUserAssetDribbletsInnerUserAssetDribbletDetailsInner
     """  # noqa: E501
 
-    transId: Optional[StrictInt] = Field(default=None, alias="transId")
-    serviceChargeAmount: Optional[StrictStr] = Field(
+    trans_id: Optional[StrictInt] = Field(default=None, alias="transId")
+    service_charge_amount: Optional[StrictStr] = Field(
         default=None, alias="serviceChargeAmount"
     )
     amount: Optional[StrictStr] = None
-    operateTime: Optional[StrictInt] = Field(default=None, alias="operateTime")
-    transferedAmount: Optional[StrictStr] = Field(
+    operate_time: Optional[StrictInt] = Field(default=None, alias="operateTime")
+    transfered_amount: Optional[StrictStr] = Field(
         default=None, alias="transferedAmount"
     )
-    fromAsset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
+    from_asset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "transId",

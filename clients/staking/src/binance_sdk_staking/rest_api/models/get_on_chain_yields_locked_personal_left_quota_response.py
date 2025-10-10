@@ -27,7 +27,7 @@ class GetOnChainYieldsLockedPersonalLeftQuotaResponse(BaseModel):
     GetOnChainYieldsLockedPersonalLeftQuotaResponse
     """  # noqa: E501
 
-    leftPersonalQuota: Optional[StrictStr] = Field(
+    left_personal_quota: Optional[StrictStr] = Field(
         default=None, alias="leftPersonalQuota"
     )
     additional_properties: Dict[str, Any] = {}

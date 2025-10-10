@@ -33,14 +33,16 @@ class MintBfusdForPortfolioMarginResponse(BaseModel):
     target_asset_qty: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="targetAssetQty"
     )
-    rate: Optional[Union[StrictFloat, StrictInt]] = None
+    mint_rate: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="mintRate"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "fromAsset",
         "targetAsset",
         "fromAssetQty",
         "targetAssetQty",
-        "rate",
+        "mintRate",
     ]
 
     model_config = ConfigDict(
@@ -111,7 +113,7 @@ class MintBfusdForPortfolioMarginResponse(BaseModel):
                 "targetAsset": obj.get("targetAsset"),
                 "fromAssetQty": obj.get("fromAssetQty"),
                 "targetAssetQty": obj.get("targetAssetQty"),
-                "rate": obj.get("rate"),
+                "mintRate": obj.get("mintRate"),
             }
         )
         # store additional fields in additional_properties

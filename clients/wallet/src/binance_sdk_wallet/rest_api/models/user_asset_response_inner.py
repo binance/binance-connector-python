@@ -33,7 +33,7 @@ class UserAssetResponseInner(BaseModel):
     freeze: Optional[StrictStr] = None
     withdrawing: Optional[StrictStr] = None
     ipoable: Optional[StrictStr] = None
-    btcValuation: Optional[StrictStr] = Field(default=None, alias="btcValuation")
+    btc_valuation: Optional[StrictStr] = Field(default=None, alias="btcValuation")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

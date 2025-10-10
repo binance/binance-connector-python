@@ -23,7 +23,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.rest_api.models.exchange_filters import ExchangeFilters
+from binance_sdk_spot.rest_api.models.symbol_filters import SymbolFilters
 from typing import Set
 from typing_extensions import Self
 
@@ -73,7 +73,7 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
     is_margin_trading_allowed: Optional[StrictBool] = Field(
         default=None, alias="isMarginTradingAllowed"
     )
-    filters: Optional[List[ExchangeFilters]] = None
+    filters: Optional[List[SymbolFilters]] = None
     permissions: Optional[List[StrictStr]] = None
     permission_sets: Optional[List[List[StrictStr]]] = Field(
         default=None, alias="permissionSets"
@@ -205,7 +205,7 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
                 "isSpotTradingAllowed": obj.get("isSpotTradingAllowed"),
                 "isMarginTradingAllowed": obj.get("isMarginTradingAllowed"),
                 "filters": (
-                    [ExchangeFilters.from_dict(_item) for _item in obj["filters"]]
+                    [SymbolFilters.from_dict(_item) for _item in obj["filters"]]
                     if obj.get("filters") is not None
                     else None
                 ),

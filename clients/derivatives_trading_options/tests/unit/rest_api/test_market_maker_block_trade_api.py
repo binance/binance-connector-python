@@ -43,11 +43,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 )
 
 
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    NewBlockTradeOrderSideEnum,
-)
-
-
 class TestMarketMakerBlockTradeApi:
     @pytest.fixture(autouse=True)
     def setup_client(self):
@@ -126,7 +121,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcceptBlockTradeOrderResponse, "from_dict"):
             expected = AcceptBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = AcceptBlockTradeOrderResponse.model_validate_json(
@@ -184,7 +179,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcceptBlockTradeOrderResponse, "from_dict"):
             expected = AcceptBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = AcceptBlockTradeOrderResponse.model_validate_json(
@@ -279,7 +274,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountBlockTradeListResponse, "from_dict"):
             expected = AccountBlockTradeListResponse.from_dict(expected_response)
         else:
             expected = AccountBlockTradeListResponse.model_validate_json(
@@ -354,7 +349,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountBlockTradeListResponse, "from_dict"):
             expected = AccountBlockTradeListResponse.from_dict(expected_response)
         else:
             expected = AccountBlockTradeListResponse.model_validate_json(
@@ -512,7 +507,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExtendBlockTradeOrderResponse, "from_dict"):
             expected = ExtendBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = ExtendBlockTradeOrderResponse.model_validate_json(
@@ -570,7 +565,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExtendBlockTradeOrderResponse, "from_dict"):
             expected = ExtendBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = ExtendBlockTradeOrderResponse.model_validate_json(
@@ -623,10 +618,6 @@ class TestMarketMakerBlockTradeApi:
                     }
                 ]
             ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
         }
 
         expected_response = {
@@ -663,10 +654,6 @@ class TestMarketMakerBlockTradeApi:
         assert request_kwargs["method"] == "POST"
         assert normalized["liquidity"] == "liquidity_example"
         assert "legs" in normalized
-        assert normalized["symbol"] == "symbol_example"
-        assert normalized["side"] == NewBlockTradeOrderSideEnum["BUY"].value
-        assert normalized["price"] == 1.0
-        assert normalized["quantity"] == 1.0
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -677,7 +664,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(NewBlockTradeOrderResponse, "from_dict"):
             expected = NewBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = NewBlockTradeOrderResponse.model_validate_json(
@@ -705,10 +692,6 @@ class TestMarketMakerBlockTradeApi:
                     }
                 ]
             ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
             "recv_window": 5000,
         }
 
@@ -749,7 +732,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(NewBlockTradeOrderResponse, "from_dict"):
             expected = NewBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = NewBlockTradeOrderResponse.model_validate_json(
@@ -773,10 +756,6 @@ class TestMarketMakerBlockTradeApi:
                     }
                 ]
             ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
         }
         params["liquidity"] = None
 
@@ -800,116 +779,10 @@ class TestMarketMakerBlockTradeApi:
                     }
                 ]
             ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
         }
         params["legs"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'legs'"):
-            self.client.new_block_trade_order(**params)
-
-    def test_new_block_trade_order_missing_required_param_symbol(self):
-        """Test that new_block_trade_order() raises RequiredError when 'symbol' is missing."""
-        params = {
-            "liquidity": "liquidity_example",
-            "legs": [
-                [
-                    {
-                        "symbol": "BTC-210115-35000-C",
-                        "price": "100",
-                        "quantity": "0.0002",
-                        "side": "BUY",
-                        "type": "LIMIT",
-                    }
-                ]
-            ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
-        }
-        params["symbol"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
-            self.client.new_block_trade_order(**params)
-
-    def test_new_block_trade_order_missing_required_param_side(self):
-        """Test that new_block_trade_order() raises RequiredError when 'side' is missing."""
-        params = {
-            "liquidity": "liquidity_example",
-            "legs": [
-                [
-                    {
-                        "symbol": "BTC-210115-35000-C",
-                        "price": "100",
-                        "quantity": "0.0002",
-                        "side": "BUY",
-                        "type": "LIMIT",
-                    }
-                ]
-            ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
-        }
-        params["side"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
-            self.client.new_block_trade_order(**params)
-
-    def test_new_block_trade_order_missing_required_param_price(self):
-        """Test that new_block_trade_order() raises RequiredError when 'price' is missing."""
-        params = {
-            "liquidity": "liquidity_example",
-            "legs": [
-                [
-                    {
-                        "symbol": "BTC-210115-35000-C",
-                        "price": "100",
-                        "quantity": "0.0002",
-                        "side": "BUY",
-                        "type": "LIMIT",
-                    }
-                ]
-            ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
-        }
-        params["price"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
-            self.client.new_block_trade_order(**params)
-
-    def test_new_block_trade_order_missing_required_param_quantity(self):
-        """Test that new_block_trade_order() raises RequiredError when 'quantity' is missing."""
-        params = {
-            "liquidity": "liquidity_example",
-            "legs": [
-                [
-                    {
-                        "symbol": "BTC-210115-35000-C",
-                        "price": "100",
-                        "quantity": "0.0002",
-                        "side": "BUY",
-                        "type": "LIMIT",
-                    }
-                ]
-            ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
-        }
-        params["quantity"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'quantity'"
-        ):
             self.client.new_block_trade_order(**params)
 
     def test_new_block_trade_order_server_error(self):
@@ -928,10 +801,6 @@ class TestMarketMakerBlockTradeApi:
                     }
                 ]
             ],
-            "symbol": "symbol_example",
-            "side": NewBlockTradeOrderSideEnum["BUY"].value,
-            "price": 1.0,
-            "quantity": 1.0,
         }
 
         mock_error = Exception("ResponseError")
@@ -992,7 +861,9 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryBlockTradeDetailsResponse, "from_dict")
+        ):
             expected = QueryBlockTradeDetailsResponse.from_dict(expected_response)
         else:
             expected = QueryBlockTradeDetailsResponse.model_validate_json(
@@ -1050,7 +921,9 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryBlockTradeDetailsResponse, "from_dict")
+        ):
             expected = QueryBlockTradeDetailsResponse.from_dict(expected_response)
         else:
             expected = QueryBlockTradeDetailsResponse.model_validate_json(
@@ -1147,7 +1020,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QueryBlockTradeOrderResponse, "from_dict"):
             expected = QueryBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = QueryBlockTradeOrderResponse.model_validate_json(
@@ -1225,7 +1098,7 @@ class TestMarketMakerBlockTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QueryBlockTradeOrderResponse, "from_dict"):
             expected = QueryBlockTradeOrderResponse.from_dict(expected_response)
         else:
             expected = QueryBlockTradeOrderResponse.model_validate_json(

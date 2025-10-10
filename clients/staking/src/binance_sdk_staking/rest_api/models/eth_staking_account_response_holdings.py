@@ -27,8 +27,8 @@ class EthStakingAccountResponseHoldings(BaseModel):
     EthStakingAccountResponseHoldings
     """  # noqa: E501
 
-    wbethAmount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
-    bethAmount: Optional[StrictStr] = Field(default=None, alias="bethAmount")
+    wbeth_amount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
+    beth_amount: Optional[StrictStr] = Field(default=None, alias="bethAmount")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["wbethAmount", "bethAmount"]
 

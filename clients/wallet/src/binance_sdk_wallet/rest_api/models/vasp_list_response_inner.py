@@ -27,8 +27,8 @@ class VaspListResponseInner(BaseModel):
     VaspListResponseInner
     """  # noqa: E501
 
-    vaspName: Optional[StrictStr] = Field(default=None, alias="vaspName")
-    vaspCode: Optional[StrictStr] = Field(default=None, alias="vaspCode")
+    vasp_name: Optional[StrictStr] = Field(default=None, alias="vaspName")
+    vasp_code: Optional[StrictStr] = Field(default=None, alias="vaspCode")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["vaspName", "vaspCode"]
 

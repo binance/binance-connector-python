@@ -150,7 +150,7 @@ class TestUserDataStreamApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(NewUserDataStreamResponse, "from_dict"):
             expected = NewUserDataStreamResponse.from_dict(expected_response)
         else:
             expected = NewUserDataStreamResponse.model_validate_json(

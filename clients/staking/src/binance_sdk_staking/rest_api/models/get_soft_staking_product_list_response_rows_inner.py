@@ -28,11 +28,11 @@ class GetSoftStakingProductListResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     asset: Optional[StrictStr] = None
-    minAmount: Optional[StrictStr] = Field(default=None, alias="minAmount")
-    maxCap: Optional[StrictStr] = Field(default=None, alias="maxCap")
+    min_amount: Optional[StrictStr] = Field(default=None, alias="minAmount")
+    max_cap: Optional[StrictStr] = Field(default=None, alias="maxCap")
     apr: Optional[StrictStr] = None
-    stakedAmount: Optional[StrictStr] = Field(default=None, alias="stakedAmount")
-    totalProfit: Optional[StrictStr] = Field(default=None, alias="totalProfit")
+    staked_amount: Optional[StrictStr] = Field(default=None, alias="stakedAmount")
+    total_profit: Optional[StrictStr] = Field(default=None, alias="totalProfit")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

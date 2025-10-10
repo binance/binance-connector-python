@@ -109,7 +109,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckCollateralRepayRateResponse, "from_dict")
+        ):
             expected = CheckCollateralRepayRateResponse.from_dict(expected_response)
         else:
             expected = CheckCollateralRepayRateResponse.model_validate_json(
@@ -158,7 +162,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckCollateralRepayRateResponse, "from_dict")
+        ):
             expected = CheckCollateralRepayRateResponse.from_dict(expected_response)
         else:
             expected = CheckCollateralRepayRateResponse.model_validate_json(
@@ -258,7 +266,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanAdjustLtvResponse, "from_dict"):
             expected = FlexibleLoanAdjustLtvResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanAdjustLtvResponse.model_validate_json(
@@ -312,7 +320,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanAdjustLtvResponse, "from_dict"):
             expected = FlexibleLoanAdjustLtvResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanAdjustLtvResponse.model_validate_json(
@@ -443,7 +451,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanBorrowResponse, "from_dict"):
             expected = FlexibleLoanBorrowResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanBorrowResponse.model_validate_json(
@@ -496,7 +504,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanBorrowResponse, "from_dict"):
             expected = FlexibleLoanBorrowResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanBorrowResponse.model_validate_json(
@@ -595,7 +603,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanRepayResponse, "from_dict"):
             expected = FlexibleLoanRepayResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanRepayResponse.model_validate_json(
@@ -650,7 +658,7 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FlexibleLoanRepayResponse, "from_dict"):
             expected = FlexibleLoanRepayResponse.from_dict(expected_response)
         else:
             expected = FlexibleLoanRepayResponse.model_validate_json(
@@ -756,7 +764,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanAssetsDataResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanAssetsDataResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanAssetsDataResponse.model_validate_json(
@@ -807,7 +819,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanAssetsDataResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanAssetsDataResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanAssetsDataResponse.model_validate_json(
@@ -867,7 +883,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanBorrowHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanBorrowHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanBorrowHistoryResponse.model_validate_json(
@@ -928,7 +948,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanBorrowHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanBorrowHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanBorrowHistoryResponse.model_validate_json(
@@ -987,7 +1011,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanCollateralAssetsDataResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanCollateralAssetsDataResponse.from_dict(
                 expected_response
             )
@@ -1041,7 +1069,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanCollateralAssetsDataResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanCollateralAssetsDataResponse.from_dict(
                 expected_response
             )
@@ -1108,7 +1140,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanLiquidationHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanLiquidationHistoryResponse.from_dict(
                 expected_response
             )
@@ -1174,7 +1210,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanLiquidationHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanLiquidationHistoryResponse.from_dict(
                 expected_response
             )
@@ -1239,7 +1279,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanLtvAdjustmentHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanLtvAdjustmentHistoryResponse.from_dict(
                 expected_response
             )
@@ -1303,7 +1347,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanLtvAdjustmentHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanLtvAdjustmentHistoryResponse.from_dict(
                 expected_response
             )
@@ -1366,7 +1414,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanOngoingOrdersResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanOngoingOrdersResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanOngoingOrdersResponse.model_validate_json(
@@ -1424,7 +1476,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanOngoingOrdersResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanOngoingOrdersResponse.from_dict(expected_response)
         else:
             expected = GetFlexibleLoanOngoingOrdersResponse.model_validate_json(
@@ -1484,7 +1540,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanRepaymentHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanRepaymentHistoryResponse.from_dict(
                 expected_response
             )
@@ -1547,7 +1607,11 @@ class TestFlexibleRateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFlexibleLoanRepaymentHistoryResponse, "from_dict")
+        ):
             expected = GetFlexibleLoanRepaymentHistoryResponse.from_dict(
                 expected_response
             )

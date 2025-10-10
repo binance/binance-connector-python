@@ -27,7 +27,7 @@ class GetSymbolsDelistScheduleForSpotResponseInner(BaseModel):
     GetSymbolsDelistScheduleForSpotResponseInner
     """  # noqa: E501
 
-    delistTime: Optional[StrictInt] = Field(default=None, alias="delistTime")
+    delist_time: Optional[StrictInt] = Field(default=None, alias="delistTime")
     symbols: Optional[List[StrictStr]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["delistTime", "symbols"]

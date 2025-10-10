@@ -102,7 +102,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateAVirtualSubAccountResponse, "from_dict")
+        ):
             expected = CreateAVirtualSubAccountResponse.from_dict(expected_response)
         else:
             expected = CreateAVirtualSubAccountResponse.model_validate_json(
@@ -146,7 +150,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateAVirtualSubAccountResponse, "from_dict")
+        ):
             expected = CreateAVirtualSubAccountResponse.from_dict(expected_response)
         else:
             expected = CreateAVirtualSubAccountResponse.model_validate_json(
@@ -220,7 +228,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableFuturesForSubAccountResponse, "from_dict")
+        ):
             expected = EnableFuturesForSubAccountResponse.from_dict(expected_response)
         else:
             expected = EnableFuturesForSubAccountResponse.model_validate_json(
@@ -261,7 +273,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableFuturesForSubAccountResponse, "from_dict")
+        ):
             expected = EnableFuturesForSubAccountResponse.from_dict(expected_response)
         else:
             expected = EnableFuturesForSubAccountResponse.model_validate_json(
@@ -331,7 +347,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableOptionsForSubAccountResponse, "from_dict")
+        ):
             expected = EnableOptionsForSubAccountResponse.from_dict(expected_response)
         else:
             expected = EnableOptionsForSubAccountResponse.model_validate_json(
@@ -372,7 +392,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(EnableOptionsForSubAccountResponse, "from_dict")
+        ):
             expected = EnableOptionsForSubAccountResponse.from_dict(expected_response)
         else:
             expected = EnableOptionsForSubAccountResponse.model_validate_json(
@@ -453,7 +477,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesPositionRiskOfSubAccountResponse, "from_dict")
+        ):
             expected = GetFuturesPositionRiskOfSubAccountResponse.from_dict(
                 expected_response
             )
@@ -507,7 +535,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesPositionRiskOfSubAccountResponse, "from_dict")
+        ):
             expected = GetFuturesPositionRiskOfSubAccountResponse.from_dict(
                 expected_response
             )
@@ -615,7 +647,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesPositionRiskOfSubAccountV2Response, "from_dict")
+        ):
             expected = GetFuturesPositionRiskOfSubAccountV2Response.from_dict(
                 expected_response
             )
@@ -690,7 +726,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesPositionRiskOfSubAccountV2Response, "from_dict")
+        ):
             expected = GetFuturesPositionRiskOfSubAccountV2Response.from_dict(
                 expected_response
             )
@@ -787,7 +827,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSubAccountsStatusOnMarginOrFuturesResponse, "from_dict")
+        ):
             expected = GetSubAccountsStatusOnMarginOrFuturesResponse.from_dict(
                 expected_response
             )
@@ -842,7 +886,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSubAccountsStatusOnMarginOrFuturesResponse, "from_dict")
+        ):
             expected = GetSubAccountsStatusOnMarginOrFuturesResponse.from_dict(
                 expected_response
             )
@@ -917,7 +965,7 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySubAccountListResponse, "from_dict"):
             expected = QuerySubAccountListResponse.from_dict(expected_response)
         else:
             expected = QuerySubAccountListResponse.model_validate_json(
@@ -985,7 +1033,7 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySubAccountListResponse, "from_dict"):
             expected = QuerySubAccountListResponse.from_dict(expected_response)
         else:
             expected = QuerySubAccountListResponse.model_validate_json(
@@ -1072,7 +1120,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QuerySubAccountTransactionStatisticsResponse, "from_dict")
+        ):
             expected = QuerySubAccountTransactionStatisticsResponse.from_dict(
                 expected_response
             )
@@ -1154,7 +1206,11 @@ class TestAccountManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QuerySubAccountTransactionStatisticsResponse, "from_dict")
+        ):
             expected = QuerySubAccountTransactionStatisticsResponse.from_dict(
                 expected_response
             )

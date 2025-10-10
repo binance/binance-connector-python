@@ -165,7 +165,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllCoinsInformationResponse, "from_dict"):
             expected = AllCoinsInformationResponse.from_dict(expected_response)
         else:
             expected = AllCoinsInformationResponse.model_validate_json(
@@ -284,7 +284,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AllCoinsInformationResponse, "from_dict"):
             expected = AllCoinsInformationResponse.from_dict(expected_response)
         else:
             expected = AllCoinsInformationResponse.model_validate_json(
@@ -345,7 +345,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositAddressResponse, "from_dict"):
             expected = DepositAddressResponse.from_dict(expected_response)
         else:
             expected = DepositAddressResponse.model_validate_json(
@@ -394,7 +394,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositAddressResponse, "from_dict"):
             expected = DepositAddressResponse.from_dict(expected_response)
         else:
             expected = DepositAddressResponse.model_validate_json(
@@ -491,7 +491,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositHistoryResponse, "from_dict"):
             expected = DepositHistoryResponse.from_dict(expected_response)
         else:
             expected = DepositHistoryResponse.model_validate_json(
@@ -575,7 +575,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositHistoryResponse, "from_dict"):
             expected = DepositHistoryResponse.from_dict(expected_response)
         else:
             expected = DepositHistoryResponse.model_validate_json(
@@ -650,7 +650,11 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FetchDepositAddressListWithNetworkResponse, "from_dict")
+        ):
             expected = FetchDepositAddressListWithNetworkResponse.from_dict(
                 expected_response
             )
@@ -712,7 +716,11 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FetchDepositAddressListWithNetworkResponse, "from_dict")
+        ):
             expected = FetchDepositAddressListWithNetworkResponse.from_dict(
                 expected_response
             )
@@ -789,7 +797,11 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FetchWithdrawAddressListResponse, "from_dict")
+        ):
             expected = FetchWithdrawAddressListResponse.from_dict(expected_response)
         else:
             expected = FetchWithdrawAddressListResponse.model_validate_json(
@@ -837,7 +849,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FetchWithdrawQuotaResponse, "from_dict"):
             expected = FetchWithdrawQuotaResponse.from_dict(expected_response)
         else:
             expected = FetchWithdrawQuotaResponse.model_validate_json(
@@ -890,7 +902,11 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OneClickArrivalDepositApplyResponse, "from_dict")
+        ):
             expected = OneClickArrivalDepositApplyResponse.from_dict(expected_response)
         else:
             expected = OneClickArrivalDepositApplyResponse.model_validate_json(
@@ -936,7 +952,11 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(OneClickArrivalDepositApplyResponse, "from_dict")
+        ):
             expected = OneClickArrivalDepositApplyResponse.from_dict(expected_response)
         else:
             expected = OneClickArrivalDepositApplyResponse.model_validate_json(
@@ -996,7 +1016,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawResponse, "from_dict"):
             expected = WithdrawResponse.from_dict(expected_response)
         else:
             expected = WithdrawResponse.model_validate_json(
@@ -1046,7 +1066,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawResponse, "from_dict"):
             expected = WithdrawResponse.from_dict(expected_response)
         else:
             expected = WithdrawResponse.model_validate_json(
@@ -1172,7 +1192,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryResponse, "from_dict"):
             expected = WithdrawHistoryResponse.from_dict(expected_response)
         else:
             expected = WithdrawHistoryResponse.model_validate_json(
@@ -1257,7 +1277,7 @@ class TestCapitalApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryResponse, "from_dict"):
             expected = WithdrawHistoryResponse.from_dict(expected_response)
         else:
             expected = WithdrawHistoryResponse.model_validate_json(

@@ -33,7 +33,7 @@ class GetOnChainYieldsLockedProductListResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedProductListResponseRowsInner
     """  # noqa: E501
 
-    projectId: Optional[StrictStr] = Field(default=None, alias="projectId")
+    project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
     detail: Optional[GetOnChainYieldsLockedProductListResponseRowsInnerDetail] = None
     quota: Optional[GetOnChainYieldsLockedProductListResponseRowsInnerQuota] = None
     additional_properties: Dict[str, Any] = {}

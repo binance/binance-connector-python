@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0 - 2025-10-10
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### WebSocket Streams
+
+- Fixed typo for endpoint response `GET /sapi/v1/pay/transactions`
+
 ## 2.0.0 - 2025-09-16
 
 ### Changed (2)

@@ -120,7 +120,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedPersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedPersonalLeftQuotaResponse.from_dict(
                 expected_response
             )
@@ -167,7 +171,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedPersonalLeftQuotaResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedPersonalLeftQuotaResponse.from_dict(
                 expected_response
             )
@@ -258,7 +266,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedProductListResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedProductListResponse.from_dict(
                 expected_response
             )
@@ -320,7 +332,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedProductListResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedProductListResponse.from_dict(
                 expected_response
             )
@@ -403,7 +419,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedProductPositionResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedProductPositionResponse.from_dict(
                 expected_response
             )
@@ -484,7 +504,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedProductPositionResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedProductPositionResponse.from_dict(
                 expected_response
             )
@@ -563,7 +587,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedRedemptionRecordResponse.from_dict(
                 expected_response
             )
@@ -640,7 +668,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedRedemptionRecordResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedRedemptionRecordResponse.from_dict(
                 expected_response
             )
@@ -710,7 +742,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedRewardsHistoryResponse.from_dict(
                 expected_response
             )
@@ -775,7 +811,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedRewardsHistoryResponse.from_dict(
                 expected_response
             )
@@ -852,7 +892,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedSubscriptionPreviewResponse.from_dict(
                 expected_response
             )
@@ -915,7 +959,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedSubscriptionPreviewResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedSubscriptionPreviewResponse.from_dict(
                 expected_response
             )
@@ -1026,7 +1074,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedSubscriptionRecordResponse.from_dict(
                 expected_response
             )
@@ -1102,7 +1154,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetOnChainYieldsLockedSubscriptionRecordResponse, "from_dict")
+        ):
             expected = GetOnChainYieldsLockedSubscriptionRecordResponse.from_dict(
                 expected_response
             )
@@ -1163,7 +1219,7 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OnChainYieldsAccountResponse, "from_dict"):
             expected = OnChainYieldsAccountResponse.from_dict(expected_response)
         else:
             expected = OnChainYieldsAccountResponse.model_validate_json(
@@ -1211,7 +1267,7 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OnChainYieldsAccountResponse, "from_dict"):
             expected = OnChainYieldsAccountResponse.from_dict(expected_response)
         else:
             expected = OnChainYieldsAccountResponse.model_validate_json(
@@ -1267,7 +1323,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RedeemOnChainYieldsLockedProductResponse, "from_dict")
+        ):
             expected = RedeemOnChainYieldsLockedProductResponse.from_dict(
                 expected_response
             )
@@ -1310,7 +1370,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RedeemOnChainYieldsLockedProductResponse, "from_dict")
+        ):
             expected = RedeemOnChainYieldsLockedProductResponse.from_dict(
                 expected_response
             )
@@ -1394,7 +1458,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetOnChainYieldsLockedAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetOnChainYieldsLockedAutoSubscribeResponse.from_dict(
                 expected_response
             )
@@ -1439,7 +1507,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetOnChainYieldsLockedAutoSubscribeResponse, "from_dict")
+        ):
             expected = SetOnChainYieldsLockedAutoSubscribeResponse.from_dict(
                 expected_response
             )
@@ -1540,7 +1612,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetOnChainYieldsLockedProductRedeemOptionResponse, "from_dict")
+        ):
             expected = SetOnChainYieldsLockedProductRedeemOptionResponse.from_dict(
                 expected_response
             )
@@ -1591,7 +1667,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SetOnChainYieldsLockedProductRedeemOptionResponse, "from_dict")
+        ):
             expected = SetOnChainYieldsLockedProductRedeemOptionResponse.from_dict(
                 expected_response
             )
@@ -1695,7 +1775,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeOnChainYieldsLockedProductResponse, "from_dict")
+        ):
             expected = SubscribeOnChainYieldsLockedProductResponse.from_dict(
                 expected_response
             )
@@ -1752,7 +1836,11 @@ class TestOnChainYieldsApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubscribeOnChainYieldsLockedProductResponse, "from_dict")
+        ):
             expected = SubscribeOnChainYieldsLockedProductResponse.from_dict(
                 expected_response
             )

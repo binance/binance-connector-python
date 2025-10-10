@@ -79,10 +79,10 @@ class Outboundaccountposition(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in b (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in B (list)
         _items = []
-        if self.b:
-            for _item_b in self.b:
+        if self.B:
+            for _item_b in self.B:
                 if _item_b:
                     _items.append(_item_b.to_dict())
             _dict["B"] = _items

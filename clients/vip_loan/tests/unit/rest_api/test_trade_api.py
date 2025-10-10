@@ -106,7 +106,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanBorrowResponse, "from_dict"):
             expected = VipLoanBorrowResponse.from_dict(expected_response)
         else:
             expected = VipLoanBorrowResponse.model_validate_json(
@@ -163,7 +163,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanBorrowResponse, "from_dict"):
             expected = VipLoanBorrowResponse.from_dict(expected_response)
         else:
             expected = VipLoanBorrowResponse.model_validate_json(
@@ -339,7 +339,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanRenewResponse, "from_dict"):
             expected = VipLoanRenewResponse.from_dict(expected_response)
         else:
             expected = VipLoanRenewResponse.model_validate_json(
@@ -385,7 +385,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanRenewResponse, "from_dict"):
             expected = VipLoanRenewResponse.from_dict(expected_response)
         else:
             expected = VipLoanRenewResponse.model_validate_json(
@@ -482,7 +482,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanRepayResponse, "from_dict"):
             expected = VipLoanRepayResponse.from_dict(expected_response)
         else:
             expected = VipLoanRepayResponse.model_validate_json(
@@ -529,7 +529,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VipLoanRepayResponse, "from_dict"):
             expected = VipLoanRepayResponse.from_dict(expected_response)
         else:
             expected = VipLoanRepayResponse.model_validate_json(

@@ -28,8 +28,8 @@ class SubscribeEthStakingResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = None
-    wbethAmount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
-    conversionRatio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
+    wbeth_amount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
+    conversion_ratio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["success", "wbethAmount", "conversionRatio"]
 

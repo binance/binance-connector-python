@@ -123,7 +123,7 @@ class TestPayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetPayTradeHistoryResponse, "from_dict"):
             expected = GetPayTradeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetPayTradeHistoryResponse.model_validate_json(
@@ -216,7 +216,7 @@ class TestPayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetPayTradeHistoryResponse, "from_dict"):
             expected = GetPayTradeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetPayTradeHistoryResponse.model_validate_json(

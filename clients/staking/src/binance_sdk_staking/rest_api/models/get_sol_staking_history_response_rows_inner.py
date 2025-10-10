@@ -30,11 +30,11 @@ class GetSolStakingHistoryResponseRowsInner(BaseModel):
     time: Optional[StrictInt] = None
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    distributeAsset: Optional[StrictStr] = Field(default=None, alias="distributeAsset")
-    distributeAmount: Optional[StrictStr] = Field(
+    distribute_asset: Optional[StrictStr] = Field(default=None, alias="distributeAsset")
+    distribute_amount: Optional[StrictStr] = Field(
         default=None, alias="distributeAmount"
     )
-    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

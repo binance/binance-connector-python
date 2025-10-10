@@ -27,7 +27,7 @@ class GetOnChainYieldsLockedProductListResponseRowsInnerQuota(BaseModel):
     GetOnChainYieldsLockedProductListResponseRowsInnerQuota
     """  # noqa: E501
 
-    totalPersonalQuota: Optional[StrictStr] = Field(
+    total_personal_quota: Optional[StrictStr] = Field(
         default=None, alias="totalPersonalQuota"
     )
     minimum: Optional[StrictStr] = None

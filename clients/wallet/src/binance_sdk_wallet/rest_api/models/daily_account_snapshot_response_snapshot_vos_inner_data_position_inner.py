@@ -27,11 +27,11 @@ class DailyAccountSnapshotResponseSnapshotVosInnerDataPositionInner(BaseModel):
     DailyAccountSnapshotResponseSnapshotVosInnerDataPositionInner
     """  # noqa: E501
 
-    entryPrice: Optional[StrictStr] = Field(default=None, alias="entryPrice")
-    markPrice: Optional[StrictStr] = Field(default=None, alias="markPrice")
-    positionAmt: Optional[StrictStr] = Field(default=None, alias="positionAmt")
+    entry_price: Optional[StrictStr] = Field(default=None, alias="entryPrice")
+    mark_price: Optional[StrictStr] = Field(default=None, alias="markPrice")
+    position_amt: Optional[StrictStr] = Field(default=None, alias="positionAmt")
     symbol: Optional[StrictStr] = None
-    unRealizedProfit: Optional[StrictStr] = Field(
+    un_realized_profit: Optional[StrictStr] = Field(
         default=None, alias="unRealizedProfit"
     )
     additional_properties: Dict[str, Any] = {}

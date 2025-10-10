@@ -30,9 +30,9 @@ class AssetDividendRecordResponseRowsInner(BaseModel):
     id: Optional[StrictInt] = None
     amount: Optional[StrictStr] = None
     asset: Optional[StrictStr] = None
-    divTime: Optional[StrictInt] = Field(default=None, alias="divTime")
-    enInfo: Optional[StrictStr] = Field(default=None, alias="enInfo")
-    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
+    div_time: Optional[StrictInt] = Field(default=None, alias="divTime")
+    en_info: Optional[StrictStr] = Field(default=None, alias="enInfo")
+    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

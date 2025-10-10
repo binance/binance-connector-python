@@ -43,6 +43,7 @@ from .models import AccountStatusResponse
 from .models import AllOrderListsResponse
 from .models import AllOrdersResponse
 from .models import MyAllocationsResponse
+from .models import MyFiltersResponse
 from .models import MyPreventedMatchesResponse
 from .models import MyTradesResponse
 from .models import OpenOrderListsStatusResponse
@@ -116,6 +117,7 @@ from .models import OrderListPlaceSelfTradePreventionModeEnum
 from .models import OrderListPlaceOcoSideEnum
 from .models import OrderListPlaceOcoAboveTypeEnum
 from .models import OrderListPlaceOcoBelowTypeEnum
+from .models import OrderListPlaceOcoAboveTimeInForceEnum
 from .models import OrderListPlaceOcoAbovePegPriceTypeEnum
 from .models import OrderListPlaceOcoAbovePegOffsetTypeEnum
 from .models import OrderListPlaceOcoBelowTimeInForceEnum
@@ -316,7 +318,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     async def account_rate_limits_orders(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AccountRateLimitsOrdersResponse]:
         """
                 WebSocket Unfilled Order Count
@@ -326,7 +328,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[AccountRateLimitsOrdersResponse]
@@ -342,7 +344,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self,
         id: Optional[str] = None,
         omit_zero_balances: Optional[bool] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AccountStatusResponse]:
         """
                 WebSocket Account information
@@ -353,7 +355,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: false
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[AccountStatusResponse]
@@ -374,7 +376,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AllOrderListsResponse]:
         """
                 WebSocket Account order list history
@@ -388,7 +390,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[AllOrderListsResponse]
@@ -410,7 +412,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AllOrdersResponse]:
         """
                 WebSocket Account order history
@@ -425,7 +427,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[AllOrdersResponse]
@@ -448,7 +450,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         from_allocation_id: Optional[int] = None,
         limit: Optional[int] = None,
         order_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyAllocationsResponse]:
         """
                 WebSocket Account allocations
@@ -464,7 +466,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     from_allocation_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[MyAllocationsResponse]
@@ -485,6 +487,33 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             recv_window,
         )
 
+    async def my_filters(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+        recv_window: Optional[float] = None,
+    ) -> WebsocketApiResponse[MyFiltersResponse]:
+        """
+                WebSocket Query Relevant Filters
+
+                Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+        Weight: 40
+
+                Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+                Returns:
+                    WebsocketApiResponse[MyFiltersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._accountApi.my_filters(symbol, id, recv_window)
+
     async def my_prevented_matches(
         self,
         symbol: Union[str, None],
@@ -493,7 +522,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         order_id: Optional[int] = None,
         from_prevented_match_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyPreventedMatchesResponse]:
         """
                 WebSocket Account prevented matches
@@ -519,7 +548,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     from_prevented_match_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[MyPreventedMatchesResponse]
@@ -548,7 +577,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         end_time: Optional[int] = None,
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyTradesResponse]:
         """
                 WebSocket Account trade history
@@ -567,7 +596,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     end_time (Optional[int] = None):
                     from_id (Optional[int] = None): Aggregate trade ID to begin at
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[MyTradesResponse]
@@ -584,7 +613,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     async def open_order_lists_status(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrderListsStatusResponse]:
         """
                 WebSocket Current open Order lists
@@ -599,7 +628,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OpenOrderListsStatusResponse]
@@ -615,7 +644,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self,
         id: Optional[str] = None,
         symbol: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrdersStatusResponse]:
         """
                 WebSocket Current open orders
@@ -636,7 +665,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OpenOrdersStatusResponse]
@@ -655,7 +684,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         id: Optional[str] = None,
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderAmendmentsResponse]:
         """
                 WebSocket Query Order Amendments
@@ -669,7 +698,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     from_execution_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderAmendmentsResponse]
@@ -688,7 +717,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         id: Optional[str] = None,
         orig_client_order_id: Optional[str] = None,
         order_list_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListStatusResponse]:
         """
                 WebSocket Query Order list
@@ -702,7 +731,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     order_list_id (Optional[int] = None): Cancel order list by orderListId
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListStatusResponse]
@@ -722,7 +751,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderStatusResponse]:
         """
                 WebSocket Query order
@@ -735,7 +764,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderStatusResponse]
@@ -752,7 +781,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     async def session_logon(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SessionLogonResponse]:
         """
                 WebSocket Log in with API key
@@ -767,7 +796,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[SessionLogonResponse]
@@ -1367,7 +1396,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self,
         symbol: Union[str, None],
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrdersCancelAllResponse]:
         """
                 WebSocket Cancel open orders
@@ -1379,7 +1408,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OpenOrdersCancelAllResponse]
@@ -1399,7 +1428,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderAmendKeepPriorityResponse]:
         """
                 WebSocket Order Amend Keep Priority
@@ -1418,7 +1447,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderAmendKeepPriorityResponse]
@@ -1446,7 +1475,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
         cancel_restrictions: Optional[OrderCancelCancelRestrictionsEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelResponse]:
         """
                 WebSocket Cancel order
@@ -1461,7 +1490,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
                     cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderCancelResponse]
@@ -1512,7 +1541,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
                 WebSocket Cancel and replace order
@@ -1550,7 +1579,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderCancelReplaceResponse]
@@ -1596,7 +1625,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListCancelResponse]:
         """
                 WebSocket Cancel Order list
@@ -1610,7 +1639,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     order_list_id (Optional[int] = None): Cancel order list by orderListId
                     list_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListCancelResponse]
@@ -1655,7 +1684,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self_trade_prevention_mode: Optional[
             OrderListPlaceSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceResponse]:
         """
                 WebSocket Place new OCO - Deprecated
@@ -1690,7 +1719,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     stop_strategy_type (Optional[int] = None): <p>Arbitrary numeric value identifying the stop order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
                     new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListPlaceResponse]
@@ -1738,7 +1767,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         above_price: Optional[float] = None,
         above_stop_price: Optional[float] = None,
         above_trailing_delta: Optional[int] = None,
-        above_time_in_force: Optional[float] = None,
+        above_time_in_force: Optional[OrderListPlaceOcoAboveTimeInForceEnum] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
         above_peg_price_type: Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None,
@@ -1759,7 +1788,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self_trade_prevention_mode: Optional[
             OrderListPlaceOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOcoResponse]:
         """
                 WebSocket Place new Order list - OCO
@@ -1793,7 +1822,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
                     above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
+                    above_time_in_force (Optional[OrderListPlaceOcoAboveTimeInForceEnum] = None):
                     above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
                     above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
                     above_peg_price_type (Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None):
@@ -1812,7 +1841,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListPlaceOcoResponse]
@@ -1900,7 +1929,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOtoPendingPegPriceTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
                 WebSocket Place new Order list - OTO
@@ -1949,7 +1978,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListPlaceOtoResponse]
@@ -2059,7 +2088,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
                 WebSocket Place new Order list - OTOCO
@@ -2120,7 +2149,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None):
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderListPlaceOtocoResponse]
@@ -2200,7 +2229,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderPlacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderPlacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
                 WebSocket Place new order
@@ -2232,7 +2261,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderPlacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderPlaceResponse]
@@ -2289,7 +2318,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
                 WebSocket Test new order
@@ -2326,7 +2355,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[OrderTestResponse]
@@ -2377,7 +2406,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self_trade_prevention_mode: Optional[
             SorOrderPlaceSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SorOrderPlaceResponse]:
         """
                 WebSocket Place new order using SOR
@@ -2406,7 +2435,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
                     self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[SorOrderPlaceResponse]
@@ -2451,7 +2480,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self_trade_prevention_mode: Optional[
             SorOrderTestSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SorOrderTestResponse]:
         """
                 WebSocket Test new order using SOR
@@ -2479,7 +2508,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
                     self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiResponse[SorOrderTestResponse]
@@ -2644,7 +2673,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         data = response.data()
         stream = await RequestStream(
             self,
-            data.result.subscriptionId,
+            data.result.subscription_id,
             response_model=UserDataStreamEventsResponse,
         )
         return WebsocketApiUserDataStreamResponse(response=response, stream=stream)
@@ -2679,7 +2708,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         data = response.data()
         stream = await RequestStream(
             self,
-            data.result.subscriptionId,
+            data.result.subscription_id,
             response_model=UserDataStreamEventsResponse,
         )
         return WebsocketApiUserDataStreamResponse(response=response, stream=stream)

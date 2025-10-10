@@ -27,13 +27,17 @@ class AccountInfoResponse(BaseModel):
     AccountInfoResponse
     """  # noqa: E501
 
-    vipLevel: Optional[StrictInt] = Field(default=None, alias="vipLevel")
-    isMarginEnabled: Optional[StrictBool] = Field(default=None, alias="isMarginEnabled")
-    isFutureEnabled: Optional[StrictBool] = Field(default=None, alias="isFutureEnabled")
-    isOptionsEnabled: Optional[StrictBool] = Field(
+    vip_level: Optional[StrictInt] = Field(default=None, alias="vipLevel")
+    is_margin_enabled: Optional[StrictBool] = Field(
+        default=None, alias="isMarginEnabled"
+    )
+    is_future_enabled: Optional[StrictBool] = Field(
+        default=None, alias="isFutureEnabled"
+    )
+    is_options_enabled: Optional[StrictBool] = Field(
         default=None, alias="isOptionsEnabled"
     )
-    isPortfolioMarginRetailEnabled: Optional[StrictBool] = Field(
+    is_portfolio_margin_retail_enabled: Optional[StrictBool] = Field(
         default=None, alias="isPortfolioMarginRetailEnabled"
     )
     additional_properties: Dict[str, Any] = {}

@@ -112,7 +112,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(BrokerWithdrawResponse, "from_dict"):
             expected = BrokerWithdrawResponse.from_dict(expected_response)
         else:
             expected = BrokerWithdrawResponse.model_validate_json(
@@ -168,7 +168,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(BrokerWithdrawResponse, "from_dict"):
             expected = BrokerWithdrawResponse.from_dict(expected_response)
         else:
             expected = BrokerWithdrawResponse.model_validate_json(
@@ -348,7 +348,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckQuestionnaireRequirementsResponse, "from_dict")
+        ):
             expected = CheckQuestionnaireRequirementsResponse.from_dict(
                 expected_response
             )
@@ -393,7 +397,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CheckQuestionnaireRequirementsResponse, "from_dict")
+        ):
             expected = CheckQuestionnaireRequirementsResponse.from_dict(
                 expected_response
             )
@@ -482,7 +490,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DepositHistoryTravelRuleResponse, "from_dict")
+        ):
             expected = DepositHistoryTravelRuleResponse.from_dict(expected_response)
         else:
             expected = DepositHistoryTravelRuleResponse.model_validate_json(
@@ -574,7 +586,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DepositHistoryTravelRuleResponse, "from_dict")
+        ):
             expected = DepositHistoryTravelRuleResponse.from_dict(expected_response)
         else:
             expected = DepositHistoryTravelRuleResponse.model_validate_json(
@@ -639,7 +655,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositHistoryV2Response, "from_dict"):
             expected = DepositHistoryV2Response.from_dict(expected_response)
         else:
             expected = DepositHistoryV2Response.model_validate_json(
@@ -705,7 +721,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DepositHistoryV2Response, "from_dict"):
             expected = DepositHistoryV2Response.from_dict(expected_response)
         else:
             expected = DepositHistoryV2Response.model_validate_json(
@@ -766,7 +782,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FetchAddressVerificationListResponse, "from_dict")
+        ):
             expected = FetchAddressVerificationListResponse.from_dict(expected_response)
         else:
             expected = FetchAddressVerificationListResponse.model_validate_json(
@@ -820,7 +840,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FetchAddressVerificationListResponse, "from_dict")
+        ):
             expected = FetchAddressVerificationListResponse.from_dict(expected_response)
         else:
             expected = FetchAddressVerificationListResponse.model_validate_json(
@@ -889,7 +913,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireResponse, "from_dict")
+        ):
             expected = SubmitDepositQuestionnaireResponse.from_dict(expected_response)
         else:
             expected = SubmitDepositQuestionnaireResponse.model_validate_json(
@@ -947,7 +975,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireResponse, "from_dict")
+        ):
             expected = SubmitDepositQuestionnaireResponse.from_dict(expected_response)
         else:
             expected = SubmitDepositQuestionnaireResponse.model_validate_json(
@@ -1094,7 +1126,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireTravelRuleResponse, "from_dict")
+        ):
             expected = SubmitDepositQuestionnaireTravelRuleResponse.from_dict(
                 expected_response
             )
@@ -1141,7 +1177,11 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireTravelRuleResponse, "from_dict")
+        ):
             expected = SubmitDepositQuestionnaireTravelRuleResponse.from_dict(
                 expected_response
             )
@@ -1220,7 +1260,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VaspListResponse, "from_dict"):
             expected = VaspListResponse.from_dict(expected_response)
         else:
             expected = VaspListResponse.model_validate_json(
@@ -1262,7 +1302,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(VaspListResponse, "from_dict"):
             expected = VaspListResponse.from_dict(expected_response)
         else:
             expected = VaspListResponse.model_validate_json(
@@ -1353,7 +1393,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryV1Response, "from_dict"):
             expected = WithdrawHistoryV1Response.from_dict(expected_response)
         else:
             expected = WithdrawHistoryV1Response.model_validate_json(
@@ -1447,7 +1487,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryV1Response, "from_dict"):
             expected = WithdrawHistoryV1Response.from_dict(expected_response)
         else:
             expected = WithdrawHistoryV1Response.model_validate_json(
@@ -1538,7 +1578,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryV2Response, "from_dict"):
             expected = WithdrawHistoryV2Response.from_dict(expected_response)
         else:
             expected = WithdrawHistoryV2Response.model_validate_json(
@@ -1632,7 +1672,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawHistoryV2Response, "from_dict"):
             expected = WithdrawHistoryV2Response.from_dict(expected_response)
         else:
             expected = WithdrawHistoryV2Response.model_validate_json(
@@ -1698,7 +1738,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawTravelRuleResponse, "from_dict"):
             expected = WithdrawTravelRuleResponse.from_dict(expected_response)
         else:
             expected = WithdrawTravelRuleResponse.model_validate_json(
@@ -1755,7 +1795,7 @@ class TestTravelRuleApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WithdrawTravelRuleResponse, "from_dict"):
             expected = WithdrawTravelRuleResponse.from_dict(expected_response)
         else:
             expected = WithdrawTravelRuleResponse.model_validate_json(

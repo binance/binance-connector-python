@@ -27,8 +27,10 @@ class EthStakingAccountResponseProfit(BaseModel):
     EthStakingAccountResponseProfit
     """  # noqa: E501
 
-    amountFromWBETH: Optional[StrictStr] = Field(default=None, alias="amountFromWBETH")
-    amountFromBETH: Optional[StrictStr] = Field(default=None, alias="amountFromBETH")
+    amount_from_wbeth: Optional[StrictStr] = Field(
+        default=None, alias="amountFromWBETH"
+    )
+    amount_from_beth: Optional[StrictStr] = Field(default=None, alias="amountFromBETH")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["amountFromWBETH", "amountFromBETH"]
 

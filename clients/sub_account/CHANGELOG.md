@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.1.0 - 2025-10-10
+
+### Changed (2)
+
+- Modified parameter `orderArgs`:
+  - item property `symbol` added
+  - item property `positionSide` added
+  - item property `quantity` added
+  - affected methods:
+    - `move_position_for_sub_account()` (`POST /sapi/v1/sub-account/futures/move-position`)
+- Updated `binance-common` library to version `3.2.0`
+
 ## 2.0.0 - 2025-09-24
 
 ### Changed (2)

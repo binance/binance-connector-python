@@ -33,6 +33,7 @@ from .models import GetOpenOrdersResponse
 from .models import GetOrderResponse
 from .models import GetOrderListResponse
 from .models import MyAllocationsResponse
+from .models import MyFiltersResponse
 from .models import MyPreventedMatchesResponse
 from .models import MyTradesResponse
 from .models import OpenOrderListResponse
@@ -98,6 +99,7 @@ from .models import OrderCancelReplacePegOffsetTypeEnum
 from .models import OrderListOcoSideEnum
 from .models import OrderListOcoAboveTypeEnum
 from .models import OrderListOcoBelowTypeEnum
+from .models import OrderListOcoAboveTimeInForceEnum
 from .models import OrderListOcoAbovePegPriceTypeEnum
 from .models import OrderListOcoAbovePegOffsetTypeEnum
 from .models import OrderListOcoBelowTimeInForceEnum
@@ -269,7 +271,7 @@ class SpotRestAPI:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[AllOrderListResponse]:
         """
                 Query all Order lists
@@ -284,7 +286,7 @@ class SpotRestAPI:
                     start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[AllOrderListResponse]
@@ -305,7 +307,7 @@ class SpotRestAPI:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[AllOrdersResponse]:
         """
                 All orders
@@ -319,7 +321,7 @@ class SpotRestAPI:
                     start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[AllOrdersResponse]
@@ -336,7 +338,7 @@ class SpotRestAPI:
     def get_account(
         self,
         omit_zero_balances: Optional[bool] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetAccountResponse]:
         """
                 Account information
@@ -346,7 +348,7 @@ class SpotRestAPI:
 
                 Args:
                     omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: `false`
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetAccountResponse]
@@ -361,7 +363,7 @@ class SpotRestAPI:
     def get_open_orders(
         self,
         symbol: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOpenOrdersResponse]:
         """
                 Current open orders
@@ -371,7 +373,7 @@ class SpotRestAPI:
 
                 Args:
                     symbol (Optional[str] = None): Symbol to query
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOpenOrdersResponse]
@@ -388,7 +390,7 @@ class SpotRestAPI:
         symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOrderResponse]:
         """
                 Query order
@@ -400,7 +402,7 @@ class SpotRestAPI:
                     symbol (Union[str, None]):
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOrderResponse]
@@ -418,7 +420,7 @@ class SpotRestAPI:
         self,
         order_list_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOrderListResponse]:
         """
                 Query Order list
@@ -429,7 +431,7 @@ class SpotRestAPI:
                 Args:
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     orig_client_order_id (Optional[str] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOrderListResponse]
@@ -451,7 +453,7 @@ class SpotRestAPI:
         from_allocation_id: Optional[int] = None,
         limit: Optional[int] = None,
         order_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyAllocationsResponse]:
         """
                 Query Allocations
@@ -466,7 +468,7 @@ class SpotRestAPI:
                     from_allocation_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
                     order_id (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyAllocationsResponse]
@@ -486,6 +488,31 @@ class SpotRestAPI:
             recv_window,
         )
 
+    def my_filters(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[float] = None,
+    ) -> ApiResponse[MyFiltersResponse]:
+        """
+                Query relevant filters
+
+                Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+        Weight: 40
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+                Returns:
+                    ApiResponse[MyFiltersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.my_filters(symbol, recv_window)
+
     def my_prevented_matches(
         self,
         symbol: Union[str, None],
@@ -493,7 +520,7 @@ class SpotRestAPI:
         order_id: Optional[int] = None,
         from_prevented_match_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyPreventedMatchesResponse]:
         """
                 Query Prevented Matches
@@ -518,7 +545,7 @@ class SpotRestAPI:
                     order_id (Optional[int] = None):
                     from_prevented_match_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyPreventedMatchesResponse]
@@ -545,7 +572,7 @@ class SpotRestAPI:
         end_time: Optional[int] = None,
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyTradesResponse]:
         """
                 Account trade list
@@ -563,7 +590,7 @@ class SpotRestAPI:
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyTradesResponse]
@@ -579,7 +606,7 @@ class SpotRestAPI:
 
     def open_order_list(
         self,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OpenOrderListResponse]:
         """
                 Query Open Order lists
@@ -588,7 +615,7 @@ class SpotRestAPI:
         Weight: 6
 
                 Args:
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OpenOrderListResponse]
@@ -606,7 +633,7 @@ class SpotRestAPI:
         order_id: Union[int, None],
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderAmendmentsResponse]:
         """
                 Query Order Amendments
@@ -619,7 +646,7 @@ class SpotRestAPI:
                     order_id (Union[int, None]):
                     from_execution_id (Optional[int] = None):
                     limit (Optional[int] = None): Default:500; Maximum: 1000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderAmendmentsResponse]
@@ -635,7 +662,7 @@ class SpotRestAPI:
 
     def rate_limit_order(
         self,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[RateLimitOrderResponse]:
         """
                 Query Unfilled Order Count
@@ -644,7 +671,7 @@ class SpotRestAPI:
         Weight: 40
 
                 Args:
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[RateLimitOrderResponse]
@@ -1164,7 +1191,7 @@ class SpotRestAPI:
     def delete_open_orders(
         self,
         symbol: Union[str, None],
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOpenOrdersResponse]:
         """
                 Cancel All Open Orders on a Symbol
@@ -1175,7 +1202,7 @@ class SpotRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOpenOrdersResponse]
@@ -1194,7 +1221,7 @@ class SpotRestAPI:
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
         cancel_restrictions: Optional[DeleteOrderCancelRestrictionsEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOrderResponse]:
         """
                 Cancel order
@@ -1208,7 +1235,7 @@ class SpotRestAPI:
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
                     cancel_restrictions (Optional[DeleteOrderCancelRestrictionsEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOrderResponse]
@@ -1233,7 +1260,7 @@ class SpotRestAPI:
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOrderListResponse]:
         """
                 Cancel Order list
@@ -1246,7 +1273,7 @@ class SpotRestAPI:
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOrderListResponse]
@@ -1286,7 +1313,7 @@ class SpotRestAPI:
         peg_price_type: Optional[NewOrderPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[NewOrderPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
                 New order
@@ -1315,7 +1342,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[NewOrderPegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[NewOrderPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[NewOrderResponse]
@@ -1354,7 +1381,7 @@ class SpotRestAPI:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderAmendKeepPriorityResponse]:
         """
                 Order Amend Keep Priority
@@ -1372,7 +1399,7 @@ class SpotRestAPI:
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderAmendKeepPriorityResponse]
@@ -1421,7 +1448,7 @@ class SpotRestAPI:
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderCancelReplaceResponse]:
         """
                 Cancel an Existing Order and Send a New Order
@@ -1458,7 +1485,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderCancelReplaceResponse]
@@ -1509,7 +1536,7 @@ class SpotRestAPI:
         above_price: Optional[float] = None,
         above_stop_price: Optional[float] = None,
         above_trailing_delta: Optional[int] = None,
-        above_time_in_force: Optional[float] = None,
+        above_time_in_force: Optional[OrderListOcoAboveTimeInForceEnum] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
         above_peg_price_type: Optional[OrderListOcoAbovePegPriceTypeEnum] = None,
@@ -1530,7 +1557,7 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             OrderListOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOcoResponse]:
         """
                 New Order list - OCO
@@ -1563,7 +1590,7 @@ class SpotRestAPI:
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
                     above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`
+                    above_time_in_force (Optional[OrderListOcoAboveTimeInForceEnum] = None):
                     above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
                     above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
                     above_peg_price_type (Optional[OrderListOcoAbovePegPriceTypeEnum] = None):
@@ -1582,7 +1609,7 @@ class SpotRestAPI:
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOcoResponse]
@@ -1660,7 +1687,7 @@ class SpotRestAPI:
         pending_peg_price_type: Optional[OrderListOtoPendingPegPriceTypeEnum] = None,
         pending_peg_offset_type: Optional[OrderListOtoPendingPegOffsetTypeEnum] = None,
         pending_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtoResponse]:
         """
                 New Order list - OTO
@@ -1708,7 +1735,7 @@ class SpotRestAPI:
                     pending_peg_price_type (Optional[OrderListOtoPendingPegPriceTypeEnum] = None):
                     pending_peg_offset_type (Optional[OrderListOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOtoResponse]
@@ -1812,7 +1839,7 @@ class SpotRestAPI:
             OrderListOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtocoResponse]:
         """
                 New Order list - OTOCO
@@ -1872,7 +1899,7 @@ class SpotRestAPI:
                     pending_below_peg_price_type (Optional[OrderListOtocoPendingBelowPegPriceTypeEnum] = None):
                     pending_below_peg_offset_type (Optional[OrderListOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOtocoResponse]
@@ -1951,7 +1978,7 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             OrderOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderOcoResponse]:
         """
                 New OCO - Deprecated
@@ -1989,7 +2016,7 @@ class SpotRestAPI:
                     stop_limit_time_in_force (Optional[OrderOcoStopLimitTimeInForceEnum] = None):
                     new_order_resp_type (Optional[OrderOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderOcoResponse]
@@ -2045,7 +2072,7 @@ class SpotRestAPI:
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
                 Test new order
@@ -2077,7 +2104,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderTestResponse]
@@ -2126,7 +2153,7 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             SorOrderSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[SorOrderResponse]:
         """
                 New order using SOR
@@ -2153,7 +2180,7 @@ class SpotRestAPI:
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     new_order_resp_type (Optional[SorOrderNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[SorOrderSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[SorOrderResponse]
@@ -2196,7 +2223,7 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             SorOrderTestSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[SorOrderTestResponse]:
         """
                 Test new order using SOR
@@ -2222,7 +2249,7 @@ class SpotRestAPI:
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     new_order_resp_type (Optional[SorOrderTestNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[SorOrderTestResponse]
@@ -2279,6 +2306,7 @@ class SpotRestAPI:
                 Start user data stream
 
                 Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.
+        This request does not require `signature`.
         Weight: 2
 
                 Args:
@@ -2301,6 +2329,8 @@ class SpotRestAPI:
                 Keepalive user data stream
 
                 Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.
+
+        This request does not require `signature`.
         Weight: 2
 
                 Args:

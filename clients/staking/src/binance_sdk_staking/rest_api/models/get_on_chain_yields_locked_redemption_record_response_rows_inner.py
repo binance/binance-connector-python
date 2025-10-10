@@ -27,19 +27,19 @@ class GetOnChainYieldsLockedRedemptionRecordResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedRedemptionRecordResponseRowsInner
     """  # noqa: E501
 
-    positionId: Optional[StrictStr] = Field(default=None, alias="positionId")
-    redeemId: Optional[StrictInt] = Field(default=None, alias="redeemId")
+    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    redeem_id: Optional[StrictInt] = Field(default=None, alias="redeemId")
     time: Optional[StrictInt] = None
     asset: Optional[StrictStr] = None
-    lockPeriod: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
+    lock_period: Optional[StrictStr] = Field(default=None, alias="lockPeriod")
     amount: Optional[StrictStr] = None
-    originalAmount: Optional[StrictStr] = Field(default=None, alias="originalAmount")
+    original_amount: Optional[StrictStr] = Field(default=None, alias="originalAmount")
     type: Optional[StrictStr] = None
-    deliverDate: Optional[StrictStr] = Field(default=None, alias="deliverDate")
-    lossAmount: Optional[StrictStr] = Field(default=None, alias="lossAmount")
-    isComplete: Optional[StrictBool] = Field(default=None, alias="isComplete")
-    rewardAsset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    rewardAmt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
+    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
+    loss_amount: Optional[StrictStr] = Field(default=None, alias="lossAmount")
+    is_complete: Optional[StrictBool] = Field(default=None, alias="isComplete")
+    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
+    reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

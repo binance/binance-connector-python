@@ -104,7 +104,11 @@ class TestFiatApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFiatDepositWithdrawHistoryResponse, "from_dict")
+        ):
             expected = GetFiatDepositWithdrawHistoryResponse.from_dict(
                 expected_response
             )
@@ -172,7 +176,11 @@ class TestFiatApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFiatDepositWithdrawHistoryResponse, "from_dict")
+        ):
             expected = GetFiatDepositWithdrawHistoryResponse.from_dict(
                 expected_response
             )
@@ -270,7 +278,9 @@ class TestFiatApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetFiatPaymentsHistoryResponse, "from_dict")
+        ):
             expected = GetFiatPaymentsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFiatPaymentsHistoryResponse.model_validate_json(
@@ -338,7 +348,9 @@ class TestFiatApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetFiatPaymentsHistoryResponse, "from_dict")
+        ):
             expected = GetFiatPaymentsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetFiatPaymentsHistoryResponse.model_validate_json(

@@ -114,7 +114,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDualInvestmentProductListResponse, "from_dict")
+        ):
             expected = GetDualInvestmentProductListResponse.from_dict(expected_response)
         else:
             expected = GetDualInvestmentProductListResponse.model_validate_json(
@@ -185,7 +189,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDualInvestmentProductListResponse, "from_dict")
+        ):
             expected = GetDualInvestmentProductListResponse.from_dict(expected_response)
         else:
             expected = GetDualInvestmentProductListResponse.model_validate_json(

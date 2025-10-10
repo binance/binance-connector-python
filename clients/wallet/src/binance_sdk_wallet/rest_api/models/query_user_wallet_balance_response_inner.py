@@ -29,7 +29,7 @@ class QueryUserWalletBalanceResponseInner(BaseModel):
 
     activate: Optional[StrictBool] = None
     balance: Optional[StrictStr] = None
-    walletName: Optional[StrictStr] = Field(default=None, alias="walletName")
+    wallet_name: Optional[StrictStr] = Field(default=None, alias="walletName")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["activate", "balance", "walletName"]
 

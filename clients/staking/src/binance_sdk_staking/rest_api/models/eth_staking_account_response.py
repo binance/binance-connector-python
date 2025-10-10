@@ -33,9 +33,9 @@ class EthStakingAccountResponse(BaseModel):
     EthStakingAccountResponse
     """  # noqa: E501
 
-    holdingInETH: Optional[StrictStr] = Field(default=None, alias="holdingInETH")
+    holding_in_eth: Optional[StrictStr] = Field(default=None, alias="holdingInETH")
     holdings: Optional[EthStakingAccountResponseHoldings] = None
-    thirtyDaysProfitInETH: Optional[StrictStr] = Field(
+    thirty_days_profit_in_eth: Optional[StrictStr] = Field(
         default=None, alias="thirtyDaysProfitInETH"
     )
     profit: Optional[EthStakingAccountResponseProfit] = None

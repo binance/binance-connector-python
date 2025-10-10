@@ -35,14 +35,14 @@ class AssetDetailResponseSKY(BaseModel):
     AssetDetailResponseSKY
     """  # noqa: E501
 
-    minWithdrawAmount: Optional[StrictStr] = Field(
+    min_withdraw_amount: Optional[StrictStr] = Field(
         default=None, alias="minWithdrawAmount"
     )
-    depositStatus: Optional[StrictBool] = Field(default=None, alias="depositStatus")
-    withdrawFee: Optional[Union[StrictFloat, StrictInt]] = Field(
+    deposit_status: Optional[StrictBool] = Field(default=None, alias="depositStatus")
+    withdraw_fee: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="withdrawFee"
     )
-    withdrawStatus: Optional[StrictBool] = Field(default=None, alias="withdrawStatus")
+    withdraw_status: Optional[StrictBool] = Field(default=None, alias="withdrawStatus")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "minWithdrawAmount",

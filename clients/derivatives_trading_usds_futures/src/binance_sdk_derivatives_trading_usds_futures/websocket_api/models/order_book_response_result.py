@@ -28,8 +28,8 @@ class OrderBookResponseResult(BaseModel):
     """  # noqa: E501
 
     last_update_id: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
-    e: Optional[StrictInt] = Field(default=None, alias="E")
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     bids: Optional[List[List[str]]] = Field(default=None, alias="bids")
 
     asks: Optional[List[List[str]]] = Field(default=None, alias="asks")

@@ -30,7 +30,9 @@ class GetWbethRewardsHistoryResponse(BaseModel):
     GetWbethRewardsHistoryResponse
     """  # noqa: E501
 
-    estRewardsInETH: Optional[StrictStr] = Field(default=None, alias="estRewardsInETH")
+    est_rewards_in_eth: Optional[StrictStr] = Field(
+        default=None, alias="estRewardsInETH"
+    )
     rows: Optional[List[GetWbethRewardsHistoryResponseRowsInner]] = None
     total: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
