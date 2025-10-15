@@ -189,7 +189,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountInformationResponse, "from_dict"):
             expected = AccountInformationResponse.from_dict(expected_response)
         else:
             expected = AccountInformationResponse.model_validate_json(
@@ -302,7 +302,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountInformationResponse, "from_dict"):
             expected = AccountInformationResponse.from_dict(expected_response)
         else:
             expected = AccountInformationResponse.model_validate_json(
@@ -361,7 +361,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FuturesAccountBalanceResponse, "from_dict"):
             expected = FuturesAccountBalanceResponse.from_dict(expected_response)
         else:
             expected = FuturesAccountBalanceResponse.model_validate_json(
@@ -413,7 +413,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FuturesAccountBalanceResponse, "from_dict"):
             expected = FuturesAccountBalanceResponse.from_dict(expected_response)
         else:
             expected = FuturesAccountBalanceResponse.model_validate_json(
@@ -461,7 +461,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetCurrentPositionModeResponse, "from_dict")
+        ):
             expected = GetCurrentPositionModeResponse.from_dict(expected_response)
         else:
             expected = GetCurrentPositionModeResponse.model_validate_json(
@@ -502,7 +504,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetCurrentPositionModeResponse, "from_dict")
+        ):
             expected = GetCurrentPositionModeResponse.from_dict(expected_response)
         else:
             expected = GetCurrentPositionModeResponse.model_validate_json(
@@ -565,7 +569,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesOrderHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesOrderHistoryResponse.from_dict(
                 expected_response
             )
@@ -615,7 +623,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesOrderHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesOrderHistoryResponse.from_dict(
                 expected_response
             )
@@ -717,7 +729,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesTradeHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesTradeHistoryResponse.from_dict(
                 expected_response
             )
@@ -767,7 +783,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesTradeHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesTradeHistoryResponse.from_dict(
                 expected_response
             )
@@ -869,7 +889,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesTransactionHistoryResponse.from_dict(
                 expected_response
             )
@@ -921,7 +945,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForFuturesTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetDownloadIdForFuturesTransactionHistoryResponse.from_dict(
                 expected_response
             )
@@ -1027,7 +1055,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesOrderHistoryDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetFuturesOrderHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1079,7 +1111,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesOrderHistoryDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetFuturesOrderHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1166,7 +1202,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesTradeDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetFuturesTradeDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1216,7 +1256,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFuturesTradeDownloadLinkByIdResponse, "from_dict")
+        ):
             expected = GetFuturesTradeDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1305,7 +1349,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                GetFuturesTransactionHistoryDownloadLinkByIdResponse, "from_dict"
+            )
+        ):
             expected = GetFuturesTransactionHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1357,7 +1407,13 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                GetFuturesTransactionHistoryDownloadLinkByIdResponse, "from_dict"
+            )
+        ):
             expected = GetFuturesTransactionHistoryDownloadLinkByIdResponse.from_dict(
                 expected_response
             )
@@ -1448,7 +1504,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetIncomeHistoryResponse, "from_dict"):
             expected = GetIncomeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetIncomeHistoryResponse.model_validate_json(
@@ -1516,7 +1572,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetIncomeHistoryResponse, "from_dict"):
             expected = GetIncomeHistoryResponse.from_dict(expected_response)
         else:
             expected = GetIncomeHistoryResponse.model_validate_json(
@@ -1578,7 +1634,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(NotionalBracketForPairResponse, "from_dict")
+        ):
             expected = NotionalBracketForPairResponse.from_dict(expected_response)
         else:
             expected = NotionalBracketForPairResponse.model_validate_json(
@@ -1633,7 +1691,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(NotionalBracketForPairResponse, "from_dict")
+        ):
             expected = NotionalBracketForPairResponse.from_dict(expected_response)
         else:
             expected = NotionalBracketForPairResponse.model_validate_json(
@@ -1696,7 +1756,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(NotionalBracketForSymbolResponse, "from_dict")
+        ):
             expected = NotionalBracketForSymbolResponse.from_dict(expected_response)
         else:
             expected = NotionalBracketForSymbolResponse.model_validate_json(
@@ -1752,7 +1816,11 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(NotionalBracketForSymbolResponse, "from_dict")
+        ):
             expected = NotionalBracketForSymbolResponse.from_dict(expected_response)
         else:
             expected = NotionalBracketForSymbolResponse.model_validate_json(
@@ -1812,7 +1880,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserCommissionRateResponse, "from_dict"):
             expected = UserCommissionRateResponse.from_dict(expected_response)
         else:
             expected = UserCommissionRateResponse.model_validate_json(
@@ -1857,7 +1925,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserCommissionRateResponse, "from_dict"):
             expected = UserCommissionRateResponse.from_dict(expected_response)
         else:
             expected = UserCommissionRateResponse.model_validate_json(

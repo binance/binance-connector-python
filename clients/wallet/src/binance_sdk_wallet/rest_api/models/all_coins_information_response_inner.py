@@ -31,10 +31,10 @@ class AllCoinsInformationResponseInner(BaseModel):
     """  # noqa: E501
 
     coin: Optional[StrictStr] = None
-    depositAllEnable: Optional[StrictBool] = Field(
+    deposit_all_enable: Optional[StrictBool] = Field(
         default=None, alias="depositAllEnable"
     )
-    withdrawAllEnable: Optional[StrictBool] = Field(
+    withdraw_all_enable: Optional[StrictBool] = Field(
         default=None, alias="withdrawAllEnable"
     )
     name: Optional[StrictStr] = None
@@ -45,9 +45,9 @@ class AllCoinsInformationResponseInner(BaseModel):
     ipoing: Optional[StrictStr] = None
     ipoable: Optional[StrictStr] = None
     storage: Optional[StrictStr] = None
-    isLegalMoney: Optional[StrictBool] = Field(default=None, alias="isLegalMoney")
+    is_legal_money: Optional[StrictBool] = Field(default=None, alias="isLegalMoney")
     trading: Optional[StrictBool] = None
-    networkList: Optional[List[AllCoinsInformationResponseInnerNetworkListInner]] = (
+    network_list: Optional[List[AllCoinsInformationResponseInnerNetworkListInner]] = (
         Field(default=None, alias="networkList")
     )
     additional_properties: Dict[str, Any] = {}

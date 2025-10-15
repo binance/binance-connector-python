@@ -314,6 +314,12 @@ class OrderListOcoBelowTypeEnum(Enum):
     TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
 
 
+class OrderListOcoAboveTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
 class OrderListOcoAbovePegPriceTypeEnum(Enum):
     PRIMARY_PEG = "PRIMARY_PEG"
     MARKET_PEG = "MARKET_PEG"
@@ -324,9 +330,9 @@ class OrderListOcoAbovePegOffsetTypeEnum(Enum):
 
 
 class OrderListOcoBelowTimeInForceEnum(Enum):
-    belowType = "belowType"
-    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
-    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
 
 
 class OrderListOcoBelowPegPriceTypeEnum(Enum):
@@ -526,8 +532,8 @@ class OrderOcoSideEnum(Enum):
 
 class OrderOcoStopLimitTimeInForceEnum(Enum):
     GTC = "GTC"
-    FOK = "FOK"
     IOC = "IOC"
+    FOK = "FOK"
 
 
 class OrderOcoNewOrderRespTypeEnum(Enum):

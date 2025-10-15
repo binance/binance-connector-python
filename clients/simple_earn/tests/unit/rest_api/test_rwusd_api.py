@@ -84,7 +84,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdAccountResponse, "from_dict"):
             expected = GetRwusdAccountResponse.from_dict(expected_response)
         else:
             expected = GetRwusdAccountResponse.model_validate_json(
@@ -123,7 +123,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdAccountResponse, "from_dict"):
             expected = GetRwusdAccountResponse.from_dict(expected_response)
         else:
             expected = GetRwusdAccountResponse.model_validate_json(
@@ -191,7 +191,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdQuotaDetailsResponse, "from_dict"):
             expected = GetRwusdQuotaDetailsResponse.from_dict(expected_response)
         else:
             expected = GetRwusdQuotaDetailsResponse.model_validate_json(
@@ -252,7 +252,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdQuotaDetailsResponse, "from_dict"):
             expected = GetRwusdQuotaDetailsResponse.from_dict(expected_response)
         else:
             expected = GetRwusdQuotaDetailsResponse.model_validate_json(
@@ -303,7 +303,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdRateHistoryResponse, "from_dict"):
             expected = GetRwusdRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRateHistoryResponse.model_validate_json(
@@ -353,7 +353,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetRwusdRateHistoryResponse, "from_dict"):
             expected = GetRwusdRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRateHistoryResponse.model_validate_json(
@@ -415,7 +415,11 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetRwusdRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRedemptionHistoryResponse.model_validate_json(
@@ -476,7 +480,11 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetRwusdRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRedemptionHistoryResponse.model_validate_json(
@@ -534,7 +542,9 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetRwusdRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRewardsHistoryResponse.model_validate_json(
@@ -591,7 +601,9 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetRwusdRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdRewardsHistoryResponse.model_validate_json(
@@ -651,7 +663,11 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetRwusdSubscriptionHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdSubscriptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdSubscriptionHistoryResponse.model_validate_json(
@@ -711,7 +727,11 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetRwusdSubscriptionHistoryResponse, "from_dict")
+        ):
             expected = GetRwusdSubscriptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetRwusdSubscriptionHistoryResponse.model_validate_json(
@@ -774,7 +794,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemRwusdResponse, "from_dict"):
             expected = RedeemRwusdResponse.from_dict(expected_response)
         else:
             expected = RedeemRwusdResponse.model_validate_json(
@@ -818,7 +838,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemRwusdResponse, "from_dict"):
             expected = RedeemRwusdResponse.from_dict(expected_response)
         else:
             expected = RedeemRwusdResponse.model_validate_json(
@@ -903,7 +923,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeRwusdResponse, "from_dict"):
             expected = SubscribeRwusdResponse.from_dict(expected_response)
         else:
             expected = SubscribeRwusdResponse.model_validate_json(
@@ -942,7 +962,7 @@ class TestRwusdApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeRwusdResponse, "from_dict"):
             expected = SubscribeRwusdResponse.from_dict(expected_response)
         else:
             expected = SubscribeRwusdResponse.model_validate_json(

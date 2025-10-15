@@ -34,7 +34,7 @@ class ConditionalOrderTriggerReject(BaseModel):
     T: Optional[StrictInt] = Field(default=None, alias="T")
     var_or: Optional[ConditionalOrderTriggerRejectOr] = Field(default=None, alias="or")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "T", "or"]
+    __properties: ClassVar[List[str]] = ["E", "T", "var_or"]
 
     model_config = ConfigDict(
         populate_by_name=True,

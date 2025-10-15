@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.8.0 - 2025-10-10
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### WebSocket Streams
+
+- Fixed typo for user data stream events response `account_update`, `Openorderloss` and `Outboundaccountposition`
+
 ## 1.7.0 - 2025-09-24
 
 ### Changed (2)

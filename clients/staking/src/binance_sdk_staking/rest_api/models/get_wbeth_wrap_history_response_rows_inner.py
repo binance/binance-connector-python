@@ -28,11 +28,11 @@ class GetWbethWrapHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     time: Optional[StrictInt] = None
-    fromAsset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
-    fromAmount: Optional[StrictStr] = Field(default=None, alias="fromAmount")
-    toAsset: Optional[StrictStr] = Field(default=None, alias="toAsset")
-    toAmount: Optional[StrictStr] = Field(default=None, alias="toAmount")
-    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    from_asset: Optional[StrictStr] = Field(default=None, alias="fromAsset")
+    from_amount: Optional[StrictStr] = Field(default=None, alias="fromAmount")
+    to_asset: Optional[StrictStr] = Field(default=None, alias="toAsset")
+    to_amount: Optional[StrictStr] = Field(default=None, alias="toAmount")
+    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

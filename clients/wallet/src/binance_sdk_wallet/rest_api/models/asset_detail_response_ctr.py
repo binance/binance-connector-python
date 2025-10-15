@@ -27,13 +27,13 @@ class AssetDetailResponseCTR(BaseModel):
     AssetDetailResponseCTR
     """  # noqa: E501
 
-    minWithdrawAmount: Optional[StrictStr] = Field(
+    min_withdraw_amount: Optional[StrictStr] = Field(
         default=None, alias="minWithdrawAmount"
     )
-    depositStatus: Optional[StrictBool] = Field(default=None, alias="depositStatus")
-    withdrawFee: Optional[StrictInt] = Field(default=None, alias="withdrawFee")
-    withdrawStatus: Optional[StrictBool] = Field(default=None, alias="withdrawStatus")
-    depositTip: Optional[StrictStr] = Field(default=None, alias="depositTip")
+    deposit_status: Optional[StrictBool] = Field(default=None, alias="depositStatus")
+    withdraw_fee: Optional[StrictInt] = Field(default=None, alias="withdrawFee")
+    withdraw_status: Optional[StrictBool] = Field(default=None, alias="withdrawStatus")
+    deposit_tip: Optional[StrictStr] = Field(default=None, alias="depositTip")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "minWithdrawAmount",

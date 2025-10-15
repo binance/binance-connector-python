@@ -65,6 +65,7 @@ from binance_sdk_spot.rest_api.models import OrderCancelReplacePegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoAboveTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOcoAboveTimeInForceEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTimeInForceEnum
@@ -284,7 +285,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOpenOrdersResponse, "from_dict"):
             expected = DeleteOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = DeleteOpenOrdersResponse.model_validate_json(
@@ -297,7 +298,7 @@ class TestTradeApi:
     def test_delete_open_orders_success_with_optional_params(self, mock_get_signature):
         """Test delete_open_orders() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "recv_window": 5000}
+        params = {"symbol": "BNBUSDT", "recv_window": 5000.0}
 
         expected_response = [
             {
@@ -422,7 +423,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOpenOrdersResponse, "from_dict"):
             expected = DeleteOpenOrdersResponse.from_dict(expected_response)
         else:
             expected = DeleteOpenOrdersResponse.model_validate_json(
@@ -509,7 +510,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOrderResponse, "from_dict"):
             expected = DeleteOrderResponse.from_dict(expected_response)
         else:
             expected = DeleteOrderResponse.model_validate_json(
@@ -528,7 +529,7 @@ class TestTradeApi:
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
             "cancel_restrictions": DeleteOrderCancelRestrictionsEnum["ONLY_NEW"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -572,7 +573,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOrderResponse, "from_dict"):
             expected = DeleteOrderResponse.from_dict(expected_response)
         else:
             expected = DeleteOrderResponse.model_validate_json(
@@ -701,7 +702,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOrderListResponse, "from_dict"):
             expected = DeleteOrderListResponse.from_dict(expected_response)
         else:
             expected = DeleteOrderListResponse.model_validate_json(
@@ -719,7 +720,7 @@ class TestTradeApi:
             "order_list_id": 1,
             "list_client_order_id": "list_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -805,7 +806,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DeleteOrderListResponse, "from_dict"):
             expected = DeleteOrderListResponse.from_dict(expected_response)
         else:
             expected = DeleteOrderListResponse.model_validate_json(
@@ -968,7 +969,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(NewOrderResponse, "from_dict"):
             expected = NewOrderResponse.from_dict(expected_response)
         else:
             expected = NewOrderResponse.model_validate_json(
@@ -1002,7 +1003,7 @@ class TestTradeApi:
             "peg_price_type": NewOrderPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": NewOrderPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1118,7 +1119,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(NewOrderResponse, "from_dict"):
             expected = NewOrderResponse.from_dict(expected_response)
         else:
             expected = NewOrderResponse.model_validate_json(
@@ -1269,7 +1270,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(OrderAmendKeepPriorityResponse, "from_dict")
+        ):
             expected = OrderAmendKeepPriorityResponse.from_dict(expected_response)
         else:
             expected = OrderAmendKeepPriorityResponse.model_validate_json(
@@ -1290,7 +1293,7 @@ class TestTradeApi:
             "order_id": 1,
             "orig_client_order_id": "orig_client_order_id_example",
             "new_client_order_id": "new_client_order_id_example",
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1368,7 +1371,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(OrderAmendKeepPriorityResponse, "from_dict")
+        ):
             expected = OrderAmendKeepPriorityResponse.from_dict(expected_response)
         else:
             expected = OrderAmendKeepPriorityResponse.model_validate_json(
@@ -1537,7 +1542,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderCancelReplaceResponse, "from_dict"):
             expected = OrderCancelReplaceResponse.from_dict(expected_response)
         else:
             expected = OrderCancelReplaceResponse.model_validate_json(
@@ -1585,7 +1590,7 @@ class TestTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -1687,7 +1692,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderCancelReplaceResponse, "from_dict"):
             expected = OrderCancelReplaceResponse.from_dict(expected_response)
         else:
             expected = OrderCancelReplaceResponse.model_validate_json(
@@ -1885,7 +1890,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOcoResponse, "from_dict"):
             expected = OrderListOcoResponse.from_dict(expected_response)
         else:
             expected = OrderListOcoResponse.model_validate_json(
@@ -1910,7 +1915,7 @@ class TestTradeApi:
             "above_price": 1.0,
             "above_stop_price": 1.0,
             "above_trailing_delta": 1,
-            "above_time_in_force": 1.0,
+            "above_time_in_force": OrderListOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
             "above_strategy_type": 1,
             "above_peg_price_type": OrderListOcoAbovePegPriceTypeEnum[
@@ -1925,7 +1930,7 @@ class TestTradeApi:
             "below_price": 1.0,
             "below_stop_price": 1.0,
             "below_trailing_delta": 1,
-            "below_time_in_force": OrderListOcoBelowTimeInForceEnum["belowType"].value,
+            "below_time_in_force": OrderListOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
             "below_strategy_type": 1,
             "below_peg_price_type": OrderListOcoBelowPegPriceTypeEnum[
@@ -1939,7 +1944,7 @@ class TestTradeApi:
             "self_trade_prevention_mode": OrderListOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2026,7 +2031,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOcoResponse, "from_dict"):
             expected = OrderListOcoResponse.from_dict(expected_response)
         else:
             expected = OrderListOcoResponse.model_validate_json(
@@ -2238,7 +2243,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOtoResponse, "from_dict"):
             expected = OrderListOtoResponse.from_dict(expected_response)
         else:
             expected = OrderListOtoResponse.model_validate_json(
@@ -2292,7 +2297,7 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2377,7 +2382,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOtoResponse, "from_dict"):
             expected = OrderListOtoResponse.from_dict(expected_response)
         else:
             expected = OrderListOtoResponse.model_validate_json(
@@ -2695,7 +2700,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOtocoResponse, "from_dict"):
             expected = OrderListOtocoResponse.from_dict(expected_response)
         else:
             expected = OrderListOtocoResponse.model_validate_json(
@@ -2771,7 +2776,7 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -2880,7 +2885,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderListOtocoResponse, "from_dict"):
             expected = OrderListOtocoResponse.from_dict(expected_response)
         else:
             expected = OrderListOtocoResponse.model_validate_json(
@@ -3182,7 +3187,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderOcoResponse, "from_dict"):
             expected = OrderOcoResponse.from_dict(expected_response)
         else:
             expected = OrderOcoResponse.model_validate_json(
@@ -3217,7 +3222,7 @@ class TestTradeApi:
             "self_trade_prevention_mode": OrderOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -3303,7 +3308,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderOcoResponse, "from_dict"):
             expected = OrderOcoResponse.from_dict(expected_response)
         else:
             expected = OrderOcoResponse.model_validate_json(
@@ -3458,7 +3463,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderTestResponse, "from_dict"):
             expected = OrderTestResponse.from_dict(expected_response)
         else:
             expected = OrderTestResponse.model_validate_json(
@@ -3493,7 +3498,7 @@ class TestTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -3533,7 +3538,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(OrderTestResponse, "from_dict"):
             expected = OrderTestResponse.from_dict(expected_response)
         else:
             expected = OrderTestResponse.model_validate_json(
@@ -3667,7 +3672,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SorOrderResponse, "from_dict"):
             expected = SorOrderResponse.from_dict(expected_response)
         else:
             expected = SorOrderResponse.model_validate_json(
@@ -3695,7 +3700,7 @@ class TestTradeApi:
             "self_trade_prevention_mode": SorOrderSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -3752,7 +3757,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SorOrderResponse, "from_dict"):
             expected = SorOrderResponse.from_dict(expected_response)
         else:
             expected = SorOrderResponse.model_validate_json(
@@ -3887,7 +3892,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SorOrderTestResponse, "from_dict"):
             expected = SorOrderTestResponse.from_dict(expected_response)
         else:
             expected = SorOrderTestResponse.model_validate_json(
@@ -3916,7 +3921,7 @@ class TestTradeApi:
             "self_trade_prevention_mode": SorOrderTestSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
-            "recv_window": 5000,
+            "recv_window": 5000.0,
         }
 
         expected_response = {
@@ -3955,7 +3960,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SorOrderTestResponse, "from_dict"):
             expected = SorOrderTestResponse.from_dict(expected_response)
         else:
             expected = SorOrderTestResponse.model_validate_json(

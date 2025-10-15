@@ -28,14 +28,14 @@ class GetEthRedemptionHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     time: Optional[StrictInt] = None
-    arrivalTime: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
+    arrival_time: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    distributeAsset: Optional[StrictStr] = Field(default=None, alias="distributeAsset")
-    distributeAmount: Optional[StrictStr] = Field(
+    distribute_asset: Optional[StrictStr] = Field(default=None, alias="distributeAsset")
+    distribute_amount: Optional[StrictStr] = Field(
         default=None, alias="distributeAmount"
     )
-    conversionRatio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
+    conversion_ratio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

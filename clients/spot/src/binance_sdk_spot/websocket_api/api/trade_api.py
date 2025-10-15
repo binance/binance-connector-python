@@ -51,6 +51,7 @@ from ..models import OrderListPlaceSelfTradePreventionModeEnum
 from ..models import OrderListPlaceOcoSideEnum
 from ..models import OrderListPlaceOcoAboveTypeEnum
 from ..models import OrderListPlaceOcoBelowTypeEnum
+from ..models import OrderListPlaceOcoAboveTimeInForceEnum
 from ..models import OrderListPlaceOcoAbovePegPriceTypeEnum
 from ..models import OrderListPlaceOcoAbovePegOffsetTypeEnum
 from ..models import OrderListPlaceOcoBelowTimeInForceEnum
@@ -129,7 +130,7 @@ class TradeApi:
         self,
         symbol: Union[str, None],
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrdersCancelAllResponse]:
         """
             WebSocket Cancel open orders
@@ -143,7 +144,7 @@ class TradeApi:
             Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OpenOrdersCancelAllResponse]
@@ -183,7 +184,7 @@ class TradeApi:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderAmendKeepPriorityResponse]:
         """
             WebSocket Order Amend Keep Priority
@@ -204,7 +205,7 @@ class TradeApi:
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderAmendKeepPriorityResponse]
@@ -260,7 +261,7 @@ class TradeApi:
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
         cancel_restrictions: Optional[OrderCancelCancelRestrictionsEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelResponse]:
         """
             WebSocket Cancel order
@@ -277,7 +278,7 @@ class TradeApi:
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
                     cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderCancelResponse]
@@ -354,7 +355,7 @@ class TradeApi:
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
             WebSocket Cancel and replace order
@@ -394,7 +395,7 @@ class TradeApi:
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderCancelReplaceResponse]
@@ -517,7 +518,7 @@ class TradeApi:
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListCancelResponse]:
         """
             WebSocket Cancel Order list
@@ -533,7 +534,7 @@ class TradeApi:
                     order_list_id (Optional[int] = None): Cancel order list by orderListId
                     list_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): The new client order ID for the order after being amended. <br> If not sent, one will be randomly generated. <br> It is possible to reuse the current clientOrderId by sending it as the `newClientOrderId`.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListCancelResponse]
@@ -600,7 +601,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderListPlaceSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceResponse]:
         """
             WebSocket Place new OCO - Deprecated
@@ -637,7 +638,7 @@ class TradeApi:
                     stop_strategy_type (Optional[int] = None): <p>Arbitrary numeric value identifying the stop order strategy.</p><p>Values smaller than `1000000` are reserved and cannot be used.</p>
                     new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceResponse]
@@ -765,7 +766,7 @@ class TradeApi:
         above_price: Optional[float] = None,
         above_stop_price: Optional[float] = None,
         above_trailing_delta: Optional[int] = None,
-        above_time_in_force: Optional[float] = None,
+        above_time_in_force: Optional[OrderListPlaceOcoAboveTimeInForceEnum] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
         above_peg_price_type: Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None,
@@ -786,7 +787,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderListPlaceOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOcoResponse]:
         """
             WebSocket Place new Order list - OCO
@@ -822,7 +823,7 @@ class TradeApi:
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
                     above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
+                    above_time_in_force (Optional[OrderListPlaceOcoAboveTimeInForceEnum] = None):
                     above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
                     above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
                     above_peg_price_type (Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None):
@@ -841,7 +842,7 @@ class TradeApi:
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOcoResponse]
@@ -1055,7 +1056,7 @@ class TradeApi:
             OrderListPlaceOtoPendingPegPriceTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
             WebSocket Place new Order list - OTO
@@ -1106,7 +1107,7 @@ class TradeApi:
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOtoResponse]
@@ -1351,7 +1352,7 @@ class TradeApi:
             OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
             WebSocket Place new Order list - OTOCO
@@ -1414,7 +1415,7 @@ class TradeApi:
                     pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None):
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListPlaceOtocoResponse]
@@ -1681,7 +1682,7 @@ class TradeApi:
         peg_price_type: Optional[OrderPlacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderPlacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
             WebSocket Place new order
@@ -1715,7 +1716,7 @@ class TradeApi:
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderPlacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderPlaceResponse]
@@ -1822,7 +1823,7 @@ class TradeApi:
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
             WebSocket Test new order
@@ -1861,7 +1862,7 @@ class TradeApi:
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100)
              See Pegged Orders
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderTestResponse]
@@ -1966,7 +1967,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             SorOrderPlaceSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SorOrderPlaceResponse]:
         """
             WebSocket Place new order using SOR
@@ -1997,7 +1998,7 @@ class TradeApi:
                     strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
                     self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[SorOrderPlaceResponse]
@@ -2080,7 +2081,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             SorOrderTestSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[SorOrderTestResponse]:
         """
             WebSocket Test new order using SOR
@@ -2110,7 +2111,7 @@ class TradeApi:
                     strategy_type (Optional[int] = None): Arbitrary numeric value identifying the order strategy.
                         Values smaller than 1000000 are reserved and cannot be used.
                     self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[SorOrderTestResponse]

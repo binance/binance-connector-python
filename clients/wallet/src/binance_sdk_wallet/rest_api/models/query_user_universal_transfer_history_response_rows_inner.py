@@ -31,7 +31,7 @@ class QueryUserUniversalTransferHistoryResponseRowsInner(BaseModel):
     amount: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
-    tranId: Optional[StrictInt] = Field(default=None, alias="tranId")
+    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     timestamp: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

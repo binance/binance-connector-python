@@ -11,11 +11,6 @@ Do not edit the class manually.
 from enum import Enum
 
 
-class NewBlockTradeOrderSideEnum(Enum):
-    BUY = "BUY"
-    SELL = "SELL"
-
-
 class NewOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"

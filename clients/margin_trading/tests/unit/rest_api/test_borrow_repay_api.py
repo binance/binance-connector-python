@@ -98,7 +98,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFutureHourlyInterestRateResponse, "from_dict")
+        ):
             expected = GetFutureHourlyInterestRateResponse.from_dict(expected_response)
         else:
             expected = GetFutureHourlyInterestRateResponse.model_validate_json(
@@ -142,7 +146,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetFutureHourlyInterestRateResponse, "from_dict")
+        ):
             expected = GetFutureHourlyInterestRateResponse.from_dict(expected_response)
         else:
             expected = GetFutureHourlyInterestRateResponse.model_validate_json(
@@ -225,7 +233,7 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetInterestHistoryResponse, "from_dict"):
             expected = GetInterestHistoryResponse.from_dict(expected_response)
         else:
             expected = GetInterestHistoryResponse.model_validate_json(
@@ -289,7 +297,7 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetInterestHistoryResponse, "from_dict"):
             expected = GetInterestHistoryResponse.from_dict(expected_response)
         else:
             expected = GetInterestHistoryResponse.model_validate_json(
@@ -353,7 +361,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountBorrowRepayResponse, "from_dict")
+        ):
             expected = MarginAccountBorrowRepayResponse.from_dict(expected_response)
         else:
             expected = MarginAccountBorrowRepayResponse.model_validate_json(
@@ -401,7 +413,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountBorrowRepayResponse, "from_dict")
+        ):
             expected = MarginAccountBorrowRepayResponse.from_dict(expected_response)
         else:
             expected = MarginAccountBorrowRepayResponse.model_validate_json(
@@ -554,7 +570,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryBorrowRepayRecordsInMarginAccountResponse, "from_dict")
+        ):
             expected = QueryBorrowRepayRecordsInMarginAccountResponse.from_dict(
                 expected_response
             )
@@ -624,7 +644,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryBorrowRepayRecordsInMarginAccountResponse, "from_dict")
+        ):
             expected = QueryBorrowRepayRecordsInMarginAccountResponse.from_dict(
                 expected_response
             )
@@ -715,7 +739,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginInterestRateHistoryResponse, "from_dict")
+        ):
             expected = QueryMarginInterestRateHistoryResponse.from_dict(
                 expected_response
             )
@@ -777,7 +805,11 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginInterestRateHistoryResponse, "from_dict")
+        ):
             expected = QueryMarginInterestRateHistoryResponse.from_dict(
                 expected_response
             )
@@ -851,7 +883,7 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QueryMaxBorrowResponse, "from_dict"):
             expected = QueryMaxBorrowResponse.from_dict(expected_response)
         else:
             expected = QueryMaxBorrowResponse.model_validate_json(
@@ -894,7 +926,7 @@ class TestBorrowRepayApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QueryMaxBorrowResponse, "from_dict"):
             expected = QueryMaxBorrowResponse.from_dict(expected_response)
         else:
             expected = QueryMaxBorrowResponse.model_validate_json(

@@ -123,7 +123,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DepositAssetsIntoTheManagedSubAccountResponse, "from_dict")
+        ):
             expected = DepositAssetsIntoTheManagedSubAccountResponse.from_dict(
                 expected_response
             )
@@ -173,7 +177,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DepositAssetsIntoTheManagedSubAccountResponse, "from_dict")
+        ):
             expected = DepositAssetsIntoTheManagedSubAccountResponse.from_dict(
                 expected_response
             )
@@ -292,7 +300,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetManagedSubAccountDepositAddressResponse, "from_dict")
+        ):
             expected = GetManagedSubAccountDepositAddressResponse.from_dict(
                 expected_response
             )
@@ -346,7 +358,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetManagedSubAccountDepositAddressResponse, "from_dict")
+        ):
             expected = GetManagedSubAccountDepositAddressResponse.from_dict(
                 expected_response
             )
@@ -450,7 +466,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -510,7 +530,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -612,7 +636,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountFuturesAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountFuturesAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -686,7 +714,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountFuturesAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountFuturesAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -799,7 +831,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountListResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountListResponse.from_dict(expected_response)
         else:
             expected = QueryManagedSubAccountListResponse.model_validate_json(
@@ -883,7 +919,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountListResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountListResponse.from_dict(expected_response)
         else:
             expected = QueryManagedSubAccountListResponse.model_validate_json(
@@ -972,7 +1012,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountMarginAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountMarginAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -1051,7 +1095,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountMarginAssetDetailsResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountMarginAssetDetailsResponse.from_dict(
                 expected_response
             )
@@ -1197,7 +1245,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountSnapshotResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountSnapshotResponse.from_dict(
                 expected_response
             )
@@ -1313,7 +1365,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryManagedSubAccountSnapshotResponse, "from_dict")
+        ):
             expected = QueryManagedSubAccountSnapshotResponse.from_dict(
                 expected_response
             )
@@ -1447,7 +1503,14 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogMasterAccountInvestorResponse,
+                "from_dict",
+            )
+        ):
             expected = QueryManagedSubAccountTransferLogMasterAccountInvestorResponse.from_dict(
                 expected_response
             )
@@ -1535,7 +1598,14 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogMasterAccountInvestorResponse,
+                "from_dict",
+            )
+        ):
             expected = QueryManagedSubAccountTransferLogMasterAccountInvestorResponse.from_dict(
                 expected_response
             )
@@ -1748,7 +1818,14 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogMasterAccountTradingResponse,
+                "from_dict",
+            )
+        ):
             expected = (
                 QueryManagedSubAccountTransferLogMasterAccountTradingResponse.from_dict(
                     expected_response
@@ -1838,7 +1915,14 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogMasterAccountTradingResponse,
+                "from_dict",
+            )
+        ):
             expected = (
                 QueryManagedSubAccountTransferLogMasterAccountTradingResponse.from_dict(
                     expected_response
@@ -2048,7 +2132,13 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogSubAccountTradingResponse, "from_dict"
+            )
+        ):
             expected = (
                 QueryManagedSubAccountTransferLogSubAccountTradingResponse.from_dict(
                     expected_response
@@ -2135,7 +2225,13 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(
+                QueryManagedSubAccountTransferLogSubAccountTradingResponse, "from_dict"
+            )
+        ):
             expected = (
                 QueryManagedSubAccountTransferLogSubAccountTradingResponse.from_dict(
                     expected_response
@@ -2286,7 +2382,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(WithdrawlAssetsFromTheManagedSubAccountResponse, "from_dict")
+        ):
             expected = WithdrawlAssetsFromTheManagedSubAccountResponse.from_dict(
                 expected_response
             )
@@ -2337,7 +2437,11 @@ class TestManagedSubAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(WithdrawlAssetsFromTheManagedSubAccountResponse, "from_dict")
+        ):
             expected = WithdrawlAssetsFromTheManagedSubAccountResponse.from_dict(
                 expected_response
             )

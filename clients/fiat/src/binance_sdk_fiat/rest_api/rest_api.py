@@ -98,7 +98,7 @@ class FiatRestAPI:
 
         * If beginTime and endTime are not sent, the recent 30-day data will be returned.
 
-        Weight: 90000
+        Weight: 45000
 
                 Args:
                     transaction_type (Union[str, None]): 0-buy,1-sell

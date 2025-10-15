@@ -32,7 +32,7 @@ class CompressedAggregateTradesListResponseInner(BaseModel):
     q: Optional[StrictStr] = None
     f: Optional[StrictInt] = None
     l: Optional[StrictInt] = None
-    t: Optional[StrictInt] = Field(default=None, alias="T")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["a", "p", "q", "f", "l", "T", "m"]

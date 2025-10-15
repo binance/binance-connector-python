@@ -101,7 +101,11 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSoftStakingProductListResponse, "from_dict")
+        ):
             expected = GetSoftStakingProductListResponse.from_dict(expected_response)
         else:
             expected = GetSoftStakingProductListResponse.model_validate_json(
@@ -164,7 +168,11 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSoftStakingProductListResponse, "from_dict")
+        ):
             expected = GetSoftStakingProductListResponse.from_dict(expected_response)
         else:
             expected = GetSoftStakingProductListResponse.model_validate_json(
@@ -230,7 +238,11 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSoftStakingRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetSoftStakingRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSoftStakingRewardsHistoryResponse.model_validate_json(
@@ -296,7 +308,11 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSoftStakingRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetSoftStakingRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSoftStakingRewardsHistoryResponse.model_validate_json(
@@ -352,7 +368,7 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SetSoftStakingResponse, "from_dict"):
             expected = SetSoftStakingResponse.from_dict(expected_response)
         else:
             expected = SetSoftStakingResponse.model_validate_json(
@@ -391,7 +407,7 @@ class TestSoftStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SetSoftStakingResponse, "from_dict"):
             expected = SetSoftStakingResponse.from_dict(expected_response)
         else:
             expected = SetSoftStakingResponse.model_validate_json(

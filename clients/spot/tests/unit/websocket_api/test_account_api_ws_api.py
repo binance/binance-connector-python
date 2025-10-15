@@ -29,6 +29,7 @@ from binance_sdk_spot.websocket_api.models import AccountStatusResponse
 from binance_sdk_spot.websocket_api.models import AllOrderListsResponse
 from binance_sdk_spot.websocket_api.models import AllOrdersResponse
 from binance_sdk_spot.websocket_api.models import MyAllocationsResponse
+from binance_sdk_spot.websocket_api.models import MyFiltersResponse
 from binance_sdk_spot.websocket_api.models import MyPreventedMatchesResponse
 from binance_sdk_spot.websocket_api.models import MyTradesResponse
 from binance_sdk_spot.websocket_api.models import OpenOrderListsStatusResponse
@@ -1102,6 +1103,192 @@ class TestWebSocketAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.my_allocations(**params)
+
+    @pytest.mark.asyncio
+    async def test_my_filters_success(self):
+        """Test my_filters() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        expected_response = {
+            "id": "1758009606869",
+            "status": 200,
+            "result": {
+                "exchangeFilters": [
+                    {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000}
+                ],
+                "symbolFilters": [
+                    {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20}
+                ],
+                "assetFilters": [
+                    {
+                        "filterType": "MAX_ASSET",
+                        "asset": "JPY",
+                        "limit": "1000000.00000000",
+                    }
+                ],
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                },
+                {
+                    "rateLimitType": "RAW_REQUESTS",
+                    "interval": "MINUTE",
+                    "intervalNum": 5,
+                    "limit": 61000,
+                },
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.my_filters(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/myFilters".replace("/", "", 1)
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={"method": "/myFilters".replace("/", "", 1), "params": params},
+            response_model=MyFiltersResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_my_filters_success_with_optional_params(self):
+        """Test my_filters() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "recv_window": 5000.0,
+        }
+
+        expected_response = {
+            "id": "1758009606869",
+            "status": 200,
+            "result": {
+                "exchangeFilters": [
+                    {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000}
+                ],
+                "symbolFilters": [
+                    {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20}
+                ],
+                "assetFilters": [
+                    {
+                        "filterType": "MAX_ASSET",
+                        "asset": "JPY",
+                        "limit": "1000000.00000000",
+                    }
+                ],
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                },
+                {
+                    "rateLimitType": "RAW_REQUESTS",
+                    "interval": "MINUTE",
+                    "intervalNum": 5,
+                    "limit": 61000,
+                },
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.my_filters(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/myFilters".replace("/", "", 1)
+        assert params["symbol"] == "BNBUSDT"
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["recv_window"] == 5000.0
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={"method": "/myFilters".replace("/", "", 1), "params": params},
+            response_model=MyFiltersResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_my_filters_missing_required_param_symbol(self):
+        """Test that my_filters() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "recv_window": 5000.0,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.my_filters(**params)
+
+    @pytest.mark.asyncio
+    async def test_my_filters_server_error(self):
+        """Test that my_filters() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.my_filters(**params)
 
     @pytest.mark.asyncio
     async def test_my_prevented_matches_success(self):

@@ -108,39 +108,12 @@ class OrderBookResponse(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+    def from_dict(cls, obj: Optional[Any]) -> Optional[Self]:
         """Create an instance of OrderBookResponse from a dict"""
         if obj is None:
             return None
 
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
+        if isinstance(obj, (list, tuple)):
+            return cls.model_validate(tuple(obj))
 
-        _obj = cls.model_validate(
-            {
-                "T": obj.get("T"),
-                "u": obj.get("u"),
-                "bids": (
-                    [
-                        OrderBookResponseBidsItem.from_dict(_item)
-                        for _item in obj["bids"]
-                    ]
-                    if obj.get("bids") is not None
-                    else None
-                ),
-                "asks": (
-                    [
-                        OrderBookResponseAsksItem.from_dict(_item)
-                        for _item in obj["asks"]
-                    ]
-                    if obj.get("asks") is not None
-                    else None
-                ),
-            }
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
-        return _obj
+        return cls.model_validate(obj)

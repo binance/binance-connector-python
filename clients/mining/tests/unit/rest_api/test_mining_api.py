@@ -136,7 +136,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountListResponse, "from_dict"):
             expected = AccountListResponse.from_dict(expected_response)
         else:
             expected = AccountListResponse.model_validate_json(
@@ -216,7 +216,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountListResponse, "from_dict"):
             expected = AccountListResponse.from_dict(expected_response)
         else:
             expected = AccountListResponse.model_validate_json(
@@ -296,7 +296,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcquiringAlgorithmResponse, "from_dict"):
             expected = AcquiringAlgorithmResponse.from_dict(expected_response)
         else:
             expected = AcquiringAlgorithmResponse.model_validate_json(
@@ -353,7 +353,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AcquiringCoinnameResponse, "from_dict"):
             expected = AcquiringCoinnameResponse.from_dict(expected_response)
         else:
             expected = AcquiringCoinnameResponse.model_validate_json(
@@ -411,7 +411,11 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CancelHashrateResaleConfigurationResponse, "from_dict")
+        ):
             expected = CancelHashrateResaleConfigurationResponse.from_dict(
                 expected_response
             )
@@ -454,7 +458,11 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CancelHashrateResaleConfigurationResponse, "from_dict")
+        ):
             expected = CancelHashrateResaleConfigurationResponse.from_dict(
                 expected_response
             )
@@ -590,7 +598,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(EarningsListResponse, "from_dict"):
             expected = EarningsListResponse.from_dict(expected_response)
         else:
             expected = EarningsListResponse.model_validate_json(
@@ -677,7 +685,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(EarningsListResponse, "from_dict"):
             expected = EarningsListResponse.from_dict(expected_response)
         else:
             expected = EarningsListResponse.model_validate_json(
@@ -780,7 +788,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExtraBonusListResponse, "from_dict"):
             expected = ExtraBonusListResponse.from_dict(expected_response)
         else:
             expected = ExtraBonusListResponse.model_validate_json(
@@ -844,7 +852,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExtraBonusListResponse, "from_dict"):
             expected = ExtraBonusListResponse.from_dict(expected_response)
         else:
             expected = ExtraBonusListResponse.model_validate_json(
@@ -958,7 +966,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleDetailResponse, "from_dict"):
             expected = HashrateResaleDetailResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleDetailResponse.model_validate_json(
@@ -1032,7 +1040,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleDetailResponse, "from_dict"):
             expected = HashrateResaleDetailResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleDetailResponse.model_validate_json(
@@ -1142,7 +1150,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleListResponse, "from_dict"):
             expected = HashrateResaleListResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleListResponse.model_validate_json(
@@ -1214,7 +1222,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleListResponse, "from_dict"):
             expected = HashrateResaleListResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleListResponse.model_validate_json(
@@ -1280,7 +1288,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleRequestResponse, "from_dict"):
             expected = HashrateResaleRequestResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleRequestResponse.model_validate_json(
@@ -1329,7 +1337,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(HashrateResaleRequestResponse, "from_dict"):
             expected = HashrateResaleRequestResponse.from_dict(expected_response)
         else:
             expected = HashrateResaleRequestResponse.model_validate_json(
@@ -1511,7 +1519,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MiningAccountEarningResponse, "from_dict"):
             expected = MiningAccountEarningResponse.from_dict(expected_response)
         else:
             expected = MiningAccountEarningResponse.model_validate_json(
@@ -1576,7 +1584,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MiningAccountEarningResponse, "from_dict"):
             expected = MiningAccountEarningResponse.from_dict(expected_response)
         else:
             expected = MiningAccountEarningResponse.model_validate_json(
@@ -1671,7 +1679,11 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RequestForDetailMinerListResponse, "from_dict")
+        ):
             expected = RequestForDetailMinerListResponse.from_dict(expected_response)
         else:
             expected = RequestForDetailMinerListResponse.model_validate_json(
@@ -1738,7 +1750,11 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(RequestForDetailMinerListResponse, "from_dict")
+        ):
             expected = RequestForDetailMinerListResponse.from_dict(expected_response)
         else:
             expected = RequestForDetailMinerListResponse.model_validate_json(
@@ -1869,7 +1885,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RequestForMinerListResponse, "from_dict"):
             expected = RequestForMinerListResponse.from_dict(expected_response)
         else:
             expected = RequestForMinerListResponse.model_validate_json(
@@ -1945,7 +1961,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RequestForMinerListResponse, "from_dict"):
             expected = RequestForMinerListResponse.from_dict(expected_response)
         else:
             expected = RequestForMinerListResponse.model_validate_json(
@@ -2054,7 +2070,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(StatisticListResponse, "from_dict"):
             expected = StatisticListResponse.from_dict(expected_response)
         else:
             expected = StatisticListResponse.model_validate_json(
@@ -2119,7 +2135,7 @@ class TestMiningApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(StatisticListResponse, "from_dict"):
             expected = StatisticListResponse.from_dict(expected_response)
         else:
             expected = StatisticListResponse.model_validate_json(

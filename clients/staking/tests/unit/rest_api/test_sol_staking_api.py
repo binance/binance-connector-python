@@ -87,7 +87,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ClaimBoostRewardsResponse, "from_dict"):
             expected = ClaimBoostRewardsResponse.from_dict(expected_response)
         else:
             expected = ClaimBoostRewardsResponse.model_validate_json(
@@ -126,7 +126,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ClaimBoostRewardsResponse, "from_dict"):
             expected = ClaimBoostRewardsResponse.from_dict(expected_response)
         else:
             expected = ClaimBoostRewardsResponse.model_validate_json(
@@ -187,7 +187,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBnsolRateHistoryResponse, "from_dict"):
             expected = GetBnsolRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBnsolRateHistoryResponse.model_validate_json(
@@ -247,7 +247,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBnsolRateHistoryResponse, "from_dict"):
             expected = GetBnsolRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBnsolRateHistoryResponse.model_validate_json(
@@ -310,7 +310,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetBnsolRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetBnsolRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBnsolRewardsHistoryResponse.model_validate_json(
@@ -372,7 +374,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetBnsolRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetBnsolRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBnsolRewardsHistoryResponse.model_validate_json(
@@ -442,7 +446,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetBoostRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetBoostRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBoostRewardsHistoryResponse.model_validate_json(
@@ -504,7 +510,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetBoostRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetBoostRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetBoostRewardsHistoryResponse.model_validate_json(
@@ -583,7 +591,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetSolRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetSolRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSolRedemptionHistoryResponse.model_validate_json(
@@ -647,7 +657,9 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetSolRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetSolRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSolRedemptionHistoryResponse.model_validate_json(
@@ -710,7 +722,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetSolStakingHistoryResponse, "from_dict"):
             expected = GetSolStakingHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSolStakingHistoryResponse.model_validate_json(
@@ -772,7 +784,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetSolStakingHistoryResponse, "from_dict"):
             expected = GetSolStakingHistoryResponse.from_dict(expected_response)
         else:
             expected = GetSolStakingHistoryResponse.model_validate_json(
@@ -832,7 +844,11 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSolStakingQuotaDetailsResponse, "from_dict")
+        ):
             expected = GetSolStakingQuotaDetailsResponse.from_dict(expected_response)
         else:
             expected = GetSolStakingQuotaDetailsResponse.model_validate_json(
@@ -885,7 +901,11 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSolStakingQuotaDetailsResponse, "from_dict")
+        ):
             expected = GetSolStakingQuotaDetailsResponse.from_dict(expected_response)
         else:
             expected = GetSolStakingQuotaDetailsResponse.model_validate_json(
@@ -938,7 +958,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetUnclaimedRewardsResponse, "from_dict"):
             expected = GetUnclaimedRewardsResponse.from_dict(expected_response)
         else:
             expected = GetUnclaimedRewardsResponse.model_validate_json(
@@ -984,7 +1004,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetUnclaimedRewardsResponse, "from_dict"):
             expected = GetUnclaimedRewardsResponse.from_dict(expected_response)
         else:
             expected = GetUnclaimedRewardsResponse.model_validate_json(
@@ -1045,7 +1065,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemSolResponse, "from_dict"):
             expected = RedeemSolResponse.from_dict(expected_response)
         else:
             expected = RedeemSolResponse.model_validate_json(
@@ -1089,7 +1109,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemSolResponse, "from_dict"):
             expected = RedeemSolResponse.from_dict(expected_response)
         else:
             expected = RedeemSolResponse.model_validate_json(
@@ -1155,7 +1175,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SolStakingAccountResponse, "from_dict"):
             expected = SolStakingAccountResponse.from_dict(expected_response)
         else:
             expected = SolStakingAccountResponse.model_validate_json(
@@ -1198,7 +1218,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SolStakingAccountResponse, "from_dict"):
             expected = SolStakingAccountResponse.from_dict(expected_response)
         else:
             expected = SolStakingAccountResponse.model_validate_json(
@@ -1258,7 +1278,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeSolStakingResponse, "from_dict"):
             expected = SubscribeSolStakingResponse.from_dict(expected_response)
         else:
             expected = SubscribeSolStakingResponse.model_validate_json(
@@ -1303,7 +1323,7 @@ class TestSolStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeSolStakingResponse, "from_dict"):
             expected = SubscribeSolStakingResponse.from_dict(expected_response)
         else:
             expected = SubscribeSolStakingResponse.model_validate_json(

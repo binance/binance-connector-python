@@ -28,8 +28,8 @@ class SubscribeSolStakingResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = None
-    bnsolAmount: Optional[StrictStr] = Field(default=None, alias="bnsolAmount")
-    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    bnsol_amount: Optional[StrictStr] = Field(default=None, alias="bnsolAmount")
+    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["success", "bnsolAmount", "exchangeRate"]
 

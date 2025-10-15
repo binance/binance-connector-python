@@ -27,8 +27,8 @@ class DepositHistoryV2ResponseInnerQuestionnaire(BaseModel):
     DepositHistoryV2ResponseInnerQuestionnaire
     """  # noqa: E501
 
-    vaspName: Optional[StrictStr] = Field(default=None, alias="vaspName")
-    depositOriginator: Optional[StrictInt] = Field(
+    vasp_name: Optional[StrictStr] = Field(default=None, alias="vaspName")
+    deposit_originator: Optional[StrictInt] = Field(
         default=None, alias="depositOriginator"
     )
     additional_properties: Dict[str, Any] = {}

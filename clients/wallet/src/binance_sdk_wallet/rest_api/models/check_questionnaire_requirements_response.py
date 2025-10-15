@@ -27,7 +27,7 @@ class CheckQuestionnaireRequirementsResponse(BaseModel):
     CheckQuestionnaireRequirementsResponse
     """  # noqa: E501
 
-    questionnaireCountryCode: Optional[StrictStr] = Field(
+    questionnaire_country_code: Optional[StrictStr] = Field(
         default=None, alias="questionnaireCountryCode"
     )
     additional_properties: Dict[str, Any] = {}

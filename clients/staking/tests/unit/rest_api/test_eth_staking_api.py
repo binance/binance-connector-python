@@ -92,7 +92,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(EthStakingAccountResponse, "from_dict"):
             expected = EthStakingAccountResponse.from_dict(expected_response)
         else:
             expected = EthStakingAccountResponse.model_validate_json(
@@ -136,7 +136,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(EthStakingAccountResponse, "from_dict"):
             expected = EthStakingAccountResponse.from_dict(expected_response)
         else:
             expected = EthStakingAccountResponse.model_validate_json(
@@ -187,7 +187,11 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCurrentEthStakingQuotaResponse, "from_dict")
+        ):
             expected = GetCurrentEthStakingQuotaResponse.from_dict(expected_response)
         else:
             expected = GetCurrentEthStakingQuotaResponse.model_validate_json(
@@ -231,7 +235,11 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCurrentEthStakingQuotaResponse, "from_dict")
+        ):
             expected = GetCurrentEthStakingQuotaResponse.from_dict(expected_response)
         else:
             expected = GetCurrentEthStakingQuotaResponse.model_validate_json(
@@ -296,7 +304,9 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetEthRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetEthRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetEthRedemptionHistoryResponse.model_validate_json(
@@ -360,7 +370,9 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetEthRedemptionHistoryResponse, "from_dict")
+        ):
             expected = GetEthRedemptionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetEthRedemptionHistoryResponse.model_validate_json(
@@ -423,7 +435,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetEthStakingHistoryResponse, "from_dict"):
             expected = GetEthStakingHistoryResponse.from_dict(expected_response)
         else:
             expected = GetEthStakingHistoryResponse.model_validate_json(
@@ -485,7 +497,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetEthStakingHistoryResponse, "from_dict"):
             expected = GetEthStakingHistoryResponse.from_dict(expected_response)
         else:
             expected = GetEthStakingHistoryResponse.model_validate_json(
@@ -542,7 +554,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethRateHistoryResponse, "from_dict"):
             expected = GetWbethRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethRateHistoryResponse.model_validate_json(
@@ -598,7 +610,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethRateHistoryResponse, "from_dict"):
             expected = GetWbethRateHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethRateHistoryResponse.model_validate_json(
@@ -661,7 +673,9 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetWbethRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetWbethRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethRewardsHistoryResponse.model_validate_json(
@@ -723,7 +737,9 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetWbethRewardsHistoryResponse, "from_dict")
+        ):
             expected = GetWbethRewardsHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethRewardsHistoryResponse.model_validate_json(
@@ -786,7 +802,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethUnwrapHistoryResponse, "from_dict"):
             expected = GetWbethUnwrapHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethUnwrapHistoryResponse.model_validate_json(
@@ -848,7 +864,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethUnwrapHistoryResponse, "from_dict"):
             expected = GetWbethUnwrapHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethUnwrapHistoryResponse.model_validate_json(
@@ -909,7 +925,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethWrapHistoryResponse, "from_dict"):
             expected = GetWbethWrapHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethWrapHistoryResponse.model_validate_json(
@@ -969,7 +985,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetWbethWrapHistoryResponse, "from_dict"):
             expected = GetWbethWrapHistoryResponse.from_dict(expected_response)
         else:
             expected = GetWbethWrapHistoryResponse.model_validate_json(
@@ -1030,7 +1046,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemEthResponse, "from_dict"):
             expected = RedeemEthResponse.from_dict(expected_response)
         else:
             expected = RedeemEthResponse.model_validate_json(
@@ -1074,7 +1090,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(RedeemEthResponse, "from_dict"):
             expected = RedeemEthResponse.from_dict(expected_response)
         else:
             expected = RedeemEthResponse.model_validate_json(
@@ -1148,7 +1164,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeEthStakingResponse, "from_dict"):
             expected = SubscribeEthStakingResponse.from_dict(expected_response)
         else:
             expected = SubscribeEthStakingResponse.model_validate_json(
@@ -1193,7 +1209,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(SubscribeEthStakingResponse, "from_dict"):
             expected = SubscribeEthStakingResponse.from_dict(expected_response)
         else:
             expected = SubscribeEthStakingResponse.model_validate_json(
@@ -1267,7 +1283,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WrapBethResponse, "from_dict"):
             expected = WrapBethResponse.from_dict(expected_response)
         else:
             expected = WrapBethResponse.model_validate_json(
@@ -1310,7 +1326,7 @@ class TestEthStakingApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(WrapBethResponse, "from_dict"):
             expected = WrapBethResponse.from_dict(expected_response)
         else:
             expected = WrapBethResponse.model_validate_json(

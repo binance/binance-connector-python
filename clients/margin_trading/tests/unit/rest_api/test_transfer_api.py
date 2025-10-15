@@ -114,7 +114,11 @@ class TestTransferApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCrossMarginTransferHistoryResponse, "from_dict")
+        ):
             expected = GetCrossMarginTransferHistoryResponse.from_dict(
                 expected_response
             )
@@ -200,7 +204,11 @@ class TestTransferApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCrossMarginTransferHistoryResponse, "from_dict")
+        ):
             expected = GetCrossMarginTransferHistoryResponse.from_dict(
                 expected_response
             )
@@ -260,7 +268,11 @@ class TestTransferApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMaxTransferOutAmountResponse, "from_dict")
+        ):
             expected = QueryMaxTransferOutAmountResponse.from_dict(expected_response)
         else:
             expected = QueryMaxTransferOutAmountResponse.model_validate_json(
@@ -305,7 +317,11 @@ class TestTransferApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMaxTransferOutAmountResponse, "from_dict")
+        ):
             expected = QueryMaxTransferOutAmountResponse.from_dict(expected_response)
         else:
             expected = QueryMaxTransferOutAmountResponse.model_validate_json(

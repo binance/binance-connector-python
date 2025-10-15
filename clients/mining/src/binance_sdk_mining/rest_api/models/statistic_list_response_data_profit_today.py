@@ -27,9 +27,9 @@ class StatisticListResponseDataProfitToday(BaseModel):
     StatisticListResponseDataProfitToday
     """  # noqa: E501
 
-    btc: Optional[StrictStr] = Field(default=None, alias="BTC")
-    bsv: Optional[StrictStr] = Field(default=None, alias="BSV")
-    bch: Optional[StrictStr] = Field(default=None, alias="BCH")
+    BTC: Optional[StrictStr] = Field(default=None, alias="BTC")
+    BSV: Optional[StrictStr] = Field(default=None, alias="BSV")
+    BCH: Optional[StrictStr] = Field(default=None, alias="BCH")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["BTC", "BSV", "BCH"]
 

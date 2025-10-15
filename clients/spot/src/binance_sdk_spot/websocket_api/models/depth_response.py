@@ -26,7 +26,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_spot.websocket_api.models.depth_response_result import (
     DepthResponseResult,
 )
-from binance_sdk_spot.websocket_api.models.rate_limits_inner import RateLimitsInner
+from binance_sdk_spot.websocket_api.models.rate_limits import RateLimits
 from typing import Set
 from typing_extensions import Self
 
@@ -39,9 +39,7 @@ class DepthResponse(BaseModel):
     id: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     result: Optional[DepthResponseResult] = None
-    rate_limits: Optional[List[RateLimitsInner]] = Field(
-        default=None, alias="rateLimits"
-    )
+    rate_limits: Optional[List[RateLimits]] = Field(default=None, alias="rateLimits")
 
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "status", "result", "rateLimits"]
@@ -128,7 +126,7 @@ class DepthResponse(BaseModel):
                     else None
                 ),
                 "rateLimits": (
-                    [RateLimitsInner.from_dict(_item) for _item in obj["rateLimits"]]
+                    [RateLimits.from_dict(_item) for _item in obj["rateLimits"]]
                     if obj.get("rateLimits") is not None
                     else None
                 ),

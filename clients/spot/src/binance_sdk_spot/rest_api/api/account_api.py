@@ -29,6 +29,7 @@ from ..models import GetOpenOrdersResponse
 from ..models import GetOrderResponse
 from ..models import GetOrderListResponse
 from ..models import MyAllocationsResponse
+from ..models import MyFiltersResponse
 from ..models import MyPreventedMatchesResponse
 from ..models import MyTradesResponse
 from ..models import OpenOrderListResponse
@@ -97,7 +98,7 @@ class AccountApi:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[AllOrderListResponse]:
         """
                 Query all Order lists
@@ -114,7 +115,7 @@ class AccountApi:
                     start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[AllOrderListResponse]
@@ -151,7 +152,7 @@ class AccountApi:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[AllOrdersResponse]:
         """
                 All orders
@@ -167,7 +168,7 @@ class AccountApi:
                     start_time (Optional[int] = None): Timestamp in ms to get aggregate trades from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[AllOrdersResponse]
@@ -206,7 +207,7 @@ class AccountApi:
     def get_account(
         self,
         omit_zero_balances: Optional[bool] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetAccountResponse]:
         """
                 Account information
@@ -218,7 +219,7 @@ class AccountApi:
 
                 Args:
                     omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: `false`
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetAccountResponse]
@@ -245,7 +246,7 @@ class AccountApi:
     def get_open_orders(
         self,
         symbol: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOpenOrdersResponse]:
         """
                 Current open orders
@@ -257,7 +258,7 @@ class AccountApi:
 
                 Args:
                     symbol (Optional[str] = None): Symbol to query
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOpenOrdersResponse]
@@ -286,7 +287,7 @@ class AccountApi:
         symbol: Union[str, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOrderResponse]:
         """
                 Query order
@@ -300,7 +301,7 @@ class AccountApi:
                     symbol (Union[str, None]):
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOrderResponse]
@@ -338,7 +339,7 @@ class AccountApi:
         self,
         order_list_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[GetOrderListResponse]:
         """
                 Query Order list
@@ -351,7 +352,7 @@ class AccountApi:
                 Args:
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     orig_client_order_id (Optional[str] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[GetOrderListResponse]
@@ -387,7 +388,7 @@ class AccountApi:
         from_allocation_id: Optional[int] = None,
         limit: Optional[int] = None,
         order_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyAllocationsResponse]:
         """
                 Query Allocations
@@ -404,7 +405,7 @@ class AccountApi:
                     from_allocation_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
                     order_id (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyAllocationsResponse]
@@ -441,6 +442,50 @@ class AccountApi:
             signer=self._signer,
         )
 
+    def my_filters(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[float] = None,
+    ) -> ApiResponse[MyFiltersResponse]:
+        """
+                Query relevant filters
+                GET /api/v3/myFilters
+                https://developers.binance.com/docs/binance-spot-api-docs/rest-api/account-endpoints#query-relevant-filters-user_data
+
+                Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+        Weight: 40
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+                Returns:
+                    ApiResponse[MyFiltersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        payload = {"symbol": symbol, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v3/myFilters",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=MyFiltersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def my_prevented_matches(
         self,
         symbol: Union[str, None],
@@ -448,7 +493,7 @@ class AccountApi:
         order_id: Optional[int] = None,
         from_prevented_match_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyPreventedMatchesResponse]:
         """
                 Query Prevented Matches
@@ -475,7 +520,7 @@ class AccountApi:
                     order_id (Optional[int] = None):
                     from_prevented_match_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyPreventedMatchesResponse]
@@ -519,7 +564,7 @@ class AccountApi:
         end_time: Optional[int] = None,
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[MyTradesResponse]:
         """
                 Account trade list
@@ -539,7 +584,7 @@ class AccountApi:
                     end_time (Optional[int] = None): Timestamp in ms to get aggregate trades until INCLUSIVE.
                     from_id (Optional[int] = None): ID to get aggregate trades from INCLUSIVE.
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[MyTradesResponse]
@@ -578,7 +623,7 @@ class AccountApi:
 
     def open_order_list(
         self,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OpenOrderListResponse]:
         """
                 Query Open Order lists
@@ -589,7 +634,7 @@ class AccountApi:
         Weight: 6
 
                 Args:
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OpenOrderListResponse]
@@ -619,7 +664,7 @@ class AccountApi:
         order_id: Union[int, None],
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderAmendmentsResponse]:
         """
                 Query Order Amendments
@@ -634,7 +679,7 @@ class AccountApi:
                     order_id (Union[int, None]):
                     from_execution_id (Optional[int] = None):
                     limit (Optional[int] = None): Default:500; Maximum: 1000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderAmendmentsResponse]
@@ -675,7 +720,7 @@ class AccountApi:
 
     def rate_limit_order(
         self,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[RateLimitOrderResponse]:
         """
                 Query Unfilled Order Count
@@ -686,7 +731,7 @@ class AccountApi:
         Weight: 40
 
                 Args:
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[RateLimitOrderResponse]

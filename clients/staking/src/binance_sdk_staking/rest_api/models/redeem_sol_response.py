@@ -28,9 +28,9 @@ class RedeemSolResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = None
-    solAmount: Optional[StrictStr] = Field(default=None, alias="solAmount")
-    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
-    arrivalTime: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
+    sol_amount: Optional[StrictStr] = Field(default=None, alias="solAmount")
+    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    arrival_time: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "success",

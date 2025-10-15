@@ -92,7 +92,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginAssetLeverageResponse, "from_dict")
+        ):
             expected = GetPortfolioMarginAssetLeverageResponse.from_dict(
                 expected_response
             )
@@ -144,7 +148,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(PortfolioMarginCollateralRateResponse, "from_dict")
+        ):
             expected = PortfolioMarginCollateralRateResponse.from_dict(
                 expected_response
             )
@@ -231,7 +239,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(PortfolioMarginProTieredCollateralRateResponse, "from_dict")
+        ):
             expected = PortfolioMarginProTieredCollateralRateResponse.from_dict(
                 expected_response
             )
@@ -311,7 +323,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(PortfolioMarginProTieredCollateralRateResponse, "from_dict")
+        ):
             expected = PortfolioMarginProTieredCollateralRateResponse.from_dict(
                 expected_response
             )
@@ -364,7 +380,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryPortfolioMarginAssetIndexPriceResponse, "from_dict")
+        ):
             expected = QueryPortfolioMarginAssetIndexPriceResponse.from_dict(
                 expected_response
             )
@@ -407,7 +427,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryPortfolioMarginAssetIndexPriceResponse, "from_dict")
+        ):
             expected = QueryPortfolioMarginAssetIndexPriceResponse.from_dict(
                 expected_response
             )

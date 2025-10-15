@@ -33,8 +33,8 @@ class FetchAddressVerificationListResponseInner(BaseModel):
     status: Optional[StrictStr] = None
     token: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
-    walletAddress: Optional[StrictStr] = Field(default=None, alias="walletAddress")
-    addressQuestionnaire: Optional[
+    wallet_address: Optional[StrictStr] = Field(default=None, alias="walletAddress")
+    address_questionnaire: Optional[
         FetchAddressVerificationListResponseInnerAddressQuestionnaire
     ] = Field(default=None, alias="addressQuestionnaire")
     additional_properties: Dict[str, Any] = {}

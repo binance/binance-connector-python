@@ -21,19 +21,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict
-from typing import Any, ClassVar, Dict
-from binance_sdk_spot.websocket_streams.models.rate_limits_inner import RateLimitsInner
-from typing import Optional, Set, List
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Set
 from typing_extensions import Self
 
 
-class RateLimits(RateLimitsInner):
+class RateLimits(BaseModel):
     """
     RateLimits
     """  # noqa: E501
 
-    __properties: ClassVar[List[str]] = []
+    rate_limit_type: Optional[StrictStr] = Field(default=None, alias="rateLimitType")
+    interval: Optional[StrictStr] = None
+    interval_num: Optional[StrictInt] = Field(default=None, alias="intervalNum")
+    limit: Optional[StrictInt] = None
+    count: Optional[StrictInt] = None
+    additional_properties: Dict[str, Any] = {}
+    __properties: ClassVar[List[str]] = [
+        "rate_limit_type",
+        "interval",
+        "interval_num",
+        "limit",
+        "count",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -64,14 +75,24 @@ class RateLimits(RateLimitsInner):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         return _dict
 
     @classmethod
@@ -83,5 +104,18 @@ class RateLimits(RateLimitsInner):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({})
+        _obj = cls.model_validate(
+            {
+                "rateLimitType": obj.get("rateLimitType"),
+                "interval": obj.get("interval"),
+                "intervalNum": obj.get("intervalNum"),
+                "limit": obj.get("limit"),
+                "count": obj.get("count"),
+            }
+        )
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj

@@ -89,7 +89,9 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(CancelAlgoOrderSpotAlgoResponse, "from_dict")
+        ):
             expected = CancelAlgoOrderSpotAlgoResponse.from_dict(expected_response)
         else:
             expected = CancelAlgoOrderSpotAlgoResponse.model_validate_json(
@@ -130,7 +132,9 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(CancelAlgoOrderSpotAlgoResponse, "from_dict")
+        ):
             expected = CancelAlgoOrderSpotAlgoResponse.from_dict(expected_response)
         else:
             expected = CancelAlgoOrderSpotAlgoResponse.model_validate_json(
@@ -211,7 +215,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentAlgoOpenOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QueryCurrentAlgoOpenOrdersSpotAlgoResponse.from_dict(
                 expected_response
             )
@@ -273,7 +281,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentAlgoOpenOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QueryCurrentAlgoOpenOrdersSpotAlgoResponse.from_dict(
                 expected_response
             )
@@ -344,7 +356,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryHistoricalAlgoOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QueryHistoricalAlgoOrdersSpotAlgoResponse.from_dict(
                 expected_response
             )
@@ -414,7 +430,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryHistoricalAlgoOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QueryHistoricalAlgoOrdersSpotAlgoResponse.from_dict(
                 expected_response
             )
@@ -496,7 +516,9 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QuerySubOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QuerySubOrdersSpotAlgoResponse.from_dict(expected_response)
         else:
             expected = QuerySubOrdersSpotAlgoResponse.model_validate_json(
@@ -559,7 +581,9 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QuerySubOrdersSpotAlgoResponse, "from_dict")
+        ):
             expected = QuerySubOrdersSpotAlgoResponse.from_dict(expected_response)
         else:
             expected = QuerySubOrdersSpotAlgoResponse.model_validate_json(
@@ -640,7 +664,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(TimeWeightedAveragePriceSpotAlgoResponse, "from_dict")
+        ):
             expected = TimeWeightedAveragePriceSpotAlgoResponse.from_dict(
                 expected_response
             )
@@ -695,7 +723,11 @@ class TestSpotAlgoApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(TimeWeightedAveragePriceSpotAlgoResponse, "from_dict")
+        ):
             expected = TimeWeightedAveragePriceSpotAlgoResponse.from_dict(
                 expected_response
             )

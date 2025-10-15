@@ -81,75 +81,7 @@ class TestGeneralApi:
                     "limit": 61000,
                 },
             ],
-            "exchangeFilters": [
-                {
-                    "filterType": "PRICE_FILTER",
-                    "minPrice": "0.00000100",
-                    "maxPrice": "100000.00000000",
-                    "tickSize": "0.00000100",
-                },
-                {
-                    "filterType": "PERCENT_PRICE",
-                    "multiplierUp": "1.3000",
-                    "multiplierDown": "0.7000",
-                    "avgPriceMins": 5,
-                },
-                {
-                    "filterType": "PERCENT_PRICE_BY_SIDE",
-                    "bidMultiplierUp": "1.2",
-                    "bidMultiplierDown": "0.2",
-                    "askMultiplierUp": "5",
-                    "askMultiplierDown": "0.8",
-                    "avgPriceMins": 1,
-                },
-                {
-                    "filterType": "LOT_SIZE",
-                    "minQty": "0.00100000",
-                    "maxQty": "100000.00000000",
-                    "stepSize": "0.00100000",
-                },
-                {
-                    "filterType": "MIN_NOTIONAL",
-                    "minNotional": "0.00100000",
-                    "applyToMarket": True,
-                    "avgPriceMins": 5,
-                },
-                {
-                    "filterType": "NOTIONAL",
-                    "minNotional": "10.00000000",
-                    "applyMinToMarket": False,
-                    "maxNotional": "10000.00000000",
-                    "applyMaxToMarket": False,
-                    "avgPriceMins": 5,
-                },
-                {"filterType": "ICEBERG_PARTS", "limit": 10},
-                {
-                    "filterType": "MARKET_LOT_SIZE",
-                    "minQty": "0.00100000",
-                    "maxQty": "100000.00000000",
-                    "stepSize": "0.00100000",
-                },
-                {"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 25},
-                {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 5},
-                {"filterType": "MAX_NUM_ICEBERG_ORDERS", "maxNumIcebergOrders": 5},
-                {"filterType": "MAX_POSITION", "maxPosition": "10.00000000"},
-                {
-                    "filterType": "TRAILING_DELTA",
-                    "minTrailingAboveDelta": 10,
-                    "maxTrailingAboveDelta": 2000,
-                    "minTrailingBelowDelta": 10,
-                    "maxTrailingBelowDelta": 2000,
-                },
-                {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
-                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-                {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
-                {"filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 200},
-                {
-                    "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
-                    "maxNumIcebergOrders": 10000,
-                },
-                {"filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-            ],
+            "exchangeFilters": [],
             "symbols": [
                 {
                     "symbol": "ETHBTC",
@@ -174,84 +106,7 @@ class TestGeneralApi:
                     "pegInstructionsAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
-                    "filters": [
-                        {
-                            "filterType": "PRICE_FILTER",
-                            "minPrice": "0.00000100",
-                            "maxPrice": "100000.00000000",
-                            "tickSize": "0.00000100",
-                        },
-                        {
-                            "filterType": "PERCENT_PRICE",
-                            "multiplierUp": "1.3000",
-                            "multiplierDown": "0.7000",
-                            "avgPriceMins": 5,
-                        },
-                        {
-                            "filterType": "PERCENT_PRICE_BY_SIDE",
-                            "bidMultiplierUp": "1.2",
-                            "bidMultiplierDown": "0.2",
-                            "askMultiplierUp": "5",
-                            "askMultiplierDown": "0.8",
-                            "avgPriceMins": 1,
-                        },
-                        {
-                            "filterType": "LOT_SIZE",
-                            "minQty": "0.00100000",
-                            "maxQty": "100000.00000000",
-                            "stepSize": "0.00100000",
-                        },
-                        {
-                            "filterType": "MIN_NOTIONAL",
-                            "minNotional": "0.00100000",
-                            "applyToMarket": True,
-                            "avgPriceMins": 5,
-                        },
-                        {
-                            "filterType": "NOTIONAL",
-                            "minNotional": "10.00000000",
-                            "applyMinToMarket": False,
-                            "maxNotional": "10000.00000000",
-                            "applyMaxToMarket": False,
-                            "avgPriceMins": 5,
-                        },
-                        {"filterType": "ICEBERG_PARTS", "limit": 10},
-                        {
-                            "filterType": "MARKET_LOT_SIZE",
-                            "minQty": "0.00100000",
-                            "maxQty": "100000.00000000",
-                            "stepSize": "0.00100000",
-                        },
-                        {"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 25},
-                        {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 5},
-                        {
-                            "filterType": "MAX_NUM_ICEBERG_ORDERS",
-                            "maxNumIcebergOrders": 5,
-                        },
-                        {"filterType": "MAX_POSITION", "maxPosition": "10.00000000"},
-                        {
-                            "filterType": "TRAILING_DELTA",
-                            "minTrailingAboveDelta": 10,
-                            "maxTrailingAboveDelta": 2000,
-                            "minTrailingBelowDelta": 10,
-                            "maxTrailingBelowDelta": 2000,
-                        },
-                        {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
-                        {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-                        {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
-                            "maxNumAlgoOrders": 200,
-                        },
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
-                            "maxNumIcebergOrders": 10000,
-                        },
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS",
-                            "maxNumOrderLists": 20,
-                        },
-                    ],
+                    "filters": [],
                     "permissions": [],
                     "permissionSets": [["SPOT", "MARGIN"]],
                     "defaultSelfTradePreventionMode": "NONE",
@@ -282,7 +137,7 @@ class TestGeneralApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExchangeInfoResponse, "from_dict"):
             expected = ExchangeInfoResponse.from_dict(expected_response)
         else:
             expected = ExchangeInfoResponse.model_validate_json(
@@ -325,75 +180,7 @@ class TestGeneralApi:
                     "limit": 61000,
                 },
             ],
-            "exchangeFilters": [
-                {
-                    "filterType": "PRICE_FILTER",
-                    "minPrice": "0.00000100",
-                    "maxPrice": "100000.00000000",
-                    "tickSize": "0.00000100",
-                },
-                {
-                    "filterType": "PERCENT_PRICE",
-                    "multiplierUp": "1.3000",
-                    "multiplierDown": "0.7000",
-                    "avgPriceMins": 5,
-                },
-                {
-                    "filterType": "PERCENT_PRICE_BY_SIDE",
-                    "bidMultiplierUp": "1.2",
-                    "bidMultiplierDown": "0.2",
-                    "askMultiplierUp": "5",
-                    "askMultiplierDown": "0.8",
-                    "avgPriceMins": 1,
-                },
-                {
-                    "filterType": "LOT_SIZE",
-                    "minQty": "0.00100000",
-                    "maxQty": "100000.00000000",
-                    "stepSize": "0.00100000",
-                },
-                {
-                    "filterType": "MIN_NOTIONAL",
-                    "minNotional": "0.00100000",
-                    "applyToMarket": True,
-                    "avgPriceMins": 5,
-                },
-                {
-                    "filterType": "NOTIONAL",
-                    "minNotional": "10.00000000",
-                    "applyMinToMarket": False,
-                    "maxNotional": "10000.00000000",
-                    "applyMaxToMarket": False,
-                    "avgPriceMins": 5,
-                },
-                {"filterType": "ICEBERG_PARTS", "limit": 10},
-                {
-                    "filterType": "MARKET_LOT_SIZE",
-                    "minQty": "0.00100000",
-                    "maxQty": "100000.00000000",
-                    "stepSize": "0.00100000",
-                },
-                {"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 25},
-                {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 5},
-                {"filterType": "MAX_NUM_ICEBERG_ORDERS", "maxNumIcebergOrders": 5},
-                {"filterType": "MAX_POSITION", "maxPosition": "10.00000000"},
-                {
-                    "filterType": "TRAILING_DELTA",
-                    "minTrailingAboveDelta": 10,
-                    "maxTrailingAboveDelta": 2000,
-                    "minTrailingBelowDelta": 10,
-                    "maxTrailingBelowDelta": 2000,
-                },
-                {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
-                {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-                {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
-                {"filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 200},
-                {
-                    "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
-                    "maxNumIcebergOrders": 10000,
-                },
-                {"filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-            ],
+            "exchangeFilters": [],
             "symbols": [
                 {
                     "symbol": "ETHBTC",
@@ -418,84 +205,7 @@ class TestGeneralApi:
                     "pegInstructionsAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
-                    "filters": [
-                        {
-                            "filterType": "PRICE_FILTER",
-                            "minPrice": "0.00000100",
-                            "maxPrice": "100000.00000000",
-                            "tickSize": "0.00000100",
-                        },
-                        {
-                            "filterType": "PERCENT_PRICE",
-                            "multiplierUp": "1.3000",
-                            "multiplierDown": "0.7000",
-                            "avgPriceMins": 5,
-                        },
-                        {
-                            "filterType": "PERCENT_PRICE_BY_SIDE",
-                            "bidMultiplierUp": "1.2",
-                            "bidMultiplierDown": "0.2",
-                            "askMultiplierUp": "5",
-                            "askMultiplierDown": "0.8",
-                            "avgPriceMins": 1,
-                        },
-                        {
-                            "filterType": "LOT_SIZE",
-                            "minQty": "0.00100000",
-                            "maxQty": "100000.00000000",
-                            "stepSize": "0.00100000",
-                        },
-                        {
-                            "filterType": "MIN_NOTIONAL",
-                            "minNotional": "0.00100000",
-                            "applyToMarket": True,
-                            "avgPriceMins": 5,
-                        },
-                        {
-                            "filterType": "NOTIONAL",
-                            "minNotional": "10.00000000",
-                            "applyMinToMarket": False,
-                            "maxNotional": "10000.00000000",
-                            "applyMaxToMarket": False,
-                            "avgPriceMins": 5,
-                        },
-                        {"filterType": "ICEBERG_PARTS", "limit": 10},
-                        {
-                            "filterType": "MARKET_LOT_SIZE",
-                            "minQty": "0.00100000",
-                            "maxQty": "100000.00000000",
-                            "stepSize": "0.00100000",
-                        },
-                        {"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 25},
-                        {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 5},
-                        {
-                            "filterType": "MAX_NUM_ICEBERG_ORDERS",
-                            "maxNumIcebergOrders": 5,
-                        },
-                        {"filterType": "MAX_POSITION", "maxPosition": "10.00000000"},
-                        {
-                            "filterType": "TRAILING_DELTA",
-                            "minTrailingAboveDelta": 10,
-                            "maxTrailingAboveDelta": 2000,
-                            "minTrailingBelowDelta": 10,
-                            "maxTrailingBelowDelta": 2000,
-                        },
-                        {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 10},
-                        {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 20},
-                        {"filterType": "EXCHANGE_MAX_NUM_ORDERS", "maxNumOrders": 1000},
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
-                            "maxNumAlgoOrders": 200,
-                        },
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
-                            "maxNumIcebergOrders": 10000,
-                        },
-                        {
-                            "filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS",
-                            "maxNumOrderLists": 20,
-                        },
-                    ],
+                    "filters": [],
                     "permissions": [],
                     "permissionSets": [["SPOT", "MARGIN"]],
                     "defaultSelfTradePreventionMode": "NONE",
@@ -525,7 +235,7 @@ class TestGeneralApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(ExchangeInfoResponse, "from_dict"):
             expected = ExchangeInfoResponse.from_dict(expected_response)
         else:
             expected = ExchangeInfoResponse.model_validate_json(
@@ -599,7 +309,7 @@ class TestGeneralApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(TimeResponse, "from_dict"):
             expected = TimeResponse.from_dict(expected_response)
         else:
             expected = TimeResponse.model_validate_json(json.dumps(expected_response))

@@ -99,7 +99,11 @@ class TestRebateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSpotRebateHistoryRecordsResponse, "from_dict")
+        ):
             expected = GetSpotRebateHistoryRecordsResponse.from_dict(expected_response)
         else:
             expected = GetSpotRebateHistoryRecordsResponse.model_validate_json(
@@ -168,7 +172,11 @@ class TestRebateApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSpotRebateHistoryRecordsResponse, "from_dict")
+        ):
             expected = GetSpotRebateHistoryRecordsResponse.from_dict(expected_response)
         else:
             expected = GetSpotRebateHistoryRecordsResponse.model_validate_json(

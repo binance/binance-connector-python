@@ -29,7 +29,7 @@ class GetPayTradeHistoryResponseDataInnerPayerInfo(BaseModel):
 
     name: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    binanceId: Optional[StrictStr] = Field(default=None, alias="binanceId")
+    binance_id: Optional[StrictStr] = Field(default=None, alias="binanceId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "type", "binanceId"]
 

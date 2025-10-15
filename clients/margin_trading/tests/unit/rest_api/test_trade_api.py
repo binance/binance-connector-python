@@ -147,7 +147,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(CreateSpecialKeyResponse, "from_dict"):
             expected = CreateSpecialKeyResponse.from_dict(expected_response)
         else:
             expected = CreateSpecialKeyResponse.model_validate_json(
@@ -197,7 +197,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(CreateSpecialKeyResponse, "from_dict"):
             expected = CreateSpecialKeyResponse.from_dict(expected_response)
         else:
             expected = CreateSpecialKeyResponse.model_validate_json(
@@ -419,7 +419,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetForceLiquidationRecordResponse, "from_dict")
+        ):
             expected = GetForceLiquidationRecordResponse.from_dict(expected_response)
         else:
             expected = GetForceLiquidationRecordResponse.model_validate_json(
@@ -483,7 +487,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetForceLiquidationRecordResponse, "from_dict")
+        ):
             expected = GetForceLiquidationRecordResponse.from_dict(expected_response)
         else:
             expected = GetForceLiquidationRecordResponse.model_validate_json(
@@ -539,7 +547,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSmallLiabilityExchangeCoinListResponse, "from_dict")
+        ):
             expected = GetSmallLiabilityExchangeCoinListResponse.from_dict(
                 expected_response
             )
@@ -590,7 +602,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSmallLiabilityExchangeCoinListResponse, "from_dict")
+        ):
             expected = GetSmallLiabilityExchangeCoinListResponse.from_dict(
                 expected_response
             )
@@ -666,7 +682,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSmallLiabilityExchangeHistoryResponse, "from_dict")
+        ):
             expected = GetSmallLiabilityExchangeHistoryResponse.from_dict(
                 expected_response
             )
@@ -729,7 +749,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetSmallLiabilityExchangeHistoryResponse, "from_dict")
+        ):
             expected = GetSmallLiabilityExchangeHistoryResponse.from_dict(
                 expected_response
             )
@@ -912,7 +936,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountCancelAllOpenOrdersOnASymbolResponse, "from_dict")
+        ):
             expected = MarginAccountCancelAllOpenOrdersOnASymbolResponse.from_dict(
                 expected_response
             )
@@ -1055,7 +1083,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountCancelAllOpenOrdersOnASymbolResponse, "from_dict")
+        ):
             expected = MarginAccountCancelAllOpenOrdersOnASymbolResponse.from_dict(
                 expected_response
             )
@@ -1189,7 +1221,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(MarginAccountCancelOcoResponse, "from_dict")
+        ):
             expected = MarginAccountCancelOcoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountCancelOcoResponse.model_validate_json(
@@ -1293,7 +1327,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(MarginAccountCancelOcoResponse, "from_dict")
+        ):
             expected = MarginAccountCancelOcoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountCancelOcoResponse.model_validate_json(
@@ -1377,7 +1413,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountCancelOrderResponse, "from_dict")
+        ):
             expected = MarginAccountCancelOrderResponse.from_dict(expected_response)
         else:
             expected = MarginAccountCancelOrderResponse.model_validate_json(
@@ -1439,7 +1479,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(MarginAccountCancelOrderResponse, "from_dict")
+        ):
             expected = MarginAccountCancelOrderResponse.from_dict(expected_response)
         else:
             expected = MarginAccountCancelOrderResponse.model_validate_json(
@@ -1575,7 +1619,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOcoResponse, "from_dict"):
             expected = MarginAccountNewOcoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOcoResponse.model_validate_json(
@@ -1693,7 +1737,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOcoResponse, "from_dict"):
             expected = MarginAccountNewOcoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOcoResponse.model_validate_json(
@@ -1861,7 +1905,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOrderResponse, "from_dict"):
             expected = MarginAccountNewOrderResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOrderResponse.model_validate_json(
@@ -1947,7 +1991,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOrderResponse, "from_dict"):
             expected = MarginAccountNewOrderResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOrderResponse.model_validate_json(
@@ -2116,7 +2160,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOtoResponse, "from_dict"):
             expected = MarginAccountNewOtoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOtoResponse.model_validate_json(
@@ -2236,7 +2280,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOtoResponse, "from_dict"):
             expected = MarginAccountNewOtoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOtoResponse.model_validate_json(
@@ -2573,7 +2617,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOtocoResponse, "from_dict"):
             expected = MarginAccountNewOtocoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOtocoResponse.model_validate_json(
@@ -2724,7 +2768,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(MarginAccountNewOtocoResponse, "from_dict"):
             expected = MarginAccountNewOtocoResponse.from_dict(expected_response)
         else:
             expected = MarginAccountNewOtocoResponse.model_validate_json(
@@ -2947,7 +2991,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(MarginManualLiquidationResponse, "from_dict")
+        ):
             expected = MarginManualLiquidationResponse.from_dict(expected_response)
         else:
             expected = MarginManualLiquidationResponse.model_validate_json(
@@ -2998,7 +3044,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(MarginManualLiquidationResponse, "from_dict")
+        ):
             expected = MarginManualLiquidationResponse.from_dict(expected_response)
         else:
             expected = MarginManualLiquidationResponse.model_validate_json(
@@ -3075,7 +3123,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentMarginOrderCountUsageResponse, "from_dict")
+        ):
             expected = QueryCurrentMarginOrderCountUsageResponse.from_dict(
                 expected_response
             )
@@ -3137,7 +3189,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentMarginOrderCountUsageResponse, "from_dict")
+        ):
             expected = QueryCurrentMarginOrderCountUsageResponse.from_dict(
                 expected_response
             )
@@ -3233,7 +3289,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsAllOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsAllOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsAllOcoResponse.model_validate_json(
@@ -3326,7 +3386,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsAllOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsAllOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsAllOcoResponse.model_validate_json(
@@ -3423,7 +3487,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsAllOrdersResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsAllOrdersResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsAllOrdersResponse.model_validate_json(
@@ -3513,7 +3581,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsAllOrdersResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsAllOrdersResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsAllOrdersResponse.model_validate_json(
@@ -3596,7 +3668,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryMarginAccountsOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOcoResponse.model_validate_json(
@@ -3664,7 +3738,9 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryMarginAccountsOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOcoResponse.model_validate_json(
@@ -3735,7 +3811,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOpenOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOpenOcoResponse.model_validate_json(
@@ -3803,7 +3883,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOcoResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOpenOcoResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOpenOcoResponse.model_validate_json(
@@ -3872,7 +3956,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOrdersResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOpenOrdersResponse.from_dict(
                 expected_response
             )
@@ -3940,7 +4028,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOrdersResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOpenOrdersResponse.from_dict(
                 expected_response
             )
@@ -4019,7 +4111,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOrderResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOrderResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOrderResponse.model_validate_json(
@@ -4085,7 +4181,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOrderResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsOrderResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsOrderResponse.model_validate_json(
@@ -4170,7 +4270,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsTradeListResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsTradeListResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsTradeListResponse.model_validate_json(
@@ -4235,7 +4339,11 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsTradeListResponse, "from_dict")
+        ):
             expected = QueryMarginAccountsTradeListResponse.from_dict(expected_response)
         else:
             expected = QueryMarginAccountsTradeListResponse.model_validate_json(
@@ -4303,7 +4411,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySpecialKeyResponse, "from_dict"):
             expected = QuerySpecialKeyResponse.from_dict(expected_response)
         else:
             expected = QuerySpecialKeyResponse.model_validate_json(
@@ -4348,7 +4456,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySpecialKeyResponse, "from_dict"):
             expected = QuerySpecialKeyResponse.from_dict(expected_response)
         else:
             expected = QuerySpecialKeyResponse.model_validate_json(
@@ -4411,7 +4519,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySpecialKeyListResponse, "from_dict"):
             expected = QuerySpecialKeyListResponse.from_dict(expected_response)
         else:
             expected = QuerySpecialKeyListResponse.model_validate_json(
@@ -4467,7 +4575,7 @@ class TestTradeApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(QuerySpecialKeyListResponse, "from_dict"):
             expected = QuerySpecialKeyListResponse.from_dict(expected_response)
         else:
             expected = QuerySpecialKeyListResponse.model_validate_json(

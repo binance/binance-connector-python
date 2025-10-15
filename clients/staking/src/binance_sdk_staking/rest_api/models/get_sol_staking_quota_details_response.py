@@ -27,20 +27,22 @@ class GetSolStakingQuotaDetailsResponse(BaseModel):
     GetSolStakingQuotaDetailsResponse
     """  # noqa: E501
 
-    leftStakingPersonalQuota: Optional[StrictStr] = Field(
+    left_staking_personal_quota: Optional[StrictStr] = Field(
         default=None, alias="leftStakingPersonalQuota"
     )
-    leftRedemptionPersonalQuota: Optional[StrictStr] = Field(
+    left_redemption_personal_quota: Optional[StrictStr] = Field(
         default=None, alias="leftRedemptionPersonalQuota"
     )
-    minStakeAmount: Optional[StrictStr] = Field(default=None, alias="minStakeAmount")
-    minRedeemAmount: Optional[StrictStr] = Field(default=None, alias="minRedeemAmount")
-    redeemPeriod: Optional[StrictInt] = Field(default=None, alias="redeemPeriod")
+    min_stake_amount: Optional[StrictStr] = Field(default=None, alias="minStakeAmount")
+    min_redeem_amount: Optional[StrictStr] = Field(
+        default=None, alias="minRedeemAmount"
+    )
+    redeem_period: Optional[StrictInt] = Field(default=None, alias="redeemPeriod")
     stakeable: Optional[StrictBool] = None
     redeemable: Optional[StrictBool] = None
-    soldOut: Optional[StrictBool] = Field(default=None, alias="soldOut")
-    commissionFee: Optional[StrictStr] = Field(default=None, alias="commissionFee")
-    nextEpochTime: Optional[StrictInt] = Field(default=None, alias="nextEpochTime")
+    sold_out: Optional[StrictBool] = Field(default=None, alias="soldOut")
+    commission_fee: Optional[StrictStr] = Field(default=None, alias="commissionFee")
+    next_epoch_time: Optional[StrictInt] = Field(default=None, alias="nextEpochTime")
     calculating: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

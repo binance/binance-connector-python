@@ -24,6 +24,7 @@ from ..models import AccountStatusResponse
 from ..models import AllOrderListsResponse
 from ..models import AllOrdersResponse
 from ..models import MyAllocationsResponse
+from ..models import MyFiltersResponse
 from ..models import MyPreventedMatchesResponse
 from ..models import MyTradesResponse
 from ..models import OpenOrderListsStatusResponse
@@ -96,7 +97,7 @@ class AccountApi:
     async def account_rate_limits_orders(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AccountRateLimitsOrdersResponse]:
         """
             WebSocket Unfilled Order Count
@@ -108,7 +109,7 @@ class AccountApi:
 
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[AccountRateLimitsOrdersResponse]
@@ -138,7 +139,7 @@ class AccountApi:
         self,
         id: Optional[str] = None,
         omit_zero_balances: Optional[bool] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AccountStatusResponse]:
         """
             WebSocket Account information
@@ -151,7 +152,7 @@ class AccountApi:
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     omit_zero_balances (Optional[bool] = None): When set to `true`, emits only the non-zero balances of an account. <br>Default value: false
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[AccountStatusResponse]
@@ -187,7 +188,7 @@ class AccountApi:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AllOrderListsResponse]:
         """
             WebSocket Account order list history
@@ -203,7 +204,7 @@ class AccountApi:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[AllOrderListsResponse]
@@ -239,7 +240,7 @@ class AccountApi:
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[AllOrdersResponse]:
         """
             WebSocket Account order history
@@ -256,7 +257,7 @@ class AccountApi:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[AllOrdersResponse]
@@ -299,7 +300,7 @@ class AccountApi:
         from_allocation_id: Optional[int] = None,
         limit: Optional[int] = None,
         order_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyAllocationsResponse]:
         """
             WebSocket Account allocations
@@ -317,7 +318,7 @@ class AccountApi:
                     from_allocation_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[MyAllocationsResponse]
@@ -356,6 +357,53 @@ class AccountApi:
             payload=payload, response_model=MyAllocationsResponse, signer=self.signer
         )
 
+    async def my_filters(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+        recv_window: Optional[float] = None,
+    ) -> WebsocketApiResponse[MyFiltersResponse]:
+        """
+            WebSocket Query Relevant Filters
+            /myFilters
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-relevant-filters-user_data
+
+            Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+        Weight: 40
+
+            Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+            Returns:
+                WebsocketApiResponse[MyFiltersResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        params = {
+            "symbol": symbol,
+            **({"id": id} if id is not None else {}),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
+        }
+
+        payload = {
+            "method": "/myFilters".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_signed_message(
+            payload=payload, response_model=MyFiltersResponse, signer=self.signer
+        )
+
     async def my_prevented_matches(
         self,
         symbol: Union[str, None],
@@ -364,7 +412,7 @@ class AccountApi:
         order_id: Optional[int] = None,
         from_prevented_match_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyPreventedMatchesResponse]:
         """
             WebSocket Account prevented matches
@@ -392,7 +440,7 @@ class AccountApi:
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     from_prevented_match_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[MyPreventedMatchesResponse]
@@ -445,7 +493,7 @@ class AccountApi:
         end_time: Optional[int] = None,
         from_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[MyTradesResponse]:
         """
             WebSocket Account trade history
@@ -466,7 +514,7 @@ class AccountApi:
                     end_time (Optional[int] = None):
                     from_id (Optional[int] = None): Aggregate trade ID to begin at
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[MyTradesResponse]
@@ -504,7 +552,7 @@ class AccountApi:
     async def open_order_lists_status(
         self,
         id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrderListsStatusResponse]:
         """
             WebSocket Current open Order lists
@@ -521,7 +569,7 @@ class AccountApi:
 
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OpenOrderListsStatusResponse]
@@ -551,7 +599,7 @@ class AccountApi:
         self,
         id: Optional[str] = None,
         symbol: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OpenOrdersStatusResponse]:
         """
             WebSocket Current open orders
@@ -574,7 +622,7 @@ class AccountApi:
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OpenOrdersStatusResponse]
@@ -606,7 +654,7 @@ class AccountApi:
         id: Optional[str] = None,
         from_execution_id: Optional[int] = None,
         limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderAmendmentsResponse]:
         """
             WebSocket Query Order Amendments
@@ -622,7 +670,7 @@ class AccountApi:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     from_execution_id (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderAmendmentsResponse]
@@ -668,7 +716,7 @@ class AccountApi:
         id: Optional[str] = None,
         orig_client_order_id: Optional[str] = None,
         order_list_id: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListStatusResponse]:
         """
             WebSocket Query Order list
@@ -684,7 +732,7 @@ class AccountApi:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
                     order_list_id (Optional[int] = None): Cancel order list by orderListId
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderListStatusResponse]
@@ -720,7 +768,7 @@ class AccountApi:
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderStatusResponse]:
         """
             WebSocket Query order
@@ -735,7 +783,7 @@ class AccountApi:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     orig_client_order_id (Optional[str] = None): `orderId`or`origClientOrderId`mustbesent
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[OrderStatusResponse]

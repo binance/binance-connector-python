@@ -30,11 +30,11 @@ class GetBnsolRateHistoryResponseRowsInner(BaseModel):
     GetBnsolRateHistoryResponseRowsInner
     """  # noqa: E501
 
-    annualPercentageRate: Optional[StrictStr] = Field(
+    annual_percentage_rate: Optional[StrictStr] = Field(
         default=None, alias="annualPercentageRate"
     )
-    exchangeRate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
-    boostRewards: Optional[
+    exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    boost_rewards: Optional[
         List[GetBnsolRateHistoryResponseRowsInnerBoostRewardsInner]
     ] = Field(default=None, alias="boostRewards")
     time: Optional[StrictInt] = None

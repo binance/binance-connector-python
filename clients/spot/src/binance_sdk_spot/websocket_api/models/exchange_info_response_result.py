@@ -23,16 +23,14 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.exchange_filters_inner import (
-    ExchangeFiltersInner,
-)
+from binance_sdk_spot.websocket_api.models.exchange_filters import ExchangeFilters
 from binance_sdk_spot.websocket_api.models.exchange_info_response_result_sors_inner import (
     ExchangeInfoResponseResultSorsInner,
 )
 from binance_sdk_spot.websocket_api.models.exchange_info_response_result_symbols_inner import (
     ExchangeInfoResponseResultSymbolsInner,
 )
-from binance_sdk_spot.websocket_api.models.rate_limits_inner import RateLimitsInner
+from binance_sdk_spot.websocket_api.models.rate_limits import RateLimits
 from typing import Set
 from typing_extensions import Self
 
@@ -44,11 +42,9 @@ class ExchangeInfoResponseResult(BaseModel):
 
     timezone: Optional[StrictStr] = None
     server_time: Optional[StrictInt] = Field(default=None, alias="serverTime")
-    rate_limits: Optional[List[RateLimitsInner]] = Field(
-        default=None, alias="rateLimits"
-    )
+    rate_limits: Optional[List[RateLimits]] = Field(default=None, alias="rateLimits")
 
-    exchange_filters: Optional[List[ExchangeFiltersInner]] = Field(
+    exchange_filters: Optional[List[ExchangeFilters]] = Field(
         default=None, alias="exchangeFilters"
     )
 
@@ -165,13 +161,13 @@ class ExchangeInfoResponseResult(BaseModel):
                 "timezone": obj.get("timezone"),
                 "serverTime": obj.get("serverTime"),
                 "rateLimits": (
-                    [RateLimitsInner.from_dict(_item) for _item in obj["rateLimits"]]
+                    [RateLimits.from_dict(_item) for _item in obj["rateLimits"]]
                     if obj.get("rateLimits") is not None
                     else None
                 ),
                 "exchangeFilters": (
                     [
-                        ExchangeFiltersInner.from_dict(_item)
+                        ExchangeFilters.from_dict(_item)
                         for _item in obj["exchangeFilters"]
                     ]
                     if obj.get("exchangeFilters") is not None

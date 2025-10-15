@@ -23,7 +23,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.rate_limits_inner import RateLimitsInner
+from binance_sdk_spot.websocket_api.models.rate_limits import RateLimits
 from typing import Set
 from typing_extensions import Self
 
@@ -36,9 +36,7 @@ class UserDataStreamStopResponse(BaseModel):
     id: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     response: Optional[Dict[str, Any]] = None
-    rate_limits: Optional[List[RateLimitsInner]] = Field(
-        default=None, alias="rateLimits"
-    )
+    rate_limits: Optional[List[RateLimits]] = Field(default=None, alias="rateLimits")
 
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "status", "response", "rateLimits"]
@@ -118,7 +116,7 @@ class UserDataStreamStopResponse(BaseModel):
                 "status": obj.get("status"),
                 "response": obj.get("response"),
                 "rateLimits": (
-                    [RateLimitsInner.from_dict(_item) for _item in obj["rateLimits"]]
+                    [RateLimits.from_dict(_item) for _item in obj["rateLimits"]]
                     if obj.get("rateLimits") is not None
                     else None
                 ),

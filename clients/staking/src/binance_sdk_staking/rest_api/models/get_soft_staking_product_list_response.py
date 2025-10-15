@@ -31,7 +31,7 @@ class GetSoftStakingProductListResponse(BaseModel):
     """  # noqa: E501
 
     status: Optional[StrictBool] = None
-    totalRewardsUsdt: Optional[StrictStr] = Field(
+    total_rewards_usdt: Optional[StrictStr] = Field(
         default=None, alias="totalRewardsUsdt"
     )
     rows: Optional[List[GetSoftStakingProductListResponseRowsInner]] = None

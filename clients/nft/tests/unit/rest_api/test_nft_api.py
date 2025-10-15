@@ -99,7 +99,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTAssetResponse, "from_dict"):
             expected = GetNFTAssetResponse.from_dict(expected_response)
         else:
             expected = GetNFTAssetResponse.model_validate_json(
@@ -157,7 +157,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTAssetResponse, "from_dict"):
             expected = GetNFTAssetResponse.from_dict(expected_response)
         else:
             expected = GetNFTAssetResponse.model_validate_json(
@@ -223,7 +223,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTDepositHistoryResponse, "from_dict"):
             expected = GetNFTDepositHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTDepositHistoryResponse.model_validate_json(
@@ -288,7 +288,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTDepositHistoryResponse, "from_dict"):
             expected = GetNFTDepositHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTDepositHistoryResponse.model_validate_json(
@@ -374,7 +374,11 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetNFTTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetNFTTransactionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTTransactionHistoryResponse.model_validate_json(
@@ -452,7 +456,11 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetNFTTransactionHistoryResponse, "from_dict")
+        ):
             expected = GetNFTTransactionHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTTransactionHistoryResponse.model_validate_json(
@@ -538,7 +546,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTWithdrawHistoryResponse, "from_dict"):
             expected = GetNFTWithdrawHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTWithdrawHistoryResponse.model_validate_json(
@@ -607,7 +615,7 @@ class TestNFTApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetNFTWithdrawHistoryResponse, "from_dict"):
             expected = GetNFTWithdrawHistoryResponse.from_dict(expected_response)
         else:
             expected = GetNFTWithdrawHistoryResponse.model_validate_json(

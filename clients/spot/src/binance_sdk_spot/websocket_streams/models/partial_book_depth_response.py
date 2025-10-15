@@ -32,11 +32,11 @@ class PartialBookDepthResponse(BaseModel):
     PartialBookDepthResponse
     """  # noqa: E501
 
-    lastUpdateId: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
+    last_update_id: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
     bids: Optional[List[List[StrictStr]]] = None
     asks: Optional[List[List[StrictStr]]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["lastUpdateId", "bids", "asks"]
+    __properties: ClassVar[List[str]] = ["last_update_id", "bids", "asks"]
 
     model_config = ConfigDict(
         populate_by_name=True,

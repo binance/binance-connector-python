@@ -27,12 +27,14 @@ jobs:
     needs: detect-clients
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         client: ${{ fromJson(needs.detect-clients.outputs.clients) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Compare versions
         id: version

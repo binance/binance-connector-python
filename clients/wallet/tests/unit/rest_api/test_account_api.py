@@ -90,7 +90,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(AccountApiTradingStatusResponse, "from_dict")
+        ):
             expected = AccountApiTradingStatusResponse.from_dict(expected_response)
         else:
             expected = AccountApiTradingStatusResponse.model_validate_json(
@@ -138,7 +140,9 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(AccountApiTradingStatusResponse, "from_dict")
+        ):
             expected = AccountApiTradingStatusResponse.from_dict(expected_response)
         else:
             expected = AccountApiTradingStatusResponse.model_validate_json(
@@ -192,7 +196,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountInfoResponse, "from_dict"):
             expected = AccountInfoResponse.from_dict(expected_response)
         else:
             expected = AccountInfoResponse.model_validate_json(
@@ -237,7 +241,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountInfoResponse, "from_dict"):
             expected = AccountInfoResponse.from_dict(expected_response)
         else:
             expected = AccountInfoResponse.model_validate_json(
@@ -285,7 +289,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountStatusResponse, "from_dict"):
             expected = AccountStatusResponse.from_dict(expected_response)
         else:
             expected = AccountStatusResponse.model_validate_json(
@@ -324,7 +328,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AccountStatusResponse, "from_dict"):
             expected = AccountStatusResponse.from_dict(expected_response)
         else:
             expected = AccountStatusResponse.model_validate_json(
@@ -446,7 +450,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DailyAccountSnapshotResponse, "from_dict"):
             expected = DailyAccountSnapshotResponse.from_dict(expected_response)
         else:
             expected = DailyAccountSnapshotResponse.model_validate_json(
@@ -559,7 +563,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DailyAccountSnapshotResponse, "from_dict"):
             expected = DailyAccountSnapshotResponse.from_dict(expected_response)
         else:
             expected = DailyAccountSnapshotResponse.model_validate_json(
@@ -753,7 +757,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetApiKeyPermissionResponse, "from_dict"):
             expected = GetApiKeyPermissionResponse.from_dict(expected_response)
         else:
             expected = GetApiKeyPermissionResponse.model_validate_json(
@@ -808,7 +812,7 @@ class TestAccountApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetApiKeyPermissionResponse, "from_dict"):
             expected = GetApiKeyPermissionResponse.from_dict(expected_response)
         else:
             expected = GetApiKeyPermissionResponse.model_validate_json(

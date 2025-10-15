@@ -111,7 +111,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AssetDetailResponse, "from_dict"):
             expected = AssetDetailResponse.from_dict(expected_response)
         else:
             expected = AssetDetailResponse.model_validate_json(
@@ -164,7 +164,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AssetDetailResponse, "from_dict"):
             expected = AssetDetailResponse.from_dict(expected_response)
         else:
             expected = AssetDetailResponse.model_validate_json(
@@ -232,7 +232,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AssetDividendRecordResponse, "from_dict"):
             expected = AssetDividendRecordResponse.from_dict(expected_response)
         else:
             expected = AssetDividendRecordResponse.model_validate_json(
@@ -299,7 +299,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(AssetDividendRecordResponse, "from_dict"):
             expected = AssetDividendRecordResponse.from_dict(expected_response)
         else:
             expected = AssetDividendRecordResponse.model_validate_json(
@@ -384,7 +384,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DustTransferResponse, "from_dict"):
             expected = DustTransferResponse.from_dict(expected_response)
         else:
             expected = DustTransferResponse.model_validate_json(
@@ -452,7 +452,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DustTransferResponse, "from_dict"):
             expected = DustTransferResponse.from_dict(expected_response)
         else:
             expected = DustTransferResponse.model_validate_json(
@@ -566,7 +566,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DustlogResponse, "from_dict"):
             expected = DustlogResponse.from_dict(expected_response)
         else:
             expected = DustlogResponse.model_validate_json(
@@ -661,7 +661,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(DustlogResponse, "from_dict"):
             expected = DustlogResponse.from_dict(expected_response)
         else:
             expected = DustlogResponse.model_validate_json(
@@ -718,7 +718,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundingWalletResponse, "from_dict"):
             expected = FundingWalletResponse.from_dict(expected_response)
         else:
             expected = FundingWalletResponse.model_validate_json(
@@ -770,7 +770,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FundingWalletResponse, "from_dict"):
             expected = FundingWalletResponse.from_dict(expected_response)
         else:
             expected = FundingWalletResponse.model_validate_json(
@@ -835,7 +835,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAssetsThatCanBeConvertedIntoBnbResponse, "from_dict")
+        ):
             expected = GetAssetsThatCanBeConvertedIntoBnbResponse.from_dict(
                 expected_response
             )
@@ -893,7 +897,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetAssetsThatCanBeConvertedIntoBnbResponse, "from_dict")
+        ):
             expected = GetAssetsThatCanBeConvertedIntoBnbResponse.from_dict(
                 expected_response
             )
@@ -1004,7 +1012,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCloudMiningPaymentAndRefundHistoryResponse, "from_dict")
+        ):
             expected = GetCloudMiningPaymentAndRefundHistoryResponse.from_dict(
                 expected_response
             )
@@ -1104,7 +1116,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCloudMiningPaymentAndRefundHistoryResponse, "from_dict")
+        ):
             expected = GetCloudMiningPaymentAndRefundHistoryResponse.from_dict(
                 expected_response
             )
@@ -1193,7 +1209,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetOpenSymbolListResponse, "from_dict"):
             expected = GetOpenSymbolListResponse.from_dict(expected_response)
         else:
             expected = GetOpenSymbolListResponse.model_validate_json(
@@ -1271,7 +1287,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryUserDelegationHistoryResponse, "from_dict")
+        ):
             expected = QueryUserDelegationHistoryResponse.from_dict(expected_response)
         else:
             expected = QueryUserDelegationHistoryResponse.model_validate_json(
@@ -1339,7 +1359,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryUserDelegationHistoryResponse, "from_dict")
+        ):
             expected = QueryUserDelegationHistoryResponse.from_dict(expected_response)
         else:
             expected = QueryUserDelegationHistoryResponse.model_validate_json(
@@ -1461,7 +1485,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryUserUniversalTransferHistoryResponse, "from_dict")
+        ):
             expected = QueryUserUniversalTransferHistoryResponse.from_dict(
                 expected_response
             )
@@ -1533,7 +1561,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryUserUniversalTransferHistoryResponse, "from_dict")
+        ):
             expected = QueryUserUniversalTransferHistoryResponse.from_dict(
                 expected_response
             )
@@ -1610,7 +1642,9 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryUserWalletBalanceResponse, "from_dict")
+        ):
             expected = QueryUserWalletBalanceResponse.from_dict(expected_response)
         else:
             expected = QueryUserWalletBalanceResponse.model_validate_json(
@@ -1662,7 +1696,9 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(QueryUserWalletBalanceResponse, "from_dict")
+        ):
             expected = QueryUserWalletBalanceResponse.from_dict(expected_response)
         else:
             expected = QueryUserWalletBalanceResponse.model_validate_json(
@@ -1712,7 +1748,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ToggleBnbBurnOnSpotTradeAndMarginInterestResponse, "from_dict")
+        ):
             expected = ToggleBnbBurnOnSpotTradeAndMarginInterestResponse.from_dict(
                 expected_response
             )
@@ -1763,7 +1803,11 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ToggleBnbBurnOnSpotTradeAndMarginInterestResponse, "from_dict")
+        ):
             expected = ToggleBnbBurnOnSpotTradeAndMarginInterestResponse.from_dict(
                 expected_response
             )
@@ -1828,7 +1872,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(TradeFeeResponse, "from_dict"):
             expected = TradeFeeResponse.from_dict(expected_response)
         else:
             expected = TradeFeeResponse.model_validate_json(
@@ -1878,7 +1922,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(TradeFeeResponse, "from_dict"):
             expected = TradeFeeResponse.from_dict(expected_response)
         else:
             expected = TradeFeeResponse.model_validate_json(
@@ -1990,7 +2034,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserAssetResponse, "from_dict"):
             expected = UserAssetResponse.from_dict(expected_response)
         else:
             expected = UserAssetResponse.model_validate_json(
@@ -2097,7 +2141,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserAssetResponse, "from_dict"):
             expected = UserAssetResponse.from_dict(expected_response)
         else:
             expected = UserAssetResponse.model_validate_json(
@@ -2157,7 +2201,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserUniversalTransferResponse, "from_dict"):
             expected = UserUniversalTransferResponse.from_dict(expected_response)
         else:
             expected = UserUniversalTransferResponse.model_validate_json(
@@ -2205,7 +2249,7 @@ class TestAssetApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(UserUniversalTransferResponse, "from_dict"):
             expected = UserUniversalTransferResponse.from_dict(expected_response)
         else:
             expected = UserUniversalTransferResponse.model_validate_json(

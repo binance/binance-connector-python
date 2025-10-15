@@ -30,7 +30,7 @@ class GetBoostRewardsHistoryResponseRowsInner(BaseModel):
     time: Optional[StrictInt] = None
     token: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    bnsolHolding: Optional[StrictStr] = Field(default=None, alias="bnsolHolding")
+    bnsol_holding: Optional[StrictStr] = Field(default=None, alias="bnsolHolding")
     status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

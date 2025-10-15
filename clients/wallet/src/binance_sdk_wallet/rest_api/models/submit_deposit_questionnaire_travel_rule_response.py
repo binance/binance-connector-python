@@ -27,7 +27,7 @@ class SubmitDepositQuestionnaireTravelRuleResponse(BaseModel):
     SubmitDepositQuestionnaireTravelRuleResponse
     """  # noqa: E501
 
-    trId: Optional[StrictInt] = Field(default=None, alias="trId")
+    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
     accepted: Optional[StrictBool] = None
     info: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

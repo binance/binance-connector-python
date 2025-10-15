@@ -57,6 +57,7 @@ from ..models import OrderCancelReplacePegOffsetTypeEnum
 from ..models import OrderListOcoSideEnum
 from ..models import OrderListOcoAboveTypeEnum
 from ..models import OrderListOcoBelowTypeEnum
+from ..models import OrderListOcoAboveTimeInForceEnum
 from ..models import OrderListOcoAbovePegPriceTypeEnum
 from ..models import OrderListOcoAbovePegOffsetTypeEnum
 from ..models import OrderListOcoBelowTimeInForceEnum
@@ -131,7 +132,7 @@ class TradeApi:
     def delete_open_orders(
         self,
         symbol: Union[str, None],
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOpenOrdersResponse]:
         """
                 Cancel All Open Orders on a Symbol
@@ -144,7 +145,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOpenOrdersResponse]
@@ -180,7 +181,7 @@ class TradeApi:
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
         cancel_restrictions: Optional[DeleteOrderCancelRestrictionsEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOrderResponse]:
         """
                 Cancel order
@@ -196,7 +197,7 @@ class TradeApi:
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
                     cancel_restrictions (Optional[DeleteOrderCancelRestrictionsEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOrderResponse]
@@ -238,7 +239,7 @@ class TradeApi:
         order_list_id: Optional[int] = None,
         list_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[DeleteOrderListResponse]:
         """
                 Cancel Order list
@@ -253,7 +254,7 @@ class TradeApi:
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     list_client_order_id (Optional[str] = None): A unique Id for the entire orderList
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[DeleteOrderListResponse]
@@ -310,7 +311,7 @@ class TradeApi:
         peg_price_type: Optional[NewOrderPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[NewOrderPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
                 New order
@@ -341,7 +342,7 @@ class TradeApi:
                     peg_price_type (Optional[NewOrderPegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[NewOrderPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[NewOrderResponse]
@@ -405,7 +406,7 @@ class TradeApi:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         new_client_order_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderAmendKeepPriorityResponse]:
         """
                 Order Amend Keep Priority
@@ -425,7 +426,7 @@ class TradeApi:
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent.<br/> Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderAmendKeepPriorityResponse]
@@ -495,7 +496,7 @@ class TradeApi:
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderCancelReplaceResponse]:
         """
                 Cancel an Existing Order and Send a New Order
@@ -534,7 +535,7 @@ class TradeApi:
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderCancelReplaceResponse]
@@ -615,7 +616,7 @@ class TradeApi:
         above_price: Optional[float] = None,
         above_stop_price: Optional[float] = None,
         above_trailing_delta: Optional[int] = None,
-        above_time_in_force: Optional[float] = None,
+        above_time_in_force: Optional[OrderListOcoAboveTimeInForceEnum] = None,
         above_strategy_id: Optional[int] = None,
         above_strategy_type: Optional[int] = None,
         above_peg_price_type: Optional[OrderListOcoAbovePegPriceTypeEnum] = None,
@@ -636,7 +637,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderListOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOcoResponse]:
         """
                 New Order list - OCO
@@ -671,7 +672,7 @@ class TradeApi:
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. <br>Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
                     above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
-                    above_time_in_force (Optional[float] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`
+                    above_time_in_force (Optional[OrderListOcoAboveTimeInForceEnum] = None):
                     above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
                     above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. <br>Values smaller than 1000000 are reserved and cannot be used.
                     above_peg_price_type (Optional[OrderListOcoAbovePegPriceTypeEnum] = None):
@@ -690,7 +691,7 @@ class TradeApi:
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOcoResponse]
@@ -803,7 +804,7 @@ class TradeApi:
         pending_peg_price_type: Optional[OrderListOtoPendingPegPriceTypeEnum] = None,
         pending_peg_offset_type: Optional[OrderListOtoPendingPegOffsetTypeEnum] = None,
         pending_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtoResponse]:
         """
                 New Order list - OTO
@@ -853,7 +854,7 @@ class TradeApi:
                     pending_peg_price_type (Optional[OrderListOtoPendingPegPriceTypeEnum] = None):
                     pending_peg_offset_type (Optional[OrderListOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOtoResponse]
@@ -1009,7 +1010,7 @@ class TradeApi:
             OrderListOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtocoResponse]:
         """
                 New Order list - OTOCO
@@ -1071,7 +1072,7 @@ class TradeApi:
                     pending_below_peg_price_type (Optional[OrderListOtocoPendingBelowPegPriceTypeEnum] = None):
                     pending_below_peg_offset_type (Optional[OrderListOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderListOtocoResponse]
@@ -1202,7 +1203,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderOcoSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderOcoResponse]:
         """
                 New OCO - Deprecated
@@ -1242,7 +1243,7 @@ class TradeApi:
                     stop_limit_time_in_force (Optional[OrderOcoStopLimitTimeInForceEnum] = None):
                     new_order_resp_type (Optional[OrderOcoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderOcoSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderOcoResponse]
@@ -1332,7 +1333,7 @@ class TradeApi:
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
                 Test new order
@@ -1366,7 +1367,7 @@ class TradeApi:
                     peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None):
                     peg_offset_value (Optional[int] = None): Priceleveltopegthepriceto(max:100).<br>See[PeggedOrdersInfo](#pegged-orders-info)
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[OrderTestResponse]
@@ -1440,7 +1441,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             SorOrderSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[SorOrderResponse]:
         """
                 New order using SOR
@@ -1469,7 +1470,7 @@ class TradeApi:
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     new_order_resp_type (Optional[SorOrderNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[SorOrderSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[SorOrderResponse]
@@ -1541,7 +1542,7 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             SorOrderTestSelfTradePreventionModeEnum
         ] = None,
-        recv_window: Optional[int] = None,
+        recv_window: Optional[float] = None,
     ) -> ApiResponse[SorOrderTestResponse]:
         """
                 Test new order using SOR
@@ -1569,7 +1570,7 @@ class TradeApi:
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     new_order_resp_type (Optional[SorOrderTestNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None):
-                    recv_window (Optional[int] = None): The value cannot be greater than `60000`
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     ApiResponse[SorOrderTestResponse]

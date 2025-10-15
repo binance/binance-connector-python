@@ -35,14 +35,16 @@ class RedeemBfusdForPortfolioMarginResponse(BaseModel):
     target_asset_qty: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="targetAssetQty"
     )
-    rate: Optional[Union[StrictFloat, StrictInt]] = None
+    redeem_rate: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="redeemRate"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "fromAsset",
         "targetAsset",
         "fromAssetQty",
         "targetAssetQty",
-        "rate",
+        "redeemRate",
     ]
 
     model_config = ConfigDict(
@@ -113,7 +115,7 @@ class RedeemBfusdForPortfolioMarginResponse(BaseModel):
                 "targetAsset": obj.get("targetAsset"),
                 "fromAssetQty": obj.get("fromAssetQty"),
                 "targetAssetQty": obj.get("targetAssetQty"),
-                "rate": obj.get("rate"),
+                "redeemRate": obj.get("redeemRate"),
             }
         )
         # store additional fields in additional_properties

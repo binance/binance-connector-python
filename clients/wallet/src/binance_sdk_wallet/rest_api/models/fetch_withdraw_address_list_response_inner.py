@@ -28,13 +28,13 @@ class FetchWithdrawAddressListResponseInner(BaseModel):
     """  # noqa: E501
 
     address: Optional[StrictStr] = None
-    addressTag: Optional[StrictStr] = Field(default=None, alias="addressTag")
+    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
     coin: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
     origin: Optional[StrictStr] = None
-    originType: Optional[StrictStr] = Field(default=None, alias="originType")
-    whiteStatus: Optional[StrictBool] = Field(default=None, alias="whiteStatus")
+    origin_type: Optional[StrictStr] = Field(default=None, alias="originType")
+    white_status: Optional[StrictBool] = Field(default=None, alias="whiteStatus")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "address",

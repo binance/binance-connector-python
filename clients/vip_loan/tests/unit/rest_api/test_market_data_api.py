@@ -100,7 +100,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBorrowInterestRateResponse, "from_dict"):
             expected = GetBorrowInterestRateResponse.from_dict(expected_response)
         else:
             expected = GetBorrowInterestRateResponse.model_validate_json(
@@ -154,7 +154,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetBorrowInterestRateResponse, "from_dict"):
             expected = GetBorrowInterestRateResponse.from_dict(expected_response)
         else:
             expected = GetBorrowInterestRateResponse.model_validate_json(
@@ -233,7 +233,9 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetCollateralAssetDataResponse, "from_dict")
+        ):
             expected = GetCollateralAssetDataResponse.from_dict(expected_response)
         else:
             expected = GetCollateralAssetDataResponse.model_validate_json(
@@ -289,7 +291,9 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(GetCollateralAssetDataResponse, "from_dict")
+        ):
             expected = GetCollateralAssetDataResponse.from_dict(expected_response)
         else:
             expected = GetCollateralAssetDataResponse.model_validate_json(
@@ -353,7 +357,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetLoanableAssetsDataResponse, "from_dict"):
             expected = GetLoanableAssetsDataResponse.from_dict(expected_response)
         else:
             expected = GetLoanableAssetsDataResponse.model_validate_json(
@@ -410,7 +414,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(GetLoanableAssetsDataResponse, "from_dict"):
             expected = GetLoanableAssetsDataResponse.from_dict(expected_response)
         else:
             expected = GetLoanableAssetsDataResponse.model_validate_json(

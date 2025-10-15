@@ -106,7 +106,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(AddIpRestrictionForSubAccountApiKeyResponse, "from_dict")
+        ):
             expected = AddIpRestrictionForSubAccountApiKeyResponse.from_dict(
                 expected_response
             )
@@ -162,7 +166,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(AddIpRestrictionForSubAccountApiKeyResponse, "from_dict")
+        ):
             expected = AddIpRestrictionForSubAccountApiKeyResponse.from_dict(
                 expected_response
             )
@@ -284,7 +292,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DeleteIpListForASubAccountApiKeyResponse, "from_dict")
+        ):
             expected = DeleteIpListForASubAccountApiKeyResponse.from_dict(
                 expected_response
             )
@@ -340,7 +352,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(DeleteIpListForASubAccountApiKeyResponse, "from_dict")
+        ):
             expected = DeleteIpListForASubAccountApiKeyResponse.from_dict(
                 expected_response
             )
@@ -463,7 +479,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetIpRestrictionForASubAccountApiKeyResponse, "from_dict")
+        ):
             expected = GetIpRestrictionForASubAccountApiKeyResponse.from_dict(
                 expected_response
             )
@@ -517,7 +537,11 @@ class TestApiManagementApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetIpRestrictionForASubAccountApiKeyResponse, "from_dict")
+        ):
             expected = GetIpRestrictionForASubAccountApiKeyResponse.from_dict(
                 expected_response
             )

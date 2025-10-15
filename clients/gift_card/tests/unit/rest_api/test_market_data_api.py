@@ -105,7 +105,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateADualTokenGiftCardResponse, "from_dict")
+        ):
             expected = CreateADualTokenGiftCardResponse.from_dict(expected_response)
         else:
             expected = CreateADualTokenGiftCardResponse.model_validate_json(
@@ -160,7 +164,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateADualTokenGiftCardResponse, "from_dict")
+        ):
             expected = CreateADualTokenGiftCardResponse.from_dict(expected_response)
         else:
             expected = CreateADualTokenGiftCardResponse.model_validate_json(
@@ -277,7 +285,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateASingleTokenGiftCardResponse, "from_dict")
+        ):
             expected = CreateASingleTokenGiftCardResponse.from_dict(expected_response)
         else:
             expected = CreateASingleTokenGiftCardResponse.model_validate_json(
@@ -327,7 +339,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateASingleTokenGiftCardResponse, "from_dict")
+        ):
             expected = CreateASingleTokenGiftCardResponse.from_dict(expected_response)
         else:
             expected = CreateASingleTokenGiftCardResponse.model_validate_json(
@@ -407,7 +423,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FetchRsaPublicKeyResponse, "from_dict"):
             expected = FetchRsaPublicKeyResponse.from_dict(expected_response)
         else:
             expected = FetchRsaPublicKeyResponse.model_validate_json(
@@ -453,7 +469,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FetchRsaPublicKeyResponse, "from_dict"):
             expected = FetchRsaPublicKeyResponse.from_dict(expected_response)
         else:
             expected = FetchRsaPublicKeyResponse.model_validate_json(
@@ -514,7 +530,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FetchTokenLimitResponse, "from_dict"):
             expected = FetchTokenLimitResponse.from_dict(expected_response)
         else:
             expected = FetchTokenLimitResponse.model_validate_json(
@@ -558,7 +574,7 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif is_oneof or is_list or hasattr(FetchTokenLimitResponse, "from_dict"):
             expected = FetchTokenLimitResponse.from_dict(expected_response)
         else:
             expected = FetchTokenLimitResponse.model_validate_json(
@@ -640,7 +656,9 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(RedeemABinanceGiftCardResponse, "from_dict")
+        ):
             expected = RedeemABinanceGiftCardResponse.from_dict(expected_response)
         else:
             expected = RedeemABinanceGiftCardResponse.model_validate_json(
@@ -695,7 +713,9 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof or is_list or hasattr(RedeemABinanceGiftCardResponse, "from_dict")
+        ):
             expected = RedeemABinanceGiftCardResponse.from_dict(expected_response)
         else:
             expected = RedeemABinanceGiftCardResponse.model_validate_json(
@@ -772,7 +792,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(VerifyBinanceGiftCardByGiftCardNumberResponse, "from_dict")
+        ):
             expected = VerifyBinanceGiftCardByGiftCardNumberResponse.from_dict(
                 expected_response
             )
@@ -822,7 +846,11 @@ class TestMarketDataApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(VerifyBinanceGiftCardByGiftCardNumberResponse, "from_dict")
+        ):
             expected = VerifyBinanceGiftCardByGiftCardNumberResponse.from_dict(
                 expected_response
             )

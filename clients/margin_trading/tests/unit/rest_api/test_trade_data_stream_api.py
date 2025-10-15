@@ -393,7 +393,11 @@ class TestTradeDataStreamApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(StartIsolatedMarginUserDataStreamResponse, "from_dict")
+        ):
             expected = StartIsolatedMarginUserDataStreamResponse.from_dict(
                 expected_response
             )
@@ -434,7 +438,11 @@ class TestTradeDataStreamApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(StartIsolatedMarginUserDataStreamResponse, "from_dict")
+        ):
             expected = StartIsolatedMarginUserDataStreamResponse.from_dict(
                 expected_response
             )
@@ -495,7 +503,11 @@ class TestTradeDataStreamApi:
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list:
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(StartMarginUserDataStreamResponse, "from_dict")
+        ):
             expected = StartMarginUserDataStreamResponse.from_dict(expected_response)
         else:
             expected = StartMarginUserDataStreamResponse.model_validate_json(

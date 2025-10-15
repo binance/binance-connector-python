@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.5.0 - 2025-10-10
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.2.0`
+
+#### REST API
+
+- Fixed typo for endpoint response `GET /dapi/v1/depth`
+
+- Modified response for `query_order()` (`GET /dapi/v1/order`):
+  - property `position_side` added
+
+#### WebSocket Streams
+
+- Fixed typo for user data stream events response `account_update`
+
 ## 2.4.0 - 2025-09-24
 
 ### Changed (1)

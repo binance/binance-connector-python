@@ -28,9 +28,9 @@ class Listenkeyexpired(BaseModel):
     """  # noqa: E501
 
     E: Optional[StrictStr] = Field(default=None, alias="E")
-    listenKey: Optional[StrictStr] = Field(default=None, alias="listenKey")
+    listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "listenKey"]
+    __properties: ClassVar[List[str]] = ["E", "listen_key"]
 
     model_config = ConfigDict(
         populate_by_name=True,

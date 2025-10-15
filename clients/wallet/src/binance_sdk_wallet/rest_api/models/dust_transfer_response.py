@@ -30,11 +30,11 @@ class DustTransferResponse(BaseModel):
     DustTransferResponse
     """  # noqa: E501
 
-    totalServiceCharge: Optional[StrictStr] = Field(
+    total_service_charge: Optional[StrictStr] = Field(
         default=None, alias="totalServiceCharge"
     )
-    totalTransfered: Optional[StrictStr] = Field(default=None, alias="totalTransfered")
-    transferResult: Optional[List[DustTransferResponseTransferResultInner]] = Field(
+    total_transfered: Optional[StrictStr] = Field(default=None, alias="totalTransfered")
+    transfer_result: Optional[List[DustTransferResponseTransferResultInner]] = Field(
         default=None, alias="transferResult"
     )
     additional_properties: Dict[str, Any] = {}
