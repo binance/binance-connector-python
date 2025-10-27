@@ -50,21 +50,25 @@ jobs:
           new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
 
           if [ "$old_version" = "$new_version" ]; then
-            echo "::error ::Version was not bumped in pyproject.toml — skipping release"
-            exit 1
+            echo "release_needed=false" >> $GITHUB_OUTPUT
+          else
+            echo "release_needed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Set working directory path
+        if: steps.version.outputs.release_needed == 'true'
         id: path
         run: echo "dir=$([[ '${{ matrix.client }}' == 'common' ]] && echo 'common' || echo 'clients/${{ matrix.client }}')" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
+        if: steps.version.outputs.release_needed == 'true'
         working-directory: ${{ steps.path.outputs.dir }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Configure Poetry
+        if: steps.version.outputs.release_needed == 'true'
         working-directory: ${{ steps.path.outputs.dir }}
         run: |
           poetry install
@@ -75,9 +79,11 @@ jobs:
           fi
 
       - name: Build (release)
+        if: steps.version.outputs.release_needed == 'true'
         working-directory: ${{ steps.path.outputs.dir }}
         run: poetry build
 
       - name: Publish to pypi
+        if: steps.version.outputs.release_needed == 'true'
         working-directory: ${{ steps.path.outputs.dir }}
         run: poetry publish
