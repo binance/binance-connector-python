@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0 - 2025-10-27
+
+### Changed (1)
+
+#### WebSocket Streams
+
+- Modified User Data Streams response for `OrderTradeUpdateO`:
+  - `er` added 
+
 ## 1.8.0 - 2025-10-10
 
 ### Changed (4)
