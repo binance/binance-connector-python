@@ -425,7 +425,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
 
         Weight: 1 on 10s order rate limit(X-MBX-ORDER-COUNT-10S);
         1 on 1min order rate limit(X-MBX-ORDER-COUNT-1M);
-        1 on IP rate limit(x-mbx-used-weight-1m)
+        0 on IP rate limit(x-mbx-used-weight-1m)
 
                 Args:
                     symbol (Union[str, None]):

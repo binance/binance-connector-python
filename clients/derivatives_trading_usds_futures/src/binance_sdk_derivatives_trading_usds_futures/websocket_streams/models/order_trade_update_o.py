@@ -63,6 +63,7 @@ class OrderTradeUpdateO(BaseModel):
     V: Optional[StrictStr] = Field(default=None, alias="V")
     pm: Optional[StrictStr] = None
     gtd: Optional[StrictInt] = None
+    er: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "s",
@@ -101,6 +102,7 @@ class OrderTradeUpdateO(BaseModel):
         "V",
         "pm",
         "gtd",
+        "er",
     ]
 
     model_config = ConfigDict(
@@ -199,6 +201,7 @@ class OrderTradeUpdateO(BaseModel):
                 "V": obj.get("V"),
                 "pm": obj.get("pm"),
                 "gtd": obj.get("gtd"),
+                "er": obj.get("er"),
             }
         )
         # store additional fields in additional_properties
