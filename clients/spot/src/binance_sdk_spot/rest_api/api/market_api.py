@@ -35,11 +35,17 @@ from ..models import TickerTradingDayResponse
 from ..models import UiKlinesResponse
 
 
+from ..models import DepthSymbolStatusEnum
 from ..models import KlinesIntervalEnum
 from ..models import TickerWindowSizeEnum
 from ..models import TickerTypeEnum
+from ..models import TickerSymbolStatusEnum
 from ..models import Ticker24hrTypeEnum
+from ..models import Ticker24hrSymbolStatusEnum
+from ..models import TickerBookTickerSymbolStatusEnum
+from ..models import TickerPriceSymbolStatusEnum
 from ..models import TickerTradingDayTypeEnum
+from ..models import TickerTradingDaySymbolStatusEnum
 from ..models import UiKlinesIntervalEnum
 
 
@@ -154,6 +160,7 @@ class MarketApi:
         self,
         symbol: Union[str, None],
         limit: Optional[int] = None,
+        symbol_status: Optional[DepthSymbolStatusEnum] = None,
     ) -> ApiResponse[DepthResponse]:
         """
                 Order book
@@ -173,6 +180,7 @@ class MarketApi:
                 Args:
                     symbol (Union[str, None]):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    symbol_status (Optional[DepthSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[DepthResponse]
@@ -187,7 +195,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        payload = {"symbol": symbol, "limit": limit}
+        payload = {"symbol": symbol, "limit": limit, "symbol_status": symbol_status}
 
         return send_request(
             self._session,
@@ -353,6 +361,7 @@ class MarketApi:
         symbols: Optional[List[str]] = None,
         window_size: Optional[TickerWindowSizeEnum] = None,
         type: Optional[TickerTypeEnum] = None,
+        symbol_status: Optional[TickerSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerResponse]:
         """
                 Rolling window price change statistics
@@ -367,6 +376,7 @@ class MarketApi:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     window_size (Optional[TickerWindowSizeEnum] = None):
                     type (Optional[TickerTypeEnum] = None):
+                    symbol_status (Optional[TickerSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerResponse]
@@ -381,6 +391,7 @@ class MarketApi:
             "symbols": symbols,
             "window_size": window_size,
             "type": type,
+            "symbol_status": symbol_status,
         }
 
         return send_request(
@@ -398,6 +409,7 @@ class MarketApi:
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
         type: Optional[Ticker24hrTypeEnum] = None,
+        symbol_status: Optional[Ticker24hrSymbolStatusEnum] = None,
     ) -> ApiResponse[Ticker24hrResponse]:
         """
                 24hr ticker price change statistics
@@ -447,6 +459,7 @@ class MarketApi:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[Ticker24hrTypeEnum] = None):
+                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[Ticker24hrResponse]
@@ -456,7 +469,12 @@ class MarketApi:
 
         """
 
-        payload = {"symbol": symbol, "symbols": symbols, "type": type}
+        payload = {
+            "symbol": symbol,
+            "symbols": symbols,
+            "type": type,
+            "symbol_status": symbol_status,
+        }
 
         return send_request(
             self._session,
@@ -472,6 +490,7 @@ class MarketApi:
         self,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerBookTickerSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerBookTickerResponse]:
         """
                 Symbol order book ticker
@@ -508,6 +527,7 @@ class MarketApi:
                 Args:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerBookTickerSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerBookTickerResponse]
@@ -517,7 +537,7 @@ class MarketApi:
 
         """
 
-        payload = {"symbol": symbol, "symbols": symbols}
+        payload = {"symbol": symbol, "symbols": symbols, "symbol_status": symbol_status}
 
         return send_request(
             self._session,
@@ -533,6 +553,7 @@ class MarketApi:
         self,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerPriceSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerPriceResponse]:
         """
                 Symbol price ticker
@@ -569,6 +590,7 @@ class MarketApi:
                 Args:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerPriceResponse]
@@ -578,7 +600,7 @@ class MarketApi:
 
         """
 
-        payload = {"symbol": symbol, "symbols": symbols}
+        payload = {"symbol": symbol, "symbols": symbols, "symbol_status": symbol_status}
 
         return send_request(
             self._session,
@@ -596,6 +618,7 @@ class MarketApi:
         symbols: Optional[List[str]] = None,
         time_zone: Optional[str] = None,
         type: Optional[TickerTradingDayTypeEnum] = None,
+        symbol_status: Optional[TickerTradingDaySymbolStatusEnum] = None,
     ) -> ApiResponse[TickerTradingDayResponse]:
         """
                 Trading Day Ticker
@@ -610,6 +633,7 @@ class MarketApi:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     time_zone (Optional[str] = None): Default: 0 (UTC)
                     type (Optional[TickerTradingDayTypeEnum] = None):
+                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerTradingDayResponse]
@@ -624,6 +648,7 @@ class MarketApi:
             "symbols": symbols,
             "time_zone": time_zone,
             "type": type,
+            "symbol_status": symbol_status,
         }
 
         return send_request(

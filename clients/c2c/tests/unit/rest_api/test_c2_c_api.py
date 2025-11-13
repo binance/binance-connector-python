@@ -115,9 +115,11 @@ class TestC2CApi:
         """Test get_c2_c_trade_history() successfully with optional parameters."""
 
         params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
+            "trade_type": "trade_type_example",
+            "start_timestamp": 56,
+            "end_timestamp": 56,
             "page": 1,
+            "rows": 100,
             "recv_window": 5000,
         }
 

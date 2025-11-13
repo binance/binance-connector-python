@@ -14,9 +14,18 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
+from .api.bfusd_api import BfusdApi
 from .api.flexible_locked_api import FlexibleLockedApi
 from .api.rwusd_api import RwusdApi
 
+from .models import GetBfusdAccountResponse
+from .models import GetBfusdQuotaDetailsResponse
+from .models import GetBfusdRateHistoryResponse
+from .models import GetBfusdRedemptionHistoryResponse
+from .models import GetBfusdRewardsHistoryResponse
+from .models import GetBfusdSubscriptionHistoryResponse
+from .models import RedeemBfusdResponse
+from .models import SubscribeBfusdResponse
 from .models import GetCollateralRecordResponse
 from .models import GetFlexiblePersonalLeftQuotaResponse
 from .models import GetFlexibleProductPositionResponse
@@ -69,6 +78,7 @@ class SimpleEarnRestAPI:
             else None
         )
 
+        self._bfusdApi = BfusdApi(self.configuration, self._session, self._signer)
         self._flexibleLockedApi = FlexibleLockedApi(
             self.configuration, self._session, self._signer
         )
@@ -116,6 +126,272 @@ class SimpleEarnRestAPI:
             signer=self._signer,
         )
 
+    def get_bfusd_account(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdAccountResponse]:
+        """
+                Get BFUSD Account (USER_DATA)
+
+                Get BFUSD account information.
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdAccountResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_account(recv_window)
+
+    def get_bfusd_quota_details(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdQuotaDetailsResponse]:
+        """
+                Get BFUSD Quota Details (USER_DATA)
+
+                Get BFUSD quota details including fast redemption quota and standard redemption quota.
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdQuotaDetailsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_quota_details(recv_window)
+
+    def get_bfusd_rate_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdRateHistoryResponse]:
+        """
+                Get BFUSD Rate History (USER_DATA)
+
+                Get BFUSD rate history sorted by descending order.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_rate_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_bfusd_redemption_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdRedemptionHistoryResponse]:
+        """
+                Get BFUSD Redemption History (USER_DATA)
+
+                Get BFUSD redemption history.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdRedemptionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_redemption_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_bfusd_rewards_history(
+        self,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdRewardsHistoryResponse]:
+        """
+                Get BFUSD Rewards History (USER_DATA)
+
+                Get BFUSD rewards history.
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time minus one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdRewardsHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_rewards_history(
+            start_time, end_time, current, size, recv_window
+        )
+
+    def get_bfusd_subscription_history(
+        self,
+        asset: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetBfusdSubscriptionHistoryResponse]:
+        """
+                Get BFUSD subscription history(USER_DATA)
+
+                Get BFUSD subscription history
+
+        * The time between `startTime` and `endTime` cannot be longer than 6 months.
+        * If `startTime` and `endTime` are both not sent, then the last 30 days' data will be returned.
+        * If `startTime` is sent but `endTime` is not sent, `endTime` will default to current time, and results from `startTime` onward will be returned.
+        * If `endTime` is sent but `startTime` is not sent, `startTime` defaults to the current time advanced by one month, and data between `startTime` and `endTime` will be returned.
+
+        Weight: 150
+
+                Args:
+                    asset (Optional[str] = None): USDC or USDT
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetBfusdSubscriptionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.get_bfusd_subscription_history(
+            asset, start_time, end_time, current, size, recv_window
+        )
+
+    def redeem_bfusd(
+        self,
+        amount: Union[float, None],
+        type: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[RedeemBfusdResponse]:
+        """
+                Redeem BFUSD(TRADE)
+
+                Redeem BFUSD to USDT
+
+        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+
+        Weight: 150
+
+                Args:
+                    amount (Union[float, None]): Amount
+                    type (Union[str, None]): FAST or STANDARD, defaults to STANDARD
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[RedeemBfusdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.redeem_bfusd(amount, type, recv_window)
+
+    def subscribe_bfusd(
+        self,
+        asset: Union[str, None],
+        amount: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SubscribeBfusdResponse]:
+        """
+                Subscribe BFUSD(TRADE)
+
+                Subscribe BFUSD
+
+        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint.
+
+        Weight: 150
+
+                Args:
+                    asset (Union[str, None]): USDT or USDC (whichever is eligible)
+                    amount (Union[float, None]): Amount
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[SubscribeBfusdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._bfusdApi.subscribe_bfusd(asset, amount, recv_window)
+
     def get_collateral_record(
         self,
         product_id: Optional[str] = None,
@@ -141,9 +417,9 @@ class SimpleEarnRestAPI:
                     product_id (Optional[str] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetCollateralRecordResponse]
@@ -171,7 +447,7 @@ class SimpleEarnRestAPI:
 
                 Args:
                     product_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexiblePersonalLeftQuotaResponse]
@@ -203,9 +479,9 @@ class SimpleEarnRestAPI:
                 Args:
                     asset (Optional[str] = None): USDC or USDT
                     product_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleProductPositionResponse]
@@ -248,9 +524,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleRedemptionRecordResponse]
@@ -300,9 +576,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleRewardsHistoryResponse]
@@ -332,7 +608,7 @@ class SimpleEarnRestAPI:
                 Args:
                     product_id (Union[str, None]):
                     amount (Union[float, None]): Amount
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionPreviewResponse]
@@ -375,9 +651,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionRecordResponse]
@@ -412,7 +688,7 @@ class SimpleEarnRestAPI:
 
                 Args:
                     project_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedPersonalLeftQuotaResponse]
@@ -446,9 +722,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     position_id (Optional[int] = None):
                     project_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedProductPositionResponse]
@@ -491,9 +767,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedRedemptionRecordResponse]
@@ -541,9 +817,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedRewardsHistoryResponse]
@@ -575,7 +851,7 @@ class SimpleEarnRestAPI:
                     project_id (Union[str, None]):
                     amount (Union[float, None]): Amount
                     auto_subscribe (Optional[bool] = None): true or false, default true.
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionPreviewResponse]
@@ -616,9 +892,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionRecordResponse]
@@ -659,9 +935,9 @@ class SimpleEarnRestAPI:
                     apr_period (Optional[str] = None): "DAY","YEAR",default"DAY"
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRateHistoryResponse]
@@ -691,9 +967,9 @@ class SimpleEarnRestAPI:
 
                 Args:
                     asset (Optional[str] = None): USDC or USDT
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetSimpleEarnFlexibleProductListResponse]
@@ -725,9 +1001,9 @@ class SimpleEarnRestAPI:
 
                 Args:
                     asset (Optional[str] = None): USDC or USDT
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetSimpleEarnLockedProductListResponse]
@@ -763,7 +1039,7 @@ class SimpleEarnRestAPI:
                     redeem_all (Optional[bool] = None): true or false, default to false
                     amount (Optional[float] = None): if redeemAll is false, amount is mandatory
                     dest_account (Optional[str] = None): `SPOT`,`FUND`, default `SPOT`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemFlexibleProductResponse]
@@ -793,7 +1069,7 @@ class SimpleEarnRestAPI:
 
                 Args:
                     position_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemLockedProductResponse]
@@ -821,7 +1097,7 @@ class SimpleEarnRestAPI:
                 Args:
                     product_id (Union[str, None]):
                     auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetFlexibleAutoSubscribeResponse]
@@ -851,7 +1127,7 @@ class SimpleEarnRestAPI:
                 Args:
                     position_id (Union[str, None]):
                     auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetLockedAutoSubscribeResponse]
@@ -881,7 +1157,7 @@ class SimpleEarnRestAPI:
                 Args:
                     position_id (Union[str, None]):
                     redeem_to (Union[str, None]): `SPOT`,'FLEXIBLE'
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetLockedProductRedeemOptionResponse]
@@ -907,7 +1183,7 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SimpleAccountResponse]
@@ -941,7 +1217,7 @@ class SimpleEarnRestAPI:
                     amount (Union[float, None]): Amount
                     auto_subscribe (Optional[bool] = None): true or false, default true.
                     source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeFlexibleProductResponse]
@@ -979,7 +1255,7 @@ class SimpleEarnRestAPI:
                     auto_subscribe (Optional[bool] = None): true or false, default true.
                     source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
                     redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeLockedProductResponse]
@@ -1005,7 +1281,7 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdAccountResponse]
@@ -1029,7 +1305,7 @@ class SimpleEarnRestAPI:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdQuotaDetailsResponse]
@@ -1064,9 +1340,9 @@ class SimpleEarnRestAPI:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRateHistoryResponse]
@@ -1103,9 +1379,9 @@ class SimpleEarnRestAPI:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRedemptionHistoryResponse]
@@ -1142,9 +1418,9 @@ class SimpleEarnRestAPI:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRewardsHistoryResponse]
@@ -1183,9 +1459,9 @@ class SimpleEarnRestAPI:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdSubscriptionHistoryResponse]
@@ -1217,7 +1493,7 @@ class SimpleEarnRestAPI:
                 Args:
                     amount (Union[float, None]): Amount
                     type (Union[str, None]): FAST or STANDARD, defaults to STANDARD
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemRwusdResponse]
@@ -1247,7 +1523,7 @@ class SimpleEarnRestAPI:
                 Args:
                     asset (Union[str, None]): USDT or USDC (whichever is eligible)
                     amount (Union[float, None]): Amount
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeRwusdResponse]

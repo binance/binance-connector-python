@@ -83,9 +83,6 @@ from .models import OrderTestResponse
 from .models import SorOrderPlaceResponse
 from .models import SorOrderTestResponse
 from .models import SessionSubscriptionsResponse
-from .models import UserDataStreamPingResponse
-from .models import UserDataStreamStartResponse
-from .models import UserDataStreamStopResponse
 from .models import UserDataStreamSubscribeResponse
 from .models import UserDataStreamSubscribeSignatureResponse
 from .models import UserDataStreamUnsubscribeResponse
@@ -93,11 +90,17 @@ from .models import UserDataStreamUnsubscribeResponse
 from .models import UserDataStreamEventsResponse
 
 from .models import ExchangeInfoSymbolStatusEnum
+from .models import DepthSymbolStatusEnum
 from .models import KlinesIntervalEnum
 from .models import TickerTypeEnum
 from .models import TickerWindowSizeEnum
+from .models import TickerSymbolStatusEnum
 from .models import Ticker24hrTypeEnum
+from .models import Ticker24hrSymbolStatusEnum
+from .models import TickerBookSymbolStatusEnum
+from .models import TickerPriceSymbolStatusEnum
 from .models import TickerTradingDayTypeEnum
+from .models import TickerTradingDaySymbolStatusEnum
 from .models import UiKlinesIntervalEnum
 from .models import OrderCancelCancelRestrictionsEnum
 from .models import OrderCancelReplaceCancelReplaceModeEnum
@@ -971,6 +974,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         symbol: Union[str, None],
         id: Optional[str] = None,
         limit: Optional[int] = None,
+        symbol_status: Optional[DepthSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[DepthResponse]:
         """
                 WebSocket Order book
@@ -998,6 +1002,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    symbol_status (Optional[DepthSymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[DepthResponse]
@@ -1007,7 +1012,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        return await self._marketApi.depth(symbol, id, limit)
+        return await self._marketApi.depth(symbol, id, limit, symbol_status)
 
     async def klines(
         self,
@@ -1062,6 +1067,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         symbols: Optional[List[str]] = None,
         type: Optional[TickerTypeEnum] = None,
         window_size: Optional[TickerWindowSizeEnum] = None,
+        symbol_status: Optional[TickerSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerResponse]:
         """
                 WebSocket Rolling window price change statistics
@@ -1083,6 +1089,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[TickerTypeEnum] = None):
                     window_size (Optional[TickerWindowSizeEnum] = None):
+                    symbol_status (Optional[TickerSymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[TickerResponse]
@@ -1092,7 +1099,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        return await self._marketApi.ticker(id, symbol, symbols, type, window_size)
+        return await self._marketApi.ticker(
+            id, symbol, symbols, type, window_size, symbol_status
+        )
 
     async def ticker24hr(
         self,
@@ -1100,6 +1109,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
         type: Optional[Ticker24hrTypeEnum] = None,
+        symbol_status: Optional[Ticker24hrSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[Ticker24hrResponse]:
         """
                 WebSocket 24hr ticker price change statistics
@@ -1127,6 +1137,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[Ticker24hrTypeEnum] = None):
+                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[Ticker24hrResponse]
@@ -1136,13 +1147,16 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        return await self._marketApi.ticker24hr(id, symbol, symbols, type)
+        return await self._marketApi.ticker24hr(
+            id, symbol, symbols, type, symbol_status
+        )
 
     async def ticker_book(
         self,
         id: Optional[str] = None,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerBookSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerBookResponse]:
         """
                 WebSocket Symbol order book ticker
@@ -1164,6 +1178,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerBookSymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[TickerBookResponse]
@@ -1173,13 +1188,14 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        return await self._marketApi.ticker_book(id, symbol, symbols)
+        return await self._marketApi.ticker_book(id, symbol, symbols, symbol_status)
 
     async def ticker_price(
         self,
         id: Optional[str] = None,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerPriceSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerPriceResponse]:
         """
                 WebSocket Symbol price ticker
@@ -1202,6 +1218,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[TickerPriceResponse]
@@ -1211,7 +1228,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        return await self._marketApi.ticker_price(id, symbol, symbols)
+        return await self._marketApi.ticker_price(id, symbol, symbols, symbol_status)
 
     async def ticker_trading_day(
         self,
@@ -1220,6 +1237,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         symbols: Optional[List[str]] = None,
         time_zone: Optional[str] = None,
         type: Optional[TickerTradingDayTypeEnum] = None,
+        symbol_status: Optional[TickerTradingDaySymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerTradingDayResponse]:
         """
                 WebSocket Trading Day Ticker
@@ -1233,6 +1251,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbols (Optional[List[str]] = None): List of symbols to query
                     time_zone (Optional[str] = None): Default: 0 (UTC)
                     type (Optional[TickerTradingDayTypeEnum] = None):
+                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None):
 
                 Returns:
                     WebsocketApiResponse[TickerTradingDayResponse]
@@ -1243,7 +1262,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
 
         return await self._marketApi.ticker_trading_day(
-            id, symbol, symbols, time_zone, type
+            id, symbol, symbols, time_zone, type, symbol_status
         )
 
     async def trades_aggregate(
@@ -2561,90 +2580,6 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
 
         return await self._userDataStreamApi.session_subscriptions(id)
-
-    async def user_data_stream_ping(
-        self,
-        listen_key: Union[str, None],
-        id: Optional[str] = None,
-    ) -> WebsocketApiResponse[UserDataStreamPingResponse]:
-        """
-                WebSocket Ping user data stream
-
-                Ping a user data stream to keep it alive.
-
-        User data streams close automatically after 60 minutes,
-        even if you're listening to them on WebSocket Streams.
-        In order to keep the stream open, you have to regularly send pings using the `userDataStream.ping` request.
-
-        It is recommended to send a ping once every 30 minutes.
-
-        This request does not require `signature`.
-        Weight: 2
-
-                Args:
-                    listen_key (Union[str, None]):
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    WebsocketApiResponse[UserDataStreamPingResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._userDataStreamApi.user_data_stream_ping(listen_key, id)
-
-    async def user_data_stream_start(
-        self,
-        id: Optional[str] = None,
-    ) -> WebsocketApiResponse[UserDataStreamStartResponse]:
-        """
-                WebSocket Start user data stream
-
-                Start a new user data stream.
-        Note the stream will close in 60 minutes unless `userDataStream.ping` requests are sent regularly.
-        This request does not require `signature`.
-        Weight: 2
-
-                Args:
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    WebsocketApiResponse[UserDataStreamStartResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._userDataStreamApi.user_data_stream_start(id)
-
-    async def user_data_stream_stop(
-        self,
-        listen_key: Union[str, None],
-        id: Optional[str] = None,
-    ) -> WebsocketApiResponse[UserDataStreamStopResponse]:
-        """
-                WebSocket Stop user data stream
-
-                Explicitly stop and close the user data stream.
-        This request does not require `signature`.
-        Weight: 2
-
-                Args:
-                    listen_key (Union[str, None]):
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    WebsocketApiResponse[UserDataStreamStopResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._userDataStreamApi.user_data_stream_stop(listen_key, id)
 
     async def user_data_stream_subscribe(
         self,

@@ -26,12 +26,10 @@ from .models import GetPortfolioMarginProAccountBalanceResponse
 from .models import GetPortfolioMarginProAccountInfoResponse
 from .models import GetPortfolioMarginProSpanAccountInfoResponse
 from .models import GetTransferableEarnAssetBalanceForPortfolioMarginResponse
-from .models import MintBfusdForPortfolioMarginResponse
 from .models import PortfolioMarginProBankruptcyLoanRepayResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from .models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
-from .models import RedeemBfusdForPortfolioMarginResponse
 from .models import RepayFuturesNegativeBalanceResponse
 from .models import TransferLdusdtForPortfolioMarginResponse
 from .models import GetPortfolioMarginAssetLeverageResponse
@@ -351,38 +349,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
             )
         )
 
-    def mint_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[MintBfusdForPortfolioMarginResponse]:
-        """
-                Mint BFUSD for Portfolio Margin(TRADE)
-
-                Mint BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[MintBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.mint_bfusd_for_portfolio_margin(
-            from_asset, target_asset, amount, recv_window
-        )
-
     def portfolio_margin_pro_bankruptcy_loan_repay(
         self,
         var_from: Optional[str] = None,
@@ -512,38 +478,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         return self._accountApi.query_portfolio_margin_pro_negative_balance_interest_history(
             asset, start_time, end_time, size, recv_window
-        )
-
-    def redeem_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemBfusdForPortfolioMarginResponse]:
-        """
-                Redeem BFUSD for Portfolio Margin(TRADE)
-
-                Redeem BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.redeem_bfusd_for_portfolio_margin(
-            from_asset, target_asset, amount, recv_window
         )
 
     def repay_futures_negative_balance(

@@ -699,7 +699,7 @@ class MarketDataApi:
 
                 Mark Price and Funding Rate
 
-        Weight: 1
+        Weight: 1 with symbol, 10 without symbol
 
                 Args:
                     symbol (Optional[str] = None):
@@ -1305,7 +1305,7 @@ class MarketDataApi:
         symbol: Optional[str] = None,
     ) -> ApiResponse[SymbolPriceTickerResponse]:
         """
-                Symbol Price Ticker(Deprecated)
+                Symbol Price Ticker
                 GET /fapi/v1/ticker/price
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Symbol-Price-Ticker
 

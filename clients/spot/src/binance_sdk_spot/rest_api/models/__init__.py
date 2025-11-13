@@ -130,9 +130,6 @@ from .new_order_response import NewOrderResponse as NewOrderResponse
 from .new_order_response_fills_inner import (
     NewOrderResponseFillsInner as NewOrderResponseFillsInner,
 )
-from .new_user_data_stream_response import (
-    NewUserDataStreamResponse as NewUserDataStreamResponse,
-)
 from .notional_filter import NotionalFilter as NotionalFilter
 from .open_order_list_response import OpenOrderListResponse as OpenOrderListResponse
 from .open_order_list_response_inner import (
@@ -279,11 +276,17 @@ from .ui_klines_response import UiKlinesResponse as UiKlinesResponse
 
 
 from .enums import ExchangeInfoSymbolStatusEnum as ExchangeInfoSymbolStatusEnum
+from .enums import DepthSymbolStatusEnum as DepthSymbolStatusEnum
 from .enums import KlinesIntervalEnum as KlinesIntervalEnum
 from .enums import TickerWindowSizeEnum as TickerWindowSizeEnum
 from .enums import TickerTypeEnum as TickerTypeEnum
+from .enums import TickerSymbolStatusEnum as TickerSymbolStatusEnum
 from .enums import Ticker24hrTypeEnum as Ticker24hrTypeEnum
+from .enums import Ticker24hrSymbolStatusEnum as Ticker24hrSymbolStatusEnum
+from .enums import TickerBookTickerSymbolStatusEnum as TickerBookTickerSymbolStatusEnum
+from .enums import TickerPriceSymbolStatusEnum as TickerPriceSymbolStatusEnum
 from .enums import TickerTradingDayTypeEnum as TickerTradingDayTypeEnum
+from .enums import TickerTradingDaySymbolStatusEnum as TickerTradingDaySymbolStatusEnum
 from .enums import UiKlinesIntervalEnum as UiKlinesIntervalEnum
 from .enums import (
     DeleteOrderCancelRestrictionsEnum as DeleteOrderCancelRestrictionsEnum,

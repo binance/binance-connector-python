@@ -27,6 +27,9 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models.accou
 from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models.account_update import (
     AccountUpdate,
 )
+from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models.algo_update import (
+    AlgoUpdate,
+)
 from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models.conditional_order_trigger_reject import (
     ConditionalOrderTriggerReject,
 )
@@ -54,6 +57,7 @@ from typing_extensions import Self
 USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "AccountConfigUpdate",
     "AccountUpdate",
+    "AlgoUpdate",
     "ConditionalOrderTriggerReject",
     "GridUpdate",
     "Listenkeyexpired",
@@ -71,26 +75,29 @@ class UserDataStreamEventsResponse(BaseModel):
 
     # data type: AccountConfigUpdate
     oneof_schema_1_validator: Optional[AccountConfigUpdate] = None
+    # data type: AlgoUpdate
+    oneof_schema_2_validator: Optional[AlgoUpdate] = None
     # data type: AccountUpdate
-    oneof_schema_2_validator: Optional[AccountUpdate] = None
+    oneof_schema_3_validator: Optional[AccountUpdate] = None
     # data type: ConditionalOrderTriggerReject
-    oneof_schema_3_validator: Optional[ConditionalOrderTriggerReject] = None
+    oneof_schema_4_validator: Optional[ConditionalOrderTriggerReject] = None
     # data type: GridUpdate
-    oneof_schema_4_validator: Optional[GridUpdate] = None
+    oneof_schema_5_validator: Optional[GridUpdate] = None
     # data type: MarginCall
-    oneof_schema_5_validator: Optional[MarginCall] = None
+    oneof_schema_6_validator: Optional[MarginCall] = None
     # data type: OrderTradeUpdate
-    oneof_schema_6_validator: Optional[OrderTradeUpdate] = None
+    oneof_schema_7_validator: Optional[OrderTradeUpdate] = None
     # data type: StrategyUpdate
-    oneof_schema_7_validator: Optional[StrategyUpdate] = None
+    oneof_schema_8_validator: Optional[StrategyUpdate] = None
     # data type: TradeLite
-    oneof_schema_8_validator: Optional[TradeLite] = None
+    oneof_schema_9_validator: Optional[TradeLite] = None
     # data type: Listenkeyexpired
-    oneof_schema_9_validator: Optional[Listenkeyexpired] = None
+    oneof_schema_10_validator: Optional[Listenkeyexpired] = None
     actual_instance: Optional[
         Union[
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
             ConditionalOrderTriggerReject,
             GridUpdate,
             Listenkeyexpired,
@@ -103,6 +110,7 @@ class UserDataStreamEventsResponse(BaseModel):
     one_of_schemas: Set[str] = {
         "AccountConfigUpdate",
         "AccountUpdate",
+        "AlgoUpdate",
         "ConditionalOrderTriggerReject",
         "GridUpdate",
         "Listenkeyexpired",
@@ -143,6 +151,11 @@ class UserDataStreamEventsResponse(BaseModel):
             error_messages.append(
                 f"Error! Input type `{type(v)}` is not `AccountConfigUpdate`"
             )
+        else:
+            match += 1
+        # validate data type: AlgoUpdate
+        if not isinstance(v, AlgoUpdate):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AlgoUpdate`")
         else:
             match += 1
         # validate data type: AccountUpdate
@@ -198,13 +211,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
+                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
+                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -224,6 +237,12 @@ class UserDataStreamEventsResponse(BaseModel):
         # deserialize data into AccountConfigUpdate
         try:
             instance.actual_instance = AccountConfigUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into AlgoUpdate
+        try:
+            instance.actual_instance = AlgoUpdate.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -279,13 +298,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, Listenkeyexpired, MarginCall, OrderTradeUpdate, StrategyUpdate, TradeLite. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -310,6 +329,7 @@ class UserDataStreamEventsResponse(BaseModel):
             Dict[str, Any],
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
             ConditionalOrderTriggerReject,
             GridUpdate,
             Listenkeyexpired,

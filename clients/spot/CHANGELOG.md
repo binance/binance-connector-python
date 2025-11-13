@@ -1,5 +1,34 @@
 # Changelog
 
+## 4.0.0 - 2025-11-13
+
+### Changed (2)
+
+#### REST API
+
+- Added parameter `symbolStatus`
+  - affected methods:
+    - `depth()` (`GET /api/v3/depth`)
+    - `ticker()` (`GET /api/v3/ticker`)
+    - `ticker24hr()` (`GET /api/v3/ticker/24hr`)
+    - `ticker_book_ticker()` (`GET /api/v3/ticker/bookTicker`)
+    - `ticker_price()` (`GET /api/v3/ticker/price`)
+    - `ticker_trading_day()` (`GET /api/v3/ticker/tradingDay`)
+
+#### WebSocket API
+
+- Added parameter `symbolStatus`
+  - affected methods:
+    - `depth()` (`depth` method)
+    - `ticker()` (`ticker` method)
+    - `ticker24hr()` (`ticker.24hr` method)
+    - `ticker_book()` (`ticker.book` method)
+    - `ticker_price()` (`ticker.price` method)
+    - `ticker_trading_day()` (`ticker.tradingDay` method)
+- Marked `order_oco` (`POST /api/v3/order/oco`) as deprecated.
+
+- Marked `order_list_place` (`orderList.place` method) as deprecated.
+
 ## 3.0.0 - 2025-10-10
 
 ### Added (2)

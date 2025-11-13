@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.0 - 2025-11-13
+
+### Removed (2)
+
+#### REST API
+
+- `mint_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/mint`)
+- `redeem_bfusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/redeem`)
+
 ## 2.0.0 - 2025-10-10
 
 ### Changed (3)

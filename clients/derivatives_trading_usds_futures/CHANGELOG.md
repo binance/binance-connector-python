@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.0 - 2025-11-13
+
+### Added (7)
+
+#### REST API
+
+- `cancel_algo_order()` (`DELETE /fapi/v1/algoOrder`)
+- `cancel_all_algo_open_orders()` (`DELETE /fapi/v1/algoOpenOrders`)
+- `current_all_algo_open_orders()` (`GET /fapi/v1/openAlgoOrders`)
+- `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+- `query_algo_order()` (`GET /fapi/v1/algoOrder`)
+- `query_all_algo_orders()` (`GET /fapi/v1/allAlgoOrders`)
+- Marked `symbol_price_ticker` (`GET /fapi/v1/ticker/price`) as deprecated.
+
 ## 2.0.0 - 2025-10-27
 
 ### Changed (1)

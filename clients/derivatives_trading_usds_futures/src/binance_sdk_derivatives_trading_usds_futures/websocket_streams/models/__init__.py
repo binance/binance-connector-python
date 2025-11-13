@@ -18,6 +18,8 @@ from .account_update_ap_inner import AccountUpdateAPInner as AccountUpdateAPInne
 from .aggregate_trade_streams_response import (
     AggregateTradeStreamsResponse as AggregateTradeStreamsResponse,
 )
+from .algo_update import AlgoUpdate as AlgoUpdate
+from .algo_update_o import AlgoUpdateO as AlgoUpdateO
 from .all_book_tickers_stream_response import (
     AllBookTickersStreamResponse as AllBookTickersStreamResponse,
 )
