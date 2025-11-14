@@ -16,8 +16,10 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 
+from ..models import FiatWithdrawResponse
 from ..models import GetFiatDepositWithdrawHistoryResponse
 from ..models import GetFiatPaymentsHistoryResponse
+from ..models import GetOrderDetailResponse
 
 
 class FiatApi:
@@ -32,6 +34,50 @@ class FiatApi:
         self._configuration = configuration
         self._session = session
         self._signer = signer
+
+    def fiat_withdraw(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[FiatWithdrawResponse]:
+        """
+                Fiat Withdraw(WITHDRAW)
+                GET /sapi/v2/fiat/withdraw
+                https://developers.binance.com/docs/fiat/rest-api/Fiat-Withdraw
+
+                Submit withdraw request, in this version, we only support BRL withdrawal via bank_transfer.
+
+        You need to call this api first, and call query order detail api in a loop to get the status of the order until this order is successful.
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        you need to bind your bank account on web/app before using the corresponding account number
+
+        Weight: 45000
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[FiatWithdrawResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v2/fiat/withdraw",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=FiatWithdrawResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
 
     def get_fiat_deposit_withdraw_history(
         self,
@@ -160,6 +206,53 @@ class FiatApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=GetFiatPaymentsHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_order_detail(
+        self,
+        order_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetOrderDetailResponse]:
+        """
+                Get Order Detail(USER_DATA)
+                GET /sapi/v1/fiat/get-order-detail
+                https://developers.binance.com/docs/fiat/rest-api/Get-Order-Detail
+
+                Get Order Detail
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        Weight: 45000
+
+                Args:
+                    order_id (Union[str, None]): order id retrieved from the api call of withdrawal
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetOrderDetailResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if order_id is None:
+            raise RequiredError(
+                field="order_id", error_message="Missing required parameter 'order_id'"
+            )
+
+        payload = {"order_id": order_id, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/fiat/get-order-detail",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=GetOrderDetailResponse,
             is_signed=True,
             signer=self._signer,
         )

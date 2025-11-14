@@ -23,7 +23,6 @@ from .api.account_api import AccountApi
 from .api.general_api import GeneralApi
 from .api.market_api import MarketApi
 from .api.trade_api import TradeApi
-from .api.user_data_stream_api import UserDataStreamApi
 
 from .models import AccountCommissionResponse
 from .models import AllOrderListResponse
@@ -68,15 +67,19 @@ from .models import OrderTestResponse
 from .models import SorOrderResponse
 from .models import SorOrderTestResponse
 
-from .models import NewUserDataStreamResponse
-
 
 from .models import ExchangeInfoSymbolStatusEnum
+from .models import DepthSymbolStatusEnum
 from .models import KlinesIntervalEnum
 from .models import TickerWindowSizeEnum
 from .models import TickerTypeEnum
+from .models import TickerSymbolStatusEnum
 from .models import Ticker24hrTypeEnum
+from .models import Ticker24hrSymbolStatusEnum
+from .models import TickerBookTickerSymbolStatusEnum
+from .models import TickerPriceSymbolStatusEnum
 from .models import TickerTradingDayTypeEnum
+from .models import TickerTradingDaySymbolStatusEnum
 from .models import UiKlinesIntervalEnum
 from .models import DeleteOrderCancelRestrictionsEnum
 from .models import NewOrderSideEnum
@@ -180,9 +183,6 @@ class SpotRestAPI:
         self._generalApi = GeneralApi(self.configuration, self._session, self._signer)
         self._marketApi = MarketApi(self.configuration, self._session, self._signer)
         self._tradeApi = TradeApi(self.configuration, self._session, self._signer)
-        self._userDataStreamApi = UserDataStreamApi(
-            self.configuration, self._session, self._signer
-        )
 
     def send_request(
         self,
@@ -816,6 +816,7 @@ class SpotRestAPI:
         self,
         symbol: Union[str, None],
         limit: Optional[int] = None,
+        symbol_status: Optional[DepthSymbolStatusEnum] = None,
     ) -> ApiResponse[DepthResponse]:
         """
                 Order book
@@ -833,6 +834,7 @@ class SpotRestAPI:
                 Args:
                     symbol (Union[str, None]):
                     limit (Optional[int] = None): Default: 500; Maximum: 1000.
+                    symbol_status (Optional[DepthSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[DepthResponse]
@@ -842,7 +844,7 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.depth(symbol, limit)
+        return self._marketApi.depth(symbol, limit, symbol_status)
 
     def get_trades(
         self,
@@ -938,6 +940,7 @@ class SpotRestAPI:
         symbols: Optional[List[str]] = None,
         window_size: Optional[TickerWindowSizeEnum] = None,
         type: Optional[TickerTypeEnum] = None,
+        symbol_status: Optional[TickerSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerResponse]:
         """
                 Rolling window price change statistics
@@ -950,6 +953,7 @@ class SpotRestAPI:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     window_size (Optional[TickerWindowSizeEnum] = None):
                     type (Optional[TickerTypeEnum] = None):
+                    symbol_status (Optional[TickerSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerResponse]
@@ -959,13 +963,14 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.ticker(symbol, symbols, window_size, type)
+        return self._marketApi.ticker(symbol, symbols, window_size, type, symbol_status)
 
     def ticker24hr(
         self,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
         type: Optional[Ticker24hrTypeEnum] = None,
+        symbol_status: Optional[Ticker24hrSymbolStatusEnum] = None,
     ) -> ApiResponse[Ticker24hrResponse]:
         """
                 24hr ticker price change statistics
@@ -1013,6 +1018,7 @@ class SpotRestAPI:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[Ticker24hrTypeEnum] = None):
+                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[Ticker24hrResponse]
@@ -1022,12 +1028,13 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.ticker24hr(symbol, symbols, type)
+        return self._marketApi.ticker24hr(symbol, symbols, type, symbol_status)
 
     def ticker_book_ticker(
         self,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerBookTickerSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerBookTickerResponse]:
         """
                 Symbol order book ticker
@@ -1062,6 +1069,7 @@ class SpotRestAPI:
                 Args:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerBookTickerSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerBookTickerResponse]
@@ -1071,12 +1079,13 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.ticker_book_ticker(symbol, symbols)
+        return self._marketApi.ticker_book_ticker(symbol, symbols, symbol_status)
 
     def ticker_price(
         self,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerPriceSymbolStatusEnum] = None,
     ) -> ApiResponse[TickerPriceResponse]:
         """
                 Symbol price ticker
@@ -1111,6 +1120,7 @@ class SpotRestAPI:
                 Args:
                     symbol (Optional[str] = None): Symbol to query
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerPriceResponse]
@@ -1120,7 +1130,7 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.ticker_price(symbol, symbols)
+        return self._marketApi.ticker_price(symbol, symbols, symbol_status)
 
     def ticker_trading_day(
         self,
@@ -1128,6 +1138,7 @@ class SpotRestAPI:
         symbols: Optional[List[str]] = None,
         time_zone: Optional[str] = None,
         type: Optional[TickerTradingDayTypeEnum] = None,
+        symbol_status: Optional[TickerTradingDaySymbolStatusEnum] = None,
     ) -> ApiResponse[TickerTradingDayResponse]:
         """
                 Trading Day Ticker
@@ -1140,6 +1151,7 @@ class SpotRestAPI:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     time_zone (Optional[str] = None): Default: 0 (UTC)
                     type (Optional[TickerTradingDayTypeEnum] = None):
+                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None):
 
                 Returns:
                     ApiResponse[TickerTradingDayResponse]
@@ -1149,7 +1161,9 @@ class SpotRestAPI:
 
         """
 
-        return self._marketApi.ticker_trading_day(symbol, symbols, time_zone, type)
+        return self._marketApi.ticker_trading_day(
+            symbol, symbols, time_zone, type, symbol_status
+        )
 
     def ui_klines(
         self,
@@ -2275,73 +2289,3 @@ class SpotRestAPI:
             self_trade_prevention_mode,
             recv_window,
         )
-
-    def delete_user_data_stream(
-        self,
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Close user data stream
-
-                Close out a user data stream.
-        Weight: 2
-
-                Args:
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._userDataStreamApi.delete_user_data_stream(listen_key)
-
-    def new_user_data_stream(
-        self,
-    ) -> ApiResponse[NewUserDataStreamResponse]:
-        """
-                Start user data stream
-
-                Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent.
-        This request does not require `signature`.
-        Weight: 2
-
-                Args:
-
-                Returns:
-                    ApiResponse[NewUserDataStreamResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._userDataStreamApi.new_user_data_stream()
-
-    def put_user_data_stream(
-        self,
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Keepalive user data stream
-
-                Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.
-
-        This request does not require `signature`.
-        Weight: 2
-
-                Args:
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._userDataStreamApi.put_user_data_stream(listen_key)

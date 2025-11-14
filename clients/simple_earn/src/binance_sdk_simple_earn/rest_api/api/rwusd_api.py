@@ -53,7 +53,7 @@ class RwusdApi:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdAccountResponse]
@@ -91,7 +91,7 @@ class RwusdApi:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdQuotaDetailsResponse]
@@ -140,9 +140,9 @@ class RwusdApi:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRateHistoryResponse]
@@ -197,9 +197,9 @@ class RwusdApi:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRedemptionHistoryResponse]
@@ -254,9 +254,9 @@ class RwusdApi:
                 Args:
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdRewardsHistoryResponse]
@@ -313,9 +313,9 @@ class RwusdApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRwusdSubscriptionHistoryResponse]
@@ -366,7 +366,7 @@ class RwusdApi:
                 Args:
                     amount (Union[float, None]): Amount
                     type (Union[str, None]): FAST or STANDARD, defaults to STANDARD
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemRwusdResponse]
@@ -419,7 +419,7 @@ class RwusdApi:
                 Args:
                     asset (Union[str, None]): USDT or USDC (whichever is eligible)
                     amount (Union[float, None]): Amount
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeRwusdResponse]

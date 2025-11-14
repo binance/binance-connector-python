@@ -81,6 +81,8 @@ from .models import ClassicPortfolioMarginAccountInformationResponse
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
 from .models import AutoCancelAllOpenOrdersResponse
+from .models import CancelAlgoOrderResponse
+from .models import CancelAllAlgoOpenOrdersResponse
 from .models import CancelAllOpenOrdersResponse
 from .models import CancelMultipleOrdersResponse
 from .models import CancelOrderResponse
@@ -88,17 +90,21 @@ from .models import ChangeInitialLeverageResponse
 from .models import ChangeMarginTypeResponse
 from .models import ChangeMultiAssetsModeResponse
 from .models import ChangePositionModeResponse
+from .models import CurrentAllAlgoOpenOrdersResponse
 from .models import CurrentAllOpenOrdersResponse
 from .models import GetOrderModifyHistoryResponse
 from .models import GetPositionMarginChangeHistoryResponse
 from .models import ModifyIsolatedPositionMarginResponse
 from .models import ModifyMultipleOrdersResponse
 from .models import ModifyOrderResponse
+from .models import NewAlgoOrderResponse
 from .models import NewOrderResponse
 from .models import PlaceMultipleOrdersResponse
 from .models import PositionAdlQuantileEstimationResponse
 from .models import PositionInformationV2Response
 from .models import PositionInformationV3Response
+from .models import QueryAlgoOrderResponse
+from .models import QueryAllAlgoOrdersResponse
 from .models import QueryCurrentOpenOrderResponse
 from .models import QueryOrderResponse
 from .models import TestOrderResponse
@@ -125,6 +131,12 @@ from .models import ChangeMarginTypeMarginTypeEnum
 from .models import ModifyIsolatedPositionMarginPositionSideEnum
 from .models import ModifyOrderSideEnum
 from .models import ModifyOrderPriceMatchEnum
+from .models import NewAlgoOrderSideEnum
+from .models import NewAlgoOrderPositionSideEnum
+from .models import NewAlgoOrderTimeInForceEnum
+from .models import NewAlgoOrderWorkingTypeEnum
+from .models import NewAlgoOrderPriceMatchEnum
+from .models import NewAlgoOrderSelfTradePreventionModeEnum
 from .models import NewOrderSideEnum
 from .models import NewOrderPositionSideEnum
 from .models import NewOrderTimeInForceEnum
@@ -1315,7 +1327,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Mark Price and Funding Rate
 
-        Weight: 1
+        Weight: 1 with symbol, 10 without symbol
 
                 Args:
                     symbol (Optional[str] = None):
@@ -1698,7 +1710,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         symbol: Optional[str] = None,
     ) -> ApiResponse[SymbolPriceTickerResponse]:
         """
-                Symbol Price Ticker(Deprecated)
+                Symbol Price Ticker
 
                 Latest price for a symbol or symbols.
 
@@ -2073,6 +2085,62 @@ class DerivativesTradingUsdsFuturesRestAPI:
             symbol, countdown_time, recv_window
         )
 
+    def cancel_algo_order(
+        self,
+        algoid: Optional[int] = None,
+        clientalgoid: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAlgoOrderResponse]:
+        """
+                Cancel Algo Order (TRADE)
+
+                Cancel an active algo order.
+
+        * Either `algoid` or `clientalgoid` must be sent.
+
+        Weight: 1
+
+                Args:
+                    algoid (Optional[int] = None):
+                    clientalgoid (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.cancel_algo_order(algoid, clientalgoid, recv_window)
+
+    def cancel_all_algo_open_orders(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAllAlgoOpenOrdersResponse]:
+        """
+                Cancel All Algo Open Orders (TRADE)
+
+                Cancel All Algo Open Orders
+
+        Weight: 1
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.cancel_all_algo_open_orders(symbol, recv_window)
+
     def cancel_all_open_orders(
         self,
         symbol: Union[str, None],
@@ -2274,6 +2342,41 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
 
         return self._tradeApi.change_position_mode(dual_side_position, recv_window)
+
+    def current_all_algo_open_orders(
+        self,
+        algo_type: Optional[str] = None,
+        symbol: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CurrentAllAlgoOpenOrdersResponse]:
+        """
+                Current All Algo Open Orders (USER_DATA)
+
+                Get all algo open orders on a symbol.
+
+        * If the symbol is not sent, orders for all symbols will be returned in an array.
+
+        Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
+        Careful when accessing this with no symbol.
+
+                Args:
+                    algo_type (Optional[str] = None):
+                    symbol (Optional[str] = None):
+                    algo_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CurrentAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.current_all_algo_open_orders(
+            algo_type, symbol, algo_id, recv_window
+        )
 
     def current_all_open_orders(
         self,
@@ -2518,6 +2621,121 @@ class DerivativesTradingUsdsFuturesRestAPI:
             recv_window,
         )
 
+    def new_algo_order(
+        self,
+        algo_type: Union[str, None],
+        symbol: Union[str, None],
+        side: Union[NewAlgoOrderSideEnum, None],
+        type: Union[str, None],
+        position_side: Optional[NewAlgoOrderPositionSideEnum] = None,
+        time_in_force: Optional[NewAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[str] = None,
+        price_protect: Optional[str] = None,
+        reduce_only: Optional[str] = None,
+        activation_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        self_trade_prevention_mode: Optional[
+            NewAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        good_till_date: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[NewAlgoOrderResponse]:
+        """
+                New Algo Order(TRADE)
+
+                Send in a new Algo order.
+
+        * Condition orders will be triggered when:
+
+        * If parameter`priceProtect`is sent as true:
+        * when price reaches the `triggerPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
+
+        * `STOP`, `STOP_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * `TRAILING_STOP_MARKET`:
+        * BUY: the lowest price after order placed <= `activationPrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+
+        * For `TRAILING_STOP_MARKET`, if you got such error code.
+        ``{"code": -2021, "msg": "Order would immediately trigger."}``
+        means that the parameters you send do not meet the following requirements:
+        * BUY: `activationPrice` should be smaller than latest price.
+        * SELL: `activationPrice` should be larger than latest price.
+
+        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+        * Follow the same rules for condition orders.
+        * If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
+        * Cannot be used with `quantity` paremeter
+        * Cannot be used with `reduceOnly` parameter
+        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
+
+        Weight: 0 on IP rate limit(x-mbx-used-weight-1m)
+
+                Args:
+                    algo_type (Union[str, None]): Only support `CONDITIONAL`
+                    symbol (Union[str, None]):
+                    side (Union[NewAlgoOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    price (Optional[float] = None):
+                    trigger_price (Optional[float] = None):
+                    working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[NewAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.new_algo_order(
+            algo_type,
+            symbol,
+            side,
+            type,
+            position_side,
+            time_in_force,
+            quantity,
+            price,
+            trigger_price,
+            working_type,
+            price_match,
+            close_position,
+            price_protect,
+            reduce_only,
+            activation_price,
+            callback_rate,
+            client_algo_id,
+            self_trade_prevention_mode,
+            good_till_date,
+            recv_window,
+        )
+
     def new_order(
         self,
         symbol: Union[str, None],
@@ -2607,7 +2825,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 
@@ -2762,6 +2980,86 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
 
         return self._tradeApi.position_information_v3(symbol, recv_window)
+
+    def query_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAlgoOrderResponse]:
+        """
+                Query Algo Order (USER_DATA)
+
+                Check an algo order's status.
+
+        * These orders will not be found:
+        * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+        * order create time + 90 days < current time
+
+        * Either `algoId` or `clientAlgoId` must be sent.
+        * `algoId` is self-increment for each specific `symbol`
+
+        Weight: 1
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.query_algo_order(algo_id, client_algo_id, recv_window)
+
+    def query_all_algo_orders(
+        self,
+        symbol: Union[str, None],
+        algo_id: Optional[int] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAllAlgoOrdersResponse]:
+        """
+                Query All Algo Orders (USER_DATA)
+
+                Get all algo orders; active, canceled, or filled.
+
+        * These orders will not be found:
+        * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+        * order create time + 90 days < current time
+
+        * If `algoId` is set, it will get orders >= that `algoId`. Otherwise most recent orders are returned.
+        * The query time period must be less then 7 days( default as the recent 7 days).
+
+        Weight: 5
+
+                Args:
+                    symbol (Union[str, None]):
+                    algo_id (Optional[int] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAllAlgoOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.query_all_algo_orders(
+            symbol, algo_id, start_time, end_time, page, limit, recv_window
+        )
 
     def query_current_open_order(
         self,
@@ -2925,7 +3223,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[TestOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 

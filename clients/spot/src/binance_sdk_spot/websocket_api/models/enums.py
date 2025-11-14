@@ -24,6 +24,14 @@ class ExchangeInfoSymbolStatusEnum(Enum):
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
+class DepthSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class KlinesIntervalEnum(Enum):
     INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
@@ -139,14 +147,54 @@ class TickerWindowSizeEnum(Enum):
     WINDOW_SIZE_6d = "6d"
 
 
+class TickerSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class Ticker24hrTypeEnum(Enum):
     FULL = "FULL"
     MINI = "MINI"
 
 
+class Ticker24hrSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class TickerBookSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class TickerPriceSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class TickerTradingDayTypeEnum(Enum):
     FULL = "FULL"
     MINI = "MINI"
+
+
+class TickerTradingDaySymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
 class UiKlinesIntervalEnum(Enum):

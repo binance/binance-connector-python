@@ -39,11 +39,17 @@ from binance_sdk_spot.rest_api.models import TickerTradingDayResponse
 from binance_sdk_spot.rest_api.models import UiKlinesResponse
 
 
+from binance_sdk_spot.rest_api.models import DepthSymbolStatusEnum
 from binance_sdk_spot.rest_api.models import KlinesIntervalEnum
 from binance_sdk_spot.rest_api.models import TickerWindowSizeEnum
 from binance_sdk_spot.rest_api.models import TickerTypeEnum
+from binance_sdk_spot.rest_api.models import TickerSymbolStatusEnum
 from binance_sdk_spot.rest_api.models import Ticker24hrTypeEnum
+from binance_sdk_spot.rest_api.models import Ticker24hrSymbolStatusEnum
+from binance_sdk_spot.rest_api.models import TickerBookTickerSymbolStatusEnum
+from binance_sdk_spot.rest_api.models import TickerPriceSymbolStatusEnum
 from binance_sdk_spot.rest_api.models import TickerTradingDayTypeEnum
+from binance_sdk_spot.rest_api.models import TickerTradingDaySymbolStatusEnum
 from binance_sdk_spot.rest_api.models import UiKlinesIntervalEnum
 
 
@@ -358,7 +364,11 @@ class TestMarketApi:
     def test_depth_success_with_optional_params(self):
         """Test depth() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "limit": 500}
+        params = {
+            "symbol": "BNBUSDT",
+            "limit": 500,
+            "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
+        }
 
         expected_response = {
             "lastUpdateId": 1027024,
@@ -877,6 +887,7 @@ class TestMarketApi:
             "symbols": [""],
             "window_size": TickerWindowSizeEnum["WINDOW_SIZE_1m"].value,
             "type": TickerTypeEnum["FULL"].value,
+            "symbol_status": TickerSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -999,6 +1010,7 @@ class TestMarketApi:
             "symbol": "BNBUSDT",
             "symbols": [""],
             "type": Ticker24hrTypeEnum["FULL"].value,
+            "symbol_status": Ticker24hrSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -1109,7 +1121,11 @@ class TestMarketApi:
     def test_ticker_book_ticker_success_with_optional_params(self):
         """Test ticker_book_ticker() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "symbols": [""]}
+        params = {
+            "symbol": "BNBUSDT",
+            "symbols": [""],
+            "symbol_status": TickerBookTickerSymbolStatusEnum["TRADING"].value,
+        }
 
         expected_response = {
             "symbol": "LTCBTC",
@@ -1197,7 +1213,11 @@ class TestMarketApi:
     def test_ticker_price_success_with_optional_params(self):
         """Test ticker_price() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "symbols": [""]}
+        params = {
+            "symbol": "BNBUSDT",
+            "symbols": [""],
+            "symbol_status": TickerPriceSymbolStatusEnum["TRADING"].value,
+        }
 
         expected_response = {"symbol": "LTCBTC", "price": "4.00000200"}
 
@@ -1300,6 +1320,7 @@ class TestMarketApi:
             "symbols": [""],
             "time_zone": "time_zone_example",
             "type": TickerTradingDayTypeEnum["FULL"].value,
+            "symbol_status": TickerTradingDaySymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {

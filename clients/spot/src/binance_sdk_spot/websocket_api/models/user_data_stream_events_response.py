@@ -34,7 +34,6 @@ from binance_sdk_spot.websocket_api.models.external_lock_update import (
     ExternalLockUpdate,
 )
 from binance_sdk_spot.websocket_api.models.list_status import ListStatus
-from binance_sdk_spot.websocket_api.models.listen_key_expired import ListenKeyExpired
 from binance_sdk_spot.websocket_api.models.outbound_account_position import (
     OutboundAccountPosition,
 )
@@ -47,7 +46,6 @@ USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "ExecutionReport",
     "ExternalLockUpdate",
     "ListStatus",
-    "ListenKeyExpired",
     "OutboundAccountPosition",
 ]
 
@@ -65,19 +63,16 @@ class UserDataStreamEventsResponse(BaseModel):
     oneof_schema_3_validator: Optional[ExecutionReport] = None
     # data type: ListStatus
     oneof_schema_4_validator: Optional[ListStatus] = None
-    # data type: ListenKeyExpired
-    oneof_schema_5_validator: Optional[ListenKeyExpired] = None
     # data type: EventStreamTerminated
-    oneof_schema_6_validator: Optional[EventStreamTerminated] = None
+    oneof_schema_5_validator: Optional[EventStreamTerminated] = None
     # data type: ExternalLockUpdate
-    oneof_schema_7_validator: Optional[ExternalLockUpdate] = None
+    oneof_schema_6_validator: Optional[ExternalLockUpdate] = None
     actual_instance: Optional[
         Union[
             OutboundAccountPosition,
             BalanceUpdate,
             ExecutionReport,
             ListStatus,
-            ListenKeyExpired,
             EventStreamTerminated,
             ExternalLockUpdate,
         ]
@@ -88,7 +83,6 @@ class UserDataStreamEventsResponse(BaseModel):
         "ExecutionReport",
         "ExternalLockUpdate",
         "ListStatus",
-        "ListenKeyExpired",
         "OutboundAccountPosition",
     }
 
@@ -154,13 +148,6 @@ class UserDataStreamEventsResponse(BaseModel):
                 match += 1
             except (ValidationError, ValueError) as e:
                 error_messages.append(str(e))
-        # deserialize data into ListenKeyExpired
-        if is_list == ListenKeyExpired.is_array():
-            try:
-                instance.actual_instance = ListenKeyExpired.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
         # deserialize data into EventStreamTerminated
         if is_list == EventStreamTerminated.is_array():
             try:
@@ -179,13 +166,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, ListenKeyExpired, OutboundAccountPosition. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, OutboundAccountPosition. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, ListenKeyExpired, OutboundAccountPosition. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, OutboundAccountPosition. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -213,7 +200,6 @@ class UserDataStreamEventsResponse(BaseModel):
             ExecutionReport,
             ExternalLockUpdate,
             ListStatus,
-            ListenKeyExpired,
             OutboundAccountPosition,
         ]
     ]:

@@ -78,9 +78,8 @@ class TradeApi:
                 POST /sapi/v1/margin/apiKey
                 https://developers.binance.com/docs/margin_trading/trade/Create-Special-Key-of-Low-Latency-Trading
 
-                **Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher. **
-
-        **If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
+                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher.
+        - If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
 
         **Supported Products:**
 
@@ -100,10 +99,6 @@ class TradeApi:
         * RSA
 
         We recommend to **use Ed25519 API keys** as it should provide the best performance and security out of all supported key types. We accept PKCS#8 (BEGIN PUBLIC KEY). For how to generate an RSA key pair to send API requests on Binance. Please refer to the document below [FAQ](https://www.binance.com/en/support/faq/how-to-generate-an-rsa-key-pair-to-send-api-requests-on-binance-2b79728f331e43079b27440d9d15c5db) .
-
-        Read [REST API](https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#signed-trade-and-user_data-endpoint-security) or [WebSocket API](https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md#request-security) documentation to learn how to use different API keys
-
-        You need to enable Permits “Enable Spot & Margin Trading” option for the API Key which requests this endpoint.
 
         Weight: 1(UID)
 

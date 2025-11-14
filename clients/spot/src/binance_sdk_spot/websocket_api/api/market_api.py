@@ -32,11 +32,17 @@ from ..models import TradesRecentResponse
 from ..models import UiKlinesResponse
 
 
+from ..models import DepthSymbolStatusEnum
 from ..models import KlinesIntervalEnum
 from ..models import TickerTypeEnum
 from ..models import TickerWindowSizeEnum
+from ..models import TickerSymbolStatusEnum
 from ..models import Ticker24hrTypeEnum
+from ..models import Ticker24hrSymbolStatusEnum
+from ..models import TickerBookSymbolStatusEnum
+from ..models import TickerPriceSymbolStatusEnum
 from ..models import TickerTradingDayTypeEnum
+from ..models import TickerTradingDaySymbolStatusEnum
 from ..models import UiKlinesIntervalEnum
 
 from typing import List, Optional, Union
@@ -102,6 +108,7 @@ class MarketApi:
         symbol: Union[str, None],
         id: Optional[str] = None,
         limit: Optional[int] = None,
+        symbol_status: Optional[DepthSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[DepthResponse]:
         """
             WebSocket Order book
@@ -131,6 +138,7 @@ class MarketApi:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    symbol_status (Optional[DepthSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[DepthResponse]
@@ -149,6 +157,7 @@ class MarketApi:
             "symbol": symbol,
             **({"id": id} if id is not None else {}),
             **({"limit": limit} if limit is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {
@@ -239,6 +248,7 @@ class MarketApi:
         symbols: Optional[List[str]] = None,
         type: Optional[TickerTypeEnum] = None,
         window_size: Optional[TickerWindowSizeEnum] = None,
+        symbol_status: Optional[TickerSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerResponse]:
         """
             WebSocket Rolling window price change statistics
@@ -262,6 +272,7 @@ class MarketApi:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[TickerTypeEnum] = None):
                     window_size (Optional[TickerWindowSizeEnum] = None):
+                    symbol_status (Optional[TickerSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerResponse]
@@ -277,6 +288,7 @@ class MarketApi:
             **({"symbols": symbols} if symbols is not None else {}),
             **({"type": type} if type is not None else {}),
             **({"window_size": window_size} if window_size is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {
@@ -294,6 +306,7 @@ class MarketApi:
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
         type: Optional[Ticker24hrTypeEnum] = None,
+        symbol_status: Optional[Ticker24hrSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[Ticker24hrResponse]:
         """
             WebSocket 24hr ticker price change statistics
@@ -323,6 +336,7 @@ class MarketApi:
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
                     type (Optional[Ticker24hrTypeEnum] = None):
+                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[Ticker24hrResponse]
@@ -337,6 +351,7 @@ class MarketApi:
             **({"symbol": symbol} if symbol is not None else {}),
             **({"symbols": symbols} if symbols is not None else {}),
             **({"type": type} if type is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {
@@ -353,6 +368,7 @@ class MarketApi:
         id: Optional[str] = None,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerBookSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerBookResponse]:
         """
             WebSocket Symbol order book ticker
@@ -376,6 +392,7 @@ class MarketApi:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerBookSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerBookResponse]
@@ -389,6 +406,7 @@ class MarketApi:
             **({"id": id} if id is not None else {}),
             **({"symbol": symbol} if symbol is not None else {}),
             **({"symbols": symbols} if symbols is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {
@@ -405,6 +423,7 @@ class MarketApi:
         id: Optional[str] = None,
         symbol: Optional[str] = None,
         symbols: Optional[List[str]] = None,
+        symbol_status: Optional[TickerPriceSymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerPriceResponse]:
         """
             WebSocket Symbol price ticker
@@ -429,6 +448,7 @@ class MarketApi:
                     id (Optional[str] = None): Unique WebSocket request ID.
                     symbol (Optional[str] = None): Describe a single symbol
                     symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerPriceResponse]
@@ -442,6 +462,7 @@ class MarketApi:
             **({"id": id} if id is not None else {}),
             **({"symbol": symbol} if symbol is not None else {}),
             **({"symbols": symbols} if symbols is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {
@@ -460,6 +481,7 @@ class MarketApi:
         symbols: Optional[List[str]] = None,
         time_zone: Optional[str] = None,
         type: Optional[TickerTradingDayTypeEnum] = None,
+        symbol_status: Optional[TickerTradingDaySymbolStatusEnum] = None,
     ) -> WebsocketApiResponse[TickerTradingDayResponse]:
         """
             WebSocket Trading Day Ticker
@@ -475,6 +497,7 @@ class MarketApi:
                     symbols (Optional[List[str]] = None): List of symbols to query
                     time_zone (Optional[str] = None): Default: 0 (UTC)
                     type (Optional[TickerTradingDayTypeEnum] = None):
+                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None):
 
             Returns:
                 WebsocketApiResponse[TickerTradingDayResponse]
@@ -490,6 +513,7 @@ class MarketApi:
             **({"symbols": symbols} if symbols is not None else {}),
             **({"time_zone": time_zone} if time_zone is not None else {}),
             **({"type": type} if type is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
         }
 
         payload = {

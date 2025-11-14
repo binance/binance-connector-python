@@ -161,6 +161,13 @@ class TestEthStakingApi:
         expected_response = {
             "leftStakingPersonalQuota": "1000",
             "leftRedemptionPersonalQuota": "1000",
+            "minStakeAmount": "0.00010000",
+            "minRedeemAmount": "0.00000001",
+            "redeemPeriod": 20,
+            "stakeable": True,
+            "redeemable": True,
+            "commissionFee": "0.05000000",
+            "calculating": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -211,6 +218,13 @@ class TestEthStakingApi:
         expected_response = {
             "leftStakingPersonalQuota": "1000",
             "leftRedemptionPersonalQuota": "1000",
+            "minStakeAmount": "0.00010000",
+            "minRedeemAmount": "0.00000001",
+            "redeemPeriod": 20,
+            "stakeable": True,
+            "redeemable": True,
+            "commissionFee": "0.05000000",
+            "calculating": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
