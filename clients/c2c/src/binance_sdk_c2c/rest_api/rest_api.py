@@ -83,9 +83,11 @@ class C2CRestAPI:
 
     def get_c2_c_trade_history(
         self,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
+        trade_type: Optional[str] = None,
+        start_timestamp: Optional[int] = None,
+        end_timestamp: Optional[int] = None,
         page: Optional[int] = None,
+        rows: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetC2CTradeHistoryResponse]:
         """
@@ -93,17 +95,18 @@ class C2CRestAPI:
 
                 Get C2C Trade History
 
-        * The max interval between startTime and endTime is 30 days.
-        * If startTime and endTime are not sent, the recent 7 days' data will be returned.
-        * The earliest startTime is supported on June 10, 2020
-        * Return up to 200 records per request.
+        * The max interval between startTimestamp and endTimestamp is 30 days.
+        * If startTimestamp and endTimestamp are not sent, the recent 30 days' data will be returned.
+        * You can only view data from the past 6 months. To see all C2C orders, please check https://c2c.binance.com/en/fiatOrder
 
         Weight: 1
 
                 Args:
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
+                    trade_type (Optional[str] = None): BUY, SELL
+                    start_timestamp (Optional[int] = None):
+                    end_timestamp (Optional[int] = None):
                     page (Optional[int] = None): Default 1
+                    rows (Optional[int] = None): default 100, max 100
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -115,5 +118,5 @@ class C2CRestAPI:
         """
 
         return self._c2CApi.get_c2_c_trade_history(
-            start_time, end_time, page, recv_window
+            trade_type, start_timestamp, end_timestamp, page, rows, recv_window
         )

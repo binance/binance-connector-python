@@ -19,7 +19,6 @@ from .api.borrow_repay_api import BorrowRepayApi
 from .api.market_data_api import MarketDataApi
 from .api.risk_data_stream_api import RiskDataStreamApi
 from .api.trade_api import TradeApi
-from .api.trade_data_stream_api import TradeDataStreamApi
 from .api.transfer_api import TransferApi
 
 from .models import AdjustCrossMarginMaxLeverageResponse
@@ -78,9 +77,6 @@ from .models import QueryMarginAccountsTradeListResponse
 from .models import QuerySpecialKeyResponse
 from .models import QuerySpecialKeyListResponse
 
-
-from .models import StartIsolatedMarginUserDataStreamResponse
-from .models import StartMarginUserDataStreamResponse
 from .models import GetCrossMarginTransferHistoryResponse
 from .models import QueryMaxTransferOutAmountResponse
 
@@ -123,9 +119,6 @@ class MarginTradingRestAPI:
             self.configuration, self._session, self._signer
         )
         self._tradeApi = TradeApi(self.configuration, self._session, self._signer)
-        self._tradeDataStreamApi = TradeDataStreamApi(
-            self.configuration, self._session, self._signer
-        )
         self._transferApi = TransferApi(self.configuration, self._session, self._signer)
 
     def send_request(
@@ -1062,9 +1055,8 @@ class MarginTradingRestAPI:
         """
                 Create Special Key(Low-Latency Trading)(TRADE)
 
-                **Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher. **
-
-        **If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
+                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher.
+        - If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
 
         **Supported Products:**
 
@@ -1084,10 +1076,6 @@ class MarginTradingRestAPI:
         * RSA
 
         We recommend to **use Ed25519 API keys** as it should provide the best performance and security out of all supported key types. We accept PKCS#8 (BEGIN PUBLIC KEY). For how to generate an RSA key pair to send API requests on Binance. Please refer to the document below [FAQ](https://www.binance.com/en/support/faq/how-to-generate-an-rsa-key-pair-to-send-api-requests-on-binance-2b79728f331e43079b27440d9d15c5db) .
-
-        Read [REST API](https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#signed-trade-and-user_data-endpoint-security) or [WebSocket API](https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md#request-security) documentation to learn how to use different API keys
-
-        You need to enable Permits “Enable Spot & Margin Trading” option for the API Key which requests this endpoint.
 
         Weight: 1(UID)
 
@@ -2172,156 +2160,6 @@ class MarginTradingRestAPI:
         """
 
         return self._tradeApi.small_liability_exchange(asset_names, recv_window)
-
-    def close_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-        listenkey: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Close Isolated Margin User Data Stream (USER_STREAM)
-
-                Close out a isolated margin user data stream.
-
-        Weight: 3000
-
-                Args:
-                    symbol (Union[str, None]):
-                    listenkey (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.close_isolated_margin_user_data_stream(
-            symbol, listenkey
-        )
-
-    def close_margin_user_data_stream(
-        self,
-        listenkey: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Close Margin User Data Stream (USER_STREAM)
-
-                Close out a Margin user data stream.
-
-        Weight: 3000
-
-                Args:
-                    listenkey (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.close_margin_user_data_stream(listenkey)
-
-    def keepalive_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Keepalive Isolated Margin User Data Stream (USER_STREAM)
-
-                Keepalive an isolated margin user data stream to prevent a time out.
-
-        Weight: 1
-
-                Args:
-                    symbol (Union[str, None]):
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.keepalive_isolated_margin_user_data_stream(
-            symbol, listen_key
-        )
-
-    def keepalive_margin_user_data_stream(
-        self,
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Keepalive Margin User Data Stream (USER_STREAM)
-
-                Keepalive a margin user data stream to prevent a time out.
-
-        Weight: 1
-
-                Args:
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.keepalive_margin_user_data_stream(listen_key)
-
-    def start_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-    ) -> ApiResponse[StartIsolatedMarginUserDataStreamResponse]:
-        """
-                Start Isolated Margin User Data Stream (USER_STREAM)
-
-                Start a new isolated margin user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active listenKey, that listenKey will be returned and its validity will be extended for 60 minutes.
-
-        Weight: 1
-
-                Args:
-                    symbol (Union[str, None]):
-
-                Returns:
-                    ApiResponse[StartIsolatedMarginUserDataStreamResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.start_isolated_margin_user_data_stream(symbol)
-
-    def start_margin_user_data_stream(
-        self,
-    ) -> ApiResponse[StartMarginUserDataStreamResponse]:
-        """
-                Start Margin User Data Stream (USER_STREAM)
-
-                Start a new margin user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active listenKey, that listenKey will be returned and its validity will be extended for 60 minutes.
-
-        Weight: 1
-
-                Args:
-
-                Returns:
-                    ApiResponse[StartMarginUserDataStreamResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.start_margin_user_data_stream()
 
     def get_cross_margin_transfer_history(
         self,

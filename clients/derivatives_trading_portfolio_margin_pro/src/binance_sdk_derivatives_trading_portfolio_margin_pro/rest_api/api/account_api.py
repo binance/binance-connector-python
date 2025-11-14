@@ -25,12 +25,10 @@ from ..models import GetPortfolioMarginProAccountBalanceResponse
 from ..models import GetPortfolioMarginProAccountInfoResponse
 from ..models import GetPortfolioMarginProSpanAccountInfoResponse
 from ..models import GetTransferableEarnAssetBalanceForPortfolioMarginResponse
-from ..models import MintBfusdForPortfolioMarginResponse
 from ..models import PortfolioMarginProBankruptcyLoanRepayResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from ..models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
-from ..models import RedeemBfusdForPortfolioMarginResponse
 from ..models import RepayFuturesNegativeBalanceResponse
 from ..models import TransferLdusdtForPortfolioMarginResponse
 
@@ -451,70 +449,6 @@ class AccountApi:
             signer=self._signer,
         )
 
-    def mint_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[MintBfusdForPortfolioMarginResponse]:
-        """
-                Mint BFUSD for Portfolio Margin(TRADE)
-                POST /sapi/v1/portfolio/mint
-                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Mint-BFUSD-Portfolio-Margin
-
-                Mint BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[MintBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if from_asset is None:
-            raise RequiredError(
-                field="from_asset",
-                error_message="Missing required parameter 'from_asset'",
-            )
-        if target_asset is None:
-            raise RequiredError(
-                field="target_asset",
-                error_message="Missing required parameter 'target_asset'",
-            )
-        if amount is None:
-            raise RequiredError(
-                field="amount", error_message="Missing required parameter 'amount'"
-            )
-
-        payload = {
-            "from_asset": from_asset,
-            "target_asset": target_asset,
-            "amount": amount,
-            "recv_window": recv_window,
-        }
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="POST",
-            path="/sapi/v1/portfolio/mint",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=MintBfusdForPortfolioMarginResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
     def portfolio_margin_pro_bankruptcy_loan_repay(
         self,
         var_from: Optional[str] = None,
@@ -700,70 +634,6 @@ class AccountApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
-    def redeem_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemBfusdForPortfolioMarginResponse]:
-        """
-                Redeem BFUSD for Portfolio Margin(TRADE)
-                POST /sapi/v1/portfolio/redeem
-                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Redeem-BFUSD-Portfolio-Margin
-
-                Redeem BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if from_asset is None:
-            raise RequiredError(
-                field="from_asset",
-                error_message="Missing required parameter 'from_asset'",
-            )
-        if target_asset is None:
-            raise RequiredError(
-                field="target_asset",
-                error_message="Missing required parameter 'target_asset'",
-            )
-        if amount is None:
-            raise RequiredError(
-                field="amount", error_message="Missing required parameter 'amount'"
-            )
-
-        payload = {
-            "from_asset": from_asset,
-            "target_asset": target_asset,
-            "amount": amount,
-            "recv_window": recv_window,
-        }
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="POST",
-            path="/sapi/v1/portfolio/redeem",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=RedeemBfusdForPortfolioMarginResponse,
             is_signed=True,
             signer=self._signer,
         )

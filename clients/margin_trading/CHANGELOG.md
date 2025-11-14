@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.0.0 - 2025-11-14
+
+### Removed (6)
+
+#### REST API
+
+- `close_isolated_margin_user_data_stream()` (`DELETE /sapi/v1/userDataStream/isolated`)
+- `close_margin_user_data_stream()` (`DELETE /sapi/v1/userDataStream`)
+- `keepalive_isolated_margin_user_data_stream()` (`PUT /sapi/v1/userDataStream/isolated`)
+- `keepalive_margin_user_data_stream()` (`PUT /sapi/v1/userDataStream`)
+- `start_isolated_margin_user_data_stream()` (`POST /sapi/v1/userDataStream/isolated`)
+- `start_margin_user_data_stream()` (`POST /sapi/v1/userDataStream`)
+
 ## 2.4.0 - 2025-10-10
 
 ### Changed (2)

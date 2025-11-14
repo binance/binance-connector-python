@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.0.0 - 2025-11-14
+
+### Changed (1)
+
+- Modified response for `get_current_eth_staking_quota()` (`GET /sapi/v1/eth-staking/eth/quota`):
+  - property `redeemPeriod` added
+  - property `redeemable` added
+  - property `calculating` added
+  - property `minRedeemAmount` added
+  - property `stakeable` added
+  - property `commissionFee` added
+  - property `minStakeAmount` added
+
 ## 3.2.0 - 2025-10-10
 
 ### Changed (2)

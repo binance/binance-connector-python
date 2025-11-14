@@ -82,9 +82,9 @@ class FlexibleLockedApi:
                     product_id (Optional[str] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetCollateralRecordResponse]
@@ -131,7 +131,7 @@ class FlexibleLockedApi:
 
                 Args:
                     product_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexiblePersonalLeftQuotaResponse]
@@ -181,9 +181,9 @@ class FlexibleLockedApi:
                 Args:
                     asset (Optional[str] = None): USDC or USDT
                     product_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleProductPositionResponse]
@@ -244,9 +244,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleRedemptionRecordResponse]
@@ -310,9 +310,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleRewardsHistoryResponse]
@@ -368,7 +368,7 @@ class FlexibleLockedApi:
                 Args:
                     product_id (Union[str, None]):
                     amount (Union[float, None]): Amount
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionPreviewResponse]
@@ -437,9 +437,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetFlexibleSubscriptionRecordResponse]
@@ -488,7 +488,7 @@ class FlexibleLockedApi:
 
                 Args:
                     project_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedPersonalLeftQuotaResponse]
@@ -540,9 +540,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     position_id (Optional[int] = None):
                     project_id (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedProductPositionResponse]
@@ -604,9 +604,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedRedemptionRecordResponse]
@@ -668,9 +668,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedRewardsHistoryResponse]
@@ -722,7 +722,7 @@ class FlexibleLockedApi:
                     project_id (Union[str, None]):
                     amount (Union[float, None]): Amount
                     auto_subscribe (Optional[bool] = None): true or false, default true.
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionPreviewResponse]
@@ -790,9 +790,9 @@ class FlexibleLockedApi:
                     asset (Optional[str] = None): USDC or USDT
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetLockedSubscriptionRecordResponse]
@@ -853,9 +853,9 @@ class FlexibleLockedApi:
                     apr_period (Optional[str] = None): "DAY","YEAR",default"DAY"
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetRateHistoryResponse]
@@ -911,9 +911,9 @@ class FlexibleLockedApi:
 
                 Args:
                     asset (Optional[str] = None): USDC or USDT
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetSimpleEarnFlexibleProductListResponse]
@@ -962,9 +962,9 @@ class FlexibleLockedApi:
 
                 Args:
                     asset (Optional[str] = None): USDC or USDT
-                    current (Optional[int] = None): Currently querying the page. Start from 1. Default:1
-                    size (Optional[int] = None): Default:10, Max:100
-                    recv_window (Optional[int] = None):
+                    current (Optional[int] = None): Currently querying page. Starts from 1. Default: 1
+                    size (Optional[int] = None): Number of results per page. Default: 10, Max: 100
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[GetSimpleEarnLockedProductListResponse]
@@ -1017,7 +1017,7 @@ class FlexibleLockedApi:
                     redeem_all (Optional[bool] = None): true or false, default to false
                     amount (Optional[float] = None): if redeemAll is false, amount is mandatory
                     dest_account (Optional[str] = None): `SPOT`,`FUND`, default `SPOT`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemFlexibleProductResponse]
@@ -1071,7 +1071,7 @@ class FlexibleLockedApi:
 
                 Args:
                     position_id (Union[str, None]):
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[RedeemLockedProductResponse]
@@ -1119,7 +1119,7 @@ class FlexibleLockedApi:
                 Args:
                     product_id (Union[str, None]):
                     auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetFlexibleAutoSubscribeResponse]
@@ -1176,7 +1176,7 @@ class FlexibleLockedApi:
                 Args:
                     position_id (Union[str, None]):
                     auto_subscribe (Union[bool, None]): true or false
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetLockedAutoSubscribeResponse]
@@ -1233,7 +1233,7 @@ class FlexibleLockedApi:
                 Args:
                     position_id (Union[str, None]):
                     redeem_to (Union[str, None]): `SPOT`,'FLEXIBLE'
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SetLockedProductRedeemOptionResponse]
@@ -1286,7 +1286,7 @@ class FlexibleLockedApi:
         Weight: 150
 
                 Args:
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SimpleAccountResponse]
@@ -1334,7 +1334,7 @@ class FlexibleLockedApi:
                     amount (Union[float, None]): Amount
                     auto_subscribe (Optional[bool] = None): true or false, default true.
                     source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeFlexibleProductResponse]
@@ -1400,7 +1400,7 @@ class FlexibleLockedApi:
                     auto_subscribe (Optional[bool] = None): true or false, default true.
                     source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
                     redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
-                    recv_window (Optional[int] = None):
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
                     ApiResponse[SubscribeLockedProductResponse]

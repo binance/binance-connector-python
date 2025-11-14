@@ -23,11 +23,17 @@ from binance_common.errors import RequiredError
 from binance_sdk_spot.websocket_api.api import MarketApi
 
 
+from binance_sdk_spot.websocket_api.models import DepthSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import KlinesIntervalEnum
 from binance_sdk_spot.websocket_api.models import TickerTypeEnum
 from binance_sdk_spot.websocket_api.models import TickerWindowSizeEnum
+from binance_sdk_spot.websocket_api.models import TickerSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import Ticker24hrTypeEnum
+from binance_sdk_spot.websocket_api.models import Ticker24hrSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import TickerBookSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import TickerPriceSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import TickerTradingDayTypeEnum
+from binance_sdk_spot.websocket_api.models import TickerTradingDaySymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
 from binance_sdk_spot.websocket_api.models import AvgPriceResponse
 from binance_sdk_spot.websocket_api.models import DepthResponse
@@ -251,6 +257,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
+            "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -306,6 +313,7 @@ class TestWebSocketMarketApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["limit"] == 100
+        assert params["symbol_status"] == DepthSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -322,6 +330,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
+            "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
         params["symbol"] = None
 
@@ -613,6 +622,7 @@ class TestWebSocketMarketApi:
             "symbols": ["symbols_example"],
             "type": TickerTypeEnum["FULL"].value,
             "window_size": TickerWindowSizeEnum["WINDOW_SIZE_1m"].value,
+            "symbol_status": TickerSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -670,6 +680,7 @@ class TestWebSocketMarketApi:
         assert params["symbols"] == ["symbols_example"]
         assert params["type"] == TickerTypeEnum["FULL"].value
         assert params["window_size"] == TickerWindowSizeEnum["WINDOW_SIZE_1m"].value
+        assert params["symbol_status"] == TickerSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -764,6 +775,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
             "type": Ticker24hrTypeEnum["FULL"].value,
+            "symbol_status": Ticker24hrSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -826,6 +838,7 @@ class TestWebSocketMarketApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
         assert params["type"] == Ticker24hrTypeEnum["FULL"].value
+        assert params["symbol_status"] == Ticker24hrSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -903,6 +916,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
+            "symbol_status": TickerBookSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -948,6 +962,7 @@ class TestWebSocketMarketApi:
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
+        assert params["symbol_status"] == TickerBookSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -1021,6 +1036,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
+            "symbol_status": TickerPriceSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -1062,6 +1078,7 @@ class TestWebSocketMarketApi:
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
+        assert params["symbol_status"] == TickerPriceSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -1172,6 +1189,7 @@ class TestWebSocketMarketApi:
             "symbols": ["symbols_example"],
             "time_zone": "time_zone_example",
             "type": TickerTradingDayTypeEnum["FULL"].value,
+            "symbol_status": TickerTradingDaySymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -1250,6 +1268,9 @@ class TestWebSocketMarketApi:
         assert params["symbols"] == ["symbols_example"]
         assert params["time_zone"] == "time_zone_example"
         assert params["type"] == TickerTradingDayTypeEnum["FULL"].value
+        assert (
+            params["symbol_status"] == TickerTradingDaySymbolStatusEnum["TRADING"].value
+        )
 
         assert result is not None
         assert result.data() == expected_response

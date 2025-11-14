@@ -309,12 +309,6 @@ from .query_special_key_list_response_inner import (
 from .query_special_key_response import (
     QuerySpecialKeyResponse as QuerySpecialKeyResponse,
 )
-from .start_isolated_margin_user_data_stream_response import (
-    StartIsolatedMarginUserDataStreamResponse as StartIsolatedMarginUserDataStreamResponse,
-)
-from .start_margin_user_data_stream_response import (
-    StartMarginUserDataStreamResponse as StartMarginUserDataStreamResponse,
-)
 from .start_user_data_stream_response import (
     StartUserDataStreamResponse as StartUserDataStreamResponse,
 )
