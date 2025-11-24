@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-derivatives-trading-portfolio-margin"
-version = "1.8.0"
+version = "2.0.0"
 description = "Official Binance Derivatives Trading Portfolio Margin SDK - A lightweight library that provides a convenient interface to Binance's DerivativesTradingPortfolioMargin REST API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"

@@ -213,6 +213,7 @@ class TradeApi:
                 Cancel multiple orders.
 
         * At least one instance of `orderId` and `clientOrderId` must be sent.
+        * Max 10 orders can be deleted in one request
 
         Weight: 1
 

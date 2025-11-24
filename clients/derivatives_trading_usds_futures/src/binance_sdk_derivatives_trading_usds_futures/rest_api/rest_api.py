@@ -46,6 +46,7 @@ from .models import AcceptTheOfferedQuoteResponse
 from .models import ListAllConvertPairsResponse
 from .models import OrderStatusResponse
 from .models import SendQuoteRequestResponse
+from .models import AdlRiskResponse
 from .models import BasisResponse
 from .models import CheckServerTimeResponse
 from .models import CompositeIndexSymbolInformationResponse
@@ -932,6 +933,32 @@ class DerivativesTradingUsdsFuturesRestAPI:
             from_asset, to_asset, from_amount, to_amount, valid_time, recv_window
         )
 
+    def adl_risk(
+        self,
+        symbol: Optional[str] = None,
+    ) -> ApiResponse[AdlRiskResponse]:
+        """
+                ADL Risk
+
+                Query the symbol-level ADL risk rating.
+        The ADL risk rating measures the likelihood of ADL during liquidation, and the rating takes into account the insurance fund balance, position concentration on the symbol, order book depth, price volatility, average leverage, unrealized PnL, and margin utilization at the symbol level.
+        The rating can be high, medium and low, and is updated every 30 minutes.
+
+        Weight: 1
+
+                Args:
+                    symbol (Optional[str] = None):
+
+                Returns:
+                    ApiResponse[AdlRiskResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.adl_risk(symbol)
+
     def basis(
         self,
         pair: Union[str, None],
@@ -1033,6 +1060,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                 Get compressed, aggregate market trades. Market trades that fill in 100ms with the same price and the same taking side will have the quantity aggregated.
 
 
+        Retail Price Improvement(RPI) orders are aggregated and without special tags to be distinguished.
         * support querying futures trade histories that are not older than one year
         * If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 1 hour.
         * If `fromId`, `startTime`, and `endTime` are not sent, the most recent aggregate trades will be returned.
@@ -1512,6 +1540,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Query symbol orderbook
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
         Weight: Adjusted based on the limit:
         | Limit         | Weight |
         | ------------- | ------ |
@@ -1686,6 +1716,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Best price/qty on the order book for a symbol or symbols.
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
         * If the symbol is not sent, bookTickers for all symbols will be returned in an array.
         * The field `X-MBX-USED-WEIGHT-1M` in response header is not accurate from this endpoint, please ignore.
 
@@ -3029,7 +3060,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Query All Algo Orders (USER_DATA)
 
-                Get all algo orders; active, canceled, or filled.
+                Get all algo orders; active, CANCELED, TRIGGERED or FINISHED .
 
         * These orders will not be found:
         * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time

@@ -24,9 +24,9 @@ configuration_rest_api = ConfigurationRestAPI(
 client = DerivativesTradingPortfolioMarginPro(config_rest_api=configuration_rest_api)
 
 
-def transfer_ldusdt_for_portfolio_margin():
+def transfer_ldusdt_rwusd_for_portfolio_margin():
     try:
-        response = client.rest_api.transfer_ldusdt_for_portfolio_margin(
+        response = client.rest_api.transfer_ldusdt_rwusd_for_portfolio_margin(
             asset="asset_example",
             transfer_type="transfer_type_example",
             amount=1.0,
@@ -34,14 +34,14 @@ def transfer_ldusdt_for_portfolio_margin():
 
         rate_limits = response.rate_limits
         logging.info(
-            f"transfer_ldusdt_for_portfolio_margin() rate limits: {rate_limits}"
+            f"transfer_ldusdt_rwusd_for_portfolio_margin() rate limits: {rate_limits}"
         )
 
         data = response.data()
-        logging.info(f"transfer_ldusdt_for_portfolio_margin() response: {data}")
+        logging.info(f"transfer_ldusdt_rwusd_for_portfolio_margin() response: {data}")
     except Exception as e:
-        logging.error(f"transfer_ldusdt_for_portfolio_margin() error: {e}")
+        logging.error(f"transfer_ldusdt_rwusd_for_portfolio_margin() error: {e}")
 
 
 if __name__ == "__main__":
-    transfer_ldusdt_for_portfolio_margin()
+    transfer_ldusdt_rwusd_for_portfolio_margin()

@@ -20,6 +20,7 @@ from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_derivatives_trading_usds_futures.rest_api.api import MarketDataApi
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import AdlRiskResponse
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import BasisResponse
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CheckServerTimeResponse,
@@ -173,6 +174,96 @@ class TestMarketDataApi:
         mock_response.headers = headers
 
         self.mock_session.request.return_value = mock_response
+
+    def test_adl_risk_success(self):
+        """Test adl_risk() successfully with required parameters only."""
+
+        expected_response = {
+            "symbol": "BTCUSDT",
+            "adlRisk": "low",
+            "updateTime": 1597370495002,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.adl_risk()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/symbolAdlRisk" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AdlRiskResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(AdlRiskResponse, "from_dict"):
+            expected = AdlRiskResponse.from_dict(expected_response)
+        else:
+            expected = AdlRiskResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_adl_risk_success_with_optional_params(self):
+        """Test adl_risk() successfully with optional parameters."""
+
+        params = {"symbol": "symbol_example"}
+
+        expected_response = {
+            "symbol": "BTCUSDT",
+            "adlRisk": "low",
+            "updateTime": 1597370495002,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.adl_risk(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/symbolAdlRisk" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AdlRiskResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(AdlRiskResponse, "from_dict"):
+            expected = AdlRiskResponse.from_dict(expected_response)
+        else:
+            expected = AdlRiskResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_adl_risk_server_error(self):
+        """Test that adl_risk() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.adl_risk = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.adl_risk()
 
     def test_basis_success(self):
         """Test basis() successfully with required parameters only."""
@@ -2102,6 +2193,7 @@ class TestMarketDataApi:
                 "quoteQty": "8000.00",
                 "time": 1499865549590,
                 "isBuyerMaker": True,
+                "isRPITrade": True,
             }
         ]
 
@@ -2153,6 +2245,7 @@ class TestMarketDataApi:
                 "quoteQty": "8000.00",
                 "time": 1499865549590,
                 "isBuyerMaker": True,
+                "isRPITrade": True,
             }
         ]
 
@@ -3251,6 +3344,7 @@ class TestMarketDataApi:
                 "quoteQty": "48.00",
                 "time": 1499865549590,
                 "isBuyerMaker": True,
+                "isRPITrade": True,
             }
         ]
 
@@ -3302,6 +3396,7 @@ class TestMarketDataApi:
                 "quoteQty": "48.00",
                 "time": 1499865549590,
                 "isBuyerMaker": True,
+                "isRPITrade": True,
             }
         ]
 

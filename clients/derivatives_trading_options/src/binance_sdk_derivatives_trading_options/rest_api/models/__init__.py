@@ -98,6 +98,9 @@ from .historical_exercise_records_response import (
 from .historical_exercise_records_response_inner import (
     HistoricalExerciseRecordsResponseInner as HistoricalExerciseRecordsResponseInner,
 )
+from .index_price_ticker_response import (
+    IndexPriceTickerResponse as IndexPriceTickerResponse,
+)
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
 )
@@ -211,9 +214,6 @@ from .set_market_maker_protection_config_response import (
 )
 from .start_user_data_stream_response import (
     StartUserDataStreamResponse as StartUserDataStreamResponse,
-)
-from .symbol_price_ticker_response import (
-    SymbolPriceTickerResponse as SymbolPriceTickerResponse,
 )
 from .ticker24hr_price_change_statistics_response import (
     Ticker24hrPriceChangeStatisticsResponse as Ticker24hrPriceChangeStatisticsResponse,

@@ -31,7 +31,7 @@ from .models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from .models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from .models import RepayFuturesNegativeBalanceResponse
-from .models import TransferLdusdtForPortfolioMarginResponse
+from .models import TransferLdusdtRwusdForPortfolioMarginResponse
 from .models import GetPortfolioMarginAssetLeverageResponse
 from .models import PortfolioMarginCollateralRateResponse
 from .models import PortfolioMarginProTieredCollateralRateResponse
@@ -204,7 +204,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 60
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -331,7 +331,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     recv_window (Optional[int] = None):
 
@@ -506,35 +506,35 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         return self._accountApi.repay_futures_negative_balance(var_from, recv_window)
 
-    def transfer_ldusdt_for_portfolio_margin(
+    def transfer_ldusdt_rwusd_for_portfolio_margin(
         self,
         asset: Union[str, None],
         transfer_type: Union[str, None],
         amount: Union[float, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[TransferLdusdtForPortfolioMarginResponse]:
+    ) -> ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]:
         """
-                Transfer LDUSDT for Portfolio Margin(TRADE)
+                Transfer LDUSDT/RWUSD for Portfolio Margin(TRADE)
 
-                Transfer LDUSDT as collateral for all types of Portfolio Margin account
+                Transfer LDUSDT/RWUSD as collateral for all types of Portfolio Margin account
 
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     amount (Union[float, None]):
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[TransferLdusdtForPortfolioMarginResponse]
+                    ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
 
         """
 
-        return self._accountApi.transfer_ldusdt_for_portfolio_margin(
+        return self._accountApi.transfer_ldusdt_rwusd_for_portfolio_margin(
             asset, transfer_type, amount, recv_window
         )
 

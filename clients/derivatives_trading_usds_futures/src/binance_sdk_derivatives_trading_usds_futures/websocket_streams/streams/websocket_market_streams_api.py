@@ -57,6 +57,9 @@ class WebsocketMarketStreamsApi:
 
             The Aggregate Trade Streams push market trade information that is aggregated for fills with same price and taking side every 100 milliseconds. Only market trades will be aggregated, which means the insurance fund trades and ADL trades won't be aggregated.
 
+
+        Retail Price Improvement(RPI) orders are aggregated and without special tags to be distinguished.
+
         Update Speed: 100ms
 
             Args:
@@ -100,6 +103,8 @@ class WebsocketMarketStreamsApi:
             https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/All-Book-Tickers-Stream
 
             Pushes any update to the best bid or ask's price or quantity in real-time for all symbols.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
 
         Update Speed: 5s
 
@@ -393,6 +398,8 @@ class WebsocketMarketStreamsApi:
 
             Bids and asks, pushed every 250 milliseconds, 500 milliseconds, 100 milliseconds (if existing)
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
         Update Speed: 250ms, 500ms, 100ms
 
             Args:
@@ -439,6 +446,8 @@ class WebsocketMarketStreamsApi:
             https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Individual-Symbol-Book-Ticker-Streams
 
             Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
 
         Update Speed: Real-time
 
@@ -797,6 +806,8 @@ class WebsocketMarketStreamsApi:
             https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Partial-Book-Depth-Streams
 
             Top **<levels\>** bids and asks, Valid **<levels\>** are 5, 10, or 20.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
 
         Update Speed: 250ms, 500ms or 100ms
 

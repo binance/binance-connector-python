@@ -28,6 +28,49 @@ class ModifyOrderPriceMatchEnum(Enum):
     QUEUE_20 = "QUEUE_20"
 
 
+class NewAlgoOrderSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class NewAlgoOrderPositionSideEnum(Enum):
+    BOTH = "BOTH"
+    LONG = "LONG"
+    SHORT = "SHORT"
+
+
+class NewAlgoOrderTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+    GTX = "GTX"
+    GTD = "GTD"
+    RPI = "RPI"
+
+
+class NewAlgoOrderWorkingTypeEnum(Enum):
+    MARK_PRICE = "MARK_PRICE"
+    CONTRACT_PRICE = "CONTRACT_PRICE"
+
+
+class NewAlgoOrderPriceMatchEnum(Enum):
+    NONE = "NONE"
+    OPPONENT = "OPPONENT"
+    OPPONENT_5 = "OPPONENT_5"
+    OPPONENT_10 = "OPPONENT_10"
+    OPPONENT_20 = "OPPONENT_20"
+    QUEUE = "QUEUE"
+    QUEUE_5 = "QUEUE_5"
+    QUEUE_10 = "QUEUE_10"
+    QUEUE_20 = "QUEUE_20"
+
+
+class NewAlgoOrderSelfTradePreventionModeEnum(Enum):
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+
+
 class NewOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"
@@ -45,6 +88,7 @@ class NewOrderTimeInForceEnum(Enum):
     FOK = "FOK"
     GTX = "GTX"
     GTD = "GTD"
+    RPI = "RPI"
 
 
 class NewOrderWorkingTypeEnum(Enum):

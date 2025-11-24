@@ -30,6 +30,9 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
     HistoricalExerciseRecordsResponse,
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import (
+    IndexPriceTickerResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     KlineCandlestickDataResponse,
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import (
@@ -45,9 +48,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     RecentTradesListResponse,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    SymbolPriceTickerResponse,
 )
 
 from binance_sdk_derivatives_trading_options.rest_api.models import (
@@ -347,6 +347,106 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.historical_exercise_records()
+
+    def test_index_price_ticker_success(self):
+        """Test index_price_ticker() successfully with required parameters only."""
+
+        params = {"underlying": "underlying_example"}
+
+        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.index_price_ticker(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/eapi/v1/index" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["underlying"] == "underlying_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(IndexPriceTickerResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(IndexPriceTickerResponse, "from_dict"):
+            expected = IndexPriceTickerResponse.from_dict(expected_response)
+        else:
+            expected = IndexPriceTickerResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_index_price_ticker_success_with_optional_params(self):
+        """Test index_price_ticker() successfully with optional parameters."""
+
+        params = {"underlying": "underlying_example"}
+
+        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.index_price_ticker(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/eapi/v1/index" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(IndexPriceTickerResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(IndexPriceTickerResponse, "from_dict"):
+            expected = IndexPriceTickerResponse.from_dict(expected_response)
+        else:
+            expected = IndexPriceTickerResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_index_price_ticker_missing_required_param_underlying(self):
+        """Test that index_price_ticker() raises RequiredError when 'underlying' is missing."""
+        params = {"underlying": "underlying_example"}
+        params["underlying"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'underlying'"
+        ):
+            self.client.index_price_ticker(**params)
+
+    def test_index_price_ticker_server_error(self):
+        """Test that index_price_ticker() raises an error when the server returns an error."""
+
+        params = {"underlying": "underlying_example"}
+
+        mock_error = Exception("ResponseError")
+        self.client.index_price_ticker = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.index_price_ticker(**params)
 
     def test_kline_candlestick_data_success(self):
         """Test kline_candlestick_data() successfully with required parameters only."""
@@ -1242,106 +1342,6 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.recent_trades_list(**params)
-
-    def test_symbol_price_ticker_success(self):
-        """Test symbol_price_ticker() successfully with required parameters only."""
-
-        params = {"underlying": "underlying_example"}
-
-        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.symbol_price_ticker(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "/eapi/v1/index" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-        assert normalized["underlying"] == "underlying_example"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(SymbolPriceTickerResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif is_oneof or is_list or hasattr(SymbolPriceTickerResponse, "from_dict"):
-            expected = SymbolPriceTickerResponse.from_dict(expected_response)
-        else:
-            expected = SymbolPriceTickerResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_symbol_price_ticker_success_with_optional_params(self):
-        """Test symbol_price_ticker() successfully with optional parameters."""
-
-        params = {"underlying": "underlying_example"}
-
-        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.symbol_price_ticker(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "/eapi/v1/index" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(SymbolPriceTickerResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif is_oneof or is_list or hasattr(SymbolPriceTickerResponse, "from_dict"):
-            expected = SymbolPriceTickerResponse.from_dict(expected_response)
-        else:
-            expected = SymbolPriceTickerResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_symbol_price_ticker_missing_required_param_underlying(self):
-        """Test that symbol_price_ticker() raises RequiredError when 'underlying' is missing."""
-        params = {"underlying": "underlying_example"}
-        params["underlying"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'underlying'"
-        ):
-            self.client.symbol_price_ticker(**params)
-
-    def test_symbol_price_ticker_server_error(self):
-        """Test that symbol_price_ticker() raises an error when the server returns an error."""
-
-        params = {"underlying": "underlying_example"}
-
-        mock_error = Exception("ResponseError")
-        self.client.symbol_price_ticker = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.symbol_price_ticker(**params)
 
     def test_test_connectivity_success(self):
         """Test test_connectivity() successfully with required parameters only."""

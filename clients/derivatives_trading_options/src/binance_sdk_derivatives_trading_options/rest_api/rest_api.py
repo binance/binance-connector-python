@@ -29,6 +29,7 @@ from .models import OptionMarginAccountInformationResponse
 from .models import CheckServerTimeResponse
 from .models import ExchangeInformationResponse
 from .models import HistoricalExerciseRecordsResponse
+from .models import IndexPriceTickerResponse
 from .models import KlineCandlestickDataResponse
 from .models import OldTradesLookupResponse
 from .models import OpenInterestResponse
@@ -36,7 +37,6 @@ from .models import OptionMarkPriceResponse
 from .models import OrderBookResponse
 from .models import RecentBlockTradesListResponse
 from .models import RecentTradesListResponse
-from .models import SymbolPriceTickerResponse
 
 from .models import Ticker24hrPriceChangeStatisticsResponse
 from .models import AcceptBlockTradeOrderResponse
@@ -377,6 +377,30 @@ class DerivativesTradingOptionsRestAPI:
             underlying, start_time, end_time, limit
         )
 
+    def index_price_ticker(
+        self,
+        underlying: Union[str, None],
+    ) -> ApiResponse[IndexPriceTickerResponse]:
+        """
+                Index Price Ticker
+
+                Get spot index price for option underlying.
+
+        Weight: 1
+
+                Args:
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
+
+                Returns:
+                    ApiResponse[IndexPriceTickerResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.index_price_ticker(underlying)
+
     def kline_candlestick_data(
         self,
         symbol: Union[str, None],
@@ -574,30 +598,6 @@ class DerivativesTradingOptionsRestAPI:
         """
 
         return self._marketDataApi.recent_trades_list(symbol, limit)
-
-    def symbol_price_ticker(
-        self,
-        underlying: Union[str, None],
-    ) -> ApiResponse[SymbolPriceTickerResponse]:
-        """
-                Symbol Price Ticker
-
-                Get spot index price for option underlying.
-
-        Weight: 1
-
-                Args:
-                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
-
-                Returns:
-                    ApiResponse[SymbolPriceTickerResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketDataApi.symbol_price_ticker(underlying)
 
     def test_connectivity(
         self,
@@ -1152,6 +1152,7 @@ class DerivativesTradingOptionsRestAPI:
                 Cancel multiple orders.
 
         * At least one instance of `orderId` and `clientOrderId` must be sent.
+        * Max 10 orders can be deleted in one request
 
         Weight: 1
 

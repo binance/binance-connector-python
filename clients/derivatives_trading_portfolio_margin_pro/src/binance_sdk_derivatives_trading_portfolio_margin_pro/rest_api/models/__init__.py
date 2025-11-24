@@ -87,6 +87,6 @@ from .query_portfolio_margin_pro_negative_balance_interest_history_response_inne
 from .repay_futures_negative_balance_response import (
     RepayFuturesNegativeBalanceResponse as RepayFuturesNegativeBalanceResponse,
 )
-from .transfer_ldusdt_for_portfolio_margin_response import (
-    TransferLdusdtForPortfolioMarginResponse as TransferLdusdtForPortfolioMarginResponse,
+from .transfer_ldusdt_rwusd_for_portfolio_margin_response import (
+    TransferLdusdtRwusdForPortfolioMarginResponse as TransferLdusdtRwusdForPortfolioMarginResponse,
 )

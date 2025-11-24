@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.0 - 2025-11-24
+
+### Changed (2)
+
+#### REST API
+
+- Renamed `symbol_price_ticker()` to `index_price_ticker()`.
+
+#### WebSocket Streams
+
+- Modified response for `trade_streams()` (`<symbol>@trade` method):
+  - `t`: number -> string
+
+
 ## 2.0.0 - 2025-10-10
 
 ### Changed (9)

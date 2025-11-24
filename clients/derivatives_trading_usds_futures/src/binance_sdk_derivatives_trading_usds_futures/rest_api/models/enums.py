@@ -236,6 +236,7 @@ class NewAlgoOrderTimeInForceEnum(Enum):
     FOK = "FOK"
     GTX = "GTX"
     GTD = "GTD"
+    RPI = "RPI"
 
 
 class NewAlgoOrderWorkingTypeEnum(Enum):
@@ -278,6 +279,7 @@ class NewOrderTimeInForceEnum(Enum):
     FOK = "FOK"
     GTX = "GTX"
     GTD = "GTD"
+    RPI = "RPI"
 
 
 class NewOrderWorkingTypeEnum(Enum):
@@ -325,6 +327,7 @@ class TestOrderTimeInForceEnum(Enum):
     FOK = "FOK"
     GTX = "GTX"
     GTD = "GTD"
+    RPI = "RPI"
 
 
 class TestOrderWorkingTypeEnum(Enum):

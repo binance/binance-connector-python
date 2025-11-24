@@ -55,7 +55,6 @@ class Executionreport(BaseModel):
     I: Optional[StrictInt] = Field(default=None, alias="I")
     w: Optional[StrictBool] = None
     m: Optional[StrictBool] = None
-    M: Optional[StrictBool] = Field(default=None, alias="M")
     O: Optional[StrictInt] = Field(default=None, alias="O")
     Z: Optional[StrictStr] = Field(default=None, alias="Z")
     Y: Optional[StrictStr] = Field(default=None, alias="Y")
@@ -99,7 +98,6 @@ class Executionreport(BaseModel):
         "I",
         "w",
         "m",
-        "M",
         "O",
         "Z",
         "Y",
@@ -203,7 +201,6 @@ class Executionreport(BaseModel):
                 "I": obj.get("I"),
                 "w": obj.get("w"),
                 "m": obj.get("m"),
-                "M": obj.get("M"),
                 "O": obj.get("O"),
                 "Z": obj.get("Z"),
                 "Y": obj.get("Y"),

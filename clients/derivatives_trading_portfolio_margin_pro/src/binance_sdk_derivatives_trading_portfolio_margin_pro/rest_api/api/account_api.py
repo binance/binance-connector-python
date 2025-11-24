@@ -30,7 +30,7 @@ from ..models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from ..models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from ..models import RepayFuturesNegativeBalanceResponse
-from ..models import TransferLdusdtForPortfolioMarginResponse
+from ..models import TransferLdusdtRwusdForPortfolioMarginResponse
 
 
 class AccountApi:
@@ -209,7 +209,7 @@ class AccountApi:
         Weight: 60
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -409,7 +409,7 @@ class AccountApi:
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     recv_window (Optional[int] = None):
 
@@ -678,30 +678,30 @@ class AccountApi:
             signer=self._signer,
         )
 
-    def transfer_ldusdt_for_portfolio_margin(
+    def transfer_ldusdt_rwusd_for_portfolio_margin(
         self,
         asset: Union[str, None],
         transfer_type: Union[str, None],
         amount: Union[float, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[TransferLdusdtForPortfolioMarginResponse]:
+    ) -> ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]:
         """
-                Transfer LDUSDT for Portfolio Margin(TRADE)
+                Transfer LDUSDT/RWUSD for Portfolio Margin(TRADE)
                 POST /sapi/v1/portfolio/earn-asset-transfer
                 https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Transfer-LDUSDT-Portfolio-Margin
 
-                Transfer LDUSDT as collateral for all types of Portfolio Margin account
+                Transfer LDUSDT/RWUSD as collateral for all types of Portfolio Margin account
 
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     amount (Union[float, None]):
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[TransferLdusdtForPortfolioMarginResponse]
+                    ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -736,7 +736,7 @@ class AccountApi:
             path="/sapi/v1/portfolio/earn-asset-transfer",
             payload=payload,
             time_unit=self._configuration.time_unit,
-            response_model=TransferLdusdtForPortfolioMarginResponse,
+            response_model=TransferLdusdtRwusdForPortfolioMarginResponse,
             is_signed=True,
             signer=self._signer,
         )

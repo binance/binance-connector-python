@@ -25,6 +25,24 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     ModifyOrderPriceMatchEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderPositionSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderTimeInForceEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderWorkingTypeEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderPriceMatchEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderSelfTradePreventionModeEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderSideEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
@@ -46,10 +64,16 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    CancelAlgoOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     CancelOrderResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     ModifyOrderResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderResponse,
@@ -70,6 +94,177 @@ class TestWebSocketTradeApi:
     def setup_method(self):
         self.mock_websocket_api = MagicMock()
         self.websocket_api = TradeApi(websocket_api=self.mock_websocket_api)
+
+    @pytest.mark.asyncio
+    async def test_cancel_algo_order_success(self):
+        """Test cancel_algo_order() successfully with required parameters only."""
+
+        expected_response = {
+            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "status": 200,
+            "result": {
+                "algoId": 3000000000003505,
+                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BTCUSDT",
+                "side": "SELL",
+                "positionSide": "SHORT",
+                "timeInForce": "GTC",
+                "quantity": "1.000",
+                "algoStatus": "CANCELED",
+                "triggerPrice": "120000.00",
+                "price": "160000.00",
+                "icebergQuantity": None,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1762507264142,
+                "updateTime": 1762507264143,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 2400,
+                    "count": 1,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.cancel_algo_order()
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/algoOrder.cancel".replace(
+            "/", "", 1
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={"method": "/algoOrder.cancel".replace("/", "", 1), "params": {}},
+            response_model=CancelAlgoOrderResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_cancel_algo_order_success_with_optional_params(self):
+        """Test cancel_algo_order() successfully with optional parameters."""
+
+        params = {
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "algoid": 56,
+            "clientalgoid": "clientalgoid_example",
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "status": 200,
+            "result": {
+                "algoId": 3000000000003505,
+                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BTCUSDT",
+                "side": "SELL",
+                "positionSide": "SHORT",
+                "timeInForce": "GTC",
+                "quantity": "1.000",
+                "algoStatus": "CANCELED",
+                "triggerPrice": "120000.00",
+                "price": "160000.00",
+                "icebergQuantity": None,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1762507264142,
+                "updateTime": 1762507264143,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 2400,
+                    "count": 1,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.cancel_algo_order(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/algoOrder.cancel".replace(
+            "/", "", 1
+        )
+        assert "params" in request_kwargs["payload"]
+        params = request_kwargs["payload"]["params"]
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["algoid"] == 56
+        assert params["clientalgoid"] == "clientalgoid_example"
+        assert params["recv_window"] == 5000
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/algoOrder.cancel".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=CancelAlgoOrderResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_cancel_algo_order_server_error(self):
+        """Test that cancel_algo_order() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.cancel_algo_order()
 
     @pytest.mark.asyncio
     async def test_cancel_order_success(self):
@@ -141,8 +336,6 @@ class TestWebSocketTradeApi:
             "/", "", 1
         )
 
-        assert "params" in request_kwargs["payload"]
-        params = request_kwargs["payload"]["params"]
         assert params["symbol"] == "symbol_example"
 
         assert result is not None
@@ -580,6 +773,377 @@ class TestWebSocketTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.modify_order(**params)
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_success(self):
+        """Test new_algo_order() successfully with required parameters only."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+        }
+
+        expected_response = {
+            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "status": 200,
+            "result": {
+                "algoId": 3000000000003505,
+                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BTCUSDT",
+                "side": "SELL",
+                "positionSide": "SHORT",
+                "timeInForce": "GTC",
+                "quantity": "1.000",
+                "algoStatus": "NEW",
+                "triggerPrice": "120000.00",
+                "price": "160000.00",
+                "icebergQuantity": None,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1762507264142,
+                "updateTime": 1762507264143,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 2400,
+                    "count": 1,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.new_algo_order(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/algoOrder.place".replace(
+            "/", "", 1
+        )
+
+        assert params["algo_type"] == "algo_type_example"
+
+        assert params["symbol"] == "symbol_example"
+
+        assert params["side"] == NewAlgoOrderSideEnum["BUY"].value
+
+        assert params["type"] == "type_example"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/algoOrder.place".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=NewAlgoOrderResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_success_with_optional_params(self):
+        """Test new_algo_order() successfully with optional parameters."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "position_side": NewAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activation_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "status": 200,
+            "result": {
+                "algoId": 3000000000003505,
+                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BTCUSDT",
+                "side": "SELL",
+                "positionSide": "SHORT",
+                "timeInForce": "GTC",
+                "quantity": "1.000",
+                "algoStatus": "NEW",
+                "triggerPrice": "120000.00",
+                "price": "160000.00",
+                "icebergQuantity": None,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1762507264142,
+                "updateTime": 1762507264143,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            },
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 2400,
+                    "count": 1,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.new_algo_order(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/algoOrder.place".replace(
+            "/", "", 1
+        )
+        assert params["algo_type"] == "algo_type_example"
+        assert params["symbol"] == "symbol_example"
+        assert params["side"] == NewAlgoOrderSideEnum["BUY"].value
+        assert params["type"] == "type_example"
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["position_side"] == NewAlgoOrderPositionSideEnum["BOTH"].value
+        assert params["time_in_force"] == NewAlgoOrderTimeInForceEnum["GTC"].value
+        assert params["quantity"] == 1.0
+        assert params["price"] == 1.0
+        assert params["trigger_price"] == 1.0
+        assert params["working_type"] == NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value
+        assert params["price_match"] == NewAlgoOrderPriceMatchEnum["NONE"].value
+        assert params["close_position"] == "close_position_example"
+        assert params["price_protect"] == "False"
+        assert params["reduce_only"] == "False"
+        assert params["activation_price"] == 1.0
+        assert params["callback_rate"] == 1.0
+        assert params["client_algo_id"] == "1"
+        assert (
+            params["self_trade_prevention_mode"]
+            == NewAlgoOrderSelfTradePreventionModeEnum["EXPIRE_TAKER"].value
+        )
+        assert params["good_till_date"] == 56
+        assert params["recv_window"] == 5000
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/algoOrder.place".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=NewAlgoOrderResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_missing_required_param_algo_type(self):
+        """Test that new_algo_order() raises RequiredError when 'algo_type' is missing."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "position_side": NewAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activation_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+        params["algo_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'algo_type'"
+        ):
+            await self.websocket_api.new_algo_order(**params)
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_missing_required_param_symbol(self):
+        """Test that new_algo_order() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "position_side": NewAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activation_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.new_algo_order(**params)
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_missing_required_param_side(self):
+        """Test that new_algo_order() raises RequiredError when 'side' is missing."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "position_side": NewAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activation_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            await self.websocket_api.new_algo_order(**params)
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_missing_required_param_type(self):
+        """Test that new_algo_order() raises RequiredError when 'type' is missing."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "position_side": NewAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activation_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+        params["type"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            await self.websocket_api.new_algo_order(**params)
+
+    @pytest.mark.asyncio
+    async def test_new_algo_order_server_error(self):
+        """Test that new_algo_order() raises an error when the server returns an error."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewAlgoOrderSideEnum["BUY"].value,
+            "type": "type_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.new_algo_order(**params)
 
     @pytest.mark.asyncio
     async def test_new_order_success(self):
