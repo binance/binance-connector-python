@@ -317,7 +317,7 @@ def send_request(
 
     url = f"{configuration.base_path}{path}"
     retries = configuration.retries if configuration else 0
-    backoff = configuration.backoff if configuration else 1
+    backoff = configuration.backoff / 1000 if configuration else 1
     timeout = configuration.timeout / 1000 if configuration else 10
     proxies = (
         parse_proxies(configuration.proxy)
