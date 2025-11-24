@@ -19,6 +19,7 @@ from binance_common.utils import send_request
 from ..models import CheckServerTimeResponse
 from ..models import ExchangeInformationResponse
 from ..models import HistoricalExerciseRecordsResponse
+from ..models import IndexPriceTickerResponse
 from ..models import KlineCandlestickDataResponse
 from ..models import OldTradesLookupResponse
 from ..models import OpenInterestResponse
@@ -26,7 +27,6 @@ from ..models import OptionMarkPriceResponse
 from ..models import OrderBookResponse
 from ..models import RecentBlockTradesListResponse
 from ..models import RecentTradesListResponse
-from ..models import SymbolPriceTickerResponse
 
 from ..models import Ticker24hrPriceChangeStatisticsResponse
 
@@ -159,6 +159,48 @@ class MarketDataApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=HistoricalExerciseRecordsResponse,
+        )
+
+    def index_price_ticker(
+        self,
+        underlying: Union[str, None],
+    ) -> ApiResponse[IndexPriceTickerResponse]:
+        """
+                Index Price Ticker
+                GET /eapi/v1/index
+                https://developers.binance.com/docs/derivatives/option/market-data/Index-Price-Ticker
+
+                Get spot index price for option underlying.
+
+        Weight: 1
+
+                Args:
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
+
+                Returns:
+                    ApiResponse[IndexPriceTickerResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if underlying is None:
+            raise RequiredError(
+                field="underlying",
+                error_message="Missing required parameter 'underlying'",
+            )
+
+        payload = {"underlying": underlying}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/eapi/v1/index",
+            payload=payload,
+            time_unit=self._configuration.time_unit,
+            response_model=IndexPriceTickerResponse,
         )
 
     def kline_candlestick_data(
@@ -480,48 +522,6 @@ class MarketDataApi:
             payload=payload,
             time_unit=self._configuration.time_unit,
             response_model=RecentTradesListResponse,
-        )
-
-    def symbol_price_ticker(
-        self,
-        underlying: Union[str, None],
-    ) -> ApiResponse[SymbolPriceTickerResponse]:
-        """
-                Symbol Price Ticker
-                GET /eapi/v1/index
-                https://developers.binance.com/docs/derivatives/option/market-data/Symbol-Price-Ticker
-
-                Get spot index price for option underlying.
-
-        Weight: 1
-
-                Args:
-                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
-
-                Returns:
-                    ApiResponse[SymbolPriceTickerResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if underlying is None:
-            raise RequiredError(
-                field="underlying",
-                error_message="Missing required parameter 'underlying'",
-            )
-
-        payload = {"underlying": underlying}
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="GET",
-            path="/eapi/v1/index",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=SymbolPriceTickerResponse,
         )
 
     def test_connectivity(

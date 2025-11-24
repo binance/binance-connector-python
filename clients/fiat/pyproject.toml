@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-fiat"
-version = "2.0.0"
+version = "3.0.0"
 description = "Official Binance Fiat SDK - A lightweight library that provides a convenient interface to Binance's Fiat REST API"
 authors = ["Binance"]
 license = "MIT"

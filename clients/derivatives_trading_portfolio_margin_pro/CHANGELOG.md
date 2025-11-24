@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.0 - 2025-11-24
+
+### Changed (1)
+
+#### REST API
+
+- Renamed `transfer_ldusdt_for_portfolio_margin()` to `transfer_ldusdt_rwusd_for_portfolio_margin()`.
+
+
 ## 3.0.0 - 2025-11-14
 
 ### Removed (2)

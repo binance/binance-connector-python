@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.0 - 2025-11-24
+
+### Changed (1)
+
+#### WebSocket Streams
+
+- Marked `all_ticker()` (`!ticker@arr` stream) as deprecated.
+
 ## 4.0.0 - 2025-11-14
 
 ### Changed (2)

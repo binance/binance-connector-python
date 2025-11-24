@@ -22,18 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 
 
-def symbol_price_ticker():
+def index_price_ticker():
     try:
-        response = client.rest_api.symbol_price_ticker(underlying="underlying_example")
+        response = client.rest_api.index_price_ticker(underlying="underlying_example")
 
         rate_limits = response.rate_limits
-        logging.info(f"symbol_price_ticker() rate limits: {rate_limits}")
+        logging.info(f"index_price_ticker() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"symbol_price_ticker() response: {data}")
+        logging.info(f"index_price_ticker() response: {data}")
     except Exception as e:
-        logging.error(f"symbol_price_ticker() error: {e}")
+        logging.error(f"index_price_ticker() error: {e}")
 
 
 if __name__ == "__main__":
-    symbol_price_ticker()
+    index_price_ticker()

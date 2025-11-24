@@ -1,5 +1,44 @@
 # Changelog
 
+## 4.0.0 - 2025-11-24
+
+### Added (1)
+
+#### REST API
+
+- `adl_risk()` (`GET /fapi/v1/symbolAdlRisk`)
+
+### Changed (5)
+
+#### REST API
+
+- Modified parameter `batchOrders`:
+  - items.`timeInForce`: enum added: `RPI`
+  - items.`timeInForce`: enum added: `RPI`
+  - affected methods:
+    - `place_multiple_orders()` (`POST /fapi/v1/batchOrders`)
+- Modified parameter `timeInForce`:
+  - enum added: `RPI`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `new_order()` (`POST /fapi/v1/order`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified response for `old_trades_lookup()` (`GET /fapi/v1/historicalTrades`):
+  - items: property `isRPITrade` added
+  - items: item property `isRPITrade` added
+
+- Modified response for `recent_trades_list()` (`GET /fapi/v1/trades`):
+  - items: property `isRPITrade` added
+  - items: item property `isRPITrade` added
+
+#### WebSocket API
+
+- Modified parameter `timeInForce`:
+  - enum added: `RPI`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+    - `new_order()` (`order.place` method)
+
 ## 3.0.0 - 2025-11-14
 
 ### Added (7)

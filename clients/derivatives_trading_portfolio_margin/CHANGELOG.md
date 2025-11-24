@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0 - 2025-11-24
+
+### Changed (1)
+
+- Modified response for `user_data()` method:
+  - removed `M` from Executionreport
+
+
 ## 1.8.0 - 2025-10-10
 
 ### Changed (2)

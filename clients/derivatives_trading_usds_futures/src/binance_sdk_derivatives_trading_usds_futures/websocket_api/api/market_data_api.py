@@ -50,6 +50,8 @@ class MarketDataApi:
 
         You can use `depth` request together with `<symbol>@depth` streams to maintain a local order book.
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
         Weight: Adjusted based on the limit:
         | Limit         | Weight |
         | ------------- | ------ |
@@ -103,6 +105,7 @@ class MarketDataApi:
 
             Best price/qty on the order book for a symbol or symbols.
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
         * If the symbol is not sent, bookTickers for all symbols will be returned in an array.
         * The field `X-MBX-USED-WEIGHT-1M` in response header is not accurate from this endpoint, please ignore.
 

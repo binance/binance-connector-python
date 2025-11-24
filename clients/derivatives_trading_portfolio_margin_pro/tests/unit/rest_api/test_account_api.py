@@ -63,7 +63,7 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     RepayFuturesNegativeBalanceResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    TransferLdusdtForPortfolioMarginResponse,
+    TransferLdusdtRwusdForPortfolioMarginResponse,
 )
 
 
@@ -1820,8 +1820,10 @@ class TestAccountApi:
             self.client.repay_futures_negative_balance()
 
     @patch("binance_common.utils.get_signature")
-    def test_transfer_ldusdt_for_portfolio_margin_success(self, mock_get_signature):
-        """Test transfer_ldusdt_for_portfolio_margin() successfully with required parameters only."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_success(
+        self, mock_get_signature
+    ):
+        """Test transfer_ldusdt_rwusd_for_portfolio_margin() successfully with required parameters only."""
 
         params = {
             "asset": "asset_example",
@@ -1833,7 +1835,7 @@ class TestAccountApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.transfer_ldusdt_for_portfolio_margin(**params)
+        response = self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -1857,30 +1859,32 @@ class TestAccountApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(TransferLdusdtForPortfolioMarginResponse)
+        is_oneof = is_one_of_model(TransferLdusdtRwusdForPortfolioMarginResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
         elif (
             is_oneof
             or is_list
-            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+            or hasattr(TransferLdusdtRwusdForPortfolioMarginResponse, "from_dict")
         ):
-            expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
+            expected = TransferLdusdtRwusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
         else:
-            expected = TransferLdusdtForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
+            expected = (
+                TransferLdusdtRwusdForPortfolioMarginResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
             )
 
         assert response.data() == expected
 
     @patch("binance_common.utils.get_signature")
-    def test_transfer_ldusdt_for_portfolio_margin_success_with_optional_params(
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_success_with_optional_params(
         self, mock_get_signature
     ):
-        """Test transfer_ldusdt_for_portfolio_margin() successfully with optional parameters."""
+        """Test transfer_ldusdt_rwusd_for_portfolio_margin() successfully with optional parameters."""
 
         params = {
             "asset": "asset_example",
@@ -1893,7 +1897,7 @@ class TestAccountApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.transfer_ldusdt_for_portfolio_margin(**params)
+        response = self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -1909,27 +1913,31 @@ class TestAccountApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(TransferLdusdtForPortfolioMarginResponse)
+        is_oneof = is_one_of_model(TransferLdusdtRwusdForPortfolioMarginResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
         elif (
             is_oneof
             or is_list
-            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+            or hasattr(TransferLdusdtRwusdForPortfolioMarginResponse, "from_dict")
         ):
-            expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
+            expected = TransferLdusdtRwusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
         else:
-            expected = TransferLdusdtForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
+            expected = (
+                TransferLdusdtRwusdForPortfolioMarginResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
             )
 
         assert response.data() == expected
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_asset(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'asset' is missing."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_asset(
+        self,
+    ):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'asset' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -1938,12 +1946,12 @@ class TestAccountApi:
         params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_transfer_type(
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_transfer_type(
         self,
     ):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'transfer_type' is missing."""
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'transfer_type' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -1954,10 +1962,12 @@ class TestAccountApi:
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_type'"
         ):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_amount(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_amount(
+        self,
+    ):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -1966,10 +1976,10 @@ class TestAccountApi:
         params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_server_error(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises an error when the server returns an error."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_server_error(self):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises an error when the server returns an error."""
 
         params = {
             "asset": "asset_example",
@@ -1978,9 +1988,9 @@ class TestAccountApi:
         }
 
         mock_error = Exception("ResponseError")
-        self.client.transfer_ldusdt_for_portfolio_margin = MagicMock(
+        self.client.transfer_ldusdt_rwusd_for_portfolio_margin = MagicMock(
             side_effect=mock_error
         )
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)

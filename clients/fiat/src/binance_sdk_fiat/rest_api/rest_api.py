@@ -16,10 +16,8 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 from .api.fiat_api import FiatApi
 
-from .models import FiatWithdrawResponse
 from .models import GetFiatDepositWithdrawHistoryResponse
 from .models import GetFiatPaymentsHistoryResponse
-from .models import GetOrderDetailResponse
 
 
 T = TypeVar("T")
@@ -83,36 +81,6 @@ class FiatRestAPI:
             is_signed=True,
             signer=self._signer,
         )
-
-    def fiat_withdraw(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[FiatWithdrawResponse]:
-        """
-                Fiat Withdraw(WITHDRAW)
-
-                Submit withdraw request, in this version, we only support BRL withdrawal via bank_transfer.
-
-        You need to call this api first, and call query order detail api in a loop to get the status of the order until this order is successful.
-
-        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
-
-        you need to bind your bank account on web/app before using the corresponding account number
-
-        Weight: 45000
-
-                Args:
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[FiatWithdrawResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._fiatApi.fiat_withdraw(recv_window)
 
     def get_fiat_deposit_withdraw_history(
         self,
@@ -194,31 +162,3 @@ class FiatRestAPI:
         return self._fiatApi.get_fiat_payments_history(
             transaction_type, begin_time, end_time, page, rows, recv_window
         )
-
-    def get_order_detail(
-        self,
-        order_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetOrderDetailResponse]:
-        """
-                Get Order Detail(USER_DATA)
-
-                Get Order Detail
-
-        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
-
-        Weight: 45000
-
-                Args:
-                    order_id (Union[str, None]): order id retrieved from the api call of withdrawal
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetOrderDetailResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._fiatApi.get_order_detail(order_id, recv_window)

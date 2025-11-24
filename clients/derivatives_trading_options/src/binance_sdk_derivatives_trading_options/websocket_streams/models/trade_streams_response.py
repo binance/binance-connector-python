@@ -30,7 +30,7 @@ class TradeStreamsResponse(BaseModel):
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
-    t: Optional[StrictInt] = None
+    t: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
     b: Optional[StrictInt] = None

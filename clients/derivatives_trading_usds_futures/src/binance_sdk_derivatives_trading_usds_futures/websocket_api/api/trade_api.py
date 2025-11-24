@@ -13,8 +13,10 @@ from binance_common.models import WebsocketApiResponse
 from binance_common.signature import Signers
 from binance_common.websocket import WebSocketAPIBase
 
+from ..models import CancelAlgoOrderResponse
 from ..models import CancelOrderResponse
 from ..models import ModifyOrderResponse
+from ..models import NewAlgoOrderResponse
 from ..models import NewOrderResponse
 from ..models import PositionInformationResponse
 from ..models import PositionInformationV2Response
@@ -23,6 +25,12 @@ from ..models import QueryOrderResponse
 
 from ..models import ModifyOrderSideEnum
 from ..models import ModifyOrderPriceMatchEnum
+from ..models import NewAlgoOrderSideEnum
+from ..models import NewAlgoOrderPositionSideEnum
+from ..models import NewAlgoOrderTimeInForceEnum
+from ..models import NewAlgoOrderWorkingTypeEnum
+from ..models import NewAlgoOrderPriceMatchEnum
+from ..models import NewAlgoOrderSelfTradePreventionModeEnum
 from ..models import NewOrderSideEnum
 from ..models import NewOrderPositionSideEnum
 from ..models import NewOrderTimeInForceEnum
@@ -44,6 +52,54 @@ class TradeApi:
     ) -> None:
         self.websocket_api = websocket_api
         self.signer = signer
+
+    async def cancel_algo_order(
+        self,
+        id: Optional[str] = None,
+        algoid: Optional[int] = None,
+        clientalgoid: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> WebsocketApiResponse[CancelAlgoOrderResponse]:
+        """
+            Cancel Algo Order (TRADE)
+            /algoOrder.cancel
+            https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/websocket-api/Cancel-Algo-Order
+
+            Cancel an active algo order.
+
+        * Either `algoid` or `clientalgoid` must be sent.
+
+        Weight: 1
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    algoid (Optional[int] = None):
+                    clientalgoid (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+            Returns:
+                WebsocketApiResponse[CancelAlgoOrderResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        params = {
+            **({"id": id} if id is not None else {}),
+            **({"algoid": algoid} if algoid is not None else {}),
+            **({"clientalgoid": clientalgoid} if clientalgoid is not None else {}),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
+        }
+
+        payload = {
+            "method": "/algoOrder.cancel".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_signed_message(
+            payload=payload, response_model=CancelAlgoOrderResponse, signer=self.signer
+        )
 
     async def cancel_order(
         self,
@@ -197,6 +253,167 @@ class TradeApi:
             payload=payload, response_model=ModifyOrderResponse, signer=self.signer
         )
 
+    async def new_algo_order(
+        self,
+        algo_type: Union[str, None],
+        symbol: Union[str, None],
+        side: Union[NewAlgoOrderSideEnum, None],
+        type: Union[str, None],
+        id: Optional[str] = None,
+        position_side: Optional[NewAlgoOrderPositionSideEnum] = None,
+        time_in_force: Optional[NewAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[str] = None,
+        price_protect: Optional[str] = None,
+        reduce_only: Optional[str] = None,
+        activation_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        self_trade_prevention_mode: Optional[
+            NewAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        good_till_date: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> WebsocketApiResponse[NewAlgoOrderResponse]:
+        """
+            New Algo Order(TRADE)
+            /algoOrder.place
+            https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/websocket-api/New-Algo-Order
+
+            Send in a new algo order.
+
+        * Condition orders will be triggered when:
+
+        * If parameter`priceProtect`is sent as true:
+        * when price reaches the `triggerPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
+
+        * `STOP`, `STOP_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * `TRAILING_STOP_MARKET`:
+        * BUY: the lowest price after order placed <= `activationPrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+
+        * For `TRAILING_STOP_MARKET`, if you got such error code.
+        ``{"code": -2021, "msg": "Order would immediately trigger."}``
+        means that the parameters you send do not meet the following requirements:
+        * BUY: `activationPrice` should be smaller than latest price.
+        * SELL: `activationPrice` should be larger than latest price.
+
+        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+        * Follow the same rules for condition orders.
+        * If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
+        * Cannot be used with `quantity` paremeter
+        * Cannot be used with `reduceOnly` parameter
+        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
+
+        Weight: 0
+
+            Args:
+                    algo_type (Union[str, None]): Only support `CONDITIONAL`
+                    symbol (Union[str, None]):
+                    side (Union[NewAlgoOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    price (Optional[float] = None):
+                    trigger_price (Optional[float] = None):
+                    working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
+
+            Returns:
+                WebsocketApiResponse[NewAlgoOrderResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if algo_type is None:
+            raise RequiredError(
+                field="algo_type",
+                error_message="Missing required parameter 'algo_type'",
+            )
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
+        params = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            **({"id": id} if id is not None else {}),
+            **({"position_side": position_side} if position_side is not None else {}),
+            **({"time_in_force": time_in_force} if time_in_force is not None else {}),
+            **({"quantity": quantity} if quantity is not None else {}),
+            **({"price": price} if price is not None else {}),
+            **({"trigger_price": trigger_price} if trigger_price is not None else {}),
+            **({"working_type": working_type} if working_type is not None else {}),
+            **({"price_match": price_match} if price_match is not None else {}),
+            **(
+                {"close_position": close_position} if close_position is not None else {}
+            ),
+            **({"price_protect": price_protect} if price_protect is not None else {}),
+            **({"reduce_only": reduce_only} if reduce_only is not None else {}),
+            **(
+                {"activation_price": activation_price}
+                if activation_price is not None
+                else {}
+            ),
+            **({"callback_rate": callback_rate} if callback_rate is not None else {}),
+            **(
+                {"client_algo_id": client_algo_id} if client_algo_id is not None else {}
+            ),
+            **(
+                {"self_trade_prevention_mode": self_trade_prevention_mode}
+                if self_trade_prevention_mode is not None
+                else {}
+            ),
+            **(
+                {"good_till_date": good_till_date} if good_till_date is not None else {}
+            ),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
+        }
+
+        payload = {
+            "method": "/algoOrder.place".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_signed_message(
+            payload=payload, response_model=NewAlgoOrderResponse, signer=self.signer
+        )
+
     async def new_order(
         self,
         symbol: Union[str, None],
@@ -286,7 +503,7 @@ class TradeApi:
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 

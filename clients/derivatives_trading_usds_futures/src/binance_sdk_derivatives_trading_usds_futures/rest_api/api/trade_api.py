@@ -1727,7 +1727,7 @@ class TradeApi:
                 GET /fapi/v1/allAlgoOrders
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Query-All-Algo-Orders
 
-                Get all algo orders; active, canceled, or filled.
+                Get all algo orders; active, CANCELED, TRIGGERED or FINISHED .
 
         * These orders will not be found:
         * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time

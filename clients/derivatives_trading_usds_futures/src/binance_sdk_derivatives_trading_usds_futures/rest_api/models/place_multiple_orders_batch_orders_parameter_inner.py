@@ -113,9 +113,9 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
         if value is None:
             return value
 
-        if value not in set(["GTC", "IOC", "FOK", "GTX", "GTD"]):
+        if value not in set(["GTC", "IOC", "FOK", "GTX", "GTD", "RPI"]):
             raise ValueError(
-                "must be one of enum values ('GTC', 'IOC', 'FOK', 'GTX', 'GTD')"
+                "must be one of enum values ('GTC', 'IOC', 'FOK', 'GTX', 'GTD', 'RPI')"
             )
         return value
 

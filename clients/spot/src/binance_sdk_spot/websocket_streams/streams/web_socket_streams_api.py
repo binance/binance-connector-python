@@ -176,9 +176,9 @@ class WebSocketStreamsApi:
         id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
-        WebSocket All Market Tickers Stream
+        WebSocket All Market Tickers Stream (DEPRECATED)
         /!ticker@arr
-        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-tickers-stream
+        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-tickers-stream-deprecated
 
         24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
 
