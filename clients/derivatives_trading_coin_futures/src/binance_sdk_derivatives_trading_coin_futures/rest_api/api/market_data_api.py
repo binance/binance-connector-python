@@ -125,6 +125,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -140,6 +141,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/basis",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=BasisResponse,
         )
@@ -166,6 +168,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -174,6 +177,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/time",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckServerTimeResponse,
         )
@@ -221,6 +225,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -235,6 +240,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/aggTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CompressedAggregateTradesListResponse,
         )
@@ -309,6 +315,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -324,6 +331,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/continuousKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ContinuousContractKlineCandlestickDataResponse,
         )
@@ -350,6 +358,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -358,6 +367,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/exchangeInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInformationResponse,
         )
@@ -399,6 +409,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -412,6 +423,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/fundingRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFundingRateHistoryOfPerpetualFuturesResponse,
         )
@@ -438,6 +450,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -446,6 +459,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/fundingInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFundingRateInfoResponse,
         )
@@ -476,6 +490,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "pair": pair}
 
         return send_request(
@@ -484,6 +499,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/premiumIndex",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=IndexPriceAndMarkPriceResponse,
         )
@@ -543,6 +559,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "interval": interval,
@@ -557,6 +574,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/indexPriceKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=IndexPriceKlineCandlestickDataResponse,
         )
@@ -616,6 +634,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -630,6 +649,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/klines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=KlineCandlestickDataResponse,
         )
@@ -678,6 +698,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "period": period,
@@ -692,6 +713,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/globalLongShortAccountRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=LongShortRatioResponse,
         )
@@ -752,6 +774,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -766,6 +789,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/markPriceKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarkPriceKlineCandlestickDataResponse,
         )
@@ -805,6 +829,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit, "from_id": from_id}
 
         return send_request(
@@ -813,6 +838,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/historicalTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OldTradesLookupResponse,
         )
@@ -846,6 +872,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -854,6 +881,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/openInterest",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OpenInterestResponse,
         )
@@ -910,6 +938,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -925,6 +954,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/openInterestHist",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OpenInterestStatisticsResponse,
         )
@@ -966,6 +996,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -974,6 +1005,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/depth",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OrderBookResponse,
         )
@@ -1028,6 +1060,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -1042,6 +1075,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/premiumIndexKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PremiumIndexKlineDataResponse,
         )
@@ -1075,6 +1109,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1083,6 +1118,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/constituents",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryIndexPriceConstituentsResponse,
         )
@@ -1120,6 +1156,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -1128,6 +1165,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/trades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RecentTradesListResponse,
         )
@@ -1162,6 +1200,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "pair": pair}
 
         return send_request(
@@ -1170,6 +1209,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/ticker/bookTicker",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolOrderBookTickerResponse,
         )
@@ -1204,6 +1244,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "pair": pair}
 
         return send_request(
@@ -1212,6 +1253,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/ticker/price",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolPriceTickerResponse,
         )
@@ -1268,6 +1310,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -1283,6 +1326,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/takerBuySellVol",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TakerBuySellVolumeResponse,
         )
@@ -1309,6 +1353,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -1317,6 +1362,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/ping",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -1351,6 +1397,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "pair": pair}
 
         return send_request(
@@ -1359,6 +1406,7 @@ class MarketDataApi:
             method="GET",
             path="/dapi/v1/ticker/24hr",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=Ticker24hrPriceChangeStatisticsResponse,
         )
@@ -1410,6 +1458,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -1424,6 +1473,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/topLongShortAccountRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TopTraderLongShortRatioAccountsResponse,
         )
@@ -1475,6 +1525,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "period": period,
@@ -1489,6 +1540,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/topLongShortPositionRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TopTraderLongShortRatioPositionsResponse,
         )

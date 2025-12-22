@@ -64,6 +64,7 @@ class CapitalApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -72,6 +73,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/config/getall",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AllCoinsInformationResponse,
             is_signed=True,
@@ -117,6 +119,7 @@ class CapitalApi:
                 field="coin", error_message="Missing required parameter 'coin'"
             )
 
+        body = {}
         payload = {
             "coin": coin,
             "network": network,
@@ -130,6 +133,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/deposit/address",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DepositAddressResponse,
             is_signed=True,
@@ -180,6 +184,7 @@ class CapitalApi:
 
         """
 
+        body = {}
         payload = {
             "include_source": include_source,
             "coin": coin,
@@ -198,6 +203,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/deposit/hisrec",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DepositHistoryResponse,
             is_signed=True,
@@ -239,6 +245,7 @@ class CapitalApi:
                 field="coin", error_message="Missing required parameter 'coin'"
             )
 
+        body = {}
         payload = {"coin": coin, "network": network}
 
         return send_request(
@@ -247,6 +254,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/deposit/address/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchDepositAddressListWithNetworkResponse,
             is_signed=True,
@@ -275,6 +283,7 @@ class CapitalApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -283,6 +292,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/withdraw/address/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchWithdrawAddressListResponse,
             is_signed=True,
@@ -311,6 +321,7 @@ class CapitalApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -319,6 +330,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/withdraw/quota",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchWithdrawQuotaResponse,
             is_signed=True,
@@ -357,6 +369,7 @@ class CapitalApi:
 
         """
 
+        body = {}
         payload = {
             "deposit_id": deposit_id,
             "tx_id": tx_id,
@@ -370,6 +383,7 @@ class CapitalApi:
             method="POST",
             path="/sapi/v1/capital/deposit/credit-apply",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OneClickArrivalDepositApplyResponse,
             is_signed=True,
@@ -436,6 +450,7 @@ class CapitalApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "coin": coin,
             "address": address,
@@ -455,6 +470,7 @@ class CapitalApi:
             method="POST",
             path="/sapi/v1/capital/withdraw/apply",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawResponse,
             is_signed=True,
@@ -509,6 +525,7 @@ class CapitalApi:
 
         """
 
+        body = {}
         payload = {
             "coin": coin,
             "withdraw_order_id": withdraw_order_id,
@@ -527,6 +544,7 @@ class CapitalApi:
             method="GET",
             path="/sapi/v1/capital/withdraw/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawHistoryResponse,
             is_signed=True,

@@ -181,6 +181,20 @@ from .order_list_oco_response_order_reports_inner import (
 from .order_list_oco_response_orders_inner import (
     OrderListOcoResponseOrdersInner as OrderListOcoResponseOrdersInner,
 )
+from .order_list_opo_response import OrderListOpoResponse as OrderListOpoResponse
+from .order_list_opo_response_order_reports_inner import (
+    OrderListOpoResponseOrderReportsInner as OrderListOpoResponseOrderReportsInner,
+)
+from .order_list_opo_response_orders_inner import (
+    OrderListOpoResponseOrdersInner as OrderListOpoResponseOrdersInner,
+)
+from .order_list_opoco_response import OrderListOpocoResponse as OrderListOpocoResponse
+from .order_list_opoco_response_order_reports_inner import (
+    OrderListOpocoResponseOrderReportsInner as OrderListOpocoResponseOrderReportsInner,
+)
+from .order_list_opoco_response_orders_inner import (
+    OrderListOpocoResponseOrdersInner as OrderListOpocoResponseOrdersInner,
+)
 from .order_list_oto_response import OrderListOtoResponse as OrderListOtoResponse
 from .order_list_oto_response_order_reports_inner import (
     OrderListOtoResponseOrderReportsInner as OrderListOtoResponseOrderReportsInner,
@@ -346,6 +360,74 @@ from .enums import (
 from .enums import OrderListOcoNewOrderRespTypeEnum as OrderListOcoNewOrderRespTypeEnum
 from .enums import (
     OrderListOcoSelfTradePreventionModeEnum as OrderListOcoSelfTradePreventionModeEnum,
+)
+from .enums import OrderListOpoWorkingTypeEnum as OrderListOpoWorkingTypeEnum
+from .enums import OrderListOpoWorkingSideEnum as OrderListOpoWorkingSideEnum
+from .enums import OrderListOpoPendingTypeEnum as OrderListOpoPendingTypeEnum
+from .enums import OrderListOpoPendingSideEnum as OrderListOpoPendingSideEnum
+from .enums import OrderListOpoNewOrderRespTypeEnum as OrderListOpoNewOrderRespTypeEnum
+from .enums import (
+    OrderListOpoSelfTradePreventionModeEnum as OrderListOpoSelfTradePreventionModeEnum,
+)
+from .enums import (
+    OrderListOpoWorkingTimeInForceEnum as OrderListOpoWorkingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpoWorkingPegPriceTypeEnum as OrderListOpoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpoWorkingPegOffsetTypeEnum as OrderListOpoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpoPendingTimeInForceEnum as OrderListOpoPendingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpoPendingPegPriceTypeEnum as OrderListOpoPendingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpoPendingPegOffsetTypeEnum as OrderListOpoPendingPegOffsetTypeEnum,
+)
+from .enums import OrderListOpocoWorkingTypeEnum as OrderListOpocoWorkingTypeEnum
+from .enums import OrderListOpocoWorkingSideEnum as OrderListOpocoWorkingSideEnum
+from .enums import OrderListOpocoPendingSideEnum as OrderListOpocoPendingSideEnum
+from .enums import (
+    OrderListOpocoPendingAboveTypeEnum as OrderListOpocoPendingAboveTypeEnum,
+)
+from .enums import (
+    OrderListOpocoNewOrderRespTypeEnum as OrderListOpocoNewOrderRespTypeEnum,
+)
+from .enums import (
+    OrderListOpocoSelfTradePreventionModeEnum as OrderListOpocoSelfTradePreventionModeEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingTimeInForceEnum as OrderListOpocoWorkingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingPegPriceTypeEnum as OrderListOpocoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingPegOffsetTypeEnum as OrderListOpocoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAboveTimeInForceEnum as OrderListOpocoPendingAboveTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAbovePegPriceTypeEnum as OrderListOpocoPendingAbovePegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAbovePegOffsetTypeEnum as OrderListOpocoPendingAbovePegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowTypeEnum as OrderListOpocoPendingBelowTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowTimeInForceEnum as OrderListOpocoPendingBelowTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowPegPriceTypeEnum as OrderListOpocoPendingBelowPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowPegOffsetTypeEnum as OrderListOpocoPendingBelowPegOffsetTypeEnum,
 )
 from .enums import OrderListOtoWorkingTypeEnum as OrderListOtoWorkingTypeEnum
 from .enums import OrderListOtoWorkingSideEnum as OrderListOtoWorkingSideEnum

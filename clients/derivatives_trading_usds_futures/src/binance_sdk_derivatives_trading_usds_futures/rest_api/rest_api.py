@@ -70,6 +70,7 @@ from .models import QuarterlyContractSettlementPriceResponse
 from .models import QueryIndexPriceConstituentsResponse
 from .models import QueryInsuranceFundBalanceSnapshotResponse
 from .models import RecentTradesListResponse
+from .models import RpiOrderBookResponse
 from .models import SymbolOrderBookTickerResponse
 from .models import SymbolPriceTickerResponse
 from .models import SymbolPriceTickerV2Response
@@ -78,6 +79,7 @@ from .models import TakerBuySellVolumeResponse
 from .models import Ticker24hrPriceChangeStatisticsResponse
 from .models import TopTraderLongShortRatioAccountsResponse
 from .models import TopTraderLongShortRatioPositionsResponse
+from .models import TradingScheduleResponse
 from .models import ClassicPortfolioMarginAccountInformationResponse
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
@@ -93,6 +95,7 @@ from .models import ChangeMultiAssetsModeResponse
 from .models import ChangePositionModeResponse
 from .models import CurrentAllAlgoOpenOrdersResponse
 from .models import CurrentAllOpenOrdersResponse
+from .models import FuturesTradfiPerpsContractResponse
 from .models import GetOrderModifyHistoryResponse
 from .models import GetPositionMarginChangeHistoryResponse
 from .models import ModifyIsolatedPositionMarginResponse
@@ -141,7 +144,6 @@ from .models import NewAlgoOrderSelfTradePreventionModeEnum
 from .models import NewOrderSideEnum
 from .models import NewOrderPositionSideEnum
 from .models import NewOrderTimeInForceEnum
-from .models import NewOrderWorkingTypeEnum
 from .models import NewOrderNewOrderRespTypeEnum
 from .models import NewOrderPriceMatchEnum
 from .models import NewOrderSelfTradePreventionModeEnum
@@ -190,7 +192,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -198,25 +204,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -226,7 +215,36 @@ class DerivativesTradingUsdsFuturesRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -1110,6 +1128,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         * PERPETUAL
         * CURRENT_QUARTER
         * NEXT_QUARTER
+        * TRADIFI_PERPETUAL
 
         Weight: based on parameter LIMIT
         | LIMIT       | weight |
@@ -1640,6 +1659,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Query index price constituents
 
+
+        **Note**:
+
+        Prices from constituents of TradFi perps will be hiden and displayed as -1.
+
         Weight: 2
 
                 Args:
@@ -1706,6 +1730,37 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
 
         return self._marketDataApi.recent_trades_list(symbol, limit)
+
+    def rpi_order_book(
+        self,
+        symbol: Union[str, None],
+        limit: Optional[int] = None,
+    ) -> ApiResponse[RpiOrderBookResponse]:
+        """
+                RPI Order Book
+
+                Query symbol orderbook with RPI orders
+
+        RPI(Retail Price Improvement) orders are included and aggreated in the response message. Crossed price levels are hidden and invisible.
+
+        Weight: Adjusted based on the limit:
+        | Limit         | Weight |
+        | ------------- | ------ |
+        | 1000          | 20     |
+
+                Args:
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default 100; max 1000
+
+                Returns:
+                    ApiResponse[RpiOrderBookResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.rpi_order_book(symbol, limit)
 
     def symbol_order_book_ticker(
         self,
@@ -1960,6 +2015,28 @@ class DerivativesTradingUsdsFuturesRestAPI:
         return self._marketDataApi.top_trader_long_short_ratio_positions(
             symbol, period, limit, start_time, end_time
         )
+
+    def trading_schedule(
+        self,
+    ) -> ApiResponse[TradingScheduleResponse]:
+        """
+                Trading Schedule
+
+                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period starting from the day prior to the query time, covering both the U.S. equity and commodity markets. Equity market session types include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING", while commodity market session types include "REGULAR" and "NO_TRADING".
+
+        Weight: 5
+
+                Args:
+
+                Returns:
+                    ApiResponse[TradingScheduleResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.trading_schedule()
 
     def classic_portfolio_margin_account_information(
         self,
@@ -2438,6 +2515,30 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
         return self._tradeApi.current_all_open_orders(symbol, recv_window)
 
+    def futures_tradfi_perps_contract(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[FuturesTradfiPerpsContractResponse]:
+        """
+                Futures TradFi Perps Contract(USER_DATA)
+
+                Sign TradFi-Perps agreement contract
+
+        Weight: 0
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[FuturesTradfiPerpsContractResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.futures_tradfi_perps_contract(recv_window)
+
     def get_order_modify_history(
         self,
         symbol: Union[str, None],
@@ -2668,7 +2769,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         close_position: Optional[str] = None,
         price_protect: Optional[str] = None,
         reduce_only: Optional[str] = None,
-        activation_price: Optional[float] = None,
+        activate_price: Optional[float] = None,
         callback_rate: Optional[float] = None,
         client_algo_id: Optional[str] = None,
         self_trade_prevention_mode: Optional[
@@ -2682,6 +2783,8 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Send in a new Algo order.
 
+        * Algo order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Algo order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
         * Condition orders will be triggered when:
 
         * If parameter`priceProtect`is sent as true:
@@ -2695,14 +2798,14 @@ class DerivativesTradingUsdsFuturesRestAPI:
         * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
         * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
         * `TRAILING_STOP_MARKET`:
-        * BUY: the lowest price after order placed <= `activationPrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
-        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+        * BUY: the lowest price after order placed <= `activatePrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activatePrice`, and the latest price <= the highest price * (1 - `callbackRate`)
 
         * For `TRAILING_STOP_MARKET`, if you got such error code.
         ``{"code": -2021, "msg": "Order would immediately trigger."}``
         means that the parameters you send do not meet the following requirements:
-        * BUY: `activationPrice` should be smaller than latest price.
-        * SELL: `activationPrice` should be larger than latest price.
+        * BUY: `activatePrice` should be smaller than latest price.
+        * SELL: `activatePrice` should be larger than latest price.
 
         * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
         * Follow the same rules for condition orders.
@@ -2721,16 +2824,16 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     type (Union[str, None]):
                     position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
+                    quantity (Optional[float] = None):
                     price (Optional[float] = None):
                     trigger_price (Optional[float] = None):
                     working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
-                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
+                    activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
                     client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
@@ -2759,7 +2862,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
             close_position,
             price_protect,
             reduce_only,
-            activation_price,
+            activate_price,
             callback_rate,
             client_algo_id,
             self_trade_prevention_mode,
@@ -2778,12 +2881,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
         reduce_only: Optional[str] = None,
         price: Optional[float] = None,
         new_client_order_id: Optional[str] = None,
-        stop_price: Optional[float] = None,
-        close_position: Optional[str] = None,
-        activation_price: Optional[float] = None,
-        callback_rate: Optional[float] = None,
-        working_type: Optional[NewOrderWorkingTypeEnum] = None,
-        price_protect: Optional[str] = None,
         new_order_resp_type: Optional[NewOrderNewOrderRespTypeEnum] = None,
         price_match: Optional[NewOrderPriceMatchEnum] = None,
         self_trade_prevention_mode: Optional[
@@ -2797,40 +2894,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Send in a new order.
 
-        * Order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
-        * Order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
-        * Condition orders will be triggered when:
-
-        * If parameter`priceProtect`is sent as true:
-        * when price reaches the `stopPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
-        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
-
-        * `STOP`, `STOP_MARKET`:
-        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
-        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-        * `TRAILING_STOP_MARKET`:
-        * BUY: the lowest price after order placed `<= `activationPrice`, and the latest price >`= the lowest price * (1 + `callbackRate`)
-        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
-
-        * For `TRAILING_STOP_MARKET`, if you got such error code.
-        ``{"code": -2021, "msg": "Order would immediately trigger."}``
-        means that the parameters you send do not meet the following requirements:
-        * BUY: `activationPrice` should be smaller than latest price.
-        * SELL: `activationPrice` should be larger than latest price.
-
         * If `newOrderRespType ` is sent as `RESULT` :
         * `MARKET` order: the final FILLED result of the order will be return directly.
         * `LIMIT` order with special `timeInForce`: the final status result of the order(FILLED or EXPIRED) will be returned directly.
 
-        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
-        * Follow the same rules for condition orders.
-        * If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
-        * Cannot be used with `quantity` paremeter
-        * Cannot be used with `reduceOnly` parameter
-        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
         * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
         * In extreme market conditions, timeInForce `GTD` order auto cancel time might be delayed comparing to `goodTillDate`
 
@@ -2844,16 +2911,10 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     type (Union[str, None]):
                     position_side (Optional[NewOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[NewOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     price (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
-                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-                    working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
@@ -2878,12 +2939,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
             reduce_only,
             price,
             new_client_order_id,
-            stop_price,
-            close_position,
-            activation_price,
-            callback_rate,
-            working_type,
-            price_protect,
             new_order_resp_type,
             price_match,
             self_trade_prevention_mode,
@@ -3242,14 +3297,14 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     type (Union[str, None]):
                     position_side (Optional[TestOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[TestOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     price (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
                     working_type (Optional[TestOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"

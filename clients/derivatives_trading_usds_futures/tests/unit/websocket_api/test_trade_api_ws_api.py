@@ -100,32 +100,13 @@ class TestWebSocketTradeApi:
         """Test cancel_algo_order() successfully with required parameters only."""
 
         expected_response = {
-            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "id": "unique-cancel-request-id-5678",
             "status": 200,
             "result": {
-                "algoId": 3000000000003505,
-                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
-                "algoType": "CONDITIONAL",
-                "orderType": "TAKE_PROFIT",
-                "symbol": "BTCUSDT",
-                "side": "SELL",
-                "positionSide": "SHORT",
-                "timeInForce": "GTC",
-                "quantity": "1.000",
-                "algoStatus": "CANCELED",
-                "triggerPrice": "120000.00",
-                "price": "160000.00",
-                "icebergQuantity": None,
-                "selfTradePreventionMode": "EXPIRE_MAKER",
-                "workingType": "CONTRACT_PRICE",
-                "priceMatch": "NONE",
-                "closePosition": False,
-                "priceProtect": False,
-                "reduceOnly": False,
-                "createTime": 1762507264142,
-                "updateTime": 1762507264143,
-                "triggerTime": 0,
-                "goodTillDate": 0,
+                "algoId": 2000000002162519,
+                "clientAlgoId": "rDMG8WSde6LkyMNtk6s825",
+                "code": "200",
+                "msg": "success",
             },
             "rateLimits": [
                 {
@@ -133,7 +114,7 @@ class TestWebSocketTradeApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 2400,
-                    "count": 1,
+                    "count": 6,
                 }
             ],
         }
@@ -179,32 +160,13 @@ class TestWebSocketTradeApi:
         }
 
         expected_response = {
-            "id": "06c9dbd8-ccbf-4ecf-a29c-fe31495ac73f",
+            "id": "unique-cancel-request-id-5678",
             "status": 200,
             "result": {
-                "algoId": 3000000000003505,
-                "clientAlgoId": "0Xkl1p621E4EryvufmYre1",
-                "algoType": "CONDITIONAL",
-                "orderType": "TAKE_PROFIT",
-                "symbol": "BTCUSDT",
-                "side": "SELL",
-                "positionSide": "SHORT",
-                "timeInForce": "GTC",
-                "quantity": "1.000",
-                "algoStatus": "CANCELED",
-                "triggerPrice": "120000.00",
-                "price": "160000.00",
-                "icebergQuantity": None,
-                "selfTradePreventionMode": "EXPIRE_MAKER",
-                "workingType": "CONTRACT_PRICE",
-                "priceMatch": "NONE",
-                "closePosition": False,
-                "priceProtect": False,
-                "reduceOnly": False,
-                "createTime": 1762507264142,
-                "updateTime": 1762507264143,
-                "triggerTime": 0,
-                "goodTillDate": 0,
+                "algoId": 2000000002162519,
+                "clientAlgoId": "rDMG8WSde6LkyMNtk6s825",
+                "code": "200",
+                "msg": "success",
             },
             "rateLimits": [
                 {
@@ -212,7 +174,7 @@ class TestWebSocketTradeApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 2400,
-                    "count": 1,
+                    "count": 6,
                 }
             ],
         }

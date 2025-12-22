@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_usds_futures.websocket_api.models.cancel_algo_order_response_rate_limits_inner import (
-    CancelAlgoOrderResponseRateLimitsInner,
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models.cancel_order_response_rate_limits_inner import (
+    CancelOrderResponseRateLimitsInner,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models.new_algo_order_response_result import (
     NewAlgoOrderResponseResult,
@@ -36,7 +36,7 @@ class NewAlgoOrderResponse(BaseModel):
     id: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     result: Optional[NewAlgoOrderResponseResult] = None
-    rate_limits: Optional[List[CancelAlgoOrderResponseRateLimitsInner]] = Field(
+    rate_limits: Optional[List[CancelOrderResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
 
@@ -126,7 +126,7 @@ class NewAlgoOrderResponse(BaseModel):
                 ),
                 "rateLimits": (
                     [
-                        CancelAlgoOrderResponseRateLimitsInner.from_dict(_item)
+                        CancelOrderResponseRateLimitsInner.from_dict(_item)
                         for _item in obj["rateLimits"]
                     ]
                     if obj.get("rateLimits") is not None

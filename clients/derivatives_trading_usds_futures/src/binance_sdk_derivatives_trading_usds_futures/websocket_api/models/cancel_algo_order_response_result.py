@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -29,55 +29,10 @@ class CancelAlgoOrderResponseResult(BaseModel):
 
     algo_id: Optional[StrictInt] = Field(default=None, alias="algoId")
     client_algo_id: Optional[StrictStr] = Field(default=None, alias="clientAlgoId")
-    algo_type: Optional[StrictStr] = Field(default=None, alias="algoType")
-    order_type: Optional[StrictStr] = Field(default=None, alias="orderType")
-    symbol: Optional[StrictStr] = None
-    side: Optional[StrictStr] = None
-    position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
-    time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    quantity: Optional[StrictStr] = None
-    algo_status: Optional[StrictStr] = Field(default=None, alias="algoStatus")
-    trigger_price: Optional[StrictStr] = Field(default=None, alias="triggerPrice")
-    price: Optional[StrictStr] = None
-    iceberg_quantity: Optional[StrictStr] = Field(default=None, alias="icebergQuantity")
-    self_trade_prevention_mode: Optional[StrictStr] = Field(
-        default=None, alias="selfTradePreventionMode"
-    )
-    working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
-    price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
-    close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
-    price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
-    update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
-    trigger_time: Optional[StrictInt] = Field(default=None, alias="triggerTime")
-    good_till_date: Optional[StrictInt] = Field(default=None, alias="goodTillDate")
+    code: Optional[StrictStr] = None
+    msg: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "algoId",
-        "clientAlgoId",
-        "algoType",
-        "orderType",
-        "symbol",
-        "side",
-        "positionSide",
-        "timeInForce",
-        "quantity",
-        "algoStatus",
-        "triggerPrice",
-        "price",
-        "icebergQuantity",
-        "selfTradePreventionMode",
-        "workingType",
-        "priceMatch",
-        "closePosition",
-        "priceProtect",
-        "reduceOnly",
-        "createTime",
-        "updateTime",
-        "triggerTime",
-        "goodTillDate",
-    ]
+    __properties: ClassVar[List[str]] = ["algoId", "clientAlgoId", "code", "msg"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -145,27 +100,8 @@ class CancelAlgoOrderResponseResult(BaseModel):
             {
                 "algoId": obj.get("algoId"),
                 "clientAlgoId": obj.get("clientAlgoId"),
-                "algoType": obj.get("algoType"),
-                "orderType": obj.get("orderType"),
-                "symbol": obj.get("symbol"),
-                "side": obj.get("side"),
-                "positionSide": obj.get("positionSide"),
-                "timeInForce": obj.get("timeInForce"),
-                "quantity": obj.get("quantity"),
-                "algoStatus": obj.get("algoStatus"),
-                "triggerPrice": obj.get("triggerPrice"),
-                "price": obj.get("price"),
-                "icebergQuantity": obj.get("icebergQuantity"),
-                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
-                "workingType": obj.get("workingType"),
-                "priceMatch": obj.get("priceMatch"),
-                "closePosition": obj.get("closePosition"),
-                "priceProtect": obj.get("priceProtect"),
-                "reduceOnly": obj.get("reduceOnly"),
-                "createTime": obj.get("createTime"),
-                "updateTime": obj.get("updateTime"),
-                "triggerTime": obj.get("triggerTime"),
-                "goodTillDate": obj.get("goodTillDate"),
+                "code": obj.get("code"),
+                "msg": obj.get("msg"),
             }
         )
         # store additional fields in additional_properties

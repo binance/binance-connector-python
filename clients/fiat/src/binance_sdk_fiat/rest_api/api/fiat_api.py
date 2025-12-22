@@ -16,8 +16,13 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 
+from ..models import DepositResponse
+from ..models import FiatWithdrawResponse
 from ..models import GetFiatDepositWithdrawHistoryResponse
 from ..models import GetFiatPaymentsHistoryResponse
+from ..models import GetOrderDetailResponse
+
+from ..models import AccountInfo
 
 
 class FiatApi:
@@ -32,6 +37,173 @@ class FiatApi:
         self._configuration = configuration
         self._session = session
         self._signer = signer
+
+    def deposit(
+        self,
+        currency: Union[str, None],
+        api_payment_method: Union[str, None],
+        amount: Union[int, None],
+        recv_window: Optional[int] = None,
+        ext: Optional[object] = None,
+    ) -> ApiResponse[DepositResponse]:
+        """
+                Deposit(TRADE)
+                POST /sapi/v1/fiat/deposit
+                https://developers.binance.com/docs/fiat/rest-api/Fiat-Deposit
+
+                Submit deposit request, in this version, we only support BRL deposit via pix.
+
+
+
+        For BRL deposit via pix, you need to place an order before making a transfer from your bank.
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        Weight: 45000
+
+                Args:
+                    currency (Union[str, None]):
+                    api_payment_method (Union[str, None]):
+                    amount (Union[int, None]):
+                    recv_window (Optional[int] = None):
+                    ext (Optional[object] = None):
+
+                Returns:
+                    ApiResponse[DepositResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if currency is None:
+            raise RequiredError(
+                field="currency", error_message="Missing required parameter 'currency'"
+            )
+        if api_payment_method is None:
+            raise RequiredError(
+                field="api_payment_method",
+                error_message="Missing required parameter 'api_payment_method'",
+            )
+        if amount is None:
+            raise RequiredError(
+                field="amount", error_message="Missing required parameter 'amount'"
+            )
+
+        body = {
+            "currency": currency,
+            "api_payment_method": api_payment_method,
+            "amount": amount,
+            "ext": ext,
+        }
+        payload = {
+            "currency": currency,
+            "api_payment_method": api_payment_method,
+            "amount": amount,
+            "recv_window": recv_window,
+            "ext": ext,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/fiat/deposit",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=DepositResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def fiat_withdraw(
+        self,
+        currency: Union[str, None],
+        api_payment_method: Union[str, None],
+        amount: Union[int, None],
+        account_info: Union[AccountInfo, None],
+        recv_window: Optional[int] = None,
+        ext: Optional[object] = None,
+    ) -> ApiResponse[FiatWithdrawResponse]:
+        """
+                Fiat Withdraw(WITHDRAW)
+                POST /sapi/v2/fiat/withdraw
+                https://developers.binance.com/docs/fiat/rest-api/Fiat-Withdraw
+
+                Submit withdraw request, in this version, we only support BRL withdrawal via bank_transfer.
+
+        You need to call this api first, and call query order detail api in a loop to get the status of the order until this order is successful.
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        you need to bind your bank account on web/app before using the corresponding account number
+
+        Weight: 45000
+
+                Args:
+                    currency (Union[str, None]):
+                    api_payment_method (Union[str, None]):
+                    amount (Union[int, None]):
+                    account_info (Union[AccountInfo, None]):
+                    recv_window (Optional[int] = None):
+                    ext (Optional[object] = None):
+
+                Returns:
+                    ApiResponse[FiatWithdrawResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if currency is None:
+            raise RequiredError(
+                field="currency", error_message="Missing required parameter 'currency'"
+            )
+        if api_payment_method is None:
+            raise RequiredError(
+                field="api_payment_method",
+                error_message="Missing required parameter 'api_payment_method'",
+            )
+        if amount is None:
+            raise RequiredError(
+                field="amount", error_message="Missing required parameter 'amount'"
+            )
+        if account_info is None:
+            raise RequiredError(
+                field="account_info",
+                error_message="Missing required parameter 'account_info'",
+            )
+
+        body = {
+            "currency": currency,
+            "api_payment_method": api_payment_method,
+            "amount": amount,
+            "account_info": account_info,
+            "ext": ext,
+        }
+        payload = {
+            "currency": currency,
+            "api_payment_method": api_payment_method,
+            "amount": amount,
+            "account_info": account_info,
+            "recv_window": recv_window,
+            "ext": ext,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v2/fiat/withdraw",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=FiatWithdrawResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
 
     def get_fiat_deposit_withdraw_history(
         self,
@@ -75,6 +247,7 @@ class FiatApi:
                 error_message="Missing required parameter 'transaction_type'",
             )
 
+        body = {}
         payload = {
             "transaction_type": transaction_type,
             "begin_time": begin_time,
@@ -90,6 +263,7 @@ class FiatApi:
             method="GET",
             path="/sapi/v1/fiat/orders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFiatDepositWithdrawHistoryResponse,
             is_signed=True,
@@ -143,6 +317,7 @@ class FiatApi:
                 error_message="Missing required parameter 'transaction_type'",
             )
 
+        body = {}
         payload = {
             "transaction_type": transaction_type,
             "begin_time": begin_time,
@@ -158,8 +333,58 @@ class FiatApi:
             method="GET",
             path="/sapi/v1/fiat/payments",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFiatPaymentsHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_order_detail(
+        self,
+        order_no: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetOrderDetailResponse]:
+        """
+                Get Order Detail(USER_DATA)
+                GET /sapi/v1/fiat/get-order-detail
+                https://developers.binance.com/docs/fiat/rest-api/Get-Order-Detail
+
+                Get Order Detail
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        Weight: 1
+
+                Args:
+                    order_no (Union[str, None]): order id retrieved from the api call of withdrawal
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetOrderDetailResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if order_no is None:
+            raise RequiredError(
+                field="order_no", error_message="Missing required parameter 'order_no'"
+            )
+
+        body = {}
+        payload = {"order_no": order_no, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/fiat/get-order-detail",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetOrderDetailResponse,
             is_signed=True,
             signer=self._signer,
         )

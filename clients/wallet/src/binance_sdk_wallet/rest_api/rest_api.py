@@ -29,6 +29,8 @@ from .models import DailyAccountSnapshotResponse
 from .models import GetApiKeyPermissionResponse
 from .models import AssetDetailResponse
 from .models import AssetDividendRecordResponse
+from .models import DustConvertResponse
+from .models import DustConvertibleAssetsResponse
 from .models import DustTransferResponse
 from .models import DustlogResponse
 from .models import FundingWalletResponse
@@ -93,7 +95,11 @@ class WalletRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -101,25 +107,8 @@ class WalletRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -129,7 +118,36 @@ class WalletRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -380,6 +398,72 @@ class WalletRestAPI:
 
         return self._assetApi.asset_dividend_record(
             asset, start_time, end_time, limit, recv_window
+        )
+
+    def dust_convert(
+        self,
+        asset: Union[str, None],
+        client_id: Optional[str] = None,
+        target_asset: Optional[str] = None,
+        third_party_client_id: Optional[str] = None,
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertResponse]:
+        """
+                Dust Convert (USER_DATA)
+
+                Convert dust assets
+
+        Weight: 10
+
+                Args:
+                    asset (Union[str, None]):
+                    client_id (Optional[str] = None): A unique id for the request
+                    target_asset (Optional[str] = None):
+                    third_party_client_id (Optional[str] = None):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._assetApi.dust_convert(
+            asset,
+            client_id,
+            target_asset,
+            third_party_client_id,
+            dust_quota_asset_to_target_asset_price,
+        )
+
+    def dust_convertible_assets(
+        self,
+        target_asset: Union[str, None],
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertibleAssetsResponse]:
+        """
+                Dust Convertible Assets (USER_DATA)
+
+                Query dust convertible assets
+
+        Weight: 1
+
+                Args:
+                    target_asset (Union[str, None]):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertibleAssetsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._assetApi.dust_convertible_assets(
+            target_asset, dust_quota_asset_to_target_asset_price
         )
 
     def dust_transfer(

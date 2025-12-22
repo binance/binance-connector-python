@@ -16,16 +16,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
@@ -40,23 +32,12 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
     position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
     type: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    quantity: Optional[Union[StrictFloat, StrictInt]] = None
+    quantity: Optional[StrictStr] = None
     reduce_only: Optional[StrictStr] = Field(default=None, alias="reduceOnly")
-    price: Optional[Union[StrictFloat, StrictInt]] = None
+    price: Optional[StrictStr] = None
     new_client_order_id: Optional[StrictStr] = Field(
         default=None, alias="newClientOrderId"
     )
-    stop_price: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="stopPrice"
-    )
-    activation_price: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="activationPrice"
-    )
-    callback_rate: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="callbackRate"
-    )
-    working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
-    price_protect: Optional[StrictStr] = Field(default=None, alias="priceProtect")
     new_order_resp_type: Optional[StrictStr] = Field(
         default=None, alias="newOrderRespType"
     )
@@ -64,7 +45,7 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"
     )
-    good_till_date: Optional[StrictInt] = Field(default=None, alias="goodTillDate")
+    good_till_date: Optional[StrictStr] = Field(default=None, alias="goodTillDate")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",
@@ -76,11 +57,6 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
         "reduceOnly",
         "price",
         "newClientOrderId",
-        "stopPrice",
-        "activationPrice",
-        "callbackRate",
-        "workingType",
-        "priceProtect",
         "newOrderRespType",
         "priceMatch",
         "selfTradePreventionMode",
@@ -116,18 +92,6 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
         if value not in set(["GTC", "IOC", "FOK", "GTX", "GTD", "RPI"]):
             raise ValueError(
                 "must be one of enum values ('GTC', 'IOC', 'FOK', 'GTX', 'GTD', 'RPI')"
-            )
-        return value
-
-    @field_validator("working_type")
-    def working_type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(["MARK_PRICE", "CONTRACT_PRICE"]):
-            raise ValueError(
-                "must be one of enum values ('MARK_PRICE', 'CONTRACT_PRICE')"
             )
         return value
 
@@ -250,11 +214,6 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
                 "reduceOnly": obj.get("reduceOnly"),
                 "price": obj.get("price"),
                 "newClientOrderId": obj.get("newClientOrderId"),
-                "stopPrice": obj.get("stopPrice"),
-                "activationPrice": obj.get("activationPrice"),
-                "callbackRate": obj.get("callbackRate"),
-                "workingType": obj.get("workingType"),
-                "priceProtect": obj.get("priceProtect"),
                 "newOrderRespType": obj.get("newOrderRespType"),
                 "priceMatch": obj.get("priceMatch"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),

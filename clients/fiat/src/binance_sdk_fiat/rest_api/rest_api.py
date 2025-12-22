@@ -16,8 +16,13 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 from .api.fiat_api import FiatApi
 
+from .models import DepositResponse
+from .models import FiatWithdrawResponse
 from .models import GetFiatDepositWithdrawHistoryResponse
 from .models import GetFiatPaymentsHistoryResponse
+from .models import GetOrderDetailResponse
+
+from .models import AccountInfo
 
 
 T = TypeVar("T")
@@ -41,7 +46,11 @@ class FiatRestAPI:
         self._fiatApi = FiatApi(self.configuration, self._session, self._signer)
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -49,25 +58,8 @@ class FiatRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -77,9 +69,120 @@ class FiatRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
+        )
+
+    def deposit(
+        self,
+        currency: Union[str, None],
+        api_payment_method: Union[str, None],
+        amount: Union[int, None],
+        recv_window: Optional[int] = None,
+        ext: Optional[object] = None,
+    ) -> ApiResponse[DepositResponse]:
+        """
+                Deposit(TRADE)
+
+                Submit deposit request, in this version, we only support BRL deposit via pix.
+
+
+
+        For BRL deposit via pix, you need to place an order before making a transfer from your bank.
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        Weight: 45000
+
+                Args:
+                    currency (Union[str, None]):
+                    api_payment_method (Union[str, None]):
+                    amount (Union[int, None]):
+                    recv_window (Optional[int] = None):
+                    ext (Optional[object] = None):
+
+                Returns:
+                    ApiResponse[DepositResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._fiatApi.deposit(
+            currency, api_payment_method, amount, recv_window, ext
+        )
+
+    def fiat_withdraw(
+        self,
+        currency: Union[str, None],
+        api_payment_method: Union[str, None],
+        amount: Union[int, None],
+        account_info: Union[AccountInfo, None],
+        recv_window: Optional[int] = None,
+        ext: Optional[object] = None,
+    ) -> ApiResponse[FiatWithdrawResponse]:
+        """
+                Fiat Withdraw(WITHDRAW)
+
+                Submit withdraw request, in this version, we only support BRL withdrawal via bank_transfer.
+
+        You need to call this api first, and call query order detail api in a loop to get the status of the order until this order is successful.
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        you need to bind your bank account on web/app before using the corresponding account number
+
+        Weight: 45000
+
+                Args:
+                    currency (Union[str, None]):
+                    api_payment_method (Union[str, None]):
+                    amount (Union[int, None]):
+                    account_info (Union[AccountInfo, None]):
+                    recv_window (Optional[int] = None):
+                    ext (Optional[object] = None):
+
+                Returns:
+                    ApiResponse[FiatWithdrawResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._fiatApi.fiat_withdraw(
+            currency, api_payment_method, amount, account_info, recv_window, ext
         )
 
     def get_fiat_deposit_withdraw_history(
@@ -162,3 +265,31 @@ class FiatRestAPI:
         return self._fiatApi.get_fiat_payments_history(
             transaction_type, begin_time, end_time, page, rows, recv_window
         )
+
+    def get_order_detail(
+        self,
+        order_no: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetOrderDetailResponse]:
+        """
+                Get Order Detail(USER_DATA)
+
+                Get Order Detail
+
+        Before calling this api, please make sure you have already completed your KYC or KYB, and already activated your fiat service on our website.
+
+        Weight: 1
+
+                Args:
+                    order_no (Union[str, None]): order id retrieved from the api call of withdrawal
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetOrderDetailResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._fiatApi.get_order_detail(order_no, recv_window)

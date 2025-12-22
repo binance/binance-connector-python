@@ -1,12 +1,24 @@
 # Changelog
 
+## 3.0.0 - 2025-12-22
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- Modified response for `um_position_adl_quantile_estimation()` (`GET /papi/v1/um/adlQuantile`):
+  - items.`adlQuantile`: property `HEDGE` deleted
+  - items.`adlQuantile`: property `HEDGE` deleted
+
 ## 2.0.0 - 2025-11-24
 
 ### Changed (1)
 
 - Modified response for `user_data()` method:
   - removed `M` from Executionreport
-
 
 ## 1.8.0 - 2025-10-10
 

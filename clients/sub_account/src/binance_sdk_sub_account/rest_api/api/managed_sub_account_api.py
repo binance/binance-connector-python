@@ -87,6 +87,7 @@ class ManagedSubAccountApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "to_email": to_email,
             "asset": asset,
@@ -100,6 +101,7 @@ class ManagedSubAccountApi:
             method="POST",
             path="/sapi/v1/managed-subaccount/deposit",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DepositAssetsIntoTheManagedSubAccountResponse,
             is_signed=True,
@@ -150,6 +152,7 @@ class ManagedSubAccountApi:
                 field="coin", error_message="Missing required parameter 'coin'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "coin": coin,
@@ -164,6 +167,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/deposit/address",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetManagedSubAccountDepositAddressResponse,
             is_signed=True,
@@ -201,6 +205,7 @@ class ManagedSubAccountApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -209,6 +214,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/asset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountAssetDetailsResponse,
             is_signed=True,
@@ -246,6 +252,7 @@ class ManagedSubAccountApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "account_type": account_type}
 
         return send_request(
@@ -254,6 +261,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/fetch-future-asset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountFuturesAssetDetailsResponse,
             is_signed=True,
@@ -290,6 +298,7 @@ class ManagedSubAccountApi:
 
         """
 
+        body = {}
         payload = {
             "email": email,
             "page": page,
@@ -303,6 +312,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/info",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountListResponse,
             is_signed=True,
@@ -340,6 +350,7 @@ class ManagedSubAccountApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "account_type": account_type}
 
         return send_request(
@@ -348,6 +359,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/marginAsset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountMarginAssetDetailsResponse,
             is_signed=True,
@@ -401,6 +413,7 @@ class ManagedSubAccountApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "type": type,
@@ -416,6 +429,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/accountSnapshot",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountSnapshotResponse,
             is_signed=True,
@@ -481,6 +495,7 @@ class ManagedSubAccountApi:
                 field="limit", error_message="Missing required parameter 'limit'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "start_time": start_time,
@@ -497,6 +512,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/queryTransLogForInvestor",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountTransferLogMasterAccountInvestorResponse,
             is_signed=True,
@@ -562,6 +578,7 @@ class ManagedSubAccountApi:
                 field="limit", error_message="Missing required parameter 'limit'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "start_time": start_time,
@@ -578,6 +595,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/queryTransLogForTradeParent",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountTransferLogMasterAccountTradingResponse,
             is_signed=True,
@@ -638,6 +656,7 @@ class ManagedSubAccountApi:
                 field="limit", error_message="Missing required parameter 'limit'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -654,6 +673,7 @@ class ManagedSubAccountApi:
             method="GET",
             path="/sapi/v1/managed-subaccount/query-trans-log",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryManagedSubAccountTransferLogSubAccountTradingResponse,
             is_signed=True,
@@ -708,6 +728,7 @@ class ManagedSubAccountApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "from_email": from_email,
             "asset": asset,
@@ -722,6 +743,7 @@ class ManagedSubAccountApi:
             method="POST",
             path="/sapi/v1/managed-subaccount/withdraw",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawlAssetsFromTheManagedSubAccountResponse,
             is_signed=True,

@@ -39,7 +39,7 @@ class WebsocketMarketStreamsApi:
     async def index_price_streams(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             Index Price Streams
@@ -52,7 +52,7 @@ class WebsocketMarketStreamsApi:
 
             Args:
                     symbol (Union[str, None]): The symbol parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -83,7 +83,7 @@ class WebsocketMarketStreamsApi:
         self,
         symbol: Union[str, None],
         interval: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             Kline/Candlestick Streams
@@ -97,7 +97,7 @@ class WebsocketMarketStreamsApi:
             Args:
                     symbol (Union[str, None]): The symbol parameter
                     interval (Union[str, None]): The interval parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -134,7 +134,7 @@ class WebsocketMarketStreamsApi:
     async def mark_price(
         self,
         underlying_asset: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             Mark Price
@@ -147,7 +147,7 @@ class WebsocketMarketStreamsApi:
 
             Args:
                     underlying_asset (Union[str, None]): The underlyingAsset parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -177,7 +177,7 @@ class WebsocketMarketStreamsApi:
 
     async def new_symbol_info(
         self,
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             New Symbol Info
@@ -189,7 +189,7 @@ class WebsocketMarketStreamsApi:
         Update Speed: 50ms
 
             Args:
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -214,7 +214,7 @@ class WebsocketMarketStreamsApi:
         self,
         underlying_asset: Union[str, None],
         expiration_date: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             Open Interest
@@ -228,7 +228,7 @@ class WebsocketMarketStreamsApi:
             Args:
                     underlying_asset (Union[str, None]): The underlyingAsset parameter
                     expiration_date (Union[str, None]): The expirationDate parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -266,7 +266,7 @@ class WebsocketMarketStreamsApi:
         self,
         symbol: Union[str, None],
         levels: Union[int, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
         update_speed: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
@@ -281,7 +281,7 @@ class WebsocketMarketStreamsApi:
             Args:
                     symbol (Union[str, None]): The symbol parameter
                     levels (Union[int, None]): The levels parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
                     update_speed (Optional[str] = None): WebSocket stream update speed
 
             Returns:
@@ -320,7 +320,7 @@ class WebsocketMarketStreamsApi:
     async def ticker24_hour(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             24-hour TICKER
@@ -333,7 +333,7 @@ class WebsocketMarketStreamsApi:
 
             Args:
                     symbol (Union[str, None]): The symbol parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -364,7 +364,7 @@ class WebsocketMarketStreamsApi:
         self,
         underlying_asset: Union[str, None],
         expiration_date: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             24-hour TICKER by underlying asset and expiration data
@@ -378,7 +378,7 @@ class WebsocketMarketStreamsApi:
             Args:
                     underlying_asset (Union[str, None]): The underlyingAsset parameter
                     expiration_date (Union[str, None]): The expirationDate parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle
@@ -417,7 +417,7 @@ class WebsocketMarketStreamsApi:
     async def trade_streams(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
             Trade Streams
@@ -430,7 +430,7 @@ class WebsocketMarketStreamsApi:
 
             Args:
                     symbol (Union[str, None]): The symbol parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
+                    id (Optional[int] = None): Unique WebSocket request ID.
 
             Returns:
                 RequestStreamHandle

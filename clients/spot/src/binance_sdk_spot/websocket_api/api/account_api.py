@@ -368,7 +368,7 @@ class AccountApi:
             /myFilters
             https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/account-requests#query-relevant-filters-user_data
 
-            Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+            Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only method that shows if an account has `MAX_ASSET` filters applied to it.
         Weight: 40
 
             Args:

@@ -58,7 +58,11 @@ class TestBfusdApi:
     def test_get_bfusd_account_success(self, mock_get_signature):
         """Test get_bfusd_account() successfully with required parameters only."""
 
-        expected_response = {"bfusdAmount": "100", "totalProfit": "12.81"}
+        expected_response = {
+            "bfusdAmount": "100",
+            "usdtProfit": "11.00",
+            "bfusdProfit": "1.81",
+        }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -99,7 +103,11 @@ class TestBfusdApi:
 
         params = {"recv_window": 5000}
 
-        expected_response = {"bfusdAmount": "100", "totalProfit": "12.81"}
+        expected_response = {
+            "bfusdAmount": "100",
+            "usdtProfit": "11.00",
+            "bfusdProfit": "1.81",
+        }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -500,6 +508,7 @@ class TestBfusdApi:
             "rows": [
                 {
                     "time": 1575018510000,
+                    "rewardAsset": "BFUSD",
                     "rewardsAmount": "1",
                     "BFUSDPosition": "100",
                     "annualPercentageRate": "0.0418",
@@ -561,6 +570,7 @@ class TestBfusdApi:
             "rows": [
                 {
                     "time": 1575018510000,
+                    "rewardAsset": "BFUSD",
                     "rewardsAmount": "1",
                     "BFUSDPosition": "100",
                     "annualPercentageRate": "0.0418",

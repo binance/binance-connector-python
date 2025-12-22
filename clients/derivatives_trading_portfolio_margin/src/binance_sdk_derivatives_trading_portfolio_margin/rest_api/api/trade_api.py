@@ -161,6 +161,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -169,6 +170,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/cm/conditional/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllCmOpenConditionalOrdersResponse,
             is_signed=True,
@@ -206,6 +208,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -214,6 +217,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/cm/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllCmOpenOrdersResponse,
             is_signed=True,
@@ -251,6 +255,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -259,6 +264,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/um/conditional/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllUmOpenConditionalOrdersResponse,
             is_signed=True,
@@ -296,6 +302,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -304,6 +311,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/um/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllUmOpenOrdersResponse,
             is_signed=True,
@@ -347,6 +355,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -360,6 +369,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/cm/conditional/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelCmConditionalOrderResponse,
             is_signed=True,
@@ -403,6 +413,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -416,6 +427,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/cm/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelCmOrderResponse,
             is_signed=True,
@@ -453,6 +465,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -461,6 +474,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/margin/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMarginAccountAllOpenOrdersOnASymbolResponse,
             is_signed=True,
@@ -506,6 +520,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_list_id": order_list_id,
@@ -520,6 +535,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMarginAccountOcoOrdersResponse,
             is_signed=True,
@@ -565,6 +581,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -579,6 +596,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMarginAccountOrderResponse,
             is_signed=True,
@@ -622,6 +640,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -635,6 +654,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/um/conditional/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelUmConditionalOrderResponse,
             is_signed=True,
@@ -678,6 +698,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -691,6 +712,7 @@ class TradeApi:
             method="DELETE",
             path="/papi/v1/um/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelUmOrderResponse,
             is_signed=True,
@@ -742,6 +764,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "pair": pair,
@@ -758,6 +781,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/userTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CmAccountTradeListResponse,
             is_signed=True,
@@ -796,6 +820,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -804,6 +829,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/adlQuantile",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CmPositionAdlQuantileEstimationResponse,
             is_signed=True,
@@ -834,6 +860,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -842,6 +869,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/feeBurn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmFuturesBnbBurnStatusResponse,
             is_signed=True,
@@ -885,6 +913,7 @@ class TradeApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"asset": asset, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -893,6 +922,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/marginLoan",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountBorrowResponse,
             is_signed=True,
@@ -984,6 +1014,7 @@ class TradeApi:
                 error_message="Missing required parameter 'stop_price'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1008,6 +1039,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/margin/order/oco",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOcoResponse,
             is_signed=True,
@@ -1051,6 +1083,7 @@ class TradeApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"asset": asset, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -1059,6 +1092,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/repayLoan",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountRepayResponse,
             is_signed=True,
@@ -1105,6 +1139,7 @@ class TradeApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "amount": amount,
@@ -1118,6 +1153,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/margin/repay-debt",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountRepayDebtResponse,
             is_signed=True,
@@ -1165,6 +1201,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -1181,6 +1218,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/myTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountTradeListResponse,
             is_signed=True,
@@ -1249,6 +1287,7 @@ class TradeApi:
                 field="price", error_message="Missing required parameter 'price'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1266,6 +1305,7 @@ class TradeApi:
             method="PUT",
             path="/papi/v1/cm/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyCmOrderResponse,
             is_signed=True,
@@ -1334,6 +1374,7 @@ class TradeApi:
                 field="price", error_message="Missing required parameter 'price'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1351,6 +1392,7 @@ class TradeApi:
             method="PUT",
             path="/papi/v1/um/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyUmOrderResponse,
             is_signed=True,
@@ -1448,6 +1490,7 @@ class TradeApi:
                 error_message="Missing required parameter 'strategy_type'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1472,6 +1515,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/cm/conditional/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewCmConditionalOrderResponse,
             is_signed=True,
@@ -1541,6 +1585,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1562,6 +1607,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/cm/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewCmOrderResponse,
             is_signed=True,
@@ -1635,6 +1681,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1659,6 +1706,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewMarginOrderResponse,
             is_signed=True,
@@ -1766,6 +1814,7 @@ class TradeApi:
                 error_message="Missing required parameter 'strategy_type'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1793,6 +1842,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/um/conditional/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewUmConditionalOrderResponse,
             is_signed=True,
@@ -1870,6 +1920,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1893,6 +1944,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/um/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewUmOrderResponse,
             is_signed=True,
@@ -1939,6 +1991,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -1954,6 +2007,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/conditional/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCmConditionalOrdersResponse,
             is_signed=True,
@@ -2008,6 +2062,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "pair": pair,
@@ -2024,6 +2079,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCmOrdersResponse,
             is_signed=True,
@@ -2058,6 +2114,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2066,6 +2123,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/conditional/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCurrentCmOpenConditionalOrdersResponse,
             is_signed=True,
@@ -2103,6 +2161,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "pair": pair, "recv_window": recv_window}
 
         return send_request(
@@ -2111,6 +2170,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCurrentCmOpenOrdersResponse,
             is_signed=True,
@@ -2146,6 +2206,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2154,6 +2215,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/conditional/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCurrentUmOpenConditionalOrdersResponse,
             is_signed=True,
@@ -2189,6 +2251,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2197,6 +2260,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllCurrentUmOpenOrdersResponse,
             is_signed=True,
@@ -2242,6 +2306,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2257,6 +2322,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllMarginAccountOrdersResponse,
             is_signed=True,
@@ -2303,6 +2369,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -2318,6 +2385,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/conditional/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllUmConditionalOrdersResponse,
             is_signed=True,
@@ -2370,6 +2438,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2385,6 +2454,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllUmOrdersResponse,
             is_signed=True,
@@ -2434,6 +2504,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -2447,6 +2518,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/conditional/orderHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCmConditionalOrderHistoryResponse,
             is_signed=True,
@@ -2496,6 +2568,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2512,6 +2585,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/orderAmendment",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCmModifyOrderHistoryResponse,
             is_signed=True,
@@ -2559,6 +2633,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2572,6 +2647,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCmOrderResponse,
             is_signed=True,
@@ -2616,6 +2692,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -2629,6 +2706,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/conditional/openOrder",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentCmOpenConditionalOrderResponse,
             is_signed=True,
@@ -2673,6 +2751,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2686,6 +2765,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/openOrder",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentCmOpenOrderResponse,
             is_signed=True,
@@ -2723,6 +2803,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2731,6 +2812,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentMarginOpenOrderResponse,
             is_signed=True,
@@ -2775,6 +2857,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -2788,6 +2871,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/conditional/openOrder",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentUmOpenConditionalOrderResponse,
             is_signed=True,
@@ -2833,6 +2917,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2846,6 +2931,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/openOrder",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentUmOpenOrderResponse,
             is_signed=True,
@@ -2887,6 +2973,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2900,6 +2987,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountOrderResponse,
             is_signed=True,
@@ -2938,6 +3026,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "from_id": from_id,
             "start_time": start_time,
@@ -2952,6 +3041,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/allOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsAllOcoResponse,
             is_signed=True,
@@ -2986,6 +3076,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "order_list_id": order_list_id,
             "orig_client_order_id": orig_client_order_id,
@@ -2998,6 +3089,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOcoResponse,
             is_signed=True,
@@ -3028,6 +3120,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -3036,6 +3129,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/openOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOpenOcoResponse,
             is_signed=True,
@@ -3084,6 +3178,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "strategy_id": strategy_id,
@@ -3097,6 +3192,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/conditional/orderHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUmConditionalOrderHistoryResponse,
             is_signed=True,
@@ -3146,6 +3242,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -3162,6 +3259,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/orderAmendment",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUmModifyOrderHistoryResponse,
             is_signed=True,
@@ -3209,6 +3307,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -3222,6 +3321,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUmOrderResponse,
             is_signed=True,
@@ -3265,6 +3365,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "auto_close_type": auto_close_type,
@@ -3280,6 +3381,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/cm/forceOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUsersCmForceOrdersResponse,
             is_signed=True,
@@ -3318,6 +3420,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -3332,6 +3435,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/margin/forceOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUsersMarginForceOrdersResponse,
             is_signed=True,
@@ -3375,6 +3479,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "auto_close_type": auto_close_type,
@@ -3390,6 +3495,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/forceOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUsersUmForceOrdersResponse,
             is_signed=True,
@@ -3430,6 +3536,7 @@ class TradeApi:
                 field="fee_burn", error_message="Missing required parameter 'fee_burn'"
             )
 
+        body = {}
         payload = {"fee_burn": fee_burn, "recv_window": recv_window}
 
         return send_request(
@@ -3438,6 +3545,7 @@ class TradeApi:
             method="POST",
             path="/papi/v1/um/feeBurn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ToggleBnbBurnOnUmFuturesTradeResponse,
             is_signed=True,
@@ -3488,6 +3596,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -3503,6 +3612,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/userTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UmAccountTradeListResponse,
             is_signed=True,
@@ -3542,6 +3652,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -3550,6 +3661,7 @@ class TradeApi:
             method="GET",
             path="/papi/v1/um/adlQuantile",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UmPositionAdlQuantileEstimationResponse,
             is_signed=True,

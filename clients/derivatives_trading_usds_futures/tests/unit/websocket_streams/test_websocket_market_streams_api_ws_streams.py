@@ -2501,3 +2501,202 @@ class TestWebSocketStreams:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.ws_streams.partial_book_depth_streams(**params)
+
+    @pytest.mark.asyncio
+    async def test_rpi_diff_book_depth_streams_subscription(self):
+        """Test that rpi_diff_book_depth_streams() subscribes to the correct WebSocket stream."""
+
+        params = {
+            "symbol": "btcusdt",
+        }
+
+        expected_response = {
+            "e": "depthUpdate",
+            "E": 123456789,
+            "T": 123456788,
+            "s": "BTCUSDT",
+            "U": 157,
+            "u": 160,
+            "pu": 149,
+            "b": [["0.0024", "10"]],
+            "a": [["0.0026", "100"]],
+        }
+        stream_endpoint = ws_streams_placeholder(
+            "/<symbol>@rpiDepth@500ms".replace("/", "", 1),
+            params,
+        )
+
+        def mock_on(event, callback, stream):
+            if event == "message" and stream == stream_endpoint:
+                callback(expected_response)
+
+        self.websocket_client.on = MagicMock(side_effect=mock_on)
+
+        mock_callback = MagicMock()
+
+        stream = await self.ws_streams.rpi_diff_book_depth_streams(**params)
+        assert isinstance(stream, RequestStreamHandle)
+        assert callable(stream.on)
+        assert callable(stream.unsubscribe)
+        stream.on("message", mock_callback)
+        mock_callback.assert_called_once_with(expected_response)
+
+    @pytest.mark.asyncio
+    async def test_rpi_diff_book_depth_streams_success(self):
+        """Test rpi_diff_book_depth_streams() successfully with required parameters only."""
+
+        params = {
+            "symbol": "btcusdt",
+        }
+
+        expected_response = {
+            "e": "depthUpdate",
+            "E": 123456789,
+            "T": 123456788,
+            "s": "BTCUSDT",
+            "U": 157,
+            "u": 160,
+            "pu": 149,
+            "b": [["0.0024", "10"]],
+            "a": [["0.0026", "100"]],
+        }
+        self.ws_streams.rpi_diff_book_depth_streams = AsyncMock(
+            return_value=expected_response
+        )
+
+        response = await self.ws_streams.rpi_diff_book_depth_streams(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_rpi_diff_book_depth_streams_success_with_optional_params(self):
+        """Test rpi_diff_book_depth_streams() successfully with optional parameters."""
+
+        params = {"symbol": "btcusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "depthUpdate",
+            "E": 123456789,
+            "T": 123456788,
+            "s": "BTCUSDT",
+            "U": 157,
+            "u": 160,
+            "pu": 149,
+            "b": [["0.0024", "10"]],
+            "a": [["0.0026", "100"]],
+        }
+
+        self.ws_streams.rpi_diff_book_depth_streams = AsyncMock(
+            return_value=expected_response
+        )
+
+        response = await self.ws_streams.rpi_diff_book_depth_streams(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_rpi_diff_book_depth_streams_missing_required_param_symbol(self):
+        """Test that rpi_diff_book_depth_streams() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "btcusdt",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.ws_streams.rpi_diff_book_depth_streams(**params)
+
+    @pytest.mark.asyncio
+    async def test_rpi_diff_book_depth_streams_server_error(self):
+        """Test that rpi_diff_book_depth_streams() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "btcusdt",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.ws_streams.rpi_diff_book_depth_streams = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.ws_streams.rpi_diff_book_depth_streams(**params)
+
+    @pytest.mark.asyncio
+    async def test_trading_session_stream_subscription(self):
+        """Test that trading_session_stream() subscribes to the correct WebSocket stream."""
+
+        expected_response = {
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
+        }
+        stream_endpoint = ws_streams_placeholder(
+            "/tradingSession".replace("/", "", 1),
+            {},
+        )
+
+        def mock_on(event, callback, stream):
+            if event == "message" and stream == stream_endpoint:
+                callback(expected_response)
+
+        self.websocket_client.on = MagicMock(side_effect=mock_on)
+
+        mock_callback = MagicMock()
+
+        stream = await self.ws_streams.trading_session_stream()
+        assert isinstance(stream, RequestStreamHandle)
+        assert callable(stream.on)
+        assert callable(stream.unsubscribe)
+        stream.on("message", mock_callback)
+        mock_callback.assert_called_once_with(expected_response)
+
+    @pytest.mark.asyncio
+    async def test_trading_session_stream_success(self):
+        """Test trading_session_stream() successfully with required parameters only."""
+
+        expected_response = {
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
+        }
+        self.ws_streams.trading_session_stream = AsyncMock(
+            return_value=expected_response
+        )
+
+        response = await self.ws_streams.trading_session_stream()
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_trading_session_stream_success_with_optional_params(self):
+        """Test trading_session_stream() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
+        }
+
+        self.ws_streams.trading_session_stream = AsyncMock(
+            return_value=expected_response
+        )
+
+        response = await self.ws_streams.trading_session_stream(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_trading_session_stream_server_error(self):
+        """Test that trading_session_stream() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.ws_streams.trading_session_stream = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.ws_streams.trading_session_stream()

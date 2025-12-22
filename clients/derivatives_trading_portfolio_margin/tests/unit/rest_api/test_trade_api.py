@@ -9405,8 +9405,8 @@ class TestTradeApi:
         """Test um_position_adl_quantile_estimation() successfully with required parameters only."""
 
         expected_response = [
-            {"symbol": "ETHUSDT", "adlQuantile": {"LONG": 3, "SHORT": 3, "HEDGE": 0}},
-            {"symbol": "BTCUSDT", "adlQuantile": {"LONG": 1, "SHORT": 2, "BOTH": 0}},
+            {"symbol": "ETHUSDT", "adlQuantile": {"LONG": 3, "SHORT": 3, "BOTH": 0}},
+            {"symbol": "BTCUSDT", "adlQuantile": {"LONG": 0, "SHORT": 0, "BOTH": 2}},
         ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -9457,8 +9457,8 @@ class TestTradeApi:
         params = {"symbol": "symbol_example", "recv_window": 5000}
 
         expected_response = [
-            {"symbol": "ETHUSDT", "adlQuantile": {"LONG": 3, "SHORT": 3, "HEDGE": 0}},
-            {"symbol": "BTCUSDT", "adlQuantile": {"LONG": 1, "SHORT": 2, "BOTH": 0}},
+            {"symbol": "ETHUSDT", "adlQuantile": {"LONG": 3, "SHORT": 3, "BOTH": 0}},
+            {"symbol": "BTCUSDT", "adlQuantile": {"LONG": 0, "SHORT": 0, "BOTH": 2}},
         ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

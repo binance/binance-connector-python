@@ -409,6 +409,170 @@ class OrderListOcoSelfTradePreventionModeEnum(Enum):
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
+class OrderListOpoWorkingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListOpoWorkingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListOpoPendingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    MARKET = "MARKET"
+    STOP_LOSS = "STOP_LOSS"
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListOpoPendingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListOpoNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+    FULL = "FULL"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+
+
+class OrderListOpoSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    DECREMENT = "DECREMENT"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderListOpoWorkingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListOpoWorkingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListOpoWorkingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListOpoPendingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListOpoPendingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListOpoPendingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListOpocoWorkingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListOpocoWorkingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListOpocoPendingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListOpocoPendingAboveTypeEnum(Enum):
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    STOP_LOSS = "STOP_LOSS"
+    LIMIT_MAKER = "LIMIT_MAKER"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+
+
+class OrderListOpocoNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+    FULL = "FULL"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+
+
+class OrderListOpocoSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    DECREMENT = "DECREMENT"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderListOpocoWorkingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListOpocoWorkingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListOpocoWorkingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListOpocoPendingAboveTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListOpocoPendingAbovePegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListOpocoPendingAbovePegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListOpocoPendingBelowTypeEnum(Enum):
+    STOP_LOSS = "STOP_LOSS"
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+
+
+class OrderListOpocoPendingBelowTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListOpocoPendingBelowPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListOpocoPendingBelowPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
 class OrderListOtoWorkingTypeEnum(Enum):
     LIMIT = "LIMIT"
     LIMIT_MAKER = "LIMIT_MAKER"

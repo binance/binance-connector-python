@@ -28,9 +28,10 @@ class GetBfusdAccountResponse(BaseModel):
     """  # noqa: E501
 
     bfusd_amount: Optional[StrictStr] = Field(default=None, alias="bfusdAmount")
-    total_profit: Optional[StrictStr] = Field(default=None, alias="totalProfit")
+    usdt_profit: Optional[StrictStr] = Field(default=None, alias="usdtProfit")
+    bfusd_profit: Optional[StrictStr] = Field(default=None, alias="bfusdProfit")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["bfusdAmount", "totalProfit"]
+    __properties: ClassVar[List[str]] = ["bfusdAmount", "usdtProfit", "bfusdProfit"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,7 +98,8 @@ class GetBfusdAccountResponse(BaseModel):
         _obj = cls.model_validate(
             {
                 "bfusdAmount": obj.get("bfusdAmount"),
-                "totalProfit": obj.get("totalProfit"),
+                "usdtProfit": obj.get("usdtProfit"),
+                "bfusdProfit": obj.get("bfusdProfit"),
             }
         )
         # store additional fields in additional_properties

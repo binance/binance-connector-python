@@ -1,5 +1,43 @@
 # Changelog
 
+## 6.0.0 - 2025-12-22
+
+### Added (5)
+
+#### REST API
+
+- `order_list_opo()` (`POST /api/v3/orderList/opo`)
+- `order_list_opoco()` (`POST /api/v3/orderList/opoco`)
+
+#### WebSocket API
+
+- `order_list_place_opo()` (`orderList.place.opo` method)
+- `order_list_place_opoco()` (`orderList.place.opoco` method)
+- `order_amend_keep_priority()` (`order.amend.keepPriority` method)
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- Modified response for `exchange_info()` (`GET /api/v3/exchangeInfo`):
+  - `symbols`.items: property `opoAllowed` added
+  - `symbols`.items: item property `opoAllowed` added
+
+#### WebSocket API
+
+- Modified response for `exchange_info()` (`exchangeInfo` method):
+  - `result`.`symbols`.items: property `opoAllowed` added
+  - `result`.`symbols`.items: item property `opoAllowed` added
+
+### Removed (1)
+
+#### WebSocket Streams
+
+- `/!ticker@arr()` (`!ticker@arr` stream)
+
 ## 5.0.0 - 2025-11-24
 
 ### Changed (1)

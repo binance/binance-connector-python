@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.0.0 - 2025-12-22
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+- Modified parameter `dustQuotaAssetToTargetAssetPrice`:
+  - type `BIGDECIMAL` → `number`
+  - affected methods:
+    - `dust_convert()` (`POST /sapi/v1/asset/dust-convert/convert`)
+    - `dust_convertible_assets()` (`POST /sapi/v1/asset/dust-convert/query-convertible-assets`)
+
 ## 4.1.0 - 2025-10-10
 
 ### Changed (2)

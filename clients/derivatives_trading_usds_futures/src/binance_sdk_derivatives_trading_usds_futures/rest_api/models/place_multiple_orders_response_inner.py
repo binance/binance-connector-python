@@ -44,8 +44,6 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     orig_type: Optional[StrictStr] = Field(default=None, alias="origType")
-    activate_price: Optional[StrictStr] = Field(default=None, alias="activatePrice")
-    price_rate: Optional[StrictStr] = Field(default=None, alias="priceRate")
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
     working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
     price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
@@ -75,8 +73,6 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
         "timeInForce",
         "type",
         "origType",
-        "activatePrice",
-        "priceRate",
         "updateTime",
         "workingType",
         "priceProtect",
@@ -168,8 +164,6 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "origType": obj.get("origType"),
-                "activatePrice": obj.get("activatePrice"),
-                "priceRate": obj.get("priceRate"),
                 "updateTime": obj.get("updateTime"),
                 "workingType": obj.get("workingType"),
                 "priceProtect": obj.get("priceProtect"),

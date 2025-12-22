@@ -55,6 +55,7 @@ class RiskDataStreamApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -63,6 +64,7 @@ class RiskDataStreamApi:
             method="DELETE",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -96,6 +98,7 @@ class RiskDataStreamApi:
                 error_message="Missing required parameter 'listen_key'",
             )
 
+        body = {}
         payload = {"listen_key": listen_key}
 
         return send_request(
@@ -104,6 +107,7 @@ class RiskDataStreamApi:
             method="PUT",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -129,6 +133,7 @@ class RiskDataStreamApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -137,6 +142,7 @@ class RiskDataStreamApi:
             method="POST",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
         )

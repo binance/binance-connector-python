@@ -51,6 +51,7 @@ class AlgoUpdateO(BaseModel):
     R: Optional[StrictBool] = Field(default=None, alias="R")
     tt: Optional[StrictInt] = None
     gtd: Optional[StrictInt] = None
+    rm: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "caid",
@@ -77,6 +78,7 @@ class AlgoUpdateO(BaseModel):
         "R",
         "tt",
         "gtd",
+        "rm",
     ]
 
     model_config = ConfigDict(
@@ -163,6 +165,7 @@ class AlgoUpdateO(BaseModel):
                 "R": obj.get("R"),
                 "tt": obj.get("tt"),
                 "gtd": obj.get("gtd"),
+                "rm": obj.get("rm"),
             }
         )
         # store additional fields in additional_properties

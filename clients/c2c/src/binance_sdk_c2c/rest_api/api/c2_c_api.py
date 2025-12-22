@@ -69,6 +69,7 @@ class C2CApi:
 
         """
 
+        body = {}
         payload = {
             "trade_type": trade_type,
             "start_timestamp": start_timestamp,
@@ -84,6 +85,7 @@ class C2CApi:
             method="GET",
             path="/sapi/v1/c2c/orderMatch/listUserOrderHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetC2CTradeHistoryResponse,
             is_signed=True,

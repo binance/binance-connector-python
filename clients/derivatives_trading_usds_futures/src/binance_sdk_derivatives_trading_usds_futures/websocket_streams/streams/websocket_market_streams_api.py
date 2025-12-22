@@ -34,6 +34,8 @@ from ..models import MarkPriceStreamResponse
 from ..models import MarkPriceStreamForAllMarketResponse
 from ..models import MultiAssetsModeAssetIndexResponse
 from ..models import PartialBookDepthStreamsResponse
+from ..models import RpiDiffBookDepthStreamsResponse
+from ..models import TradingSessionStreamResponse
 
 
 from typing import Optional, Union
@@ -728,6 +730,10 @@ class WebsocketMarketStreamsApi:
 
             Mark price and funding rate for all symbols pushed every 3 seconds or every second.
 
+        **Note**:
+
+        This stream does not cover TradFi Perps.
+
         Update Speed: 3000ms or 1000ms
 
             Args:
@@ -848,4 +854,88 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=PartialBookDepthStreamsResponse,
+        )
+
+    async def rpi_diff_book_depth_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+            RPI Diff. Book Depth Streams
+            /<symbol>@rpiDepth@500ms
+            https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Diff-Book-Depth-Streams-RPI
+
+            Bids and asks including RPI orders, pushed every 500 milliseconds
+
+        RPI(Retail Price Improvement) orders are included and aggreated in the response message. When the quantity of a price level to be updated is equal to 0, it means either all quotations for this price have been filled/canceled, or the quantity of crossed RPI orders for this price are hidden
+
+        Update Speed: 500ms
+
+            Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                RequestStreamHandle
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        stream = ws_streams_placeholder(
+            "/<symbol>@rpiDepth@500ms".replace("/", "", 1),
+            {
+                "symbol": symbol,
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=RpiDiffBookDepthStreamsResponse,
+        )
+
+    async def trading_session_stream(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+            Trading Session Stream
+            /tradingSession
+            https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Trading-Session-Stream
+
+            Trading session information for the underlying assets of TradFi Perpetual contracts—covering the U.S. equity market and the commodity market—is updated every second. Trading session information for different underlying markets is pushed in separate messages. Session types for the equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING". Session types for the commodity market include "REGULAR" and "NO_TRADING".
+
+        Update Speed: 1s
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                RequestStreamHandle
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        stream = ws_streams_placeholder(
+            "/tradingSession".replace("/", "", 1),
+            {
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=TradingSessionStreamResponse,
         )

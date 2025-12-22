@@ -16,17 +16,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
@@ -39,16 +30,16 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
     symbol: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    quantity: Optional[Union[StrictFloat, StrictInt]] = None
-    price: Optional[Union[StrictFloat, StrictInt]] = None
+    quantity: Optional[StrictStr] = None
+    price: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    post_only: Optional[StrictBool] = Field(default=None, alias="postOnly")
+    reduce_only: Optional[StrictStr] = Field(default=None, alias="reduceOnly")
+    post_only: Optional[StrictStr] = Field(default=None, alias="postOnly")
     new_order_resp_type: Optional[StrictStr] = Field(
         default=None, alias="newOrderRespType"
     )
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
-    is_mmp: Optional[StrictBool] = Field(default=None, alias="isMmp")
+    is_mmp: Optional[StrictStr] = Field(default=None, alias="isMmp")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",

@@ -32,6 +32,7 @@ class MarginTradingWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
+
         super().__init__(configuration)
         self.configuration = configuration
 
