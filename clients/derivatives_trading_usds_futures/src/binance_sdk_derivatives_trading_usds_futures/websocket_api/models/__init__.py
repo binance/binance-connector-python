@@ -45,6 +45,9 @@ from .cancel_algo_order_response_result import (
     CancelAlgoOrderResponseResult as CancelAlgoOrderResponseResult,
 )
 from .cancel_order_response import CancelOrderResponse as CancelOrderResponse
+from .cancel_order_response_rate_limits_inner import (
+    CancelOrderResponseRateLimitsInner as CancelOrderResponseRateLimitsInner,
+)
 from .cancel_order_response_result import (
     CancelOrderResponseResult as CancelOrderResponseResult,
 )

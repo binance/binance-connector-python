@@ -33,6 +33,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
+
         super().__init__(configuration)
         self.configuration = configuration
 
@@ -550,6 +551,10 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
                 Mark price and funding rate for all symbols pushed every 3 seconds or every second.
 
+        **Note**:
+
+        This stream does not cover TradFi Perps.
+
         Update Speed: 3000ms or 1000ms
 
                 Args:
@@ -625,3 +630,57 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         return await self._websocketMarketStreamsApi.partial_book_depth_streams(
             symbol, levels, id, update_speed
         )
+
+    async def rpi_diff_book_depth_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                RPI Diff. Book Depth Streams
+
+                Bids and asks including RPI orders, pushed every 500 milliseconds
+
+        RPI(Retail Price Improvement) orders are included and aggreated in the response message. When the quantity of a price level to be updated is equal to 0, it means either all quotations for this price have been filled/canceled, or the quantity of crossed RPI orders for this price are hidden
+
+        Update Speed: 500ms
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._websocketMarketStreamsApi.rpi_diff_book_depth_streams(
+            symbol, id
+        )
+
+    async def trading_session_stream(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Trading Session Stream
+
+                Trading session information for the underlying assets of TradFi Perpetual contracts—covering the U.S. equity market and the commodity market—is updated every second. Trading session information for different underlying markets is pushed in separate messages. Session types for the equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING". Session types for the commodity market include "REGULAR" and "NO_TRADING".
+
+        Update Speed: 1s
+
+                Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._websocketMarketStreamsApi.trading_session_stream(id)

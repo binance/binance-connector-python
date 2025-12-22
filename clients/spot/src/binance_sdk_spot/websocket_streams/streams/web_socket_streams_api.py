@@ -24,7 +24,6 @@ from binance_common.websocket import (
 from ..models import AggTradeResponse
 from ..models import AllMarketRollingWindowTickerResponse
 from ..models import AllMiniTickerResponse
-from ..models import AllTickerResponse
 from ..models import AvgPriceResponse
 from ..models import BookTickerResponse
 from ..models import DiffBookDepthResponse
@@ -169,39 +168,6 @@ class WebSocketStreamsApi:
 
         return await RequestStream(
             self.websocket_base, stream=stream, response_model=AllMiniTickerResponse
-        )
-
-    async def all_ticker(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-        WebSocket All Market Tickers Stream (DEPRECATED)
-        /!ticker@arr
-        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-tickers-stream-deprecated
-
-        24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
-
-        Args:
-                id (Optional[str] = None): Unique WebSocket request ID.
-
-        Returns:
-            RequestStreamHandle
-
-        Raises:
-            RequiredError: If a required parameter is missing.
-
-        """
-
-        stream = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", "", 1),
-            {
-                "id": id,
-            },
-        )
-
-        return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AllTickerResponse
         )
 
     async def avg_price(

@@ -1,5 +1,120 @@
 # Changelog
 
+## 5.0.0 - 2025-12-22
+
+### Added (5)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- `futures_tradfi_perps_contract()` (`POST /fapi/v1/stock/contract`)
+- `trading_schedule()` (`GET /fapi/v1/tradingSchedule`)
+- `rpi_order_book()` (`GET /fapi/v1/rpiDepth`)
+
+#### WebSocket Streams
+
+- `trading_session_stream()` (`tradingSession` stream)
+- `rpi_diff_book_depth_streams()` (`<symbol>@rpiDepth@500ms` stream)
+
+### Changed (12)
+
+#### REST API
+
+- Added parameter `activatePrice`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+- Deleted parameter `activationPrice`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+
+- Modified parameter `batchOrders`:
+  - items: property `stopPrice` deleted
+  - items: property `priceProtect` deleted
+  - items: property `activationPrice` deleted
+  - items: property `callbackRate` deleted
+  - items: property `workingType` deleted
+  - items: item property `stopPrice` deleted
+  - items: item property `priceProtect` deleted
+  - items: item property `activationPrice` deleted
+  - items: item property `callbackRate` deleted
+  - items: item property `workingType` deleted
+  - items.`goodTillDate`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - items.`goodTillDate`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - affected methods:
+    - `place_multiple_orders()` (`POST /fapi/v1/batchOrders`)
+- Modified parameter `batchOrders`:
+  - items.`orderId`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - items.`recvWindow`: type `integer` → `string`
+  - items.`orderId`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - items.`recvWindow`: type `integer` → `string`
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`)
+
+- Deleted parameter `activationPrice`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Deleted parameter `callbackRate`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Deleted parameter `closePosition`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Deleted parameter `priceProtect`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Deleted parameter `stopPrice`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Deleted parameter `workingType`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+- Modified response for `place_multiple_orders()` (`POST /fapi/v1/batchOrders`):
+  - items: property `priceRate` deleted
+  - items: property `activatePrice` deleted
+  - items: item property `priceRate` deleted
+  - items: item property `activatePrice` deleted
+
+- Modified response for `new_order()` (`POST /fapi/v1/order`):
+  - property `activatePrice` deleted
+  - property `priceRate` deleted
+
+#### WebSocket API
+
+- Modified response for `cancel_algo_order()` (`algoOrder.cancel` method):
+  - `result`: property `code` added
+  - `result`: property `msg` added
+  - `result`: property `positionSide` deleted
+  - `result`: property `priceMatch` deleted
+  - `result`: property `createTime` deleted
+  - `result`: property `price` deleted
+  - `result`: property `priceProtect` deleted
+  - `result`: property `algoType` deleted
+  - `result`: property `selfTradePreventionMode` deleted
+  - `result`: property `timeInForce` deleted
+  - `result`: property `updateTime` deleted
+  - `result`: property `workingType` deleted
+  - `result`: property `goodTillDate` deleted
+  - `result`: property `symbol` deleted
+  - `result`: property `orderType` deleted
+  - `result`: property `triggerPrice` deleted
+  - `result`: property `algoStatus` deleted
+  - `result`: property `triggerTime` deleted
+  - `result`: property `icebergQuantity` deleted
+  - `result`: property `side` deleted
+  - `result`: property `closePosition` deleted
+  - `result`: property `reduceOnly` deleted
+  - `result`: property `quantity` deleted
+
 ## 4.0.0 - 2025-11-24
 
 ### Added (1)

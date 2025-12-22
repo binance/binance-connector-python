@@ -76,6 +76,8 @@ from .models import OrderCancelReplaceResponse
 from .models import OrderListCancelResponse
 from .models import OrderListPlaceResponse
 from .models import OrderListPlaceOcoResponse
+from .models import OrderListPlaceOpoResponse
+from .models import OrderListPlaceOpocoResponse
 from .models import OrderListPlaceOtoResponse
 from .models import OrderListPlaceOtocoResponse
 from .models import OrderPlaceResponse
@@ -128,6 +130,34 @@ from .models import OrderListPlaceOcoBelowPegPriceTypeEnum
 from .models import OrderListPlaceOcoBelowPegOffsetTypeEnum
 from .models import OrderListPlaceOcoNewOrderRespTypeEnum
 from .models import OrderListPlaceOcoSelfTradePreventionModeEnum
+from .models import OrderListPlaceOpoWorkingTypeEnum
+from .models import OrderListPlaceOpoWorkingSideEnum
+from .models import OrderListPlaceOpoPendingTypeEnum
+from .models import OrderListPlaceOpoPendingSideEnum
+from .models import OrderListPlaceOpoNewOrderRespTypeEnum
+from .models import OrderListPlaceOpoSelfTradePreventionModeEnum
+from .models import OrderListPlaceOpoWorkingTimeInForceEnum
+from .models import OrderListPlaceOpoWorkingPegPriceTypeEnum
+from .models import OrderListPlaceOpoWorkingPegOffsetTypeEnum
+from .models import OrderListPlaceOpoPendingTimeInForceEnum
+from .models import OrderListPlaceOpoPendingPegPriceTypeEnum
+from .models import OrderListPlaceOpoPendingPegOffsetTypeEnum
+from .models import OrderListPlaceOpocoWorkingTypeEnum
+from .models import OrderListPlaceOpocoWorkingSideEnum
+from .models import OrderListPlaceOpocoPendingSideEnum
+from .models import OrderListPlaceOpocoPendingAboveTypeEnum
+from .models import OrderListPlaceOpocoNewOrderRespTypeEnum
+from .models import OrderListPlaceOpocoSelfTradePreventionModeEnum
+from .models import OrderListPlaceOpocoWorkingTimeInForceEnum
+from .models import OrderListPlaceOpocoWorkingPegPriceTypeEnum
+from .models import OrderListPlaceOpocoWorkingPegOffsetTypeEnum
+from .models import OrderListPlaceOpocoPendingAboveTimeInForceEnum
+from .models import OrderListPlaceOpocoPendingAbovePegPriceTypeEnum
+from .models import OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum
+from .models import OrderListPlaceOpocoPendingBelowTypeEnum
+from .models import OrderListPlaceOpocoPendingBelowTimeInForceEnum
+from .models import OrderListPlaceOpocoPendingBelowPegPriceTypeEnum
+from .models import OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum
 from .models import OrderListPlaceOtoWorkingTypeEnum
 from .models import OrderListPlaceOtoWorkingSideEnum
 from .models import OrderListPlaceOtoPendingTypeEnum
@@ -499,7 +529,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
                 WebSocket Query Relevant Filters
 
-                Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only endpoint that shows if an account has `MAX_ASSET` filters applied to it.
+                Retrieves the list of [filters](filters.md) relevant to an account on a given symbol. This is the only method that shows if an account has `MAX_ASSET` filters applied to it.
         Weight: 40
 
                 Args:
@@ -1905,6 +1935,308 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             recv_window,
         )
 
+    async def order_list_place_opo(
+        self,
+        symbol: Union[str, None],
+        working_type: Union[OrderListPlaceOpoWorkingTypeEnum, None],
+        working_side: Union[OrderListPlaceOpoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_type: Union[OrderListPlaceOpoPendingTypeEnum, None],
+        pending_side: Union[OrderListPlaceOpoPendingSideEnum, None],
+        id: Optional[str] = None,
+        list_client_order_id: Optional[str] = None,
+        new_order_resp_type: Optional[OrderListPlaceOpoNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            OrderListPlaceOpoSelfTradePreventionModeEnum
+        ] = None,
+        working_client_order_id: Optional[str] = None,
+        working_iceberg_qty: Optional[float] = None,
+        working_time_in_force: Optional[OrderListPlaceOpoWorkingTimeInForceEnum] = None,
+        working_strategy_id: Optional[int] = None,
+        working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[
+            OrderListPlaceOpoWorkingPegPriceTypeEnum
+        ] = None,
+        working_peg_offset_type: Optional[
+            OrderListPlaceOpoWorkingPegOffsetTypeEnum
+        ] = None,
+        working_peg_offset_value: Optional[int] = None,
+        pending_client_order_id: Optional[str] = None,
+        pending_price: Optional[float] = None,
+        pending_stop_price: Optional[float] = None,
+        pending_trailing_delta: Optional[float] = None,
+        pending_iceberg_qty: Optional[float] = None,
+        pending_time_in_force: Optional[OrderListPlaceOpoPendingTimeInForceEnum] = None,
+        pending_strategy_id: Optional[int] = None,
+        pending_strategy_type: Optional[int] = None,
+        pending_peg_price_type: Optional[
+            OrderListPlaceOpoPendingPegPriceTypeEnum
+        ] = None,
+        pending_peg_offset_type: Optional[
+            OrderListPlaceOpoPendingPegOffsetTypeEnum
+        ] = None,
+        pending_peg_offset_value: Optional[int] = None,
+        recv_window: Optional[float] = None,
+    ) -> WebsocketApiResponse[OrderListPlaceOpoResponse]:
+        """
+                WebSocket OPO
+
+                Place an [OPO](./faqs/opo.md).
+
+        * OPOs add 2 orders to the EXCHANGE_MAX_NUM_ORDERS filter and MAX_NUM_ORDERS filter.
+        Weight: 1
+
+        Unfilled Order Count: 2
+
+                Args:
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListPlaceOpoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListPlaceOpoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_type (Union[OrderListPlaceOpoPendingTypeEnum, None]):
+                    pending_side (Union[OrderListPlaceOpoPendingSideEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    new_order_resp_type (Optional[OrderListPlaceOpoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceOpoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListPlaceOpoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListPlaceOpoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListPlaceOpoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
+                    pending_price (Optional[float] = None):
+                    pending_stop_price (Optional[float] = None):
+                    pending_trailing_delta (Optional[float] = None):
+                    pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
+                    pending_time_in_force (Optional[OrderListPlaceOpoPendingTimeInForceEnum] = None):
+                    pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
+                    pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. Values smaller than 1000000 are reserved and cannot be used.
+                    pending_peg_price_type (Optional[OrderListPlaceOpoPendingPegPriceTypeEnum] = None):
+                    pending_peg_offset_type (Optional[OrderListPlaceOpoPendingPegOffsetTypeEnum] = None):
+                    pending_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+                Returns:
+                    WebsocketApiResponse[OrderListPlaceOpoResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._tradeApi.order_list_place_opo(
+            symbol,
+            working_type,
+            working_side,
+            working_price,
+            working_quantity,
+            pending_type,
+            pending_side,
+            id,
+            list_client_order_id,
+            new_order_resp_type,
+            self_trade_prevention_mode,
+            working_client_order_id,
+            working_iceberg_qty,
+            working_time_in_force,
+            working_strategy_id,
+            working_strategy_type,
+            working_peg_price_type,
+            working_peg_offset_type,
+            working_peg_offset_value,
+            pending_client_order_id,
+            pending_price,
+            pending_stop_price,
+            pending_trailing_delta,
+            pending_iceberg_qty,
+            pending_time_in_force,
+            pending_strategy_id,
+            pending_strategy_type,
+            pending_peg_price_type,
+            pending_peg_offset_type,
+            pending_peg_offset_value,
+            recv_window,
+        )
+
+    async def order_list_place_opoco(
+        self,
+        symbol: Union[str, None],
+        working_type: Union[OrderListPlaceOpocoWorkingTypeEnum, None],
+        working_side: Union[OrderListPlaceOpocoWorkingSideEnum, None],
+        working_price: Union[float, None],
+        working_quantity: Union[float, None],
+        pending_side: Union[OrderListPlaceOpocoPendingSideEnum, None],
+        pending_above_type: Union[OrderListPlaceOpocoPendingAboveTypeEnum, None],
+        id: Optional[str] = None,
+        list_client_order_id: Optional[str] = None,
+        new_order_resp_type: Optional[OrderListPlaceOpocoNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            OrderListPlaceOpocoSelfTradePreventionModeEnum
+        ] = None,
+        working_client_order_id: Optional[str] = None,
+        working_iceberg_qty: Optional[float] = None,
+        working_time_in_force: Optional[
+            OrderListPlaceOpocoWorkingTimeInForceEnum
+        ] = None,
+        working_strategy_id: Optional[int] = None,
+        working_strategy_type: Optional[int] = None,
+        working_peg_price_type: Optional[
+            OrderListPlaceOpocoWorkingPegPriceTypeEnum
+        ] = None,
+        working_peg_offset_type: Optional[
+            OrderListPlaceOpocoWorkingPegOffsetTypeEnum
+        ] = None,
+        working_peg_offset_value: Optional[int] = None,
+        pending_above_client_order_id: Optional[str] = None,
+        pending_above_price: Optional[float] = None,
+        pending_above_stop_price: Optional[float] = None,
+        pending_above_trailing_delta: Optional[float] = None,
+        pending_above_iceberg_qty: Optional[float] = None,
+        pending_above_time_in_force: Optional[
+            OrderListPlaceOpocoPendingAboveTimeInForceEnum
+        ] = None,
+        pending_above_strategy_id: Optional[int] = None,
+        pending_above_strategy_type: Optional[int] = None,
+        pending_above_peg_price_type: Optional[
+            OrderListPlaceOpocoPendingAbovePegPriceTypeEnum
+        ] = None,
+        pending_above_peg_offset_type: Optional[
+            OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum
+        ] = None,
+        pending_above_peg_offset_value: Optional[int] = None,
+        pending_below_type: Optional[OrderListPlaceOpocoPendingBelowTypeEnum] = None,
+        pending_below_client_order_id: Optional[str] = None,
+        pending_below_price: Optional[float] = None,
+        pending_below_stop_price: Optional[float] = None,
+        pending_below_trailing_delta: Optional[float] = None,
+        pending_below_iceberg_qty: Optional[float] = None,
+        pending_below_time_in_force: Optional[
+            OrderListPlaceOpocoPendingBelowTimeInForceEnum
+        ] = None,
+        pending_below_strategy_id: Optional[int] = None,
+        pending_below_strategy_type: Optional[int] = None,
+        pending_below_peg_price_type: Optional[
+            OrderListPlaceOpocoPendingBelowPegPriceTypeEnum
+        ] = None,
+        pending_below_peg_offset_type: Optional[
+            OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum
+        ] = None,
+        pending_below_peg_offset_value: Optional[int] = None,
+        recv_window: Optional[float] = None,
+    ) -> WebsocketApiResponse[OrderListPlaceOpocoResponse]:
+        """
+                WebSocket OPOCO
+
+                Place an [OPOCO](./faqs/opo.md).
+        Weight: 1
+
+        Unfilled Order Count: 3
+
+                Args:
+                    symbol (Union[str, None]):
+                    working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]):
+                    working_side (Union[OrderListPlaceOpocoWorkingSideEnum, None]):
+                    working_price (Union[float, None]):
+                    working_quantity (Union[float, None]): Sets the quantity for the working order.
+                    pending_side (Union[OrderListPlaceOpocoPendingSideEnum, None]):
+                    pending_above_type (Union[OrderListPlaceOpocoPendingAboveTypeEnum, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    list_client_order_id (Optional[str] = None):
+                    new_order_resp_type (Optional[OrderListPlaceOpocoNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[OrderListPlaceOpocoSelfTradePreventionModeEnum] = None):
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
+                    working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
+                    working_time_in_force (Optional[OrderListPlaceOpocoWorkingTimeInForceEnum] = None):
+                    working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
+                    working_peg_price_type (Optional[OrderListPlaceOpocoWorkingPegPriceTypeEnum] = None):
+                    working_peg_offset_type (Optional[OrderListPlaceOpocoWorkingPegOffsetTypeEnum] = None):
+                    working_peg_offset_value (Optional[int] = None):
+                    pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
+                    pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
+                    pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
+                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop FAQ](./faqs/trailing-stop-faq.md)
+                    pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
+                    pending_above_time_in_force (Optional[OrderListPlaceOpocoPendingAboveTimeInForceEnum] = None):
+                    pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
+                    pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. Values smaller than 1000000 are reserved and cannot be used.
+                    pending_above_peg_price_type (Optional[OrderListPlaceOpocoPendingAbovePegPriceTypeEnum] = None):
+                    pending_above_peg_offset_type (Optional[OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum] = None):
+                    pending_above_peg_offset_value (Optional[int] = None):
+                    pending_below_type (Optional[OrderListPlaceOpocoPendingBelowTypeEnum] = None):
+                    pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
+                    pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price
+                    pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
+                    pending_below_trailing_delta (Optional[float] = None):
+                    pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
+                    pending_below_time_in_force (Optional[OrderListPlaceOpocoPendingBelowTimeInForceEnum] = None):
+                    pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
+                    pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. Values smaller than 1000000 are reserved and cannot be used.
+                    pending_below_peg_price_type (Optional[OrderListPlaceOpocoPendingBelowPegPriceTypeEnum] = None):
+                    pending_below_peg_offset_type (Optional[OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum] = None):
+                    pending_below_peg_offset_value (Optional[int] = None):
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+
+                Returns:
+                    WebsocketApiResponse[OrderListPlaceOpocoResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._tradeApi.order_list_place_opoco(
+            symbol,
+            working_type,
+            working_side,
+            working_price,
+            working_quantity,
+            pending_side,
+            pending_above_type,
+            id,
+            list_client_order_id,
+            new_order_resp_type,
+            self_trade_prevention_mode,
+            working_client_order_id,
+            working_iceberg_qty,
+            working_time_in_force,
+            working_strategy_id,
+            working_strategy_type,
+            working_peg_price_type,
+            working_peg_offset_type,
+            working_peg_offset_value,
+            pending_above_client_order_id,
+            pending_above_price,
+            pending_above_stop_price,
+            pending_above_trailing_delta,
+            pending_above_iceberg_qty,
+            pending_above_time_in_force,
+            pending_above_strategy_id,
+            pending_above_strategy_type,
+            pending_above_peg_price_type,
+            pending_above_peg_offset_type,
+            pending_above_peg_offset_value,
+            pending_below_type,
+            pending_below_client_order_id,
+            pending_below_price,
+            pending_below_stop_price,
+            pending_below_trailing_delta,
+            pending_below_iceberg_qty,
+            pending_below_time_in_force,
+            pending_below_strategy_id,
+            pending_below_strategy_type,
+            pending_below_peg_price_type,
+            pending_below_peg_offset_type,
+            pending_below_peg_offset_value,
+            recv_window,
+        )
+
     async def order_list_place_oto(
         self,
         symbol: Union[str, None],
@@ -1978,22 +2310,22 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     list_client_order_id (Optional[str] = None):
                     new_order_resp_type (Optional[OrderListPlaceOtoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceOtoSelfTradePreventionModeEnum] = None):
-                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
                     working_time_in_force (Optional[OrderListPlaceOtoWorkingTimeInForceEnum] = None):
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
-                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
                     working_peg_price_type (Optional[OrderListPlaceOtoWorkingPegPriceTypeEnum] = None):
                     working_peg_offset_type (Optional[OrderListPlaceOtoWorkingPegOffsetTypeEnum] = None):
                     working_peg_offset_value (Optional[int] = None):
-                    pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order.<br> Automatically generated if not sent.
+                    pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
                     pending_price (Optional[float] = None):
                     pending_stop_price (Optional[float] = None):
                     pending_trailing_delta (Optional[float] = None):
-                    pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC`, or if `pendingType` is `LIMIT_MAKER`.
+                    pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
                     pending_time_in_force (Optional[OrderListPlaceOtoPendingTimeInForceEnum] = None):
                     pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
-                    pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. Values smaller than 1000000 are reserved and cannot be used.
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
@@ -2137,34 +2469,34 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     list_client_order_id (Optional[str] = None):
                     new_order_resp_type (Optional[OrderListPlaceOtocoNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[OrderListPlaceOtocoSelfTradePreventionModeEnum] = None):
-                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order.<br> Automatically generated if not sent.
+                    working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
                     working_time_in_force (Optional[OrderListPlaceOtocoWorkingTimeInForceEnum] = None):
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
-                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than 1000000 are reserved and cannot be used.
                     working_peg_price_type (Optional[OrderListPlaceOtocoWorkingPegPriceTypeEnum] = None):
                     working_peg_offset_type (Optional[OrderListPlaceOtocoWorkingPegOffsetTypeEnum] = None):
                     working_peg_offset_value (Optional[int] = None):
-                    pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order.<br> Automatically generated if not sent.
+                    pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
                     pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT` , `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
-                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop FAQ](faqs/trailing-stop-faq.md)
+                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop FAQ](./faqs/trailing-stop-faq.md)
                     pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
                     pending_above_time_in_force (Optional[OrderListPlaceOtocoPendingAboveTimeInForceEnum] = None):
                     pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
-                    pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. Values smaller than 1000000 are reserved and cannot be used.
                     pending_above_peg_price_type (Optional[OrderListPlaceOtocoPendingAbovePegPriceTypeEnum] = None):
                     pending_above_peg_offset_type (Optional[OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum] = None):
                     pending_above_peg_offset_value (Optional[int] = None):
                     pending_below_type (Optional[OrderListPlaceOtocoPendingBelowTypeEnum] = None):
-                    pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order.<br> Automatically generated if not sent.
-                    pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                    pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. <br>Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
+                    pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
+                    pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify limit price
+                    pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT or TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
                     pending_below_trailing_delta (Optional[float] = None):
                     pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
                     pending_below_time_in_force (Optional[OrderListPlaceOtocoPendingBelowTimeInForceEnum] = None):
                     pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
-                    pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. <br> Values smaller than 1000000 are reserved and cannot be used.
+                    pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. Values smaller than 1000000 are reserved and cannot be used.
                     pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None):
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):

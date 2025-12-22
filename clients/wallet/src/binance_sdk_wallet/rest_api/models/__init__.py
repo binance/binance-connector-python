@@ -82,6 +82,16 @@ from .deposit_history_v2_response_inner import (
 from .deposit_history_v2_response_inner_questionnaire import (
     DepositHistoryV2ResponseInnerQuestionnaire as DepositHistoryV2ResponseInnerQuestionnaire,
 )
+from .dust_convert_response import DustConvertResponse as DustConvertResponse
+from .dust_convert_response_transfer_result_inner import (
+    DustConvertResponseTransferResultInner as DustConvertResponseTransferResultInner,
+)
+from .dust_convertible_assets_response import (
+    DustConvertibleAssetsResponse as DustConvertibleAssetsResponse,
+)
+from .dust_convertible_assets_response_details_inner import (
+    DustConvertibleAssetsResponseDetailsInner as DustConvertibleAssetsResponseDetailsInner,
+)
 from .dust_transfer_response import DustTransferResponse as DustTransferResponse
 from .dust_transfer_response_transfer_result_inner import (
     DustTransferResponseTransferResultInner as DustTransferResponseTransferResultInner,

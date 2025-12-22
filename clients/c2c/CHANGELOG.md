@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0 - 2025-12-22
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
 ## 2.0.0 - 2025-11-14
 
 ### Changed (6)

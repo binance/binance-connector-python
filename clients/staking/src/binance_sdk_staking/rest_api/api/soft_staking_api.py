@@ -64,6 +64,7 @@ class SoftStakingApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "current": current,
@@ -77,6 +78,7 @@ class SoftStakingApi:
             method="GET",
             path="/sapi/v1/soft-staking/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSoftStakingProductListResponse,
             is_signed=True,
@@ -120,6 +122,7 @@ class SoftStakingApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -135,6 +138,7 @@ class SoftStakingApi:
             method="GET",
             path="/sapi/v1/soft-staking/history/rewardsRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSoftStakingRewardsHistoryResponse,
             is_signed=True,
@@ -173,6 +177,7 @@ class SoftStakingApi:
                 error_message="Missing required parameter 'soft_staking'",
             )
 
+        body = {}
         payload = {"soft_staking": soft_staking, "recv_window": recv_window}
 
         return send_request(
@@ -181,6 +186,7 @@ class SoftStakingApi:
             method="GET",
             path="/sapi/v1/soft-staking/set",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetSoftStakingResponse,
             is_signed=True,

@@ -16,16 +16,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
@@ -35,16 +27,16 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
     ModifyMultipleOrdersBatchOrdersParameterInner
     """  # noqa: E501
 
-    order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
+    order_id: Optional[StrictStr] = Field(default=None, alias="orderId")
     orig_client_order_id: Optional[StrictStr] = Field(
         default=None, alias="origClientOrderId"
     )
     symbol: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
-    quantity: Optional[Union[StrictFloat, StrictInt]] = None
-    price: Optional[Union[StrictFloat, StrictInt]] = None
+    quantity: Optional[StrictStr] = None
+    price: Optional[StrictStr] = None
     price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
-    recv_window: Optional[StrictInt] = Field(default=None, alias="recvWindow")
+    recv_window: Optional[StrictStr] = Field(default=None, alias="recvWindow")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "orderId",

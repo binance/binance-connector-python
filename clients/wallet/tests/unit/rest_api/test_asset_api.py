@@ -22,6 +22,8 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 from binance_sdk_wallet.rest_api.api import AssetApi
 from binance_sdk_wallet.rest_api.models import AssetDetailResponse
 from binance_sdk_wallet.rest_api.models import AssetDividendRecordResponse
+from binance_sdk_wallet.rest_api.models import DustConvertResponse
+from binance_sdk_wallet.rest_api.models import DustConvertibleAssetsResponse
 from binance_sdk_wallet.rest_api.models import DustTransferResponse
 from binance_sdk_wallet.rest_api.models import DustlogResponse
 from binance_sdk_wallet.rest_api.models import FundingWalletResponse
@@ -316,6 +318,319 @@ class TestAssetApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.asset_dividend_record()
+
+    @patch("binance_common.utils.get_signature")
+    def test_dust_convert_success(self, mock_get_signature):
+        """Test dust_convert() successfully with required parameters only."""
+
+        params = {
+            "asset": "asset_example",
+        }
+
+        expected_response = {
+            "totalTransfered": "3.5971223",
+            "totalServiceCharge": "0.0794964",
+            "transferResult": [
+                {
+                    "tranId": 2987331510,
+                    "fromAsset": "USDT",
+                    "amount": "1",
+                    "transferedAmount": "3.5971223",
+                    "serviceChargeAmount": "0.0794964",
+                    "operateTime": 1765212029749,
+                }
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.dust_convert(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/asset/dust-convert/convert" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["asset"] == "asset_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DustConvertResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DustConvertResponse, "from_dict"):
+            expected = DustConvertResponse.from_dict(expected_response)
+        else:
+            expected = DustConvertResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_dust_convert_success_with_optional_params(self, mock_get_signature):
+        """Test dust_convert() successfully with optional parameters."""
+
+        params = {
+            "asset": "asset_example",
+            "client_id": "1",
+            "target_asset": "target_asset_example",
+            "third_party_client_id": "1",
+            "dust_quota_asset_to_target_asset_price": 1.0,
+        }
+
+        expected_response = {
+            "totalTransfered": "3.5971223",
+            "totalServiceCharge": "0.0794964",
+            "transferResult": [
+                {
+                    "tranId": 2987331510,
+                    "fromAsset": "USDT",
+                    "amount": "1",
+                    "transferedAmount": "3.5971223",
+                    "serviceChargeAmount": "0.0794964",
+                    "operateTime": 1765212029749,
+                }
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.dust_convert(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/asset/dust-convert/convert" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DustConvertResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DustConvertResponse, "from_dict"):
+            expected = DustConvertResponse.from_dict(expected_response)
+        else:
+            expected = DustConvertResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_dust_convert_missing_required_param_asset(self):
+        """Test that dust_convert() raises RequiredError when 'asset' is missing."""
+        params = {
+            "asset": "asset_example",
+        }
+        params["asset"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
+            self.client.dust_convert(**params)
+
+    def test_dust_convert_server_error(self):
+        """Test that dust_convert() raises an error when the server returns an error."""
+
+        params = {
+            "asset": "asset_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.dust_convert = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.dust_convert(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_dust_convertible_assets_success(self, mock_get_signature):
+        """Test dust_convertible_assets() successfully with required parameters only."""
+
+        params = {
+            "target_asset": "target_asset_example",
+        }
+
+        expected_response = {
+            "dribbletPercentage": "0.02",
+            "totalTransferQuotaAssetAmount": "0.7899968",
+            "totalTransferTargetAssetAmount": "0.7899968",
+            "dribbletBase": "10",
+            "details": [
+                {
+                    "asset": "AR",
+                    "assetFullName": "AR",
+                    "amountFree": "0.00856",
+                    "exchange": "0.00073616",
+                    "toQuotaAssetAmount": "0.036808",
+                    "toTargetAssetAmount": "0.036808",
+                    "toTargetAssetOffExchange": "0.03607184",
+                },
+                {
+                    "asset": "BNB",
+                    "assetFullName": "BNB",
+                    "amountFree": "0.00082768",
+                    "exchange": "0.01506378",
+                    "toQuotaAssetAmount": "0.7531888",
+                    "toTargetAssetAmount": "0.7531888",
+                    "toTargetAssetOffExchange": "0.73812502",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.dust_convertible_assets(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert (
+            "/sapi/v1/asset/dust-convert/query-convertible-assets"
+            in request_kwargs["url"]
+        )
+        assert request_kwargs["method"] == "POST"
+        assert normalized["targetAsset"] == "target_asset_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DustConvertibleAssetsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DustConvertibleAssetsResponse, "from_dict"):
+            expected = DustConvertibleAssetsResponse.from_dict(expected_response)
+        else:
+            expected = DustConvertibleAssetsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_dust_convertible_assets_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test dust_convertible_assets() successfully with optional parameters."""
+
+        params = {
+            "target_asset": "target_asset_example",
+            "dust_quota_asset_to_target_asset_price": 1.0,
+        }
+
+        expected_response = {
+            "dribbletPercentage": "0.02",
+            "totalTransferQuotaAssetAmount": "0.7899968",
+            "totalTransferTargetAssetAmount": "0.7899968",
+            "dribbletBase": "10",
+            "details": [
+                {
+                    "asset": "AR",
+                    "assetFullName": "AR",
+                    "amountFree": "0.00856",
+                    "exchange": "0.00073616",
+                    "toQuotaAssetAmount": "0.036808",
+                    "toTargetAssetAmount": "0.036808",
+                    "toTargetAssetOffExchange": "0.03607184",
+                },
+                {
+                    "asset": "BNB",
+                    "assetFullName": "BNB",
+                    "amountFree": "0.00082768",
+                    "exchange": "0.01506378",
+                    "toQuotaAssetAmount": "0.7531888",
+                    "toTargetAssetAmount": "0.7531888",
+                    "toTargetAssetOffExchange": "0.73812502",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.dust_convertible_assets(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert (
+            "/sapi/v1/asset/dust-convert/query-convertible-assets"
+            in request_kwargs["url"]
+        )
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DustConvertibleAssetsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DustConvertibleAssetsResponse, "from_dict"):
+            expected = DustConvertibleAssetsResponse.from_dict(expected_response)
+        else:
+            expected = DustConvertibleAssetsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_dust_convertible_assets_missing_required_param_target_asset(self):
+        """Test that dust_convertible_assets() raises RequiredError when 'target_asset' is missing."""
+        params = {
+            "target_asset": "target_asset_example",
+        }
+        params["target_asset"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'target_asset'"
+        ):
+            self.client.dust_convertible_assets(**params)
+
+    def test_dust_convertible_assets_server_error(self):
+        """Test that dust_convertible_assets() raises an error when the server returns an error."""
+
+        params = {
+            "target_asset": "target_asset_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.dust_convertible_assets = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.dust_convertible_assets(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_dust_transfer_success(self, mock_get_signature):

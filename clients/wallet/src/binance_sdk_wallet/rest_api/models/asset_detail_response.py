@@ -33,8 +33,8 @@ class AssetDetailResponse(BaseModel):
     AssetDetailResponse
     """  # noqa: E501
 
-    CTR: Optional[AssetDetailResponseCTR] = Field(default=None, alias="CTR")
-    SKY: Optional[AssetDetailResponseSKY] = Field(default=None, alias="SKY")
+    ctr: Optional[AssetDetailResponseCTR] = Field(default=None, alias="CTR")
+    sky: Optional[AssetDetailResponseSKY] = Field(default=None, alias="SKY")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["CTR", "SKY"]
 
@@ -84,12 +84,12 @@ class AssetDetailResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of CTR
-        if self.CTR:
-            _dict["CTR"] = self.CTR.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of SKY
-        if self.SKY:
-            _dict["SKY"] = self.SKY.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of ctr
+        if self.ctr:
+            _dict["CTR"] = self.ctr.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of sky
+        if self.sky:
+            _dict["SKY"] = self.sky.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():

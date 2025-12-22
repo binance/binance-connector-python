@@ -83,8 +83,8 @@ class ExecutionReport(BaseModel):
     k: Optional[StrictStr] = None
     uS: Optional[StrictBool] = Field(default=None, alias="uS")
     gP: Optional[StrictStr] = Field(default=None, alias="gP")
-    gOT: Optional[StrictStr] = Field(default=None, alias="gOT")
-    gOV: Optional[StrictInt] = Field(default=None, alias="gOV")
+    g_ot: Optional[StrictStr] = Field(default=None, alias="gOT")
+    g_ov: Optional[StrictInt] = Field(default=None, alias="gOV")
     gp: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

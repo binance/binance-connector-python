@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.0.0 - 2025-12-22
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- Modified parameter `batchOrders`:
+  - items.`orderId`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - items.`recvWindow`: type `integer` → `string`
+  - items.`orderId`: type `integer` → `string`
+  - items.`price`: type `number` → `string`
+  - items.`quantity`: type `number` → `string`
+  - items.`recvWindow`: type `integer` → `string`
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /dapi/v1/batchOrders`)
+
 ## 2.5.0 - 2025-10-10
 
 ### Changed (4)

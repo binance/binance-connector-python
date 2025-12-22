@@ -3158,6 +3158,7 @@ class TestAccountApi:
             "symbol": "BTCUSDT",
             "makerCommissionRate": "0.0002",
             "takerCommissionRate": "0.0004",
+            "rpiCommissionRate": "0.00005",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -3209,6 +3210,7 @@ class TestAccountApi:
             "symbol": "BTCUSDT",
             "makerCommissionRate": "0.0002",
             "takerCommissionRate": "0.0004",
+            "rpiCommissionRate": "0.00005",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

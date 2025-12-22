@@ -82,6 +82,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {"algo": algo, "user_name": user_name, "recv_window": recv_window}
 
         return send_request(
@@ -90,6 +91,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/statistics/user/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountListResponse,
             is_signed=True,
@@ -118,6 +120,7 @@ class MiningApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -126,6 +129,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/pub/algoList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AcquiringAlgorithmResponse,
         )
@@ -152,6 +156,7 @@ class MiningApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -160,6 +165,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/pub/coinList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AcquiringCoinnameResponse,
         )
@@ -202,6 +208,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {
             "config_id": config_id,
             "user_name": user_name,
@@ -214,6 +221,7 @@ class MiningApi:
             method="POST",
             path="/sapi/v1/mining/hash-transfer/config/cancel",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelHashrateResaleConfigurationResponse,
             is_signed=True,
@@ -268,6 +276,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {
             "algo": algo,
             "user_name": user_name,
@@ -285,6 +294,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/payment/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=EarningsListResponse,
             is_signed=True,
@@ -339,6 +349,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {
             "algo": algo,
             "user_name": user_name,
@@ -356,6 +367,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/payment/other",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExtraBonusListResponse,
             is_signed=True,
@@ -405,6 +417,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {
             "config_id": config_id,
             "user_name": user_name,
@@ -419,6 +432,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/hash-transfer/profit/details",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=HashrateResaleDetailResponse,
             is_signed=True,
@@ -453,6 +467,7 @@ class MiningApi:
 
         """
 
+        body = {}
         payload = {
             "page_index": page_index,
             "page_size": page_size,
@@ -465,6 +480,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/hash-transfer/config/details/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=HashrateResaleListResponse,
             is_signed=True,
@@ -536,6 +552,7 @@ class MiningApi:
                 error_message="Missing required parameter 'hash_rate'",
             )
 
+        body = {}
         payload = {
             "user_name": user_name,
             "algo": algo,
@@ -552,6 +569,7 @@ class MiningApi:
             method="POST",
             path="/sapi/v1/mining/hash-transfer/config",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=HashrateResaleRequestResponse,
             is_signed=True,
@@ -597,6 +615,7 @@ class MiningApi:
                 field="algo", error_message="Missing required parameter 'algo'"
             )
 
+        body = {}
         payload = {
             "algo": algo,
             "start_date": start_date,
@@ -612,6 +631,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/payment/uid",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MiningAccountEarningResponse,
             is_signed=True,
@@ -663,6 +683,7 @@ class MiningApi:
                 error_message="Missing required parameter 'worker_name'",
             )
 
+        body = {}
         payload = {
             "algo": algo,
             "user_name": user_name,
@@ -676,6 +697,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/worker/detail",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RequestForDetailMinerListResponse,
             is_signed=True,
@@ -728,6 +750,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {
             "algo": algo,
             "user_name": user_name,
@@ -744,6 +767,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/worker/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RequestForMinerListResponse,
             is_signed=True,
@@ -788,6 +812,7 @@ class MiningApi:
                 error_message="Missing required parameter 'user_name'",
             )
 
+        body = {}
         payload = {"algo": algo, "user_name": user_name, "recv_window": recv_window}
 
         return send_request(
@@ -796,6 +821,7 @@ class MiningApi:
             method="GET",
             path="/sapi/v1/mining/statistics/user/status",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=StatisticListResponse,
             is_signed=True,

@@ -70,6 +70,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -81,6 +82,7 @@ class MarketMakerBlockTradeApi:
             method="POST",
             path="/eapi/v1/block/order/execute",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AcceptBlockTradeOrderResponse,
             is_signed=True,
@@ -117,6 +119,7 @@ class MarketMakerBlockTradeApi:
 
         """
 
+        body = {}
         payload = {
             "end_time": end_time,
             "start_time": start_time,
@@ -130,6 +133,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/user-trades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountBlockTradeListResponse,
             is_signed=True,
@@ -168,6 +172,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -179,6 +184,7 @@ class MarketMakerBlockTradeApi:
             method="DELETE",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -216,6 +222,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -227,6 +234,7 @@ class MarketMakerBlockTradeApi:
             method="PUT",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExtendBlockTradeOrderResponse,
             is_signed=True,
@@ -271,6 +279,7 @@ class MarketMakerBlockTradeApi:
                 field="legs", error_message="Missing required parameter 'legs'"
             )
 
+        body = {}
         payload = {"liquidity": liquidity, "legs": legs, "recv_window": recv_window}
 
         return send_request(
@@ -279,6 +288,7 @@ class MarketMakerBlockTradeApi:
             method="POST",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewBlockTradeOrderResponse,
             is_signed=True,
@@ -317,6 +327,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -328,6 +339,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/order/execute",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryBlockTradeDetailsResponse,
             is_signed=True,
@@ -366,6 +378,7 @@ class MarketMakerBlockTradeApi:
 
         """
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "end_time": end_time,
@@ -380,6 +393,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/order/orders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryBlockTradeOrderResponse,
             is_signed=True,

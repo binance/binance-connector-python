@@ -28,6 +28,7 @@ class GetBfusdRewardsHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     time: Optional[StrictInt] = None
+    reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
     rewards_amount: Optional[StrictStr] = Field(default=None, alias="rewardsAmount")
     bfusd_position: Optional[StrictStr] = Field(default=None, alias="BFUSDPosition")
     annual_percentage_rate: Optional[StrictStr] = Field(
@@ -36,6 +37,7 @@ class GetBfusdRewardsHistoryResponseRowsInner(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "time",
+        "rewardAsset",
         "rewardsAmount",
         "BFUSDPosition",
         "annualPercentageRate",
@@ -106,6 +108,7 @@ class GetBfusdRewardsHistoryResponseRowsInner(BaseModel):
         _obj = cls.model_validate(
             {
                 "time": obj.get("time"),
+                "rewardAsset": obj.get("rewardAsset"),
                 "rewardsAmount": obj.get("rewardsAmount"),
                 "BFUSDPosition": obj.get("BFUSDPosition"),
                 "annualPercentageRate": obj.get("annualPercentageRate"),

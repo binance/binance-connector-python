@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models.cm_position_adl_quantile_estimation_response_inner_adl_quantile import (
-    CmPositionAdlQuantileEstimationResponseInnerAdlQuantile,
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models.um_position_adl_quantile_estimation_response_inner_adl_quantile import (
+    UmPositionAdlQuantileEstimationResponseInnerAdlQuantile,
 )
 from typing import Set
 from typing_extensions import Self
@@ -31,7 +31,7 @@ class UmPositionAdlQuantileEstimationResponseInner(BaseModel):
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = None
-    adl_quantile: Optional[CmPositionAdlQuantileEstimationResponseInnerAdlQuantile] = (
+    adl_quantile: Optional[UmPositionAdlQuantileEstimationResponseInnerAdlQuantile] = (
         Field(default=None, alias="adlQuantile")
     )
     additional_properties: Dict[str, Any] = {}
@@ -106,7 +106,7 @@ class UmPositionAdlQuantileEstimationResponseInner(BaseModel):
             {
                 "symbol": obj.get("symbol"),
                 "adlQuantile": (
-                    CmPositionAdlQuantileEstimationResponseInnerAdlQuantile.from_dict(
+                    UmPositionAdlQuantileEstimationResponseInnerAdlQuantile.from_dict(
                         obj["adlQuantile"]
                     )
                     if obj.get("adlQuantile") is not None

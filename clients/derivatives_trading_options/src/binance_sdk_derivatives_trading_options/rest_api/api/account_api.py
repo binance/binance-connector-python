@@ -75,6 +75,7 @@ class AccountApi:
                 field="currency", error_message="Missing required parameter 'currency'"
             )
 
+        body = {}
         payload = {
             "currency": currency,
             "record_id": record_id,
@@ -90,6 +91,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/bill",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountFundingFlowResponse,
             is_signed=True,
@@ -137,6 +139,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -149,6 +152,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/income/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForOptionTransactionHistoryResponse,
             is_signed=True,
@@ -189,6 +193,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -197,6 +202,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/income/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetOptionTransactionHistoryDownloadLinkByIdResponse,
             is_signed=True,
@@ -227,6 +233,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -235,6 +242,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OptionAccountInformationResponse,
             is_signed=True,
@@ -265,6 +273,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -273,6 +282,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/marginAccount",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OptionMarginAccountInformationResponse,
             is_signed=True,

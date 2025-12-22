@@ -97,7 +97,7 @@ class TestWebSocketStreams:
     async def test_index_price_streams_success_with_optional_params(self):
         """Test index_price_streams() successfully with optional parameters."""
 
-        params = {"symbol": "btcusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"symbol": "btcusdt", "id": 532601580}
 
         expected_response = {
             "e": "index",
@@ -233,11 +233,7 @@ class TestWebSocketStreams:
     async def test_kline_candlestick_streams_success_with_optional_params(self):
         """Test kline_candlestick_streams() successfully with optional parameters."""
 
-        params = {
-            "symbol": "btcusdt",
-            "interval": "1m",
-            "id": "e9d6b4349871b40611412680b3445fac",
-        }
+        params = {"symbol": "btcusdt", "interval": "1m", "id": 532601580}
 
         expected_response = {
             "e": "kline",
@@ -386,7 +382,7 @@ class TestWebSocketStreams:
     async def test_mark_price_success_with_optional_params(self):
         """Test mark_price() successfully with optional parameters."""
 
-        params = {"underlying_asset": "ETH", "id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"underlying_asset": "ETH", "id": 532601580}
 
         expected_response = [
             {
@@ -498,7 +494,7 @@ class TestWebSocketStreams:
     async def test_new_symbol_info_success_with_optional_params(self):
         """Test new_symbol_info() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"id": 532601580}
 
         expected_response = {
             "e": "OPTION_PAIR",
@@ -598,7 +594,7 @@ class TestWebSocketStreams:
         params = {
             "underlying_asset": "ETH",
             "expiration_date": "220930",
-            "id": "e9d6b4349871b40611412680b3445fac",
+            "id": 532601580,
         }
 
         expected_response = [
@@ -733,7 +729,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "btcusdt",
             "levels": 10,
-            "id": "e9d6b4349871b40611412680b3445fac",
+            "id": 532601580,
             "update_speed": "update_speed_example",
         }
 
@@ -907,7 +903,7 @@ class TestWebSocketStreams:
     async def test_ticker24_hour_success_with_optional_params(self):
         """Test ticker24_hour() successfully with optional parameters."""
 
-        params = {"symbol": "btcusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"symbol": "btcusdt", "id": 532601580}
 
         expected_response = {
             "e": "24hrTicker",
@@ -1173,7 +1169,7 @@ class TestWebSocketStreams:
         params = {
             "underlying_asset": "ETH",
             "expiration_date": "220930",
-            "id": "e9d6b4349871b40611412680b3445fac",
+            "id": 532601580,
         }
 
         expected_response = [
@@ -1385,7 +1381,7 @@ class TestWebSocketStreams:
     async def test_trade_streams_success_with_optional_params(self):
         """Test trade_streams() successfully with optional parameters."""
 
-        params = {"symbol": "btcusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"symbol": "btcusdt", "id": 532601580}
 
         expected_response = {
             "e": "trade",

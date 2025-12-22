@@ -89,6 +89,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     RecentTradesListResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    RpiOrderBookResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     SymbolOrderBookTickerResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
@@ -109,6 +112,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    TradingScheduleResponse,
 )
 
 
@@ -3453,6 +3459,122 @@ class TestMarketDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.recent_trades_list(**params)
 
+    def test_rpi_order_book_success(self):
+        """Test rpi_order_book() successfully with required parameters only."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        expected_response = {
+            "lastUpdateId": 1027024,
+            "E": 1589436922972,
+            "T": 1589436922959,
+            "bids": [["4.00000000", "431.00000000"]],
+            "asks": [["4.00000200", "12.00000000"]],
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.rpi_order_book(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/rpiDepth" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "symbol_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(RpiOrderBookResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(RpiOrderBookResponse, "from_dict"):
+            expected = RpiOrderBookResponse.from_dict(expected_response)
+        else:
+            expected = RpiOrderBookResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_rpi_order_book_success_with_optional_params(self):
+        """Test rpi_order_book() successfully with optional parameters."""
+
+        params = {"symbol": "symbol_example", "limit": 100}
+
+        expected_response = {
+            "lastUpdateId": 1027024,
+            "E": 1589436922972,
+            "T": 1589436922959,
+            "bids": [["4.00000000", "431.00000000"]],
+            "asks": [["4.00000200", "12.00000000"]],
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.rpi_order_book(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/rpiDepth" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(RpiOrderBookResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(RpiOrderBookResponse, "from_dict"):
+            expected = RpiOrderBookResponse.from_dict(expected_response)
+        else:
+            expected = RpiOrderBookResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_rpi_order_book_missing_required_param_symbol(self):
+        """Test that rpi_order_book() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "symbol_example",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.rpi_order_book(**params)
+
+    def test_rpi_order_book_server_error(self):
+        """Test that rpi_order_book() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.rpi_order_book = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.rpi_order_book(**params)
+
     def test_symbol_order_book_ticker_success(self):
         """Test symbol_order_book_ticker() successfully with required parameters only."""
 
@@ -4382,3 +4504,80 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.top_trader_long_short_ratio_positions(**params)
+
+    def test_trading_schedule_success(self):
+        """Test trading_schedule() successfully with required parameters only."""
+
+        expected_response = {
+            "updateTime": 1761286643918,
+            "marketSchedules": {
+                "EQUITY": {
+                    "sessions": [
+                        {
+                            "startTime": 1761177600000,
+                            "endTime": 1761206400000,
+                            "type": "OVERNIGHT",
+                        },
+                        {
+                            "startTime": 1761206400000,
+                            "endTime": 1761226200000,
+                            "type": "PRE_MARKET",
+                        },
+                    ]
+                },
+                "COMMODITY": {
+                    "sessions": [
+                        {
+                            "startTime": 1761724800000,
+                            "endTime": 1761744600000,
+                            "type": "NO_TRADING",
+                        },
+                        {
+                            "startTime": 1761744600000,
+                            "endTime": 1761768000000,
+                            "type": "REGULAR",
+                        },
+                    ]
+                },
+            },
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.trading_schedule()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/tradingSchedule" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(TradingScheduleResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(TradingScheduleResponse, "from_dict"):
+            expected = TradingScheduleResponse.from_dict(expected_response)
+        else:
+            expected = TradingScheduleResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_trading_schedule_server_error(self):
+        """Test that trading_schedule() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.trading_schedule = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.trading_schedule()

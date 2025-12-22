@@ -123,6 +123,7 @@ class TradeApi:
                 field="api_name", error_message="Missing required parameter 'api_name'"
             )
 
+        body = {}
         payload = {
             "api_name": api_name,
             "symbol": symbol,
@@ -138,6 +139,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CreateSpecialKeyResponse,
             is_signed=True,
@@ -176,6 +178,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"api_name": api_name, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -184,6 +187,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -224,6 +228,7 @@ class TradeApi:
                 field="ip", error_message="Missing required parameter 'ip'"
             )
 
+        body = {}
         payload = {"ip": ip, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -232,6 +237,7 @@ class TradeApi:
             method="PUT",
             path="/sapi/v1/margin/apiKey/ip",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -273,6 +279,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -288,6 +295,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/forceLiquidationRec",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetForceLiquidationRecordResponse,
             is_signed=True,
@@ -318,6 +326,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -326,6 +335,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/exchange-small-liability",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSmallLiabilityExchangeCoinListResponse,
             is_signed=True,
@@ -373,6 +383,7 @@ class TradeApi:
                 field="size", error_message="Missing required parameter 'size'"
             )
 
+        body = {}
         payload = {
             "current": current,
             "size": size,
@@ -387,6 +398,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/exchange-small-liability-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSmallLiabilityExchangeHistoryResponse,
             is_signed=True,
@@ -427,6 +439,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -439,6 +452,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelAllOpenOrdersOnASymbolResponse,
             is_signed=True,
@@ -486,6 +500,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -501,6 +516,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelOcoResponse,
             is_signed=True,
@@ -548,6 +564,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -563,6 +580,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelOrderResponse,
             is_signed=True,
@@ -651,6 +669,7 @@ class TradeApi:
                 error_message="Missing required parameter 'stop_price'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -678,6 +697,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/oco",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOcoResponse,
             is_signed=True,
@@ -753,6 +773,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -778,6 +799,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOrderResponse,
             is_signed=True,
@@ -907,6 +929,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_quantity'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -939,6 +962,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/oto",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOtoResponse,
             is_signed=True,
@@ -1077,6 +1101,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_above_type'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1116,6 +1141,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/otoco",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOtocoResponse,
             is_signed=True,
@@ -1158,6 +1184,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {"type": type, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1166,6 +1193,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/manual-liquidation",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginManualLiquidationResponse,
             is_signed=True,
@@ -1200,6 +1228,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1212,6 +1241,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/rateLimit/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentMarginOrderCountUsageResponse,
             is_signed=True,
@@ -1254,6 +1284,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1270,6 +1301,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/allOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsAllOcoResponse,
             is_signed=True,
@@ -1321,6 +1353,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1337,6 +1370,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsAllOrdersResponse,
             is_signed=True,
@@ -1375,6 +1409,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1389,6 +1424,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOcoResponse,
             is_signed=True,
@@ -1423,6 +1459,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1435,6 +1472,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/openOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOpenOcoResponse,
             is_signed=True,
@@ -1473,6 +1511,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1485,6 +1524,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOpenOrdersResponse,
             is_signed=True,
@@ -1531,6 +1571,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1545,6 +1586,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOrderResponse,
             is_signed=True,
@@ -1597,6 +1639,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1614,6 +1657,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/myTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsTradeListResponse,
             is_signed=True,
@@ -1648,6 +1692,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1656,6 +1701,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySpecialKeyResponse,
             is_signed=True,
@@ -1688,6 +1734,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1696,6 +1743,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/api-key-list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySpecialKeyListResponse,
             is_signed=True,
@@ -1738,6 +1786,7 @@ class TradeApi:
                 error_message="Missing required parameter 'asset_names'",
             )
 
+        body = {}
         payload = {"asset_names": asset_names, "recv_window": recv_window}
 
         return send_request(
@@ -1746,6 +1795,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/exchange-small-liability",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,

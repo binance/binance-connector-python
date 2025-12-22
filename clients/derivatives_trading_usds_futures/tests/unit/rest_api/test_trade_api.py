@@ -63,6 +63,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CurrentAllOpenOrdersResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    FuturesTradfiPerpsContractResponse,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetOrderModifyHistoryResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
@@ -153,9 +156,6 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderTimeInForceEnum,
-)
-from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
-    NewOrderWorkingTypeEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
@@ -2175,6 +2175,103 @@ class TestTradeApi:
             self.client.current_all_open_orders()
 
     @patch("binance_common.utils.get_signature")
+    def test_futures_tradfi_perps_contract_success(self, mock_get_signature):
+        """Test futures_tradfi_perps_contract() successfully with required parameters only."""
+
+        expected_response = {"code": 200, "msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.futures_tradfi_perps_contract()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/fapi/v1/stock/contract" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
+        ):
+            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
+        else:
+            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_futures_tradfi_perps_contract_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test futures_tradfi_perps_contract() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"code": 200, "msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.futures_tradfi_perps_contract(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/fapi/v1/stock/contract" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
+        ):
+            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
+        else:
+            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_futures_tradfi_perps_contract_server_error(self):
+        """Test that futures_tradfi_perps_contract() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.futures_tradfi_perps_contract = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.futures_tradfi_perps_contract()
+
+    @patch("binance_common.utils.get_signature")
     def test_get_order_modify_history_success(self, mock_get_signature):
         """Test get_order_modify_history() successfully with required parameters only."""
 
@@ -2717,14 +2814,14 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
+                    quantity="1.0",
+                    price="1.0",
                     price_match="NONE",
-                    recv_window=5000,
+                    recv_window="5000",
                 )
             ],
         }
@@ -2806,14 +2903,14 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
+                    quantity="1.0",
+                    price="1.0",
                     price_match="NONE",
-                    recv_window=5000,
+                    recv_window="5000",
                 )
             ],
             "recv_window": 5000,
@@ -2886,14 +2983,14 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
+                    quantity="1.0",
+                    price="1.0",
                     price_match="NONE",
-                    recv_window=5000,
+                    recv_window="5000",
                 )
             ],
         }
@@ -2910,14 +3007,14 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
+                    quantity="1.0",
+                    price="1.0",
                     price_match="NONE",
-                    recv_window=5000,
+                    recv_window="5000",
                 )
             ],
         }
@@ -3249,7 +3346,7 @@ class TestTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
@@ -3417,8 +3514,6 @@ class TestTradeApi:
             "timeInForce": "GTD",
             "type": "TRAILING_STOP_MARKET",
             "origType": "TRAILING_STOP_MARKET",
-            "activatePrice": "9020",
-            "priceRate": "0.3",
             "updateTime": 1566818724722,
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
@@ -3480,12 +3575,6 @@ class TestTradeApi:
             "reduce_only": "False",
             "price": 1.0,
             "new_client_order_id": "1",
-            "stop_price": 1.0,
-            "close_position": "close_position_example",
-            "activation_price": 1.0,
-            "callback_rate": 1.0,
-            "working_type": NewOrderWorkingTypeEnum["MARK_PRICE"].value,
-            "price_protect": "False",
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewOrderPriceMatchEnum["NONE"].value,
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
@@ -3514,8 +3603,6 @@ class TestTradeApi:
             "timeInForce": "GTD",
             "type": "TRAILING_STOP_MARKET",
             "origType": "TRAILING_STOP_MARKET",
-            "activatePrice": "9020",
-            "priceRate": "0.3",
             "updateTime": 1566818724722,
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
@@ -3618,19 +3705,14 @@ class TestTradeApi:
                     position_side="BOTH",
                     type="",
                     time_in_force="GTC",
-                    quantity=1.0,
+                    quantity="1.0",
                     reduce_only="False",
-                    price=1.0,
+                    price="1.0",
                     new_client_order_id="1",
-                    stop_price=1.0,
-                    activation_price=1.0,
-                    callback_rate=1.0,
-                    working_type="MARK_PRICE",
-                    price_protect="False",
                     new_order_resp_type="ACK",
                     price_match="NONE",
                     self_trade_prevention_mode="EXPIRE_TAKER",
-                    good_till_date=56,
+                    good_till_date="",
                 )
             ],
         }
@@ -3649,13 +3731,11 @@ class TestTradeApi:
                 "side": "BUY",
                 "positionSide": "SHORT",
                 "status": "NEW",
-                "stopPrice": "9300",
+                "stopPrice": "0",
                 "symbol": "BTCUSDT",
                 "timeInForce": "GTC",
                 "type": "TRAILING_STOP_MARKET",
                 "origType": "TRAILING_STOP_MARKET",
-                "activatePrice": "9020",
-                "priceRate": "0.3",
                 "updateTime": 1566818724722,
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
@@ -3717,19 +3797,14 @@ class TestTradeApi:
                     position_side="BOTH",
                     type="",
                     time_in_force="GTC",
-                    quantity=1.0,
+                    quantity="1.0",
                     reduce_only="False",
-                    price=1.0,
+                    price="1.0",
                     new_client_order_id="1",
-                    stop_price=1.0,
-                    activation_price=1.0,
-                    callback_rate=1.0,
-                    working_type="MARK_PRICE",
-                    price_protect="False",
                     new_order_resp_type="ACK",
                     price_match="NONE",
                     self_trade_prevention_mode="EXPIRE_TAKER",
-                    good_till_date=56,
+                    good_till_date="",
                 )
             ],
             "recv_window": 5000,
@@ -3749,13 +3824,11 @@ class TestTradeApi:
                 "side": "BUY",
                 "positionSide": "SHORT",
                 "status": "NEW",
-                "stopPrice": "9300",
+                "stopPrice": "0",
                 "symbol": "BTCUSDT",
                 "timeInForce": "GTC",
                 "type": "TRAILING_STOP_MARKET",
                 "origType": "TRAILING_STOP_MARKET",
-                "activatePrice": "9020",
-                "priceRate": "0.3",
                 "updateTime": 1566818724722,
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
@@ -3807,19 +3880,14 @@ class TestTradeApi:
                     position_side="BOTH",
                     type="",
                     time_in_force="GTC",
-                    quantity=1.0,
+                    quantity="1.0",
                     reduce_only="False",
-                    price=1.0,
+                    price="1.0",
                     new_client_order_id="1",
-                    stop_price=1.0,
-                    activation_price=1.0,
-                    callback_rate=1.0,
-                    working_type="MARK_PRICE",
-                    price_protect="False",
                     new_order_resp_type="ACK",
                     price_match="NONE",
                     self_trade_prevention_mode="EXPIRE_TAKER",
-                    good_till_date=56,
+                    good_till_date="",
                 )
             ],
         }
@@ -3841,19 +3909,14 @@ class TestTradeApi:
                     position_side="BOTH",
                     type="",
                     time_in_force="GTC",
-                    quantity=1.0,
+                    quantity="1.0",
                     reduce_only="False",
-                    price=1.0,
+                    price="1.0",
                     new_client_order_id="1",
-                    stop_price=1.0,
-                    activation_price=1.0,
-                    callback_rate=1.0,
-                    working_type="MARK_PRICE",
-                    price_protect="False",
                     new_order_resp_type="ACK",
                     price_match="NONE",
                     self_trade_prevention_mode="EXPIRE_TAKER",
-                    good_till_date=56,
+                    good_till_date="",
                 )
             ],
         }

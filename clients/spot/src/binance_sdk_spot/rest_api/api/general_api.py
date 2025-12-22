@@ -72,6 +72,7 @@ class GeneralApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "symbols": symbols,
@@ -86,6 +87,7 @@ class GeneralApi:
             method="GET",
             path="/api/v3/exchangeInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInfoResponse,
         )
@@ -111,6 +113,7 @@ class GeneralApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -119,6 +122,7 @@ class GeneralApi:
             method="GET",
             path="/api/v3/ping",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -143,6 +147,7 @@ class GeneralApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -151,6 +156,7 @@ class GeneralApi:
             method="GET",
             path="/api/v3/time",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TimeResponse,
         )

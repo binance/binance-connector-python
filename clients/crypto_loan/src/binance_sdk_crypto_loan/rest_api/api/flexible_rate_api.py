@@ -80,6 +80,7 @@ class FlexibleRateApi:
                 error_message="Missing required parameter 'collateral_coin'",
             )
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -92,6 +93,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/repay/rate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckCollateralRepayRateResponse,
             is_signed=True,
@@ -153,6 +155,7 @@ class FlexibleRateApi:
                 error_message="Missing required parameter 'direction'",
             )
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -167,6 +170,7 @@ class FlexibleRateApi:
             method="POST",
             path="/sapi/v2/loan/flexible/adjust/ltv",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FlexibleLoanAdjustLtvResponse,
             is_signed=True,
@@ -220,6 +224,7 @@ class FlexibleRateApi:
                 error_message="Missing required parameter 'collateral_coin'",
             )
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -234,6 +239,7 @@ class FlexibleRateApi:
             method="POST",
             path="/sapi/v2/loan/flexible/borrow",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FlexibleLoanBorrowResponse,
             is_signed=True,
@@ -295,6 +301,7 @@ class FlexibleRateApi:
                 error_message="Missing required parameter 'repay_amount'",
             )
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -311,6 +318,7 @@ class FlexibleRateApi:
             method="POST",
             path="/sapi/v2/loan/flexible/repay",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FlexibleLoanRepayResponse,
             is_signed=True,
@@ -343,6 +351,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {"loan_coin": loan_coin, "recv_window": recv_window}
 
         return send_request(
@@ -351,6 +360,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/loanable/data",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanAssetsDataResponse,
             is_signed=True,
@@ -396,6 +406,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -412,6 +423,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/borrow/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanBorrowHistoryResponse,
             is_signed=True,
@@ -444,6 +456,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {"collateral_coin": collateral_coin, "recv_window": recv_window}
 
         return send_request(
@@ -452,6 +465,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/collateral/data",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanCollateralAssetsDataResponse,
             is_signed=True,
@@ -493,6 +507,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -509,6 +524,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/liquidation/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanLiquidationHistoryResponse,
             is_signed=True,
@@ -554,6 +570,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -570,6 +587,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/ltv/adjustment/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanLtvAdjustmentHistoryResponse,
             is_signed=True,
@@ -608,6 +626,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -622,6 +641,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/ongoing/orders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanOngoingOrdersResponse,
             is_signed=True,
@@ -667,6 +687,7 @@ class FlexibleRateApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -683,6 +704,7 @@ class FlexibleRateApi:
             method="GET",
             path="/sapi/v2/loan/flexible/repay/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanRepaymentHistoryResponse,
             is_signed=True,

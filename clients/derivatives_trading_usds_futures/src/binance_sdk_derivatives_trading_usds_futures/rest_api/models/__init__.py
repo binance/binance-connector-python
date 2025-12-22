@@ -140,6 +140,9 @@ from .futures_account_balance_v3_response import (
 from .futures_account_configuration_response import (
     FuturesAccountConfigurationResponse as FuturesAccountConfigurationResponse,
 )
+from .futures_tradfi_perps_contract_response import (
+    FuturesTradfiPerpsContractResponse as FuturesTradfiPerpsContractResponse,
+)
 from .futures_trading_quantitative_rules_indicators_response import (
     FuturesTradingQuantitativeRulesIndicatorsResponse as FuturesTradingQuantitativeRulesIndicatorsResponse,
 )
@@ -422,6 +425,13 @@ from .recent_trades_list_response import (
 from .recent_trades_list_response_inner import (
     RecentTradesListResponseInner as RecentTradesListResponseInner,
 )
+from .rpi_order_book_response import RpiOrderBookResponse as RpiOrderBookResponse
+from .rpi_order_book_response_asks_item import (
+    RpiOrderBookResponseAsksItem as RpiOrderBookResponseAsksItem,
+)
+from .rpi_order_book_response_bids_item import (
+    RpiOrderBookResponseBidsItem as RpiOrderBookResponseBidsItem,
+)
 from .send_quote_request_response import (
     SendQuoteRequestResponse as SendQuoteRequestResponse,
 )
@@ -501,6 +511,24 @@ from .top_trader_long_short_ratio_positions_response import (
 from .top_trader_long_short_ratio_positions_response_inner import (
     TopTraderLongShortRatioPositionsResponseInner as TopTraderLongShortRatioPositionsResponseInner,
 )
+from .trading_schedule_response import (
+    TradingScheduleResponse as TradingScheduleResponse,
+)
+from .trading_schedule_response_market_schedules import (
+    TradingScheduleResponseMarketSchedules as TradingScheduleResponseMarketSchedules,
+)
+from .trading_schedule_response_market_schedules_commodity import (
+    TradingScheduleResponseMarketSchedulesCOMMODITY as TradingScheduleResponseMarketSchedulesCOMMODITY,
+)
+from .trading_schedule_response_market_schedules_commodity_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesCOMMODITYSessionsInner as TradingScheduleResponseMarketSchedulesCOMMODITYSessionsInner,
+)
+from .trading_schedule_response_market_schedules_equity import (
+    TradingScheduleResponseMarketSchedulesEQUITY as TradingScheduleResponseMarketSchedulesEQUITY,
+)
+from .trading_schedule_response_market_schedules_equity_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesEQUITYSessionsInner as TradingScheduleResponseMarketSchedulesEQUITYSessionsInner,
+)
 from .user_commission_rate_response import (
     UserCommissionRateResponse as UserCommissionRateResponse,
 )
@@ -556,7 +584,6 @@ from .enums import (
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderPositionSideEnum as NewOrderPositionSideEnum
 from .enums import NewOrderTimeInForceEnum as NewOrderTimeInForceEnum
-from .enums import NewOrderWorkingTypeEnum as NewOrderWorkingTypeEnum
 from .enums import NewOrderNewOrderRespTypeEnum as NewOrderNewOrderRespTypeEnum
 from .enums import NewOrderPriceMatchEnum as NewOrderPriceMatchEnum
 from .enums import (

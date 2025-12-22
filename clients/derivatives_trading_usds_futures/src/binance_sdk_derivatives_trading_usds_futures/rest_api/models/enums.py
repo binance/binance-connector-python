@@ -282,11 +282,6 @@ class NewOrderTimeInForceEnum(Enum):
     RPI = "RPI"
 
 
-class NewOrderWorkingTypeEnum(Enum):
-    MARK_PRICE = "MARK_PRICE"
-    CONTRACT_PRICE = "CONTRACT_PRICE"
-
-
 class NewOrderNewOrderRespTypeEnum(Enum):
     ACK = "ACK"
     RESULT = "RESULT"

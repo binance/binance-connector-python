@@ -469,6 +469,9 @@ from .um_position_adl_quantile_estimation_response import (
 from .um_position_adl_quantile_estimation_response_inner import (
     UmPositionAdlQuantileEstimationResponseInner as UmPositionAdlQuantileEstimationResponseInner,
 )
+from .um_position_adl_quantile_estimation_response_inner_adl_quantile import (
+    UmPositionAdlQuantileEstimationResponseInnerAdlQuantile as UmPositionAdlQuantileEstimationResponseInnerAdlQuantile,
+)
 
 
 from .enums import MarginAccountNewOcoSideEnum as MarginAccountNewOcoSideEnum

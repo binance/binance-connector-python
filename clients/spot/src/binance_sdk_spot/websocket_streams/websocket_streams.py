@@ -41,6 +41,7 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
+
         super().__init__(configuration)
         self.configuration = configuration
 
@@ -181,28 +182,6 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         """
 
         return await self._webSocketStreamsApi.all_mini_ticker(id)
-
-    async def all_ticker(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-        WebSocket All Market Tickers Stream (DEPRECATED)
-
-        24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
-
-        Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
-
-        Returns:
-            RequestStreamHandle
-
-        Raises:
-            RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._webSocketStreamsApi.all_ticker(id)
 
     async def avg_price(
         self,

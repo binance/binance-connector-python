@@ -2071,13 +2071,13 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
-                    recv_window=5000,
+                    quantity="1.0",
+                    price="1.0",
+                    recv_window="5000",
                 )
             ],
         }
@@ -2158,13 +2158,13 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
-                    recv_window=5000,
+                    quantity="1.0",
+                    price="1.0",
+                    recv_window="5000",
                 )
             ],
             "recv_window": 5000,
@@ -2236,13 +2236,13 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
-                    recv_window=5000,
+                    quantity="1.0",
+                    price="1.0",
+                    recv_window="5000",
                 )
             ],
         }
@@ -2259,13 +2259,13 @@ class TestTradeApi:
         params = {
             "batch_orders": [
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
-                    recv_window=5000,
+                    quantity="1.0",
+                    price="1.0",
+                    recv_window="5000",
                 )
             ],
         }

@@ -64,6 +64,7 @@ class UserInformationApi:
 
         """
 
+        body = {}
         payload = {
             "order_id": order_id,
             "collateral_account_id": collateral_account_id,
@@ -76,6 +77,7 @@ class UserInformationApi:
             method="GET",
             path="/sapi/v1/loan/vip/collateral/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckVIPLoanCollateralAccountResponse,
             is_signed=True,
@@ -118,6 +120,7 @@ class UserInformationApi:
 
         """
 
+        body = {}
         payload = {
             "order_id": order_id,
             "collateral_account_id": collateral_account_id,
@@ -134,6 +137,7 @@ class UserInformationApi:
             method="GET",
             path="/sapi/v1/loan/vip/ongoing/orders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetVIPLoanOngoingOrdersResponse,
             is_signed=True,
@@ -168,6 +172,7 @@ class UserInformationApi:
 
         """
 
+        body = {}
         payload = {"current": current, "limit": limit, "recv_window": recv_window}
 
         return send_request(
@@ -176,6 +181,7 @@ class UserInformationApi:
             method="GET",
             path="/sapi/v1/loan/vip/request/data",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryApplicationStatusResponse,
             is_signed=True,

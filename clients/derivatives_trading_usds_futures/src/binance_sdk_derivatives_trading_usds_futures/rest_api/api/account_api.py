@@ -76,6 +76,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -84,6 +85,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v2/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountInformationV2Response,
             is_signed=True,
@@ -114,6 +116,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -122,6 +125,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v3/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountInformationV3Response,
             is_signed=True,
@@ -152,6 +156,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -160,6 +165,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v2/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesAccountBalanceV2Response,
             is_signed=True,
@@ -190,6 +196,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -198,6 +205,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v3/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesAccountBalanceV3Response,
             is_signed=True,
@@ -228,6 +236,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -236,6 +245,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/accountConfig",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesAccountConfigurationResponse,
             is_signed=True,
@@ -269,6 +279,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -277,6 +288,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/apiTradingStatus",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesTradingQuantitativeRulesIndicatorsResponse,
             is_signed=True,
@@ -307,6 +319,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -315,6 +328,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/feeBurn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetBnbBurnStatusResponse,
             is_signed=True,
@@ -345,6 +359,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -353,6 +368,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/multiAssetsMargin",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCurrentMultiAssetsModeResponse,
             is_signed=True,
@@ -383,6 +399,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -391,6 +408,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCurrentPositionModeResponse,
             is_signed=True,
@@ -438,6 +456,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -450,6 +469,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/order/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesOrderHistoryResponse,
             is_signed=True,
@@ -497,6 +517,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -509,6 +530,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/trade/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesTradeHistoryResponse,
             is_signed=True,
@@ -556,6 +578,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -568,6 +591,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/income/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesTransactionHistoryResponse,
             is_signed=True,
@@ -608,6 +632,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -616,6 +641,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/order/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesOrderHistoryDownloadLinkByIdResponse,
             is_signed=True,
@@ -656,6 +682,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -664,6 +691,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/trade/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesTradeDownloadLinkByIdResponse,
             is_signed=True,
@@ -704,6 +732,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -712,6 +741,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/income/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesTransactionHistoryDownloadLinkByIdResponse,
             is_signed=True,
@@ -759,6 +789,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "income_type": income_type,
@@ -775,6 +806,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/income",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetIncomeHistoryResponse,
             is_signed=True,
@@ -807,6 +839,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -815,6 +848,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/leverageBracket",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NotionalAndLeverageBracketsResponse,
             is_signed=True,
@@ -845,6 +879,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -853,6 +888,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/rateLimit/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserRateLimitResponse,
             is_signed=True,
@@ -885,6 +921,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -893,6 +930,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/symbolConfig",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolConfigurationResponse,
             is_signed=True,
@@ -930,6 +968,7 @@ class AccountApi:
                 field="fee_burn", error_message="Missing required parameter 'fee_burn'"
             )
 
+        body = {}
         payload = {"fee_burn": fee_burn, "recv_window": recv_window}
 
         return send_request(
@@ -938,6 +977,7 @@ class AccountApi:
             method="POST",
             path="/fapi/v1/feeBurn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ToggleBnbBurnOnFuturesTradeResponse,
             is_signed=True,
@@ -975,6 +1015,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -983,6 +1024,7 @@ class AccountApi:
             method="GET",
             path="/fapi/v1/commissionRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UserCommissionRateResponse,
             is_signed=True,

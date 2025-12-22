@@ -94,6 +94,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "product_id": product_id,
             "start_time": start_time,
@@ -109,6 +110,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/history/collateralRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCollateralRecordResponse,
             is_signed=True,
@@ -147,6 +149,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'product_id'",
             )
 
+        body = {}
         payload = {"product_id": product_id, "recv_window": recv_window}
 
         return send_request(
@@ -155,6 +158,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/personalLeftQuota",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexiblePersonalLeftQuotaResponse,
             is_signed=True,
@@ -193,6 +197,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "product_id": product_id,
@@ -207,6 +212,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/position",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleProductPositionResponse,
             is_signed=True,
@@ -256,6 +262,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "product_id": product_id,
             "redeem_id": redeem_id,
@@ -273,6 +280,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/history/redemptionRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleRedemptionRecordResponse,
             is_signed=True,
@@ -327,6 +335,7 @@ class FlexibleLockedApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "type": type,
             "product_id": product_id,
@@ -344,6 +353,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/history/rewardsRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleRewardsHistoryResponse,
             is_signed=True,
@@ -388,6 +398,7 @@ class FlexibleLockedApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "product_id": product_id,
             "amount": amount,
@@ -400,6 +411,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/subscriptionPreview",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleSubscriptionPreviewResponse,
             is_signed=True,
@@ -449,6 +461,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "product_id": product_id,
             "purchase_id": purchase_id,
@@ -466,6 +479,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/history/subscriptionRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleSubscriptionRecordResponse,
             is_signed=True,
@@ -504,6 +518,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'project_id'",
             )
 
+        body = {}
         payload = {"project_id": project_id, "recv_window": recv_window}
 
         return send_request(
@@ -512,6 +527,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/personalLeftQuota",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedPersonalLeftQuotaResponse,
             is_signed=True,
@@ -552,6 +568,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "position_id": position_id,
@@ -567,6 +584,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/position",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedProductPositionResponse,
             is_signed=True,
@@ -616,6 +634,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "position_id": position_id,
             "redeem_id": redeem_id,
@@ -633,6 +652,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/history/redemptionRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedRedemptionRecordResponse,
             is_signed=True,
@@ -680,6 +700,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "position_id": position_id,
             "asset": asset,
@@ -696,6 +717,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/history/rewardsRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedRewardsHistoryResponse,
             is_signed=True,
@@ -742,6 +764,7 @@ class FlexibleLockedApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "project_id": project_id,
             "amount": amount,
@@ -755,6 +778,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/subscriptionPreview",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedSubscriptionPreviewResponse,
             is_signed=True,
@@ -802,6 +826,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "purchase_id": purchase_id,
             "asset": asset,
@@ -818,6 +843,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/history/subscriptionRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLockedSubscriptionRecordResponse,
             is_signed=True,
@@ -871,6 +897,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'product_id'",
             )
 
+        body = {}
         payload = {
             "product_id": product_id,
             "apr_period": apr_period,
@@ -887,6 +914,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/history/rateHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetRateHistoryResponse,
             is_signed=True,
@@ -923,6 +951,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "current": current,
@@ -936,6 +965,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/flexible/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSimpleEarnFlexibleProductListResponse,
             is_signed=True,
@@ -974,6 +1004,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "current": current,
@@ -987,6 +1018,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/locked/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSimpleEarnLockedProductListResponse,
             is_signed=True,
@@ -1033,6 +1065,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'product_id'",
             )
 
+        body = {}
         payload = {
             "product_id": product_id,
             "redeem_all": redeem_all,
@@ -1047,6 +1080,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/flexible/redeem",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemFlexibleProductResponse,
             is_signed=True,
@@ -1087,6 +1121,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'position_id'",
             )
 
+        body = {}
         payload = {"position_id": position_id, "recv_window": recv_window}
 
         return send_request(
@@ -1095,6 +1130,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/locked/redeem",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemLockedProductResponse,
             is_signed=True,
@@ -1140,6 +1176,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'auto_subscribe'",
             )
 
+        body = {}
         payload = {
             "product_id": product_id,
             "auto_subscribe": auto_subscribe,
@@ -1152,6 +1189,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/flexible/setAutoSubscribe",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetFlexibleAutoSubscribeResponse,
             is_signed=True,
@@ -1197,6 +1235,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'auto_subscribe'",
             )
 
+        body = {}
         payload = {
             "position_id": position_id,
             "auto_subscribe": auto_subscribe,
@@ -1209,6 +1248,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/locked/setAutoSubscribe",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetLockedAutoSubscribeResponse,
             is_signed=True,
@@ -1254,6 +1294,7 @@ class FlexibleLockedApi:
                 error_message="Missing required parameter 'redeem_to'",
             )
 
+        body = {}
         payload = {
             "position_id": position_id,
             "redeem_to": redeem_to,
@@ -1266,6 +1307,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/locked/setRedeemOption",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetLockedProductRedeemOptionResponse,
             is_signed=True,
@@ -1296,6 +1338,7 @@ class FlexibleLockedApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1304,6 +1347,7 @@ class FlexibleLockedApi:
             method="GET",
             path="/sapi/v1/simple-earn/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SimpleAccountResponse,
             is_signed=True,
@@ -1354,6 +1398,7 @@ class FlexibleLockedApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "product_id": product_id,
             "amount": amount,
@@ -1368,6 +1413,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/flexible/subscribe",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeFlexibleProductResponse,
             is_signed=True,
@@ -1399,7 +1445,7 @@ class FlexibleLockedApi:
                     amount (Union[float, None]): Amount
                     auto_subscribe (Optional[bool] = None): true or false, default true.
                     source_account (Optional[str] = None): `SPOT`,`FUND`,`ALL`, default `SPOT`
-                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `FLEXIBLE`
+                    redeem_to (Optional[str] = None): `SPOT`,`FLEXIBLE`, default `SPOT`
                     recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
 
                 Returns:
@@ -1420,6 +1466,7 @@ class FlexibleLockedApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "project_id": project_id,
             "amount": amount,
@@ -1435,6 +1482,7 @@ class FlexibleLockedApi:
             method="POST",
             path="/sapi/v1/simple-earn/locked/subscribe",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeLockedProductResponse,
             is_signed=True,

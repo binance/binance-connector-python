@@ -32,14 +32,14 @@ def modify_multiple_orders():
         response = client.rest_api.modify_multiple_orders(
             batch_orders=[
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id=1,
+                    order_id="1",
                     orig_client_order_id="1",
                     symbol="",
                     side="BUY",
-                    quantity=1.0,
-                    price=1.0,
+                    quantity="1.0",
+                    price="1.0",
                     price_match="NONE",
-                    recv_window=5000,
+                    recv_window="5000",
                 )
             ],
         )
