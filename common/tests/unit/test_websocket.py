@@ -20,7 +20,7 @@ from binance_common.websocket import (
     WebSocketCommon,
     WebSocketConnection,
 )
-from binance_common.models import WebsocketApiResponse
+from binance_common.models import WebsocketApiResponse, WebsocketApiRateLimit
 
 
 # ========== Fixtures ==========
@@ -820,6 +820,224 @@ class TestWebSocketAPIBase:
         result = await ws_api.send_signed_message({"params": {}})
         assert isinstance(result, WebsocketApiResponse)
         assert result.data() == "Websocket Reconnect"
+
+    @pytest.mark.asyncio
+    async def test_send_message_return_rate_limits_false_updates_payload(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = False
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload)
+
+            assert "params" in payload
+            assert payload["params"].get("returnRateLimits") is False
+
+            sent_payload = mock_send.await_args.args[0]
+            assert "params" in sent_payload
+            assert sent_payload["params"].get("returnRateLimits") in (False, "false")
+
+            assert isinstance(result, WebsocketApiResponse)
+            assert callable(result._data_function)
+            assert result._data_function() == {"result": {"foo": "bar"}, "rateLimits": []}
+            assert result.rate_limits == []
+
+    @pytest.mark.asyncio
+    async def test_send_message_return_rate_limits_true_does_not_modify_payload(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": [{
+                "rateLimitType": "REQUEST_WEIGHT",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 10,
+                "count": 0
+            }]})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload)
+
+            assert "returnRateLimits" not in payload["params"]
+            assert result.rate_limits == [WebsocketApiRateLimit(rateLimitType='REQUEST_WEIGHT', interval='MINUTE', intervalNum=1, limit=10, count=0)]
+
+    @pytest.mark.asyncio
+    async def test_send_message_session_logon_sets_connection_flags(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload, session_logon=True)
+
+            assert mock_connection.is_session_log_on is True
+            assert mock_connection.session_logon_request == payload
+            assert "id" in payload
+
+    @pytest.mark.asyncio
+    async def test_send_message_response_model_is_one_of_model(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        class DummyResponseModel:
+            @classmethod
+            def from_dict(cls, data):
+                return {"from_dict": data}
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(ws_api, "is_one_of_model", return_value=True), \
+             patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload, response_model=DummyResponseModel)
+
+            data = result._data_function()
+            assert data == {"from_dict": {"result": {"foo": "bar"}, "rateLimits": []}}
+
+    @pytest.mark.asyncio
+    async def test_send_message_response_model_model_validate(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        class DummyResponseModel:
+            @classmethod
+            def model_validate(cls, data):
+                return {"validated": data}
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(ws_api, "is_one_of_model", return_value=False), \
+             patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload, response_model=DummyResponseModel)
+
+            data = result._data_function()
+            assert data == {"validated": {"result": {"foo": "bar"}, "rateLimits": []}}
+
+    @pytest.mark.asyncio
+    async def test_send_message_no_response_model_returns_raw(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(ws_api, "is_one_of_model", return_value=False), \
+             patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload)
+
+            data = result._data_function()
+            assert data == {"result": {"foo": "bar"}, "rateLimits": []}
+
+    @pytest.mark.asyncio
+    async def test_send_message_timeout_error_returns_error(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+            hanging_future = asyncio.Future()
+            mock_send.return_value = hanging_future
+
+            result = await ws_api.send_message(payload)
+
+            assert callable(result._data_function)
+            assert result._data_function() == {"error": "timeout"}
+            assert result.rate_limits == []
+
+    @pytest.mark.asyncio
+    async def test_send_message_generic_exception_returns_error(self, ws_api, mock_connection, caplog):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        class ExplodingFuture:
+            def __await__(self):
+                raise RuntimeError("Something went wrong")
+
+        with caplog.at_level(logging.WARNING), \
+             patch.object(WebSocketCommon, "send_message", new=AsyncMock(return_value=ExplodingFuture())):
+
+            result = await ws_api.send_message(payload)
+
+            assert "error" in result._data_function()
+            assert result._data_function()["error"] == "Something went wrong"
+            assert any("Connection with user closed" in m for m in caplog.messages)
+
+
+    @pytest.mark.asyncio
+    async def test_send_message_skip_auth_logic(self, ws_api, mock_connection):
+        mock_connection.is_session_log_on = True
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+
+        with patch.object(WebSocketCommon, "send_message", new_callable=AsyncMock) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {"foo": "bar"}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            await ws_api.send_message(payload, session_logon=None)
+
+            sent_payload = mock_send.await_args.args[0]
+            mock_send.assert_awaited_once()
+
+    @pytest.mark.asyncio
+    async def test_send_message_no_connections_raises(self, ws_api):
+        ws_api.connections = []
+        ws_api.reconnect_tasks = []
+
+        with pytest.raises(ValueError, match="No WebSocket connections available."):
+            await ws_api.send_message({"params": {}})
+
+    @pytest.mark.asyncio
+    async def test_send_message_all_connections_reconnecting_returns_reconnect_response(self, ws_api, mock_connection):
+        mock_connection.reconnect = True
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+
+        result = await ws_api.send_message({"params": {}})
+
+        assert result._data_function() == "Websocket Reconnect"
+        assert result.rate_limits == []
 
     @pytest.mark.asyncio
     async def test_ping_ws_api(self, ws_api, mock_connection):

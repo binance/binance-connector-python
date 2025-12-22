@@ -104,8 +104,8 @@ class ConfigurationWebSocketAPI:
         private_key: Optional[Union[bytes, str]] = None,
         private_key_passphrase: Optional[str] = None,
         stream_url: str = "wss://ws-api.binance.com/ws-api/v3",
-        timeout: int = 5,
-        reconnect_delay: int = 5,
+        timeout: int = 5000,
+        reconnect_delay: int = 5000,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,
@@ -113,6 +113,7 @@ class ConfigurationWebSocketAPI:
         time_unit: TimeUnit = None,
         https_agent: Optional[ssl.SSLContext] = None,
         session_re_logon: Optional[bool] = True,
+        return_rate_limits: Optional[bool] = True
     ):
         """
         Initialize the API configuration.
@@ -132,6 +133,7 @@ class ConfigurationWebSocketAPI:
             time_unit (Optional[TimeUnit]): Time unit for time-based responses (default: None).
             https_agent (Optional[ssl.SSLContext]): Custom HTTPS Agent (default: None).
             session_re_logon (Optional[bool]): Enable session re-logon (default: True).
+            return_rate_limits (Optional[bool]): Enable rate limits returns (default: True).
         """
 
         self.api_key = api_key
@@ -149,6 +151,7 @@ class ConfigurationWebSocketAPI:
         self.https_agent = https_agent
         self.user_agent = ""
         self.session_re_logon = session_re_logon
+        self.return_rate_limits = return_rate_limits
 
 
 class ConfigurationWebSocketStreams:
@@ -166,7 +169,7 @@ class ConfigurationWebSocketStreams:
     def __init__(
         self,
         stream_url: str = "wss://stream.binance.com:9443/stream",
-        reconnect_delay: int = 5,
+        reconnect_delay: int = 5000,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,

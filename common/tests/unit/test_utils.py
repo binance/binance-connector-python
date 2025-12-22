@@ -728,6 +728,7 @@ class TestSendRequest(unittest.TestCase):
             headers=headers,
             timeout=5,
             proxies=None,
+            data=None,
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
@@ -762,6 +763,7 @@ class TestSendRequest(unittest.TestCase):
             headers=headers,
             timeout=5,
             proxies=None,
+            data=None,
         )
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
@@ -780,10 +782,11 @@ class TestSendRequest(unittest.TestCase):
         for status, exception in error_cases.items():
             with self.subTest(status=status):
                 mock_response = Mock(
-                    status_code=status, headers={"Content-Type": "application/json"}
+                    status_code=status,
+                    headers={"Content-Type": "application/json"}
                 )
 
-                mock_response.json.return_value = {"msg": f"Error {status}"}
+                mock_response.json.return_value = {"msg": f"Error {status}", "code": 10001}
                 self.session.request.return_value = mock_response
 
                 with self.assertRaises(exception) as context:
@@ -792,6 +795,7 @@ class TestSendRequest(unittest.TestCase):
                     )
 
                 self.assertEqual(context.exception.error_message, f"Error {status}")
+                self.assertEqual(context.exception.status_code, 10001)
 
                 mock_response.json.return_value = {}
                 self.session.request.return_value = mock_response
@@ -804,6 +808,7 @@ class TestSendRequest(unittest.TestCase):
                 self.assertEqual(
                     context.exception.error_message, exception().error_message
                 )
+                self.assertIsNone(getattr(context.exception, "status_code", None))
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
@@ -901,6 +906,48 @@ class TestSendRequest(unittest.TestCase):
             send_request(self.session, self.configuration, self.method, self.path, {})
 
         self.assertEqual(str(context.exception), "Network error: Final Failure")
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.get_timestamp", return_value=1234567890)
+    @patch("binance_common.utils.get_signature", return_value="signed_signature")
+    def test_request_with_body(
+        self,
+        mock_get_signature,
+        mock_get_timestamp,
+        mock_clean_none,
+        mock_encoded_string,
+    ):
+        mock_response = Mock(status_code=200)
+        mock_response.json.return_value = {"success": True}
+        mock_response.text = json.dumps({"success": True})
+        mock_response.headers = {}
+        self.session.request.return_value = mock_response
+
+        body_data = {"field1": "value1", "field2": "value2"}
+
+        response = send_request(
+            self.session,
+            self.configuration,
+            "POST",
+            self.path,
+            payload={"param": "value"},
+            body=body_data,
+            is_signed=True,
+        )
+
+        self.assertEqual(response.data(), {"success": True})
+        self.session.request.assert_called_once()
+        _, kwargs = self.session.request.call_args
+
+        self.assertEqual(kwargs["data"], body_data)
+        expected_signature_payload = {
+            "param": "value",
+            **body_data,
+            "timestamp": 1234567890,
+            "signature": "signed_signature",
+        }
+        self.assertEqual(kwargs["params"], expected_signature_payload)
 
 
 class TestParseRateLimitHeaders(unittest.TestCase):
