@@ -20,6 +20,7 @@ from binance_common.utils import (
     get_signature,
     get_timestamp,
     get_uuid,
+    get_random_int,
     make_serializable,
     parse_proxies,
     parse_user_event,
@@ -44,7 +45,7 @@ class WebSocketConnection:
     """Represents a WebSocket connection.
 
     Attributes:
-        id (str): Unique identifier for the WebSocket connection.
+        id (Union[str, int]): Unique identifier for the WebSocket connection.
         pending_request (dict): Dictionary to hold pending requests.
         stream_callback_map (dict): Map of stream names to their callback functions.
         response_types (dict): Map of stream names to their response types.
@@ -53,7 +54,7 @@ class WebSocketConnection:
     """
 
     def __init__(
-        self, websocket: aiohttp.ClientWebSocketResponse, id: str, ws_type: str
+        self, websocket: aiohttp.ClientWebSocketResponse, id: Union[str, int], ws_type: str
     ):
         self.id = id
         self.pending_request = {}
@@ -89,14 +90,14 @@ class WebSocketCommon:
         self,
         url: str,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
-        ws_id: str = None,
+        ws_id: Union[str, int] = None,
     ):
         """Connect to the Binance WebSocket server.
 
         Args:
             url (str): WebSocket URL.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
-            ws_id (str): Optional WebSocket ID for the connection.
+            ws_id (Union[str, int]): Optional WebSocket ID for the connection.
         """
 
         try:
@@ -115,7 +116,7 @@ class WebSocketCommon:
         self,
         url,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
-        ws_id: str = None,
+        ws_id: Union[str, int]  = None,
     ):
         """Initialize a WebSocket connection.
 
@@ -145,7 +146,7 @@ class WebSocketCommon:
                 max_msg_size=20 * 1024 * 1024,
                 proxy=proxy,
                 ssl=configuration.https_agent,
-                timeout=configuration.timeout,
+                timeout=configuration.timeout / 1000,
             )
             if ws_id:
                 id = ws_id
@@ -339,7 +340,7 @@ class WebSocketCommon:
 
         await self.close_connection(connection, False)
         if configuration.reconnect_delay:
-            await asyncio.sleep(configuration.reconnect_delay)
+            await asyncio.sleep(configuration.reconnect_delay / 1000)
 
         await self.connect(configuration.stream_url, configuration, connection.id)
 
@@ -471,11 +472,12 @@ class WebSocketCommon:
 
 
 class WebSocketStreamBase(WebSocketCommon):
-    def __init__(self, configuration: ConfigurationWebSocketStreams):
+    def __init__(self, configuration: ConfigurationWebSocketStreams, id_strict_int: Optional[bool] = False):
         if not configuration.stream_url.endswith("stream"):
             configuration.stream_url = configuration.stream_url + "/stream"
         super().__init__(configuration)
         self.configuration = configuration
+        self.id_strict_int = id_strict_int
 
     async def create_connection(self):
         """Create a WebSocket connection.
@@ -525,7 +527,7 @@ class WebSocketStreamBase(WebSocketCommon):
                 )
 
             logging.info(f"Subscribing to streams: {streams}")
-            json_msg = {"method": "SUBSCRIBE", "params": streams, "id": get_uuid()}
+            json_msg = {"method": "SUBSCRIBE", "params": streams, "id": get_random_int() if self.id_strict_int else get_uuid()}
             await self.send_message(json_msg, connection)
             global_stream_connections.stream_connections_map[stream] = connection
             connection.stream_callback_map.update({stream: []})
@@ -687,6 +689,14 @@ class WebSocketAPIBase(WebSocketCommon):
             is_signed=True,
             skip_auth=skip_auth
         )
+
+
+        if not self.configuration.return_rate_limits:
+            if "params" in payload:
+                payload["params"].update({ "returnRateLimits": False})
+            else:
+                payload["params"] = { "returnRateLimits": False }
+
         _payload = ws_api_payload(
             self.configuration,
             payload,
@@ -708,7 +718,7 @@ class WebSocketAPIBase(WebSocketCommon):
                         if response_model
                         else ws_response
                     ),
-                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]),
+                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]) if self.configuration.return_rate_limits else [],
                 )
             except asyncio.TimeoutError:
                 logging.warning(
@@ -776,6 +786,13 @@ class WebSocketAPIBase(WebSocketCommon):
             is_signed=False,
             skip_auth=skip_auth
         )
+
+        if not self.configuration.return_rate_limits:
+            if "params" in payload:
+                payload["params"].update({ "returnRateLimits": False})
+            else:
+                payload["params"] = { "returnRateLimits": False }
+
         _payload = ws_api_payload(
             self.configuration,
             payload,
@@ -802,7 +819,7 @@ class WebSocketAPIBase(WebSocketCommon):
 
                 return WebsocketApiResponse[T](
                     data_function=data_function,
-                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]),
+                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]) if self.configuration.return_rate_limits else [],
                 )
             except asyncio.TimeoutError:
                 logging.warning(
@@ -921,7 +938,7 @@ class RequestStreamHandle(Generic[T]):
 
     def __init__(
         self,
-        websocket_base: WebSocketStreamBase | WebSocketAPIBase,
+        websocket_base: WebSocketStreamBase or WebSocketAPIBase,
         stream: str,
         response_model: Type[T] = None,
     ):
@@ -940,12 +957,12 @@ class RequestStreamHandle(Generic[T]):
 
 
 async def RequestStream(
-    websocket_base: WebSocketStreamBase | WebSocketAPIBase, stream: str, response_model: Type[T] = None
+    websocket_base: WebSocketStreamBase or WebSocketAPIBase, stream: str, response_model: Type[T] = None
 ) -> RequestStreamHandle[T]:
     """Decorator to create a request stream for a specific stream.
 
     Args:
-        websocket_base (WebSocketStreamBase | WebSocketAPIBase): WebSocket base.
+        websocket_base (WebSocketStreamBase or WebSocketAPIBase): WebSocket base.
         stream (str): Stream name.
         response_model (Type[T], optional): Response model for the stream.
     """

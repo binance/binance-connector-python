@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.3.0 - 2025-12-22
+
+### Changed (6)
+
+- Added `body` parameter to `send_request` function for Rest API http requests.
+- Added `return_rate_limits` parameter to `ConfigurationWebSocketAPI` to avoid receiving rate limit headers.
+- Added `id_strict_int` parameter to `WebSocketStreamBase` to fix `Derivatives Trading Options` error.
+- Updated returned error value in `send_request` function.
+- Updated Websocket `timeout` and `reconnect_delay` to be in milliseconds.
+- Updated `backoff` to be in milliseconds.
+
 ## 3.2.0 - 2025-10-10
 
 ### Changed (1)

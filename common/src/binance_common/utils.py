@@ -208,6 +208,15 @@ def get_uuid() -> str:
     return str(uuid.uuid4())
 
 
+def get_random_int() -> int:
+    """Generates a random alphanumeric string of the specified length.
+
+    Returns:
+        int: A random integer derived from a UUID.
+    """
+
+    return int(uuid.uuid4().int >> 64)
+
 def validate_time_unit(time_unit: Optional[str]) -> Optional[str]:
     """Validates the time unit against the defined TimeUnit constants.
 
@@ -276,10 +285,11 @@ def send_request(
     method: str,
     path: str,
     payload: Optional[dict] = None,
+    body: Optional[dict] = None,
     time_unit: Optional[str] = None,
     response_model: Type[T] = None,
     is_signed: bool = False,
-    signer: Optional[Signers]=None
+    signer: Optional[Signers]=None,
 ) -> ApiResponse[T]:
     """Sends an HTTP request with the specified configuration, method, path, and
     optional payload and time unit.
@@ -290,9 +300,11 @@ def send_request(
     - `method`: The HTTP method to use (e.g. "GET", "POST", etc.).
     - `path`: The API endpoint path.
     - `payload`: The request payload (optional).
+    - `body`: The body data to send with the request (optional).
     - `time_unit`: The time unit for the `X-MBX-TIME-UNIT` header (optional).
     - `response_model`: The response model to use for deserializing the response (optional).
     - `is_signed`: A boolean indicating whether the request should be signed (optional).
+    - `signer`: The signer to use for signing the request (optional).
 
     The function returns the JSON response from the server, or raises an appropriate exception if an error occurs.
     """
@@ -302,6 +314,8 @@ def send_request(
 
     if is_signed:
         cleaned_payload = clean_none_value(payload)
+        if body:
+            cleaned_payload.update(clean_none_value(body))
         cleaned_payload["timestamp"] = get_timestamp()
         query_string = encoded_string(cleaned_payload)
         cleaned_payload["signature"] = get_signature(configuration, query_string, signer)
@@ -317,7 +331,7 @@ def send_request(
 
     url = f"{configuration.base_path}{path}"
     retries = configuration.retries if configuration else 0
-    backoff = configuration.backoff if configuration else 1
+    backoff = configuration.backoff / 1000 if configuration else 1
     timeout = configuration.timeout / 1000 if configuration else 10
     proxies = (
         parse_proxies(configuration.proxy)
@@ -347,6 +361,7 @@ def send_request(
                 headers=headers,
                 timeout=timeout,
                 proxies=proxies,
+                data=encoded_string(clean_none_value(body)) if body else None,
             )
 
             if response.status_code >= 400:
@@ -360,17 +375,17 @@ def send_request(
                 )
 
                 if status == 400:
-                    raise BadRequestError(error_message=data.get("msg"))
+                    raise BadRequestError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif status == 401:
-                    raise UnauthorizedError(error_message=data.get("msg"))
+                    raise UnauthorizedError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif status == 403:
-                    raise ForbiddenError(error_message=data.get("msg"))
+                    raise ForbiddenError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif status == 404:
-                    raise NotFoundError(error_message=data.get("msg"))
+                    raise NotFoundError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif status == 418:
-                    raise RateLimitBanError(error_message=data.get("msg"))
+                    raise RateLimitBanError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif status == 429:
-                    raise TooManyRequestsError(error_message=data.get("msg"))
+                    raise TooManyRequestsError(error_message=data.get("msg"), status_code=data.get("code"))
                 elif 500 <= status < 600:
                     raise ServerError(
                         error_message=f"Server error: {status}", status_code=status
