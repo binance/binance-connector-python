@@ -33,6 +33,7 @@ class AggregateTradeStreamsResponse(BaseModel):
     a: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
+    nq: Optional[StrictStr] = None
     f: Optional[StrictInt] = None
     l: Optional[StrictInt] = None
     T: Optional[StrictInt] = Field(default=None, alias="T")
@@ -45,6 +46,7 @@ class AggregateTradeStreamsResponse(BaseModel):
         "a",
         "p",
         "q",
+        "nq",
         "f",
         "l",
         "T",
@@ -117,6 +119,7 @@ class AggregateTradeStreamsResponse(BaseModel):
                 "a": obj.get("a"),
                 "p": obj.get("p"),
                 "q": obj.get("q"),
+                "nq": obj.get("nq"),
                 "f": obj.get("f"),
                 "l": obj.get("l"),
                 "T": obj.get("T"),

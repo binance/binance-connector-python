@@ -23,6 +23,7 @@ from ..models import DepositHistoryV2Response
 from ..models import FetchAddressVerificationListResponse
 from ..models import SubmitDepositQuestionnaireResponse
 from ..models import SubmitDepositQuestionnaireTravelRuleResponse
+from ..models import SubmitDepositQuestionnaireV2Response
 from ..models import VaspListResponse
 from ..models import WithdrawHistoryV1Response
 from ..models import WithdrawHistoryV2Response
@@ -382,7 +383,7 @@ class TravelRuleApi:
     def submit_deposit_questionnaire(
         self,
         sub_account_id: Union[str, None],
-        deposit_id: Union[str, None],
+        deposit_id: Union[int, None],
         questionnaire: Union[str, None],
         beneficiary_pii: Union[str, None],
         signature: Union[str, None],
@@ -408,7 +409,7 @@ class TravelRuleApi:
 
                 Args:
                     sub_account_id (Union[str, None]): External user ID.
-                    deposit_id (Union[str, None]): Wallet deposit ID.
+                    deposit_id (Union[int, None]): Wallet deposit ID
                     questionnaire (Union[str, None]): JSON format questionnaire answers.
                     beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
                     signature (Union[str, None]): Must be the last parameter.
@@ -532,6 +533,64 @@ class TravelRuleApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireTravelRuleResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def submit_deposit_questionnaire_v2(
+        self,
+        deposit_id: Union[int, None],
+        questionnaire: Union[str, None],
+    ) -> ApiResponse[SubmitDepositQuestionnaireV2Response]:
+        """
+                Submit Deposit Questionnaire V2 (For local entities that require travel rule) (supporting network) (USER_DATA)
+                PUT /sapi/v2/localentity/deposit/provide-info
+                https://developers.binance.com/docs/wallet/travel-rule/deposit-provide-info-v2
+
+                Submit questionnaire for local entities that require travel rule.
+        The questionnaire is only applies to transactions from unhosted wallets or VASPs that are not
+        yet onboarded with GTR.
+
+        * Questionnaire is different for each local entity, please refer
+        * If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`,
+
+        Weight: 600
+
+                Args:
+                    deposit_id (Union[int, None]): Wallet deposit ID
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+
+                Returns:
+                    ApiResponse[SubmitDepositQuestionnaireV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if deposit_id is None:
+            raise RequiredError(
+                field="deposit_id",
+                error_message="Missing required parameter 'deposit_id'",
+            )
+        if questionnaire is None:
+            raise RequiredError(
+                field="questionnaire",
+                error_message="Missing required parameter 'questionnaire'",
+            )
+
+        body = {}
+        payload = {"deposit_id": deposit_id, "questionnaire": questionnaire}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="PUT",
+            path="/sapi/v2/localentity/deposit/provide-info",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=SubmitDepositQuestionnaireV2Response,
             is_signed=True,
             signer=self._signer,
         )

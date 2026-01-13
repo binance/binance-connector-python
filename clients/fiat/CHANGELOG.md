@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.0.0 - 2025-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+### Removed (2)
+
+- `fiat_withdraw()` (`GET /sapi/v2/fiat/withdraw`)
+- `get_order_detail()` (`GET /sapi/v1/fiat/get-order-detail`)
+
 ## 4.0.0 - 2025-12-22
 
 ### Changed (2)

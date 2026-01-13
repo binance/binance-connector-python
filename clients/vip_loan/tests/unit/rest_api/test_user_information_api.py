@@ -20,6 +20,7 @@ from binance_common.utils import is_one_of_model
 
 from binance_sdk_vip_loan.rest_api.api import UserInformationApi
 from binance_sdk_vip_loan.rest_api.models import CheckVIPLoanCollateralAccountResponse
+from binance_sdk_vip_loan.rest_api.models import GetVIPLoanAccruedInterestResponse
 from binance_sdk_vip_loan.rest_api.models import GetVIPLoanOngoingOrdersResponse
 from binance_sdk_vip_loan.rest_api.models import QueryApplicationStatusResponse
 
@@ -164,6 +165,135 @@ class TestUserInformationApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.check_vip_loan_collateral_account()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_vip_loan_accrued_interest_success(self, mock_get_signature):
+        """Test get_vip_loan_accrued_interest() successfully with required parameters only."""
+
+        expected_response = {
+            "rows": [
+                {
+                    "loanCoin": "USDT",
+                    "principalAmount": "10000",
+                    "interestAmount": "1.2",
+                    "annualInterestRate": "0.001273",
+                    "accrualTime": 1575018510000,
+                    "orderId": 756783308056935400,
+                }
+            ],
+            "total": 1,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_vip_loan_accrued_interest()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/accruedInterest" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetVIPLoanAccruedInterestResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetVIPLoanAccruedInterestResponse, "from_dict")
+        ):
+            expected = GetVIPLoanAccruedInterestResponse.from_dict(expected_response)
+        else:
+            expected = GetVIPLoanAccruedInterestResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_vip_loan_accrued_interest_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_vip_loan_accrued_interest() successfully with optional parameters."""
+
+        params = {
+            "order_id": 1,
+            "loan_coin": "loan_coin_example",
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "current": 1,
+            "limit": 10,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "rows": [
+                {
+                    "loanCoin": "USDT",
+                    "principalAmount": "10000",
+                    "interestAmount": "1.2",
+                    "annualInterestRate": "0.001273",
+                    "accrualTime": 1575018510000,
+                    "orderId": 756783308056935400,
+                }
+            ],
+            "total": 1,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_vip_loan_accrued_interest(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/accruedInterest" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetVIPLoanAccruedInterestResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetVIPLoanAccruedInterestResponse, "from_dict")
+        ):
+            expected = GetVIPLoanAccruedInterestResponse.from_dict(expected_response)
+        else:
+            expected = GetVIPLoanAccruedInterestResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_vip_loan_accrued_interest_server_error(self):
+        """Test that get_vip_loan_accrued_interest() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_vip_loan_accrued_interest = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_vip_loan_accrued_interest()
 
     @patch("binance_common.utils.get_signature")
     def test_get_vip_loan_ongoing_orders_success(self, mock_get_signature):

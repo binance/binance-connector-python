@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.0 - 2026-01-13
+
+### Added (1)
+
+- `get_flexible_loan_interest_rate_history()` (`GET /sapi/v2/loan/interestRateHistory`)
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
 ## 3.0.0 - 2025-12-22
 
 ### Changed (2)

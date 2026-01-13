@@ -16,6 +16,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import CheckVIPLoanCollateralAccountResponse
+from ..models import GetVIPLoanAccruedInterestResponse
 from ..models import GetVIPLoanOngoingOrdersResponse
 from ..models import QueryApplicationStatusResponse
 
@@ -84,6 +85,69 @@ class UserInformationApi:
             signer=self._signer,
         )
 
+    def get_vip_loan_accrued_interest(
+        self,
+        order_id: Optional[int] = None,
+        loan_coin: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanAccruedInterestResponse]:
+        """
+                Get VIP Loan Accrued Interest (USER_DATA)
+                GET /sapi/v1/loan/vip/accruedInterest
+                https://developers.binance.com/docs/vip_loan/user-information/Get-VIP-Loan-Accrued-Interest
+
+                Check VIP Loan interest record
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned.
+        * The max interval between startTime and endTime is 90 days.
+
+        Weight: 400
+
+                Args:
+                    order_id (Optional[int] = None):
+                    loan_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetVIPLoanAccruedInterestResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "order_id": order_id,
+            "loan_coin": loan_coin,
+            "start_time": start_time,
+            "end_time": end_time,
+            "current": current,
+            "limit": limit,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/loan/vip/accruedInterest",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetVIPLoanAccruedInterestResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def get_vip_loan_ongoing_orders(
         self,
         order_id: Optional[int] = None,
@@ -108,8 +172,8 @@ class UserInformationApi:
                     collateral_account_id (Optional[int] = None):
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -160,8 +224,8 @@ class UserInformationApi:
         Weight: 400
 
                 Args:
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:

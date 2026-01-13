@@ -15,6 +15,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 
+from ..models import KeepaliveUserDataStreamResponse
 from ..models import StartUserDataStreamResponse
 
 
@@ -68,7 +69,7 @@ class UserDataStreamsApi:
 
     def keepalive_user_data_stream(
         self,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[KeepaliveUserDataStreamResponse]:
         """
                 Keepalive User Data Stream (USER_STREAM)
                 PUT /dapi/v1/listenKey
@@ -81,7 +82,7 @@ class UserDataStreamsApi:
                 Args:
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[KeepaliveUserDataStreamResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -99,6 +100,7 @@ class UserDataStreamsApi:
             payload=payload,
             body=body,
             time_unit=self._configuration.time_unit,
+            response_model=KeepaliveUserDataStreamResponse,
         )
 
     def start_user_data_stream(

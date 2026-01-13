@@ -26,7 +26,9 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     AllOrdersResponse,
 )
-
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    AutoCancelAllOpenOrdersResponse,
+)
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     CancelAllOpenOrdersResponse,
 )
@@ -65,6 +67,9 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NewOrderResponse,
+)
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    PlaceMultipleOrdersResponse,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     PositionAdlQuantileEstimationResponse,
@@ -128,6 +133,9 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ModifyMultipleOrdersBatchOrdersParameterInner,
+)
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    PlaceMultipleOrdersBatchOrdersParameterInner,
 )
 
 
@@ -451,8 +459,9 @@ class TestTradeApi:
             "countdown_time": 56,
         }
 
+        expected_response = {"symbol": "BTCUSD_200925", "countdownTime": "100000"}
         mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response({})
+        self.set_mock_response(expected_response)
 
         response = self.client.auto_cancel_all_open_orders(**params)
 
@@ -473,8 +482,24 @@ class TestTradeApi:
         assert normalized["countdownTime"] == 56
 
         assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AutoCancelAllOpenOrdersResponse)
 
-        assert response.data() == {}
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(AutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
+            expected = AutoCancelAllOpenOrdersResponse.from_dict(expected_response)
+        else:
+            expected = AutoCancelAllOpenOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
 
     @patch("binance_common.utils.get_signature")
     def test_auto_cancel_all_open_orders_success_with_optional_params(
@@ -484,8 +509,9 @@ class TestTradeApi:
 
         params = {"symbol": "symbol_example", "countdown_time": 56, "recv_window": 5000}
 
+        expected_response = {"symbol": "BTCUSD_200925", "countdownTime": "100000"}
         mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response({})
+        self.set_mock_response(expected_response)
 
         response = self.client.auto_cancel_all_open_orders(**params)
 
@@ -499,8 +525,24 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AutoCancelAllOpenOrdersResponse)
 
-        assert response.data() == {}
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(AutoCancelAllOpenOrdersResponse, "from_dict")
+        ):
+            expected = AutoCancelAllOpenOrdersResponse.from_dict(expected_response)
+        else:
+            expected = AutoCancelAllOpenOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
 
     def test_auto_cancel_all_open_orders_missing_required_param_symbol(self):
         """Test that auto_cancel_all_open_orders() raises RequiredError when 'symbol' is missing."""
@@ -2675,6 +2717,260 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.new_order(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_place_multiple_orders_success(self, mock_get_signature):
+        """Test place_multiple_orders() successfully with required parameters only."""
+
+        params = {
+            "batch_orders": [
+                PlaceMultipleOrdersBatchOrdersParameterInner(
+                    symbol="",
+                    side="BUY",
+                    position_side="BOTH",
+                    type="LIMIT",
+                    time_in_force="GTC",
+                    quantity="1.0",
+                    reduce_only="False",
+                    price="1.0",
+                    new_client_order_id="1",
+                    stop_price="1.0",
+                    activation_price="1",
+                    callback_rate="1.0",
+                    working_type="MARK_PRICE",
+                    price_protect="False",
+                    new_order_resp_type="ACK",
+                    price_match="NONE",
+                    self_trade_prevention_mode="NONE",
+                )
+            ],
+        }
+
+        expected_response = [
+            {
+                "clientOrderId": "testOrder",
+                "cumQty": "0",
+                "cumBase": "0",
+                "executedQty": "0",
+                "orderId": 22542179,
+                "avgPrice": "0.0",
+                "origQty": "10",
+                "price": "0",
+                "reduceOnly": False,
+                "side": "BUY",
+                "positionSide": "SHORT",
+                "status": "NEW",
+                "stopPrice": "9300",
+                "symbol": "BTCUSD_200925",
+                "pair": "BTCUSD",
+                "timeInForce": "GTC",
+                "type": "TRAILING_STOP_MARKET",
+                "origType": "TRAILING_STOP_MARKET",
+                "activatePrice": "9020",
+                "priceRate": "0.3",
+                "updateTime": 1566818724722,
+                "workingType": "CONTRACT_PRICE",
+                "priceProtect": False,
+                "priceMatch": "NONE",
+                "selfTradePreventionMode": "NONE",
+            },
+            {"code": -2022, "msg": "ReduceOnly Order is rejected."},
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.place_multiple_orders(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/dapi/v1/batchOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert "batchOrders" in normalized
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(PlaceMultipleOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(PlaceMultipleOrdersResponse, "from_dict"):
+            expected = PlaceMultipleOrdersResponse.from_dict(expected_response)
+        else:
+            expected = PlaceMultipleOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_place_multiple_orders_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test place_multiple_orders() successfully with optional parameters."""
+
+        params = {
+            "batch_orders": [
+                PlaceMultipleOrdersBatchOrdersParameterInner(
+                    symbol="",
+                    side="BUY",
+                    position_side="BOTH",
+                    type="LIMIT",
+                    time_in_force="GTC",
+                    quantity="1.0",
+                    reduce_only="False",
+                    price="1.0",
+                    new_client_order_id="1",
+                    stop_price="1.0",
+                    activation_price="1",
+                    callback_rate="1.0",
+                    working_type="MARK_PRICE",
+                    price_protect="False",
+                    new_order_resp_type="ACK",
+                    price_match="NONE",
+                    self_trade_prevention_mode="NONE",
+                )
+            ],
+            "recv_window": 5000,
+        }
+
+        expected_response = [
+            {
+                "clientOrderId": "testOrder",
+                "cumQty": "0",
+                "cumBase": "0",
+                "executedQty": "0",
+                "orderId": 22542179,
+                "avgPrice": "0.0",
+                "origQty": "10",
+                "price": "0",
+                "reduceOnly": False,
+                "side": "BUY",
+                "positionSide": "SHORT",
+                "status": "NEW",
+                "stopPrice": "9300",
+                "symbol": "BTCUSD_200925",
+                "pair": "BTCUSD",
+                "timeInForce": "GTC",
+                "type": "TRAILING_STOP_MARKET",
+                "origType": "TRAILING_STOP_MARKET",
+                "activatePrice": "9020",
+                "priceRate": "0.3",
+                "updateTime": 1566818724722,
+                "workingType": "CONTRACT_PRICE",
+                "priceProtect": False,
+                "priceMatch": "NONE",
+                "selfTradePreventionMode": "NONE",
+            },
+            {"code": -2022, "msg": "ReduceOnly Order is rejected."},
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.place_multiple_orders(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/dapi/v1/batchOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(PlaceMultipleOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(PlaceMultipleOrdersResponse, "from_dict"):
+            expected = PlaceMultipleOrdersResponse.from_dict(expected_response)
+        else:
+            expected = PlaceMultipleOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_place_multiple_orders_missing_required_param_batch_orders(self):
+        """Test that place_multiple_orders() raises RequiredError when 'batch_orders' is missing."""
+        params = {
+            "batch_orders": [
+                PlaceMultipleOrdersBatchOrdersParameterInner(
+                    symbol="",
+                    side="BUY",
+                    position_side="BOTH",
+                    type="LIMIT",
+                    time_in_force="GTC",
+                    quantity="1.0",
+                    reduce_only="False",
+                    price="1.0",
+                    new_client_order_id="1",
+                    stop_price="1.0",
+                    activation_price="1",
+                    callback_rate="1.0",
+                    working_type="MARK_PRICE",
+                    price_protect="False",
+                    new_order_resp_type="ACK",
+                    price_match="NONE",
+                    self_trade_prevention_mode="NONE",
+                )
+            ],
+        }
+        params["batch_orders"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'batch_orders'"
+        ):
+            self.client.place_multiple_orders(**params)
+
+    def test_place_multiple_orders_server_error(self):
+        """Test that place_multiple_orders() raises an error when the server returns an error."""
+
+        params = {
+            "batch_orders": [
+                PlaceMultipleOrdersBatchOrdersParameterInner(
+                    symbol="",
+                    side="BUY",
+                    position_side="BOTH",
+                    type="LIMIT",
+                    time_in_force="GTC",
+                    quantity="1.0",
+                    reduce_only="False",
+                    price="1.0",
+                    new_client_order_id="1",
+                    stop_price="1.0",
+                    activation_price="1",
+                    callback_rate="1.0",
+                    working_type="MARK_PRICE",
+                    price_protect="False",
+                    new_order_resp_type="ACK",
+                    price_match="NONE",
+                    self_trade_prevention_mode="NONE",
+                )
+            ],
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.place_multiple_orders = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.place_multiple_orders(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_position_adl_quantile_estimation_success(self, mock_get_signature):

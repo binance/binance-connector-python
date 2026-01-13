@@ -23,6 +23,7 @@ from binance_sdk_vip_loan.rest_api.api import MarketDataApi
 from binance_sdk_vip_loan.rest_api.models import GetBorrowInterestRateResponse
 from binance_sdk_vip_loan.rest_api.models import GetCollateralAssetDataResponse
 from binance_sdk_vip_loan.rest_api.models import GetLoanableAssetsDataResponse
+from binance_sdk_vip_loan.rest_api.models import GetVIPLoanInterestRateHistoryResponse
 
 
 class TestMarketDataApi:
@@ -431,3 +432,172 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_loanable_assets_data()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_vip_loan_interest_rate_history_success(self, mock_get_signature):
+        """Test get_vip_loan_interest_rate_history() successfully with required parameters only."""
+
+        params = {
+            "coin": "coin_example",
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "rows": [
+                {
+                    "coin": "USDT",
+                    "annualizedInterestRate": "0.0647",
+                    "time": 1575018510000,
+                }
+            ],
+            "total": 1,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_vip_loan_interest_rate_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/interestRateHistory" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["coin"] == "coin_example"
+        assert normalized["recvWindow"] == 5000
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetVIPLoanInterestRateHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetVIPLoanInterestRateHistoryResponse, "from_dict")
+        ):
+            expected = GetVIPLoanInterestRateHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetVIPLoanInterestRateHistoryResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_vip_loan_interest_rate_history_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_vip_loan_interest_rate_history() successfully with optional parameters."""
+
+        params = {
+            "coin": "coin_example",
+            "recv_window": 5000,
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "current": 1,
+            "limit": 10,
+        }
+
+        expected_response = {
+            "rows": [
+                {
+                    "coin": "USDT",
+                    "annualizedInterestRate": "0.0647",
+                    "time": 1575018510000,
+                }
+            ],
+            "total": 1,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_vip_loan_interest_rate_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/interestRateHistory" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetVIPLoanInterestRateHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetVIPLoanInterestRateHistoryResponse, "from_dict")
+        ):
+            expected = GetVIPLoanInterestRateHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetVIPLoanInterestRateHistoryResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_vip_loan_interest_rate_history_missing_required_param_coin(self):
+        """Test that get_vip_loan_interest_rate_history() raises RequiredError when 'coin' is missing."""
+        params = {
+            "coin": "coin_example",
+            "recv_window": 5000,
+        }
+        params["coin"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
+            self.client.get_vip_loan_interest_rate_history(**params)
+
+    def test_get_vip_loan_interest_rate_history_missing_required_param_recv_window(
+        self,
+    ):
+        """Test that get_vip_loan_interest_rate_history() raises RequiredError when 'recv_window' is missing."""
+        params = {
+            "coin": "coin_example",
+            "recv_window": 5000,
+        }
+        params["recv_window"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'recv_window'"
+        ):
+            self.client.get_vip_loan_interest_rate_history(**params)
+
+    def test_get_vip_loan_interest_rate_history_server_error(self):
+        """Test that get_vip_loan_interest_rate_history() raises an error when the server returns an error."""
+
+        params = {
+            "coin": "coin_example",
+            "recv_window": 5000,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_vip_loan_interest_rate_history = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_vip_loan_interest_rate_history(**params)
