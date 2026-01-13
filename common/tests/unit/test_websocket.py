@@ -56,6 +56,11 @@ def mock_config():
     config.api_secret = "test-secret"
     config.stream_url = "wss://example.com/ws"
     config.mode = WebsocketMode.SINGLE
+    config.proxy = None
+    config.compression = None
+    config.timeout = 10
+    config.reconnect_delay = 0
+    config.pool_size = 1
     return config
 
 
@@ -311,6 +316,60 @@ class TestWebSocketCommon:
         assert resolved_value == {"result": '{"success": true}', "rateLimits": []}
 
     @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_single_mode(self, mock_ws_connect, config, mock_websocket):
+        mock_ws_connect.return_value = mock_websocket
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config)
+
+        assert len(ws_common.connections) == 1
+        connection = ws_common.connections[0]
+        assert isinstance(connection, WebSocketConnection)
+        assert connection.id == "mock-uuid"
+        assert connection.url_path is None
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_single_mode_with_url_path(self, mock_ws_connect, config, mock_websocket):
+        mock_ws_connect.return_value = mock_websocket
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config, url_paths=["path1"])
+
+        assert len(ws_common.connections) == 1
+        connection = ws_common.connections[0]
+        assert isinstance(connection, WebSocketConnection)
+        assert connection.id == "mock-uuid"
+        assert connection.url_path == "path1"
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_pool_mode_with_url_paths(self, mock_ws_connect, config, mock_websocket):
+        mock_ws_connect.return_value = mock_websocket
+        config.pool_size = 2
+        config.mode = WebsocketMode.POOL
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config, url_paths=["path1", "path2"])
+
+        assert len(ws_common.connections) == 4
+        for i, connection in enumerate(ws_common.connections):
+            assert isinstance(connection, WebSocketConnection)
+            assert connection.id == "mock-uuid"
+            expected_path = "path1" if i < 2 else "path2"
+            assert connection.url_path == expected_path
+
+    @pytest.mark.asyncio
     async def test_receive_loop_handles_text_with_id(self):
         msg_data = {"id": "123", "result": "ok"}
         msg = MagicMock()
@@ -500,6 +559,40 @@ class TestWebSocketCommon:
 class TestWebSocketStreamBase:
 
     @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_create_connection_with_url_paths(self, mock_ws_connect, mock_config, mock_websocket):
+        mock_config.stream_url = "wss://test.com/ws"
+        mock_config.mode = WebsocketMode.SINGLE
+        mock_ws_connect.return_value = mock_websocket
+
+        websocket_stream = WebSocketStreamBase(mock_config, url_paths=["test_path"])
+        await websocket_stream.create_connection()
+
+        assert len(websocket_stream.connections) == 1
+        connection = websocket_stream.connections[0]
+        assert connection.url_path == "test_path"
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_create_connection_without_url_paths(self, mock_ws_connect, mock_config, mock_websocket):
+        mock_config.stream_url = "wss://test.com/ws"
+        mock_config.mode = WebsocketMode.SINGLE
+        mock_ws_connect.return_value = mock_websocket
+
+        websocket_stream = WebSocketStreamBase(mock_config)
+        await websocket_stream.create_connection()
+
+        assert len(websocket_stream.connections) == 1
+        connection = websocket_stream.connections[0]
+        assert connection.url_path is None
+
+    @pytest.mark.asyncio
     async def test_subscribe_adds_stream_and_callback(
         self, websocket_stream, mock_connection, mock_registry
     ):
@@ -510,6 +603,32 @@ class TestWebSocketStreamBase:
 
         assert "test_stream" in mock_connection.stream_callback_map
         mock_connection.websocket.send_str.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_subscribe_with_stream_url(
+        self, websocket_stream, mock_connection, mock_registry
+    ):
+        mock_connection.url_path = "test_path"
+        websocket_stream.connections = [mock_connection]
+
+        await websocket_stream.subscribe(["test_stream"], stream_url="test_path")
+
+        assert "test_stream" in mock_registry.stream_connections_map
+        assert mock_registry.stream_connections_map["test_stream"] == mock_connection
+        mock_connection.websocket.send_str.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_subscribe_with_stream_url_not_found(
+        self, websocket_stream, mock_connection, mock_registry, caplog
+    ):
+        mock_connection.url_path = "different_path"
+        websocket_stream.connections = [mock_connection]
+
+        with caplog.at_level(logging.WARNING):
+            await websocket_stream.subscribe(["test_stream"], stream_url="test_path")
+
+        assert "No matching connection found for stream: test_stream" in caplog.text
+        assert "test_stream" not in mock_registry.stream_connections_map
 
     @pytest.mark.asyncio
     async def test_on_sets_callback_for_stream(self, websocket_stream, mock_connection):
@@ -588,6 +707,40 @@ class TestWebSocketStreamBase:
         assert isinstance(result, RequestStreamHandle)
         assert hasattr(result, "on")
         assert hasattr(result, "unsubscribe")
+
+
+    @pytest.mark.asyncio
+    async def test_request_stream_with_stream_url(self, websocket_stream, mock_connection):
+        mock_connection.url_path = "test_path"
+        websocket_stream.connections = [mock_connection]
+
+        with patch.object(websocket_stream, 'subscribe', new_callable=AsyncMock) as mock_subscribe:
+            result = await RequestStream(websocket_stream, "test_stream", stream_url="test_path")
+
+            assert isinstance(result, RequestStreamHandle)
+            assert hasattr(result, "on")
+            assert hasattr(result, "unsubscribe")
+
+            mock_subscribe.assert_awaited_once_with(
+                streams=["test_stream"],
+                response_model=None,
+                stream_url="test_path"
+            )
+
+    @pytest.mark.asyncio
+    async def test_request_stream_without_stream_url(self, websocket_stream):
+        with patch.object(websocket_stream, 'subscribe', new_callable=AsyncMock) as mock_subscribe:
+            result = await RequestStream(websocket_stream, "test_stream")
+
+            assert isinstance(result, RequestStreamHandle)
+            assert hasattr(result, "on")
+            assert hasattr(result, "unsubscribe")
+
+            mock_subscribe.assert_awaited_once_with(
+                streams=["test_stream"],
+                response_model=None,
+                stream_url=None
+            )
 
     @pytest.mark.asyncio
     async def test_ping_ws_stream(self, websocket_stream, mock_connection):

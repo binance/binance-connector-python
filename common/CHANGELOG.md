@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.4.0 - 2025-01-13
+
+### Changed (1)
+
+- Support Derivatives Trading Options different WS Streams URL paths.
+
 ## 3.3.0 - 2025-12-22
 
 ### Changed (6)

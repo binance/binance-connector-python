@@ -51,10 +51,14 @@ class WebSocketConnection:
         response_types (dict): Map of stream names to their response types.
         ws_type (str): Type of WebSocket connection (API or Stream).
         websocket (aiohttp.ClientWebSocketResponse): The WebSocket response object.
+        reconnect (bool): Flag indicating if the connection should reconnect.
+        is_session_log_on (bool): Flag indicating if the session is logged on.
+        session_logon_request (Optional[dict]): The session logon request data.
+        url_path (Optional[str]): The URL path for the WebSocket connection.
     """
 
     def __init__(
-        self, websocket: aiohttp.ClientWebSocketResponse, id: Union[str, int], ws_type: str
+        self, websocket: aiohttp.ClientWebSocketResponse, id: Union[str, int], ws_type: str, url_path: Optional[str] = None
     ):
         self.id = id
         self.pending_request = {}
@@ -65,6 +69,7 @@ class WebSocketConnection:
         self.reconnect = False
         self.is_session_log_on = False
         self.session_logon_request = None
+        self.url_path = url_path
 
 
 class WebSocketCommon:
@@ -91,6 +96,7 @@ class WebSocketCommon:
         url: str,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
         ws_id: Union[str, int] = None,
+        url_paths: Optional[list[str]] = None,
     ):
         """Connect to the Binance WebSocket server.
 
@@ -98,16 +104,19 @@ class WebSocketCommon:
             url (str): WebSocket URL.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
             ws_id (Union[str, int]): Optional WebSocket ID for the connection.
+            url_paths (Optional[list[str]]): Optional list of URL paths for the connection.
         """
 
         try:
             if self.session is None:
                 self.session = aiohttp.ClientSession()
-            if configuration.mode == WebsocketMode.POOL:
-                for i in range(configuration.pool_size):
-                    await self.init_connection(url, configuration, ws_id)
-            else:
-                await self.init_connection(url, configuration, ws_id)
+
+            pool_size = configuration.pool_size if configuration.mode == WebsocketMode.POOL else 1
+            urls = url_paths if url_paths else [None]
+
+            for url_path in urls:
+                for _ in range(pool_size):
+                    await self.init_connection(url, configuration, ws_id=ws_id, url_path=url_path)
             return self
         except Exception as e:
             logging.error(f"WebSocket failed to connect: {e}")
@@ -116,6 +125,7 @@ class WebSocketCommon:
         self,
         url,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
+        url_path: Optional[str] = None,
         ws_id: Union[str, int]  = None,
     ):
         """Initialize a WebSocket connection.
@@ -123,6 +133,7 @@ class WebSocketCommon:
         Args:
             url (str): WebSocket URL.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
+            url_path (Optional[str]): Optional URL path for the connection.
             ws_id (str): Optional WebSocket ID for the connection.
         """
 
@@ -137,6 +148,9 @@ class WebSocketCommon:
         if configuration.time_unit:
             url = f"{url}?timeUnit={configuration.time_unit.value}"
         logging.info(f"Connecting to {url} with proxy {proxy}")
+
+        if url_path:
+            url = url.replace("/stream", f"/{url_path}/stream")
 
         if type(configuration).__name__ == "ConfigurationWebSocketAPI":
             websocket = await self.session.ws_connect(
@@ -168,7 +182,7 @@ class WebSocketCommon:
             id = ws_id if ws_id else get_uuid()
 
         logging.info(f"Establishing Websocket connection with id {id} to: {url}")
-        connection = WebSocketConnection(websocket, id, type(configuration).__name__)
+        connection = WebSocketConnection(websocket, id, type(configuration).__name__, url_path)
 
         self.connections.append(connection)
 
@@ -472,12 +486,26 @@ class WebSocketCommon:
 
 
 class WebSocketStreamBase(WebSocketCommon):
-    def __init__(self, configuration: ConfigurationWebSocketStreams, id_strict_int: Optional[bool] = False):
+    def __init__(
+        self,
+        configuration: ConfigurationWebSocketStreams,
+        id_strict_int: Optional[bool] = False,
+        url_paths: Optional[str] = None
+    ):
+        """Initialize the WebSocketStreamBase class.
+
+        Args:
+            configuration (ConfigurationWebSocketStreams): Configuration object.
+            id_strict_int (Optional[bool]): Whether to use strict integer IDs.
+            url_paths (Optional[str]): URL paths for the WebSocket connection.
+        """
+
         if not configuration.stream_url.endswith("stream"):
             configuration.stream_url = configuration.stream_url + "/stream"
         super().__init__(configuration)
         self.configuration = configuration
         self.id_strict_int = id_strict_int
+        self.url_paths = url_paths
 
     async def create_connection(self):
         """Create a WebSocket connection.
@@ -485,9 +513,10 @@ class WebSocketStreamBase(WebSocketCommon):
         Returns:
             WebSocketConnection: The created WebSocket connection.
         """
-        return await self.connect(self.configuration.stream_url, self.configuration)
 
-    async def subscribe(self, streams: list[str], response_model: Type[T] = None):
+        return await self.connect(self.configuration.stream_url, self.configuration, url_paths=self.url_paths)
+
+    async def subscribe(self, streams: list[str], response_model: Type[T] = None, stream_url: Optional[str] = None):
         """Subscribe to a list of streams.
 
         Args:
@@ -516,15 +545,20 @@ class WebSocketStreamBase(WebSocketCommon):
         ]
 
         for stream in streams:
-            if self.configuration.mode == WebsocketMode.SINGLE:
-                connection = self.connections[0]
+            if stream_url:
+                candidates = [c for c in self.connections if c.url_path == stream_url]
             else:
-                connection = self.connections[
-                    self.round_robin_index % len(self.connections)
-                ]
-                self.round_robin_index = (self.round_robin_index + 1) % len(
-                    self.connections
-                )
+                candidates = self.connections
+
+            if self.configuration.mode == WebsocketMode.SINGLE:
+                connection = candidates[0] if candidates else None
+            else:
+                connection = candidates[self.round_robin_index % len(candidates)] if candidates else None
+                self.round_robin_index = (self.round_robin_index + 1) % len(candidates) if candidates else 0
+
+            if connection is None:
+                logging.warning(f"No matching connection found for stream: {stream}")
+                continue
 
             logging.info(f"Subscribing to streams: {streams}")
             json_msg = {"method": "SUBSCRIBE", "params": streams, "id": get_random_int() if self.id_strict_int else get_uuid()}
@@ -957,7 +991,7 @@ class RequestStreamHandle(Generic[T]):
 
 
 async def RequestStream(
-    websocket_base: WebSocketStreamBase or WebSocketAPIBase, stream: str, response_model: Type[T] = None
+    websocket_base: WebSocketStreamBase or WebSocketAPIBase, stream: str, response_model: Type[T] = None, stream_url: Optional[str] = None
 ) -> RequestStreamHandle[T]:
     """Decorator to create a request stream for a specific stream.
 
@@ -968,7 +1002,7 @@ async def RequestStream(
     """
 
     if isinstance(websocket_base, WebSocketStreamBase):
-        await websocket_base.subscribe(streams=[stream], response_model=response_model)
+        await websocket_base.subscribe(streams=[stream], response_model=response_model, stream_url=stream_url)
     else:
         await websocket_base.subscribe_user_data(id=stream, response_model=response_model)
 
