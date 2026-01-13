@@ -62,7 +62,7 @@ from .models import TopTraderLongShortRatioPositionsResponse
 from .models import ClassicPortfolioMarginAccountInformationResponse
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
-
+from .models import AutoCancelAllOpenOrdersResponse
 from .models import CancelAllOpenOrdersResponse
 from .models import CancelMultipleOrdersResponse
 from .models import CancelOrderResponse
@@ -76,13 +76,14 @@ from .models import ModifyIsolatedPositionMarginResponse
 from .models import ModifyMultipleOrdersResponse
 from .models import ModifyOrderResponse
 from .models import NewOrderResponse
+from .models import PlaceMultipleOrdersResponse
 from .models import PositionAdlQuantileEstimationResponse
 from .models import PositionInformationResponse
 from .models import QueryCurrentOpenOrderResponse
 from .models import QueryOrderResponse
 from .models import UsersForceOrdersResponse
 
-
+from .models import KeepaliveUserDataStreamResponse
 from .models import StartUserDataStreamResponse
 
 
@@ -118,6 +119,7 @@ from .models import UsersForceOrdersAutoCloseTypeEnum
 
 
 from .models import ModifyMultipleOrdersBatchOrdersParameterInner
+from .models import PlaceMultipleOrdersBatchOrdersParameterInner
 
 T = TypeVar("T")
 
@@ -1626,7 +1628,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         symbol: Union[str, None],
         countdown_time: Union[int, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AutoCancelAllOpenOrdersResponse]:
         """
                 Auto-Cancel All Open Orders (TRADE)
 
@@ -1645,7 +1647,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[AutoCancelAllOpenOrdersResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -2189,6 +2191,36 @@ class DerivativesTradingCoinFuturesRestAPI:
             recv_window,
         )
 
+    def place_multiple_orders(
+        self,
+        batch_orders: Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[PlaceMultipleOrdersResponse]:
+        """
+                Place Multiple Orders(TRADE)
+
+                Place multiple orders
+
+        * Parameter rules are same with `New Order`
+        * Batch orders are processed concurrently, and the order of matching is not guaranteed.
+        * The order of returned contents for batch orders is the same as the order of the order list.
+
+        Weight: 5
+
+                Args:
+                    batch_orders (Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[PlaceMultipleOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.place_multiple_orders(batch_orders, recv_window)
+
     def position_adl_quantile_estimation(
         self,
         symbol: Optional[str] = None,
@@ -2392,7 +2424,7 @@ class DerivativesTradingCoinFuturesRestAPI:
 
     def keepalive_user_data_stream(
         self,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[KeepaliveUserDataStreamResponse]:
         """
                 Keepalive User Data Stream (USER_STREAM)
 
@@ -2403,7 +2435,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                 Args:
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[KeepaliveUserDataStreamResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.

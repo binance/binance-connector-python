@@ -191,6 +191,9 @@ from .submit_deposit_questionnaire_response import (
 from .submit_deposit_questionnaire_travel_rule_response import (
     SubmitDepositQuestionnaireTravelRuleResponse as SubmitDepositQuestionnaireTravelRuleResponse,
 )
+from .submit_deposit_questionnaire_v2_response import (
+    SubmitDepositQuestionnaireV2Response as SubmitDepositQuestionnaireV2Response,
+)
 from .system_status_response import SystemStatusResponse as SystemStatusResponse
 from .toggle_bnb_burn_on_spot_trade_and_margin_interest_response import (
     ToggleBnbBurnOnSpotTradeAndMarginInterestResponse as ToggleBnbBurnOnSpotTradeAndMarginInterestResponse,

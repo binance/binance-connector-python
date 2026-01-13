@@ -18,7 +18,7 @@ from binance_common.utils import send_request
 
 from ..models import AccountTradeListResponse
 from ..models import AllOrdersResponse
-
+from ..models import AutoCancelAllOpenOrdersResponse
 from ..models import CancelAllOpenOrdersResponse
 from ..models import CancelMultipleOrdersResponse
 from ..models import CancelOrderResponse
@@ -32,6 +32,7 @@ from ..models import ModifyIsolatedPositionMarginResponse
 from ..models import ModifyMultipleOrdersResponse
 from ..models import ModifyOrderResponse
 from ..models import NewOrderResponse
+from ..models import PlaceMultipleOrdersResponse
 from ..models import PositionAdlQuantileEstimationResponse
 from ..models import PositionInformationResponse
 from ..models import QueryCurrentOpenOrderResponse
@@ -56,6 +57,7 @@ from ..models import UsersForceOrdersAutoCloseTypeEnum
 
 
 from ..models import ModifyMultipleOrdersBatchOrdersParameterInner
+from ..models import PlaceMultipleOrdersBatchOrdersParameterInner
 
 
 class TradeApi:
@@ -220,7 +222,7 @@ class TradeApi:
         symbol: Union[str, None],
         countdown_time: Union[int, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AutoCancelAllOpenOrdersResponse]:
         """
                 Auto-Cancel All Open Orders (TRADE)
                 POST /dapi/v1/countdownCancelAll
@@ -241,7 +243,7 @@ class TradeApi:
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[AutoCancelAllOpenOrdersResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -273,6 +275,7 @@ class TradeApi:
             payload=payload,
             body=body,
             time_unit=self._configuration.time_unit,
+            response_model=AutoCancelAllOpenOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1124,6 +1127,58 @@ class TradeApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def place_multiple_orders(
+        self,
+        batch_orders: Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[PlaceMultipleOrdersResponse]:
+        """
+                Place Multiple Orders(TRADE)
+                POST /dapi/v1/batchOrders
+                https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/rest-api/Place-Multiple-Orders
+
+                Place multiple orders
+
+        * Parameter rules are same with `New Order`
+        * Batch orders are processed concurrently, and the order of matching is not guaranteed.
+        * The order of returned contents for batch orders is the same as the order of the order list.
+
+        Weight: 5
+
+                Args:
+                    batch_orders (Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[PlaceMultipleOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if batch_orders is None:
+            raise RequiredError(
+                field="batch_orders",
+                error_message="Missing required parameter 'batch_orders'",
+            )
+
+        body = {}
+        payload = {"batch_orders": batch_orders, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/dapi/v1/batchOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=PlaceMultipleOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )

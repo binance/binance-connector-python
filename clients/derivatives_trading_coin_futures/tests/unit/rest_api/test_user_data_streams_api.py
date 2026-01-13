@@ -19,7 +19,9 @@ from binance_common.utils import is_one_of_model
 
 from binance_sdk_derivatives_trading_coin_futures.rest_api.api import UserDataStreamsApi
 
-
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    KeepaliveUserDataStreamResponse,
+)
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     StartUserDataStreamResponse,
 )
@@ -83,7 +85,11 @@ class TestUserDataStreamsApi:
     def test_keepalive_user_data_stream_success(self):
         """Test keepalive_user_data_stream() successfully with required parameters only."""
 
-        self.set_mock_response({})
+        expected_response = {
+            "listenKey": "vmNt6gl1so8bXVsaAY153FG5tf63QaODxUarKUM8V8rY4ElSwEe431DNIYNKOkQp"
+        }
+
+        self.set_mock_response(expected_response)
 
         response = self.client.keepalive_user_data_stream()
 
@@ -97,8 +103,24 @@ class TestUserDataStreamsApi:
         assert request_kwargs["method"] == "PUT"
 
         assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(KeepaliveUserDataStreamResponse)
 
-        assert response.data() == {}
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(KeepaliveUserDataStreamResponse, "from_dict")
+        ):
+            expected = KeepaliveUserDataStreamResponse.from_dict(expected_response)
+        else:
+            expected = KeepaliveUserDataStreamResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
 
     def test_keepalive_user_data_stream_server_error(self):
         """Test that keepalive_user_data_stream() raises an error when the server returns an error."""

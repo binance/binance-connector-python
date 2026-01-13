@@ -1,5 +1,24 @@
 # Changelog
 
+## 6.0.0 - 2025-01-13
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.4.0`
+
+#### WebSocket API
+
+- Added parameter `activatePrice`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Deleted parameter `activationPrice`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+#### WebSocket Streams
+
+- Modified response for `aggregate_trade_streams()` (`<symbol>@aggTrade` stream):
+  - property `nq` added
+
 ## 5.0.0 - 2025-12-22
 
 ### Added (5)

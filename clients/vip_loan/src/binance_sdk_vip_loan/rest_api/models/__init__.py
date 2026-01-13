@@ -32,6 +32,18 @@ from .get_loanable_assets_data_response import (
 from .get_loanable_assets_data_response_rows_inner import (
     GetLoanableAssetsDataResponseRowsInner as GetLoanableAssetsDataResponseRowsInner,
 )
+from .get_vip_loan_accrued_interest_response import (
+    GetVIPLoanAccruedInterestResponse as GetVIPLoanAccruedInterestResponse,
+)
+from .get_vip_loan_accrued_interest_response_rows_inner import (
+    GetVIPLoanAccruedInterestResponseRowsInner as GetVIPLoanAccruedInterestResponseRowsInner,
+)
+from .get_vip_loan_interest_rate_history_response import (
+    GetVIPLoanInterestRateHistoryResponse as GetVIPLoanInterestRateHistoryResponse,
+)
+from .get_vip_loan_interest_rate_history_response_rows_inner import (
+    GetVIPLoanInterestRateHistoryResponseRowsInner as GetVIPLoanInterestRateHistoryResponseRowsInner,
+)
 from .get_vip_loan_ongoing_orders_response import (
     GetVIPLoanOngoingOrdersResponse as GetVIPLoanOngoingOrdersResponse,
 )

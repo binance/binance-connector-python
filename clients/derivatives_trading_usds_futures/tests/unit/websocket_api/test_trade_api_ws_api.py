@@ -846,7 +846,7 @@ class TestWebSocketTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
@@ -931,7 +931,7 @@ class TestWebSocketTradeApi:
         assert params["close_position"] == "close_position_example"
         assert params["price_protect"] == "False"
         assert params["reduce_only"] == "False"
-        assert params["activation_price"] == 1.0
+        assert params["activate_price"] == 1.0
         assert params["callback_rate"] == 1.0
         assert params["client_algo_id"] == "1"
         assert (
@@ -972,7 +972,7 @@ class TestWebSocketTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
@@ -1008,7 +1008,7 @@ class TestWebSocketTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
@@ -1042,7 +1042,7 @@ class TestWebSocketTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
@@ -1076,7 +1076,7 @@ class TestWebSocketTradeApi:
             "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
-            "activation_price": 1.0,
+            "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[

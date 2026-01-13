@@ -270,7 +270,7 @@ class TradeApi:
         close_position: Optional[str] = None,
         price_protect: Optional[str] = None,
         reduce_only: Optional[str] = None,
-        activation_price: Optional[float] = None,
+        activate_price: Optional[float] = None,
         callback_rate: Optional[float] = None,
         client_algo_id: Optional[str] = None,
         self_trade_prevention_mode: Optional[
@@ -299,14 +299,14 @@ class TradeApi:
         * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
         * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
         * `TRAILING_STOP_MARKET`:
-        * BUY: the lowest price after order placed <= `activationPrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
-        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+        * BUY: the lowest price after order placed <= `activatePrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activatePrice`, and the latest price <= the highest price * (1 - `callbackRate`)
 
         * For `TRAILING_STOP_MARKET`, if you got such error code.
         ``{"code": -2021, "msg": "Order would immediately trigger."}``
         means that the parameters you send do not meet the following requirements:
-        * BUY: `activationPrice` should be smaller than latest price.
-        * SELL: `activationPrice` should be larger than latest price.
+        * BUY: `activatePrice` should be smaller than latest price.
+        * SELL: `activatePrice` should be larger than latest price.
 
         * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
         * Follow the same rules for condition orders.
@@ -334,7 +334,7 @@ class TradeApi:
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
-                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
                     client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
@@ -386,9 +386,7 @@ class TradeApi:
             **({"price_protect": price_protect} if price_protect is not None else {}),
             **({"reduce_only": reduce_only} if reduce_only is not None else {}),
             **(
-                {"activation_price": activation_price}
-                if activation_price is not None
-                else {}
+                {"activate_price": activate_price} if activate_price is not None else {}
             ),
             **({"callback_rate": callback_rate} if callback_rate is not None else {}),
             **(

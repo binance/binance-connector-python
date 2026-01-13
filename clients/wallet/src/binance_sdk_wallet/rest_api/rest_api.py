@@ -62,6 +62,7 @@ from .models import DepositHistoryV2Response
 from .models import FetchAddressVerificationListResponse
 from .models import SubmitDepositQuestionnaireResponse
 from .models import SubmitDepositQuestionnaireTravelRuleResponse
+from .models import SubmitDepositQuestionnaireV2Response
 from .models import VaspListResponse
 from .models import WithdrawHistoryV1Response
 from .models import WithdrawHistoryV2Response
@@ -664,8 +665,6 @@ class WalletRestAPI:
                 Query User Delegation History(For Master Account)(USER_DATA)
 
                 Query User Delegation History
-
-        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint
 
         Weight: 60
 
@@ -1539,7 +1538,7 @@ class WalletRestAPI:
     def submit_deposit_questionnaire(
         self,
         sub_account_id: Union[str, None],
-        deposit_id: Union[str, None],
+        deposit_id: Union[int, None],
         questionnaire: Union[str, None],
         beneficiary_pii: Union[str, None],
         signature: Union[str, None],
@@ -1563,7 +1562,7 @@ class WalletRestAPI:
 
                 Args:
                     sub_account_id (Union[str, None]): External user ID.
-                    deposit_id (Union[str, None]): Wallet deposit ID.
+                    deposit_id (Union[int, None]): Wallet deposit ID
                     questionnaire (Union[str, None]): JSON format questionnaire answers.
                     beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
                     signature (Union[str, None]): Must be the last parameter.
@@ -1625,6 +1624,39 @@ class WalletRestAPI:
 
         return self._travelRuleApi.submit_deposit_questionnaire_travel_rule(
             tran_id, questionnaire
+        )
+
+    def submit_deposit_questionnaire_v2(
+        self,
+        deposit_id: Union[int, None],
+        questionnaire: Union[str, None],
+    ) -> ApiResponse[SubmitDepositQuestionnaireV2Response]:
+        """
+                Submit Deposit Questionnaire V2 (For local entities that require travel rule) (supporting network) (USER_DATA)
+
+                Submit questionnaire for local entities that require travel rule.
+        The questionnaire is only applies to transactions from unhosted wallets or VASPs that are not
+        yet onboarded with GTR.
+
+        * Questionnaire is different for each local entity, please refer
+        * If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`,
+
+        Weight: 600
+
+                Args:
+                    deposit_id (Union[int, None]): Wallet deposit ID
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+
+                Returns:
+                    ApiResponse[SubmitDepositQuestionnaireV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.submit_deposit_questionnaire_v2(
+            deposit_id, questionnaire
         )
 
     def vasp_list(

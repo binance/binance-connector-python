@@ -47,6 +47,12 @@ from .get_flexible_loan_collateral_assets_data_response import (
 from .get_flexible_loan_collateral_assets_data_response_rows_inner import (
     GetFlexibleLoanCollateralAssetsDataResponseRowsInner as GetFlexibleLoanCollateralAssetsDataResponseRowsInner,
 )
+from .get_flexible_loan_interest_rate_history_response import (
+    GetFlexibleLoanInterestRateHistoryResponse as GetFlexibleLoanInterestRateHistoryResponse,
+)
+from .get_flexible_loan_interest_rate_history_response_rows_inner import (
+    GetFlexibleLoanInterestRateHistoryResponseRowsInner as GetFlexibleLoanInterestRateHistoryResponseRowsInner,
+)
 from .get_flexible_loan_liquidation_history_response import (
     GetFlexibleLoanLiquidationHistoryResponse as GetFlexibleLoanLiquidationHistoryResponse,
 )

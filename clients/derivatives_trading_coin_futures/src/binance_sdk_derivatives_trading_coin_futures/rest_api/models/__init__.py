@@ -25,6 +25,9 @@ from .account_trade_list_response_inner import (
 )
 from .all_orders_response import AllOrdersResponse as AllOrdersResponse
 from .all_orders_response_inner import AllOrdersResponseInner as AllOrdersResponseInner
+from .auto_cancel_all_open_orders_response import (
+    AutoCancelAllOpenOrdersResponse as AutoCancelAllOpenOrdersResponse,
+)
 from .basis_response import BasisResponse as BasisResponse
 from .basis_response_inner import BasisResponseInner as BasisResponseInner
 from .cancel_all_open_orders_response import (
@@ -166,6 +169,9 @@ from .index_price_kline_candlestick_data_response_item import (
 from .index_price_kline_candlestick_data_response_item_inner import (
     IndexPriceKlineCandlestickDataResponseItemInner as IndexPriceKlineCandlestickDataResponseItemInner,
 )
+from .keepalive_user_data_stream_response import (
+    KeepaliveUserDataStreamResponse as KeepaliveUserDataStreamResponse,
+)
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
 )
@@ -233,6 +239,15 @@ from .order_book_response_asks_item import (
 )
 from .order_book_response_bids_item import (
     OrderBookResponseBidsItem as OrderBookResponseBidsItem,
+)
+from .place_multiple_orders_batch_orders_parameter_inner import (
+    PlaceMultipleOrdersBatchOrdersParameterInner as PlaceMultipleOrdersBatchOrdersParameterInner,
+)
+from .place_multiple_orders_response import (
+    PlaceMultipleOrdersResponse as PlaceMultipleOrdersResponse,
+)
+from .place_multiple_orders_response_inner import (
+    PlaceMultipleOrdersResponseInner as PlaceMultipleOrdersResponseInner,
 )
 from .position_adl_quantile_estimation_response import (
     PositionAdlQuantileEstimationResponse as PositionAdlQuantileEstimationResponse,

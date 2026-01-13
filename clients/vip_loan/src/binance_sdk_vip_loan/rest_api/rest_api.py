@@ -21,10 +21,12 @@ from .api.user_information_api import UserInformationApi
 from .models import GetBorrowInterestRateResponse
 from .models import GetCollateralAssetDataResponse
 from .models import GetLoanableAssetsDataResponse
+from .models import GetVIPLoanInterestRateHistoryResponse
 from .models import VipLoanBorrowResponse
 from .models import VipLoanRenewResponse
 from .models import VipLoanRepayResponse
 from .models import CheckVIPLoanCollateralAccountResponse
+from .models import GetVIPLoanAccruedInterestResponse
 from .models import GetVIPLoanOngoingOrdersResponse
 from .models import QueryApplicationStatusResponse
 
@@ -197,6 +199,46 @@ class VipLoanRestAPI:
             loan_coin, vip_level, recv_window
         )
 
+    def get_vip_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanInterestRateHistoryResponse]:
+        """
+                Get VIP Loan Interest Rate History (USER_DATA)
+
+                Check VIP Loan flexible interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and end Time is 180 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetVIPLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_vip_loan_interest_rate_history(
+            coin, recv_window, start_time, end_time, current, limit
+        )
+
     def vip_loan_borrow(
         self,
         loan_account_id: Union[int, None],
@@ -338,6 +380,47 @@ class VipLoanRestAPI:
             order_id, collateral_account_id, recv_window
         )
 
+    def get_vip_loan_accrued_interest(
+        self,
+        order_id: Optional[int] = None,
+        loan_coin: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanAccruedInterestResponse]:
+        """
+                Get VIP Loan Accrued Interest (USER_DATA)
+
+                Check VIP Loan interest record
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned.
+        * The max interval between startTime and endTime is 90 days.
+
+        Weight: 400
+
+                Args:
+                    order_id (Optional[int] = None):
+                    loan_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetVIPLoanAccruedInterestResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._userInformationApi.get_vip_loan_accrued_interest(
+            order_id, loan_coin, start_time, end_time, current, limit, recv_window
+        )
+
     def get_vip_loan_ongoing_orders(
         self,
         order_id: Optional[int] = None,
@@ -360,8 +443,8 @@ class VipLoanRestAPI:
                     collateral_account_id (Optional[int] = None):
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -396,8 +479,8 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:

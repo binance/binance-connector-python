@@ -23,6 +23,7 @@ from ..models import FlexibleLoanRepayResponse
 from ..models import GetFlexibleLoanAssetsDataResponse
 from ..models import GetFlexibleLoanBorrowHistoryResponse
 from ..models import GetFlexibleLoanCollateralAssetsDataResponse
+from ..models import GetFlexibleLoanInterestRateHistoryResponse
 from ..models import GetFlexibleLoanLiquidationHistoryResponse
 from ..models import GetFlexibleLoanLtvAdjustmentHistoryResponse
 from ..models import GetFlexibleLoanOngoingOrdersResponse
@@ -468,6 +469,77 @@ class FlexibleRateApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFlexibleLoanCollateralAssetsDataResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_flexible_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]:
+        """
+                Get Flexible Loan Interest Rate History (USER_DATA)
+                GET /sapi/v2/loan/interestRateHistory
+                https://developers.binance.com/docs/crypto_loan/flexible-rate/market-data/Get-Flexible-Loan-Interest-Rate-History
+
+                Check Flexible Loan interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and endTime is 90 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if coin is None:
+            raise RequiredError(
+                field="coin", error_message="Missing required parameter 'coin'"
+            )
+        if recv_window is None:
+            raise RequiredError(
+                field="recv_window",
+                error_message="Missing required parameter 'recv_window'",
+            )
+
+        body = {}
+        payload = {
+            "coin": coin,
+            "recv_window": recv_window,
+            "start_time": start_time,
+            "end_time": end_time,
+            "current": current,
+            "limit": limit,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v2/loan/interestRateHistory",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetFlexibleLoanInterestRateHistoryResponse,
             is_signed=True,
             signer=self._signer,
         )

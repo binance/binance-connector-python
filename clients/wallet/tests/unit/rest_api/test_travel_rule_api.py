@@ -29,6 +29,7 @@ from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireRespons
 from binance_sdk_wallet.rest_api.models import (
     SubmitDepositQuestionnaireTravelRuleResponse,
 )
+from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireV2Response
 from binance_sdk_wallet.rest_api.models import VaspListResponse
 from binance_sdk_wallet.rest_api.models import WithdrawHistoryV1Response
 from binance_sdk_wallet.rest_api.models import WithdrawHistoryV2Response
@@ -868,7 +869,7 @@ class TestTravelRuleApi:
 
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -900,7 +901,7 @@ class TestTravelRuleApi:
         )
         assert request_kwargs["method"] == "PUT"
         assert normalized["subAccountId"] == "1"
-        assert normalized["depositId"] == "1"
+        assert normalized["depositId"] == 1
         assert normalized["questionnaire"] == "questionnaire_example"
         assert normalized["beneficiaryPii"] == "beneficiary_pii_example"
 
@@ -934,7 +935,7 @@ class TestTravelRuleApi:
 
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -992,7 +993,7 @@ class TestTravelRuleApi:
         """Test that submit_deposit_questionnaire() raises RequiredError when 'sub_account_id' is missing."""
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1008,7 +1009,7 @@ class TestTravelRuleApi:
         """Test that submit_deposit_questionnaire() raises RequiredError when 'deposit_id' is missing."""
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1024,7 +1025,7 @@ class TestTravelRuleApi:
         """Test that submit_deposit_questionnaire() raises RequiredError when 'questionnaire' is missing."""
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1040,7 +1041,7 @@ class TestTravelRuleApi:
         """Test that submit_deposit_questionnaire() raises RequiredError when 'beneficiary_pii' is missing."""
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1056,7 +1057,7 @@ class TestTravelRuleApi:
         """Test that submit_deposit_questionnaire() raises RequiredError when 'signature' is missing."""
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1073,7 +1074,7 @@ class TestTravelRuleApi:
 
         params = {
             "sub_account_id": "1",
-            "deposit_id": "1",
+            "deposit_id": 1,
             "questionnaire": "questionnaire_example",
             "beneficiary_pii": "beneficiary_pii_example",
             "signature": "signature_example",
@@ -1226,6 +1227,140 @@ class TestTravelRuleApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.submit_deposit_questionnaire_travel_rule(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_submit_deposit_questionnaire_v2_success(self, mock_get_signature):
+        """Test submit_deposit_questionnaire_v2() successfully with required parameters only."""
+
+        params = {"deposit_id": 1, "questionnaire": "questionnaire_example"}
+
+        expected_response = {
+            "trId": 765127651,
+            "accepted": True,
+            "info": "Deposit questionnaire accepted.",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.submit_deposit_questionnaire_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/localentity/deposit/provide-info" in request_kwargs["url"]
+        assert request_kwargs["method"] == "PUT"
+        assert normalized["depositId"] == 1
+        assert normalized["questionnaire"] == "questionnaire_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SubmitDepositQuestionnaireV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireV2Response, "from_dict")
+        ):
+            expected = SubmitDepositQuestionnaireV2Response.from_dict(expected_response)
+        else:
+            expected = SubmitDepositQuestionnaireV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_submit_deposit_questionnaire_v2_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test submit_deposit_questionnaire_v2() successfully with optional parameters."""
+
+        params = {"deposit_id": 1, "questionnaire": "questionnaire_example"}
+
+        expected_response = {
+            "trId": 765127651,
+            "accepted": True,
+            "info": "Deposit questionnaire accepted.",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.submit_deposit_questionnaire_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/localentity/deposit/provide-info" in request_kwargs["url"]
+        assert request_kwargs["method"] == "PUT"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SubmitDepositQuestionnaireV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(SubmitDepositQuestionnaireV2Response, "from_dict")
+        ):
+            expected = SubmitDepositQuestionnaireV2Response.from_dict(expected_response)
+        else:
+            expected = SubmitDepositQuestionnaireV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_submit_deposit_questionnaire_v2_missing_required_param_deposit_id(self):
+        """Test that submit_deposit_questionnaire_v2() raises RequiredError when 'deposit_id' is missing."""
+        params = {"deposit_id": 1, "questionnaire": "questionnaire_example"}
+        params["deposit_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'deposit_id'"
+        ):
+            self.client.submit_deposit_questionnaire_v2(**params)
+
+    def test_submit_deposit_questionnaire_v2_missing_required_param_questionnaire(self):
+        """Test that submit_deposit_questionnaire_v2() raises RequiredError when 'questionnaire' is missing."""
+        params = {"deposit_id": 1, "questionnaire": "questionnaire_example"}
+        params["questionnaire"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'questionnaire'"
+        ):
+            self.client.submit_deposit_questionnaire_v2(**params)
+
+    def test_submit_deposit_questionnaire_v2_server_error(self):
+        """Test that submit_deposit_questionnaire_v2() raises an error when the server returns an error."""
+
+        params = {"deposit_id": 1, "questionnaire": "questionnaire_example"}
+
+        mock_error = Exception("ResponseError")
+        self.client.submit_deposit_questionnaire_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.submit_deposit_questionnaire_v2(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_vasp_list_success(self, mock_get_signature):

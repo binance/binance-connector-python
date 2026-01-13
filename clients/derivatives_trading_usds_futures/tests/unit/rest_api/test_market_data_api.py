@@ -1075,7 +1075,6 @@ class TestMarketDataApi:
                             "stepSize": "1",
                         },
                         {"filterType": "MAX_NUM_ORDERS", "limit": 200},
-                        {"filterType": "MAX_NUM_ALGO_ORDERS", "limit": 10},
                         {"filterType": "MIN_NOTIONAL", "notional": "5.0"},
                         {
                             "filterType": "PERCENT_PRICE",

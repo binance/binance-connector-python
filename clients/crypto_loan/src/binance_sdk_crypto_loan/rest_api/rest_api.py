@@ -24,6 +24,7 @@ from .models import FlexibleLoanRepayResponse
 from .models import GetFlexibleLoanAssetsDataResponse
 from .models import GetFlexibleLoanBorrowHistoryResponse
 from .models import GetFlexibleLoanCollateralAssetsDataResponse
+from .models import GetFlexibleLoanInterestRateHistoryResponse
 from .models import GetFlexibleLoanLiquidationHistoryResponse
 from .models import GetFlexibleLoanLtvAdjustmentHistoryResponse
 from .models import GetFlexibleLoanOngoingOrdersResponse
@@ -369,6 +370,46 @@ class CryptoLoanRestAPI:
 
         return self._flexibleRateApi.get_flexible_loan_collateral_assets_data(
             collateral_coin, recv_window
+        )
+
+    def get_flexible_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]:
+        """
+                Get Flexible Loan Interest Rate History (USER_DATA)
+
+                Check Flexible Loan interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and endTime is 90 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleRateApi.get_flexible_loan_interest_rate_history(
+            coin, recv_window, start_time, end_time, current, limit
         )
 
     def get_flexible_loan_liquidation_history(

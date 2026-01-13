@@ -584,8 +584,6 @@ class AssetApi:
 
                 Query User Delegation History
 
-        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint
-
         Weight: 60
 
                 Args:
