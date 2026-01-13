@@ -215,7 +215,7 @@ def get_random_int() -> int:
         int: A random integer derived from a UUID.
     """
 
-    return int(uuid.uuid4().int >> 64)
+    return int(uuid.uuid4().int >> 96)
 
 def validate_time_unit(time_unit: Optional[str]) -> Optional[str]:
     """Validates the time unit against the defined TimeUnit constants.
