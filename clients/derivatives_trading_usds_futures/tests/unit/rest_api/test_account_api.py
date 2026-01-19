@@ -2928,7 +2928,7 @@ class TestAccountApi:
             {
                 "symbol": "BTCUSDT",
                 "marginType": "CROSSED",
-                "isAutoAddMargin": "False",
+                "isAutoAddMargin": False,
                 "leverage": 21,
                 "maxNotionalValue": "1000000",
             }
@@ -2979,7 +2979,7 @@ class TestAccountApi:
             {
                 "symbol": "BTCUSDT",
                 "marginType": "CROSSED",
-                "isAutoAddMargin": "False",
+                "isAutoAddMargin": False,
                 "leverage": 21,
                 "maxNotionalValue": "1000000",
             }

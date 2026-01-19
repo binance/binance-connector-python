@@ -22,26 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 
 
-def get_option_transaction_history_download_link_by_id():
+def user_commission():
     try:
-        response = client.rest_api.get_option_transaction_history_download_link_by_id(
-            download_id="1",
-        )
+        response = client.rest_api.user_commission()
 
         rate_limits = response.rate_limits
-        logging.info(
-            f"get_option_transaction_history_download_link_by_id() rate limits: {rate_limits}"
-        )
+        logging.info(f"user_commission() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(
-            f"get_option_transaction_history_download_link_by_id() response: {data}"
-        )
+        logging.info(f"user_commission() response: {data}")
     except Exception as e:
-        logging.error(
-            f"get_option_transaction_history_download_link_by_id() error: {e}"
-        )
+        logging.error(f"user_commission() error: {e}")
 
 
 if __name__ == "__main__":
-    get_option_transaction_history_download_link_by_id()
+    user_commission()

@@ -16,21 +16,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import ConfigDict
+from typing import Any, ClassVar, Dict
+from binance_sdk_derivatives_trading_options.rest_api.models.kline_candlestick_data_response_item_inner import (
+    KlineCandlestickDataResponseItemInner,
+)
+from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class SymbolPriceTickerResponse(BaseModel):
+class KlineCandlestickDataResponseItem(KlineCandlestickDataResponseItemInner):
     """
-    SymbolPriceTickerResponse
+    KlineCandlestickDataResponseItem
     """  # noqa: E501
 
-    time: Optional[StrictInt] = None
-    index_price: Optional[StrictStr] = Field(default=None, alias="indexPrice")
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["time", "indexPrice"]
+    __properties: ClassVar[List[str]] = []
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,11 +49,11 @@ class SymbolPriceTickerResponse(BaseModel):
 
     @classmethod
     def is_array(cls) -> bool:
-        return False
+        return True
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SymbolPriceTickerResponse from a JSON string"""
+        """Create an instance of KlineCandlestickDataResponseItem from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -65,41 +65,17 @@ class SymbolPriceTickerResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SymbolPriceTickerResponse from a dict"""
-        if obj is None:
-            return None
-
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate(
-            {"time": obj.get("time"), "indexPrice": obj.get("indexPrice")}
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
-        return _obj
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[list[Self]]:
+        """Create an instance of Ticker24hrResponse2 from a dict"""
+        return [cls.model_validate(item) for item in obj]

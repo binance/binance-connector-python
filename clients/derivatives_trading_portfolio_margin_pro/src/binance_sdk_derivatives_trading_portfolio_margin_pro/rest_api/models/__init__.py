@@ -21,6 +21,9 @@ from .fund_collection_by_asset_response import (
 from .get_auto_repay_futures_status_response import (
     GetAutoRepayFuturesStatusResponse as GetAutoRepayFuturesStatusResponse,
 )
+from .get_delta_mode_status_response import (
+    GetDeltaModeStatusResponse as GetDeltaModeStatusResponse,
+)
 from .get_portfolio_margin_asset_leverage_response import (
     GetPortfolioMarginAssetLeverageResponse as GetPortfolioMarginAssetLeverageResponse,
 )
@@ -86,6 +89,9 @@ from .query_portfolio_margin_pro_negative_balance_interest_history_response_inne
 )
 from .repay_futures_negative_balance_response import (
     RepayFuturesNegativeBalanceResponse as RepayFuturesNegativeBalanceResponse,
+)
+from .switch_delta_mode_response import (
+    SwitchDeltaModeResponse as SwitchDeltaModeResponse,
 )
 from .transfer_ldusdt_rwusd_for_portfolio_margin_response import (
     TransferLdusdtRwusdForPortfolioMarginResponse as TransferLdusdtRwusdForPortfolioMarginResponse,

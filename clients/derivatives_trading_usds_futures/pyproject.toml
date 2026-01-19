@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-derivatives-trading-usds-futures"
-version = "6.0.0"
+version = "6.1.0"
 description = "Official Binance Derivatives Trading Usds Futures SDK - A lightweight library that provides a convenient interface to Binance's DerivativesTradingUsdsFutures REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"

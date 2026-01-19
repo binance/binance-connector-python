@@ -27,7 +27,7 @@ async def mark_price():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.mark_price(
-            underlying_asset="ETH",
+            underlying="btcusdt",
         )
         stream.on("message", lambda data: print(f"{data}"))
 

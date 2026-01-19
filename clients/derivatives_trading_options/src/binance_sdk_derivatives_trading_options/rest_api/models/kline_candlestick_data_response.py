@@ -18,14 +18,14 @@ import json
 
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_derivatives_trading_options.rest_api.models.kline_candlestick_data_response_inner import (
-    KlineCandlestickDataResponseInner,
+from binance_sdk_derivatives_trading_options.rest_api.models.kline_candlestick_data_response_item import (
+    KlineCandlestickDataResponseItem,
 )
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class KlineCandlestickDataResponse(KlineCandlestickDataResponseInner):
+class KlineCandlestickDataResponse(KlineCandlestickDataResponseItem):
     """
     KlineCandlestickDataResponse
     """  # noqa: E501

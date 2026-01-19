@@ -39,8 +39,6 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
     strike_price: Optional[StrictStr] = Field(default=None, alias="strikePrice")
     underlying: Optional[StrictStr] = None
     unit: Optional[StrictInt] = None
-    maker_fee_rate: Optional[StrictStr] = Field(default=None, alias="makerFeeRate")
-    taker_fee_rate: Optional[StrictStr] = Field(default=None, alias="takerFeeRate")
     liquidation_fee_rate: Optional[StrictStr] = Field(
         default=None, alias="liquidationFeeRate"
     )
@@ -59,6 +57,7 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
     price_scale: Optional[StrictInt] = Field(default=None, alias="priceScale")
     quantity_scale: Optional[StrictInt] = Field(default=None, alias="quantityScale")
     quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
+    status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "expiryDate",
@@ -68,8 +67,6 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
         "strikePrice",
         "underlying",
         "unit",
-        "makerFeeRate",
-        "takerFeeRate",
         "liquidationFeeRate",
         "minQty",
         "maxQty",
@@ -80,6 +77,7 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
         "priceScale",
         "quantityScale",
         "quoteAsset",
+        "status",
     ]
 
     model_config = ConfigDict(
@@ -169,8 +167,6 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
                 "strikePrice": obj.get("strikePrice"),
                 "underlying": obj.get("underlying"),
                 "unit": obj.get("unit"),
-                "makerFeeRate": obj.get("makerFeeRate"),
-                "takerFeeRate": obj.get("takerFeeRate"),
                 "liquidationFeeRate": obj.get("liquidationFeeRate"),
                 "minQty": obj.get("minQty"),
                 "maxQty": obj.get("maxQty"),
@@ -181,6 +177,7 @@ class ExchangeInformationResponseOptionSymbolsInner(BaseModel):
                 "priceScale": obj.get("priceScale"),
                 "quantityScale": obj.get("quantityScale"),
                 "quoteAsset": obj.get("quoteAsset"),
+                "status": obj.get("status"),
             }
         )
         # store additional fields in additional_properties

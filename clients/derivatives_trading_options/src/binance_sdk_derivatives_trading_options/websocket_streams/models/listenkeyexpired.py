@@ -16,33 +16,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_options.websocket_streams.models.account_update_b_inner import (
-    AccountUpdateBInner,
-)
-from binance_sdk_derivatives_trading_options.websocket_streams.models.account_update_g_inner import (
-    AccountUpdateGInner,
-)
-from binance_sdk_derivatives_trading_options.websocket_streams.models.account_update_p_inner import (
-    AccountUpdatePInner,
-)
 from typing import Set
 from typing_extensions import Self
 
 
-class AccountUpdate(BaseModel):
+class Listenkeyexpired(BaseModel):
     """
-    AccountUpdate
+    Listenkeyexpired
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, alias="E")
-    B: Optional[List[AccountUpdateBInner]] = Field(default=None, alias="B")
-    G: Optional[List[AccountUpdateGInner]] = Field(default=None, alias="G")
-    P: Optional[List[AccountUpdatePInner]] = Field(default=None, alias="P")
-    uid: Optional[StrictInt] = None
+    E: Optional[StrictStr] = Field(default=None, alias="E")
+    listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "B", "G", "P", "uid"]
+    __properties: ClassVar[List[str]] = ["E", "listen_key"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +49,7 @@ class AccountUpdate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AccountUpdate from a JSON string"""
+        """Create an instance of Listenkeyexpired from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,27 +74,6 @@ class AccountUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in B (list)
-        _items = []
-        if self.B:
-            for _item_b in self.B:
-                if _item_b:
-                    _items.append(_item_b.to_dict())
-            _dict["B"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in G (list)
-        _items = []
-        if self.G:
-            for _item_g in self.G:
-                if _item_g:
-                    _items.append(_item_g.to_dict())
-            _dict["G"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in P (list)
-        _items = []
-        if self.P:
-            for _item_p in self.P:
-                if _item_p:
-                    _items.append(_item_p.to_dict())
-            _dict["P"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -116,7 +83,7 @@ class AccountUpdate(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AccountUpdate from a dict"""
+        """Create an instance of Listenkeyexpired from a dict"""
         if obj is None:
             return None
 
@@ -124,25 +91,7 @@ class AccountUpdate(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "E": obj.get("E"),
-                "B": (
-                    [AccountUpdateBInner.from_dict(_item) for _item in obj["B"]]
-                    if obj.get("B") is not None
-                    else None
-                ),
-                "G": (
-                    [AccountUpdateGInner.from_dict(_item) for _item in obj["G"]]
-                    if obj.get("G") is not None
-                    else None
-                ),
-                "P": (
-                    [AccountUpdatePInner.from_dict(_item) for _item in obj["P"]]
-                    if obj.get("P") is not None
-                    else None
-                ),
-                "uid": obj.get("uid"),
-            }
+            {"E": obj.get("E"), "listenKey": obj.get("listenKey")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

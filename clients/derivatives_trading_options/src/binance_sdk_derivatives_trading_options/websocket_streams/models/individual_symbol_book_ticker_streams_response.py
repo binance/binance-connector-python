@@ -16,24 +16,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
 
-class AccountUpdateGInner(BaseModel):
+class IndividualSymbolBookTickerStreamsResponse(BaseModel):
     """
-    AccountUpdateGInner
+    IndividualSymbolBookTickerStreamsResponse
     """  # noqa: E501
 
-    ui: Optional[StrictStr] = None
-    d: Optional[Union[StrictFloat, StrictInt]] = None
-    t: Optional[Union[StrictFloat, StrictInt]] = None
-    g: Optional[Union[StrictFloat, StrictInt]] = None
-    v: Optional[Union[StrictFloat, StrictInt]] = None
+    e: Optional[StrictStr] = None
+    u: Optional[StrictInt] = None
+    s: Optional[StrictStr] = None
+    b: Optional[StrictStr] = None
+    B: Optional[StrictStr] = Field(default=None, alias="B")
+    a: Optional[StrictStr] = None
+    A: Optional[StrictStr] = Field(default=None, alias="A")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["ui", "d", "t", "g", "v"]
+    __properties: ClassVar[List[str]] = ["e", "u", "s", "b", "B", "a", "A", "T", "E"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +56,7 @@ class AccountUpdateGInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AccountUpdateGInner from a JSON string"""
+        """Create an instance of IndividualSymbolBookTickerStreamsResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +90,7 @@ class AccountUpdateGInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AccountUpdateGInner from a dict"""
+        """Create an instance of IndividualSymbolBookTickerStreamsResponse from a dict"""
         if obj is None:
             return None
 
@@ -95,11 +99,15 @@ class AccountUpdateGInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "ui": obj.get("ui"),
-                "d": obj.get("d"),
-                "t": obj.get("t"),
-                "g": obj.get("g"),
-                "v": obj.get("v"),
+                "e": obj.get("e"),
+                "u": obj.get("u"),
+                "s": obj.get("s"),
+                "b": obj.get("b"),
+                "B": obj.get("B"),
+                "a": obj.get("a"),
+                "A": obj.get("A"),
+                "T": obj.get("T"),
+                "E": obj.get("E"),
             }
         )
         # store additional fields in additional_properties

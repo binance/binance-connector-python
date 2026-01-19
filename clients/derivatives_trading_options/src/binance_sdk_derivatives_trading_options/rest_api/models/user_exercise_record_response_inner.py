@@ -31,7 +31,6 @@ class UserExerciseRecordResponseInner(BaseModel):
     currency: Optional[StrictStr] = None
     symbol: Optional[StrictStr] = None
     exercise_price: Optional[StrictStr] = Field(default=None, alias="exercisePrice")
-    mark_price: Optional[StrictStr] = Field(default=None, alias="markPrice")
     quantity: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
     fee: Optional[StrictStr] = None
@@ -47,7 +46,6 @@ class UserExerciseRecordResponseInner(BaseModel):
         "currency",
         "symbol",
         "exercisePrice",
-        "markPrice",
         "quantity",
         "amount",
         "fee",
@@ -127,7 +125,6 @@ class UserExerciseRecordResponseInner(BaseModel):
                 "currency": obj.get("currency"),
                 "symbol": obj.get("symbol"),
                 "exercisePrice": obj.get("exercisePrice"),
-                "markPrice": obj.get("markPrice"),
                 "quantity": obj.get("quantity"),
                 "amount": obj.get("amount"),
                 "fee": obj.get("fee"),

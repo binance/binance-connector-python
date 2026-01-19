@@ -22,25 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 
 
-def get_download_id_for_option_transaction_history():
+def index_price():
     try:
-        response = client.rest_api.get_download_id_for_option_transaction_history(
-            start_time=1623319461670,
-            end_time=1641782889000,
-        )
+        response = client.rest_api.index_price(underlying="underlying_example")
 
         rate_limits = response.rate_limits
-        logging.info(
-            f"get_download_id_for_option_transaction_history() rate limits: {rate_limits}"
-        )
+        logging.info(f"index_price() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(
-            f"get_download_id_for_option_transaction_history() response: {data}"
-        )
+        logging.info(f"index_price() response: {data}")
     except Exception as e:
-        logging.error(f"get_download_id_for_option_transaction_history() error: {e}")
+        logging.error(f"index_price() error: {e}")
 
 
 if __name__ == "__main__":
-    get_download_id_for_option_transaction_history()
+    index_price()

@@ -24,15 +24,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
     AccountFundingFlowResponse,
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import (
-    GetDownloadIdForOptionTransactionHistoryResponse,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    GetOptionTransactionHistoryDownloadLinkByIdResponse,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    OptionAccountInformationResponse,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionMarginAccountInformationResponse,
 )
 
@@ -226,464 +217,6 @@ class TestAccountApi:
             self.client.account_funding_flow(**params)
 
     @patch("binance_common.utils.get_signature")
-    def test_get_download_id_for_option_transaction_history_success(
-        self, mock_get_signature
-    ):
-        """Test get_download_id_for_option_transaction_history() successfully with required parameters only."""
-
-        params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
-        }
-
-        expected_response = {
-            "avgCostTimestampOfLast30d": 7241837,
-            "downloadId": "546975389218332672",
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.get_download_id_for_option_transaction_history(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/income/asyn" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-        assert normalized["startTime"] == 1623319461670
-        assert normalized["endTime"] == 1641782889000
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(GetDownloadIdForOptionTransactionHistoryResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(GetDownloadIdForOptionTransactionHistoryResponse, "from_dict")
-        ):
-            expected = GetDownloadIdForOptionTransactionHistoryResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = (
-                GetDownloadIdForOptionTransactionHistoryResponse.model_validate_json(
-                    json.dumps(expected_response)
-                )
-            )
-
-        assert response.data() == expected
-
-    @patch("binance_common.utils.get_signature")
-    def test_get_download_id_for_option_transaction_history_success_with_optional_params(
-        self, mock_get_signature
-    ):
-        """Test get_download_id_for_option_transaction_history() successfully with optional parameters."""
-
-        params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
-            "recv_window": 5000,
-        }
-
-        expected_response = {
-            "avgCostTimestampOfLast30d": 7241837,
-            "downloadId": "546975389218332672",
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.get_download_id_for_option_transaction_history(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/income/asyn" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(GetDownloadIdForOptionTransactionHistoryResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(GetDownloadIdForOptionTransactionHistoryResponse, "from_dict")
-        ):
-            expected = GetDownloadIdForOptionTransactionHistoryResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = (
-                GetDownloadIdForOptionTransactionHistoryResponse.model_validate_json(
-                    json.dumps(expected_response)
-                )
-            )
-
-        assert response.data() == expected
-
-    def test_get_download_id_for_option_transaction_history_missing_required_param_start_time(
-        self,
-    ):
-        """Test that get_download_id_for_option_transaction_history() raises RequiredError when 'start_time' is missing."""
-        params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
-        }
-        params["start_time"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'start_time'"
-        ):
-            self.client.get_download_id_for_option_transaction_history(**params)
-
-    def test_get_download_id_for_option_transaction_history_missing_required_param_end_time(
-        self,
-    ):
-        """Test that get_download_id_for_option_transaction_history() raises RequiredError when 'end_time' is missing."""
-        params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
-        }
-        params["end_time"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'end_time'"
-        ):
-            self.client.get_download_id_for_option_transaction_history(**params)
-
-    def test_get_download_id_for_option_transaction_history_server_error(self):
-        """Test that get_download_id_for_option_transaction_history() raises an error when the server returns an error."""
-
-        params = {
-            "start_time": 1623319461670,
-            "end_time": 1641782889000,
-        }
-
-        mock_error = Exception("ResponseError")
-        self.client.get_download_id_for_option_transaction_history = MagicMock(
-            side_effect=mock_error
-        )
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.get_download_id_for_option_transaction_history(**params)
-
-    @patch("binance_common.utils.get_signature")
-    def test_get_option_transaction_history_download_link_by_id_success(
-        self, mock_get_signature
-    ):
-        """Test get_option_transaction_history_download_link_by_id() successfully with required parameters only."""
-
-        params = {
-            "download_id": "1",
-        }
-
-        expected_response = {
-            "downloadId": "545923594199212032",
-            "status": "processing",
-            "url": "",
-            "notified": False,
-            "expirationTimestamp": -1,
-            "isExpired": None,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.get_option_transaction_history_download_link_by_id(
-            **params
-        )
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/income/asyn/id" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-        assert normalized["downloadId"] == "1"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(GetOptionTransactionHistoryDownloadLinkByIdResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(GetOptionTransactionHistoryDownloadLinkByIdResponse, "from_dict")
-        ):
-            expected = GetOptionTransactionHistoryDownloadLinkByIdResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = (
-                GetOptionTransactionHistoryDownloadLinkByIdResponse.model_validate_json(
-                    json.dumps(expected_response)
-                )
-            )
-
-        assert response.data() == expected
-
-    @patch("binance_common.utils.get_signature")
-    def test_get_option_transaction_history_download_link_by_id_success_with_optional_params(
-        self, mock_get_signature
-    ):
-        """Test get_option_transaction_history_download_link_by_id() successfully with optional parameters."""
-
-        params = {"download_id": "1", "recv_window": 5000}
-
-        expected_response = {
-            "downloadId": "545923594199212032",
-            "status": "processing",
-            "url": "",
-            "notified": False,
-            "expirationTimestamp": -1,
-            "isExpired": None,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.get_option_transaction_history_download_link_by_id(
-            **params
-        )
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/income/asyn/id" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(GetOptionTransactionHistoryDownloadLinkByIdResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(GetOptionTransactionHistoryDownloadLinkByIdResponse, "from_dict")
-        ):
-            expected = GetOptionTransactionHistoryDownloadLinkByIdResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = (
-                GetOptionTransactionHistoryDownloadLinkByIdResponse.model_validate_json(
-                    json.dumps(expected_response)
-                )
-            )
-
-        assert response.data() == expected
-
-    def test_get_option_transaction_history_download_link_by_id_missing_required_param_download_id(
-        self,
-    ):
-        """Test that get_option_transaction_history_download_link_by_id() raises RequiredError when 'download_id' is missing."""
-        params = {
-            "download_id": "1",
-        }
-        params["download_id"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'download_id'"
-        ):
-            self.client.get_option_transaction_history_download_link_by_id(**params)
-
-    def test_get_option_transaction_history_download_link_by_id_server_error(self):
-        """Test that get_option_transaction_history_download_link_by_id() raises an error when the server returns an error."""
-
-        params = {
-            "download_id": "1",
-        }
-
-        mock_error = Exception("ResponseError")
-        self.client.get_option_transaction_history_download_link_by_id = MagicMock(
-            side_effect=mock_error
-        )
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.get_option_transaction_history_download_link_by_id(**params)
-
-    @patch("binance_common.utils.get_signature")
-    def test_option_account_information_success(self, mock_get_signature):
-        """Test option_account_information() successfully with required parameters only."""
-
-        expected_response = {
-            "asset": [
-                {
-                    "asset": "USDT",
-                    "marginBalance": "1877.52214415",
-                    "equity": "617.77711415",
-                    "available": "0",
-                    "locked": "2898.92389933",
-                    "unrealizedPNL": "222.23697000",
-                }
-            ],
-            "greek": [
-                {
-                    "underlying": "BTCUSDT",
-                    "delta": "-0.05",
-                    "gamma": "-0.002",
-                    "theta": "-0.05",
-                    "vega": "-0.002",
-                }
-            ],
-            "time": 1592449455993,
-            "riskLevel": "NORMAL",
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.option_account_information()
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/account" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(OptionAccountInformationResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(OptionAccountInformationResponse, "from_dict")
-        ):
-            expected = OptionAccountInformationResponse.from_dict(expected_response)
-        else:
-            expected = OptionAccountInformationResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    @patch("binance_common.utils.get_signature")
-    def test_option_account_information_success_with_optional_params(
-        self, mock_get_signature
-    ):
-        """Test option_account_information() successfully with optional parameters."""
-
-        params = {"recv_window": 5000}
-
-        expected_response = {
-            "asset": [
-                {
-                    "asset": "USDT",
-                    "marginBalance": "1877.52214415",
-                    "equity": "617.77711415",
-                    "available": "0",
-                    "locked": "2898.92389933",
-                    "unrealizedPNL": "222.23697000",
-                }
-            ],
-            "greek": [
-                {
-                    "underlying": "BTCUSDT",
-                    "delta": "-0.05",
-                    "gamma": "-0.002",
-                    "theta": "-0.05",
-                    "vega": "-0.002",
-                }
-            ],
-            "time": 1592449455993,
-            "riskLevel": "NORMAL",
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.option_account_information(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/eapi/v1/account" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(OptionAccountInformationResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(OptionAccountInformationResponse, "from_dict")
-        ):
-            expected = OptionAccountInformationResponse.from_dict(expected_response)
-        else:
-            expected = OptionAccountInformationResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_option_account_information_server_error(self):
-        """Test that option_account_information() raises an error when the server returns an error."""
-
-        mock_error = Exception("ResponseError")
-        self.client.option_account_information = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.option_account_information()
-
-    @patch("binance_common.utils.get_signature")
     def test_option_margin_account_information_success(self, mock_get_signature):
         """Test option_margin_account_information() successfully with required parameters only."""
 
@@ -691,25 +224,29 @@ class TestAccountApi:
             "asset": [
                 {
                     "asset": "USDT",
-                    "marginBalance": "10099.448",
-                    "equity": "10094.44662",
-                    "available": "8725.92524",
-                    "initialMargin": "1084.52138",
-                    "maintMargin": "151.00138",
-                    "unrealizedPNL": "-5.00138",
-                    "adjustedEquity": "34.13282285",
+                    "marginBalance": "99998.87365244",
+                    "equity": "99998.87365244",
+                    "available": "96883.72734374",
+                    "initialMargin": "3115.14630870",
+                    "maintMargin": "0.00000000",
+                    "unrealizedPNL": "0.00000000",
+                    "adjustedEquity": "99998.87365244",
                 }
             ],
             "greek": [
                 {
                     "underlying": "BTCUSDT",
-                    "delta": "-0.05",
-                    "gamma": "-0.002",
-                    "theta": "-0.05",
-                    "vega": "-0.002",
+                    "delta": "0",
+                    "theta": "0",
+                    "gamma": "0",
+                    "vega": "0",
                 }
             ],
-            "time": 1592449455993,
+            "time": 1762843368098,
+            "canTrade": True,
+            "canDeposit": True,
+            "canWithdraw": True,
+            "reduceOnly": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -763,25 +300,29 @@ class TestAccountApi:
             "asset": [
                 {
                     "asset": "USDT",
-                    "marginBalance": "10099.448",
-                    "equity": "10094.44662",
-                    "available": "8725.92524",
-                    "initialMargin": "1084.52138",
-                    "maintMargin": "151.00138",
-                    "unrealizedPNL": "-5.00138",
-                    "adjustedEquity": "34.13282285",
+                    "marginBalance": "99998.87365244",
+                    "equity": "99998.87365244",
+                    "available": "96883.72734374",
+                    "initialMargin": "3115.14630870",
+                    "maintMargin": "0.00000000",
+                    "unrealizedPNL": "0.00000000",
+                    "adjustedEquity": "99998.87365244",
                 }
             ],
             "greek": [
                 {
                     "underlying": "BTCUSDT",
-                    "delta": "-0.05",
-                    "gamma": "-0.002",
-                    "theta": "-0.05",
-                    "vega": "-0.002",
+                    "delta": "0",
+                    "theta": "0",
+                    "gamma": "0",
+                    "vega": "0",
                 }
             ],
-            "time": 1592449455993,
+            "time": 1762843368098,
+            "canTrade": True,
+            "canDeposit": True,
+            "canWithdraw": True,
+            "reduceOnly": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

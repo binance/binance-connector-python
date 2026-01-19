@@ -29,14 +29,9 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     HistoricalExerciseRecordsResponse,
 )
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    IndexPriceTickerResponse,
-)
+from binance_sdk_derivatives_trading_options.rest_api.models import IndexPriceResponse
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     KlineCandlestickDataResponse,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models import (
-    OldTradesLookupResponse,
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import OpenInterestResponse
 from binance_sdk_derivatives_trading_options.rest_api.models import (
@@ -161,8 +156,6 @@ class TestMarketDataApi:
                     "strikePrice": "50000",
                     "underlying": "BTCUSDT",
                     "unit": 1,
-                    "makerFeeRate": "0.0002",
-                    "takerFeeRate": "0.0002",
                     "liquidationFeeRate": "0.0019000",
                     "minQty": "0.01",
                     "maxQty": "100",
@@ -173,6 +166,7 @@ class TestMarketDataApi:
                     "priceScale": 2,
                     "quantityScale": 2,
                     "quoteAsset": "USDT",
+                    "status": "TRADING",
                 }
             ],
             "rateLimits": [
@@ -348,16 +342,16 @@ class TestMarketDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.historical_exercise_records()
 
-    def test_index_price_ticker_success(self):
-        """Test index_price_ticker() successfully with required parameters only."""
+    def test_index_price_success(self):
+        """Test index_price() successfully with required parameters only."""
 
         params = {"underlying": "underlying_example"}
 
-        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
+        expected_response = {"time": 1656647305000, "indexPrice": "105917.75"}
 
         self.set_mock_response(expected_response)
 
-        response = self.client.index_price_ticker(**params)
+        response = self.client.index_price(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -377,29 +371,29 @@ class TestMarketDataApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(IndexPriceTickerResponse)
+        is_oneof = is_one_of_model(IndexPriceResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list or hasattr(IndexPriceTickerResponse, "from_dict"):
-            expected = IndexPriceTickerResponse.from_dict(expected_response)
+        elif is_oneof or is_list or hasattr(IndexPriceResponse, "from_dict"):
+            expected = IndexPriceResponse.from_dict(expected_response)
         else:
-            expected = IndexPriceTickerResponse.model_validate_json(
+            expected = IndexPriceResponse.model_validate_json(
                 json.dumps(expected_response)
             )
 
         assert response.data() == expected
 
-    def test_index_price_ticker_success_with_optional_params(self):
-        """Test index_price_ticker() successfully with optional parameters."""
+    def test_index_price_success_with_optional_params(self):
+        """Test index_price() successfully with optional parameters."""
 
         params = {"underlying": "underlying_example"}
 
-        expected_response = {"time": 1656647305000, "indexPrice": "9200"}
+        expected_response = {"time": 1656647305000, "indexPrice": "105917.75"}
 
         self.set_mock_response(expected_response)
 
-        response = self.client.index_price_ticker(**params)
+        response = self.client.index_price(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -414,39 +408,39 @@ class TestMarketDataApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(IndexPriceTickerResponse)
+        is_oneof = is_one_of_model(IndexPriceResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
-        elif is_oneof or is_list or hasattr(IndexPriceTickerResponse, "from_dict"):
-            expected = IndexPriceTickerResponse.from_dict(expected_response)
+        elif is_oneof or is_list or hasattr(IndexPriceResponse, "from_dict"):
+            expected = IndexPriceResponse.from_dict(expected_response)
         else:
-            expected = IndexPriceTickerResponse.model_validate_json(
+            expected = IndexPriceResponse.model_validate_json(
                 json.dumps(expected_response)
             )
 
         assert response.data() == expected
 
-    def test_index_price_ticker_missing_required_param_underlying(self):
-        """Test that index_price_ticker() raises RequiredError when 'underlying' is missing."""
+    def test_index_price_missing_required_param_underlying(self):
+        """Test that index_price() raises RequiredError when 'underlying' is missing."""
         params = {"underlying": "underlying_example"}
         params["underlying"] = None
 
         with pytest.raises(
             RequiredError, match="Missing required parameter 'underlying'"
         ):
-            self.client.index_price_ticker(**params)
+            self.client.index_price(**params)
 
-    def test_index_price_ticker_server_error(self):
-        """Test that index_price_ticker() raises an error when the server returns an error."""
+    def test_index_price_server_error(self):
+        """Test that index_price() raises an error when the server returns an error."""
 
         params = {"underlying": "underlying_example"}
 
         mock_error = Exception("ResponseError")
-        self.client.index_price_ticker = MagicMock(side_effect=mock_error)
+        self.client.index_price = MagicMock(side_effect=mock_error)
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.index_price_ticker(**params)
+            self.client.index_price(**params)
 
     def test_kline_candlestick_data_success(self):
         """Test kline_candlestick_data() successfully with required parameters only."""
@@ -457,20 +451,20 @@ class TestMarketDataApi:
         }
 
         expected_response = [
-            {
-                "open": "950",
-                "high": "1100",
-                "low": "900",
-                "close": "1000",
-                "volume": "100",
-                "amount": "2",
-                "interval": "5m",
-                "tradeCount": 10,
-                "takerVolume": "100",
-                "takerAmount": "10000",
-                "openTime": 1499040000000,
-                "closeTime": 1499644799999,
-            }
+            [
+                1762779600000,
+                "1300.000",
+                "1300.000",
+                "1300.000",
+                "1300.000",
+                "0.1000",
+                1762780499999,
+                "130.0000000",
+                1,
+                "0.1000",
+                "130.0000000",
+                "0",
+            ]
         ]
 
         self.set_mock_response(expected_response)
@@ -521,20 +515,20 @@ class TestMarketDataApi:
         }
 
         expected_response = [
-            {
-                "open": "950",
-                "high": "1100",
-                "low": "900",
-                "close": "1000",
-                "volume": "100",
-                "amount": "2",
-                "interval": "5m",
-                "tradeCount": 10,
-                "takerVolume": "100",
-                "takerAmount": "10000",
-                "openTime": 1499040000000,
-                "closeTime": 1499644799999,
-            }
+            [
+                1762779600000,
+                "1300.000",
+                "1300.000",
+                "1300.000",
+                "1300.000",
+                "0.1000",
+                1762780499999,
+                "130.0000000",
+                1,
+                "0.1000",
+                "130.0000000",
+                "0",
+            ]
         ]
 
         self.set_mock_response(expected_response)
@@ -604,130 +598,6 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.kline_candlestick_data(**params)
-
-    def test_old_trades_lookup_success(self):
-        """Test old_trades_lookup() successfully with required parameters only."""
-
-        params = {
-            "symbol": "symbol_example",
-        }
-
-        expected_response = [
-            {
-                "id": "1",
-                "tradeId": "159244329455993",
-                "price": "1000",
-                "qty": "-0.1",
-                "quoteQty": "-100",
-                "side": -1,
-                "time": 1592449455993,
-            }
-        ]
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.old_trades_lookup(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "/eapi/v1/historicalTrades" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-        assert normalized["symbol"] == "symbol_example"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(OldTradesLookupResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif is_oneof or is_list or hasattr(OldTradesLookupResponse, "from_dict"):
-            expected = OldTradesLookupResponse.from_dict(expected_response)
-        else:
-            expected = OldTradesLookupResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_old_trades_lookup_success_with_optional_params(self):
-        """Test old_trades_lookup() successfully with optional parameters."""
-
-        params = {"symbol": "symbol_example", "from_id": 1, "limit": 100}
-
-        expected_response = [
-            {
-                "id": "1",
-                "tradeId": "159244329455993",
-                "price": "1000",
-                "qty": "-0.1",
-                "quoteQty": "-100",
-                "side": -1,
-                "time": 1592449455993,
-            }
-        ]
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.old_trades_lookup(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "/eapi/v1/historicalTrades" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(OldTradesLookupResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif is_oneof or is_list or hasattr(OldTradesLookupResponse, "from_dict"):
-            expected = OldTradesLookupResponse.from_dict(expected_response)
-        else:
-            expected = OldTradesLookupResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_old_trades_lookup_missing_required_param_symbol(self):
-        """Test that old_trades_lookup() raises RequiredError when 'symbol' is missing."""
-        params = {
-            "symbol": "symbol_example",
-        }
-        params["symbol"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
-            self.client.old_trades_lookup(**params)
-
-    def test_old_trades_lookup_server_error(self):
-        """Test that old_trades_lookup() raises an error when the server returns an error."""
-
-        params = {
-            "symbol": "symbol_example",
-        }
-
-        mock_error = Exception("ResponseError")
-        self.client.old_trades_lookup = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.old_trades_lookup(**params)
 
     def test_open_interest_success(self):
         """Test open_interest() successfully with required parameters only."""
@@ -989,10 +859,10 @@ class TestMarketDataApi:
         }
 
         expected_response = {
-            "T": 1589436922972,
-            "u": 37461,
-            "bids": [["1000", "0.9"]],
-            "asks": [["1100", "0.1"]],
+            "bids": [["1000.000", "0.1000"]],
+            "asks": [["1900.000", "0.1000"]],
+            "T": 1762780909676,
+            "lastUpdateId": 361,
         }
 
         self.set_mock_response(expected_response)
@@ -1036,10 +906,10 @@ class TestMarketDataApi:
         params = {"symbol": "symbol_example", "limit": 100}
 
         expected_response = {
-            "T": 1589436922972,
-            "u": 37461,
-            "bids": [["1000", "0.9"]],
-            "asks": [["1100", "0.1"]],
+            "bids": [["1000.000", "0.1000"]],
+            "asks": [["1900.000", "0.1000"]],
+            "T": 1762780909676,
+            "lastUpdateId": 361,
         }
 
         self.set_mock_response(expected_response)
@@ -1228,13 +1098,14 @@ class TestMarketDataApi:
 
         expected_response = [
             {
-                "id": "1",
-                "symbol": "BTC-220722-19000-C",
-                "price": "1000",
-                "qty": "-0.1",
-                "quoteQty": "-100",
+                "id": 2323857420768529000,
+                "tradeId": 1,
+                "symbol": "BTC-251123-126000-C",
+                "price": "1300",
+                "qty": "0.1",
+                "quoteQty": "130",
                 "side": -1,
-                "time": 1592449455993,
+                "time": 1762780453623,
             }
         ]
 
@@ -1280,13 +1151,14 @@ class TestMarketDataApi:
 
         expected_response = [
             {
-                "id": "1",
-                "symbol": "BTC-220722-19000-C",
-                "price": "1000",
-                "qty": "-0.1",
-                "quoteQty": "-100",
+                "id": 2323857420768529000,
+                "tradeId": 1,
+                "symbol": "BTC-251123-126000-C",
+                "price": "1300",
+                "qty": "0.1",
+                "quoteQty": "130",
                 "side": -1,
-                "time": 1592449455993,
+                "time": 1762780453623,
             }
         ]
 

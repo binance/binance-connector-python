@@ -21,8 +21,14 @@ from pydantic import (
     field_validator,
 )
 from typing import Any, Optional
-from binance_sdk_derivatives_trading_options.websocket_streams.models.account_update import (
-    AccountUpdate,
+from binance_sdk_derivatives_trading_options.websocket_streams.models.balance_position_update import (
+    BalancePositionUpdate,
+)
+from binance_sdk_derivatives_trading_options.websocket_streams.models.greek_update import (
+    GreekUpdate,
+)
+from binance_sdk_derivatives_trading_options.websocket_streams.models.listenkeyexpired import (
+    Listenkeyexpired,
 )
 from binance_sdk_derivatives_trading_options.websocket_streams.models.order_trade_update import (
     OrderTradeUpdate,
@@ -34,7 +40,9 @@ from typing import Union, Set, Dict
 from typing_extensions import Self
 
 USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
-    "AccountUpdate",
+    "BalancePositionUpdate",
+    "GreekUpdate",
+    "Listenkeyexpired",
     "OrderTradeUpdate",
     "RiskLevelChange",
 ]
@@ -45,16 +53,32 @@ class UserDataStreamEventsResponse(BaseModel):
     UserDataStreamEventsResponse
     """
 
-    # data type: AccountUpdate
-    oneof_schema_1_validator: Optional[AccountUpdate] = None
+    # data type: BalancePositionUpdate
+    oneof_schema_1_validator: Optional[BalancePositionUpdate] = None
+    # data type: GreekUpdate
+    oneof_schema_2_validator: Optional[GreekUpdate] = None
     # data type: OrderTradeUpdate
-    oneof_schema_2_validator: Optional[OrderTradeUpdate] = None
+    oneof_schema_3_validator: Optional[OrderTradeUpdate] = None
     # data type: RiskLevelChange
-    oneof_schema_3_validator: Optional[RiskLevelChange] = None
+    oneof_schema_4_validator: Optional[RiskLevelChange] = None
+    # data type: Listenkeyexpired
+    oneof_schema_5_validator: Optional[Listenkeyexpired] = None
     actual_instance: Optional[
-        Union[AccountUpdate, OrderTradeUpdate, RiskLevelChange]
+        Union[
+            BalancePositionUpdate,
+            GreekUpdate,
+            Listenkeyexpired,
+            OrderTradeUpdate,
+            RiskLevelChange,
+        ]
     ] = None
-    one_of_schemas: Set[str] = {"AccountUpdate", "OrderTradeUpdate", "RiskLevelChange"}
+    one_of_schemas: Set[str] = {
+        "BalancePositionUpdate",
+        "GreekUpdate",
+        "Listenkeyexpired",
+        "OrderTradeUpdate",
+        "RiskLevelChange",
+    }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -82,11 +106,16 @@ class UserDataStreamEventsResponse(BaseModel):
 
         error_messages = []
         match = 0
-        # validate data type: AccountUpdate
-        if not isinstance(v, AccountUpdate):
+        # validate data type: BalancePositionUpdate
+        if not isinstance(v, BalancePositionUpdate):
             error_messages.append(
-                f"Error! Input type `{type(v)}` is not `AccountUpdate`"
+                f"Error! Input type `{type(v)}` is not `BalancePositionUpdate`"
             )
+        else:
+            match += 1
+        # validate data type: GreekUpdate
+        if not isinstance(v, GreekUpdate):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `GreekUpdate`")
         else:
             match += 1
         # validate data type: OrderTradeUpdate
@@ -103,16 +132,23 @@ class UserDataStreamEventsResponse(BaseModel):
             )
         else:
             match += 1
+        # validate data type: Listenkeyexpired
+        if not isinstance(v, Listenkeyexpired):
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `Listenkeyexpired`"
+            )
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountUpdate, OrderTradeUpdate, RiskLevelChange. Details: "
+                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: BalancePositionUpdate, GreekUpdate, Listenkeyexpired, OrderTradeUpdate, RiskLevelChange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountUpdate, OrderTradeUpdate, RiskLevelChange. Details: "
+                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: BalancePositionUpdate, GreekUpdate, Listenkeyexpired, OrderTradeUpdate, RiskLevelChange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -129,9 +165,15 @@ class UserDataStreamEventsResponse(BaseModel):
         error_messages = []
         match = 0
 
-        # deserialize data into AccountUpdate
+        # deserialize data into BalancePositionUpdate
         try:
-            instance.actual_instance = AccountUpdate.from_json(json_str)
+            instance.actual_instance = BalancePositionUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into GreekUpdate
+        try:
+            instance.actual_instance = GreekUpdate.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -147,17 +189,23 @@ class UserDataStreamEventsResponse(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into Listenkeyexpired
+        try:
+            instance.actual_instance = Listenkeyexpired.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountUpdate, OrderTradeUpdate, RiskLevelChange. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalancePositionUpdate, GreekUpdate, Listenkeyexpired, OrderTradeUpdate, RiskLevelChange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountUpdate, OrderTradeUpdate, RiskLevelChange. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalancePositionUpdate, GreekUpdate, Listenkeyexpired, OrderTradeUpdate, RiskLevelChange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -178,7 +226,14 @@ class UserDataStreamEventsResponse(BaseModel):
     def to_dict(
         self,
     ) -> Optional[
-        Union[Dict[str, Any], AccountUpdate, OrderTradeUpdate, RiskLevelChange]
+        Union[
+            Dict[str, Any],
+            BalancePositionUpdate,
+            GreekUpdate,
+            Listenkeyexpired,
+            OrderTradeUpdate,
+            RiskLevelChange,
+        ]
     ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:

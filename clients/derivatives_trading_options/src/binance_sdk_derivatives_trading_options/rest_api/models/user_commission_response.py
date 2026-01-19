@@ -16,29 +16,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_options.rest_api.models.option_account_information_response_asset_inner import (
-    OptionAccountInformationResponseAssetInner,
-)
-from binance_sdk_derivatives_trading_options.rest_api.models.option_account_information_response_greek_inner import (
-    OptionAccountInformationResponseGreekInner,
+from binance_sdk_derivatives_trading_options.rest_api.models.user_commission_response_commissions_inner import (
+    UserCommissionResponseCommissionsInner,
 )
 from typing import Set
 from typing_extensions import Self
 
 
-class OptionAccountInformationResponse(BaseModel):
+class UserCommissionResponse(BaseModel):
     """
-    OptionAccountInformationResponse
+    UserCommissionResponse
     """  # noqa: E501
 
-    asset: Optional[List[OptionAccountInformationResponseAssetInner]] = None
-    greek: Optional[List[OptionAccountInformationResponseGreekInner]] = None
-    time: Optional[StrictInt] = None
-    risk_level: Optional[StrictStr] = Field(default=None, alias="riskLevel")
+    commissions: Optional[List[UserCommissionResponseCommissionsInner]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["asset", "greek", "time", "riskLevel"]
+    __properties: ClassVar[List[str]] = ["commissions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +55,7 @@ class OptionAccountInformationResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OptionAccountInformationResponse from a JSON string"""
+        """Create an instance of UserCommissionResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,20 +80,13 @@ class OptionAccountInformationResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in asset (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in commissions (list)
         _items = []
-        if self.asset:
-            for _item_asset in self.asset:
-                if _item_asset:
-                    _items.append(_item_asset.to_dict())
-            _dict["asset"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in greek (list)
-        _items = []
-        if self.greek:
-            for _item_greek in self.greek:
-                if _item_greek:
-                    _items.append(_item_greek.to_dict())
-            _dict["greek"] = _items
+        if self.commissions:
+            for _item_commissions in self.commissions:
+                if _item_commissions:
+                    _items.append(_item_commissions.to_dict())
+            _dict["commissions"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -109,7 +96,7 @@ class OptionAccountInformationResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OptionAccountInformationResponse from a dict"""
+        """Create an instance of UserCommissionResponse from a dict"""
         if obj is None:
             return None
 
@@ -118,24 +105,14 @@ class OptionAccountInformationResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "asset": (
+                "commissions": (
                     [
-                        OptionAccountInformationResponseAssetInner.from_dict(_item)
-                        for _item in obj["asset"]
+                        UserCommissionResponseCommissionsInner.from_dict(_item)
+                        for _item in obj["commissions"]
                     ]
-                    if obj.get("asset") is not None
+                    if obj.get("commissions") is not None
                     else None
-                ),
-                "greek": (
-                    [
-                        OptionAccountInformationResponseGreekInner.from_dict(_item)
-                        for _item in obj["greek"]
-                    ]
-                    if obj.get("greek") is not None
-                    else None
-                ),
-                "time": obj.get("time"),
-                "riskLevel": obj.get("riskLevel"),
+                )
             }
         )
         # store additional fields in additional_properties

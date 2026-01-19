@@ -27,12 +27,49 @@ class MarkPriceResponseInner(BaseModel):
     MarkPriceResponseInner
     """  # noqa: E501
 
-    e: Optional[StrictStr] = None
-    E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     mp: Optional[StrictStr] = None
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    e: Optional[StrictStr] = None
+    i: Optional[StrictStr] = None
+    P: Optional[StrictStr] = Field(default=None, alias="P")
+    bo: Optional[StrictStr] = None
+    ao: Optional[StrictStr] = None
+    bq: Optional[StrictStr] = None
+    aq: Optional[StrictStr] = None
+    b: Optional[StrictStr] = None
+    a: Optional[StrictStr] = None
+    hl: Optional[StrictStr] = None
+    ll: Optional[StrictStr] = None
+    vo: Optional[StrictStr] = None
+    rf: Optional[StrictStr] = None
+    d: Optional[StrictStr] = None
+    t: Optional[StrictStr] = None
+    g: Optional[StrictStr] = None
+    v: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "s", "mp"]
+    __properties: ClassVar[List[str]] = [
+        "s",
+        "mp",
+        "E",
+        "e",
+        "i",
+        "P",
+        "bo",
+        "ao",
+        "bq",
+        "aq",
+        "b",
+        "a",
+        "hl",
+        "ll",
+        "vo",
+        "rf",
+        "d",
+        "t",
+        "g",
+        "v",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,10 +131,26 @@ class MarkPriceResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "e": obj.get("e"),
-                "E": obj.get("E"),
                 "s": obj.get("s"),
                 "mp": obj.get("mp"),
+                "E": obj.get("E"),
+                "e": obj.get("e"),
+                "i": obj.get("i"),
+                "P": obj.get("P"),
+                "bo": obj.get("bo"),
+                "ao": obj.get("ao"),
+                "bq": obj.get("bq"),
+                "aq": obj.get("aq"),
+                "b": obj.get("b"),
+                "a": obj.get("a"),
+                "hl": obj.get("hl"),
+                "ll": obj.get("ll"),
+                "vo": obj.get("vo"),
+                "rf": obj.get("rf"),
+                "d": obj.get("d"),
+                "t": obj.get("t"),
+                "g": obj.get("g"),
+                "v": obj.get("v"),
             }
         )
         # store additional fields in additional_properties

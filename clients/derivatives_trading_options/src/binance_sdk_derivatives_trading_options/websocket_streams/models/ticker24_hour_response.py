@@ -29,68 +29,42 @@ class Ticker24HourResponse(BaseModel):
 
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
-    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
+    p: Optional[StrictStr] = None
+    P: Optional[StrictStr] = Field(default=None, alias="P")
+    w: Optional[StrictStr] = None
+    c: Optional[StrictStr] = None
+    Q: Optional[StrictStr] = Field(default=None, alias="Q")
     o: Optional[StrictStr] = None
     h: Optional[StrictStr] = None
     l: Optional[StrictStr] = None
-    c: Optional[StrictStr] = None
-    V: Optional[StrictStr] = Field(default=None, alias="V")
-    A: Optional[StrictStr] = Field(default=None, alias="A")
-    P: Optional[StrictStr] = Field(default=None, alias="P")
-    p: Optional[StrictStr] = None
-    Q: Optional[StrictStr] = Field(default=None, alias="Q")
-    F: Optional[StrictStr] = Field(default=None, alias="F")
-    L: Optional[StrictStr] = Field(default=None, alias="L")
-    n: Optional[StrictInt] = None
-    bo: Optional[StrictStr] = None
-    ao: Optional[StrictStr] = None
-    bq: Optional[StrictStr] = None
-    aq: Optional[StrictStr] = None
-    b: Optional[StrictStr] = None
-    a: Optional[StrictStr] = None
-    d: Optional[StrictStr] = None
-    t: Optional[StrictStr] = None
-    g: Optional[StrictStr] = None
     v: Optional[StrictStr] = None
-    vo: Optional[StrictStr] = None
-    mp: Optional[StrictStr] = None
-    hl: Optional[StrictStr] = None
-    ll: Optional[StrictStr] = None
-    eep: Optional[StrictStr] = None
+    q: Optional[StrictStr] = None
+    O: Optional[StrictInt] = Field(default=None, alias="O")
+    C: Optional[StrictInt] = Field(default=None, alias="C")
+    F: Optional[StrictInt] = Field(default=None, alias="F")
+    L: Optional[StrictInt] = Field(default=None, alias="L")
+    n: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
         "E",
-        "T",
         "s",
+        "p",
+        "P",
+        "w",
+        "c",
+        "Q",
         "o",
         "h",
         "l",
-        "c",
-        "V",
-        "A",
-        "P",
-        "p",
-        "Q",
+        "v",
+        "q",
+        "O",
+        "C",
         "F",
         "L",
         "n",
-        "bo",
-        "ao",
-        "bq",
-        "aq",
-        "b",
-        "a",
-        "d",
-        "t",
-        "g",
-        "v",
-        "vo",
-        "mp",
-        "hl",
-        "ll",
-        "eep",
     ]
 
     model_config = ConfigDict(
@@ -155,35 +129,22 @@ class Ticker24HourResponse(BaseModel):
             {
                 "e": obj.get("e"),
                 "E": obj.get("E"),
-                "T": obj.get("T"),
                 "s": obj.get("s"),
+                "p": obj.get("p"),
+                "P": obj.get("P"),
+                "w": obj.get("w"),
+                "c": obj.get("c"),
+                "Q": obj.get("Q"),
                 "o": obj.get("o"),
                 "h": obj.get("h"),
                 "l": obj.get("l"),
-                "c": obj.get("c"),
-                "V": obj.get("V"),
-                "A": obj.get("A"),
-                "P": obj.get("P"),
-                "p": obj.get("p"),
-                "Q": obj.get("Q"),
+                "v": obj.get("v"),
+                "q": obj.get("q"),
+                "O": obj.get("O"),
+                "C": obj.get("C"),
                 "F": obj.get("F"),
                 "L": obj.get("L"),
                 "n": obj.get("n"),
-                "bo": obj.get("bo"),
-                "ao": obj.get("ao"),
-                "bq": obj.get("bq"),
-                "aq": obj.get("aq"),
-                "b": obj.get("b"),
-                "a": obj.get("a"),
-                "d": obj.get("d"),
-                "t": obj.get("t"),
-                "g": obj.get("g"),
-                "v": obj.get("v"),
-                "vo": obj.get("vo"),
-                "mp": obj.get("mp"),
-                "hl": obj.get("hl"),
-                "ll": obj.get("ll"),
-                "eep": obj.get("eep"),
             }
         )
         # store additional fields in additional_properties

@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class SymbolConfigurationResponseInner(BaseModel):
 
     symbol: Optional[StrictStr] = None
     margin_type: Optional[StrictStr] = Field(default=None, alias="marginType")
-    is_auto_add_margin: Optional[StrictStr] = Field(
+    is_auto_add_margin: Optional[StrictBool] = Field(
         default=None, alias="isAutoAddMargin"
     )
     leverage: Optional[StrictInt] = None

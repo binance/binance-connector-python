@@ -154,8 +154,8 @@ class TestWebSocketTradeApi:
 
         params = {
             "id": "e9d6b4349871b40611412680b3445fac",
-            "algoid": 56,
-            "clientalgoid": "clientalgoid_example",
+            "algo_id": 1,
+            "client_algo_id": "1",
             "recv_window": 5000,
         }
 
@@ -203,8 +203,8 @@ class TestWebSocketTradeApi:
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
-        assert params["algoid"] == 56
-        assert params["clientalgoid"] == "clientalgoid_example"
+        assert params["algo_id"] == 1
+        assert params["client_algo_id"] == "1"
         assert params["recv_window"] == 5000
 
         assert result is not None

@@ -26,9 +26,7 @@ async def index_price_streams():
     try:
         connection = await client.websocket_streams.create_connection()
 
-        stream = await connection.index_price_streams(
-            symbol="btcusdt",
-        )
+        stream = await connection.index_price_streams()
         stream.on("message", lambda data: print(f"{data}"))
 
         await asyncio.sleep(5)

@@ -728,11 +728,7 @@ class TestTradeApi:
     def test_cancel_algo_order_success_with_optional_params(self, mock_get_signature):
         """Test cancel_algo_order() successfully with optional parameters."""
 
-        params = {
-            "algoid": 56,
-            "clientalgoid": "clientalgoid_example",
-            "recv_window": 5000,
-        }
+        params = {"algo_id": 1, "client_algo_id": "1", "recv_window": 5000}
 
         expected_response = {
             "algoId": 2146760,

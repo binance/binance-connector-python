@@ -33,12 +33,12 @@ class OrderBookResponse(BaseModel):
     OrderBookResponse
     """  # noqa: E501
 
-    T: Optional[StrictInt] = Field(default=None, alias="T")
-    u: Optional[StrictInt] = None
     bids: Optional[List[OrderBookResponseBidsItem]] = None
     asks: Optional[List[OrderBookResponseAsksItem]] = None
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    last_update_id: Optional[StrictInt] = Field(default=None, alias="lastUpdateId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["T", "u", "bids", "asks"]
+    __properties: ClassVar[List[str]] = ["bids", "asks", "T", "lastUpdateId"]
 
     model_config = ConfigDict(
         populate_by_name=True,

@@ -22,16 +22,12 @@ from .api.trade_api import TradeApi
 from .api.user_data_streams_api import UserDataStreamsApi
 
 from .models import AccountFundingFlowResponse
-from .models import GetDownloadIdForOptionTransactionHistoryResponse
-from .models import GetOptionTransactionHistoryDownloadLinkByIdResponse
-from .models import OptionAccountInformationResponse
 from .models import OptionMarginAccountInformationResponse
 from .models import CheckServerTimeResponse
 from .models import ExchangeInformationResponse
 from .models import HistoricalExerciseRecordsResponse
-from .models import IndexPriceTickerResponse
+from .models import IndexPriceResponse
 from .models import KlineCandlestickDataResponse
-from .models import OldTradesLookupResponse
 from .models import OpenInterestResponse
 from .models import OptionMarkPriceResponse
 from .models import OrderBookResponse
@@ -63,6 +59,7 @@ from .models import PlaceMultipleOrdersResponse
 from .models import QueryCurrentOpenOptionOrdersResponse
 from .models import QueryOptionOrderHistoryResponse
 from .models import QuerySingleOrderResponse
+from .models import UserCommissionResponse
 from .models import UserExerciseRecordResponse
 
 
@@ -204,93 +201,6 @@ class DerivativesTradingOptionsRestAPI:
             currency, record_id, start_time, end_time, limit, recv_window
         )
 
-    def get_download_id_for_option_transaction_history(
-        self,
-        start_time: Union[int, None],
-        end_time: Union[int, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]:
-        """
-                Get Download Id For Option Transaction History (USER_DATA)
-
-                Get download id for option transaction history
-
-        * Request Limitation is 5 times per month, shared by > front end download page and rest api
-        * The time between `startTime` and `endTime` can not be longer than 1 year
-
-        Weight: 5
-
-                Args:
-                    start_time (Union[int, None]): Timestamp in ms
-                    end_time (Union[int, None]): Timestamp in ms
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_download_id_for_option_transaction_history(
-            start_time, end_time, recv_window
-        )
-
-    def get_option_transaction_history_download_link_by_id(
-        self,
-        download_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]:
-        """
-                Get Option Transaction History Download Link by Id (USER_DATA)
-
-                Get option transaction history download Link by Id
-
-        * Download link expiration: 24h
-
-        Weight: 5
-
-                Args:
-                    download_id (Union[str, None]): get by download id api
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_option_transaction_history_download_link_by_id(
-            download_id, recv_window
-        )
-
-    def option_account_information(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[OptionAccountInformationResponse]:
-        """
-                Option Account Information(TRADE)
-
-                Get current account information.
-
-        Weight: 3
-
-                Args:
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[OptionAccountInformationResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.option_account_information(recv_window)
-
     def option_margin_account_information(
         self,
         recv_window: Optional[int] = None,
@@ -393,12 +303,12 @@ class DerivativesTradingOptionsRestAPI:
             underlying, start_time, end_time, limit
         )
 
-    def index_price_ticker(
+    def index_price(
         self,
         underlying: Union[str, None],
-    ) -> ApiResponse[IndexPriceTickerResponse]:
+    ) -> ApiResponse[IndexPriceResponse]:
         """
-                Index Price Ticker
+                Index Price
 
                 Get spot index price for option underlying.
 
@@ -408,14 +318,14 @@ class DerivativesTradingOptionsRestAPI:
                     underlying (Union[str, None]): Option underlying, e.g BTCUSDT
 
                 Returns:
-                    ApiResponse[IndexPriceTickerResponse]
+                    ApiResponse[IndexPriceResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
 
         """
 
-        return self._marketDataApi.index_price_ticker(underlying)
+        return self._marketDataApi.index_price(underlying)
 
     def kline_candlestick_data(
         self,
@@ -453,34 +363,6 @@ class DerivativesTradingOptionsRestAPI:
         return self._marketDataApi.kline_candlestick_data(
             symbol, interval, start_time, end_time, limit
         )
-
-    def old_trades_lookup(
-        self,
-        symbol: Union[str, None],
-        from_id: Optional[int] = None,
-        limit: Optional[int] = None,
-    ) -> ApiResponse[OldTradesLookupResponse]:
-        """
-                Old Trades Lookup (MARKET_DATA)
-
-                Get older market historical trades.
-
-        Weight: 20
-
-                Args:
-                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
-                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
-
-                Returns:
-                    ApiResponse[OldTradesLookupResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketDataApi.old_trades_lookup(symbol, from_id, limit)
 
     def open_interest(
         self,
@@ -544,7 +426,7 @@ class DerivativesTradingOptionsRestAPI:
 
         Weight: limit         | weight
         ------------  | ------------
-        5, 10, 20, 50 | 2
+        5, 10, 20, 50 | 1
         100           | 5
         500           | 10
         1000          | 20
@@ -1081,7 +963,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades, e.g 4611875134427365376
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
                     limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
@@ -1168,7 +1050,6 @@ class DerivativesTradingOptionsRestAPI:
                 Cancel multiple orders.
 
         * At least one instance of `orderId` and `clientOrderId` must be sent.
-        * Max 10 orders can be deleted in one request
 
         Weight: 1
 
@@ -1447,6 +1328,30 @@ class DerivativesTradingOptionsRestAPI:
         return self._tradeApi.query_single_order(
             symbol, order_id, client_order_id, recv_window
         )
+
+    def user_commission(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[UserCommissionResponse]:
+        """
+                User Commission (USER_DATA)
+
+                Get account commission.
+
+        Weight: 5
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[UserCommissionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.user_commission(recv_window)
 
     def user_exercise_record(
         self,

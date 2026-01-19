@@ -37,13 +37,12 @@ class AccountTradeListResponseInner(BaseModel):
     realized_profit: Optional[StrictStr] = Field(default=None, alias="realizedProfit")
     side: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    volatility: Optional[StrictStr] = None
     liquidity: Optional[StrictStr] = None
-    quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
     time: Optional[StrictInt] = None
     price_scale: Optional[StrictInt] = Field(default=None, alias="priceScale")
     quantity_scale: Optional[StrictInt] = Field(default=None, alias="quantityScale")
     option_side: Optional[StrictStr] = Field(default=None, alias="optionSide")
+    quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
@@ -56,13 +55,12 @@ class AccountTradeListResponseInner(BaseModel):
         "realizedProfit",
         "side",
         "type",
-        "volatility",
         "liquidity",
-        "quoteAsset",
         "time",
         "priceScale",
         "quantityScale",
         "optionSide",
+        "quoteAsset",
     ]
 
     model_config = ConfigDict(
@@ -139,13 +137,12 @@ class AccountTradeListResponseInner(BaseModel):
                 "realizedProfit": obj.get("realizedProfit"),
                 "side": obj.get("side"),
                 "type": obj.get("type"),
-                "volatility": obj.get("volatility"),
                 "liquidity": obj.get("liquidity"),
-                "quoteAsset": obj.get("quoteAsset"),
                 "time": obj.get("time"),
                 "priceScale": obj.get("priceScale"),
                 "quantityScale": obj.get("quantityScale"),
                 "optionSide": obj.get("optionSide"),
+                "quoteAsset": obj.get("quoteAsset"),
             }
         )
         # store additional fields in additional_properties

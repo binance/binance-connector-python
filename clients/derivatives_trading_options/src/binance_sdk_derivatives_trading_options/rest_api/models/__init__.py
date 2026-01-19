@@ -83,14 +83,8 @@ from .extend_block_trade_order_response_legs_inner import (
 from .get_auto_cancel_all_open_orders_response import (
     GetAutoCancelAllOpenOrdersResponse as GetAutoCancelAllOpenOrdersResponse,
 )
-from .get_download_id_for_option_transaction_history_response import (
-    GetDownloadIdForOptionTransactionHistoryResponse as GetDownloadIdForOptionTransactionHistoryResponse,
-)
 from .get_market_maker_protection_config_response import (
     GetMarketMakerProtectionConfigResponse as GetMarketMakerProtectionConfigResponse,
-)
-from .get_option_transaction_history_download_link_by_id_response import (
-    GetOptionTransactionHistoryDownloadLinkByIdResponse as GetOptionTransactionHistoryDownloadLinkByIdResponse,
 )
 from .historical_exercise_records_response import (
     HistoricalExerciseRecordsResponse as HistoricalExerciseRecordsResponse,
@@ -98,43 +92,32 @@ from .historical_exercise_records_response import (
 from .historical_exercise_records_response_inner import (
     HistoricalExerciseRecordsResponseInner as HistoricalExerciseRecordsResponseInner,
 )
-from .index_price_ticker_response import (
-    IndexPriceTickerResponse as IndexPriceTickerResponse,
-)
+from .index_price_response import IndexPriceResponse as IndexPriceResponse
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
 )
-from .kline_candlestick_data_response_inner import (
-    KlineCandlestickDataResponseInner as KlineCandlestickDataResponseInner,
+from .kline_candlestick_data_response_item import (
+    KlineCandlestickDataResponseItem as KlineCandlestickDataResponseItem,
+)
+from .kline_candlestick_data_response_item_inner import (
+    KlineCandlestickDataResponseItemInner as KlineCandlestickDataResponseItemInner,
 )
 from .new_block_trade_order_response import (
     NewBlockTradeOrderResponse as NewBlockTradeOrderResponse,
 )
 from .new_order_response import NewOrderResponse as NewOrderResponse
-from .old_trades_lookup_response import (
-    OldTradesLookupResponse as OldTradesLookupResponse,
-)
-from .old_trades_lookup_response_inner import (
-    OldTradesLookupResponseInner as OldTradesLookupResponseInner,
-)
 from .open_interest_response import OpenInterestResponse as OpenInterestResponse
 from .open_interest_response_inner import (
     OpenInterestResponseInner as OpenInterestResponseInner,
-)
-from .option_account_information_response import (
-    OptionAccountInformationResponse as OptionAccountInformationResponse,
-)
-from .option_account_information_response_asset_inner import (
-    OptionAccountInformationResponseAssetInner as OptionAccountInformationResponseAssetInner,
-)
-from .option_account_information_response_greek_inner import (
-    OptionAccountInformationResponseGreekInner as OptionAccountInformationResponseGreekInner,
 )
 from .option_margin_account_information_response import (
     OptionMarginAccountInformationResponse as OptionMarginAccountInformationResponse,
 )
 from .option_margin_account_information_response_asset_inner import (
     OptionMarginAccountInformationResponseAssetInner as OptionMarginAccountInformationResponseAssetInner,
+)
+from .option_margin_account_information_response_greek_inner import (
+    OptionMarginAccountInformationResponseGreekInner as OptionMarginAccountInformationResponseGreekInner,
 )
 from .option_mark_price_response import (
     OptionMarkPriceResponse as OptionMarkPriceResponse,
@@ -220,6 +203,10 @@ from .ticker24hr_price_change_statistics_response import (
 )
 from .ticker24hr_price_change_statistics_response_inner import (
     Ticker24hrPriceChangeStatisticsResponseInner as Ticker24hrPriceChangeStatisticsResponseInner,
+)
+from .user_commission_response import UserCommissionResponse as UserCommissionResponse
+from .user_commission_response_commissions_inner import (
+    UserCommissionResponseCommissionsInner as UserCommissionResponseCommissionsInner,
 )
 from .user_exercise_record_response import (
     UserExerciseRecordResponse as UserExerciseRecordResponse,

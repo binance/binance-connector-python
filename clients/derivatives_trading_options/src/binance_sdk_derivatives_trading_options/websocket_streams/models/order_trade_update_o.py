@@ -16,81 +16,67 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
 
-class Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner(BaseModel):
+class OrderTradeUpdateO(BaseModel):
     """
-    Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner
+    OrderTradeUpdateO
     """  # noqa: E501
 
-    e: Optional[StrictStr] = None
-    E: Optional[StrictInt] = Field(default=None, alias="E")
-    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
-    o: Optional[StrictStr] = None
-    h: Optional[StrictStr] = None
-    l: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
-    V: Optional[StrictStr] = Field(default=None, alias="V")
-    A: Optional[StrictStr] = Field(default=None, alias="A")
-    P: Optional[StrictStr] = Field(default=None, alias="P")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
+    o: Optional[StrictStr] = None
+    f: Optional[StrictStr] = None
+    q: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
-    Q: Optional[StrictStr] = Field(default=None, alias="Q")
-    F: Optional[StrictStr] = Field(default=None, alias="F")
+    ap: Optional[StrictStr] = None
+    x: Optional[StrictStr] = None
+    X: Optional[StrictStr] = Field(default=None, alias="X")
+    i: Optional[StrictInt] = None
+    l: Optional[StrictStr] = None
+    z: Optional[StrictStr] = None
     L: Optional[StrictStr] = Field(default=None, alias="L")
-    n: Optional[StrictInt] = None
-    bo: Optional[StrictStr] = None
-    ao: Optional[StrictStr] = None
-    bq: Optional[StrictStr] = None
-    aq: Optional[StrictStr] = None
+    N: Optional[StrictStr] = Field(default=None, alias="N")
+    n: Optional[StrictStr] = None
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    t: Optional[StrictInt] = None
     b: Optional[StrictStr] = None
     a: Optional[StrictStr] = None
-    d: Optional[StrictStr] = None
-    t: Optional[StrictStr] = None
-    g: Optional[StrictStr] = None
-    v: Optional[StrictStr] = None
-    vo: Optional[StrictStr] = None
-    mp: Optional[StrictStr] = None
-    hl: Optional[StrictStr] = None
-    ll: Optional[StrictStr] = None
-    eep: Optional[StrictStr] = None
+    m: Optional[StrictBool] = None
+    R: Optional[StrictBool] = Field(default=None, alias="R")
+    ot: Optional[StrictStr] = None
+    rp: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "e",
-        "E",
-        "T",
         "s",
-        "o",
-        "h",
-        "l",
         "c",
-        "V",
-        "A",
-        "P",
+        "S",
+        "o",
+        "f",
+        "q",
         "p",
-        "Q",
-        "F",
+        "ap",
+        "x",
+        "X",
+        "i",
+        "l",
+        "z",
         "L",
+        "N",
         "n",
-        "bo",
-        "ao",
-        "bq",
-        "aq",
+        "T",
+        "t",
         "b",
         "a",
-        "d",
-        "t",
-        "g",
-        "v",
-        "vo",
-        "mp",
-        "hl",
-        "ll",
-        "eep",
+        "m",
+        "R",
+        "ot",
+        "rp",
     ]
 
     model_config = ConfigDict(
@@ -110,7 +96,7 @@ class Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner from a JSON string"""
+        """Create an instance of OrderTradeUpdateO from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -144,7 +130,7 @@ class Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner from a dict"""
+        """Create an instance of OrderTradeUpdateO from a dict"""
         if obj is None:
             return None
 
@@ -153,37 +139,30 @@ class Ticker24HourByUnderlyingAssetAndExpirationDataResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "e": obj.get("e"),
-                "E": obj.get("E"),
-                "T": obj.get("T"),
                 "s": obj.get("s"),
-                "o": obj.get("o"),
-                "h": obj.get("h"),
-                "l": obj.get("l"),
                 "c": obj.get("c"),
-                "V": obj.get("V"),
-                "A": obj.get("A"),
-                "P": obj.get("P"),
+                "S": obj.get("S"),
+                "o": obj.get("o"),
+                "f": obj.get("f"),
+                "q": obj.get("q"),
                 "p": obj.get("p"),
-                "Q": obj.get("Q"),
-                "F": obj.get("F"),
+                "ap": obj.get("ap"),
+                "x": obj.get("x"),
+                "X": obj.get("X"),
+                "i": obj.get("i"),
+                "l": obj.get("l"),
+                "z": obj.get("z"),
                 "L": obj.get("L"),
+                "N": obj.get("N"),
                 "n": obj.get("n"),
-                "bo": obj.get("bo"),
-                "ao": obj.get("ao"),
-                "bq": obj.get("bq"),
-                "aq": obj.get("aq"),
+                "T": obj.get("T"),
+                "t": obj.get("t"),
                 "b": obj.get("b"),
                 "a": obj.get("a"),
-                "d": obj.get("d"),
-                "t": obj.get("t"),
-                "g": obj.get("g"),
-                "v": obj.get("v"),
-                "vo": obj.get("vo"),
-                "mp": obj.get("mp"),
-                "hl": obj.get("hl"),
-                "ll": obj.get("ll"),
-                "eep": obj.get("eep"),
+                "m": obj.get("m"),
+                "R": obj.get("R"),
+                "ot": obj.get("ot"),
+                "rp": obj.get("rp"),
             }
         )
         # store additional fields in additional_properties

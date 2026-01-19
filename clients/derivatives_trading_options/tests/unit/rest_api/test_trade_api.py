@@ -52,6 +52,9 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
     QuerySingleOrderResponse,
 )
 from binance_sdk_derivatives_trading_options.rest_api.models import (
+    UserCommissionResponse,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models import (
     UserExerciseRecordResponse,
 )
 
@@ -110,13 +113,12 @@ class TestTradeApi:
                 "realizedProfit": "0.00000000",
                 "side": "BUY",
                 "type": "LIMIT",
-                "volatility": "0.9",
                 "liquidity": "TAKER",
-                "quoteAsset": "USDT",
                 "time": 1592465880683,
                 "priceScale": 2,
                 "quantityScale": 2,
                 "optionSide": "CALL",
+                "quoteAsset": "USDT",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -178,13 +180,12 @@ class TestTradeApi:
                 "realizedProfit": "0.00000000",
                 "side": "BUY",
                 "type": "LIMIT",
-                "volatility": "0.9",
                 "liquidity": "TAKER",
-                "quoteAsset": "USDT",
                 "time": 1592465880683,
                 "priceScale": 2,
                 "quantityScale": 2,
                 "optionSide": "CALL",
+                "quoteAsset": "USDT",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -236,7 +237,7 @@ class TestTradeApi:
             "underlying": "underlying_example",
         }
 
-        expected_response = {"code": 0, "msg": "success", "data": 0}
+        expected_response = {"code": 0, "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -289,7 +290,7 @@ class TestTradeApi:
 
         params = {"underlying": "underlying_example", "recv_window": 5000}
 
-        expected_response = {"code": 0, "msg": "success", "data": 0}
+        expected_response = {"code": 0, "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -505,16 +506,21 @@ class TestTradeApi:
                 "price": "100",
                 "quantity": "1",
                 "executedQty": "0",
-                "fee": 0,
                 "side": "BUY",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
-                "createTime": 1592465880683,
-                "status": "ACCEPTED",
-                "avgPrice": "0",
                 "reduceOnly": False,
-                "clientOrderId": "",
+                "createTime": 1592465880683,
                 "updateTime": 1566818724722,
+                "status": "NEW",
+                "avgPrice": "0",
+                "source": "API",
+                "clientOrderId": "",
+                "priceScale": 3,
+                "quantityScale": 4,
+                "optionSide": "CALL",
+                "quoteAsset": "USDT",
+                "mmp": False,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -579,16 +585,21 @@ class TestTradeApi:
                 "price": "100",
                 "quantity": "1",
                 "executedQty": "0",
-                "fee": 0,
                 "side": "BUY",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
-                "createTime": 1592465880683,
-                "status": "ACCEPTED",
-                "avgPrice": "0",
                 "reduceOnly": False,
-                "clientOrderId": "",
+                "createTime": 1592465880683,
                 "updateTime": 1566818724722,
+                "status": "NEW",
+                "avgPrice": "0",
+                "source": "API",
+                "clientOrderId": "",
+                "priceScale": 3,
+                "quantityScale": 4,
+                "optionSide": "CALL",
+                "quoteAsset": "USDT",
+                "mmp": False,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -664,12 +675,10 @@ class TestTradeApi:
             "price": "100",
             "quantity": "1",
             "executedQty": "0",
-            "fee": "0",
             "side": "BUY",
             "type": "LIMIT",
             "timeInForce": "GTC",
             "reduceOnly": False,
-            "postOnly": False,
             "createDate": 1592465880683,
             "updateTime": 1566818724722,
             "status": "ACCEPTED",
@@ -737,12 +746,10 @@ class TestTradeApi:
             "price": "100",
             "quantity": "1",
             "executedQty": "0",
-            "fee": "0",
             "side": "BUY",
             "type": "LIMIT",
             "timeInForce": "GTC",
             "reduceOnly": False,
-            "postOnly": False,
             "createDate": 1592465880683,
             "updateTime": 1566818724722,
             "status": "ACCEPTED",
@@ -826,24 +833,22 @@ class TestTradeApi:
             "symbol": "BTC-200730-9000-C",
             "price": "100",
             "quantity": "1",
+            "executedQty": "0",
             "side": "BUY",
             "type": "LIMIT",
-            "createDate": 1592465880683,
-            "reduceOnly": False,
-            "postOnly": False,
-            "mmp": False,
-            "executedQty": "0",
-            "fee": "0",
             "timeInForce": "GTC",
+            "reduceOnly": False,
             "createTime": 1592465880683,
             "updateTime": 1566818724722,
-            "status": "ACCEPTED",
+            "status": "NEW",
             "avgPrice": "0",
+            "source": "API",
             "clientOrderId": "",
             "priceScale": 2,
             "quantityScale": 2,
             "optionSide": "CALL",
             "quoteAsset": "USDT",
+            "mmp": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -910,24 +915,22 @@ class TestTradeApi:
             "symbol": "BTC-200730-9000-C",
             "price": "100",
             "quantity": "1",
+            "executedQty": "0",
             "side": "BUY",
             "type": "LIMIT",
-            "createDate": 1592465880683,
-            "reduceOnly": False,
-            "postOnly": False,
-            "mmp": False,
-            "executedQty": "0",
-            "fee": "0",
             "timeInForce": "GTC",
+            "reduceOnly": False,
             "createTime": 1592465880683,
             "updateTime": 1566818724722,
-            "status": "ACCEPTED",
+            "status": "NEW",
             "avgPrice": "0",
+            "source": "API",
             "clientOrderId": "",
             "priceScale": 2,
             "quantityScale": 2,
             "optionSide": "CALL",
             "quoteAsset": "USDT",
+            "mmp": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1041,18 +1044,18 @@ class TestTradeApi:
                 "symbol": "BTC-200730-9000-C",
                 "side": "SHORT",
                 "quantity": "-0.1",
-                "reducibleQty": "0",
                 "markValue": "105.00138",
-                "ror": "-0.05",
                 "unrealizedPNL": "-5.00138",
                 "markPrice": "1050.0138",
                 "strikePrice": "9000",
-                "positionCost": "1000.0000",
                 "expiryDate": 1593511200000,
                 "priceScale": 2,
                 "quantityScale": 2,
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
+                "time": 1762872654561,
+                "bidQuantity": "0.0000",
+                "askQuantity": "0.0000",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1107,18 +1110,18 @@ class TestTradeApi:
                 "symbol": "BTC-200730-9000-C",
                 "side": "SHORT",
                 "quantity": "-0.1",
-                "reducibleQty": "0",
                 "markValue": "105.00138",
-                "ror": "-0.05",
                 "unrealizedPNL": "-5.00138",
                 "markPrice": "1050.0138",
                 "strikePrice": "9000",
-                "positionCost": "1000.0000",
                 "expiryDate": 1593511200000,
                 "priceScale": 2,
                 "quantityScale": 2,
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
+                "time": 1762872654561,
+                "bidQuantity": "0.0000",
+                "askQuantity": "0.0000",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1179,8 +1182,8 @@ class TestTradeApi:
                     quantity="1.0",
                     price="1.0",
                     time_in_force="GTC",
-                    reduce_only="False",
-                    post_only="False",
+                    reduce_only="False）",
+                    post_only="False）",
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
@@ -1190,15 +1193,25 @@ class TestTradeApi:
 
         expected_response = [
             {
-                "orderId": 4612288550799409000,
-                "symbol": "ETH-220826-1800-C",
+                "orderId": 4611875134427365000,
+                "symbol": "BTC-200730-9000-C",
                 "price": "100",
-                "quantity": "0.01",
+                "quantity": "1",
+                "executedQty": "0",
                 "side": "BUY",
                 "type": "LIMIT",
+                "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
-                "clientOrderId": "1001",
+                "createTime": 1592465880683,
+                "updateTime": 1566818724722,
+                "status": "NEW",
+                "avgPrice": "0",
+                "source": "API",
+                "clientOrderId": "",
+                "priceScale": 2,
+                "quantityScale": 2,
+                "optionSide": "CALL",
+                "quoteAsset": "USDT",
                 "mmp": False,
             }
         ]
@@ -1255,8 +1268,8 @@ class TestTradeApi:
                     quantity="1.0",
                     price="1.0",
                     time_in_force="GTC",
-                    reduce_only="False",
-                    post_only="False",
+                    reduce_only="False）",
+                    post_only="False）",
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
@@ -1267,15 +1280,25 @@ class TestTradeApi:
 
         expected_response = [
             {
-                "orderId": 4612288550799409000,
-                "symbol": "ETH-220826-1800-C",
+                "orderId": 4611875134427365000,
+                "symbol": "BTC-200730-9000-C",
                 "price": "100",
-                "quantity": "0.01",
+                "quantity": "1",
+                "executedQty": "0",
                 "side": "BUY",
                 "type": "LIMIT",
+                "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
-                "clientOrderId": "1001",
+                "createTime": 1592465880683,
+                "updateTime": 1566818724722,
+                "status": "NEW",
+                "avgPrice": "0",
+                "source": "API",
+                "clientOrderId": "",
+                "priceScale": 2,
+                "quantityScale": 2,
+                "optionSide": "CALL",
+                "quoteAsset": "USDT",
                 "mmp": False,
             }
         ]
@@ -1373,15 +1396,13 @@ class TestTradeApi:
                 "price": "100",
                 "quantity": "1",
                 "executedQty": "0",
-                "fee": "0",
                 "side": "BUY",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
                 "createTime": 1592465880683,
                 "updateTime": 1592465880683,
-                "status": "ACCEPTED",
+                "status": "NEW",
                 "avgPrice": "0",
                 "clientOrderId": "",
                 "priceScale": 2,
@@ -1450,15 +1471,13 @@ class TestTradeApi:
                 "price": "100",
                 "quantity": "1",
                 "executedQty": "0",
-                "fee": "0",
                 "side": "BUY",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
                 "createTime": 1592465880683,
                 "updateTime": 1592465880683,
-                "status": "ACCEPTED",
+                "status": "NEW",
                 "avgPrice": "0",
                 "clientOrderId": "",
                 "priceScale": 2,
@@ -1528,18 +1547,14 @@ class TestTradeApi:
                 "price": "18000.00000000",
                 "quantity": "-0.50000000",
                 "executedQty": "-0.50000000",
-                "fee": "3.00000000",
                 "side": "SELL",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
                 "createTime": 1657867694244,
                 "updateTime": 1657867888216,
                 "status": "FILLED",
-                "reason": "0",
                 "avgPrice": "18000.00000000",
-                "source": "API",
                 "clientOrderId": "",
                 "priceScale": 2,
                 "quantityScale": 2,
@@ -1610,18 +1625,14 @@ class TestTradeApi:
                 "price": "18000.00000000",
                 "quantity": "-0.50000000",
                 "executedQty": "-0.50000000",
-                "fee": "3.00000000",
                 "side": "SELL",
                 "type": "LIMIT",
                 "timeInForce": "GTC",
                 "reduceOnly": False,
-                "postOnly": False,
                 "createTime": 1657867694244,
                 "updateTime": 1657867888216,
                 "status": "FILLED",
-                "reason": "0",
                 "avgPrice": "18000.00000000",
-                "source": "API",
                 "clientOrderId": "",
                 "priceScale": 2,
                 "quantityScale": 2,
@@ -1701,17 +1712,14 @@ class TestTradeApi:
             "price": "100",
             "quantity": "1",
             "executedQty": "0",
-            "fee": "0",
             "side": "BUY",
             "type": "LIMIT",
             "timeInForce": "GTC",
             "reduceOnly": False,
-            "postOnly": False,
             "createTime": 1592465880683,
             "updateTime": 1566818724722,
-            "status": "ACCEPTED",
+            "status": "NEW",
             "avgPrice": "0",
-            "source": "API",
             "clientOrderId": "",
             "priceScale": 2,
             "quantityScale": 2,
@@ -1774,17 +1782,14 @@ class TestTradeApi:
             "price": "100",
             "quantity": "1",
             "executedQty": "0",
-            "fee": "0",
             "side": "BUY",
             "type": "LIMIT",
             "timeInForce": "GTC",
             "reduceOnly": False,
-            "postOnly": False,
             "createTime": 1592465880683,
             "updateTime": 1566818724722,
-            "status": "ACCEPTED",
+            "status": "NEW",
             "avgPrice": "0",
-            "source": "API",
             "clientOrderId": "",
             "priceScale": 2,
             "quantityScale": 2,
@@ -1848,6 +1853,159 @@ class TestTradeApi:
             self.client.query_single_order(**params)
 
     @patch("binance_common.utils.get_signature")
+    def test_user_commission_success(self, mock_get_signature):
+        """Test user_commission() successfully with required parameters only."""
+
+        expected_response = {
+            "commissions": [
+                {
+                    "underlying": "BTCUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "ETHUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "BNBUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "SOLUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "XRPUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "DOGEUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+            ]
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.user_commission()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/eapi/v1/commission" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(UserCommissionResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(UserCommissionResponse, "from_dict"):
+            expected = UserCommissionResponse.from_dict(expected_response)
+        else:
+            expected = UserCommissionResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_user_commission_success_with_optional_params(self, mock_get_signature):
+        """Test user_commission() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {
+            "commissions": [
+                {
+                    "underlying": "BTCUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "ETHUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "BNBUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "SOLUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "XRPUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+                {
+                    "underlying": "DOGEUSDT",
+                    "makerFee": "0.000240",
+                    "takerFee": "0.000240",
+                },
+            ]
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.user_commission(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/eapi/v1/commission" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(UserCommissionResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(UserCommissionResponse, "from_dict"):
+            expected = UserCommissionResponse.from_dict(expected_response)
+        else:
+            expected = UserCommissionResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_user_commission_server_error(self):
+        """Test that user_commission() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.user_commission = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.user_commission()
+
+    @patch("binance_common.utils.get_signature")
     def test_user_exercise_record_success(self, mock_get_signature):
         """Test user_exercise_record() successfully with required parameters only."""
 
@@ -1857,7 +2015,6 @@ class TestTradeApi:
                 "currency": "USDT",
                 "symbol": "BTC-220721-25000-C",
                 "exercisePrice": "25000.00000000",
-                "markPrice": "25000.00000000",
                 "quantity": "1.00000000",
                 "amount": "0.00000000",
                 "fee": "0.00000000",
@@ -1923,7 +2080,6 @@ class TestTradeApi:
                 "currency": "USDT",
                 "symbol": "BTC-220721-25000-C",
                 "exercisePrice": "25000.00000000",
-                "markPrice": "25000.00000000",
                 "quantity": "1.00000000",
                 "amount": "0.00000000",
                 "fee": "0.00000000",

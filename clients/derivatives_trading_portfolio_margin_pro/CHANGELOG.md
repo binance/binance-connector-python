@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.2.0 - 2026-01-19
+
+### Added (2)
+
+#### REST API
+
+- `get_delta_mode_status()` (`GET /sapi/v1/portfolio/delta-mode`)
+- `switch_delta_mode()` (`POST /sapi/v1/portfolio/delta-mode`)
+
+#### WebSocket Streams
+
+### Changed (1)
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
 ## 5.1.0 - 2026-01-13
 
 ### Changed (1)
@@ -20,7 +35,6 @@
 #### REST API
 
 - Renamed `transfer_ldusdt_for_portfolio_margin()` to `transfer_ldusdt_rwusd_for_portfolio_margin()`.
-
 
 ## 3.0.0 - 2025-11-14
 

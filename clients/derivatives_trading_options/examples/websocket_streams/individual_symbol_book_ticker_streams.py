@@ -21,25 +21,24 @@ configuration_ws_streams = ConfigurationWebSocketStreams(
 client = DerivativesTradingOptions(config_ws_streams=configuration_ws_streams)
 
 
-async def partial_book_depth_streams():
+async def individual_symbol_book_ticker_streams():
     connection = None
     try:
         connection = await client.websocket_streams.create_connection()
 
-        stream = await connection.partial_book_depth_streams(
+        stream = await connection.individual_symbol_book_ticker_streams(
             symbol="btcusdt",
-            level="example_value",
         )
         stream.on("message", lambda data: print(f"{data}"))
 
         await asyncio.sleep(5)
         await stream.unsubscribe()
     except Exception as e:
-        logging.error(f"partial_book_depth_streams() error: {e}")
+        logging.error(f"individual_symbol_book_ticker_streams() error: {e}")
     finally:
         if connection:
             await connection.close_connection(close_session=True)
 
 
 if __name__ == "__main__":
-    asyncio.run(partial_book_depth_streams())
+    asyncio.run(individual_symbol_book_ticker_streams())

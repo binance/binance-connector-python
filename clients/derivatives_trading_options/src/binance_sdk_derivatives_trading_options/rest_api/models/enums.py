@@ -24,6 +24,7 @@ class NewOrderTimeInForceEnum(Enum):
     GTC = "GTC"
     IOC = "IOC"
     FOK = "FOK"
+    GTX = "GTX"
 
 
 class NewOrderNewOrderRespTypeEnum(Enum):

@@ -19,9 +19,8 @@ from binance_common.utils import send_request
 from ..models import CheckServerTimeResponse
 from ..models import ExchangeInformationResponse
 from ..models import HistoricalExerciseRecordsResponse
-from ..models import IndexPriceTickerResponse
+from ..models import IndexPriceResponse
 from ..models import KlineCandlestickDataResponse
-from ..models import OldTradesLookupResponse
 from ..models import OpenInterestResponse
 from ..models import OptionMarkPriceResponse
 from ..models import OrderBookResponse
@@ -50,7 +49,7 @@ class MarketDataApi:
         """
                 Check Server Time
                 GET /eapi/v1/time
-                https://developers.binance.com/docs/derivatives/option/market-data/Check-Server-Time
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Check-Server-Time
 
                 Test connectivity to the Rest API and get the current server time.
 
@@ -86,7 +85,7 @@ class MarketDataApi:
         """
                 Exchange Information
                 GET /eapi/v1/exchangeInfo
-                https://developers.binance.com/docs/derivatives/option/market-data/Exchange-Information
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Exchange-Information
 
                 Current exchange trading rules and symbol information
 
@@ -126,7 +125,7 @@ class MarketDataApi:
         """
                 Historical Exercise Records
                 GET /eapi/v1/exerciseHistory
-                https://developers.binance.com/docs/derivatives/option/market-data/Historical-Exercise-Records
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Historical-Exercise-Records
 
                 Get historical exercise records.
         * REALISTIC_VALUE_STRICKEN -> Exercised
@@ -167,14 +166,14 @@ class MarketDataApi:
             response_model=HistoricalExerciseRecordsResponse,
         )
 
-    def index_price_ticker(
+    def index_price(
         self,
         underlying: Union[str, None],
-    ) -> ApiResponse[IndexPriceTickerResponse]:
+    ) -> ApiResponse[IndexPriceResponse]:
         """
-                Index Price Ticker
+                Index Price
                 GET /eapi/v1/index
-                https://developers.binance.com/docs/derivatives/option/market-data/Index-Price-Ticker
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Symbol-Price-Ticker
 
                 Get spot index price for option underlying.
 
@@ -184,7 +183,7 @@ class MarketDataApi:
                     underlying (Union[str, None]): Option underlying, e.g BTCUSDT
 
                 Returns:
-                    ApiResponse[IndexPriceTickerResponse]
+                    ApiResponse[IndexPriceResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -208,7 +207,7 @@ class MarketDataApi:
             payload=payload,
             body=body,
             time_unit=self._configuration.time_unit,
-            response_model=IndexPriceTickerResponse,
+            response_model=IndexPriceResponse,
         )
 
     def kline_candlestick_data(
@@ -222,7 +221,7 @@ class MarketDataApi:
         """
                 Kline/Candlestick Data
                 GET /eapi/v1/klines
-                https://developers.binance.com/docs/derivatives/option/market-data/Kline-Candlestick-Data
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Kline-Candlestick-Data
 
                 Kline/candlestick bars for an option symbol.
         Klines are uniquely identified by their open time.
@@ -275,53 +274,6 @@ class MarketDataApi:
             response_model=KlineCandlestickDataResponse,
         )
 
-    def old_trades_lookup(
-        self,
-        symbol: Union[str, None],
-        from_id: Optional[int] = None,
-        limit: Optional[int] = None,
-    ) -> ApiResponse[OldTradesLookupResponse]:
-        """
-                Old Trades Lookup (MARKET_DATA)
-                GET /eapi/v1/historicalTrades
-                https://developers.binance.com/docs/derivatives/option/market-data/Old-Trades-Lookup
-
-                Get older market historical trades.
-
-        Weight: 20
-
-                Args:
-                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
-                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
-
-                Returns:
-                    ApiResponse[OldTradesLookupResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if symbol is None:
-            raise RequiredError(
-                field="symbol", error_message="Missing required parameter 'symbol'"
-            )
-
-        body = {}
-        payload = {"symbol": symbol, "from_id": from_id, "limit": limit}
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="GET",
-            path="/eapi/v1/historicalTrades",
-            payload=payload,
-            body=body,
-            time_unit=self._configuration.time_unit,
-            response_model=OldTradesLookupResponse,
-        )
-
     def open_interest(
         self,
         underlying_asset: Union[str, None],
@@ -330,7 +282,7 @@ class MarketDataApi:
         """
                 Open Interest
                 GET /eapi/v1/openInterest
-                https://developers.binance.com/docs/derivatives/option/market-data/Open-Interest
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Open-Interest
 
                 Get open interest for specific underlying asset on specific expiration date.
 
@@ -380,7 +332,7 @@ class MarketDataApi:
         """
                 Option Mark Price
                 GET /eapi/v1/mark
-                https://developers.binance.com/docs/derivatives/option/market-data/Option-Mark-Price
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Option-Mark-Price
 
                 Option mark price and greek info.
 
@@ -419,13 +371,13 @@ class MarketDataApi:
         """
                 Order Book
                 GET /eapi/v1/depth
-                https://developers.binance.com/docs/derivatives/option/market-data/Order-Book
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Order-Book
 
                 Check orderbook depth on specific symbol
 
         Weight: limit         | weight
         ------------  | ------------
-        5, 10, 20, 50 | 2
+        5, 10, 20, 50 | 1
         100           | 5
         500           | 10
         1000          | 20
@@ -469,7 +421,7 @@ class MarketDataApi:
         """
                 Recent Block Trades List
                 GET /eapi/v1/blockTrades
-                https://developers.binance.com/docs/derivatives/option/market-data/Recent-Block-Trade-List
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Recent-Block-Trade-List
 
                 Get recent block trades
 
@@ -509,7 +461,7 @@ class MarketDataApi:
         """
                 Recent Trades List
                 GET /eapi/v1/trades
-                https://developers.binance.com/docs/derivatives/option/market-data/Recent-Trades-List
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Recent-Trades-List
 
                 Get recent market trades
 
@@ -552,7 +504,7 @@ class MarketDataApi:
         """
                 Test Connectivity
                 GET /eapi/v1/ping
-                https://developers.binance.com/docs/derivatives/option/market-data/Test-Connectivity
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/Test-Connectivity
 
                 Test connectivity to the Rest API.
 
@@ -588,7 +540,7 @@ class MarketDataApi:
         """
                 24hr Ticker Price Change Statistics
                 GET /eapi/v1/ticker
-                https://developers.binance.com/docs/derivatives/option/market-data/24hr-Ticker-Price-Change-Statistics
+                https://developers.binance.com/docs/derivatives/options-trading/market-data/24hr-Ticker-Price-Change-Statistics
 
                 24 hour rolling window price change statistics.
 

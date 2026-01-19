@@ -240,6 +240,7 @@ class WebsocketMarketStreamsApi:
             },
         )
 
+        print("TEST3")
         return await RequestStream(
             self.websocket_base,
             stream=stream,
