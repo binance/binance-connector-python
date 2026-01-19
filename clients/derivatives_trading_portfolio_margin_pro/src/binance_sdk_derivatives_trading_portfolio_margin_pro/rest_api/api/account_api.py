@@ -21,6 +21,7 @@ from ..models import ChangeAutoRepayFuturesStatusResponse
 from ..models import FundAutoCollectionResponse
 from ..models import FundCollectionByAssetResponse
 from ..models import GetAutoRepayFuturesStatusResponse
+from ..models import GetDeltaModeStatusResponse
 from ..models import GetPortfolioMarginProAccountBalanceResponse
 from ..models import GetPortfolioMarginProAccountInfoResponse
 from ..models import GetPortfolioMarginProSpanAccountInfoResponse
@@ -30,6 +31,7 @@ from ..models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from ..models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from ..models import RepayFuturesNegativeBalanceResponse
+from ..models import SwitchDeltaModeResponse
 from ..models import TransferLdusdtRwusdForPortfolioMarginResponse
 
 
@@ -287,6 +289,46 @@ class AccountApi:
             signer=self._signer,
         )
 
+    def get_delta_mode_status(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDeltaModeStatusResponse]:
+        """
+                Get Delta Mode Status(USER_DATA)
+                GET /sapi/v1/portfolio/delta-mode
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Delta-Mode-Status
+
+                Query the Delta mode status of current account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDeltaModeStatusResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/portfolio/delta-mode",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetDeltaModeStatusResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def get_portfolio_margin_pro_account_balance(
         self,
         asset: Optional[str] = None,
@@ -478,6 +520,8 @@ class AccountApi:
                 https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Classic-Portfolio-Margin-Bankruptcy-Loan-Repay
 
                 Repay Portfolio Margin Pro Bankruptcy Loan
+
+        * Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
 
         Weight: 3000
 
@@ -702,6 +746,54 @@ class AccountApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=RepayFuturesNegativeBalanceResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def switch_delta_mode(
+        self,
+        delta_enabled: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SwitchDeltaModeResponse]:
+        """
+                Switch Delta Mode(TRADE)
+                POST /sapi/v1/portfolio/delta-mode
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Switch-Delta-Mode
+
+                Switch the Delta mode for existing PM PRO / PM RETAIL accounts.
+
+        Weight: 1500
+
+                Args:
+                    delta_enabled (Union[str, None]): `true` to enable Delta mode; `false` to disable Delta mode
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SwitchDeltaModeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if delta_enabled is None:
+            raise RequiredError(
+                field="delta_enabled",
+                error_message="Missing required parameter 'delta_enabled'",
+            )
+
+        body = {}
+        payload = {"delta_enabled": delta_enabled, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/portfolio/delta-mode",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=SwitchDeltaModeResponse,
             is_signed=True,
             signer=self._signer,
         )

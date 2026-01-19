@@ -1,5 +1,44 @@
 # Changelog
 
+## 6.1.0 - 2026-01-19
+
+### Changed (10)
+
+#### REST API
+
+- Added parameter `algoId`
+  - affected methods:
+    - `cancel_algo_order()` (`DELETE /fapi/v1/algoOrder`)
+- Added parameter `clientAlgoId`
+  - affected methods:
+    - `cancel_algo_order()` (`DELETE /fapi/v1/algoOrder`)
+- Deleted parameter `algoid`
+  - affected methods:
+    - `cancel_algo_order()` (`DELETE /fapi/v1/algoOrder`)
+- Deleted parameter `clientalgoid`
+  - affected methods:
+    - `cancel_algo_order()` (`DELETE /fapi/v1/algoOrder`)
+- Modified response for `symbol_configuration()` (`GET /fapi/v1/symbolConfig`):
+  - items.`isAutoAddMargin`: type `string` → `boolean`
+  - items.`isAutoAddMargin`: type `string` → `boolean`
+
+#### WebSocket API
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
+- Added parameter `algoId`
+  - affected methods:
+    - `cancel_algo_order()` (`algoOrder.cancel` method)
+- Added parameter `clientAlgoId`
+  - affected methods:
+    - `cancel_algo_order()` (`algoOrder.cancel` method)
+- Deleted parameter `algoid`
+  - affected methods:
+    - `cancel_algo_order()` (`algoOrder.cancel` method)
+- Deleted parameter `clientalgoid`
+  - affected methods:
+    - `cancel_algo_order()` (`algoOrder.cancel` method)
+
 ## 6.0.0 - 2025-01-13
 
 ### Changed (4)

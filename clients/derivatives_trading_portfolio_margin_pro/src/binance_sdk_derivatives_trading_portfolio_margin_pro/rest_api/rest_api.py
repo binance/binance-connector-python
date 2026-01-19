@@ -22,6 +22,7 @@ from .models import ChangeAutoRepayFuturesStatusResponse
 from .models import FundAutoCollectionResponse
 from .models import FundCollectionByAssetResponse
 from .models import GetAutoRepayFuturesStatusResponse
+from .models import GetDeltaModeStatusResponse
 from .models import GetPortfolioMarginProAccountBalanceResponse
 from .models import GetPortfolioMarginProAccountInfoResponse
 from .models import GetPortfolioMarginProSpanAccountInfoResponse
@@ -31,6 +32,7 @@ from .models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from .models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from .models import RepayFuturesNegativeBalanceResponse
+from .models import SwitchDeltaModeResponse
 from .models import TransferLdusdtRwusdForPortfolioMarginResponse
 from .models import GetPortfolioMarginAssetLeverageResponse
 from .models import PortfolioMarginCollateralRateResponse
@@ -257,6 +259,30 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         return self._accountApi.get_auto_repay_futures_status(recv_window)
 
+    def get_delta_mode_status(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDeltaModeStatusResponse]:
+        """
+                Get Delta Mode Status(USER_DATA)
+
+                Query the Delta mode status of current account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDeltaModeStatusResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_delta_mode_status(recv_window)
+
     def get_portfolio_margin_pro_account_balance(
         self,
         asset: Optional[str] = None,
@@ -374,6 +400,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
                 Portfolio Margin Pro Bankruptcy Loan Repay
 
                 Repay Portfolio Margin Pro Bankruptcy Loan
+
+        * Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
 
         Weight: 3000
 
@@ -521,6 +549,32 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
 
         return self._accountApi.repay_futures_negative_balance(var_from, recv_window)
+
+    def switch_delta_mode(
+        self,
+        delta_enabled: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SwitchDeltaModeResponse]:
+        """
+                Switch Delta Mode(TRADE)
+
+                Switch the Delta mode for existing PM PRO / PM RETAIL accounts.
+
+        Weight: 1500
+
+                Args:
+                    delta_enabled (Union[str, None]): `true` to enable Delta mode; `false` to disable Delta mode
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SwitchDeltaModeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.switch_delta_mode(delta_enabled, recv_window)
 
     def transfer_ldusdt_rwusd_for_portfolio_margin(
         self,

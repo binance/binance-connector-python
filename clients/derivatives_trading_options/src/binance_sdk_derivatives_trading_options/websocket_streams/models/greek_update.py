@@ -16,26 +16,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_derivatives_trading_options.websocket_streams.models.greek_update_g_inner import (
+    GreekUpdateGInner,
+)
 from typing import Set
 from typing_extensions import Self
 
 
-class AccountUpdateBInner(BaseModel):
+class GreekUpdate(BaseModel):
     """
-    AccountUpdateBInner
+    GreekUpdate
     """  # noqa: E501
 
-    b: Optional[StrictStr] = None
-    m: Optional[StrictStr] = None
-    u: Optional[StrictStr] = None
-    U: Optional[StrictInt] = Field(default=None, alias="U")
-    M: Optional[StrictStr] = Field(default=None, alias="M")
-    i: Optional[StrictStr] = None
-    a: Optional[StrictStr] = None
+    E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    G: Optional[List[GreekUpdateGInner]] = Field(default=None, alias="G")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["b", "m", "u", "U", "M", "i", "a"]
+    __properties: ClassVar[List[str]] = ["E", "T", "G"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +53,7 @@ class AccountUpdateBInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AccountUpdateBInner from a JSON string"""
+        """Create an instance of GreekUpdate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,6 +78,13 @@ class AccountUpdateBInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in G (list)
+        _items = []
+        if self.G:
+            for _item_g in self.G:
+                if _item_g:
+                    _items.append(_item_g.to_dict())
+            _dict["G"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -88,7 +94,7 @@ class AccountUpdateBInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AccountUpdateBInner from a dict"""
+        """Create an instance of GreekUpdate from a dict"""
         if obj is None:
             return None
 
@@ -97,13 +103,13 @@ class AccountUpdateBInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "b": obj.get("b"),
-                "m": obj.get("m"),
-                "u": obj.get("u"),
-                "U": obj.get("U"),
-                "M": obj.get("M"),
-                "i": obj.get("i"),
-                "a": obj.get("a"),
+                "E": obj.get("E"),
+                "T": obj.get("T"),
+                "G": (
+                    [GreekUpdateGInner.from_dict(_item) for _item in obj["G"]]
+                    if obj.get("G") is not None
+                    else None
+                ),
             }
         )
         # store additional fields in additional_properties

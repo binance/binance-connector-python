@@ -44,7 +44,7 @@ class MarketDataApi:
         """
                 Get Dual Investment product list
                 GET /sapi/v1/dci/product/list
-                https://developers.binance.com/docs/dual_investment/market-data/Get-Dual-Investment-product-list
+                https://developers.binance.com/docs/advanced_earn/dual-investment/market-data/Get-Dual-Investment-product-list
 
                 Get Dual Investment product list
 

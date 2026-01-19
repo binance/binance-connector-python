@@ -16,24 +16,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import RootModel, ConfigDict
+from typing import Any, ClassVar, Dict
+from typing import Optional, Set, List, Tuple
 from typing_extensions import Self
 
 
-class AccountUpdatePInner(BaseModel):
+class DiffBookDepthStreamsResponseAItem(RootModel[Tuple[str, str]]):
     """
-    AccountUpdatePInner
+    DiffBookDepthStreamsResponseAItem
     """  # noqa: E501
 
-    s: Optional[StrictStr] = None
-    c: Optional[StrictStr] = None
-    r: Optional[StrictStr] = None
-    p: Optional[StrictStr] = None
-    a: Optional[StrictStr] = None
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["s", "c", "r", "p", "a"]
+    __properties: ClassVar[List[str]] = []
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +46,7 @@ class AccountUpdatePInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AccountUpdatePInner from a JSON string"""
+        """Create an instance of DiffBookDepthStreamsResponseAItem from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -64,47 +58,24 @@ class AccountUpdatePInner(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AccountUpdatePInner from a dict"""
+        """Create an instance of DiffBookDepthStreamsResponseAItem from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "s": obj.get("s"),
-                "c": obj.get("c"),
-                "r": obj.get("r"),
-                "p": obj.get("p"),
-                "a": obj.get("a"),
-            }
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
+        _obj = cls.model_validate({})
         return _obj

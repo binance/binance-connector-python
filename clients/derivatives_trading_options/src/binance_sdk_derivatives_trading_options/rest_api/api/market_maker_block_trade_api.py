@@ -46,7 +46,7 @@ class MarketMakerBlockTradeApi:
         """
                 Accept Block Trade Order (TRADE)
                 POST /eapi/v1/block/order/execute
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Accept-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Accept-Block-Trade-Order
 
                 Accept a block trade order
 
@@ -99,7 +99,7 @@ class MarketMakerBlockTradeApi:
         """
                 Account Block Trade List (USER_DATA)
                 GET /eapi/v1/block/user-trades
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Account-Block-Trade-List
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Account-Block-Trade-List
 
                 Gets block trades for a specific account.
 
@@ -148,7 +148,7 @@ class MarketMakerBlockTradeApi:
         """
                 Cancel Block Trade Order (TRADE)
                 DELETE /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Cancel-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Cancel-Block-Trade-Order
 
                 Cancel a block trade order.
 
@@ -198,7 +198,7 @@ class MarketMakerBlockTradeApi:
         """
                 Extend Block Trade Order (TRADE)
                 PUT /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Extend-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Extend-Block-Trade-Order
 
                 Extends a block trade expire time by 30 mins from the current time.
 
@@ -250,7 +250,7 @@ class MarketMakerBlockTradeApi:
         """
                 New Block Trade Order (TRADE)
                 POST /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/New-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/New-Block-Trade-Order
 
                 Send in a new block trade order.
 
@@ -303,7 +303,7 @@ class MarketMakerBlockTradeApi:
         """
                 Query Block Trade Details (USER_DATA)
                 GET /eapi/v1/block/order/execute
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Query-Block-Trade-Detail
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Query-Block-Trade-Detail
 
                 Query block trade details; returns block trade details from counterparty's perspective.
 
@@ -357,7 +357,7 @@ class MarketMakerBlockTradeApi:
         """
                 Query Block Trade Order (TRADE)
                 GET /eapi/v1/block/order/orders
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Query-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Query-Block-Trade-Order
 
                 Check block trade order status.
 

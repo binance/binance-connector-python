@@ -31,36 +31,36 @@ class OptionPositionInformationResponseInner(BaseModel):
     symbol: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
     quantity: Optional[StrictStr] = None
-    reducible_qty: Optional[StrictStr] = Field(default=None, alias="reducibleQty")
     mark_value: Optional[StrictStr] = Field(default=None, alias="markValue")
-    ror: Optional[StrictStr] = None
     unrealized_pnl: Optional[StrictStr] = Field(default=None, alias="unrealizedPNL")
     mark_price: Optional[StrictStr] = Field(default=None, alias="markPrice")
     strike_price: Optional[StrictStr] = Field(default=None, alias="strikePrice")
-    position_cost: Optional[StrictStr] = Field(default=None, alias="positionCost")
     expiry_date: Optional[StrictInt] = Field(default=None, alias="expiryDate")
     price_scale: Optional[StrictInt] = Field(default=None, alias="priceScale")
     quantity_scale: Optional[StrictInt] = Field(default=None, alias="quantityScale")
     option_side: Optional[StrictStr] = Field(default=None, alias="optionSide")
     quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
+    time: Optional[StrictInt] = None
+    bid_quantity: Optional[StrictStr] = Field(default=None, alias="bidQuantity")
+    ask_quantity: Optional[StrictStr] = Field(default=None, alias="askQuantity")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "entryPrice",
         "symbol",
         "side",
         "quantity",
-        "reducibleQty",
         "markValue",
-        "ror",
         "unrealizedPNL",
         "markPrice",
         "strikePrice",
-        "positionCost",
         "expiryDate",
         "priceScale",
         "quantityScale",
         "optionSide",
         "quoteAsset",
+        "time",
+        "bidQuantity",
+        "askQuantity",
     ]
 
     model_config = ConfigDict(
@@ -131,18 +131,18 @@ class OptionPositionInformationResponseInner(BaseModel):
                 "symbol": obj.get("symbol"),
                 "side": obj.get("side"),
                 "quantity": obj.get("quantity"),
-                "reducibleQty": obj.get("reducibleQty"),
                 "markValue": obj.get("markValue"),
-                "ror": obj.get("ror"),
                 "unrealizedPNL": obj.get("unrealizedPNL"),
                 "markPrice": obj.get("markPrice"),
                 "strikePrice": obj.get("strikePrice"),
-                "positionCost": obj.get("positionCost"),
                 "expiryDate": obj.get("expiryDate"),
                 "priceScale": obj.get("priceScale"),
                 "quantityScale": obj.get("quantityScale"),
                 "optionSide": obj.get("optionSide"),
                 "quoteAsset": obj.get("quoteAsset"),
+                "time": obj.get("time"),
+                "bidQuantity": obj.get("bidQuantity"),
+                "askQuantity": obj.get("askQuantity"),
             }
         )
         # store additional fields in additional_properties

@@ -16,34 +16,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
 
-class GetOptionTransactionHistoryDownloadLinkByIdResponse(BaseModel):
+class UserCommissionResponseCommissionsInner(BaseModel):
     """
-    GetOptionTransactionHistoryDownloadLinkByIdResponse
+    UserCommissionResponseCommissionsInner
     """  # noqa: E501
 
-    download_id: Optional[StrictStr] = Field(default=None, alias="downloadId")
-    status: Optional[StrictStr] = None
-    url: Optional[StrictStr] = None
-    notified: Optional[StrictBool] = None
-    expiration_timestamp: Optional[StrictInt] = Field(
-        default=None, alias="expirationTimestamp"
-    )
-    is_expired: Optional[StrictStr] = Field(default=None, alias="isExpired")
+    underlying: Optional[StrictStr] = None
+    maker_fee: Optional[StrictStr] = Field(default=None, alias="makerFee")
+    taker_fee: Optional[StrictStr] = Field(default=None, alias="takerFee")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "downloadId",
-        "status",
-        "url",
-        "notified",
-        "expirationTimestamp",
-        "isExpired",
-    ]
+    __properties: ClassVar[List[str]] = ["underlying", "makerFee", "takerFee"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -66,7 +54,7 @@ class GetOptionTransactionHistoryDownloadLinkByIdResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetOptionTransactionHistoryDownloadLinkByIdResponse from a JSON string"""
+        """Create an instance of UserCommissionResponseCommissionsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -100,7 +88,7 @@ class GetOptionTransactionHistoryDownloadLinkByIdResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetOptionTransactionHistoryDownloadLinkByIdResponse from a dict"""
+        """Create an instance of UserCommissionResponseCommissionsInner from a dict"""
         if obj is None:
             return None
 
@@ -109,12 +97,9 @@ class GetOptionTransactionHistoryDownloadLinkByIdResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "downloadId": obj.get("downloadId"),
-                "status": obj.get("status"),
-                "url": obj.get("url"),
-                "notified": obj.get("notified"),
-                "expirationTimestamp": obj.get("expirationTimestamp"),
-                "isExpired": obj.get("isExpired"),
+                "underlying": obj.get("underlying"),
+                "makerFee": obj.get("makerFee"),
+                "takerFee": obj.get("takerFee"),
             }
         )
         # store additional fields in additional_properties

@@ -31,48 +31,44 @@ class NewOrderResponse(BaseModel):
     symbol: Optional[StrictStr] = None
     price: Optional[StrictStr] = None
     quantity: Optional[StrictStr] = None
+    executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
     side: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    create_date: Optional[StrictInt] = Field(default=None, alias="createDate")
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    post_only: Optional[StrictBool] = Field(default=None, alias="postOnly")
-    mmp: Optional[StrictBool] = None
-    executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
-    fee: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
+    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
     create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
     status: Optional[StrictStr] = None
     avg_price: Optional[StrictStr] = Field(default=None, alias="avgPrice")
+    source: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     price_scale: Optional[StrictInt] = Field(default=None, alias="priceScale")
     quantity_scale: Optional[StrictInt] = Field(default=None, alias="quantityScale")
     option_side: Optional[StrictStr] = Field(default=None, alias="optionSide")
     quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
+    mmp: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "orderId",
         "symbol",
         "price",
         "quantity",
+        "executedQty",
         "side",
         "type",
-        "createDate",
-        "reduceOnly",
-        "postOnly",
-        "mmp",
-        "executedQty",
-        "fee",
         "timeInForce",
+        "reduceOnly",
         "createTime",
         "updateTime",
         "status",
         "avgPrice",
+        "source",
         "clientOrderId",
         "priceScale",
         "quantityScale",
         "optionSide",
         "quoteAsset",
+        "mmp",
     ]
 
     model_config = ConfigDict(
@@ -143,24 +139,22 @@ class NewOrderResponse(BaseModel):
                 "symbol": obj.get("symbol"),
                 "price": obj.get("price"),
                 "quantity": obj.get("quantity"),
+                "executedQty": obj.get("executedQty"),
                 "side": obj.get("side"),
                 "type": obj.get("type"),
-                "createDate": obj.get("createDate"),
-                "reduceOnly": obj.get("reduceOnly"),
-                "postOnly": obj.get("postOnly"),
-                "mmp": obj.get("mmp"),
-                "executedQty": obj.get("executedQty"),
-                "fee": obj.get("fee"),
                 "timeInForce": obj.get("timeInForce"),
+                "reduceOnly": obj.get("reduceOnly"),
                 "createTime": obj.get("createTime"),
                 "updateTime": obj.get("updateTime"),
                 "status": obj.get("status"),
                 "avgPrice": obj.get("avgPrice"),
+                "source": obj.get("source"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "priceScale": obj.get("priceScale"),
                 "quantityScale": obj.get("quantityScale"),
                 "optionSide": obj.get("optionSide"),
                 "quoteAsset": obj.get("quoteAsset"),
+                "mmp": obj.get("mmp"),
             }
         )
         # store additional fields in additional_properties

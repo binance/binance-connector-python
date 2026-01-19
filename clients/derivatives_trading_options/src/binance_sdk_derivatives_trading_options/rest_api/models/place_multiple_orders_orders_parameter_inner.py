@@ -81,8 +81,8 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
         if value is None:
             return value
 
-        if value not in set(["GTC", "IOC", "FOK"]):
-            raise ValueError("must be one of enum values ('GTC', 'IOC', 'FOK')")
+        if value not in set(["GTC", "IOC", "FOK", "GTX"]):
+            raise ValueError("must be one of enum values ('GTC', 'IOC', 'FOK', 'GTX')")
         return value
 
     @field_validator("new_order_resp_type")

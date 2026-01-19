@@ -36,6 +36,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     GetAutoRepayFuturesStatusResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    GetDeltaModeStatusResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProAccountBalanceResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
@@ -61,6 +64,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RepayFuturesNegativeBalanceResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    SwitchDeltaModeResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     TransferLdusdtRwusdForPortfolioMarginResponse,
@@ -638,6 +644,95 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_auto_repay_futures_status()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_delta_mode_status_success(self, mock_get_signature):
+        """Test get_delta_mode_status() successfully with required parameters only."""
+
+        expected_response = {"deltaEnabled": False}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_delta_mode_status()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDeltaModeStatusResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetDeltaModeStatusResponse, "from_dict"):
+            expected = GetDeltaModeStatusResponse.from_dict(expected_response)
+        else:
+            expected = GetDeltaModeStatusResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_delta_mode_status_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_delta_mode_status() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"deltaEnabled": False}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_delta_mode_status(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDeltaModeStatusResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetDeltaModeStatusResponse, "from_dict"):
+            expected = GetDeltaModeStatusResponse.from_dict(expected_response)
+        else:
+            expected = GetDeltaModeStatusResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_delta_mode_status_server_error(self):
+        """Test that get_delta_mode_status() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_delta_mode_status = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_delta_mode_status()
 
     @patch("binance_common.utils.get_signature")
     def test_get_portfolio_margin_pro_account_balance_success(self, mock_get_signature):
@@ -1818,6 +1913,117 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.repay_futures_negative_balance()
+
+    @patch("binance_common.utils.get_signature")
+    def test_switch_delta_mode_success(self, mock_get_signature):
+        """Test switch_delta_mode() successfully with required parameters only."""
+
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.switch_delta_mode(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["deltaEnabled"] == "delta_enabled_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SwitchDeltaModeResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SwitchDeltaModeResponse, "from_dict"):
+            expected = SwitchDeltaModeResponse.from_dict(expected_response)
+        else:
+            expected = SwitchDeltaModeResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_switch_delta_mode_success_with_optional_params(self, mock_get_signature):
+        """Test switch_delta_mode() successfully with optional parameters."""
+
+        params = {"delta_enabled": "delta_enabled_example", "recv_window": 5000}
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.switch_delta_mode(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SwitchDeltaModeResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SwitchDeltaModeResponse, "from_dict"):
+            expected = SwitchDeltaModeResponse.from_dict(expected_response)
+        else:
+            expected = SwitchDeltaModeResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_switch_delta_mode_missing_required_param_delta_enabled(self):
+        """Test that switch_delta_mode() raises RequiredError when 'delta_enabled' is missing."""
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+        params["delta_enabled"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'delta_enabled'"
+        ):
+            self.client.switch_delta_mode(**params)
+
+    def test_switch_delta_mode_server_error(self):
+        """Test that switch_delta_mode() raises an error when the server returns an error."""
+
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.switch_delta_mode = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.switch_delta_mode(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_transfer_ldusdt_rwusd_for_portfolio_margin_success(

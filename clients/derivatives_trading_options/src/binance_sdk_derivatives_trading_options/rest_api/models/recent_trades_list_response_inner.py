@@ -27,7 +27,8 @@ class RecentTradesListResponseInner(BaseModel):
     RecentTradesListResponseInner
     """  # noqa: E501
 
-    id: Optional[StrictStr] = None
+    id: Optional[StrictInt] = None
+    trade_id: Optional[StrictInt] = Field(default=None, alias="tradeId")
     symbol: Optional[StrictStr] = None
     price: Optional[StrictStr] = None
     qty: Optional[StrictStr] = None
@@ -37,6 +38,7 @@ class RecentTradesListResponseInner(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
+        "tradeId",
         "symbol",
         "price",
         "qty",
@@ -110,6 +112,7 @@ class RecentTradesListResponseInner(BaseModel):
         _obj = cls.model_validate(
             {
                 "id": obj.get("id"),
+                "tradeId": obj.get("tradeId"),
                 "symbol": obj.get("symbol"),
                 "price": obj.get("price"),
                 "qty": obj.get("qty"),

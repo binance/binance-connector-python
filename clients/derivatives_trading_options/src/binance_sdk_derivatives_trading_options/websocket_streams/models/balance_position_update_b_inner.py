@@ -16,57 +16,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_options.websocket_streams.models.order_trade_update_o_inner_fi_inner import (
-    OrderTradeUpdateOInnerFiInner,
-)
 from typing import Set
 from typing_extensions import Self
 
 
-class OrderTradeUpdateOInner(BaseModel):
+class BalancePositionUpdateBInner(BaseModel):
     """
-    OrderTradeUpdateOInner
+    BalancePositionUpdateBInner
     """  # noqa: E501
 
-    T: Optional[StrictInt] = Field(default=None, alias="T")
-    t: Optional[StrictInt] = None
-    s: Optional[StrictStr] = None
-    c: Optional[StrictStr] = None
-    oid: Optional[StrictStr] = None
-    p: Optional[StrictStr] = None
-    q: Optional[StrictStr] = None
-    stp: Optional[StrictInt] = None
-    r: Optional[StrictBool] = None
-    po: Optional[StrictBool] = None
-    S: Optional[StrictStr] = Field(default=None, alias="S")
-    e: Optional[StrictStr] = None
-    ec: Optional[StrictStr] = None
-    f: Optional[StrictStr] = None
-    tif: Optional[StrictStr] = None
-    oty: Optional[StrictStr] = None
-    fi: Optional[List[OrderTradeUpdateOInnerFiInner]] = None
+    a: Optional[StrictStr] = None
+    b: Optional[StrictStr] = None
+    bc: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "T",
-        "t",
-        "s",
-        "c",
-        "oid",
-        "p",
-        "q",
-        "stp",
-        "r",
-        "po",
-        "S",
-        "e",
-        "ec",
-        "f",
-        "tif",
-        "oty",
-        "fi",
-    ]
+    __properties: ClassVar[List[str]] = ["a", "b", "bc"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,7 +50,7 @@ class OrderTradeUpdateOInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OrderTradeUpdateOInner from a JSON string"""
+        """Create an instance of BalancePositionUpdateBInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -110,13 +75,6 @@ class OrderTradeUpdateOInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in fi (list)
-        _items = []
-        if self.fi:
-            for _item_fi in self.fi:
-                if _item_fi:
-                    _items.append(_item_fi.to_dict())
-            _dict["fi"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -126,7 +84,7 @@ class OrderTradeUpdateOInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OrderTradeUpdateOInner from a dict"""
+        """Create an instance of BalancePositionUpdateBInner from a dict"""
         if obj is None:
             return None
 
@@ -134,32 +92,7 @@ class OrderTradeUpdateOInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "T": obj.get("T"),
-                "t": obj.get("t"),
-                "s": obj.get("s"),
-                "c": obj.get("c"),
-                "oid": obj.get("oid"),
-                "p": obj.get("p"),
-                "q": obj.get("q"),
-                "stp": obj.get("stp"),
-                "r": obj.get("r"),
-                "po": obj.get("po"),
-                "S": obj.get("S"),
-                "e": obj.get("e"),
-                "ec": obj.get("ec"),
-                "f": obj.get("f"),
-                "tif": obj.get("tif"),
-                "oty": obj.get("oty"),
-                "fi": (
-                    [
-                        OrderTradeUpdateOInnerFiInner.from_dict(_item)
-                        for _item in obj["fi"]
-                    ]
-                    if obj.get("fi") is not None
-                    else None
-                ),
-            }
+            {"a": obj.get("a"), "b": obj.get("b"), "bc": obj.get("bc")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

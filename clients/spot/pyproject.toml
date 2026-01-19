@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-spot"
-version = "6.1.0"
+version = "6.2.0"
 description = "Official Binance Spot SDK - A lightweight library that provides a convenient interface to Binance's Spot REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"

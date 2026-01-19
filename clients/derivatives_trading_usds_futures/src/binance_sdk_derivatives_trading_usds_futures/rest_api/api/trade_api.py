@@ -300,8 +300,8 @@ class TradeApi:
 
     def cancel_algo_order(
         self,
-        algoid: Optional[int] = None,
-        clientalgoid: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderResponse]:
         """
@@ -311,13 +311,13 @@ class TradeApi:
 
                 Cancel an active algo order.
 
-        * Either `algoid` or `clientalgoid` must be sent.
+        * Either `algoId` or `clientAlgoId` must be sent.
 
         Weight: 1
 
                 Args:
-                    algoid (Optional[int] = None):
-                    clientalgoid (Optional[str] = None):
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -330,8 +330,8 @@ class TradeApi:
 
         body = {}
         payload = {
-            "algoid": algoid,
-            "clientalgoid": clientalgoid,
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
             "recv_window": recv_window,
         }
 
@@ -1339,7 +1339,7 @@ class TradeApi:
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
-                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    client_algo_id (Optional[str] = None):
                     self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
@@ -1727,7 +1727,7 @@ class TradeApi:
 
                 Args:
                     algo_id (Optional[int] = None):
-                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    client_algo_id (Optional[str] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:

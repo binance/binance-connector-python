@@ -44,7 +44,7 @@ class TradeApi:
         """
                 Change Auto-Compound status(USER_DATA)
                 POST /sapi/v1/dci/product/auto_compound/edit-status
-                https://developers.binance.com/docs/dual_investment/trade/Change-Auto-Compound-status
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Change-Auto-Compound-status
 
                 Change Auto-Compound status
 
@@ -96,7 +96,7 @@ class TradeApi:
         """
                 Check Dual Investment accounts(USER_DATA)
                 GET /sapi/v1/dci/product/accounts
-                https://developers.binance.com/docs/dual_investment/trade/Check-Dual-Investment-accounts
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Check-Dual-Investment-accounts
 
                 Check Dual Investment accounts
 
@@ -139,7 +139,7 @@ class TradeApi:
         """
                 Get Dual Investment positions(USER_DATA)
                 GET /sapi/v1/dci/product/positions
-                https://developers.binance.com/docs/dual_investment/trade/Get-Dual-Investment-positions
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Get-Dual-Investment-positions
 
                 Get Dual Investment positions (batch)
 
@@ -191,7 +191,7 @@ class TradeApi:
         """
                 Subscribe Dual Investment products(USER_DATA)
                 POST /sapi/v1/dci/product/subscribe
-                https://developers.binance.com/docs/dual_investment/trade/Subscribe-Dual-Investment-products
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Subscribe-Dual-Investment-products
 
                 Subscribe Dual Investment products
 

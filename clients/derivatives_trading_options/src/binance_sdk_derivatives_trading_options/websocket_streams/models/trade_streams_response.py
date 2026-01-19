@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -29,28 +29,26 @@ class TradeStreamsResponse(BaseModel):
 
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
+    T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
-    t: Optional[StrictStr] = None
+    t: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
-    b: Optional[StrictInt] = None
-    a: Optional[StrictInt] = None
-    T: Optional[StrictInt] = Field(default=None, alias="T")
-    S: Optional[StrictStr] = Field(default=None, alias="S")
     X: Optional[StrictStr] = Field(default=None, alias="X")
+    S: Optional[StrictStr] = Field(default=None, alias="S")
+    m: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
         "E",
+        "T",
         "s",
         "t",
         "p",
         "q",
-        "b",
-        "a",
-        "T",
-        "S",
         "X",
+        "S",
+        "m",
     ]
 
     model_config = ConfigDict(
@@ -115,15 +113,14 @@ class TradeStreamsResponse(BaseModel):
             {
                 "e": obj.get("e"),
                 "E": obj.get("E"),
+                "T": obj.get("T"),
                 "s": obj.get("s"),
                 "t": obj.get("t"),
                 "p": obj.get("p"),
                 "q": obj.get("q"),
-                "b": obj.get("b"),
-                "a": obj.get("a"),
-                "T": obj.get("T"),
-                "S": obj.get("S"),
                 "X": obj.get("X"),
+                "S": obj.get("S"),
+                "m": obj.get("m"),
             }
         )
         # store additional fields in additional_properties

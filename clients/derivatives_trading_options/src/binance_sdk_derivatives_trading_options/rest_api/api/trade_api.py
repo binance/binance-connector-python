@@ -27,6 +27,7 @@ from ..models import PlaceMultipleOrdersResponse
 from ..models import QueryCurrentOpenOptionOrdersResponse
 from ..models import QueryOptionOrderHistoryResponse
 from ..models import QuerySingleOrderResponse
+from ..models import UserCommissionResponse
 from ..models import UserExerciseRecordResponse
 
 
@@ -64,7 +65,7 @@ class TradeApi:
         """
                 Account Trade List (USER_DATA)
                 GET /eapi/v1/userTrades
-                https://developers.binance.com/docs/derivatives/option/trade/Account-Trade-List
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Account-Trade-List
 
                 Get trades for a specific account and symbol.
 
@@ -72,7 +73,7 @@ class TradeApi:
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades, e.g 4611875134427365376
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
                     limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
@@ -117,7 +118,7 @@ class TradeApi:
         """
                 Cancel All Option Orders By Underlying (TRADE)
                 DELETE /eapi/v1/allOpenOrdersByUnderlying
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-All-Option-Orders-By-Underlying
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-All-Option-Orders-By-Underlying
 
                 Cancel all active orders on specified underlying.
 
@@ -165,7 +166,7 @@ class TradeApi:
         """
                 Cancel all Option orders on specific symbol (TRADE)
                 DELETE /eapi/v1/allOpenOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-all-Option-orders-on-specific-symbol
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-all-Option-orders-on-specific-symbol
 
                 Cancel all active order on a symbol.
 
@@ -214,12 +215,11 @@ class TradeApi:
         """
                 Cancel Multiple Option Orders (TRADE)
                 DELETE /eapi/v1/batchOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-Multiple-Option-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-Multiple-Option-Orders
 
                 Cancel multiple orders.
 
         * At least one instance of `orderId` and `clientOrderId` must be sent.
-        * Max 10 orders can be deleted in one request
 
         Weight: 1
 
@@ -273,7 +273,7 @@ class TradeApi:
         """
                 Cancel Option Order (TRADE)
                 DELETE /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-Option-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-Option-Order
 
                 Cancel an active order.
 
@@ -339,7 +339,7 @@ class TradeApi:
         """
                 New Order (TRADE)
                 POST /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/New-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/New-Order
 
                 Send a new order.
 
@@ -421,7 +421,7 @@ class TradeApi:
         """
                 Option Position Information (USER_DATA)
                 GET /eapi/v1/position
-                https://developers.binance.com/docs/derivatives/option/trade/Option-Position-Information
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Option-Position-Information
 
                 Get current position information.
 
@@ -463,7 +463,7 @@ class TradeApi:
         """
                 Place Multiple Orders(TRADE)
                 POST /eapi/v1/batchOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Place-Multiple-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Place-Multiple-Orders
 
                 Send multiple option orders.
 
@@ -516,7 +516,7 @@ class TradeApi:
         """
                 Query Current Open Option Orders (USER_DATA)
                 GET /eapi/v1/openOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Current-Open-Option-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Current-Open-Option-Orders
 
                 Query current all open orders, status: ACCEPTED PARTIALLY_FILLED
 
@@ -571,7 +571,7 @@ class TradeApi:
         """
                 Query Option Order History (TRADE)
                 GET /eapi/v1/historyOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Option-Order-History
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Option-Order-History
 
                 Query all finished orders within 5 days, finished status: CANCELLED FILLED REJECTED.
 
@@ -631,7 +631,7 @@ class TradeApi:
         """
                 Query Single Order (TRADE)
                 GET /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Single-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Single-Order
 
                 Check an order status.
 
@@ -685,6 +685,46 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def user_commission(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[UserCommissionResponse]:
+        """
+                User Commission (USER_DATA)
+                GET /eapi/v1/commission
+                https://developers.binance.com/docs/derivatives/options-trading/trade/User-Commission
+
+                Get account commission.
+
+        Weight: 5
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[UserCommissionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/eapi/v1/commission",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=UserCommissionResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def user_exercise_record(
         self,
         symbol: Optional[str] = None,
@@ -696,7 +736,7 @@ class TradeApi:
         """
                 User Exercise Record (USER_DATA)
                 GET /eapi/v1/exerciseRecord
-                https://developers.binance.com/docs/derivatives/option/trade/User-Exercise-Record
+                https://developers.binance.com/docs/derivatives/options-trading/trade/User-Exercise-Record
 
                 Get account exercise records.
 

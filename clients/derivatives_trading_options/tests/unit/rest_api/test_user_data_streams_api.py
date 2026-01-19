@@ -113,7 +113,8 @@ class TestUserDataStreamsApi:
         """Test start_user_data_stream() successfully with required parameters only."""
 
         expected_response = {
-            "listenKey": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1"
+            "listenKey": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1",
+            "expiration": 1762855900452,
         }
 
         self.set_mock_response(expected_response)

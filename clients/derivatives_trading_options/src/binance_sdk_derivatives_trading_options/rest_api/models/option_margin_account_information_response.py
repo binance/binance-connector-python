@@ -16,13 +16,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_options.rest_api.models.option_account_information_response_greek_inner import (
-    OptionAccountInformationResponseGreekInner,
-)
 from binance_sdk_derivatives_trading_options.rest_api.models.option_margin_account_information_response_asset_inner import (
     OptionMarginAccountInformationResponseAssetInner,
+)
+from binance_sdk_derivatives_trading_options.rest_api.models.option_margin_account_information_response_greek_inner import (
+    OptionMarginAccountInformationResponseGreekInner,
 )
 from typing import Set
 from typing_extensions import Self
@@ -34,10 +34,22 @@ class OptionMarginAccountInformationResponse(BaseModel):
     """  # noqa: E501
 
     asset: Optional[List[OptionMarginAccountInformationResponseAssetInner]] = None
-    greek: Optional[List[OptionAccountInformationResponseGreekInner]] = None
+    greek: Optional[List[OptionMarginAccountInformationResponseGreekInner]] = None
     time: Optional[StrictInt] = None
+    can_trade: Optional[StrictBool] = Field(default=None, alias="canTrade")
+    can_deposit: Optional[StrictBool] = Field(default=None, alias="canDeposit")
+    can_withdraw: Optional[StrictBool] = Field(default=None, alias="canWithdraw")
+    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["asset", "greek", "time"]
+    __properties: ClassVar[List[str]] = [
+        "asset",
+        "greek",
+        "time",
+        "canTrade",
+        "canDeposit",
+        "canWithdraw",
+        "reduceOnly",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -129,13 +141,19 @@ class OptionMarginAccountInformationResponse(BaseModel):
                 ),
                 "greek": (
                     [
-                        OptionAccountInformationResponseGreekInner.from_dict(_item)
+                        OptionMarginAccountInformationResponseGreekInner.from_dict(
+                            _item
+                        )
                         for _item in obj["greek"]
                     ]
                     if obj.get("greek") is not None
                     else None
                 ),
                 "time": obj.get("time"),
+                "canTrade": obj.get("canTrade"),
+                "canDeposit": obj.get("canDeposit"),
+                "canWithdraw": obj.get("canWithdraw"),
+                "reduceOnly": obj.get("reduceOnly"),
             }
         )
         # store additional fields in additional_properties

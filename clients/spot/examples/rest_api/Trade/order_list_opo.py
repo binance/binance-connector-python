@@ -6,6 +6,8 @@ from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingTimeInForceEnum
 
 
 # Configure logging
@@ -28,10 +30,13 @@ def order_list_opo():
             symbol="BNBUSDT",
             working_type=OrderListOpoWorkingTypeEnum["LIMIT"].value,
             working_side=OrderListOpoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
+            working_time_in_force=OrderListOpoWorkingTimeInForceEnum["GTC"].value,
+            working_price=800.0,
             working_quantity=1.0,
             pending_type=OrderListOpoPendingTypeEnum["LIMIT"].value,
-            pending_side=OrderListOpoPendingSideEnum["BUY"].value,
+            pending_side=OrderListOpoPendingSideEnum["SELL"].value,
+            pending_time_in_force=OrderListOpoPendingTimeInForceEnum["GTC"].value,
+            pending_price=805.0,
         )
 
         rate_limits = response.rate_limits

@@ -21,27 +21,24 @@ configuration_ws_streams = ConfigurationWebSocketStreams(
 client = DerivativesTradingOptions(config_ws_streams=configuration_ws_streams)
 
 
-async def ticker24_hour_by_underlying_asset_and_expiration_data():
+async def diff_book_depth_streams():
     connection = None
     try:
         connection = await client.websocket_streams.create_connection()
 
-        stream = await connection.ticker24_hour_by_underlying_asset_and_expiration_data(
-            underlying_asset="ETH",
-            expiration_date="220930",
+        stream = await connection.diff_book_depth_streams(
+            symbol="btcusdt",
         )
         stream.on("message", lambda data: print(f"{data}"))
 
         await asyncio.sleep(5)
         await stream.unsubscribe()
     except Exception as e:
-        logging.error(
-            f"ticker24_hour_by_underlying_asset_and_expiration_data() error: {e}"
-        )
+        logging.error(f"diff_book_depth_streams() error: {e}")
     finally:
         if connection:
             await connection.close_connection(close_session=True)
 
 
 if __name__ == "__main__":
-    asyncio.run(ticker24_hour_by_underlying_asset_and_expiration_data())
+    asyncio.run(diff_book_depth_streams())

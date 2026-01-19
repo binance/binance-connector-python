@@ -22,7 +22,8 @@ from binance_common.websocket import (
 from .models import UserDataStreamEventsResponse
 
 
-from .streams.websocket_market_streams_api import WebsocketMarketStreamsApi
+from .streams.market_api import MarketApi
+from .streams.public_api import PublicApi
 
 
 T = TypeVar("T", bound=BaseModel)
@@ -33,11 +34,11 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
-
-        super().__init__(configuration, True)
+        super().__init__(configuration, True, url_paths=["market", "public", "private"])
         self.configuration = configuration
 
-        self._websocketMarketStreamsApi = WebsocketMarketStreamsApi(self)
+        self._marketApi = MarketApi(self)
+        self._publicApi = PublicApi(self)
 
     async def ping_server(self, connection: WebSocketConnection):
         """Sends a ping message to the WebSocket server to check the connection status.
@@ -51,7 +52,12 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         else:
             raise ValueError("WebSocket session is not initialized.")
 
-    async def subscribe(self, streams, response_model: Optional[T] = None):
+    async def subscribe(
+        self,
+        streams,
+        response_model: Optional[T] = None,
+        stream_url: Optional[str] = None,
+    ):
         """Subscribes to the specified WebSocket streams.
 
         Args:
@@ -59,7 +65,9 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
             response_model (Optional[T]): The Pydantic model to validate the response against.
         """
 
-        await super().subscribe(streams, response_model=response_model)
+        await super().subscribe(
+            streams, response_model=response_model, stream_url=stream_url
+        )
 
     async def unsubscribe(self, streams):
         """Unsubscribes from the specified WebSocket streams.
@@ -112,12 +120,14 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self, listenKey, response_model=UserDataStreamEventsResponse
+            self,
+            listenKey,
+            response_model=UserDataStreamEventsResponse,
+            stream_url="private",
         )
 
     async def index_price_streams(
         self,
-        symbol: Union[str, None],
         id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
@@ -128,7 +138,6 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         Update Speed: 1000ms
 
                 Args:
-                    symbol (Union[str, None]): The symbol parameter
                     id (Optional[int] = None): Unique WebSocket request ID.
 
                 Returns:
@@ -139,7 +148,7 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.index_price_streams(symbol, id)
+        return await self._marketApi.index_price_streams(id)
 
     async def kline_candlestick_streams(
         self,
@@ -167,24 +176,22 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.kline_candlestick_streams(
-            symbol, interval, id
-        )
+        return await self._marketApi.kline_candlestick_streams(symbol, interval, id)
 
     async def mark_price(
         self,
-        underlying_asset: Union[str, None],
+        underlying: Union[str, None],
         id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
                 Mark Price
 
-                The mark price for all option symbols on specific underlying asset. E.g.[ETH@markPrice](wss://nbstream.binance.com/eoptions/stream?streams=ETH@markPrice)
+                The mark price for all option symbols on specific underlying asset. E.g.[btcusdt@optionMarkPrice](wss://fstream.binance.com/market/stream?streams=btcusdt@optionMarkPrice)
 
         Update Speed: 1000ms
 
                 Args:
-                    underlying_asset (Union[str, None]): The underlyingAsset parameter
+                    underlying (Union[str, None]): The underlying parameter
                     id (Optional[int] = None): Unique WebSocket request ID.
 
                 Returns:
@@ -195,7 +202,7 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.mark_price(underlying_asset, id)
+        return await self._marketApi.mark_price(underlying, id)
 
     async def new_symbol_info(
         self,
@@ -219,23 +226,21 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.new_symbol_info(id)
+        return await self._marketApi.new_symbol_info(id)
 
     async def open_interest(
         self,
-        underlying_asset: Union[str, None],
         expiration_date: Union[str, None],
         id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
                 Open Interest
 
-                Option open interest for specific underlying asset on specific expiration date. E.g.[ETH@openInterest@221125](wss://nbstream.binance.com/eoptions/stream?streams=ETH@openInterest@221125)
+                Option open interest for specific underlying asset on specific expiration date. E.g.[ethusdt@openInterest@221125](wss://fstream.binance.com/market/stream?streams=ethusdt@openInterest@221125)
 
         Update Speed: 60s
 
                 Args:
-                    underlying_asset (Union[str, None]): The underlyingAsset parameter
                     expiration_date (Union[str, None]): The expirationDate parameter
                     id (Optional[int] = None): Unique WebSocket request ID.
 
@@ -247,27 +252,23 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.open_interest(
-            underlying_asset, expiration_date, id
-        )
+        return await self._marketApi.open_interest(expiration_date, id)
 
-    async def partial_book_depth_streams(
+    async def diff_book_depth_streams(
         self,
         symbol: Union[str, None],
-        levels: Union[int, None],
         id: Optional[int] = None,
         update_speed: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
-                Partial Book Depth Streams
+                Diff Book Depth Streams
 
-                Top **<levels\>** bids and asks, Valid levels are **<levels\>** are 10, 20, 50, 100.
+                Bids and asks, pushed every 500 milliseconds, 100 milliseconds (if existing)
 
-        Update Speed: 100ms or 1000ms, 500ms(default when update speed isn't used)
+        Update Speed: 100ms or 500ms
 
                 Args:
                     symbol (Union[str, None]): The symbol parameter
-                    levels (Union[int, None]): The levels parameter
                     id (Optional[int] = None): Unique WebSocket request ID.
                     update_speed (Optional[str] = None): WebSocket stream update speed
 
@@ -279,8 +280,64 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.partial_book_depth_streams(
-            symbol, levels, id, update_speed
+        return await self._publicApi.diff_book_depth_streams(symbol, id, update_speed)
+
+    async def individual_symbol_book_ticker_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[int] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Individual Symbol Book Ticker Streams
+
+                Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
+
+        Update Speed: Real-Time
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[int] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.individual_symbol_book_ticker_streams(symbol, id)
+
+    async def partial_book_depth_streams(
+        self,
+        symbol: Union[str, None],
+        level: Union[str, None],
+        id: Optional[int] = None,
+        update_speed: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Partial Book Depth Streams
+
+                Top **<levels\>** bids and asks, Valid levels are **<levels\>** are 5, 10, 20.
+
+        Update Speed: 100ms or 500ms
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    level (Union[str, None]): The level parameter
+                    id (Optional[int] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.partial_book_depth_streams(
+            symbol, level, id, update_speed
         )
 
     async def ticker24_hour(
@@ -307,37 +364,7 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.ticker24_hour(symbol, id)
-
-    async def ticker24_hour_by_underlying_asset_and_expiration_data(
-        self,
-        underlying_asset: Union[str, None],
-        expiration_date: Union[str, None],
-        id: Optional[int] = None,
-    ) -> RequestStreamHandle:
-        r"""
-                24-hour TICKER by underlying asset and expiration data
-
-                24hr ticker info by underlying asset and expiration date. E.g.[ETH@ticker@220930](wss://nbstream.binance.com/eoptions/stream?streams=ETH@ticker@220930)
-
-        Update Speed: 1000ms
-
-                Args:
-                    underlying_asset (Union[str, None]): The underlyingAsset parameter
-                    expiration_date (Union[str, None]): The expirationDate parameter
-                    id (Optional[int] = None): Unique WebSocket request ID.
-
-                Returns:
-                    RequestStreamHandle
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._websocketMarketStreamsApi.ticker24_hour_by_underlying_asset_and_expiration_data(
-            underlying_asset, expiration_date, id
-        )
+        return await self._publicApi.ticker24_hour(symbol, id)
 
     async def trade_streams(
         self,
@@ -347,7 +374,7 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         r"""
                 Trade Streams
 
-                The Trade Streams push raw trade information for specific symbol or underlying asset. E.g.[ETH@trade](wss://nbstream.binance.com/eoptions/stream?streams=ETH@trade)
+                The Trade Streams push raw trade information for specific symbol or underlying asset. E.g.[btcusdt@optionTrade](wss://fstream.binance.com/public/stream?streams=btcusdt@optionTrade)
 
         Update Speed: 50ms
 
@@ -363,4 +390,4 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.trade_streams(symbol, id)
+        return await self._publicApi.trade_streams(symbol, id)

@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.2.0 - 2026-01-19
+
+### Changed (1)
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
+
 ## 6.1.0 - 2025-01-13
 
 ### Changed (1)

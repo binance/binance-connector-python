@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-margin-trading"
-version = "4.1.0"
+version = "4.2.0"
 description = "Official Binance MarginTrading SDK - A lightweight library that provides a convenient interface to Binance's MarginTrading REST API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
