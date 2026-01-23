@@ -289,10 +289,10 @@ class AccountApi:
                     asset (Optional[str] = None):
                     symbol (Optional[str] = None): isolated margin pair
                     type (Optional[str] = None): Transfer Type: ROLL_IN, ROLL_OUT
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:

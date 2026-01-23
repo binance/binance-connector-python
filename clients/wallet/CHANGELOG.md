@@ -1,5 +1,24 @@
 # Changelog
 
+## 7.0.0 - 2026-01-23
+
+### Changed (5)
+
+- Updated `binance-common` library to version `3.4.1`
+- Added parameter `accountType`
+  - affected methods:
+    - `dustlog()` (`GET /sapi/v1/asset/dribblet`)
+- Added parameter `asset`
+  - affected methods:
+    - `asset_detail()` (`GET /sapi/v1/asset/assetDetail`)
+- Modified response for `withdraw_history_v1()` (`GET /sapi/v1/localentity/withdraw/history`):
+  - items: property `addressTag` deleted
+  - items: item property `addressTag` deleted
+
+- Modified response for `withdraw_history_v2()` (`GET /sapi/v2/localentity/withdraw/history`):
+  - items: property `addressTag` deleted
+  - items: item property `addressTag` deleted
+
 ## 6.0.0 - 2026-01-13
 
 ### Added (1)

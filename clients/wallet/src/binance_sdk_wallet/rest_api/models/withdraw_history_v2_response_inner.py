@@ -39,7 +39,6 @@ class WithdrawHistoryV2ResponseInner(BaseModel):
         default=None, alias="travelRuleStatus"
     )
     address: Optional[StrictStr] = None
-    address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
     tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
     apply_time: Optional[StrictStr] = Field(default=None, alias="applyTime")
     network: Optional[StrictStr] = None
@@ -63,7 +62,6 @@ class WithdrawHistoryV2ResponseInner(BaseModel):
         "withdrawalStatus",
         "travelRuleStatus",
         "address",
-        "addressTag",
         "txId",
         "applyTime",
         "network",
@@ -149,7 +147,6 @@ class WithdrawHistoryV2ResponseInner(BaseModel):
                 "withdrawalStatus": obj.get("withdrawalStatus"),
                 "travelRuleStatus": obj.get("travelRuleStatus"),
                 "address": obj.get("address"),
-                "addressTag": obj.get("addressTag"),
                 "txId": obj.get("txId"),
                 "applyTime": obj.get("applyTime"),
                 "network": obj.get("network"),

@@ -50,6 +50,7 @@ class AssetApi:
 
     def asset_detail(
         self,
+        asset: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AssetDetailResponse]:
         """
@@ -65,6 +66,7 @@ class AssetApi:
         Weight: 1
 
                 Args:
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -76,7 +78,7 @@ class AssetApi:
         """
 
         body = {}
-        payload = {"recv_window": recv_window}
+        payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
             self._session,
@@ -315,6 +317,7 @@ class AssetApi:
 
     def dustlog(
         self,
+        account_type: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -332,6 +335,7 @@ class AssetApi:
         Weight: 1
 
                 Args:
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -346,6 +350,7 @@ class AssetApi:
 
         body = {}
         payload = {
+            "account_type": account_type,
             "start_time": start_time,
             "end_time": end_time,
             "recv_window": recv_window,

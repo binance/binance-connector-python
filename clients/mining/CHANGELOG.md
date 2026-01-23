@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.0.0 - 2026-01-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.4.1`
+
+- Deleted parameter `userName`
+  - affected methods:
+    - `hashrate_resale_detail()` (`GET /sapi/v1/mining/hash-transfer/profit/details`)
+- Modified response for `hashrate_resale_list()` (`GET /sapi/v1/mining/hash-transfer/config/details/list`):
+  - `data`.`configDetails`.items: property `type` added
+  - `data`.`configDetails`.items: item property `type` added
+
 ## 2.1.0 - 2025-01-13
 
 ### Changed (1)

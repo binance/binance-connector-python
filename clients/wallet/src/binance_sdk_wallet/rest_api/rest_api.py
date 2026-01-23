@@ -339,6 +339,7 @@ class WalletRestAPI:
 
     def asset_detail(
         self,
+        asset: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AssetDetailResponse]:
         """
@@ -352,6 +353,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -362,7 +364,7 @@ class WalletRestAPI:
 
         """
 
-        return self._assetApi.asset_detail(recv_window)
+        return self._assetApi.asset_detail(asset, recv_window)
 
     def asset_dividend_record(
         self,
@@ -499,6 +501,7 @@ class WalletRestAPI:
 
     def dustlog(
         self,
+        account_type: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -514,6 +517,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -526,7 +530,7 @@ class WalletRestAPI:
 
         """
 
-        return self._assetApi.dustlog(start_time, end_time, recv_window)
+        return self._assetApi.dustlog(account_type, start_time, end_time, recv_window)
 
     def funding_wallet(
         self,
