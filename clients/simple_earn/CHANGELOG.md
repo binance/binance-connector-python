@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.0 - 2026-01-23
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.4.1`
+
+- Modified response for `get_bfusd_quota_details()` (`GET /sapi/v1/bfusd/quota`):
+  - property `subscribeEnable` deleted
+  - property `redeemEnable` deleted
+
 ## 5.1.0 - 2025-01-13
 
 ### Changed (1)

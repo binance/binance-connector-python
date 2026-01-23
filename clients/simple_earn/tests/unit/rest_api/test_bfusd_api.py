@@ -166,8 +166,6 @@ class TestBfusdApi:
                 "fee": "0.0005",
                 "redeemPeriod": 3,
             },
-            "subscribeEnable": True,
-            "redeemEnable": True,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -224,8 +222,6 @@ class TestBfusdApi:
                 "fee": "0.0005",
                 "redeemPeriod": 3,
             },
-            "subscribeEnable": True,
-            "redeemEnable": True,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

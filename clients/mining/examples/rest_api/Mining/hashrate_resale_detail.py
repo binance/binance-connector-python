@@ -26,7 +26,6 @@ def hashrate_resale_detail():
     try:
         response = client.rest_api.hashrate_resale_detail(
             config_id=1,
-            user_name="user_name_example",
         )
 
         rate_limits = response.rate_limits

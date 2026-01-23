@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_simple_earn.rest_api.models.get_bfusd_quota_details_response_fast_redemption_quota import (
     GetBfusdQuotaDetailsResponseFastRedemptionQuota,
@@ -39,16 +39,10 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
     standard_redemption_quota: Optional[
         GetBfusdQuotaDetailsResponseStandardRedemptionQuota
     ] = Field(default=None, alias="standardRedemptionQuota")
-    subscribe_enable: Optional[StrictBool] = Field(
-        default=None, alias="subscribeEnable"
-    )
-    redeem_enable: Optional[StrictBool] = Field(default=None, alias="redeemEnable")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "fastRedemptionQuota",
         "standardRedemptionQuota",
-        "subscribeEnable",
-        "redeemEnable",
     ]
 
     model_config = ConfigDict(
@@ -135,8 +129,6 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
                     if obj.get("standardRedemptionQuota") is not None
                     else None
                 ),
-                "subscribeEnable": obj.get("subscribeEnable"),
-                "redeemEnable": obj.get("redeemEnable"),
             }
         )
         # store additional fields in additional_properties

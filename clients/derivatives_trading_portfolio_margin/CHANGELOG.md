@@ -1,5 +1,34 @@
 # Changelog
 
+## 4.0.0 - 2026-01-23
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.4.1`
+
+#### REST API
+
+- Modified response for `query_current_cm_open_order()` (`GET /papi/v1/cm/openOrder`):
+  - type `object` → `array`
+  - property `pair` deleted
+  - property `symbol` deleted
+  - property `positionSide` deleted
+  - property `executedQty` deleted
+  - property `timeInForce` deleted
+  - property `origQty` deleted
+  - property `reduceOnly` deleted
+  - property `time` deleted
+  - property `side` deleted
+  - property `status` deleted
+  - property `type` deleted
+  - property `avgPrice` deleted
+  - property `clientOrderId` deleted
+  - property `cumBase` deleted
+  - property `orderId` deleted
+  - property `origType` deleted
+  - property `price` deleted
+  - property `updateTime` deleted
+
 ## 3.2.0 - 2026-01-19
 
 ### Changed (1)

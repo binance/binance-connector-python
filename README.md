@@ -20,6 +20,7 @@ Before using the SDK, ensure you have:
 ## Available SDK
 
 - [binance-sdk-algo](./clients/algo) - Algo Trading connector
+- [binance-sdk-alpha](./clients/alpha/) - Alpha connector
 - [binance-sdk-c2c](./clients/c2c/) - C2C connector
 - [binance-sdk-convert](./clients/convert/) - Convert connector
 - [binance-sdk-copy-trading](./clients/copy_trading/) - Copy Trading connector

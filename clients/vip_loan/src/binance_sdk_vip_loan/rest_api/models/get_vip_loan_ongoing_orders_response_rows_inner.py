@@ -30,6 +30,7 @@ class GetVIPLoanOngoingOrdersResponseRowsInner(BaseModel):
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
     loan_coin: Optional[StrictStr] = Field(default=None, alias="loanCoin")
     total_debt: Optional[StrictStr] = Field(default=None, alias="totalDebt")
+    loan_rate: Optional[StrictStr] = Field(default=None, alias="loanRate")
     residual_interest: Optional[StrictStr] = Field(
         default=None, alias="residualInterest"
     )
@@ -52,6 +53,7 @@ class GetVIPLoanOngoingOrdersResponseRowsInner(BaseModel):
         "orderId",
         "loanCoin",
         "totalDebt",
+        "loanRate",
         "residualInterest",
         "collateralAccountId",
         "collateralCoin",
@@ -130,6 +132,7 @@ class GetVIPLoanOngoingOrdersResponseRowsInner(BaseModel):
                 "orderId": obj.get("orderId"),
                 "loanCoin": obj.get("loanCoin"),
                 "totalDebt": obj.get("totalDebt"),
+                "loanRate": obj.get("loanRate"),
                 "residualInterest": obj.get("residualInterest"),
                 "collateralAccountId": obj.get("collateralAccountId"),
                 "collateralCoin": obj.get("collateralCoin"),

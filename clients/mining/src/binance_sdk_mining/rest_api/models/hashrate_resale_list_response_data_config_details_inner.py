@@ -35,6 +35,7 @@ class HashrateResaleListResponseDataConfigDetailsInner(BaseModel):
     start_day: Optional[StrictInt] = Field(default=None, alias="startDay")
     end_day: Optional[StrictInt] = Field(default=None, alias="endDay")
     status: Optional[StrictInt] = None
+    type: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "configId",
@@ -45,6 +46,7 @@ class HashrateResaleListResponseDataConfigDetailsInner(BaseModel):
         "startDay",
         "endDay",
         "status",
+        "type",
     ]
 
     model_config = ConfigDict(
@@ -119,6 +121,7 @@ class HashrateResaleListResponseDataConfigDetailsInner(BaseModel):
                 "startDay": obj.get("startDay"),
                 "endDay": obj.get("endDay"),
                 "status": obj.get("status"),
+                "type": obj.get("type"),
             }
         )
         # store additional fields in additional_properties

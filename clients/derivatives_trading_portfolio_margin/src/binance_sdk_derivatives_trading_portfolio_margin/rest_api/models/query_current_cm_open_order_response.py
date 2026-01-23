@@ -16,56 +16,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import ConfigDict
+from typing import Any, ClassVar, Dict
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models.query_all_cm_orders_response_inner import (
+    QueryAllCmOrdersResponseInner,
+)
+from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class QueryCurrentCmOpenOrderResponse(BaseModel):
+class QueryCurrentCmOpenOrderResponse(QueryAllCmOrdersResponseInner):
     """
     QueryCurrentCmOpenOrderResponse
     """  # noqa: E501
 
-    avg_price: Optional[StrictStr] = Field(default=None, alias="avgPrice")
-    client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
-    cum_base: Optional[StrictStr] = Field(default=None, alias="cumBase")
-    executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
-    order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
-    orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
-    orig_type: Optional[StrictStr] = Field(default=None, alias="origType")
-    price: Optional[StrictStr] = None
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    side: Optional[StrictStr] = None
-    position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
-    status: Optional[StrictStr] = None
-    symbol: Optional[StrictStr] = None
-    pair: Optional[StrictStr] = None
-    time: Optional[StrictInt] = None
-    time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    type: Optional[StrictStr] = None
-    update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "avgPrice",
-        "clientOrderId",
-        "cumBase",
-        "executedQty",
-        "orderId",
-        "origQty",
-        "origType",
-        "price",
-        "reduceOnly",
-        "side",
-        "positionSide",
-        "status",
-        "symbol",
-        "pair",
-        "time",
-        "timeInForce",
-        "type",
-        "updateTime",
-    ]
+    __properties: ClassVar[List[str]] = []
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,7 +49,7 @@ class QueryCurrentCmOpenOrderResponse(BaseModel):
 
     @classmethod
     def is_array(cls) -> bool:
-        return False
+        return True
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -100,60 +65,17 @@ class QueryCurrentCmOpenOrderResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of QueryCurrentCmOpenOrderResponse from a dict"""
-        if obj is None:
-            return None
-
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate(
-            {
-                "avgPrice": obj.get("avgPrice"),
-                "clientOrderId": obj.get("clientOrderId"),
-                "cumBase": obj.get("cumBase"),
-                "executedQty": obj.get("executedQty"),
-                "orderId": obj.get("orderId"),
-                "origQty": obj.get("origQty"),
-                "origType": obj.get("origType"),
-                "price": obj.get("price"),
-                "reduceOnly": obj.get("reduceOnly"),
-                "side": obj.get("side"),
-                "positionSide": obj.get("positionSide"),
-                "status": obj.get("status"),
-                "symbol": obj.get("symbol"),
-                "pair": obj.get("pair"),
-                "time": obj.get("time"),
-                "timeInForce": obj.get("timeInForce"),
-                "type": obj.get("type"),
-                "updateTime": obj.get("updateTime"),
-            }
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
-        return _obj
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[list[Self]]:
+        """Create an instance of Ticker24hrResponse2 from a dict"""
+        return [cls.model_validate(item) for item in obj]

@@ -307,7 +307,6 @@ class MiningRestAPI:
     def hashrate_resale_detail(
         self,
         config_id: Union[int, None],
-        user_name: Union[str, None],
         page_index: Optional[int] = None,
         page_size: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -321,7 +320,6 @@ class MiningRestAPI:
 
                 Args:
                     config_id (Union[int, None]): Mining ID 168
-                    user_name (Union[str, None]): Mining account test
                     page_index (Optional[int] = None): Page number, empty default first page, starting from 1
                     page_size (Optional[int] = None): Min 10,Max 200
                     recv_window (Optional[int] = None):
@@ -335,7 +333,7 @@ class MiningRestAPI:
         """
 
         return self._miningApi.hashrate_resale_detail(
-            config_id, user_name, page_index, page_size, recv_window
+            config_id, page_index, page_size, recv_window
         )
 
     def hashrate_resale_list(

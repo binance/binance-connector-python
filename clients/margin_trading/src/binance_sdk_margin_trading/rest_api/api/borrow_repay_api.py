@@ -124,7 +124,7 @@ class BorrowRepayApi:
                 Args:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -272,7 +272,7 @@ class BorrowRepayApi:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
                     tx_id (Optional[int] = None): `tranId` in `POST /sapi/v1/margin/loan`
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -337,7 +337,7 @@ class BorrowRepayApi:
                 Args:
                     asset (Union[str, None]):
                     vip_level (Optional[int] = None): User's current specific margin data will be returned if vipLevel is omitted
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None): No more than 60000
 

@@ -377,7 +377,6 @@ class MiningApi:
     def hashrate_resale_detail(
         self,
         config_id: Union[int, None],
-        user_name: Union[str, None],
         page_index: Optional[int] = None,
         page_size: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -393,7 +392,6 @@ class MiningApi:
 
                 Args:
                     config_id (Union[int, None]): Mining ID 168
-                    user_name (Union[str, None]): Mining account test
                     page_index (Optional[int] = None): Page number, empty default first page, starting from 1
                     page_size (Optional[int] = None): Min 10,Max 200
                     recv_window (Optional[int] = None):
@@ -411,16 +409,10 @@ class MiningApi:
                 field="config_id",
                 error_message="Missing required parameter 'config_id'",
             )
-        if user_name is None:
-            raise RequiredError(
-                field="user_name",
-                error_message="Missing required parameter 'user_name'",
-            )
 
         body = {}
         payload = {
             "config_id": config_id,
-            "user_name": user_name,
             "page_index": page_index,
             "page_size": page_size,
             "recv_window": recv_window,

@@ -60,7 +60,7 @@ class TransferApi:
                 Args:
                     asset (Optional[str] = None):
                     type (Optional[str] = None): Transfer Type: ROLL_IN, ROLL_OUT
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100

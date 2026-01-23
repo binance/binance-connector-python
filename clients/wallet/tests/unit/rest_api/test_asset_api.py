@@ -126,7 +126,7 @@ class TestAssetApi:
     def test_asset_detail_success_with_optional_params(self, mock_get_signature):
         """Test asset_detail() successfully with optional parameters."""
 
-        params = {"recv_window": 5000}
+        params = {"asset": "asset_example", "recv_window": 5000}
 
         expected_response = {
             "CTR": {
@@ -895,6 +895,7 @@ class TestAssetApi:
         """Test dustlog() successfully with optional parameters."""
 
         params = {
+            "account_type": "SPOT",
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "recv_window": 5000,
