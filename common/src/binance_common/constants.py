@@ -15,6 +15,9 @@ class WebsocketMode(Enum):
 # Algo constants
 ALGO_REST_API_PROD_URL = "https://api.binance.com"
 
+# Alpha constants
+ALPHA_REST_API_PROD_URL = "https://www.binance.com"
+
 # Auto Invest constants
 AUTO_INVEST_REST_API_PROD_URL = "https://api.binance.com"
 
