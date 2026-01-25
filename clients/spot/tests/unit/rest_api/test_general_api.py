@@ -26,6 +26,9 @@ from binance_sdk_spot.rest_api.api import GeneralApi
 from binance_sdk_spot.rest_api.models import ExchangeInfoResponse
 
 from binance_sdk_spot.rest_api.models import TimeResponse
+from binance_sdk_spot.rest_api.models import SymbolFilters
+from binance_sdk_spot.rest_api.models import ExchangeFilters
+from binance_sdk_spot.rest_api.models import AssetFilters
 
 
 from binance_sdk_spot.rest_api.models import ExchangeInfoSymbolStatusEnum
@@ -326,3 +329,408 @@ class TestGeneralApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.time()
+
+    def test_symbol_filters_price_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.price_filter import (
+            PriceFilter
+        )
+
+        example_data = {
+            "filterType": "PRICE_FILTER",
+            "minPrice": "0.00000100",
+            "maxPrice": "100000.00000000",
+            "tickSize": "0.00000100"
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, PriceFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "PRICE_FILTER"
+        assert instance_data.min_price == "0.00000100"
+        assert instance_data.max_price == "100000.00000000"
+        assert instance_data.tick_size == "0.00000100"
+
+    def test_symbol_filters_percent_price_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.percent_price_filter import (
+            PercentPriceFilter
+        )
+
+        example_data = {
+            "filterType": "PERCENT_PRICE",
+            "multiplierUp": "1.3000",
+            "multiplierDown": "0.7000",
+            "avgPriceMins": 5
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, PercentPriceFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "PERCENT_PRICE"
+        assert instance_data.multiplier_up == "1.3000"
+        assert instance_data.multiplier_down == "0.7000"
+        assert instance_data.avg_price_mins == 5
+
+    def test_symbol_filters_percent_price_by_side_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.percent_price_by_side_filter import (
+            PercentPriceBySideFilter
+        )
+
+        example_data = {
+            "filterType": "PERCENT_PRICE_BY_SIDE",
+            "bidMultiplierUp": "1.2",
+            "bidMultiplierDown": "0.2",
+            "askMultiplierUp": "5",
+            "askMultiplierDown": "0.8",
+            "avgPriceMins": 1
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, PercentPriceBySideFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "PERCENT_PRICE_BY_SIDE"
+        assert instance_data.bid_multiplier_up == "1.2"
+        assert instance_data.bid_multiplier_down == "0.2"
+        assert instance_data.ask_multiplier_up == "5"
+        assert instance_data.ask_multiplier_down == "0.8"
+        assert instance_data.avg_price_mins == 1
+
+    def test_symbol_filters_lot_size_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.lot_size_filter import (
+            LotSizeFilter
+        )
+
+        example_data = {
+            "filterType": "LOT_SIZE",
+            "minQty": "0.00100000",
+            "maxQty": "100000.00000000",
+            "stepSize": "0.00100000"
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, LotSizeFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "LOT_SIZE"
+        assert instance_data.min_qty == "0.00100000"
+        assert instance_data.max_qty == "100000.00000000"
+        assert instance_data.step_size == "0.00100000"
+
+    def test_symbol_filters_min_notional_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.min_notional_filter import (
+            MinNotionalFilter
+        )
+
+        example_data = {
+            "filterType": "MIN_NOTIONAL",
+            "minNotional": "0.00100000",
+            "applyToMarket": True,
+            "avgPriceMins": 5
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MinNotionalFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MIN_NOTIONAL"
+        assert instance_data.min_notional == "0.00100000"
+        assert instance_data.apply_to_market is True
+        assert instance_data.avg_price_mins == 5
+
+    def test_symbol_filters_notional_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.notional_filter import (
+            NotionalFilter
+        )
+
+        example_data = {
+            "filterType": "NOTIONAL",
+            "minNotional": "10.00000000",
+            "applyMinToMarket": False,
+            "maxNotional": "10000.00000000",
+            "applyMaxToMarket": False,
+            "avgPriceMins": 5
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, NotionalFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "NOTIONAL"
+        assert instance_data.min_notional == "10.00000000"
+        assert instance_data.apply_min_to_market is False
+        assert instance_data.max_notional == "10000.00000000"
+        assert instance_data.apply_max_to_market is False
+        assert instance_data.avg_price_mins == 5
+
+    def test_symbol_filters_iceberg_parts_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.iceberg_parts_filter import (
+            IcebergPartsFilter
+        )
+
+        example_data = {
+            "filterType": "ICEBERG_PARTS",
+            "limit": 10
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, IcebergPartsFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "ICEBERG_PARTS"
+        assert instance_data.limit == 10
+
+    def test_symbol_filters_market_lot_size_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.market_lot_size_filter import (
+            MarketLotSizeFilter
+        )
+
+        example_data = {
+            "filterType": "MARKET_LOT_SIZE",
+            "minQty": "0.00100000",
+            "maxQty": "100000.00000000",
+            "stepSize": "0.00100000"
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MarketLotSizeFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MARKET_LOT_SIZE"
+        assert instance_data.min_qty == "0.00100000"
+        assert instance_data.max_qty == "100000.00000000"
+        assert instance_data.step_size == "0.00100000"
+
+    def test_symbol_filters_max_num_orders_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_num_orders_filter import (
+            MaxNumOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_NUM_ORDERS",
+            "maxNumOrders": 25
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxNumOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_NUM_ORDERS"
+        assert instance_data.max_num_orders == 25
+
+    def test_symbol_filters_max_num_algo_orders_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_num_algo_orders_filter import (
+            MaxNumAlgoOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_NUM_ALGO_ORDERS",
+            "maxNumAlgoOrders": 5
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxNumAlgoOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_NUM_ALGO_ORDERS"
+        assert instance_data.max_num_algo_orders == 5
+
+    def test_symbol_filters_max_num_iceberg_orders_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_num_iceberg_orders_filter import (
+            MaxNumIcebergOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_NUM_ICEBERG_ORDERS",
+            "maxNumIcebergOrders": 5
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxNumIcebergOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_NUM_ICEBERG_ORDERS"
+        assert instance_data.max_num_iceberg_orders == 5
+
+    def test_symbol_filters_max_position_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_position_filter import (
+            MaxPositionFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_POSITION",
+            "maxPosition": "10.00000000"
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxPositionFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_POSITION"
+        assert instance_data.max_position == "10.00000000"
+
+    def test_symbol_filters_trailing_delta_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.trailing_delta_filter import (
+            TrailingDeltaFilter
+        )
+
+        example_data = {
+            "filterType": "TRAILING_DELTA",
+            "minTrailingAboveDelta": 10,
+            "maxTrailingAboveDelta": 2000,
+            "minTrailingBelowDelta": 10,
+            "maxTrailingBelowDelta": 2000
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, TrailingDeltaFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "TRAILING_DELTA"
+        assert instance_data.min_trailing_above_delta == 10
+        assert instance_data.max_trailing_above_delta == 2000
+        assert instance_data.min_trailing_below_delta == 10
+        assert instance_data.max_trailing_below_delta == 2000
+
+    def test_symbol_filters_max_num_order_lists_filter(self):
+        """Test SymbolFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_num_order_lists_filter import (
+            MaxNumOrderListsFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_NUM_ORDER_LISTS",
+            "maxNumOrderLists": 20
+        }
+
+        parsed_data = SymbolFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxNumOrderListsFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_NUM_ORDER_LISTS"
+        assert instance_data.max_num_order_lists == 20
+
+    def test_exchange_filters_exchange_max_num_orders_filter(self):
+        """Test ExchangeFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.exchange_max_num_orders_filter import (
+            ExchangeMaxNumOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "EXCHANGE_MAX_NUM_ORDERS",
+            "maxNumOrders": 1000
+        }
+
+        parsed_data = ExchangeFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, ExchangeMaxNumOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "EXCHANGE_MAX_NUM_ORDERS"
+        assert instance_data.max_num_orders == 1000
+
+    def test_exchange_filters_exchange_max_num_algo_orders_filter(self):
+        """Test ExchangeFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.exchange_max_num_algo_orders_filter import (
+            ExchangeMaxNumAlgoOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "EXCHANGE_MAX_NUM_ALGO_ORDERS",
+            "maxNumAlgoOrders": 200
+        }
+
+        parsed_data = ExchangeFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, ExchangeMaxNumAlgoOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "EXCHANGE_MAX_NUM_ALGO_ORDERS"
+        assert instance_data.max_num_algo_orders == 200
+
+    def test_exchange_filters_exchange_max_num_iceberg_orders_filter(self):
+        """Test ExchangeFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.exchange_max_num_iceberg_orders_filter import (
+            ExchangeMaxNumIcebergOrdersFilter
+        )
+
+        example_data = {
+            "filterType": "EXCHANGE_MAX_NUM_ICEBERG_ORDERS",
+            "maxNumIcebergOrders": 10000
+        }
+
+        parsed_data = ExchangeFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, ExchangeMaxNumIcebergOrdersFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "EXCHANGE_MAX_NUM_ICEBERG_ORDERS"
+        assert instance_data.max_num_iceberg_orders == 10000
+
+    def test_exchange_filters_exchange_max_num_order_lists_filter(self):
+        """Test ExchangeFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.exchange_max_num_order_lists_filter import (
+            ExchangeMaxNumOrderListsFilter
+        )
+
+        example_data = {
+            "filterType": "EXCHANGE_MAX_NUM_ORDER_LISTS",
+            "maxNumOrderLists": 20
+        }
+
+        parsed_data = ExchangeFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, ExchangeMaxNumOrderListsFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "EXCHANGE_MAX_NUM_ORDER_LISTS"
+        assert instance_data.max_num_order_lists == 20
+
+    def test_asset_filters_max_asset_filter(self):
+        """Test AssetFilter oneOf deserialization."""
+
+        from binance_sdk_spot.rest_api.models.max_asset_filter import (
+            MaxAssetFilter
+        )
+
+        example_data = {
+            "filterType": "MAX_ASSET",
+            "asset": "USDC",
+            "limit": "42.00000000"
+        }
+
+        parsed_data = AssetFilters.model_validate(example_data)
+
+        assert isinstance(parsed_data.actual_instance, MaxAssetFilter)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.filter_type == "MAX_ASSET"
+        assert instance_data.asset == "USDC"
+        assert instance_data.limit == "42.00000000"

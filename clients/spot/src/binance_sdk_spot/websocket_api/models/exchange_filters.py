@@ -102,63 +102,36 @@ class ExchangeFilters(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: dict) -> Self:
+        """Validate and deserialize a dict into the appropriate oneOf model."""
+        return cls.from_dict(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
+        if parsed is None:
+            return None
 
-        is_list = isinstance(parsed, list)
+        if isinstance(parsed, dict) and "filterType" in parsed:
+            filter_type_map = {
+                "EXCHANGE_MAX_NUM_ORDERS": ExchangeMaxNumOrdersFilter,
+                "EXCHANGE_MAX_NUM_ALGO_ORDERS": ExchangeMaxNumAlgoOrdersFilter,
+                "EXCHANGE_MAX_NUM_ICEBERG_ORDERS": ExchangeMaxNumIcebergOrdersFilter,
+                "EXCHANGE_MAX_NUM_ORDER_LISTS": ExchangeMaxNumOrderListsFilter,
+            }
 
-        # deserialize data into ExchangeMaxNumOrdersFilter
-        if is_list == ExchangeMaxNumOrdersFilter.is_array():
-            try:
-                instance.actual_instance = ExchangeMaxNumOrdersFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ExchangeMaxNumAlgoOrdersFilter
-        if is_list == ExchangeMaxNumAlgoOrdersFilter.is_array():
-            try:
-                instance.actual_instance = ExchangeMaxNumAlgoOrdersFilter.from_dict(
-                    parsed
-                )
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ExchangeMaxNumIcebergOrdersFilter
-        if is_list == ExchangeMaxNumIcebergOrdersFilter.is_array():
-            try:
-                instance.actual_instance = ExchangeMaxNumIcebergOrdersFilter.from_dict(
-                    parsed
-                )
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ExchangeMaxNumOrderListsFilter
-        if is_list == ExchangeMaxNumOrderListsFilter.is_array():
-            try:
-                instance.actual_instance = ExchangeMaxNumOrderListsFilter.from_dict(
-                    parsed
-                )
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
+            ft = parsed.get("filterType")
+            target_cls = filter_type_map.get(ft)
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
+        raise ValueError(
+            f"Unable to deserialize into ExchangeFilters: 'filterType' field missing or unrecognized. Data: {parsed}"
+        )
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

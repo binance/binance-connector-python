@@ -68,36 +68,31 @@ class AssetFilters(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: dict) -> Self:
+        """Validate and deserialize a dict into the appropriate oneOf model."""
+        return cls.from_dict(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
+        if parsed is None:
+            return None
 
-        is_list = isinstance(parsed, list)
+        if isinstance(parsed, dict) and "filterType" in parsed:
+            filter_type_map = {"MAX_ASSET": MaxAssetFilter}
 
-        # deserialize data into MaxAssetFilter
-        if is_list == MaxAssetFilter.is_array():
-            try:
-                instance.actual_instance = MaxAssetFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
+            ft = parsed.get("filterType")
+            target_cls = filter_type_map.get(ft)
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into AssetFilters with oneOf schemas: MaxAssetFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into AssetFilters with oneOf schemas: MaxAssetFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
+        raise ValueError(
+            f"Unable to deserialize into AssetFilters: 'filterType' field missing or unrecognized. Data: {parsed}"
+        )
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

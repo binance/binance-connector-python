@@ -186,141 +186,48 @@ class SymbolFilters(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: dict) -> Self:
+        """Validate and deserialize a dict into the appropriate oneOf model."""
+        return cls.from_dict(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
+        if parsed is None:
+            return None
 
-        is_list = isinstance(parsed, list)
+        if isinstance(parsed, dict) and "filterType" in parsed:
+            filter_type_map = {
+                "PRICE_FILTER": PriceFilter,
+                "PERCENT_PRICE": PercentPriceFilter,
+                "PERCENT_PRICE_BY_SIDE": PercentPriceBySideFilter,
+                "LOT_SIZE": LotSizeFilter,
+                "MIN_NOTIONAL": MinNotionalFilter,
+                "NOTIONAL": NotionalFilter,
+                "ICEBERG_PARTS": IcebergPartsFilter,
+                "MARKET_LOT_SIZE": MarketLotSizeFilter,
+                "MAX_NUM_ORDERS": MaxNumOrdersFilter,
+                "MAX_NUM_ALGO_ORDERS": MaxNumAlgoOrdersFilter,
+                "MAX_NUM_ICEBERG_ORDERS": MaxNumIcebergOrdersFilter,
+                "MAX_POSITION": MaxPositionFilter,
+                "TRAILING_DELTA": TrailingDeltaFilter,
+                "T_PLUS_SELL": TPlusSellFilter,
+                "MAX_NUM_ORDER_LISTS": MaxNumOrderListsFilter,
+                "MAX_NUM_ORDER_AMENDS": MaxNumOrderAmendsFilter,
+            }
 
-        # deserialize data into PriceFilter
-        if is_list == PriceFilter.is_array():
-            try:
-                instance.actual_instance = PriceFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into PercentPriceFilter
-        if is_list == PercentPriceFilter.is_array():
-            try:
-                instance.actual_instance = PercentPriceFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into PercentPriceBySideFilter
-        if is_list == PercentPriceBySideFilter.is_array():
-            try:
-                instance.actual_instance = PercentPriceBySideFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into LotSizeFilter
-        if is_list == LotSizeFilter.is_array():
-            try:
-                instance.actual_instance = LotSizeFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MinNotionalFilter
-        if is_list == MinNotionalFilter.is_array():
-            try:
-                instance.actual_instance = MinNotionalFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into NotionalFilter
-        if is_list == NotionalFilter.is_array():
-            try:
-                instance.actual_instance = NotionalFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into IcebergPartsFilter
-        if is_list == IcebergPartsFilter.is_array():
-            try:
-                instance.actual_instance = IcebergPartsFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MarketLotSizeFilter
-        if is_list == MarketLotSizeFilter.is_array():
-            try:
-                instance.actual_instance = MarketLotSizeFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxNumOrdersFilter
-        if is_list == MaxNumOrdersFilter.is_array():
-            try:
-                instance.actual_instance = MaxNumOrdersFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxNumAlgoOrdersFilter
-        if is_list == MaxNumAlgoOrdersFilter.is_array():
-            try:
-                instance.actual_instance = MaxNumAlgoOrdersFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxNumIcebergOrdersFilter
-        if is_list == MaxNumIcebergOrdersFilter.is_array():
-            try:
-                instance.actual_instance = MaxNumIcebergOrdersFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxPositionFilter
-        if is_list == MaxPositionFilter.is_array():
-            try:
-                instance.actual_instance = MaxPositionFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into TrailingDeltaFilter
-        if is_list == TrailingDeltaFilter.is_array():
-            try:
-                instance.actual_instance = TrailingDeltaFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into TPlusSellFilter
-        if is_list == TPlusSellFilter.is_array():
-            try:
-                instance.actual_instance = TPlusSellFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxNumOrderListsFilter
-        if is_list == MaxNumOrderListsFilter.is_array():
-            try:
-                instance.actual_instance = MaxNumOrderListsFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into MaxNumOrderAmendsFilter
-        if is_list == MaxNumOrderAmendsFilter.is_array():
-            try:
-                instance.actual_instance = MaxNumOrderAmendsFilter.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
+            ft = parsed.get("filterType")
+            target_cls = filter_type_map.get(ft)
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into SymbolFilters with oneOf schemas: IcebergPartsFilter, LotSizeFilter, MarketLotSizeFilter, MaxNumAlgoOrdersFilter, MaxNumIcebergOrdersFilter, MaxNumOrderAmendsFilter, MaxNumOrderListsFilter, MaxNumOrdersFilter, MaxPositionFilter, MinNotionalFilter, NotionalFilter, PercentPriceBySideFilter, PercentPriceFilter, PriceFilter, TPlusSellFilter, TrailingDeltaFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into SymbolFilters with oneOf schemas: IcebergPartsFilter, LotSizeFilter, MarketLotSizeFilter, MaxNumAlgoOrdersFilter, MaxNumIcebergOrdersFilter, MaxNumOrderAmendsFilter, MaxNumOrderListsFilter, MaxNumOrdersFilter, MaxPositionFilter, MinNotionalFilter, NotionalFilter, PercentPriceBySideFilter, PercentPriceFilter, PriceFilter, TPlusSellFilter, TrailingDeltaFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
+        raise ValueError(
+            f"Unable to deserialize into SymbolFilters: 'filterType' field missing or unrecognized. Data: {parsed}"
+        )
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

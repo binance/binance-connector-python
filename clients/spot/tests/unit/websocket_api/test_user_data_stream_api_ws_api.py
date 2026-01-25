@@ -24,6 +24,7 @@ from binance_sdk_spot.websocket_api.api import UserDataStreamApi
 
 from binance_sdk_spot.websocket_api.models import SessionSubscriptionsResponse
 from binance_sdk_spot.websocket_api.models import UserDataStreamSubscribeResponse
+from binance_sdk_spot.websocket_api.models import UserDataStreamEventsResponse
 from binance_sdk_spot.websocket_api.models import (
     UserDataStreamSubscribeSignatureResponse,
 )
@@ -426,3 +427,254 @@ class TestWebSocketUserDataStreamApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.user_data_stream_unsubscribe()
+
+    def test_user_data_stream_events_response_balance_update(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.balance_update import BalanceUpdate
+
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "balanceUpdate",     # Event Type
+                "E": 1573200697110,       # Event Time
+                "a": "BTC",               # Asset
+                "d": "100.00000000",      # Balance Delta
+                "T": 1573200697068        # Clear Time
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance, BalanceUpdate)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1573200697110
+        assert instance_data.a == "BTC"
+        assert instance_data.d == "100.00000000"
+        assert instance_data.T == 1573200697068
+
+
+    def test_user_data_stream_events_response_outbound_account_position(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.outbound_account_position import (
+            OutboundAccountPosition,
+        )
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "outboundAccountPosition",     # Event type
+                "E": 1564034571105,                 # Event Time
+                "u": 1564034571073,                 # Time of last account update
+                # Balances Array
+                "B": [
+                    {
+                        "a": "ETH",                 # Asset
+                        "f": "10000.000000",        # Free
+                        "l": "0.000000"             # Locked
+                    }
+                ]
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance, OutboundAccountPosition)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1564034571105
+        assert instance_data.u == 1564034571073
+        assert instance_data.B is not None
+        assert len(instance_data.B) == 1
+        assert instance_data.B[0].a == "ETH"
+        assert instance_data.B[0].f == "10000.000000"
+        assert instance_data.B[0].l == "0.000000"
+
+    def test_user_data_stream_events_response_execution_report(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.execution_report import ExecutionReport
+
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "executionReport",            # Event type
+                "E": 1499405658658,                # Event time
+                "s": "ETHBTC",                     # Symbol
+                "c": "mUvoqJxFIILMdfAW5iGSOW",     # Client order ID
+                "S": "BUY",                        # Side
+                "o": "LIMIT",                      # Order type
+                "f": "GTC",                        # Time in force
+                "q": "1.00000000",                 # Order quantity
+                "p": "0.10264410",                 # Order price
+                "P": "0.00000000",                 # Stop price
+                "F": "0.00000000",                 # Iceberg quantity
+                "g": -1,                           # OrderListId
+                "C": "",                           # Original client order ID; This is the ID of the order being canceled
+                "x": "NEW",                        # Current execution type
+                "X": "CANCELLED",                  # Current order status
+                "r": "NONE",                       # Order reject reason; Please see Order Reject Reason (below) for more information.
+                "i": 4293153,                      # Order ID
+                "l": "1.00000000",                 # Last executed quantity
+                "z": "0.00000000",                 # Cumulative filled quantity
+                "L": "0.00000000",                 # Last executed price
+                "n": "0",                          # Commission amount
+                "N": None,                         # Commission asset
+                "T": 1499405658657,                # Transaction time
+                "t": -1,                           # Trade ID
+                "v": 3,                            # Prevented Match Id; This is only visible if the order expired due to STP
+                "I": 8641984,                      # Execution Id
+                "w": True,                         # Is the order on the book?
+                "m": False,                        # Is this trade the maker side?
+                "M": True,                        # Ignore
+                "O": 1499405658657,                # Order creation time
+                "Z": "0.00000000",                 # Cumulative quote asset transacted quantity
+                "Y": "0.00000000",                 # Last quote asset transacted quantity (i.e. lastPrice * lastQty)
+                "Q": "0.00000000",                 # Quote Order Quantity
+                "W": 1499405658657,                # Working Time; This is only visible if the order has been placed on the book.
+                "V": "NONE"                        # SelfTradePreventionMode
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance, ExecutionReport)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1499405658658
+        assert instance_data.s == "ETHBTC"
+        assert instance_data.c == "mUvoqJxFIILMdfAW5iGSOW"
+        assert instance_data.S == "BUY"
+        assert instance_data.o == "LIMIT"
+        assert instance_data.f == "GTC"
+        assert instance_data.q == "1.00000000"
+        assert instance_data.p == "0.10264410"
+        assert instance_data.P == "0.00000000"
+        assert instance_data.F == "0.00000000"
+        assert instance_data.g == -1
+        assert instance_data.C == ""
+        assert instance_data.x == "NEW"
+        assert instance_data.X == "CANCELLED"
+        assert instance_data.r == "NONE"
+        assert instance_data.i == 4293153
+        assert instance_data.l == "1.00000000"
+        assert instance_data.z == "0.00000000"
+        assert instance_data.L == "0.00000000"
+        assert instance_data.n == "0"
+        assert instance_data.N is None
+        assert instance_data.T == 1499405658657
+        assert instance_data.t == -1
+        assert instance_data.v == 3
+        assert instance_data.I == 8641984
+        assert instance_data.w is True
+        assert instance_data.m is False
+        assert instance_data.M is True
+        assert instance_data.O == 1499405658657
+        assert instance_data.Z == "0.00000000"
+        assert instance_data.Y == "0.00000000"
+        assert instance_data.Q == "0.00000000"
+        assert instance_data.W == 1499405658657
+        assert instance_data.V == "NONE"
+
+    def test_user_data_stream_events_response_event_stream_terminated(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.event_stream_terminated import (
+            EventStreamTerminated,
+        )
+
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "eventStreamTerminated",     # Event Type
+                "E": 1728973001334                # Event Time
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance, EventStreamTerminated)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1728973001334
+
+
+    def test_user_data_stream_events_response_list_status(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.list_status import ListStatus
+
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "listStatus",                        # Event Type
+                "E": 1564035303637,                       # Event Time
+                "s": "ETHBTC",                            # Symbol
+                "g": 2,                                   # OrderListId
+                "c": "OCO",                               # Contingency Type
+                "l": "EXEC_STARTED",                      # List Status Type
+                "L": "EXECUTING",                         # List Order Status
+                "r": "NONE",                              # List Reject Reason
+                "C": "F4QN4G8DlFATFlIUQ0cjdD",            # List Client Order ID
+                "T": 1564035303625,                       # Transaction Time
+                # An array of objects
+                "O": [
+                    {
+                        "s": "ETHBTC",                    # Symbol
+                        "i": 17,                          # OrderId
+                        "c": "AJYsMjErWJesZvqlJCTUgL"     # ClientOrderId
+                    },
+                    {
+                        "s": "ETHBTC",
+                        "i": 18,
+                        "c": "bfYPSQdLoqAJeNrOr9adzq"
+                    }
+                ]
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance, ListStatus)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1564035303637
+        assert instance_data.s == "ETHBTC"
+        assert instance_data.g == 2
+        assert instance_data.c == "OCO"
+        assert instance_data.l == "EXEC_STARTED"
+        assert instance_data.L == "EXECUTING"
+        assert instance_data.r == "NONE"
+        assert instance_data.C == "F4QN4G8DlFATFlIUQ0cjdD"
+        assert instance_data.T == 1564035303625
+        assert instance_data.O is not None
+        assert len(instance_data.O) == 2
+        assert instance_data.O[0].s == "ETHBTC"
+        assert instance_data.O[0].i == 17
+        assert instance_data.O[0].c == "AJYsMjErWJesZvqlJCTUgL"
+        assert instance_data.O[1].s == "ETHBTC"
+        assert instance_data.O[1].i == 18
+        assert instance_data.O[1].c == "bfYPSQdLoqAJeNrOr9adzq"
+    
+    def test_user_data_stream_events_response_external_lock_update(self):
+        """Test UserDataStreamEventsResponse oneOf deserialization."""
+
+        from binance_sdk_spot.websocket_api.models.external_lock_update import (
+            ExternalLockUpdate,
+        )
+
+        example_data = {
+            "subscriptionId": 0,
+            "event": {
+                "e": "externalLockUpdate",     # Event Type
+                "E": 1581557507324,            # Event Time
+                "a": "NEO",                    # Asset
+                "d": "10.00000000",            # Delta
+                "T": 1581557507268             # Transaction Time
+            }
+        }
+
+        parsed_data = UserDataStreamEventsResponse.model_validate(example_data["event"])
+
+        assert isinstance(parsed_data.actual_instance,ExternalLockUpdate)
+        instance_data = parsed_data.actual_instance
+        assert instance_data.E == 1581557507324
+        assert instance_data.a == "NEO"
+        assert instance_data.d == "10.00000000"
+        assert instance_data.T == 1581557507268
