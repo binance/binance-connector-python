@@ -70,6 +70,15 @@ class RateLimits(BaseModel):
         """Create an instance of RateLimits from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
+    @classmethod
+    def model_validate(cls, obj: Any) -> Self:
+        """Validate and deserialize using custom from_dict logic."""
+        # If obj is a dict, use from_dict to handle nested oneOf models properly
+        if isinstance(obj, dict):
+            return cls.from_dict(obj)
+        # Otherwise use Pydantic's default validation
+        return super().model_validate(obj)
+
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.
 
@@ -106,9 +115,10 @@ class RateLimits(BaseModel):
             return None
 
         if not isinstance(obj, dict):
-            return cls.model_validate(obj)
+            return BaseModel.model_validate.__func__(cls, obj)
 
-        _obj = cls.model_validate(
+        _obj = BaseModel.model_validate.__func__(
+            cls,
             {
                 "rateLimitType": obj.get("rateLimitType"),
                 "interval": obj.get("interval"),

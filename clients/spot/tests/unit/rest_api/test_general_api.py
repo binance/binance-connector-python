@@ -344,7 +344,7 @@ class TestGeneralApi:
             "tickSize": "0.00000100"
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, PriceFilter)
         instance_data = parsed_data.actual_instance
@@ -367,7 +367,7 @@ class TestGeneralApi:
             "avgPriceMins": 5
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, PercentPriceFilter)
         instance_data = parsed_data.actual_instance
@@ -392,7 +392,7 @@ class TestGeneralApi:
             "avgPriceMins": 1
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, PercentPriceBySideFilter)
         instance_data = parsed_data.actual_instance
@@ -417,7 +417,7 @@ class TestGeneralApi:
             "stepSize": "0.00100000"
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, LotSizeFilter)
         instance_data = parsed_data.actual_instance
@@ -440,7 +440,7 @@ class TestGeneralApi:
             "avgPriceMins": 5
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MinNotionalFilter)
         instance_data = parsed_data.actual_instance
@@ -465,7 +465,7 @@ class TestGeneralApi:
             "avgPriceMins": 5
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, NotionalFilter)
         instance_data = parsed_data.actual_instance
@@ -488,7 +488,7 @@ class TestGeneralApi:
             "limit": 10
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, IcebergPartsFilter)
         instance_data = parsed_data.actual_instance
@@ -509,7 +509,7 @@ class TestGeneralApi:
             "stepSize": "0.00100000"
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MarketLotSizeFilter)
         instance_data = parsed_data.actual_instance
@@ -530,7 +530,7 @@ class TestGeneralApi:
             "maxNumOrders": 25
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxNumOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -549,7 +549,7 @@ class TestGeneralApi:
             "maxNumAlgoOrders": 5
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxNumAlgoOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -568,7 +568,7 @@ class TestGeneralApi:
             "maxNumIcebergOrders": 5
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxNumIcebergOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -587,7 +587,7 @@ class TestGeneralApi:
             "maxPosition": "10.00000000"
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxPositionFilter)
         instance_data = parsed_data.actual_instance
@@ -609,7 +609,7 @@ class TestGeneralApi:
             "maxTrailingBelowDelta": 2000
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, TrailingDeltaFilter)
         instance_data = parsed_data.actual_instance
@@ -631,7 +631,7 @@ class TestGeneralApi:
             "maxNumOrderLists": 20
         }
 
-        parsed_data = SymbolFilters.model_validate(example_data)
+        parsed_data = SymbolFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxNumOrderListsFilter)
         instance_data = parsed_data.actual_instance
@@ -650,7 +650,7 @@ class TestGeneralApi:
             "maxNumOrders": 1000
         }
 
-        parsed_data = ExchangeFilters.model_validate(example_data)
+        parsed_data = ExchangeFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, ExchangeMaxNumOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -669,7 +669,7 @@ class TestGeneralApi:
             "maxNumAlgoOrders": 200
         }
 
-        parsed_data = ExchangeFilters.model_validate(example_data)
+        parsed_data = ExchangeFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, ExchangeMaxNumAlgoOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -688,7 +688,7 @@ class TestGeneralApi:
             "maxNumIcebergOrders": 10000
         }
 
-        parsed_data = ExchangeFilters.model_validate(example_data)
+        parsed_data = ExchangeFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, ExchangeMaxNumIcebergOrdersFilter)
         instance_data = parsed_data.actual_instance
@@ -707,7 +707,7 @@ class TestGeneralApi:
             "maxNumOrderLists": 20
         }
 
-        parsed_data = ExchangeFilters.model_validate(example_data)
+        parsed_data = ExchangeFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, ExchangeMaxNumOrderListsFilter)
         instance_data = parsed_data.actual_instance
@@ -727,7 +727,7 @@ class TestGeneralApi:
             "limit": "42.00000000"
         }
 
-        parsed_data = AssetFilters.model_validate(example_data)
+        parsed_data = AssetFilters.from_dict(example_data)
 
         assert isinstance(parsed_data.actual_instance, MaxAssetFilter)
         instance_data = parsed_data.actual_instance
