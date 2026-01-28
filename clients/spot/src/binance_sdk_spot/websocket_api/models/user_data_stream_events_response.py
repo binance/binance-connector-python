@@ -112,71 +112,38 @@ class UserDataStreamEventsResponse(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: dict) -> Self:
+        """Validate and deserialize a dict into the appropriate oneOf model."""
+        return cls.from_dict(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
+        if parsed is None:
+            return None
 
-        is_list = isinstance(parsed, list)
+        if isinstance(parsed, dict) and "e" in parsed:
+            event_type_map = {
+                "outboundAccountPosition": OutboundAccountPosition,
+                "balanceUpdate": BalanceUpdate,
+                "executionReport": ExecutionReport,
+                "listStatus": ListStatus,
+                "eventStreamTerminated": EventStreamTerminated,
+                "externalLockUpdate": ExternalLockUpdate,
+            }
 
-        # deserialize data into OutboundAccountPosition
-        if is_list == OutboundAccountPosition.is_array():
-            try:
-                instance.actual_instance = OutboundAccountPosition.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into BalanceUpdate
-        if is_list == BalanceUpdate.is_array():
-            try:
-                instance.actual_instance = BalanceUpdate.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ExecutionReport
-        if is_list == ExecutionReport.is_array():
-            try:
-                instance.actual_instance = ExecutionReport.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ListStatus
-        if is_list == ListStatus.is_array():
-            try:
-                instance.actual_instance = ListStatus.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into EventStreamTerminated
-        if is_list == EventStreamTerminated.is_array():
-            try:
-                instance.actual_instance = EventStreamTerminated.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ExternalLockUpdate
-        if is_list == ExternalLockUpdate.is_array():
-            try:
-                instance.actual_instance = ExternalLockUpdate.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
+            event_type = parsed.get("e")
+            target_cls = event_type_map.get(event_type)
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, OutboundAccountPosition. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: BalanceUpdate, EventStreamTerminated, ExecutionReport, ExternalLockUpdate, ListStatus, OutboundAccountPosition. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
+        raise ValueError(
+            f"Unable to deserialize into UserDataStreamEventsResponse: 'e' field missing or unrecognized. Data: {parsed}"
+        )
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

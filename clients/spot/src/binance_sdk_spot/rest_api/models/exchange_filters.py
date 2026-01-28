@@ -102,6 +102,11 @@ class ExchangeFilters(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: dict) -> Self:
+        """Validate and deserialize a dict into the appropriate oneOf model."""
+        return cls.from_dict(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
         if parsed is None:
@@ -124,38 +129,9 @@ class ExchangeFilters(BaseModel):
                 instance.actual_instance = target_cls.from_dict(parsed)
                 return instance
 
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
-        is_list = isinstance(parsed, list)
-
-        for subcls in [
-            "ExchangeMaxNumAlgoOrdersFilter",
-            "ExchangeMaxNumIcebergOrdersFilter",
-            "ExchangeMaxNumOrderListsFilter",
-            "ExchangeMaxNumOrdersFilter",
-        ]:
-            if is_list == subcls.is_array():
-                try:
-                    instance.actual_instance = subcls.from_dict(parsed)
-                    match += 1
-                except (ValidationError, ValueError) as e:
-                    error_messages.append(str(e))
-
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into ExchangeFilters with oneOf schemas: ExchangeMaxNumAlgoOrdersFilter, ExchangeMaxNumIcebergOrdersFilter, ExchangeMaxNumOrderListsFilter, ExchangeMaxNumOrdersFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+        raise ValueError(
+            f"Unable to deserialize into ExchangeFilters: 'filterType' field missing or unrecognized. Data: {parsed}"
+        )
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""
