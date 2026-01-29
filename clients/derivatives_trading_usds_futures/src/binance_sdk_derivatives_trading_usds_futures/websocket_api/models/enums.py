@@ -65,6 +65,11 @@ class NewAlgoOrderPriceMatchEnum(Enum):
     QUEUE_20 = "QUEUE_20"
 
 
+class NewAlgoOrderNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+
+
 class NewAlgoOrderSelfTradePreventionModeEnum(Enum):
     EXPIRE_TAKER = "EXPIRE_TAKER"
     EXPIRE_BOTH = "EXPIRE_BOTH"

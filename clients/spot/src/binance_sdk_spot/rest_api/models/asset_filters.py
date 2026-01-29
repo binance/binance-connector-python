@@ -75,6 +75,9 @@ class AssetFilters(BaseModel):
 
         if isinstance(parsed, dict) and "filterType" in parsed:
             filter_type_map = {"MAX_ASSET": MaxAssetFilter}
+            validator_mapping = {
+                "MaxAssetFilter": "oneof_schema_1_validator",
+            }
 
             ft = parsed.get("filterType")
             target_cls = filter_type_map.get(ft)
@@ -82,6 +85,14 @@ class AssetFilters(BaseModel):
             if target_cls is not None:
                 # Deserialize directly into the proper schema
                 instance = cls.model_construct()
+
+                class_name = str(target_cls).split(".")[-1].split("'")[0]
+                if class_name in validator_mapping:
+                    setattr(
+                        instance,
+                        validator_mapping[class_name],
+                        target_cls.from_dict(parsed),
+                    )
                 instance.actual_instance = target_cls.from_dict(parsed)
                 return instance
 

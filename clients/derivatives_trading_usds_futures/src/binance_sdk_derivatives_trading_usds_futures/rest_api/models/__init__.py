@@ -413,6 +413,9 @@ from .query_insurance_fund_balance_snapshot_response2_inner_assets_inner import 
     QueryInsuranceFundBalanceSnapshotResponse2InnerAssetsInner as QueryInsuranceFundBalanceSnapshotResponse2InnerAssetsInner,
 )
 from .query_order_response import QueryOrderResponse as QueryOrderResponse
+from .query_order_response_result import (
+    QueryOrderResponseResult as QueryOrderResponseResult,
+)
 from .query_user_rate_limit_response import (
     QueryUserRateLimitResponse as QueryUserRateLimitResponse,
 )
@@ -578,6 +581,7 @@ from .enums import NewAlgoOrderPositionSideEnum as NewAlgoOrderPositionSideEnum
 from .enums import NewAlgoOrderTimeInForceEnum as NewAlgoOrderTimeInForceEnum
 from .enums import NewAlgoOrderWorkingTypeEnum as NewAlgoOrderWorkingTypeEnum
 from .enums import NewAlgoOrderPriceMatchEnum as NewAlgoOrderPriceMatchEnum
+from .enums import NewAlgoOrderNewOrderRespTypeEnum as NewAlgoOrderNewOrderRespTypeEnum
 from .enums import (
     NewAlgoOrderSelfTradePreventionModeEnum as NewAlgoOrderSelfTradePreventionModeEnum,
 )

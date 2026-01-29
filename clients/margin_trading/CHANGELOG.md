@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.0.0 - 2026-01-29
+
+### Added (1)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- `get_margin_asset_risk_based_liquidation_ratio()` (`GET /sapi/v1/margin/risk-based-liquidation-ratio`)
+
 ## 4.3.0 - 2026-01-23
 
 ### Changed (1)

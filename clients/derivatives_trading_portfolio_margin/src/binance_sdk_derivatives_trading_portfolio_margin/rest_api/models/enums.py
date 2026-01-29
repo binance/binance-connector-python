@@ -75,6 +75,7 @@ class NewCmConditionalOrderSideEnum(Enum):
 class NewCmConditionalOrderStrategyTypeEnum(Enum):
     STOP = "STOP"
     STOP_MARKET = "STOP_MARKET"
+    LIMIT_MAKER = "LIMIT_MAKER"
     TAKE_PROFIT = "TAKE_PROFIT"
     TAKE_PROFIT_MARKET = "TAKE_PROFIT_MARKET"
     TRAILING_STOP_MARKET = "TRAILING_STOP_MARKET"
@@ -180,6 +181,7 @@ class NewUmConditionalOrderSideEnum(Enum):
 class NewUmConditionalOrderStrategyTypeEnum(Enum):
     STOP = "STOP"
     STOP_MARKET = "STOP_MARKET"
+    LIMIT_MAKER = "LIMIT_MAKER"
     TAKE_PROFIT = "TAKE_PROFIT"
     TAKE_PROFIT_MARKET = "TAKE_PROFIT_MARKET"
     TRAILING_STOP_MARKET = "TRAILING_STOP_MARKET"

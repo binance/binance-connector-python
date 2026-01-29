@@ -89,6 +89,12 @@ from .get_list_schedule_response import (
 from .get_list_schedule_response_inner import (
     GetListScheduleResponseInner as GetListScheduleResponseInner,
 )
+from .get_margin_asset_risk_based_liquidation_ratio_response import (
+    GetMarginAssetRiskBasedLiquidationRatioResponse as GetMarginAssetRiskBasedLiquidationRatioResponse,
+)
+from .get_margin_asset_risk_based_liquidation_ratio_response_inner import (
+    GetMarginAssetRiskBasedLiquidationRatioResponseInner as GetMarginAssetRiskBasedLiquidationRatioResponseInner,
+)
 from .get_small_liability_exchange_coin_list_response import (
     GetSmallLiabilityExchangeCoinListResponse as GetSmallLiabilityExchangeCoinListResponse,
 )

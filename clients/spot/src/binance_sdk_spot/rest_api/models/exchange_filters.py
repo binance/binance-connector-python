@@ -114,6 +114,12 @@ class ExchangeFilters(BaseModel):
                 "EXCHANGE_MAX_NUM_ICEBERG_ORDERS": ExchangeMaxNumIcebergOrdersFilter,
                 "EXCHANGE_MAX_NUM_ORDER_LISTS": ExchangeMaxNumOrderListsFilter,
             }
+            validator_mapping = {
+                "ExchangeMaxNumOrdersFilter": "oneof_schema_1_validator",
+                "ExchangeMaxNumAlgoOrdersFilter": "oneof_schema_2_validator",
+                "ExchangeMaxNumIcebergOrdersFilter": "oneof_schema_3_validator",
+                "ExchangeMaxNumOrderListsFilter": "oneof_schema_4_validator",
+            }
 
             ft = parsed.get("filterType")
             target_cls = filter_type_map.get(ft)
@@ -121,6 +127,14 @@ class ExchangeFilters(BaseModel):
             if target_cls is not None:
                 # Deserialize directly into the proper schema
                 instance = cls.model_construct()
+
+                class_name = str(target_cls).split(".")[-1].split("'")[0]
+                if class_name in validator_mapping:
+                    setattr(
+                        instance,
+                        validator_mapping[class_name],
+                        target_cls.from_dict(parsed),
+                    )
                 instance.actual_instance = target_cls.from_dict(parsed)
                 return instance
 

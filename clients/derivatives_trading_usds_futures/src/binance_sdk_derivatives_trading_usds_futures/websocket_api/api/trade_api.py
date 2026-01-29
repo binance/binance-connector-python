@@ -30,6 +30,7 @@ from ..models import NewAlgoOrderPositionSideEnum
 from ..models import NewAlgoOrderTimeInForceEnum
 from ..models import NewAlgoOrderWorkingTypeEnum
 from ..models import NewAlgoOrderPriceMatchEnum
+from ..models import NewAlgoOrderNewOrderRespTypeEnum
 from ..models import NewAlgoOrderSelfTradePreventionModeEnum
 from ..models import NewOrderSideEnum
 from ..models import NewOrderPositionSideEnum
@@ -275,6 +276,7 @@ class TradeApi:
         activate_price: Optional[float] = None,
         callback_rate: Optional[float] = None,
         client_algo_id: Optional[str] = None,
+        new_order_resp_type: Optional[NewAlgoOrderNewOrderRespTypeEnum] = None,
         self_trade_prevention_mode: Optional[
             NewAlgoOrderSelfTradePreventionModeEnum
         ] = None,
@@ -339,6 +341,7 @@ class TradeApi:
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
                     client_algo_id (Optional[str] = None):
+                    new_order_resp_type (Optional[NewAlgoOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
@@ -393,6 +396,11 @@ class TradeApi:
             **({"callback_rate": callback_rate} if callback_rate is not None else {}),
             **(
                 {"client_algo_id": client_algo_id} if client_algo_id is not None else {}
+            ),
+            **(
+                {"new_order_resp_type": new_order_resp_type}
+                if new_order_resp_type is not None
+                else {}
             ),
             **(
                 {"self_trade_prevention_mode": self_trade_prevention_mode}

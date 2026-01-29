@@ -33,6 +33,7 @@ class AssetDividendRecordResponseRowsInner(BaseModel):
     div_time: Optional[StrictInt] = Field(default=None, alias="divTime")
     en_info: Optional[StrictStr] = Field(default=None, alias="enInfo")
     tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
+    direction: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
@@ -41,6 +42,7 @@ class AssetDividendRecordResponseRowsInner(BaseModel):
         "divTime",
         "enInfo",
         "tranId",
+        "direction",
     ]
 
     model_config = ConfigDict(
@@ -113,6 +115,7 @@ class AssetDividendRecordResponseRowsInner(BaseModel):
                 "divTime": obj.get("divTime"),
                 "enInfo": obj.get("enInfo"),
                 "tranId": obj.get("tranId"),
+                "direction": obj.get("direction"),
             }
         )
         # store additional fields in additional_properties

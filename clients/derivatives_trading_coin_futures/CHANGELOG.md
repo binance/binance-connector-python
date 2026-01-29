@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.0.0 - 2026-01-29
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- Modified response for `cancel_multiple_orders()` (`DELETE /dapi/v1/batchOrders`):
+  - items: property `pair` added
+  - items: item property `pair` added
+
+- Modified response for `current_all_open_orders()` (`GET /dapi/v1/openOrders`):
+  - items: property `pair` added
+  - items: item property `pair` added
+
 ## 3.3.0 - 2026-01-23
 
 ### Changed (1)

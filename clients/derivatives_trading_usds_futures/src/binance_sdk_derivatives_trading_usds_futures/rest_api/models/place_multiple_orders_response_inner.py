@@ -40,6 +40,7 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
     position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
     status: Optional[StrictStr] = None
     stop_price: Optional[StrictStr] = Field(default=None, alias="stopPrice")
+    close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
     symbol: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
@@ -69,6 +70,7 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
         "positionSide",
         "status",
         "stopPrice",
+        "closePosition",
         "symbol",
         "timeInForce",
         "type",
@@ -160,6 +162,7 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
                 "positionSide": obj.get("positionSide"),
                 "status": obj.get("status"),
                 "stopPrice": obj.get("stopPrice"),
+                "closePosition": obj.get("closePosition"),
                 "symbol": obj.get("symbol"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),

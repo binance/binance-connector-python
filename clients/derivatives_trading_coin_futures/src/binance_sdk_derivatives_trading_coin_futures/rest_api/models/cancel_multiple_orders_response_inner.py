@@ -43,6 +43,7 @@ class CancelMultipleOrdersResponseInner(BaseModel):
     stop_price: Optional[StrictStr] = Field(default=None, alias="stopPrice")
     close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
     symbol: Optional[StrictStr] = None
+    pair: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     activate_price: Optional[StrictStr] = Field(default=None, alias="activatePrice")
@@ -74,6 +75,7 @@ class CancelMultipleOrdersResponseInner(BaseModel):
         "stopPrice",
         "closePosition",
         "symbol",
+        "pair",
         "timeInForce",
         "type",
         "activatePrice",
@@ -167,6 +169,7 @@ class CancelMultipleOrdersResponseInner(BaseModel):
                 "stopPrice": obj.get("stopPrice"),
                 "closePosition": obj.get("closePosition"),
                 "symbol": obj.get("symbol"),
+                "pair": obj.get("pair"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "activatePrice": obj.get("activatePrice"),

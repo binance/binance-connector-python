@@ -89,6 +89,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AggregateTradeStreamsResponse,
+            stream_url="",
         )
 
     async def all_book_tickers_stream(
@@ -126,6 +127,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllBookTickersStreamResponse,
+            stream_url="",
         )
 
     async def all_market_liquidation_order_streams(
@@ -164,6 +166,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketLiquidationOrderStreamsResponse,
+            stream_url="",
         )
 
     async def all_market_mini_tickers_stream(
@@ -201,6 +204,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketMiniTickersStreamResponse,
+            stream_url="",
         )
 
     async def all_market_tickers_streams(
@@ -238,6 +242,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketTickersStreamsResponse,
+            stream_url="",
         )
 
     async def continuous_contract_kline_candlestick_streams(
@@ -298,6 +303,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=ContinuousContractKlineCandlestickStreamsResponse,
+            stream_url="",
         )
 
     async def contract_info_stream(
@@ -335,6 +341,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=ContractInfoStreamResponse,
+            stream_url="",
         )
 
     async def diff_book_depth_streams(
@@ -383,6 +390,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=DiffBookDepthStreamsResponse,
+            stream_url="",
         )
 
     async def index_kline_candlestick_streams(
@@ -435,6 +443,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=IndexKlineCandlestickStreamsResponse,
+            stream_url="",
         )
 
     async def index_price_stream(
@@ -480,7 +489,10 @@ class WebsocketMarketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=IndexPriceStreamResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=IndexPriceStreamResponse,
+            stream_url="",
         )
 
     async def individual_symbol_book_ticker_streams(
@@ -526,6 +538,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=IndividualSymbolBookTickerStreamsResponse,
+            stream_url="",
         )
 
     async def individual_symbol_mini_ticker_stream(
@@ -571,6 +584,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=IndividualSymbolMiniTickerStreamResponse,
+            stream_url="",
         )
 
     async def individual_symbol_ticker_streams(
@@ -616,6 +630,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=IndividualSymbolTickerStreamsResponse,
+            stream_url="",
         )
 
     async def kline_candlestick_streams(
@@ -668,6 +683,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=KlineCandlestickStreamsResponse,
+            stream_url="",
         )
 
     async def liquidation_order_streams(
@@ -715,6 +731,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=LiquidationOrderStreamsResponse,
+            stream_url="",
         )
 
     async def mark_price_kline_candlestick_streams(
@@ -767,6 +784,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=MarkPriceKlineCandlestickStreamsResponse,
+            stream_url="",
         )
 
     async def mark_price_of_all_symbols_of_a_pair(
@@ -815,6 +833,7 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=MarkPriceOfAllSymbolsOfAPairResponse,
+            stream_url="",
         )
 
     async def mark_price_stream(
@@ -860,7 +879,10 @@ class WebsocketMarketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=MarkPriceStreamResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=MarkPriceStreamResponse,
+            stream_url="",
         )
 
     async def partial_book_depth_streams(
@@ -916,4 +938,5 @@ class WebsocketMarketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=PartialBookDepthStreamsResponse,
+            stream_url="",
         )

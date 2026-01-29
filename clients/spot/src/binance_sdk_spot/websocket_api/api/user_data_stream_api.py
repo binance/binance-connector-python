@@ -115,6 +115,7 @@ class UserDataStreamApi:
     async def user_data_stream_subscribe_signature(
         self,
         id: Optional[str] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]:
         """
             WebSocket Subscribe to User Data Stream through signature subscription
@@ -126,6 +127,7 @@ class UserDataStreamApi:
 
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]
@@ -137,6 +139,7 @@ class UserDataStreamApi:
 
         params = {
             **({"id": id} if id is not None else {}),
+            **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
         payload = {
@@ -162,7 +165,7 @@ class UserDataStreamApi:
 
             Stop listening to the User Data Stream in the current WebSocket connection.
 
-        Note that `session.logout` will only close the subscription created with `userdataStream.subscribe` but not subscriptions opened with `userDataStream.subscribe.signature`.
+        Note that `session.logout` will only close the subscription created with `userDataStream.subscribe` but not subscriptions opened with `userDataStream.subscribe.signature`.
         Weight: 2
 
             Args:
