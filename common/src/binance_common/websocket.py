@@ -561,7 +561,8 @@ class WebSocketStreamBase(WebSocketCommon):
                 continue
 
             logging.info(f"Subscribing to streams: {streams}")
-            json_msg = {"method": "SUBSCRIBE", "params": streams, "id": get_random_int() if self.id_strict_int else get_uuid()}
+            json_msg = {"method": "SUBSCRIBE", "params": [stream], "id": get_random_int() if self.id_strict_int else get_uuid()}
+            await asyncio.sleep(0.5)
             await self.send_message(json_msg, connection)
             global_stream_connections.stream_connections_map[stream] = connection
             connection.stream_callback_map.update({stream: []})
@@ -844,7 +845,7 @@ class WebSocketAPIBase(WebSocketCommon):
                     connection.session_logon_request = payload
 
                 is_oneof = self.is_one_of_model(response_model)
-                if is_oneof:
+                if is_oneof or hasattr(response_model, "from_dict"):
                     data_function = lambda: response_model.from_dict(ws_response)
                 elif response_model:
                     data_function = lambda: response_model.model_validate(ws_response)

@@ -368,7 +368,7 @@ def send_request(
                 status = response.status_code
                 data = (
                     response.json()
-                    if response.headers.get("Content-Type").startswith(
+                    if response.headers.get("Content-Type") and response.headers.get("Content-Type").startswith(
                         "application/json"
                     )
                     else {}
