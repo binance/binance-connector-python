@@ -16,8 +16,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models.query_order_response_result import (
+    QueryOrderResponseResult,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -27,63 +30,11 @@ class QueryOrderResponse(BaseModel):
     QueryOrderResponse
     """  # noqa: E501
 
-    avg_price: Optional[StrictStr] = Field(default=None, alias="avgPrice")
-    client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
-    cum_quote: Optional[StrictStr] = Field(default=None, alias="cumQuote")
-    executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
-    order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
-    orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
-    orig_type: Optional[StrictStr] = Field(default=None, alias="origType")
-    price: Optional[StrictStr] = None
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    side: Optional[StrictStr] = None
-    position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
-    status: Optional[StrictStr] = None
-    stop_price: Optional[StrictStr] = Field(default=None, alias="stopPrice")
-    close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
-    symbol: Optional[StrictStr] = None
-    time: Optional[StrictInt] = None
-    time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    type: Optional[StrictStr] = None
-    activate_price: Optional[StrictStr] = Field(default=None, alias="activatePrice")
-    price_rate: Optional[StrictStr] = Field(default=None, alias="priceRate")
-    update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
-    working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
-    price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
-    price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
-    self_trade_prevention_mode: Optional[StrictStr] = Field(
-        default=None, alias="selfTradePreventionMode"
-    )
-    good_till_date: Optional[StrictInt] = Field(default=None, alias="goodTillDate")
+    id: Optional[StrictStr] = None
+    status: Optional[StrictInt] = None
+    result: Optional[QueryOrderResponseResult] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "avgPrice",
-        "clientOrderId",
-        "cumQuote",
-        "executedQty",
-        "orderId",
-        "origQty",
-        "origType",
-        "price",
-        "reduceOnly",
-        "side",
-        "positionSide",
-        "status",
-        "stopPrice",
-        "closePosition",
-        "symbol",
-        "time",
-        "timeInForce",
-        "type",
-        "activatePrice",
-        "priceRate",
-        "updateTime",
-        "workingType",
-        "priceProtect",
-        "priceMatch",
-        "selfTradePreventionMode",
-        "goodTillDate",
-    ]
+    __properties: ClassVar[List[str]] = ["id", "status", "result"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -131,6 +82,9 @@ class QueryOrderResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of result
+        if self.result:
+            _dict["result"] = self.result.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -149,32 +103,13 @@ class QueryOrderResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "avgPrice": obj.get("avgPrice"),
-                "clientOrderId": obj.get("clientOrderId"),
-                "cumQuote": obj.get("cumQuote"),
-                "executedQty": obj.get("executedQty"),
-                "orderId": obj.get("orderId"),
-                "origQty": obj.get("origQty"),
-                "origType": obj.get("origType"),
-                "price": obj.get("price"),
-                "reduceOnly": obj.get("reduceOnly"),
-                "side": obj.get("side"),
-                "positionSide": obj.get("positionSide"),
+                "id": obj.get("id"),
                 "status": obj.get("status"),
-                "stopPrice": obj.get("stopPrice"),
-                "closePosition": obj.get("closePosition"),
-                "symbol": obj.get("symbol"),
-                "time": obj.get("time"),
-                "timeInForce": obj.get("timeInForce"),
-                "type": obj.get("type"),
-                "activatePrice": obj.get("activatePrice"),
-                "priceRate": obj.get("priceRate"),
-                "updateTime": obj.get("updateTime"),
-                "workingType": obj.get("workingType"),
-                "priceProtect": obj.get("priceProtect"),
-                "priceMatch": obj.get("priceMatch"),
-                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
-                "goodTillDate": obj.get("goodTillDate"),
+                "result": (
+                    QueryOrderResponseResult.from_dict(obj["result"])
+                    if obj.get("result") is not None
+                    else None
+                ),
             }
         )
         # store additional fields in additional_properties

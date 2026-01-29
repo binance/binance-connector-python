@@ -278,7 +278,7 @@ class TestWebSocketUserDataStreamApi:
     ):
         """Test user_data_stream_subscribe_signature() successfully with optional parameters."""
 
-        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+        params = {"id": "e9d6b4349871b40611412680b3445fac", "recv_window": 5000.0}
 
         expected_response = {
             "id": "d3df8a22-98ea-4fe0-9f4e-0fcea5d418b7",
@@ -308,6 +308,7 @@ class TestWebSocketUserDataStreamApi:
             "method"
         ] == "/userDataStream.subscribe.signature".replace("/", "", 1)
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["recv_window"] == 5000.0
 
         assert result is not None
         assert result.data() == expected_response

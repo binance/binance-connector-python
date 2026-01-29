@@ -3270,7 +3270,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
                 Query Current UM Open Conditional Order
 
         * Either `strategyId` or `newClientStrategyId` must be sent.
-        * If the queried order has been `CANCELED`, `TRIGGERED`或`EXPIRED`, the error message "Order does not exist" will be returned.
+        * If the queried order has been `CANCELED`, `TRIGGERED` or `EXPIRED`, the error message "Order does not exist" will be returned.
 
         Weight: 1
 

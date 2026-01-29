@@ -1,5 +1,14 @@
 # Changelog
 
+## 8.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+- Modified response for `asset_dividend_record()` (`GET /sapi/v1/asset/assetDividend`):
+  - `rows`.items: property `direction` added
+  - `rows`.items: item property `direction` added
+
 ## 7.0.0 - 2026-01-23
 
 ### Changed (5)

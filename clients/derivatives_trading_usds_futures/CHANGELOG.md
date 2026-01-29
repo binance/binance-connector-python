@@ -1,5 +1,66 @@
 # Changelog
 
+## 7.0.0 - 2026-01-29
+
+### Changed (7)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- Added parameter `newOrderRespType`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+- Modified parameter `batchOrders`:
+  - items: property `stopPrice` added
+  - items: item property `stopPrice` added
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`)
+- Modified response for `place_multiple_orders()` (`POST /fapi/v1/batchOrders`):
+  - items: property `closePosition` added
+  - items: item property `closePosition` added
+
+- Modified response for `query_order()` (`GET /fapi/v1/order`):
+  - property `id` added
+  - property `result` added
+  - property `activatePrice` deleted
+  - property `clientOrderId` deleted
+  - property `positionSide` deleted
+  - property `closePosition` deleted
+  - property `updateTime` deleted
+  - property `origQty` deleted
+  - property `reduceOnly` deleted
+  - property `time` deleted
+  - property `side` deleted
+  - property `priceRate` deleted
+  - property `price` deleted
+  - property `executedQty` deleted
+  - property `priceProtect` deleted
+  - property `avgPrice` deleted
+  - property `priceMatch` deleted
+  - property `stopPrice` deleted
+  - property `goodTillDate` deleted
+  - property `symbol` deleted
+  - property `orderId` deleted
+  - property `cumQuote` deleted
+  - property `selfTradePreventionMode` deleted
+  - property `timeInForce` deleted
+  - property `workingType` deleted
+  - property `origType` deleted
+  - property `type` deleted
+  - `status`: type `string` → `integer`
+
+#### WebSocket API
+
+- Added parameter `newOrderRespType`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified response for `position_information_v2()` (`v2/account.position` method):
+  - `result`.items: property `unRealizedProfit` added
+  - `result`.items: property `unrealizedProfit` deleted
+  - `result`.items: item property `unRealizedProfit` added
+  - `result`.items: item property `unrealizedProfit` deleted
+
 ## 6.2.0 - 2026-01-23
 
 ### Changed (1)

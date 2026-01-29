@@ -39,6 +39,7 @@ def modify_multiple_orders():
                     quantity="1.0",
                     price="1.0",
                     price_match="NONE",
+                    stop_price="1.0",
                     recv_window="5000",
                 )
             ],

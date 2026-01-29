@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+- Modified response for `place_limit_order()` (`POST /sapi/v1/convert/limit/placeOrder`):
+  - property `status` added
+  - property `orderId` added
+  - property `fromAmount` deleted
+  - property `inverseRatio` deleted
+  - property `quoteId` deleted
+  - property `ratio` deleted
+  - property `toAmount` deleted
+  - property `validTimestamp` deleted
+
 ## 3.2.0 - 2026-01-23
 
 ### Changed (1)

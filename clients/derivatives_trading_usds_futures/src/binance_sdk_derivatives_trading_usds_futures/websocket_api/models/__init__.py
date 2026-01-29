@@ -147,6 +147,7 @@ from .enums import NewAlgoOrderPositionSideEnum as NewAlgoOrderPositionSideEnum
 from .enums import NewAlgoOrderTimeInForceEnum as NewAlgoOrderTimeInForceEnum
 from .enums import NewAlgoOrderWorkingTypeEnum as NewAlgoOrderWorkingTypeEnum
 from .enums import NewAlgoOrderPriceMatchEnum as NewAlgoOrderPriceMatchEnum
+from .enums import NewAlgoOrderNewOrderRespTypeEnum as NewAlgoOrderNewOrderRespTypeEnum
 from .enums import (
     NewAlgoOrderSelfTradePreventionModeEnum as NewAlgoOrderSelfTradePreventionModeEnum,
 )

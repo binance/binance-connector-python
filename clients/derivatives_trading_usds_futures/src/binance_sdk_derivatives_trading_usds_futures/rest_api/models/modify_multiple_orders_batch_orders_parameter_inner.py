@@ -36,6 +36,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
     quantity: Optional[StrictStr] = None
     price: Optional[StrictStr] = None
     price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
+    stop_price: Optional[StrictStr] = Field(default=None, alias="stopPrice")
     recv_window: Optional[StrictStr] = Field(default=None, alias="recvWindow")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -46,6 +47,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         "quantity",
         "price",
         "priceMatch",
+        "stopPrice",
         "recvWindow",
     ]
 
@@ -154,6 +156,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
                 "quantity": obj.get("quantity"),
                 "price": obj.get("price"),
                 "priceMatch": obj.get("priceMatch"),
+                "stopPrice": obj.get("stopPrice"),
                 "recvWindow": obj.get("recvWindow"),
             }
         )

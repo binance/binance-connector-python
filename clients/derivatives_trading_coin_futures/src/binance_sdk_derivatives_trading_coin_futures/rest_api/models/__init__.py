@@ -73,9 +73,6 @@ from .continuous_contract_kline_candlestick_data_response_item_inner import (
 from .current_all_open_orders_response import (
     CurrentAllOpenOrdersResponse as CurrentAllOpenOrdersResponse,
 )
-from .current_all_open_orders_response_inner import (
-    CurrentAllOpenOrdersResponseInner as CurrentAllOpenOrdersResponseInner,
-)
 from .exchange_information_response import (
     ExchangeInformationResponse as ExchangeInformationResponse,
 )

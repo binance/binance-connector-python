@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.0.0 - 2026-01-29
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- Modified parameter `strategyType`:
+  - enum added: `LIMIT_MAKER`
+  - affected methods:
+    - `new_cm_conditional_order()` (`POST /papi/v1/cm/conditional/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+
 ## 4.0.0 - 2026-01-23
 
 ### Changed (2)

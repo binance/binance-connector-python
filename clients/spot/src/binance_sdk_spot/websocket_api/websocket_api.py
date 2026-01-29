@@ -419,7 +419,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    from_id (Optional[int] = None): Trade ID to begin at
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
@@ -627,7 +627,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     order_id (Optional[int] = None): `orderId`or`origClientOrderId`mustbesent
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    from_id (Optional[int] = None): Trade ID to begin at
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
@@ -730,7 +730,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     order_id (Union[int, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     from_execution_id (Optional[int] = None):
-                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -1327,7 +1327,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     from_id (Optional[int] = None): Aggregate trade ID to begin at
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
 
                 Returns:
                     WebsocketApiResponse[TradesAggregateResponse]
@@ -1357,7 +1357,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    from_id (Optional[int] = None): Trade ID to begin at
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
 
                 Returns:
@@ -2948,6 +2948,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     async def user_data_stream_subscribe_signature(
         self,
         id: Optional[str] = None,
+        recv_window: Optional[float] = None,
     ) -> WebsocketApiUserDataStreamResponse[
         WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse],
         RequestStreamHandle,
@@ -2960,6 +2961,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.
+                    recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
                     WebsocketApiUserDataStreamResponse[WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse], RequestStreamHandle]
@@ -2970,7 +2972,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
 
         response = await self._userDataStreamApi.user_data_stream_subscribe_signature(
-            id
+            id, recv_window
         )
         data = response.data()
         stream = await RequestStream(
@@ -2990,7 +2992,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Stop listening to the User Data Stream in the current WebSocket connection.
 
-        Note that `session.logout` will only close the subscription created with `userdataStream.subscribe` but not subscriptions opened with `userDataStream.subscribe.signature`.
+        Note that `session.logout` will only close the subscription created with `userDataStream.subscribe` but not subscriptions opened with `userDataStream.subscribe.signature`.
         Weight: 2
 
                 Args:

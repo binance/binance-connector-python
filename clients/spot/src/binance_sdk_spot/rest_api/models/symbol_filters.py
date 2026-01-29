@@ -200,6 +200,24 @@ class SymbolFilters(BaseModel):
                 "MAX_NUM_ORDER_LISTS": MaxNumOrderListsFilter,
                 "MAX_NUM_ORDER_AMENDS": MaxNumOrderAmendsFilter,
             }
+            validator_mapping = {
+                "PriceFilter": "oneof_schema_1_validator",
+                "PercentPriceFilter": "oneof_schema_2_validator",
+                "PercentPriceBySideFilter": "oneof_schema_3_validator",
+                "LotSizeFilter": "oneof_schema_4_validator",
+                "MinNotionalFilter": "oneof_schema_5_validator",
+                "NotionalFilter": "oneof_schema_6_validator",
+                "IcebergPartsFilter": "oneof_schema_7_validator",
+                "MarketLotSizeFilter": "oneof_schema_8_validator",
+                "MaxNumOrdersFilter": "oneof_schema_9_validator",
+                "MaxNumAlgoOrdersFilter": "oneof_schema_10_validator",
+                "MaxNumIcebergOrdersFilter": "oneof_schema_11_validator",
+                "MaxPositionFilter": "oneof_schema_12_validator",
+                "TrailingDeltaFilter": "oneof_schema_13_validator",
+                "TPlusSellFilter": "oneof_schema_14_validator",
+                "MaxNumOrderListsFilter": "oneof_schema_15_validator",
+                "MaxNumOrderAmendsFilter": "oneof_schema_16_validator",
+            }
 
             ft = parsed.get("filterType")
             target_cls = filter_type_map.get(ft)
@@ -207,6 +225,14 @@ class SymbolFilters(BaseModel):
             if target_cls is not None:
                 # Deserialize directly into the proper schema
                 instance = cls.model_construct()
+
+                class_name = str(target_cls).split(".")[-1].split("'")[0]
+                if class_name in validator_mapping:
+                    setattr(
+                        instance,
+                        validator_mapping[class_name],
+                        target_cls.from_dict(parsed),
+                    )
                 instance.actual_instance = target_cls.from_dict(parsed)
                 return instance
 

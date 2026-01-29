@@ -40,6 +40,9 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewAlgoOrderPriceMatchEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderNewOrderRespTypeEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewAlgoOrderSelfTradePreventionModeEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
@@ -849,6 +852,7 @@ class TestWebSocketTradeApi:
             "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
+            "new_order_resp_type": NewAlgoOrderNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
                 "EXPIRE_TAKER"
             ].value,
@@ -935,6 +939,10 @@ class TestWebSocketTradeApi:
         assert params["callback_rate"] == 1.0
         assert params["client_algo_id"] == "1"
         assert (
+            params["new_order_resp_type"]
+            == NewAlgoOrderNewOrderRespTypeEnum["ACK"].value
+        )
+        assert (
             params["self_trade_prevention_mode"]
             == NewAlgoOrderSelfTradePreventionModeEnum["EXPIRE_TAKER"].value
         )
@@ -975,6 +983,7 @@ class TestWebSocketTradeApi:
             "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
+            "new_order_resp_type": NewAlgoOrderNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
                 "EXPIRE_TAKER"
             ].value,
@@ -1011,6 +1020,7 @@ class TestWebSocketTradeApi:
             "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
+            "new_order_resp_type": NewAlgoOrderNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
                 "EXPIRE_TAKER"
             ].value,
@@ -1045,6 +1055,7 @@ class TestWebSocketTradeApi:
             "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
+            "new_order_resp_type": NewAlgoOrderNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
                 "EXPIRE_TAKER"
             ].value,
@@ -1079,6 +1090,7 @@ class TestWebSocketTradeApi:
             "activate_price": 1.0,
             "callback_rate": 1.0,
             "client_algo_id": "1",
+            "new_order_resp_type": NewAlgoOrderNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": NewAlgoOrderSelfTradePreventionModeEnum[
                 "EXPIRE_TAKER"
             ].value,
@@ -1704,7 +1716,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",
@@ -1726,7 +1738,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",
@@ -1748,7 +1760,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",
@@ -1828,7 +1840,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",
@@ -1850,7 +1862,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",
@@ -1872,7 +1884,7 @@ class TestWebSocketTradeApi:
                     "entryPrice": "0.00000",
                     "breakEvenPrice": "0.0",
                     "markPrice": "6679.50671178",
-                    "unrealizedProfit": "0.00000000",
+                    "unRealizedProfit": "0.00000000",
                     "liquidationPrice": "0",
                     "isolatedMargin": "0.00000000",
                     "notional": "0",

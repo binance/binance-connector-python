@@ -89,7 +89,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AggTradeResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AggTradeResponse,
+            stream_url="",
         )
 
     async def all_market_rolling_window_ticker(
@@ -135,6 +138,7 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketRollingWindowTickerResponse,
+            stream_url="",
         )
 
     async def all_mini_ticker(
@@ -167,7 +171,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AllMiniTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AllMiniTickerResponse,
+            stream_url="",
         )
 
     async def avg_price(
@@ -208,7 +215,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AvgPriceResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AvgPriceResponse,
+            stream_url="",
         )
 
     async def book_ticker(
@@ -250,7 +260,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=BookTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=BookTickerResponse,
+            stream_url="",
         )
 
     async def diff_book_depth(
@@ -294,7 +307,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=DiffBookDepthResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=DiffBookDepthResponse,
+            stream_url="",
         )
 
     async def kline(
@@ -344,7 +360,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=KlineResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=KlineResponse,
+            stream_url="",
         )
 
     async def kline_offset(
@@ -392,7 +411,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=KlineOffsetResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=KlineOffsetResponse,
+            stream_url="",
         )
 
     async def mini_ticker(
@@ -433,7 +455,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=MiniTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=MiniTickerResponse,
+            stream_url="",
         )
 
     async def partial_book_depth(
@@ -484,7 +509,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=PartialBookDepthResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=PartialBookDepthResponse,
+            stream_url="",
         )
 
     async def rolling_window_ticker(
@@ -536,6 +564,7 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=RollingWindowTickerResponse,
+            stream_url="",
         )
 
     async def ticker(
@@ -576,7 +605,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=TickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=TickerResponse,
+            stream_url="",
         )
 
     async def trade(
@@ -617,5 +649,8 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=TradeResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=TradeResponse,
+            stream_url="",
         )

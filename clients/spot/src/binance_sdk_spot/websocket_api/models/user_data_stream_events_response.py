@@ -115,6 +115,46 @@ class UserDataStreamEventsResponse(BaseModel):
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+
+        if parsed is None:
+            return instance
+
+        if isinstance(parsed, dict) and "filterType" in parsed:
+            filter_type_map = {
+                "outboundAccountPosition": OutboundAccountPosition,
+                "balanceUpdate": BalanceUpdate,
+                "executionReport": ExecutionReport,
+                "listStatus": ListStatus,
+                "eventStreamTerminated": EventStreamTerminated,
+                "externalLockUpdate": ExternalLockUpdate,
+            }
+            validator_mapping = {
+                "OutboundAccountPosition": "oneof_schema_1_validator",
+                "BalanceUpdate": "oneof_schema_2_validator",
+                "ExecutionReport": "oneof_schema_3_validator",
+                "ListStatus": "oneof_schema_4_validator",
+                "EventStreamTerminated": "oneof_schema_5_validator",
+                "ExternalLockUpdate": "oneof_schema_6_validator",
+            }
+
+            ft = parsed.get("filterType")
+            target_cls = filter_type_map.get(ft)
+
+            if target_cls is not None:
+                # Deserialize directly into the proper schema
+                instance = cls.model_construct()
+
+                # S049499
+                class_name = str(target_cls).split(".")[-1].split("'")[0]
+                if class_name in validator_mapping:
+                    setattr(
+                        instance,
+                        validator_mapping[class_name],
+                        target_cls.from_dict(parsed),
+                    )
+                instance.actual_instance = target_cls.from_dict(parsed)
+                return instance
+
         error_messages = []
         match = 0
 

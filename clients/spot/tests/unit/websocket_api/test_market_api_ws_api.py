@@ -1369,7 +1369,7 @@ class TestWebSocketMarketApi:
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
-            "limit": 100,
+            "limit": 500,
         }
 
         expected_response = {
@@ -1424,7 +1424,7 @@ class TestWebSocketMarketApi:
         assert params["from_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
-        assert params["limit"] == 100
+        assert params["limit"] == 500
 
         assert result is not None
         assert result.data() == expected_response
@@ -1446,7 +1446,7 @@ class TestWebSocketMarketApi:
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
-            "limit": 100,
+            "limit": 500,
         }
         params["symbol"] = None
 

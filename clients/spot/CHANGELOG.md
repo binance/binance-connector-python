@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### WebSocket API
+
+- Added parameter `recvWindow`
+  - affected methods:
+    - `user_data_stream_subscribe_signature()` (`userDataStream.subscribe.signature` method)
+
 ## 6.3.0 - 2026-01-23
 
 ### Changed (1)
@@ -11,7 +23,6 @@
 ### Changed (1)
 
 - Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
-
 
 ## 6.1.0 - 2025-01-13
 

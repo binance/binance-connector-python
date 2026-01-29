@@ -559,7 +559,7 @@ class MarketApi:
                     from_id (Optional[int] = None): Aggregate trade ID to begin at
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default: 100; Maximum: 5000
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
 
             Returns:
                 WebsocketApiResponse[TradesAggregateResponse]
@@ -610,7 +610,7 @@ class MarketApi:
             Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Unique WebSocket request ID.
-                    from_id (Optional[int] = None): Aggregate trade ID to begin at
+                    from_id (Optional[int] = None): Trade ID to begin at
                     limit (Optional[int] = None): Default: 100; Maximum: 5000
 
             Returns:

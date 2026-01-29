@@ -45,6 +45,7 @@ from .models import GetAllMarginAssetsResponse
 from .models import GetDelistScheduleResponse
 from .models import GetLimitPricePairsResponse
 from .models import GetListScheduleResponse
+from .models import GetMarginAssetRiskBasedLiquidationRatioResponse
 from .models import QueryIsolatedMarginTierDataResponse
 from .models import QueryLiabilityCoinLeverageBracketInCrossMarginProModeResponse
 from .models import QueryMarginAvailableInventoryResponse
@@ -888,6 +889,28 @@ class MarginTradingRestAPI:
         """
 
         return self._marketDataApi.get_list_schedule(recv_window)
+
+    def get_margin_asset_risk_based_liquidation_ratio(
+        self,
+    ) -> ApiResponse[GetMarginAssetRiskBasedLiquidationRatioResponse]:
+        """
+                Get Margin Asset Risk-Based Liquidation Ratio (MARKET_DATA)
+
+                Get Margin Asset Risk-Based Liquidation Ratio
+
+        Weight: 1
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetMarginAssetRiskBasedLiquidationRatioResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_margin_asset_risk_based_liquidation_ratio()
 
     def query_isolated_margin_tier_data(
         self,
