@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0 - 2026-01-29
+
+### Updated (1)
+
+- Fixed `WebsocketStream` method `Subscribe` when sending multiple streams in a single request.
+
 ## 3.4.1 - 2026-01-23
 
 ### Added (1)
