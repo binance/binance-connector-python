@@ -68,6 +68,15 @@ class ExchangeInfoResponse(BaseModel):
         """Create an instance of ExchangeInfoResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
+    @classmethod
+    def model_validate(cls, obj: Any) -> Self:
+        """Validate and deserialize using custom from_dict logic."""
+        # If obj is a dict, use from_dict to handle nested oneOf deserialization properly
+        if isinstance(obj, dict):
+            return cls.from_dict(obj)
+        # Otherwise use Pydantic's default validation
+        return super().model_validate(obj)
+
     def to_dict(self) -> Dict[str, Any]:
         """Return the dictionary representation of the model using alias.
 
@@ -114,9 +123,9 @@ class ExchangeInfoResponse(BaseModel):
             return None
 
         if not isinstance(obj, dict):
-            return cls.model_validate(obj)
+            return super(ExchangeInfoResponse, cls).model_validate(obj)
 
-        _obj = cls.model_validate(
+        _obj = super(ExchangeInfoResponse, cls).model_validate(
             {
                 "id": obj.get("id"),
                 "status": obj.get("status"),

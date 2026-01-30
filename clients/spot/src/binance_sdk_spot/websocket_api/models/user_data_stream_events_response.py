@@ -112,6 +112,15 @@ class UserDataStreamEventsResponse(BaseModel):
         return True
 
     @classmethod
+    def model_validate(cls, obj: Any) -> Self:
+        """Validate and deserialize using custom from_dict logic."""
+        # If obj is a dict, use from_dict to handle oneOf deserialization properly
+        if isinstance(obj, dict):
+            return cls.from_dict(obj)
+        # Otherwise use Pydantic's default validation
+        return super().model_validate(obj)
+
+    @classmethod
     def from_dict(cls, parsed) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
@@ -119,8 +128,8 @@ class UserDataStreamEventsResponse(BaseModel):
         if parsed is None:
             return instance
 
-        if isinstance(parsed, dict) and "filterType" in parsed:
-            filter_type_map = {
+        if isinstance(parsed, dict) and "e" in parsed:
+            event_type_map = {
                 "outboundAccountPosition": OutboundAccountPosition,
                 "balanceUpdate": BalanceUpdate,
                 "executionReport": ExecutionReport,
@@ -137,8 +146,8 @@ class UserDataStreamEventsResponse(BaseModel):
                 "ExternalLockUpdate": "oneof_schema_6_validator",
             }
 
-            ft = parsed.get("filterType")
-            target_cls = filter_type_map.get(ft)
+            event_type = parsed.get("e")
+            target_cls = event_type_map.get(event_type)
 
             if target_cls is not None:
                 # Deserialize directly into the proper schema
