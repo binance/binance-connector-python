@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.6.0 - 2026-02-11
+
+### Updated (2)
+
+- Updated `ws_api_payload` function to include the `id` sent in the payload.
+- Updated `pyproject.toml` dependencies
+
 ## 3.5.0 - 2026-01-29
 
 ### Updated (1)
