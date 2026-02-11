@@ -523,7 +523,7 @@ class MarketDataApi:
                 Query funding rate info for symbols that had FundingRateCap/ FundingRateFloor / fundingIntervalHours adjustment
 
         Weight: 0
-        share 500/5min/IP rate limit with GET /fapi/v1/fundingInfo
+        share 500/5min/IP rate limit with GET /fapi/v1/fundingRate
 
                 Args:
 
