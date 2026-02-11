@@ -1381,30 +1381,32 @@ class TestWsApiPayload(unittest.TestCase):
     def setUp(self):
         self.dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
         self.base_payload = {
-            "id": "123",
             "params": {
                 "some_param": "value",
                 "list_param": [1, 2, 3],
-                "dict_param": {"nested": "data"}
+                "dict_param": {"nested": "data"},
+                "id": "123",
             }
         }
 
     def test_payload_with_api_key_and_signed(self):
         websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=True, signer=None)
-        
+        expected_id = self.base_payload["params"]["id"]
+
         with patch("binance_common.utils.websocket_api_signature", return_value={"signed": True}) as mock_signature:
             result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
             mock_signature.assert_called_once()
 
-            assert result["id"] == self.base_payload["id"]
+            assert result["id"] == expected_id
             assert result["params"] == {"signed": True}
 
     def test_payload_without_api_key(self):
         websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+        expected_id = self.base_payload["params"]["id"]
         result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
 
         assert "apiKey" not in result["params"]
-        assert result["id"] == self.base_payload["id"]
+        assert result["id"] == expected_id
         assert isinstance(result["params"]["listParam"], str)
         assert isinstance(result["params"]["dictParam"], str)
         assert result["params"]["someParam"] == "value"

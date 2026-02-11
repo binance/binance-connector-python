@@ -651,7 +651,7 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
     if websocket_options.api_key and websocket_options.skip_auth is False:
         payload["params"]["apiKey"] = config.api_key
 
-    payload["id"] = payload["id"] if "id" in payload else get_uuid()
+    payload["id"] = payload["params"].pop("id", get_uuid())
 
     payload["params"] = {
         snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":"))
