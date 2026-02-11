@@ -736,6 +736,8 @@ class SubAccountRestAPI:
 
     def get_summary_of_sub_accounts_futures_account(
         self,
+        page: Union[int, None],
+        limit: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetSummaryOfSubAccountsFuturesAccountResponse]:
         """
@@ -746,6 +748,8 @@ class SubAccountRestAPI:
         Weight: 1
 
                 Args:
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -757,7 +761,7 @@ class SubAccountRestAPI:
         """
 
         return self._assetManagementApi.get_summary_of_sub_accounts_futures_account(
-            recv_window
+            page, limit, recv_window
         )
 
     def get_summary_of_sub_accounts_futures_account_v2(

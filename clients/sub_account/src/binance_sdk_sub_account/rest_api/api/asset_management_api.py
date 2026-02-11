@@ -494,6 +494,8 @@ class AssetManagementApi:
 
     def get_summary_of_sub_accounts_futures_account(
         self,
+        page: Union[int, None],
+        limit: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetSummaryOfSubAccountsFuturesAccountResponse]:
         """
@@ -506,6 +508,8 @@ class AssetManagementApi:
         Weight: 1
 
                 Args:
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -516,8 +520,17 @@ class AssetManagementApi:
 
         """
 
+        if page is None:
+            raise RequiredError(
+                field="page", error_message="Missing required parameter 'page'"
+            )
+        if limit is None:
+            raise RequiredError(
+                field="limit", error_message="Missing required parameter 'limit'"
+            )
+
         body = {}
-        payload = {"recv_window": recv_window}
+        payload = {"page": page, "limit": limit, "recv_window": recv_window}
 
         return send_request(
             self._session,

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-dual-investment"
-version = "2.3.0"
+version = "2.4.0"
 description = "Official Binance Dual Investment SDK - A lightweight library that provides a convenient interface to Binance's DualInvestment REST API"
 authors = ["Binance"]
 license = "MIT"
@@ -16,20 +16,19 @@ requests = ">=2.31.0"
 pydantic = ">=2.10.0"
 websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
-black = "^25.1.0"
-ruff = "^0.12.0"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = "3.5.0"
-pytest = { version = ">=6.2.5", optional = true }
+binance-common = "3.6.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]
 
 [tool.poetry.group.dev.dependencies]
 tox = "^4.27.0"
-pytest = ">=8.4.1"
 pytest-asyncio = "^1.0.0"
+black = "^25.1.0"
+ruff = "^0.12.0"
+pytest = ">=8.4.1"
 
 [tool.ruff]
 exclude = [".git", ".tox", "build", "dist"]

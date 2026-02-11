@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.1.0 - 2026-02-11
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+#### REST API
+
+- Modified response for `cancel_order()` (`DELETE /fapi/v1/order`):
+  - property `avgPrice` deleted
+
 ## 7.0.0 - 2026-01-29
 
 ### Changed (7)

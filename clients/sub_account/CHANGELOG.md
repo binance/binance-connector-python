@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.4.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+- Added parameter `limit`
+  - affected methods:
+    - `get_summary_of_sub_accounts_futures_account()` (`GET /sapi/v1/sub-account/futures/accountSummary`)
+- Added parameter `page`
+  - affected methods:
+    - `get_summary_of_sub_accounts_futures_account()` (`GET /sapi/v1/sub-account/futures/accountSummary`)
+
 ## 3.3.0 - 2026-01-29
 
 ### Changed (1)
