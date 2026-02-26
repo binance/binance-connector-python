@@ -1,0 +1,6 @@
+autobahn>=21.2.1
+Twisted>=21.2.0
+requests>=2.25.1
+pyOpenSSL>=19.0.0
+service-identity>=21.1.0
+pycryptodome>=3.15.0
