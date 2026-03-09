@@ -60,7 +60,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
     settle_plan: Optional[StrictInt] = Field(default=None, alias="settlePlan")
     trigger_protect: Optional[StrictStr] = Field(default=None, alias="triggerProtect")
     filters: Optional[List[ExchangeInformationResponseSymbolsInnerFiltersInner]] = None
-    order_type: Optional[List[StrictStr]] = Field(default=None, alias="OrderType")
+    order_types: Optional[List[StrictStr]] = Field(default=None, alias="orderTypes")
     time_in_force: Optional[List[StrictStr]] = Field(default=None, alias="timeInForce")
     liquidation_fee: Optional[StrictStr] = Field(default=None, alias="liquidationFee")
     market_take_bound: Optional[StrictStr] = Field(
@@ -88,7 +88,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
         "settlePlan",
         "triggerProtect",
         "filters",
-        "OrderType",
+        "orderTypes",
         "timeInForce",
         "liquidationFee",
         "marketTakeBound",
@@ -194,7 +194,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
                     if obj.get("filters") is not None
                     else None
                 ),
-                "OrderType": obj.get("OrderType"),
+                "orderTypes": obj.get("orderTypes"),
                 "timeInForce": obj.get("timeInForce"),
                 "liquidationFee": obj.get("liquidationFee"),
                 "marketTakeBound": obj.get("marketTakeBound"),

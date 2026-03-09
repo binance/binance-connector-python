@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-wallet"
-version = "8.1.0"
+version = "9.0.0"
 description = "Official Binance Wallet SDK - A lightweight library that provides a convenient interface to Binance's Wallet REST API"
 authors = ["Binance"]
 license = "MIT"

@@ -1424,6 +1424,7 @@ class WalletRestAPI:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 
@@ -1481,6 +1482,7 @@ class WalletRestAPI:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 

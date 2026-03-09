@@ -35,7 +35,6 @@ class CancelOrderResponse(BaseModel):
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
     orig_type: Optional[StrictStr] = Field(default=None, alias="origType")
     price: Optional[StrictStr] = None
-    avg_price: Optional[StrictStr] = Field(default=None, alias="avgPrice")
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
     side: Optional[StrictStr] = None
     position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
@@ -65,7 +64,6 @@ class CancelOrderResponse(BaseModel):
         "origQty",
         "origType",
         "price",
-        "avgPrice",
         "reduceOnly",
         "side",
         "positionSide",
@@ -157,7 +155,6 @@ class CancelOrderResponse(BaseModel):
                 "origQty": obj.get("origQty"),
                 "origType": obj.get("origType"),
                 "price": obj.get("price"),
-                "avgPrice": obj.get("avgPrice"),
                 "reduceOnly": obj.get("reduceOnly"),
                 "side": obj.get("side"),
                 "positionSide": obj.get("positionSide"),

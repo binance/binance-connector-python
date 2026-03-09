@@ -1148,7 +1148,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         If you need to continuously monitor trading statistics, please consider using WebSocket Streams:
 
-        * `<symbol>@ticker` or `!ticker@arr`
+        * `<symbol>@ticker`
         * `<symbol>@miniTicker` or `!miniTicker@arr`
 
         If you need different window sizes,

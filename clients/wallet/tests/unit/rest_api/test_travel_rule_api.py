@@ -1367,8 +1367,12 @@ class TestTravelRuleApi:
         """Test vasp_list() successfully with required parameters only."""
 
         expected_response = [
-            {"vaspName": "Binance", "vaspCode": "BINANCE"},
-            {"vaspName": "HashKeyGlobal", "vaspCode": "NVBH3Z_nNEHjvqbUfkaL"},
+            {"vaspCode": "BINANCE", "vaspName": "Binance", "identifier": "I1QNLP"},
+            {
+                "vaspCode": "NVBH3Z_nNEHjvqbUfkaL",
+                "vaspName": "HashKeyGlobal",
+                "identifier": "ABC123",
+            },
         ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1411,8 +1415,12 @@ class TestTravelRuleApi:
         params = {"recv_window": 5000}
 
         expected_response = [
-            {"vaspName": "Binance", "vaspCode": "BINANCE"},
-            {"vaspName": "HashKeyGlobal", "vaspCode": "NVBH3Z_nNEHjvqbUfkaL"},
+            {"vaspCode": "BINANCE", "vaspName": "Binance", "identifier": "I1QNLP"},
+            {
+                "vaspCode": "NVBH3Z_nNEHjvqbUfkaL",
+                "vaspName": "HashKeyGlobal",
+                "identifier": "ABC123",
+            },
         ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
