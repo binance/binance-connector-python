@@ -1,5 +1,13 @@
 # Changelog
 
+## 9.0.0 - 2026-03-09
+
+### Changed (1)
+
+- Modified response for `vasp_list()` (`GET /sapi/v1/localentity/vasp`):
+  - items: property `identifier` added
+  - items: item property `identifier` added
+
 ## 8.1.0 - 2026-02-11
 
 ### Changed (2)
