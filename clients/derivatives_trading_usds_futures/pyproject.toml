@@ -5,7 +5,7 @@ description = "Official Binance Derivatives Trading Usds Futures SDK - A lightwe
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_derivatives_trading_usds_futures/py.typed"]
 packages = [
   { include = "binance_sdk_derivatives_trading_usds_futures", from = "src" }
 ]

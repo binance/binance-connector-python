@@ -4,7 +4,7 @@ version = "1.2.1"
 description = "Official Binance Alpha Connector - A lightweight library that provides a convenient interface to Binance's Alpha REST API"
 authors = ["Binance"]
 license = "MIT"
-include = ["CHANGELOG.md", "LICENSE"]
+include = ["CHANGELOG.md", "LICENSE", "src/binance_sdk_alpha/py.typed"]
 packages = [
   { include = "binance_sdk_alpha", from = "src" }
 ]

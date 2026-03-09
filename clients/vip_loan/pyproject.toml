@@ -5,7 +5,7 @@ description = "Official Binance Vip Loan SDK - A lightweight library that provid
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_vip_loan/py.typed"]
 packages = [
   { include = "binance_sdk_vip_loan", from = "src" }
 ]

@@ -5,7 +5,7 @@ description = "Official Binance CryptoLoan Connector - A lightweight library tha
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_crypto_loan/py.typed"]
 packages = [
   { include = "binance_sdk_crypto_loan", from = "src" }
 ]
