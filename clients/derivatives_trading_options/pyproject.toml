@@ -5,7 +5,7 @@ description = "Official Binance Derivatives Trading Options SDK - A lightweight 
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_derivatives_trading_options/py.typed"]
 packages = [
   { include = "binance_sdk_derivatives_trading_options", from = "src" }
 ]

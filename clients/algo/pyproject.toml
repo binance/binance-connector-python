@@ -5,7 +5,7 @@ description = "Official Binance Algo SDK - A lightweight library that provides a
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_algo/py.typed"]
 packages = [
   { include = "binance_sdk_algo", from = "src" }
 ]

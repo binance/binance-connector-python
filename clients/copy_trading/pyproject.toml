@@ -5,7 +5,7 @@ description = "Official Binance CopyTrading Connector - A lightweight library th
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_copy_trading/py.typed"]
 packages = [
   { include = "binance_sdk_copy_trading", from = "src" }
 ]

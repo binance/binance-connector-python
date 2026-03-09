@@ -5,7 +5,7 @@ description = "Official Binance MarginTrading SDK - A lightweight library that p
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_margin_trading/py.typed"]
 packages = [
   { include = "binance_sdk_margin_trading", from = "src" }
 ]
