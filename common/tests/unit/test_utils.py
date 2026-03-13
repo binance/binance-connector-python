@@ -231,11 +231,7 @@ class TestCleanNoneValue(unittest.TestCase):
         obj = Dummy()
         cleaned = clean_none_value(obj)
 
-        expected = {
-            "a": 0,
-            "b": False,
-            "c": ""
-        }
+        expected = {"a": 0, "b": False, "c": ""}
 
         assert cleaned == expected
 
@@ -243,9 +239,7 @@ class TestCleanNoneValue(unittest.TestCase):
         input_list = [
             {"a": 0, "b": False, "c": None, "d": "", "e": [], "f": {}},
         ]
-        expected_output = [
-            {"a": 0, "b": False, "d": ""}
-        ]
+        expected_output = [{"a": 0, "b": False, "d": ""}]
 
         assert clean_none_value(input_list) == expected_output
 
@@ -255,11 +249,16 @@ class TestCleanNoneValue(unittest.TestCase):
             TEST_B = "TEST_B"
 
         input_list = [
-            {"a": 0, "b": False, "c": BasisPeriodEnum.TEST_A, "d": "", "e": [], "f": {}},
+            {
+                "a": 0,
+                "b": False,
+                "c": BasisPeriodEnum.TEST_A,
+                "d": "",
+                "e": [],
+                "f": {},
+            },
         ]
-        expected_output = [
-            {"a": 0, "b": False, "c": "TEST_A", "d": ""}
-        ]
+        expected_output = [{"a": 0, "b": False, "c": "TEST_A", "d": ""}]
 
         assert clean_none_value(input_list) == expected_output
 
@@ -311,6 +310,7 @@ class TestMakeSerializable(unittest.TestCase):
         class Color(Enum):
             RED = "red"
             BLUE = "blue"
+
         self.assertEqual(make_serializable(Color.RED), "red")
         self.assertEqual(make_serializable(Color.BLUE), "blue")
 
@@ -334,44 +334,24 @@ class TestMakeSerializable(unittest.TestCase):
 class TestTransformQuery(unittest.TestCase):
 
     def test_transform_dict(self):
-        data = {
-            "first_name": "John",
-            "last_name": "Doe",
-            "age": 30
-        }
-        expected = {
-            "firstName": "John",
-            "lastName": "Doe",
-            "age": 30
-        }
+        data = {"first_name": "John", "last_name": "Doe", "age": 30}
+        expected = {"firstName": "John", "lastName": "Doe", "age": 30}
         self.assertEqual(transform_query(data), expected)
 
     def test_transform_nested_dict(self):
         data = {
-            "user_info": {
-                "first_name": "Alice",
-                "last_name": "Smith"
-            },
-            "is_active": True
+            "user_info": {"first_name": "Alice", "last_name": "Smith"},
+            "is_active": True,
         }
         expected = {
-            "userInfo": {
-                "firstName": "Alice",
-                "lastName": "Smith"
-            },
-            "isActive": "true"
+            "userInfo": {"firstName": "Alice", "lastName": "Smith"},
+            "isActive": "true",
         }
         self.assertEqual(transform_query(data), expected)
 
     def test_transform_list_of_dicts(self):
-        data = [
-            {"first_name": "John"},
-            {"first_name": "Jane"}
-        ]
-        expected = [
-            {"firstName": "John"},
-            {"firstName": "Jane"}
-        ]
+        data = [{"first_name": "John"}, {"first_name": "Jane"}]
+        expected = [{"firstName": "John"}, {"firstName": "Jane"}]
         self.assertEqual(transform_query(data), expected)
 
     def test_transform_mixed_list(self):
@@ -425,19 +405,20 @@ class TestEncodedString(unittest.TestCase):
         dummy_instance = Dummy("value1", 123)
         query = {"items": [dummy_instance]}
 
-        expected_value = urlencode({
-            "items": json.dumps([{"a": "value1", "b": 123}], separators=(",", ":"))
-        }, doseq=True)
+        expected_value = urlencode(
+            {"items": json.dumps([{"a": "value1", "b": 123}], separators=(",", ":"))},
+            doseq=True,
+        )
 
         self.assertEqual(encoded_string(query), expected_value)
 
     def test_encode_with_snake_case(self):
         query = {"user_email": "test@example.com", "admin_email": "admin@domain.com"}
 
-        expected_value = urlencode({
-            "userEmail": "test@example.com",
-            "adminEmail": "admin@domain.com"
-        }, doseq=True)
+        expected_value = urlencode(
+            {"userEmail": "test@example.com", "adminEmail": "admin@domain.com"},
+            doseq=True,
+        )
 
         self.assertEqual(encoded_string(query), expected_value)
 
@@ -448,6 +429,7 @@ class TestIsOneOfModel(unittest.TestCase):
         a: int
         b: str
         actual_instance_must_validate_oneof: ClassVar[bool] = True
+
         def is_oneof_model() -> bool:
             return True
 
@@ -459,6 +441,7 @@ class TestIsOneOfModel(unittest.TestCase):
 
     def test_is_one_of_model_invalid(self):
         self.assertFalse(is_one_of_model(self.DummyNotOneOf))
+
 
 class TestGetUUID(unittest.TestCase):
     def test_uuid_is_string(self):
@@ -530,9 +513,7 @@ class TestGetSignature(unittest.TestCase):
             private_key_passphrase=None,
         )
 
-        self.missing_keys_config = Mock(
-            api_secret=None, private_key=None
-        )
+        self.missing_keys_config = Mock(api_secret=None, private_key=None)
 
     def test_hmac_signature(self):
         payload = {"key": "value"}
@@ -557,9 +538,9 @@ class TestGetSignature(unittest.TestCase):
         payload = {"key": "value"}
         payload_str = json.dumps(payload, separators=(",", ":"))
         signer = Signers.get_signer(self.ed25519_key.export_key(format="PEM"))
-        expected_signature = b64encode(
-            signer.sign(payload_str.encode("utf-8"))
-        ).decode("utf-8")
+        expected_signature = b64encode(signer.sign(payload_str.encode("utf-8"))).decode(
+            "utf-8"
+        )
         self.assertEqual(
             get_signature(self.ed25519_config, payload_str, signer), expected_signature
         )
@@ -782,11 +763,13 @@ class TestSendRequest(unittest.TestCase):
         for status, exception in error_cases.items():
             with self.subTest(status=status):
                 mock_response = Mock(
-                    status_code=status,
-                    headers={"Content-Type": "application/json"}
+                    status_code=status, headers={"Content-Type": "application/json"}
                 )
 
-                mock_response.json.return_value = {"msg": f"Error {status}", "code": 10001}
+                mock_response.json.return_value = {
+                    "msg": f"Error {status}",
+                    "code": 10001,
+                }
                 self.session.request.return_value = mock_response
 
                 with self.assertRaises(exception) as context:
@@ -1208,13 +1191,15 @@ class TestWsStreamsPlaceholder(unittest.TestCase):
 
 class TestParseWsRateLimitHeaders(unittest.TestCase):
     def test_parse_single_ratelimit_header(self):
-        headers = [{
-            "rateLimitType": "ORDERS",
-            "interval": "SECOND",
-            "intervalNum": 10,
-            "limit": 50,
-            "count": 12
-        }]
+        headers = [
+            {
+                "rateLimitType": "ORDERS",
+                "interval": "SECOND",
+                "intervalNum": 10,
+                "limit": 50,
+                "count": 12,
+            }
+        ]
         result = parse_ws_rate_limit_headers(headers)
         self.assertEqual(len(result), 1)
 
@@ -1232,22 +1217,22 @@ class TestParseWsRateLimitHeaders(unittest.TestCase):
                 "interval": "SECOND",
                 "intervalNum": 10,
                 "limit": 50,
-                "count": 12
+                "count": 12,
             },
             {
                 "rateLimitType": "ORDERS",
                 "interval": "DAY",
                 "intervalNum": 1,
                 "limit": 160000,
-                "count": 4043
+                "count": 4043,
             },
             {
                 "rateLimitType": "REQUEST_WEIGHT",
                 "interval": "MINUTE",
                 "intervalNum": 1,
                 "limit": 6000,
-                "count": 321
-            }
+                "count": 321,
+            },
         ]
         result = parse_ws_rate_limit_headers(headers)
         self.assertEqual(len(result), 3)
@@ -1258,12 +1243,14 @@ class TestParseWsRateLimitHeaders(unittest.TestCase):
         self.assertEqual(result[2].count, 321)
 
     def test_missing_optional_count_defaults_to_zero(self):
-        headers = [{
-            "rateLimitType": "ORDERS",
-            "interval": "MINUTE",
-            "intervalNum": 1,
-            "limit": 100
-        }]
+        headers = [
+            {
+                "rateLimitType": "ORDERS",
+                "interval": "MINUTE",
+                "intervalNum": 1,
+                "limit": 100,
+            }
+        ]
         result = parse_ws_rate_limit_headers(headers)
         self.assertEqual(result[0].count, 0)
 
@@ -1300,6 +1287,7 @@ class TestNormalizeQueryValues(unittest.TestCase):
         parsed = {"flag": ["  FaLsE  "]}
         result = normalize_query_values(parsed)
         self.assertEqual(result["flag"], False)
+
 
 class TestSanitizeHeaderValue(unittest.TestCase):
     def test_returns_simple_string_unchanged(self):
@@ -1379,7 +1367,9 @@ class TestParseCustomHeaders(unittest.TestCase):
 
 class TestWsApiPayload(unittest.TestCase):
     def setUp(self):
-        self.dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        self.dummy_config = SimpleNamespace(
+            api_key="test-api-key", api_secret="test-api-secret"
+        )
         self.base_payload = {
             "params": {
                 "some_param": "value",
@@ -1390,18 +1380,27 @@ class TestWsApiPayload(unittest.TestCase):
         }
 
     def test_payload_with_api_key_and_signed(self):
-        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=True, signer=None)
+        websocket_options = WebsocketApiOptions(
+            api_key=True, skip_auth=False, is_signed=True, signer=None
+        )
         expected_id = self.base_payload["params"]["id"]
 
-        with patch("binance_common.utils.websocket_api_signature", return_value={"signed": True}) as mock_signature:
-            result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
+        with patch(
+            "binance_common.utils.websocket_api_signature",
+            return_value={"signed": True},
+        ) as mock_signature:
+            result = ws_api_payload(
+                self.dummy_config, self.base_payload, websocket_options
+            )
             mock_signature.assert_called_once()
 
             assert result["id"] == expected_id
             assert result["params"] == {"signed": True}
 
     def test_payload_without_api_key(self):
-        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+        websocket_options = WebsocketApiOptions(
+            api_key=False, skip_auth=False, is_signed=False, signer=None
+        )
         expected_id = self.base_payload["params"]["id"]
         result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
 
@@ -1412,37 +1411,53 @@ class TestWsApiPayload(unittest.TestCase):
         assert result["params"]["someParam"] == "value"
 
     def test_payload_generates_new_id_if_missing(self):
-        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=False, is_signed=False, signer=None)
+        websocket_options = WebsocketApiOptions(
+            api_key=True, skip_auth=False, is_signed=False, signer=None
+        )
         payload_without_id = {"params": {}}
 
         with patch("binance_common.utils.get_uuid", return_value="generated-id"):
-            result = ws_api_payload(self.dummy_config, payload_without_id, websocket_options)
+            result = ws_api_payload(
+                self.dummy_config, payload_without_id, websocket_options
+            )
 
             assert result["id"] == "generated-id"
 
     def test_payload_skips_auth_when_flagged(self):
-        websocket_options = WebsocketApiOptions(api_key=True, skip_auth=True, is_signed=False, signer=None)
+        websocket_options = WebsocketApiOptions(
+            api_key=True, skip_auth=True, is_signed=False, signer=None
+        )
         result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
 
         assert "apiKey" not in result["params"]
 
     def test_params_serialization(self):
-        websocket_options = WebsocketApiOptions(api_key=False, skip_auth=False, is_signed=False, signer=None)
+        websocket_options = WebsocketApiOptions(
+            api_key=False, skip_auth=False, is_signed=False, signer=None
+        )
 
         result = ws_api_payload(self.dummy_config, self.base_payload, websocket_options)
 
-        assert result["params"]["listParam"] == json.dumps([1, 2, 3], separators=(",", ":"))
-        assert result["params"]["dictParam"] == json.dumps({"nested": "data"}, separators=(",", ":"))
-
+        assert result["params"]["listParam"] == json.dumps(
+            [1, 2, 3], separators=(",", ":")
+        )
+        assert result["params"]["dictParam"] == json.dumps(
+            {"nested": "data"}, separators=(",", ":")
+        )
 
 
 class TestWebsocketApiSignature(unittest.TestCase):
     def test_websocket_api_signature(self):
-        dummy_config = SimpleNamespace(api_key="test-api-key", api_secret="test-api-secret")
+        dummy_config = SimpleNamespace(
+            api_key="test-api-key", api_secret="test-api-secret"
+        )
         payload = {"foo": "bar"}
 
-        with patch("binance_common.utils.get_timestamp", return_value=1234567890), \
-            patch("binance_common.utils.get_signature", return_value="mocked-signature") as mock_get_signature:
+        with patch(
+            "binance_common.utils.get_timestamp", return_value=1234567890
+        ), patch(
+            "binance_common.utils.get_signature", return_value="mocked-signature"
+        ) as mock_get_signature:
 
             result = websocket_api_signature(dummy_config, payload)
 
@@ -1453,7 +1468,9 @@ class TestWebsocketApiSignature(unittest.TestCase):
             assert result["signature"] == "mocked-signature"
 
             mock_get_signature.assert_called_once()
-            called_config, called_params, called_signer = mock_get_signature.call_args[0]
+            called_config, called_params, called_signer = mock_get_signature.call_args[
+                0
+            ]
             assert called_config == dummy_config
             assert "apiKey=test-api-key" in called_params
             assert "timestamp=1234567890" in called_params
@@ -1463,9 +1480,11 @@ class EventA(BaseModel):
     x: int
     y: str
 
+
 class EventB(BaseModel):
     a: float
     b: Optional[str]
+
 
 class UserResponse(BaseModel):
     one_of_schemas: list[str] = ["EventA", "EventB"]
@@ -1512,6 +1531,7 @@ class TestParseUserEvent(unittest.TestCase):
         instance = parse_user_event(payload, UserResponse)
         self.assertIsInstance(instance, UserResponse)
         self.assertEqual(instance.actual_instance["x"], "wrong_type")
+
 
 if __name__ == "__main__":
     unittest.main()

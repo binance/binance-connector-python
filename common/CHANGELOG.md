@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.7.0 - 2026-03-16
+
+### Added (1)
+
+- Added `serverShutdown` event handler.
+
 ## 3.6.0 - 2026-02-11
 
 ### Updated (2)
