@@ -2,6 +2,7 @@ import logging
 
 from typing import List, Optional, Union
 
+
 def sanitize_header_value(value: Union[str, List[str]]) -> Union[str, List[str]]:
     """Sanitizes a header value by checking for and preventing carriage return and line feed characters.
 
@@ -19,7 +20,10 @@ def sanitize_header_value(value: Union[str, List[str]]) -> Union[str, List[str]]
         raise ValueError(f'Invalid header value (contains CR/LF): "{value}"')
     return value
 
-def parse_custom_headers(custom_headers: Optional[dict[str, Union[str, List[str]]]]) -> dict[str, Union[str, List[str]]]:
+
+def parse_custom_headers(
+    custom_headers: Optional[dict[str, Union[str, List[str]]]],
+) -> dict[str, Union[str, List[str]]]:
     """Parses custom headers for the API client.
 
     Args:
@@ -46,7 +50,7 @@ def parse_custom_headers(custom_headers: Optional[dict[str, Union[str, List[str]
                 parsed_headers[header_name] = [sanitize_header_value(v) for v in value]
             else:
                 parsed_headers[header_name] = sanitize_header_value(value)
-        except ValueError as e:
+        except ValueError:
             logging.warning(f"Dropping header '{header_name}' due to invalid value.")
             continue
 

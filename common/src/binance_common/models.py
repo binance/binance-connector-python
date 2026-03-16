@@ -7,6 +7,7 @@ T = TypeVar("T")
 T_Response = TypeVar("T_Response")
 T_Stream = TypeVar("T_Stream")
 
+
 class RateLimit(BaseModel):
     """Represents a single rate limit entry.
 
@@ -131,6 +132,7 @@ class WebsocketApiOptions(Generic[T]):
         self.api_key = api_key
         self.is_signed = is_signed
         self.skip_auth = skip_auth
+
 
 class WebsocketApiUserDataEndpoints(BaseModel):
     """Represents the WebSocket user data endpoints."""

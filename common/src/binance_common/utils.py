@@ -37,7 +37,7 @@ from binance_common.models import (
     ApiResponse,
     RateLimit,
     WebsocketApiOptions,
-    WebsocketApiRateLimit
+    WebsocketApiRateLimit,
 )
 from binance_common.signature import Signers
 
@@ -152,7 +152,9 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
     return val
 
 
-def transform_query(data: Union[dict, list, str, int, float, bool]) -> Union[dict, list, str, int, float, bool]:
+def transform_query(
+    data: Union[dict, list, str, int, float, bool],
+) -> Union[dict, list, str, int, float, bool]:
     """Recursively transform keys to camelCase and values to serializable.
 
     Args:
@@ -162,10 +164,7 @@ def transform_query(data: Union[dict, list, str, int, float, bool]) -> Union[dic
     """
 
     if isinstance(data, dict):
-        return {
-            snake_to_camel(k): transform_query(v)
-            for k, v in data.items()
-        }
+        return {snake_to_camel(k): transform_query(v) for k, v in data.items()}
     elif isinstance(data, list):
         return [transform_query(v) for v in data]
     else:
@@ -184,7 +183,11 @@ def encoded_string(query: str) -> str:
 
     query = transform_query(query)
     query = {
-        snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":")) if isinstance(v, (dict, list)) else make_serializable(v)
+        snake_to_camel(k): (
+            json.dumps(make_serializable(v), separators=(",", ":"))
+            if isinstance(v, (dict, list))
+            else make_serializable(v)
+        )
         for k, v in query.items()
     }
     return urlencode(query, True)
@@ -199,7 +202,7 @@ def is_one_of_model(model_cls: Type[BaseModel]) -> bool:
         bool: True if the model class is a one-of model, False otherwise.
     """
 
-    return (hasattr(model_cls, "is_oneof_model") and model_cls.is_oneof_model())
+    return hasattr(model_cls, "is_oneof_model") and model_cls.is_oneof_model()
 
 
 def get_uuid() -> str:
@@ -216,6 +219,7 @@ def get_random_int() -> int:
     """
 
     return int(uuid.uuid4().int >> 96)
+
 
 def validate_time_unit(time_unit: Optional[str]) -> Optional[str]:
     """Validates the time unit against the defined TimeUnit constants.
@@ -236,13 +240,17 @@ def validate_time_unit(time_unit: Optional[str]) -> Optional[str]:
 
 
 def get_signature(
-    configuration: Union[ConfigurationWebSocketAPI, ConfigurationRestAPI], payload: dict, signer: Optional[Signers] = None
+    configuration: Union[ConfigurationWebSocketAPI, ConfigurationRestAPI],
+    payload: dict,
+    signer: Optional[Signers] = None,
 ) -> str:
     if configuration.api_secret:
         return hmac_hashing(configuration.api_secret, payload)
     elif configuration.private_key:
         if not signer:
-            raise ValueError("Signer must be provided when using private_key for signing.")
+            raise ValueError(
+                "Signer must be provided when using private_key for signing."
+            )
         elif isinstance(signer, PKCS115_SigScheme):
             digest = SHA256.new(payload.encode("utf-8"))
             return b64encode(signer.sign(digest)).decode("utf-8")
@@ -289,7 +297,7 @@ def send_request(
     time_unit: Optional[str] = None,
     response_model: Type[T] = None,
     is_signed: bool = False,
-    signer: Optional[Signers]=None,
+    signer: Optional[Signers] = None,
 ) -> ApiResponse[T]:
     """Sends an HTTP request with the specified configuration, method, path, and
     optional payload and time unit.
@@ -318,7 +326,9 @@ def send_request(
             cleaned_payload.update(clean_none_value(body))
         cleaned_payload["timestamp"] = get_timestamp()
         query_string = encoded_string(cleaned_payload)
-        cleaned_payload["signature"] = get_signature(configuration, query_string, signer)
+        cleaned_payload["signature"] = get_signature(
+            configuration, query_string, signer
+        )
         payload = cleaned_payload
 
     headers = configuration.base_headers.copy()
@@ -368,24 +378,37 @@ def send_request(
                 status = response.status_code
                 data = (
                     response.json()
-                    if response.headers.get("Content-Type") and response.headers.get("Content-Type").startswith(
+                    if response.headers.get("Content-Type")
+                    and response.headers.get("Content-Type").startswith(
                         "application/json"
                     )
                     else {}
                 )
 
                 if status == 400:
-                    raise BadRequestError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise BadRequestError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif status == 401:
-                    raise UnauthorizedError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise UnauthorizedError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif status == 403:
-                    raise ForbiddenError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise ForbiddenError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif status == 404:
-                    raise NotFoundError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise NotFoundError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif status == 418:
-                    raise RateLimitBanError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise RateLimitBanError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif status == 429:
-                    raise TooManyRequestsError(error_message=data.get("msg"), status_code=data.get("code"))
+                    raise TooManyRequestsError(
+                        error_message=data.get("msg"), status_code=data.get("code")
+                    )
                 elif 500 <= status < 600:
                     raise ServerError(
                         error_message=f"Server error: {status}", status_code=status
@@ -397,8 +420,8 @@ def send_request(
             is_list = isinstance(parsed, list)
             is_oneof = is_one_of_model(response_model)
             is_flat_list = is_list and (
-                len(parsed) == 0 or
-                (not isinstance(parsed[0], list) if is_list else False)
+                len(parsed) == 0
+                or (not isinstance(parsed[0], list) if is_list else False)
             )
             if (is_list and not is_flat_list) or not response_model:
                 data_function = lambda: parsed
@@ -438,7 +461,7 @@ def parse_rate_limit_headers(headers: Dict[str, str]) -> List[RateLimit]:
     """
     rate_limits: List[RateLimit] = []
 
-    def parse_interval_details(key: str) -> Optional[Dict[str, Union[str,int]]]:
+    def parse_interval_details(key: str) -> Optional[Dict[str, Union[str, int]]]:
         """Parses interval details from a header key.
 
         :param key: The header key to parse.
@@ -601,16 +624,17 @@ def normalize_query_values(parsed, expected_types=None):
     Returns:
         dict: A new dictionary with normalized values.
     """
+
     def convert(val, expected_type=None):
         val_stripped = val.strip()
         if expected_type:
-            if expected_type == bool:
+            if expected_type is bool:
                 return val_stripped.lower() == "true"
-            elif expected_type == int:
+            elif expected_type is int:
                 return int(val_stripped)
-            elif expected_type == float:
+            elif expected_type is float:
                 return float(val_stripped)
-            elif expected_type == str:
+            elif expected_type is str:
                 return val_stripped
         val_lower = val_stripped.lower()
         if val_lower == "true":
@@ -654,9 +678,11 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
     payload["id"] = payload["params"].pop("id", get_uuid())
 
     payload["params"] = {
-        snake_to_camel(k): json.dumps(make_serializable(v), separators=(",", ":"))
-        if isinstance(v, (list, dict))
-        else make_serializable(v)
+        snake_to_camel(k): (
+            json.dumps(make_serializable(v), separators=(",", ":"))
+            if isinstance(v, (list, dict))
+            else make_serializable(v)
+        )
         for k, v in payload["params"].items()
     }
 
@@ -664,12 +690,16 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
         if websocket_options.skip_auth is True:
             payload["params"]["timestamp"] = get_timestamp()
         else:
-            payload["params"] = websocket_api_signature(config, payload["params"], websocket_options.signer)
+            payload["params"] = websocket_api_signature(
+                config, payload["params"], websocket_options.signer
+            )
 
     return payload
 
 
-def websocket_api_signature(config, payload: Optional[Dict] = {}, signer: Signers = None) -> dict:
+def websocket_api_signature(
+    config, payload: Optional[Dict] = {}, signer: Signers = None
+) -> dict:
     """Generate signature for websocket API
 
     Args:
@@ -682,9 +712,7 @@ def websocket_api_signature(config, payload: Optional[Dict] = {}, signer: Signer
     payload["apiKey"] = config.api_key
     payload["timestamp"] = get_timestamp()
     parameters = OrderedDict(sorted(payload.items()))
-    parameters["signature"] = get_signature(
-        config, urlencode(parameters), signer
-    )
+    parameters["signature"] = get_signature(config, urlencode(parameters), signer)
     return parameters
 
 
@@ -704,11 +732,13 @@ def get_validator_field_map(response_model_cls: Type[BaseModel]) -> dict[str, st
     for field_name, annotation in annotations.items():
         if field_name.startswith("oneof_schema_") and field_name.endswith("_validator"):
             if getattr(annotation, "__origin__", None) is Union:
-                type_ = next((arg for arg in get_args(annotation) if arg is not type(None)), None)
+                type_ = next(
+                    (arg for arg in get_args(annotation) if arg is not type(None)), None
+                )
             else:
                 type_ = annotation
             if isinstance(type_, str):
-                type_ = re.sub(r'^Optional\[(.*)\]$', r'\1', type_)
+                type_ = re.sub(r"^Optional\[(.*)\]$", r"\1", type_)
 
             if type_:
                 field_map[type_] = field_name
@@ -716,7 +746,9 @@ def get_validator_field_map(response_model_cls: Type[BaseModel]) -> dict[str, st
     return field_map
 
 
-def resolve_model_from_event(response_model_cls: Type[BaseModel], event_name: str) -> Type[BaseModel]:
+def resolve_model_from_event(
+    response_model_cls: Type[BaseModel], event_name: str
+) -> Type[BaseModel]:
     """Resolve the correct model class for the websocket event dynamically.
 
     Args:

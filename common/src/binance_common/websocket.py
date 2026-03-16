@@ -2,30 +2,27 @@ import aiohttp
 import asyncio
 import json
 import logging
-import platform
 
 from pydantic import BaseModel
 from typing import Callable, Optional, Dict, Generic, Union, TypeVar, Type
-from types import SimpleNamespace
-from urllib.parse import urlencode
 
 from binance_common.configuration import (
     ConfigurationWebSocketAPI,
     ConfigurationWebSocketStreams,
 )
 from binance_common.constants import WebsocketMode
-from binance_common.models import WebsocketApiResponse, WebsocketApiOptions, WebsocketApiUserDataEndpoints
+from binance_common.models import (
+    WebsocketApiResponse,
+    WebsocketApiOptions,
+    WebsocketApiUserDataEndpoints,
+)
 from binance_common.signature import Signers
 from binance_common.utils import (
-    get_signature,
-    get_timestamp,
     get_uuid,
     get_random_int,
-    make_serializable,
     parse_proxies,
     parse_user_event,
     parse_ws_rate_limit_headers,
-    snake_to_camel,
     ws_api_payload,
 )
 
@@ -58,7 +55,11 @@ class WebSocketConnection:
     """
 
     def __init__(
-        self, websocket: aiohttp.ClientWebSocketResponse, id: Union[str, int], ws_type: str, url_path: Optional[str] = None
+        self,
+        websocket: aiohttp.ClientWebSocketResponse,
+        id: Union[str, int],
+        ws_type: str,
+        url_path: Optional[str] = None,
     ):
         self.id = id
         self.pending_request = {}
@@ -76,7 +77,7 @@ class WebSocketCommon:
     def __init__(
         self,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
-        user_data_endpoints: Optional[WebsocketApiUserDataEndpoints] = None
+        user_data_endpoints: Optional[WebsocketApiUserDataEndpoints] = None,
     ):
         """Initialize the WebSocketCommon class.
 
@@ -90,6 +91,7 @@ class WebSocketCommon:
         self.configuration = configuration
         self.session = None
         self.user_data_endpoints = user_data_endpoints
+        self.close_initiated = False
 
     async def connect(
         self,
@@ -111,12 +113,18 @@ class WebSocketCommon:
             if self.session is None:
                 self.session = aiohttp.ClientSession()
 
-            pool_size = configuration.pool_size if configuration.mode == WebsocketMode.POOL else 1
+            pool_size = (
+                configuration.pool_size
+                if configuration.mode == WebsocketMode.POOL
+                else 1
+            )
             urls = url_paths if url_paths else [None]
 
             for url_path in urls:
                 for _ in range(pool_size):
-                    await self.init_connection(url, configuration, ws_id=ws_id, url_path=url_path)
+                    await self.init_connection(
+                        url, configuration, ws_id=ws_id, url_path=url_path
+                    )
             return self
         except Exception as e:
             logging.error(f"WebSocket failed to connect: {e}")
@@ -126,7 +134,7 @@ class WebSocketCommon:
         url,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
         url_path: Optional[str] = None,
-        ws_id: Union[str, int]  = None,
+        ws_id: Union[str, int] = None,
     ):
         """Initialize a WebSocket connection.
 
@@ -182,11 +190,15 @@ class WebSocketCommon:
             id = ws_id if ws_id else get_uuid()
 
         logging.info(f"Establishing Websocket connection with id {id} to: {url}")
-        connection = WebSocketConnection(websocket, id, type(configuration).__name__, url_path)
+        connection = WebSocketConnection(
+            websocket, id, type(configuration).__name__, url_path
+        )
 
         self.connections.append(connection)
 
-        asyncio.create_task(self.schedule_reconnect(connection, configuration, 23 * 3600))
+        asyncio.create_task(
+            self.schedule_reconnect(connection, configuration, 23 * 3600)
+        )
         asyncio.create_task(self.receive_loop(connection))
 
     async def receive_loop(self, connection: WebSocketConnection):
@@ -209,6 +221,20 @@ class WebSocketCommon:
                         )
                     else:
                         future.set_result(data)
+                elif (
+                    data.get("event", {}).get("e") == "serverShutdown"
+                    and not connection.reconnect
+                    and connection.id not in self.reconnect_tasks
+                    and not getattr(self, "close_initiated", False)
+                ):
+                    logging.warning(
+                        "Server shutdown event received, scheduling reconnect"
+                    )
+                    await self.schedule_reconnect(
+                        connection, self.configuration, 5, close_old_connection=False
+                    )
+                    await self.close_connection(connection, False)
+                    self.reconnect_tasks.remove(connection.id)
                 else:
                     if data.get("error"):
                         raise ValueError(f"Error received from server: {data['error']}")
@@ -217,7 +243,11 @@ class WebSocketCommon:
                     subscription_id = data.get("subscriptionId")
 
                     key = stream or subscription_id
-                    callbacks = connection.stream_callback_map.get(key) if key is not None else None
+                    callbacks = (
+                        connection.stream_callback_map.get(key)
+                        if key is not None
+                        else None
+                    )
 
                     if callbacks:
                         try:
@@ -227,28 +257,41 @@ class WebSocketCommon:
 
                                 for callback in callbacks:
                                     if response_model:
-                                        if response_model.__pydantic_fields__.get("one_of_schemas"):
+                                        if response_model.__pydantic_fields__.get(
+                                            "one_of_schemas"
+                                        ):
                                             parsed = payload
                                         elif isinstance(payload, list):
                                             parsed = [
-                                                response_model.model_validate_json(json.dumps(item))
+                                                response_model.model_validate_json(
+                                                    json.dumps(item)
+                                                )
                                                 for item in payload
                                             ]
                                         else:
-                                            parsed = response_model.model_validate_json(json.dumps(payload))
+                                            parsed = response_model.model_validate_json(
+                                                json.dumps(payload)
+                                            )
                                         callback(parsed)
                                     else:
                                         callback(payload)
                             else:
-                                response_model = connection.response_types.get(subscription_id)
+                                response_model = connection.response_types.get(
+                                    subscription_id
+                                )
                                 payload = data["event"]
 
                                 for callback in callbacks:
                                     if response_model:
                                         if isinstance(payload, list):
-                                            parsed = [parse_user_event(item, response_model) for item in payload]
+                                            parsed = [
+                                                parse_user_event(item, response_model)
+                                                for item in payload
+                                            ]
                                         else:
-                                            parsed = parse_user_event(payload, response_model)
+                                            parsed = parse_user_event(
+                                                payload, response_model
+                                            )
                                         callback(parsed)
                                     else:
                                         callback(payload)
@@ -311,6 +354,7 @@ class WebSocketCommon:
         connection: WebSocketConnection,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
         delay: int,
+        close_old_connection: bool = True,
     ):
         """Schedule a reconnect attempt after a delay.
 
@@ -318,62 +362,77 @@ class WebSocketCommon:
             connection (WebSocketConnection): WebSocket connection object.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
             delay (int): Delay in seconds.
+            close_old_connection (bool): Whether to close the old connection before reconnecting.
         """
 
         await asyncio.sleep(delay)
-        connection.reconnect = True
+
+        if close_old_connection:
+            connection.reconnect = True
+
         if connection.is_session_log_on:
             await WebSocketCommon.send_message(
                 self,
                 {
-                    'method': self.user_data_endpoints.user_data_stream_logout,
-                    'params': {},
-                    'id': get_uuid()
+                    "method": self.user_data_endpoints.user_data_stream_logout,
+                    "params": {},
+                    "id": get_uuid(),
                 },
-                connection
+                connection,
             )
             await asyncio.sleep(1)
             connection.is_session_log_on = False
         self.reconnect_tasks.append(connection.id)
-        await self.reconnect(connection, configuration)
+        await self.reconnect(connection, configuration, close_old_connection)
 
     async def reconnect(
         self,
         connection: WebSocketConnection,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
+        close_old_connection: bool = True,
     ):
         """Reconnect to the WebSocket server.
 
         Args:
             connection (WebSocketConnection): WebSocket connection object.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
+            close_old_connection (bool): Whether to close the old connection before reconnecting.
         """
 
         if len(connection.pending_request) > 0:
             connection.pending_request.clear()
 
-        await self.close_connection(connection, False)
+        if close_old_connection:
+            await self.close_connection(connection, False)
         if configuration.reconnect_delay:
             await asyncio.sleep(configuration.reconnect_delay / 1000)
 
         await self.connect(configuration.stream_url, configuration, connection.id)
 
-        new_connection = next((c for c in self.connections if c.id == connection.id), None)
+        new_connection = next(
+            (c for c in self.connections if c.id == connection.id), None
+        )
         if not new_connection:
+            logging.error("Reconnect failed: new connection not found")
             return
 
         if connection.session_logon_request and self.configuration.session_re_logon:
-            await self.session_re_log_on(connection.session_logon_request, new_connection)
+            await self.session_re_log_on(
+                connection.session_logon_request, new_connection
+            )
             await asyncio.sleep(1)
             await self._resubscribe_user_streams(connection, new_connection)
 
         await self._resubscribe_global_streams(connection, new_connection)
+        print(f"Reconnected WebSocket {close_old_connection}")
 
-        self.reconnect_tasks.remove(connection.id)
-        connection.reconnect = False
+        if close_old_connection:
+            self.reconnect_tasks.remove(connection.id)
+            connection.reconnect = False
 
-
-    async def _resubscribe_user_streams(self, old_connection: WebSocketConnection, new_connection: WebSocketConnection):
+    async def _resubscribe_user_streams(
+        self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
+    ):
         """Resubscribe all user streams from old_connection to new_connection.
 
         Args:
@@ -391,19 +450,26 @@ class WebSocketCommon:
             }
             await WebSocketCommon.send_message(self, json_msg, new_connection)
 
-            global_user_stream_connections.stream_connections_map[stream] = new_connection
+            global_user_stream_connections.stream_connections_map[stream] = (
+                new_connection
+            )
             new_connection.stream_callback_map[stream] = old_target
-            new_connection.response_types[stream] = old_connection.response_types.get(stream)
+            new_connection.response_types[stream] = old_connection.response_types.get(
+                stream
+            )
 
-
-    async def _resubscribe_global_streams(self, old_connection: WebSocketConnection, new_connection: WebSocketConnection):
+    async def _resubscribe_global_streams(
+        self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
+    ):
         """Resubscribe all global streams from old_connection to new_connection.
 
         Args:
             old_connection (WebSocketConnection): The old WebSocket connection.
             new_connection (WebSocketConnection): The new WebSocket connection.
         """
-        for stream, conn in list(global_stream_connections.stream_connections_map.items()):
+        for stream, conn in list(
+            global_stream_connections.stream_connections_map.items()
+        ):
             if conn != old_connection or not isinstance(stream, str):
                 continue
 
@@ -415,9 +481,12 @@ class WebSocketCommon:
             await self.send_message(json_msg, new_connection)
             global_stream_connections.stream_connections_map[stream] = new_connection
 
-            new_connection.stream_callback_map[stream] = old_connection.stream_callback_map.get(stream)
-            new_connection.response_types[stream] = old_connection.response_types.get(stream)
-
+            new_connection.stream_callback_map[stream] = (
+                old_connection.stream_callback_map.get(stream)
+            )
+            new_connection.response_types[stream] = old_connection.response_types.get(
+                stream
+            )
 
     async def session_re_log_on(self, request, connection: WebSocketConnection):
         """Re-logon the session.
@@ -425,32 +494,28 @@ class WebSocketCommon:
             connection (WebSocketConnection): WebSocket connection object.
         """
 
-        if request and connection.is_session_log_on == False:
+        if request and not connection.is_session_log_on:
             data = {
                 "method": request["method"],
                 "params": request["params"],
                 "id": request["id"],
             }
             signer = Signers.get_signer(
-                self.configuration.private_key, self.configuration.private_key_passphrase
+                self.configuration.private_key,
+                self.configuration.private_key_passphrase,
             )
             websocket_options = WebsocketApiOptions(
-                signer=signer,
-                api_key=False,
-                is_signed=True,
-                skip_auth=True
+                signer=signer, api_key=False, is_signed=True, skip_auth=True
             )
-            payload = ws_api_payload(
-                self.configuration,
-                data,
-                websocket_options
-            )
+            payload = ws_api_payload(self.configuration, data, websocket_options)
 
             try:
                 await WebSocketCommon.send_message(self, payload, connection)
                 connection.is_session_log_on = True
             except Exception as e:
-                logging.error(f"Session re-logon failed for connection {connection.id}: {e}")
+                logging.error(
+                    f"Session re-logon failed for connection {connection.id}: {e}"
+                )
 
     async def close_connection(
         self, connection: WebSocketConnection = None, close_session: bool = True
@@ -466,6 +531,7 @@ class WebSocketCommon:
             logging.warning("No WebSocket connections to close.")
         elif connection:
             try:
+                connection.close_initiated = True
                 await connection.websocket.close()
                 logging.info(f"WebSocket {connection.id} closed.")
                 self.connections.remove(connection)
@@ -474,6 +540,7 @@ class WebSocketCommon:
         else:
             for connection in self.connections[:]:
                 try:
+                    connection.close_initiated = True
                     await connection.websocket.close()
                     logging.info(f"WebSocket {connection.id} closed.")
                     self.connections.remove(connection)
@@ -490,7 +557,7 @@ class WebSocketStreamBase(WebSocketCommon):
         self,
         configuration: ConfigurationWebSocketStreams,
         id_strict_int: Optional[bool] = False,
-        url_paths: Optional[str] = None
+        url_paths: Optional[str] = None,
     ):
         """Initialize the WebSocketStreamBase class.
 
@@ -514,9 +581,16 @@ class WebSocketStreamBase(WebSocketCommon):
             WebSocketConnection: The created WebSocket connection.
         """
 
-        return await self.connect(self.configuration.stream_url, self.configuration, url_paths=self.url_paths)
+        return await self.connect(
+            self.configuration.stream_url, self.configuration, url_paths=self.url_paths
+        )
 
-    async def subscribe(self, streams: list[str], response_model: Type[T] = None, stream_url: Optional[str] = None):
+    async def subscribe(
+        self,
+        streams: list[str],
+        response_model: Type[T] = None,
+        stream_url: Optional[str] = None,
+    ):
         """Subscribe to a list of streams.
 
         Args:
@@ -553,15 +627,25 @@ class WebSocketStreamBase(WebSocketCommon):
             if self.configuration.mode == WebsocketMode.SINGLE:
                 connection = candidates[0] if candidates else None
             else:
-                connection = candidates[self.round_robin_index % len(candidates)] if candidates else None
-                self.round_robin_index = (self.round_robin_index + 1) % len(candidates) if candidates else 0
+                connection = (
+                    candidates[self.round_robin_index % len(candidates)]
+                    if candidates
+                    else None
+                )
+                self.round_robin_index = (
+                    (self.round_robin_index + 1) % len(candidates) if candidates else 0
+                )
 
             if connection is None:
                 logging.warning(f"No matching connection found for stream: {stream}")
                 continue
 
             logging.info(f"Subscribing to streams: {streams}")
-            json_msg = {"method": "SUBSCRIBE", "params": [stream], "id": get_random_int() if self.id_strict_int else get_uuid()}
+            json_msg = {
+                "method": "SUBSCRIBE",
+                "params": [stream],
+                "id": get_random_int() if self.id_strict_int else get_uuid(),
+            }
             await asyncio.sleep(0.5)
             await self.send_message(json_msg, connection)
             global_stream_connections.stream_connections_map[stream] = connection
@@ -667,7 +751,11 @@ class WebSocketStreamBase(WebSocketCommon):
 
 
 class WebSocketAPIBase(WebSocketCommon):
-    def __init__(self, configuration: ConfigurationWebSocketAPI, user_data_endpoints: Optional[WebsocketApiUserDataEndpoints] = None):
+    def __init__(
+        self,
+        configuration: ConfigurationWebSocketAPI,
+        user_data_endpoints: Optional[WebsocketApiUserDataEndpoints] = None,
+    ):
         super().__init__(configuration, user_data_endpoints)
         self.configuration = configuration
 
@@ -682,7 +770,7 @@ class WebSocketAPIBase(WebSocketCommon):
         response_model: Type[T] = None,
         api_key: Optional[bool] = False,
         session_logon: Optional[bool] = False,
-        session_logout: Optional[bool] = False
+        session_logout: Optional[bool] = False,
     ) -> WebsocketApiResponse[T]:
         """Send a message to the WebSocket server.
 
@@ -719,24 +807,16 @@ class WebSocketAPIBase(WebSocketCommon):
 
         skip_auth = False if session_logon else connection.is_session_log_on is True
         websocket_options = WebsocketApiOptions(
-            signer=signer,
-            api_key=api_key,
-            is_signed=True,
-            skip_auth=skip_auth
+            signer=signer, api_key=api_key, is_signed=True, skip_auth=skip_auth
         )
-
 
         if not self.configuration.return_rate_limits:
             if "params" in payload:
-                payload["params"].update({ "returnRateLimits": False})
+                payload["params"].update({"returnRateLimits": False})
             else:
-                payload["params"] = { "returnRateLimits": False }
+                payload["params"] = {"returnRateLimits": False}
 
-        _payload = ws_api_payload(
-            self.configuration,
-            payload,
-            websocket_options
-        )
+        _payload = ws_api_payload(self.configuration, payload, websocket_options)
 
         future = await super().send_message(_payload, connection)
         if promised:
@@ -753,7 +833,11 @@ class WebSocketAPIBase(WebSocketCommon):
                         if response_model
                         else ws_response
                     ),
-                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]) if self.configuration.return_rate_limits else [],
+                    rate_limits=(
+                        parse_ws_rate_limit_headers(ws_response["rateLimits"])
+                        if self.configuration.return_rate_limits
+                        else []
+                    ),
                 )
             except asyncio.TimeoutError:
                 logging.warning(
@@ -779,7 +863,7 @@ class WebSocketAPIBase(WebSocketCommon):
         response_model: Type[T] = None,
         api_key: Optional[bool] = False,
         session_logon: Optional[bool] = None,
-        session_logout: Optional[bool] = None
+        session_logout: Optional[bool] = None,
     ) -> WebsocketApiResponse[T]:
         """Send a message to the WebSocket server.
 
@@ -817,22 +901,16 @@ class WebSocketAPIBase(WebSocketCommon):
         skip_auth = False if session_logon else connection.is_session_log_on is True
 
         websocket_options = WebsocketApiOptions(
-            api_key=api_key,
-            is_signed=False,
-            skip_auth=skip_auth
+            api_key=api_key, is_signed=False, skip_auth=skip_auth
         )
 
         if not self.configuration.return_rate_limits:
             if "params" in payload:
-                payload["params"].update({ "returnRateLimits": False})
+                payload["params"].update({"returnRateLimits": False})
             else:
-                payload["params"] = { "returnRateLimits": False }
+                payload["params"] = {"returnRateLimits": False}
 
-        _payload = ws_api_payload(
-            self.configuration,
-            payload,
-            websocket_options
-        )
+        _payload = ws_api_payload(self.configuration, payload, websocket_options)
 
         future = await super().send_message(_payload, connection)
         if promised:
@@ -854,7 +932,11 @@ class WebSocketAPIBase(WebSocketCommon):
 
                 return WebsocketApiResponse[T](
                     data_function=data_function,
-                    rate_limits=parse_ws_rate_limit_headers(ws_response["rateLimits"]) if self.configuration.return_rate_limits else [],
+                    rate_limits=(
+                        parse_ws_rate_limit_headers(ws_response["rateLimits"])
+                        if self.configuration.return_rate_limits
+                        else []
+                    ),
                 )
             except asyncio.TimeoutError:
                 logging.warning(
@@ -882,7 +964,7 @@ class WebSocketAPIBase(WebSocketCommon):
             bool: True if the model is a oneof model, False otherwise.
         """
 
-        return (hasattr(model_cls, "is_oneof_model") and model_cls.is_oneof_model())
+        return hasattr(model_cls, "is_oneof_model") and model_cls.is_oneof_model()
 
     async def ping_ws_api(self, connection: WebSocketConnection):
         """Send a ping message to the WebSocket server.
@@ -992,7 +1074,10 @@ class RequestStreamHandle(Generic[T]):
 
 
 async def RequestStream(
-    websocket_base: WebSocketStreamBase or WebSocketAPIBase, stream: str, response_model: Type[T] = None, stream_url: Optional[str] = None
+    websocket_base: WebSocketStreamBase or WebSocketAPIBase,
+    stream: str,
+    response_model: Type[T] = None,
+    stream_url: Optional[str] = None,
 ) -> RequestStreamHandle[T]:
     """Decorator to create a request stream for a specific stream.
 
@@ -1003,8 +1088,12 @@ async def RequestStream(
     """
 
     if isinstance(websocket_base, WebSocketStreamBase):
-        await websocket_base.subscribe(streams=[stream], response_model=response_model, stream_url=stream_url)
+        await websocket_base.subscribe(
+            streams=[stream], response_model=response_model, stream_url=stream_url
+        )
     else:
-        await websocket_base.subscribe_user_data(id=stream, response_model=response_model)
+        await websocket_base.subscribe_user_data(
+            id=stream, response_model=response_model
+        )
 
     return RequestStreamHandle(websocket_base, stream, response_model)

@@ -55,9 +55,11 @@ class Signers:
             ed_key = cls.get_ed25519_key(key, passphrase)
             cls._ed25519_signers[cache_key] = eddsa.new(ed_key, "rfc8032")
         return cls._ed25519_signers[cache_key]
-    
+
     @classmethod
-    def get_signer(cls, private_key: str, passphrase: Optional[str] = None) -> Union[pkcs1_15.PKCS115_SigScheme, object]:
+    def get_signer(
+        cls, private_key: str, passphrase: Optional[str] = None
+    ) -> Union[pkcs1_15.PKCS115_SigScheme, object]:
         """
         Automatically detects the key type (RSA or Ed25519) and returns the appropriate signer.
         Raises ValueError if the key is not supported.
@@ -73,4 +75,6 @@ class Signers:
         except (ValueError, IndexError, TypeError):
             pass
 
-        raise ValueError("Unsupported or invalid private key format. Private key must be either 'RSA' or 'ED25519'")
+        raise ValueError(
+            "Unsupported or invalid private key format. Private key must be either 'RSA' or 'ED25519'"
+        )

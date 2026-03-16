@@ -77,7 +77,7 @@ class ConfigurationRestAPI:
         self.base_headers = {
             "Accept": "application/json",
             "X-MBX-APIKEY": str(self.api_key) if self.api_key else "",
-            **parse_custom_headers(custom_headers)
+            **parse_custom_headers(custom_headers),
         }
 
 
@@ -113,7 +113,7 @@ class ConfigurationWebSocketAPI:
         time_unit: TimeUnit = None,
         https_agent: Optional[ssl.SSLContext] = None,
         session_re_logon: Optional[bool] = True,
-        return_rate_limits: Optional[bool] = True
+        return_rate_limits: Optional[bool] = True,
     ):
         """
         Initialize the API configuration.
