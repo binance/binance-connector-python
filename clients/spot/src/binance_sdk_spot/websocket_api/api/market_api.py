@@ -21,6 +21,8 @@ from binance_common.websocket import WebSocketAPIBase
 from ..models import AvgPriceResponse
 from ..models import DepthResponse
 from ..models import KlinesResponse
+from ..models import ReferencePriceResponse
+from ..models import ReferencePriceCalculationResponse
 from ..models import TickerResponse
 from ..models import Ticker24hrResponse
 from ..models import TickerBookResponse
@@ -34,6 +36,7 @@ from ..models import UiKlinesResponse
 
 from ..models import DepthSymbolStatusEnum
 from ..models import KlinesIntervalEnum
+from ..models import ReferencePriceCalculationSymbolStatusEnum
 from ..models import TickerTypeEnum
 from ..models import TickerWindowSizeEnum
 from ..models import TickerSymbolStatusEnum
@@ -241,6 +244,97 @@ class MarketApi:
             payload=payload, response_model=KlinesResponse
         )
 
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> WebsocketApiResponse[ReferencePriceResponse]:
+        """
+            WebSocket Query Reference Price
+            /referencePrice
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#query-reference-price
+
+
+        Weight: 2
+
+            Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                WebsocketApiResponse[ReferencePriceResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        params = {
+            "symbol": symbol,
+            **({"id": id} if id is not None else {}),
+        }
+
+        payload = {
+            "method": "/referencePrice".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_message(
+            payload=payload, response_model=ReferencePriceResponse
+        )
+
+    async def reference_price_calculation(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+        symbol_status: Optional[ReferencePriceCalculationSymbolStatusEnum] = None,
+    ) -> WebsocketApiResponse[ReferencePriceCalculationResponse]:
+        """
+            WebSocket Query Reference Price Calculation
+            /referencePrice.calculation
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#query-reference-price-calculation
+
+            Describes how reference price is calculated for a given symbol.
+        Weight: 2
+
+            Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None):
+
+            Returns:
+                WebsocketApiResponse[ReferencePriceCalculationResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        params = {
+            "symbol": symbol,
+            **({"id": id} if id is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
+        }
+
+        payload = {
+            "method": "/referencePrice.calculation".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_message(
+            payload=payload, response_model=ReferencePriceCalculationResponse
+        )
+
     async def ticker(
         self,
         id: Optional[str] = None,
@@ -317,7 +411,7 @@ class MarketApi:
 
         If you need to continuously monitor trading statistics, please consider using WebSocket Streams:
 
-        * `<symbol>@ticker`
+        * `<symbol>@ticker` or `!ticker@arr`
         * `<symbol>@miniTicker` or `!miniTicker@arr`
 
         If you need different window sizes,

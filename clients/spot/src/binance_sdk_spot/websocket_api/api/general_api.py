@@ -18,11 +18,13 @@ from binance_common.signature import Signers
 from binance_common.websocket import WebSocketAPIBase
 
 from ..models import ExchangeInfoResponse
+from ..models import ExecutionRulesResponse
 from ..models import PingResponse
 from ..models import TimeResponse
 
 
 from ..models import ExchangeInfoSymbolStatusEnum
+from ..models import ExecutionRulesSymbolStatusEnum
 
 from typing import List, Optional
 
@@ -91,6 +93,56 @@ class GeneralApi:
 
         return await self.websocket_api.send_message(
             payload=payload, response_model=ExchangeInfoResponse
+        )
+
+    async def execution_rules(
+        self,
+        id: Optional[str] = None,
+        symbol: Optional[str] = None,
+        symbols: Optional[List[str]] = None,
+        symbol_status: Optional[ExecutionRulesSymbolStatusEnum] = None,
+    ) -> WebsocketApiResponse[ExecutionRulesResponse]:
+        """
+            WebSocket Query Execution Rules
+            /executionRules
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/general-requests#query-execution-rules
+
+
+        Weight: Parameter | Weight|
+        ---        | ---
+        `symbol`  | 2
+        `symbols` | 2 for each `symbol`, capped at a max of 40|
+        `symbolStatus` |40|
+        None            |40|
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None):
+
+            Returns:
+                WebsocketApiResponse[ExecutionRulesResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        params = {
+            **({"id": id} if id is not None else {}),
+            **({"symbol": symbol} if symbol is not None else {}),
+            **({"symbols": symbols} if symbols is not None else {}),
+            **({"symbol_status": symbol_status} if symbol_status is not None else {}),
+        }
+
+        payload = {
+            "method": "/executionRules".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_message(
+            payload=payload, response_model=ExecutionRulesResponse
         )
 
     async def ping(

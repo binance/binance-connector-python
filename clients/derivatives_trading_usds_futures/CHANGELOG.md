@@ -1,5 +1,40 @@
 # Changelog
 
+## 9.0.0 - 2026-03-16
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.7.0`
+
+#### REST API
+
+- Modified response for `query_order()` (`GET /fapi/v1/order`):
+  - property `priceProtect` added
+  - property `type` added
+  - property `updateTime` added
+  - property `price` added
+  - property `avgPrice` added
+  - property `closePosition` added
+  - property `reduceOnly` added
+  - property `timeInForce` added
+  - property `time` added
+  - property `origType` added
+  - property `priceRate` added
+  - property `executedQty` added
+  - property `origQty` added
+  - property `cumQuote` added
+  - property `orderId` added
+  - property `side` added
+  - property `positionSide` added
+  - property `symbol` added
+  - property `workingType` added
+  - property `clientOrderId` added
+  - property `stopPrice` added
+  - property `activatePrice` added
+  - property `id` deleted
+  - property `result` deleted
+  - `status`: type `integer` → `string`
+
 ## 8.0.0 - 2026-03-09
 
 ### Changed (2)

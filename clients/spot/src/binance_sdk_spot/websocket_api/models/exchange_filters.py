@@ -130,6 +130,7 @@ class ExchangeFilters(BaseModel):
                 # Deserialize directly into the proper schema
                 instance = cls.model_construct()
 
+                # S049499
                 class_name = str(target_cls).split(".")[-1].split("'")[0]
                 if class_name in validator_mapping:
                     setattr(

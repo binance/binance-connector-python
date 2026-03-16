@@ -24,6 +24,14 @@ class ExchangeInfoSymbolStatusEnum(Enum):
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
+class ExecutionRulesSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class DepthSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     END_OF_DAY = "END_OF_DAY"
@@ -49,6 +57,14 @@ class KlinesIntervalEnum(Enum):
     INTERVAL_3d = "3d"
     INTERVAL_1w = "1w"
     INTERVAL_1M = "1M"
+
+
+class ReferencePriceCalculationSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
 class TickerTypeEnum(Enum):

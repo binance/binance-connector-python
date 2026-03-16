@@ -1327,6 +1327,104 @@ class TestWebSocketStreams:
             await self.ws_streams.partial_book_depth(**params)
 
     @pytest.mark.asyncio
+    async def test_reference_price_subscription(self):
+        """Test that reference_price() subscribes to the correct WebSocket stream."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        expected_response = {
+            "e": "referencePrice",
+            "s": "BAZUSD",
+            "r": "1.00",
+            "t": 1770313263917,
+        }
+        stream_endpoint = ws_streams_placeholder(
+            "/<symbol>@referencePrice".replace("/", "", 1),
+            params,
+        )
+
+        def mock_on(event, callback, stream):
+            if event == "message" and stream == stream_endpoint:
+                callback(expected_response)
+
+        self.websocket_client.on = MagicMock(side_effect=mock_on)
+
+        mock_callback = MagicMock()
+
+        stream = await self.ws_streams.reference_price(**params)
+        assert isinstance(stream, RequestStreamHandle)
+        assert callable(stream.on)
+        assert callable(stream.unsubscribe)
+        stream.on("message", mock_callback)
+        mock_callback.assert_called_once_with(expected_response)
+
+    @pytest.mark.asyncio
+    async def test_reference_price_success(self):
+        """Test reference_price() successfully with required parameters only."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        expected_response = {
+            "e": "referencePrice",
+            "s": "BAZUSD",
+            "r": "1.00",
+            "t": 1770313263917,
+        }
+        self.ws_streams.reference_price = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.reference_price(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_reference_price_success_with_optional_params(self):
+        """Test reference_price() successfully with optional parameters."""
+
+        params = {"symbol": "bnbusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "referencePrice",
+            "s": "BAZUSD",
+            "r": "1.00",
+            "t": 1770313263917,
+        }
+
+        self.ws_streams.reference_price = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.reference_price(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_reference_price_missing_required_param_symbol(self):
+        """Test that reference_price() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "bnbusdt",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.ws_streams.reference_price(**params)
+
+    @pytest.mark.asyncio
+    async def test_reference_price_server_error(self):
+        """Test that reference_price() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.ws_streams.reference_price = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.ws_streams.reference_price(**params)
+
+    @pytest.mark.asyncio
     async def test_rolling_window_ticker_subscription(self):
         """Test that rolling_window_ticker() subscribes to the correct WebSocket stream."""
 

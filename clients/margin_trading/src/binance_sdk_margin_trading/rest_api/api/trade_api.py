@@ -79,15 +79,14 @@ class TradeApi:
                 POST /sapi/v1/margin/apiKey
                 https://developers.binance.com/docs/margin_trading/trade/Create-Special-Key-of-Low-Latency-Trading
 
-                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher.
-        - If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
+                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 7 or higher.
+        - If you are VIP level 6 or below, please contact your VIP manager for eligibility criterias.
 
         **Supported Products:**
 
         - Cross Margin
         - Isolated Margin
         - Portfolio Margin Pro
-        - Cross Margin Pro (Additional agreement required and subject to meeting eligibility criteria)
 
         **Unsupported Products:**
 

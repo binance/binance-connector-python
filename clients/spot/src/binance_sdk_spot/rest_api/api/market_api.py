@@ -27,6 +27,8 @@ from ..models import DepthResponse
 from ..models import GetTradesResponse
 from ..models import HistoricalTradesResponse
 from ..models import KlinesResponse
+from ..models import ReferencePriceResponse
+from ..models import ReferencePriceCalculationResponse
 from ..models import TickerResponse
 from ..models import Ticker24hrResponse
 from ..models import TickerBookTickerResponse
@@ -37,6 +39,7 @@ from ..models import UiKlinesResponse
 
 from ..models import DepthSymbolStatusEnum
 from ..models import KlinesIntervalEnum
+from ..models import ReferencePriceCalculationSymbolStatusEnum
 from ..models import TickerWindowSizeEnum
 from ..models import TickerTypeEnum
 from ..models import TickerSymbolStatusEnum
@@ -365,6 +368,92 @@ class MarketApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=KlinesResponse,
+        )
+
+    def reference_price(
+        self,
+        symbol: Union[str, None],
+    ) -> ApiResponse[ReferencePriceResponse]:
+        """
+                Query Reference Price
+                GET /api/v3/referencePrice
+                https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints#query-reference-price
+
+
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+
+                Returns:
+                    ApiResponse[ReferencePriceResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v3/referencePrice",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=ReferencePriceResponse,
+        )
+
+    def reference_price_calculation(
+        self,
+        symbol: Union[str, None],
+        symbol_status: Optional[ReferencePriceCalculationSymbolStatusEnum] = None,
+    ) -> ApiResponse[ReferencePriceCalculationResponse]:
+        """
+                Query Reference Price Calculation
+                GET /api/v3/referencePrice/calculation
+                https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints#query-reference-price-calculation
+
+                Describes how reference price is calculated for a given symbol.
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None):
+
+                Returns:
+                    ApiResponse[ReferencePriceCalculationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol, "symbol_status": symbol_status}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v3/referencePrice/calculation",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=ReferencePriceCalculationResponse,
         )
 
     def ticker(

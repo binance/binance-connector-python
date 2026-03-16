@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-derivatives-trading-coin-futures"
-version = "5.0.0"
+version = "5.1.0"
 description = "Official Binance Derivatives Trading Coin Futures SDK - A lightweight library that provides a convenient interface to Binance's DerivativesTradingCoinFutures REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
@@ -18,7 +18,7 @@ websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = "3.6.0"
+binance-common = "3.7.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]

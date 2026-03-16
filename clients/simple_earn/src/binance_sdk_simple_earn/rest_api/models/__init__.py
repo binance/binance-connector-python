@@ -20,6 +20,9 @@ from .get_bfusd_quota_details_response_fast_redemption_quota import (
 from .get_bfusd_quota_details_response_standard_redemption_quota import (
     GetBfusdQuotaDetailsResponseStandardRedemptionQuota as GetBfusdQuotaDetailsResponseStandardRedemptionQuota,
 )
+from .get_bfusd_quota_details_response_subscription_quota import (
+    GetBfusdQuotaDetailsResponseSubscriptionQuota as GetBfusdQuotaDetailsResponseSubscriptionQuota,
+)
 from .get_bfusd_rate_history_response import (
     GetBfusdRateHistoryResponse as GetBfusdRateHistoryResponse,
 )

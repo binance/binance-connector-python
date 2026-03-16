@@ -543,11 +543,10 @@ class TradeApi:
                 POST /api/v3/order/cancelReplace
                 https://developers.binance.com/docs/binance-spot-api-docs/rest-api/trading-endpoints#cancel-an-existing-order-and-send-a-new-order-trade
 
-                Cancels an existing order and places a new order on the same symbol.
-
-        Filters and Order Count are evaluated before the processing of the cancellation and order placement occurs.
-
-        A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+                * Cancels an existing order and places a new order on the same symbol.
+        * Filters and Order Count are evaluated before the processing of the cancellation and order placement occurs.
+        * A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+        * You can only cancel an individual order from an orderList using this endpoint, but the result is the same as canceling the entire orderList.
         Weight: 1
 
                 Args:

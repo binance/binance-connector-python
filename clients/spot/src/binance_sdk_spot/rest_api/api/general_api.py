@@ -21,11 +21,13 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import ExchangeInfoResponse
+from ..models import ExecutionRulesResponse
 
 from ..models import TimeResponse
 
 
 from ..models import ExchangeInfoSymbolStatusEnum
+from ..models import ExecutionRulesSymbolStatusEnum
 
 
 class GeneralApi:
@@ -90,6 +92,52 @@ class GeneralApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInfoResponse,
+        )
+
+    def execution_rules(
+        self,
+        symbol: Optional[str] = None,
+        symbols: Optional[List[str]] = None,
+        symbol_status: Optional[ExecutionRulesSymbolStatusEnum] = None,
+    ) -> ApiResponse[ExecutionRulesResponse]:
+        """
+                Query Execution Rules
+                GET /api/v3/executionRules
+                https://developers.binance.com/docs/binance-spot-api-docs/rest-api/general-endpoints#query-execution-rules
+
+
+        Weight: Parameter | Weight|
+        ---        | ---
+        `symbol`  | 2
+        `symbols` | 2 for each `symbol`, capped at a max of 40|
+        `symbolStatus` |40|
+        None            |40|
+
+                Args:
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None):
+
+                Returns:
+                    ApiResponse[ExecutionRulesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"symbol": symbol, "symbols": symbols, "symbol_status": symbol_status}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v3/executionRules",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=ExecutionRulesResponse,
         )
 
     def ping(
