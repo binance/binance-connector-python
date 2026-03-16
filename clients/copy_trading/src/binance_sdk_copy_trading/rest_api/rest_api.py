@@ -108,6 +108,7 @@ class CopyTradingRestAPI:
                 Get Futures Lead Trader Status(TRADE)
 
                 Get Futures Lead Trader Status
+
         Weight: 20
 
                 Args:
@@ -131,6 +132,7 @@ class CopyTradingRestAPI:
                 Get Futures Lead Trading Symbol Whitelist(USER_DATA)
 
                 Get Futures Lead Trading Symbol Whitelist
+
         Weight: 20
 
                 Args:

@@ -55,11 +55,14 @@ from .models import SessionLogonResponse
 from .models import SessionLogoutResponse
 from .models import SessionStatusResponse
 from .models import ExchangeInfoResponse
+from .models import ExecutionRulesResponse
 from .models import PingResponse
 from .models import TimeResponse
 from .models import AvgPriceResponse
 from .models import DepthResponse
 from .models import KlinesResponse
+from .models import ReferencePriceResponse
+from .models import ReferencePriceCalculationResponse
 from .models import TickerResponse
 from .models import Ticker24hrResponse
 from .models import TickerBookResponse
@@ -92,8 +95,10 @@ from .models import UserDataStreamUnsubscribeResponse
 from .models import UserDataStreamEventsResponse
 
 from .models import ExchangeInfoSymbolStatusEnum
+from .models import ExecutionRulesSymbolStatusEnum
 from .models import DepthSymbolStatusEnum
 from .models import KlinesIntervalEnum
+from .models import ReferencePriceCalculationSymbolStatusEnum
 from .models import TickerTypeEnum
 from .models import TickerWindowSizeEnum
 from .models import TickerSymbolStatusEnum
@@ -928,6 +933,42 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             id, symbol, symbols, permissions, show_permission_sets, symbol_status
         )
 
+    async def execution_rules(
+        self,
+        id: Optional[str] = None,
+        symbol: Optional[str] = None,
+        symbols: Optional[List[str]] = None,
+        symbol_status: Optional[ExecutionRulesSymbolStatusEnum] = None,
+    ) -> WebsocketApiResponse[ExecutionRulesResponse]:
+        """
+                WebSocket Query Execution Rules
+
+
+        Weight: Parameter | Weight|
+        ---        | ---
+        `symbol`  | 2
+        `symbols` | 2 for each `symbol`, capped at a max of 40|
+        `symbolStatus` |40|
+        None            |40|
+
+                Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol (Optional[str] = None): Describe a single symbol
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None):
+
+                Returns:
+                    WebsocketApiResponse[ExecutionRulesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._generalApi.execution_rules(
+            id, symbol, symbols, symbol_status
+        )
+
     async def ping(
         self,
         id: Optional[str] = None,
@@ -1090,6 +1131,60 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             symbol, interval, id, start_time, end_time, time_zone, limit
         )
 
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> WebsocketApiResponse[ReferencePriceResponse]:
+        """
+                WebSocket Query Reference Price
+
+
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    WebsocketApiResponse[ReferencePriceResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._marketApi.reference_price(symbol, id)
+
+    async def reference_price_calculation(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+        symbol_status: Optional[ReferencePriceCalculationSymbolStatusEnum] = None,
+    ) -> WebsocketApiResponse[ReferencePriceCalculationResponse]:
+        """
+                WebSocket Query Reference Price Calculation
+
+                Describes how reference price is calculated for a given symbol.
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None):
+
+                Returns:
+                    WebsocketApiResponse[ReferencePriceCalculationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._marketApi.reference_price_calculation(
+            symbol, id, symbol_status
+        )
+
     async def ticker(
         self,
         id: Optional[str] = None,
@@ -1148,7 +1243,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         If you need to continuously monitor trading statistics, please consider using WebSocket Streams:
 
-        * `<symbol>@ticker`
+        * `<symbol>@ticker` or `!ticker@arr`
         * `<symbol>@miniTicker` or `!miniTicker@arr`
 
         If you need different window sizes,
@@ -1595,9 +1690,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
                 WebSocket Cancel and replace order
 
-                Cancel an existing order and immediately place a new order instead of the canceled one.
-
-        A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+                * Cancel an existing order and immediately place a new order instead of the canceled one.
+        * A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+        * You can only cancel an individual order from an orderList using this method, but the result is the same as canceling the entire orderList.
         Weight: 1
 
                 Args:

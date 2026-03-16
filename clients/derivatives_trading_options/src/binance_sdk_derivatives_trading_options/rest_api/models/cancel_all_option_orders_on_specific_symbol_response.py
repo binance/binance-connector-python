@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -27,7 +27,7 @@ class CancelAllOptionOrdersOnSpecificSymbolResponse(BaseModel):
     CancelAllOptionOrdersOnSpecificSymbolResponse
     """  # noqa: E501
 
-    code: Optional[StrictInt] = None
+    code: Optional[StrictStr] = None
     msg: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["code", "msg"]

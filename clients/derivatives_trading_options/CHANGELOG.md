@@ -1,5 +1,16 @@
 # Changelog
 
+## 6.0.0 - 2026-03-16
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.7.0`
+
+#### REST API
+
+- Modified response for `cancel_all_option_orders_on_specific_symbol()` (`DELETE /eapi/v1/allOpenOrders`):
+  - `code`: type `integer` → `string`
+
 ## 5.3.1 - 2026-02-25
 
 ### Changed (1)

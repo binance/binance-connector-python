@@ -70,6 +70,7 @@ from .percent_price_by_side_filter import (
 from .percent_price_filter import PercentPriceFilter as PercentPriceFilter
 from .price_filter import PriceFilter as PriceFilter
 from .rate_limits import RateLimits as RateLimits
+from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
 from .rolling_window_ticker_response import (
     RollingWindowTickerResponse as RollingWindowTickerResponse,
 )

@@ -372,6 +372,30 @@ class SpotWebSocketStreams(WebSocketStreamBase):
             symbol, levels, id, update_speed
         )
 
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Reference Price Streams
+
+
+
+        Args:
+            symbol (Union[str, None]): Symbol to query
+            id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._webSocketStreamsApi.reference_price(symbol, id)
+
     async def rolling_window_ticker(
         self,
         symbol: Union[str, None],

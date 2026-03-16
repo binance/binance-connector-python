@@ -24,6 +24,9 @@ from binance_sdk_simple_earn.rest_api.models.get_bfusd_quota_details_response_fa
 from binance_sdk_simple_earn.rest_api.models.get_bfusd_quota_details_response_standard_redemption_quota import (
     GetBfusdQuotaDetailsResponseStandardRedemptionQuota,
 )
+from binance_sdk_simple_earn.rest_api.models.get_bfusd_quota_details_response_subscription_quota import (
+    GetBfusdQuotaDetailsResponseSubscriptionQuota,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -33,6 +36,9 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
     GetBfusdQuotaDetailsResponse
     """  # noqa: E501
 
+    subscription_quota: Optional[GetBfusdQuotaDetailsResponseSubscriptionQuota] = Field(
+        default=None, alias="subscriptionQuota"
+    )
     fast_redemption_quota: Optional[GetBfusdQuotaDetailsResponseFastRedemptionQuota] = (
         Field(default=None, alias="fastRedemptionQuota")
     )
@@ -41,6 +47,7 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
     ] = Field(default=None, alias="standardRedemptionQuota")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
+        "subscriptionQuota",
         "fastRedemptionQuota",
         "standardRedemptionQuota",
     ]
@@ -91,6 +98,9 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of subscription_quota
+        if self.subscription_quota:
+            _dict["subscriptionQuota"] = self.subscription_quota.to_dict()
         # override the default output from pydantic by calling `to_dict()` of fast_redemption_quota
         if self.fast_redemption_quota:
             _dict["fastRedemptionQuota"] = self.fast_redemption_quota.to_dict()
@@ -115,6 +125,13 @@ class GetBfusdQuotaDetailsResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "subscriptionQuota": (
+                    GetBfusdQuotaDetailsResponseSubscriptionQuota.from_dict(
+                        obj["subscriptionQuota"]
+                    )
+                    if obj.get("subscriptionQuota") is not None
+                    else None
+                ),
                 "fastRedemptionQuota": (
                     GetBfusdQuotaDetailsResponseFastRedemptionQuota.from_dict(
                         obj["fastRedemptionQuota"]

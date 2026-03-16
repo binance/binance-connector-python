@@ -154,6 +154,7 @@ class TestBfusdApi:
         """Test get_bfusd_quota_details() successfully with required parameters only."""
 
         expected_response = {
+            "subscriptionQuota": {"leftQuota": "1000"},
             "fastRedemptionQuota": {
                 "leftQuota": "2",
                 "minimum": "0.1",
@@ -210,6 +211,7 @@ class TestBfusdApi:
         params = {"recv_window": 5000}
 
         expected_response = {
+            "subscriptionQuota": {"leftQuota": "1000"},
             "fastRedemptionQuota": {
                 "leftQuota": "2",
                 "minimum": "0.1",

@@ -88,7 +88,7 @@ class BfusdApi:
                 GET /sapi/v1/bfusd/quota
                 https://developers.binance.com/docs/simple_earn/bfusd/account/Get-BFUSD-Quota-Details
 
-                Get BFUSD quota details including fast redemption quota and standard redemption quota.
+                Get BFUSD quota details including subscription quota, fast redemption quota and standard redemption quota.
 
         Weight: 150
 

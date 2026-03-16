@@ -39,6 +39,7 @@ from .models import OpenOrderListResponse
 from .models import OrderAmendmentsResponse
 from .models import RateLimitOrderResponse
 from .models import ExchangeInfoResponse
+from .models import ExecutionRulesResponse
 
 from .models import TimeResponse
 from .models import AggTradesResponse
@@ -47,6 +48,8 @@ from .models import DepthResponse
 from .models import GetTradesResponse
 from .models import HistoricalTradesResponse
 from .models import KlinesResponse
+from .models import ReferencePriceResponse
+from .models import ReferencePriceCalculationResponse
 from .models import TickerResponse
 from .models import Ticker24hrResponse
 from .models import TickerBookTickerResponse
@@ -71,8 +74,10 @@ from .models import SorOrderTestResponse
 
 
 from .models import ExchangeInfoSymbolStatusEnum
+from .models import ExecutionRulesSymbolStatusEnum
 from .models import DepthSymbolStatusEnum
 from .models import KlinesIntervalEnum
+from .models import ReferencePriceCalculationSymbolStatusEnum
 from .models import TickerWindowSizeEnum
 from .models import TickerTypeEnum
 from .models import TickerSymbolStatusEnum
@@ -752,6 +757,38 @@ class SpotRestAPI:
             symbol, symbols, permissions, show_permission_sets, symbol_status
         )
 
+    def execution_rules(
+        self,
+        symbol: Optional[str] = None,
+        symbols: Optional[List[str]] = None,
+        symbol_status: Optional[ExecutionRulesSymbolStatusEnum] = None,
+    ) -> ApiResponse[ExecutionRulesResponse]:
+        """
+                Query Execution Rules
+
+
+        Weight: Parameter | Weight|
+        ---        | ---
+        `symbol`  | 2
+        `symbols` | 2 for each `symbol`, capped at a max of 40|
+        `symbolStatus` |40|
+        None            |40|
+
+                Args:
+                    symbol (Optional[str] = None): Symbol to query
+                    symbols (Optional[List[str]] = None): List of symbols to query
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None):
+
+                Returns:
+                    ApiResponse[ExecutionRulesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._generalApi.execution_rules(symbol, symbols, symbol_status)
+
     def ping(
         self,
     ) -> ApiResponse[None]:
@@ -969,6 +1006,54 @@ class SpotRestAPI:
         return self._marketApi.klines(
             symbol, interval, start_time, end_time, time_zone, limit
         )
+
+    def reference_price(
+        self,
+        symbol: Union[str, None],
+    ) -> ApiResponse[ReferencePriceResponse]:
+        """
+                Query Reference Price
+
+
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+
+                Returns:
+                    ApiResponse[ReferencePriceResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketApi.reference_price(symbol)
+
+    def reference_price_calculation(
+        self,
+        symbol: Union[str, None],
+        symbol_status: Optional[ReferencePriceCalculationSymbolStatusEnum] = None,
+    ) -> ApiResponse[ReferencePriceCalculationResponse]:
+        """
+                Query Reference Price Calculation
+
+                Describes how reference price is calculated for a given symbol.
+        Weight: 2
+
+                Args:
+                    symbol (Union[str, None]):
+                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None):
+
+                Returns:
+                    ApiResponse[ReferencePriceCalculationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketApi.reference_price_calculation(symbol, symbol_status)
 
     def ticker(
         self,
@@ -1503,11 +1588,10 @@ class SpotRestAPI:
         """
                 Cancel an Existing Order and Send a New Order
 
-                Cancels an existing order and places a new order on the same symbol.
-
-        Filters and Order Count are evaluated before the processing of the cancellation and order placement occurs.
-
-        A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+                * Cancels an existing order and places a new order on the same symbol.
+        * Filters and Order Count are evaluated before the processing of the cancellation and order placement occurs.
+        * A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+        * You can only cancel an individual order from an orderList using this endpoint, but the result is the same as canceling the entire orderList.
         Weight: 1
 
                 Args:

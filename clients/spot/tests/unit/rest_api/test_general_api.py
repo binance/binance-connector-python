@@ -24,11 +24,13 @@ from binance_common.utils import is_one_of_model
 
 from binance_sdk_spot.rest_api.api import GeneralApi
 from binance_sdk_spot.rest_api.models import ExchangeInfoResponse
+from binance_sdk_spot.rest_api.models import ExecutionRulesResponse
 
 from binance_sdk_spot.rest_api.models import TimeResponse
 
 
 from binance_sdk_spot.rest_api.models import ExchangeInfoSymbolStatusEnum
+from binance_sdk_spot.rest_api.models import ExecutionRulesSymbolStatusEnum
 
 
 class TestGeneralApi:
@@ -254,6 +256,122 @@ class TestGeneralApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.exchange_info()
+
+    def test_execution_rules_success(self):
+        """Test execution_rules() successfully with required parameters only."""
+
+        expected_response = {
+            "symbolRules": [
+                {
+                    "symbol": "BAZUSD",
+                    "rules": [
+                        {
+                            "ruleType": "PRICE_RANGE",
+                            "bidLimitMultUp": "1.0001",
+                            "bidLimitMultDown": "0.9999",
+                            "askLimitMultUp": "1.0001",
+                            "askLimitMultDown": "0.9999",
+                        }
+                    ],
+                }
+            ]
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.execution_rules()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/api/v3/executionRules" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ExecutionRulesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ExecutionRulesResponse, "from_dict"):
+            expected = ExecutionRulesResponse.from_dict(expected_response)
+        else:
+            expected = ExecutionRulesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_execution_rules_success_with_optional_params(self):
+        """Test execution_rules() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "symbols": [""],
+            "symbol_status": ExecutionRulesSymbolStatusEnum["TRADING"].value,
+        }
+
+        expected_response = {
+            "symbolRules": [
+                {
+                    "symbol": "BAZUSD",
+                    "rules": [
+                        {
+                            "ruleType": "PRICE_RANGE",
+                            "bidLimitMultUp": "1.0001",
+                            "bidLimitMultDown": "0.9999",
+                            "askLimitMultUp": "1.0001",
+                            "askLimitMultDown": "0.9999",
+                        }
+                    ],
+                }
+            ]
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.execution_rules(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/api/v3/executionRules" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ExecutionRulesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ExecutionRulesResponse, "from_dict"):
+            expected = ExecutionRulesResponse.from_dict(expected_response)
+        else:
+            expected = ExecutionRulesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_execution_rules_server_error(self):
+        """Test that execution_rules() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.execution_rules = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.execution_rules()
 
     def test_ping_success(self):
         """Test ping() successfully with required parameters only."""
