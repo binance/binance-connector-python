@@ -23,6 +23,7 @@ from binance_common.utils import (
     parse_proxies,
     parse_user_event,
     parse_ws_rate_limit_headers,
+    redact_sensitive_info,
     ws_api_payload,
 )
 
@@ -97,7 +98,7 @@ class WebSocketCommon:
         self,
         url: str,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
-        ws_id: Union[str, int] = None,
+        ws_id: Optional[Union[str, int]] = None,
         url_paths: Optional[list[str]] = None,
     ):
         """Connect to the Binance WebSocket server.
@@ -105,7 +106,7 @@ class WebSocketCommon:
         Args:
             url (str): WebSocket URL.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
-            ws_id (Union[str, int]): Optional WebSocket ID for the connection.
+            ws_id (Optional[Union[str, int]]): Optional WebSocket ID for the connection.
             url_paths (Optional[list[str]]): Optional list of URL paths for the connection.
         """
 
@@ -134,7 +135,7 @@ class WebSocketCommon:
         url,
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
         url_path: Optional[str] = None,
-        ws_id: Union[str, int] = None,
+        ws_id: Optional[Union[str, int]] = None,
     ):
         """Initialize a WebSocket connection.
 
@@ -142,7 +143,7 @@ class WebSocketCommon:
             url (str): WebSocket URL.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
             url_path (Optional[str]): Optional URL path for the connection.
-            ws_id (str): Optional WebSocket ID for the connection.
+            ws_id (Optional[Union[str, int]]): Optional WebSocket ID for the connection.
         """
 
         user_agent = configuration.user_agent
@@ -331,7 +332,9 @@ class WebSocketCommon:
         else:
             future = connection.pending_request[payload.get("id")]
 
-        logging.info(f"Sending message to WebSocket {connection.id}: {payload}")
+        logging.info(
+            f"Sending message to WebSocket {connection.id}: {redact_sensitive_info(payload)}"
+        )
         await websocket.send_str(json.dumps(payload))
         return future
 
@@ -424,7 +427,7 @@ class WebSocketCommon:
             await self._resubscribe_user_streams(connection, new_connection)
 
         await self._resubscribe_global_streams(connection, new_connection)
-        print(f"Reconnected WebSocket {close_old_connection}")
+        logging.info(f"Reconnected WebSocket {close_old_connection}")
 
         if close_old_connection:
             self.reconnect_tasks.remove(connection.id)
@@ -518,12 +521,14 @@ class WebSocketCommon:
                 )
 
     async def close_connection(
-        self, connection: WebSocketConnection = None, close_session: bool = True
+        self,
+        connection: Optional[WebSocketConnection] = None,
+        close_session: bool = True,
     ):
         """Close the WebSocket connection.
 
         Args:
-            connection (WebSocketConnection): WebSocket connection object to close.
+            connection (Optional[WebSocketConnection]): WebSocket connection object to close.
             close_session (bool): Whether to close the aiohttp session.
         """
 
@@ -567,7 +572,7 @@ class WebSocketStreamBase(WebSocketCommon):
             url_paths (Optional[str]): URL paths for the WebSocket connection.
         """
 
-        if not configuration.stream_url.endswith("stream"):
+        if configuration.stream_url and not configuration.stream_url.endswith("stream"):
             configuration.stream_url = configuration.stream_url + "/stream"
         super().__init__(configuration)
         self.configuration = configuration
@@ -588,7 +593,7 @@ class WebSocketStreamBase(WebSocketCommon):
     async def subscribe(
         self,
         streams: list[str],
-        response_model: Type[T] = None,
+        response_model: Optional[Type[T]] = None,
         stream_url: Optional[str] = None,
     ):
         """Subscribe to a list of streams.
@@ -767,7 +772,7 @@ class WebSocketAPIBase(WebSocketCommon):
         payload: Dict,
         signer: Optional[Signers] = None,
         promised: bool = True,
-        response_model: Type[T] = None,
+        response_model: Optional[Type[T]] = None,
         api_key: Optional[bool] = False,
         session_logon: Optional[bool] = False,
         session_logout: Optional[bool] = False,
@@ -777,7 +782,7 @@ class WebSocketAPIBase(WebSocketCommon):
         Args:
             payload (Dict): Payload to send.
             promised (bool): Whether the response is promised.
-            response_model (Type[T]): Response model.
+            response_model (Optional[Type[T]]): Response model.
             api_key (Optional[bool]): Whether to include the API key in the request.
             session_logon (Optional[bool]): Whether the message is for session logon.
             session_logout (Optional[bool]): Whether the message is for session logout.
@@ -860,7 +865,7 @@ class WebSocketAPIBase(WebSocketCommon):
         self,
         payload: Dict,
         promised: bool = True,
-        response_model: Type[T] = None,
+        response_model: Optional[Type[T]] = None,
         api_key: Optional[bool] = False,
         session_logon: Optional[bool] = None,
         session_logout: Optional[bool] = None,
@@ -924,11 +929,19 @@ class WebSocketAPIBase(WebSocketCommon):
 
                 is_oneof = self.is_one_of_model(response_model)
                 if is_oneof or hasattr(response_model, "from_dict"):
-                    data_function = lambda: response_model.from_dict(ws_response)
+
+                    def data_function():
+                        return response_model.from_dict(ws_response)
+
                 elif response_model:
-                    data_function = lambda: response_model.model_validate(ws_response)
+
+                    def data_function():
+                        return response_model.model_validate(ws_response)
+
                 else:
-                    data_function = lambda: ws_response
+
+                    def data_function():
+                        return ws_response
 
                 return WebsocketApiResponse[T](
                     data_function=data_function,
@@ -975,12 +988,14 @@ class WebSocketAPIBase(WebSocketCommon):
 
         await super().ping(connection)
 
-    async def subscribe_user_data(self, id: str, response_model: Type[T] = None):
+    async def subscribe_user_data(
+        self, id: str, response_model: Optional[Type[T]] = None
+    ):
         """Subscribe to user data updates for a specific user.
 
         Args:
             id (str): User Data ID.
-            response_model (Type[T]): Pydantic model to validate the response data.
+            response_model (Optional[Type[T]]): Pydantic model to validate the response data.
         """
         if self.configuration.mode == WebsocketMode.SINGLE:
             connection = self.connections[0]
@@ -1057,7 +1072,7 @@ class RequestStreamHandle(Generic[T]):
         self,
         websocket_base: WebSocketStreamBase or WebSocketAPIBase,
         stream: str,
-        response_model: Type[T] = None,
+        response_model: Optional[Type[T]] = None,
     ):
         self._websocket_base = websocket_base
         self._stream = stream
@@ -1076,7 +1091,7 @@ class RequestStreamHandle(Generic[T]):
 async def RequestStream(
     websocket_base: WebSocketStreamBase or WebSocketAPIBase,
     stream: str,
-    response_model: Type[T] = None,
+    response_model: Optional[Type[T]] = None,
     stream_url: Optional[str] = None,
 ) -> RequestStreamHandle[T]:
     """Decorator to create a request stream for a specific stream.

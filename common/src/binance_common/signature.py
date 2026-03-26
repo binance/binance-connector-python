@@ -39,6 +39,11 @@ class Signers:
         return cls._rsa_signers[cache_key]
 
     @classmethod
+    def clear_rsa_cache(cls):
+        cls._rsa_keys.clear()
+        cls._rsa_signers.clear()
+
+    @classmethod
     def get_ed25519_key(cls, key: str, passphrase: Optional[str]) -> ECC.EccKey:
         key_data = cls._load_private_key_data(key)
         cache_key = (key_data, passphrase)
@@ -55,6 +60,11 @@ class Signers:
             ed_key = cls.get_ed25519_key(key, passphrase)
             cls._ed25519_signers[cache_key] = eddsa.new(ed_key, "rfc8032")
         return cls._ed25519_signers[cache_key]
+
+    @classmethod
+    def clear_ed25519_cache(cls):
+        cls._ed25519_keys.clear()
+        cls._ed25519_signers.clear()
 
     @classmethod
     def get_signer(
