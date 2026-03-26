@@ -1,4 +1,6 @@
-# Binance Python NFT SDK
+#  **DEPRECATED** Binance Python NFT SDK
+
+## **This module is deprecated and will be removed**
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-connector-python/ci.yaml)](https://github.com/binance/binance-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-connector-python)](https://github.com/binance/binance-connector-python/issues)

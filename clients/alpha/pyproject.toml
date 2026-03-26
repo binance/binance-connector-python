@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "binance-sdk-alpha"
-version = "1.3.0"
+version = "1.4.0"
 description = "Official Binance Alpha Connector - A lightweight library that provides a convenient interface to Binance's Alpha REST API"
 authors = ["Binance"]
 license = "MIT"
-include = ["CHANGELOG.md", "LICENSE"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_alpha/py.typed"]
 packages = [
   { include = "binance_sdk_alpha", from = "src" }
 ]
@@ -17,7 +17,7 @@ websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = "3.7.0"
+binance-common = "3.8.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]

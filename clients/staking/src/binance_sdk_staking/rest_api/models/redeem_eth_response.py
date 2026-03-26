@@ -31,12 +31,14 @@ class RedeemEthResponse(BaseModel):
     eth_amount: Optional[StrictStr] = Field(default=None, alias="ethAmount")
     conversion_ratio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
     arrival_time: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
+    redeem_id: Optional[StrictInt] = Field(default=None, alias="redeemId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "success",
         "ethAmount",
         "conversionRatio",
         "arrivalTime",
+        "redeemId",
     ]
 
     model_config = ConfigDict(
@@ -107,6 +109,7 @@ class RedeemEthResponse(BaseModel):
                 "ethAmount": obj.get("ethAmount"),
                 "conversionRatio": obj.get("conversionRatio"),
                 "arrivalTime": obj.get("arrivalTime"),
+                "redeemId": obj.get("redeemId"),
             }
         )
         # store additional fields in additional_properties

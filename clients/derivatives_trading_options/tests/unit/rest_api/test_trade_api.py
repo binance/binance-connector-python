@@ -67,6 +67,9 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    NewOrderSelfTradePreventionModeEnum,
+)
 
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     PlaceMultipleOrdersOrdersParameterInner,
@@ -521,6 +524,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -600,6 +604,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -690,6 +695,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -761,6 +767,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -849,6 +856,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -907,6 +915,9 @@ class TestTradeApi:
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "client_order_id": "1",
             "is_mmp": True,
+            "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
+                "EXPIRE_TAKER"
+            ].value,
             "recv_window": 5000,
         }
 
@@ -931,6 +942,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1187,6 +1199,7 @@ class TestTradeApi:
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
+                    self_trade_prevention_mode="EXPIRE_TAKER",
                 )
             ],
         }
@@ -1213,6 +1226,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1273,6 +1287,7 @@ class TestTradeApi:
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
+                    self_trade_prevention_mode="EXPIRE_TAKER",
                 )
             ],
             "recv_window": 5000,
@@ -1300,6 +1315,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1350,6 +1366,7 @@ class TestTradeApi:
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
+                    self_trade_prevention_mode="EXPIRE_TAKER",
                 )
             ],
         }
@@ -1375,6 +1392,7 @@ class TestTradeApi:
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
+                    self_trade_prevention_mode="EXPIRE_TAKER",
                 )
             ],
         }
@@ -1410,6 +1428,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1485,6 +1504,7 @@ class TestTradeApi:
                 "optionSide": "CALL",
                 "quoteAsset": "USDT",
                 "mmp": False,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -1726,6 +1746,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1796,6 +1817,7 @@ class TestTradeApi:
             "optionSide": "CALL",
             "quoteAsset": "USDT",
             "mmp": False,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

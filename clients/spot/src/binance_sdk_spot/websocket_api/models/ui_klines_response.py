@@ -128,11 +128,7 @@ class UiKlinesResponse(BaseModel):
             {
                 "id": obj.get("id"),
                 "status": obj.get("status"),
-                "result": (
-                    obj["result"]
-                    if obj.get("result") is not None
-                    else None
-                ),
+                "result": (obj["result"] if obj.get("result") is not None else None),
                 "rateLimits": (
                     [RateLimits.from_dict(_item) for _item in obj["rateLimits"]]
                     if obj.get("rateLimits") is not None

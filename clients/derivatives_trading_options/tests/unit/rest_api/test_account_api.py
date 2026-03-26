@@ -247,6 +247,7 @@ class TestAccountApi:
             "canDeposit": True,
             "canWithdraw": True,
             "reduceOnly": False,
+            "tradeGroupId": -1,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -323,6 +324,7 @@ class TestAccountApi:
             "canDeposit": True,
             "canWithdraw": True,
             "reduceOnly": False,
+            "tradeGroupId": -1,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

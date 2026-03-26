@@ -271,6 +271,7 @@ class SolStakingApi:
 
     def get_sol_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -292,6 +293,7 @@ class SolStakingApi:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -308,6 +310,7 @@ class SolStakingApi:
 
         body = {}
         payload = {
+            "redeem_id": redeem_id,
             "start_time": start_time,
             "end_time": end_time,
             "current": current,
@@ -330,6 +333,7 @@ class SolStakingApi:
 
     def get_sol_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -351,6 +355,7 @@ class SolStakingApi:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -367,6 +372,7 @@ class SolStakingApi:
 
         body = {}
         payload = {
+            "purchase_id": purchase_id,
             "start_time": start_time,
             "end_time": end_time,
             "current": current,

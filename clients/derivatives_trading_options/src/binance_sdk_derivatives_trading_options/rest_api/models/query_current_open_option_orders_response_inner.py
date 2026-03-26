@@ -46,6 +46,9 @@ class QueryCurrentOpenOptionOrdersResponseInner(BaseModel):
     option_side: Optional[StrictStr] = Field(default=None, alias="optionSide")
     quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
     mmp: Optional[StrictBool] = None
+    self_trade_prevention_mode: Optional[StrictStr] = Field(
+        default=None, alias="selfTradePreventionMode"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "orderId",
@@ -67,6 +70,7 @@ class QueryCurrentOpenOptionOrdersResponseInner(BaseModel):
         "optionSide",
         "quoteAsset",
         "mmp",
+        "selfTradePreventionMode",
     ]
 
     model_config = ConfigDict(
@@ -152,6 +156,7 @@ class QueryCurrentOpenOptionOrdersResponseInner(BaseModel):
                 "optionSide": obj.get("optionSide"),
                 "quoteAsset": obj.get("quoteAsset"),
                 "mmp": obj.get("mmp"),
+                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
             }
         )
         # store additional fields in additional_properties

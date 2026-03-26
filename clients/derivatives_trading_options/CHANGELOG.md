@@ -1,5 +1,46 @@
 # Changelog
 
+## 6.1.0 - 2026-03-26
+
+### Changed (11)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+#### REST API
+
+- Added parameter `selfTradePreventionMode`
+  - affected methods:
+    - `new_order()` (`POST /eapi/v1/order`)
+- Modified parameter `orders`:
+  - items: property `selfTradePreventionMode` added
+  - items: item property `selfTradePreventionMode` added
+  - affected methods:
+    - `place_multiple_orders()` (`POST /eapi/v1/batchOrders`)
+- Modified response for `cancel_multiple_option_orders()` (`DELETE /eapi/v1/batchOrders`):
+  - items: property `selfTradePreventionMode` added
+  - items: item property `selfTradePreventionMode` added
+
+- Modified response for `place_multiple_orders()` (`POST /eapi/v1/batchOrders`):
+  - items: property `selfTradePreventionMode` added
+  - items: item property `selfTradePreventionMode` added
+
+- Modified response for `option_margin_account_information()` (`GET /eapi/v1/marginAccount`):
+  - property `tradeGroupId` added
+
+- Modified response for `query_current_open_option_orders()` (`GET /eapi/v1/openOrders`):
+  - items: property `selfTradePreventionMode` added
+  - items: item property `selfTradePreventionMode` added
+
+- Modified response for `cancel_option_order()` (`DELETE /eapi/v1/order`):
+  - property `selfTradePreventionMode` added
+
+- Modified response for `query_single_order()` (`GET /eapi/v1/order`):
+  - property `selfTradePreventionMode` added
+
+- Modified response for `new_order()` (`POST /eapi/v1/order`):
+  - property `selfTradePreventionMode` added
+
 ## 6.0.0 - 2026-03-16
 
 ### Changed (2)

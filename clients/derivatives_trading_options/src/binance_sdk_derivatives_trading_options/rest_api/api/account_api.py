@@ -49,6 +49,9 @@ class AccountApi:
 
                 Query account funding flows.
 
+
+        * Only support querying data in the past 3 months
+
         Weight: 1
 
                 Args:

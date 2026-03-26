@@ -35,6 +35,7 @@ from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
 from ..models import NewOrderTimeInForceEnum
 from ..models import NewOrderNewOrderRespTypeEnum
+from ..models import NewOrderSelfTradePreventionModeEnum
 
 
 from ..models import PlaceMultipleOrdersOrdersParameterInner
@@ -68,6 +69,8 @@ class TradeApi:
                 https://developers.binance.com/docs/derivatives/options-trading/trade/Account-Trade-List
 
                 Get trades for a specific account and symbol.
+
+        * Only support querying trades in the past 3 months
 
         Weight: 5
 
@@ -334,6 +337,9 @@ class TradeApi:
         new_order_resp_type: Optional[NewOrderNewOrderRespTypeEnum] = None,
         client_order_id: Optional[str] = None,
         is_mmp: Optional[bool] = None,
+        self_trade_prevention_mode: Optional[
+            NewOrderSelfTradePreventionModeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
@@ -357,6 +363,7 @@ class TradeApi:
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", Default "ACK"
                     client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
                     is_mmp (Optional[bool] = None): is market maker protection order, true/false
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire maker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; Default `EXPIRE_MAKER`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -397,6 +404,7 @@ class TradeApi:
             "new_order_resp_type": new_order_resp_type,
             "client_order_id": client_order_id,
             "is_mmp": is_mmp,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
             "recv_window": recv_window,
         }
 

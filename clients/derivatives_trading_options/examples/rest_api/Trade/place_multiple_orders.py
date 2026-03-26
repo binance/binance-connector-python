@@ -41,6 +41,7 @@ def place_multiple_orders():
                     new_order_resp_type="ACK",
                     client_order_id="1",
                     is_mmp="",
+                    self_trade_prevention_mode="EXPIRE_TAKER",
                 )
             ],
         )

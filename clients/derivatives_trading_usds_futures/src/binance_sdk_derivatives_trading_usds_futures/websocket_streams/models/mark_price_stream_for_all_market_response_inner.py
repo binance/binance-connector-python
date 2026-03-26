@@ -31,12 +31,13 @@ class MarkPriceStreamForAllMarketResponseInner(BaseModel):
     E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
+    ap: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
     P: Optional[StrictStr] = Field(default=None, alias="P")
     r: Optional[StrictStr] = None
     T: Optional[StrictInt] = Field(default=None, alias="T")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "i", "P", "r", "T"]
+    __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "ap", "i", "P", "r", "T"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,6 +103,7 @@ class MarkPriceStreamForAllMarketResponseInner(BaseModel):
                 "E": obj.get("E"),
                 "s": obj.get("s"),
                 "p": obj.get("p"),
+                "ap": obj.get("ap"),
                 "i": obj.get("i"),
                 "P": obj.get("P"),
                 "r": obj.get("r"),
