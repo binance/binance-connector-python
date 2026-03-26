@@ -609,6 +609,7 @@ class TestSolStakingApi:
         """Test get_sol_redemption_history() successfully with optional parameters."""
 
         params = {
+            "redeem_id": 1,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "current": 1,
@@ -738,6 +739,7 @@ class TestSolStakingApi:
         """Test get_sol_staking_history() successfully with optional parameters."""
 
         params = {
+            "purchase_id": 1,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "current": 1,
@@ -1035,6 +1037,7 @@ class TestSolStakingApi:
             "solAmount": "0.23092091",
             "exchangeRate": "1.00121234",
             "arrivalTime": 1575018510000,
+            "redeemId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1085,6 +1088,7 @@ class TestSolStakingApi:
             "solAmount": "0.23092091",
             "exchangeRate": "1.00121234",
             "arrivalTime": 1575018510000,
+            "redeemId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1248,6 +1252,7 @@ class TestSolStakingApi:
             "success": True,
             "bnsolAmount": "0.23092091",
             "exchangeRate": "1.001212342342",
+            "purchaseId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1299,6 +1304,7 @@ class TestSolStakingApi:
             "success": True,
             "bnsolAmount": "0.23092091",
             "exchangeRate": "1.001212342342",
+            "purchaseId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

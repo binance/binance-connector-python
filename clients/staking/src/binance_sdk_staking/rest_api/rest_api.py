@@ -197,6 +197,7 @@ class StakingRestAPI:
 
     def get_eth_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -216,6 +217,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -231,11 +233,12 @@ class StakingRestAPI:
         """
 
         return self._ethStakingApi.get_eth_redemption_history(
-            start_time, end_time, current, size, recv_window
+            redeem_id, start_time, end_time, current, size, recv_window
         )
 
     def get_eth_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -255,6 +258,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -270,7 +274,7 @@ class StakingRestAPI:
         """
 
         return self._ethStakingApi.get_eth_staking_history(
-            start_time, end_time, current, size, recv_window
+            purchase_id, start_time, end_time, current, size, recv_window
         )
 
     def get_wbeth_rate_history(
@@ -1201,6 +1205,7 @@ class StakingRestAPI:
 
     def get_sol_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -1220,6 +1225,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -1235,11 +1241,12 @@ class StakingRestAPI:
         """
 
         return self._solStakingApi.get_sol_redemption_history(
-            start_time, end_time, current, size, recv_window
+            redeem_id, start_time, end_time, current, size, recv_window
         )
 
     def get_sol_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -1259,6 +1266,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -1274,7 +1282,7 @@ class StakingRestAPI:
         """
 
         return self._solStakingApi.get_sol_staking_history(
-            start_time, end_time, current, size, recv_window
+            purchase_id, start_time, end_time, current, size, recv_window
         )
 
     def get_sol_staking_quota_details(

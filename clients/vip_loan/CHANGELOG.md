@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.4.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
 ## 5.3.0 - 2026-03-16
 
 ### Changed (1)

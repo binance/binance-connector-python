@@ -40,6 +40,9 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
     )
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     is_mmp: Optional[StrictStr] = Field(default=None, alias="isMmp")
+    self_trade_prevention_mode: Optional[StrictStr] = Field(
+        default=None, alias="selfTradePreventionMode"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",
@@ -53,6 +56,7 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
         "newOrderRespType",
         "clientOrderId",
         "isMmp",
+        "selfTradePreventionMode",
     ]
 
     @field_validator("side")
@@ -93,6 +97,18 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
 
         if value not in set(["ACK", "RESULT"]):
             raise ValueError("must be one of enum values ('ACK', 'RESULT')")
+        return value
+
+    @field_validator("self_trade_prevention_mode")
+    def self_trade_prevention_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["EXPIRE_TAKER", "EXPIRE_BOTH", "EXPIRE_MAKER"]):
+            raise ValueError(
+                "must be one of enum values ('EXPIRE_TAKER', 'EXPIRE_BOTH', 'EXPIRE_MAKER')"
+            )
         return value
 
     model_config = ConfigDict(
@@ -170,6 +186,7 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
                 "newOrderRespType": obj.get("newOrderRespType"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "isMmp": obj.get("isMmp"),
+                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
             }
         )
         # store additional fields in additional_properties

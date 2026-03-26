@@ -40,6 +40,7 @@ class OptionMarginAccountInformationResponse(BaseModel):
     can_deposit: Optional[StrictBool] = Field(default=None, alias="canDeposit")
     can_withdraw: Optional[StrictBool] = Field(default=None, alias="canWithdraw")
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
+    trade_group_id: Optional[StrictInt] = Field(default=None, alias="tradeGroupId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",
@@ -49,6 +50,7 @@ class OptionMarginAccountInformationResponse(BaseModel):
         "canDeposit",
         "canWithdraw",
         "reduceOnly",
+        "tradeGroupId",
     ]
 
     model_config = ConfigDict(
@@ -154,6 +156,7 @@ class OptionMarginAccountInformationResponse(BaseModel):
                 "canDeposit": obj.get("canDeposit"),
                 "canWithdraw": obj.get("canWithdraw"),
                 "reduceOnly": obj.get("reduceOnly"),
+                "tradeGroupId": obj.get("tradeGroupId"),
             }
         )
         # store additional fields in additional_properties

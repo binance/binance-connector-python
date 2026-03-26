@@ -1,5 +1,21 @@
 # Changelog
 
+## 9.1.0 - 2026-03-26
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+#### WebSocket Streams
+
+- Modified response for `mark_price_stream_for_all_market()` (`!markPrice@arr@<updateSpeed>` stream):
+  - items: property `ap` added
+  - items: item property `ap` added
+
+- Modified response for `mark_price_stream()` (`<symbol>@markPrice@<updateSpeed>` stream):
+  - property `ap` added
+
 ## 9.0.0 - 2026-03-16
 
 ### Changed (2)

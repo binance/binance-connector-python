@@ -214,3 +214,6 @@ from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderTypeEnum as NewOrderTypeEnum
 from .enums import NewOrderTimeInForceEnum as NewOrderTimeInForceEnum
 from .enums import NewOrderNewOrderRespTypeEnum as NewOrderNewOrderRespTypeEnum
+from .enums import (
+    NewOrderSelfTradePreventionModeEnum as NewOrderSelfTradePreventionModeEnum,
+)

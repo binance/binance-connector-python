@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -30,8 +30,14 @@ class SubscribeSolStakingResponse(BaseModel):
     success: Optional[StrictBool] = None
     bnsol_amount: Optional[StrictStr] = Field(default=None, alias="bnsolAmount")
     exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
+    purchase_id: Optional[StrictInt] = Field(default=None, alias="purchaseId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["success", "bnsolAmount", "exchangeRate"]
+    __properties: ClassVar[List[str]] = [
+        "success",
+        "bnsolAmount",
+        "exchangeRate",
+        "purchaseId",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,6 +106,7 @@ class SubscribeSolStakingResponse(BaseModel):
                 "success": obj.get("success"),
                 "bnsolAmount": obj.get("bnsolAmount"),
                 "exchangeRate": obj.get("exchangeRate"),
+                "purchaseId": obj.get("purchaseId"),
             }
         )
         # store additional fields in additional_properties

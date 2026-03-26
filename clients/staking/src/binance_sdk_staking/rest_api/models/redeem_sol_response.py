@@ -31,12 +31,14 @@ class RedeemSolResponse(BaseModel):
     sol_amount: Optional[StrictStr] = Field(default=None, alias="solAmount")
     exchange_rate: Optional[StrictStr] = Field(default=None, alias="exchangeRate")
     arrival_time: Optional[StrictInt] = Field(default=None, alias="arrivalTime")
+    redeem_id: Optional[StrictInt] = Field(default=None, alias="redeemId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "success",
         "solAmount",
         "exchangeRate",
         "arrivalTime",
+        "redeemId",
     ]
 
     model_config = ConfigDict(
@@ -107,6 +109,7 @@ class RedeemSolResponse(BaseModel):
                 "solAmount": obj.get("solAmount"),
                 "exchangeRate": obj.get("exchangeRate"),
                 "arrivalTime": obj.get("arrivalTime"),
+                "redeemId": obj.get("redeemId"),
             }
         )
         # store additional fields in additional_properties
