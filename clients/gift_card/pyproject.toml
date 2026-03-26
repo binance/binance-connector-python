@@ -5,7 +5,7 @@ description = "Official Binance GiftCard SDK - A lightweight library that provid
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_gift_card/py.typed"]
 packages = [
   { include = "binance_sdk_gift_card", from = "src" }
 ]

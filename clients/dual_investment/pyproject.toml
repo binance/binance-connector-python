@@ -5,7 +5,7 @@ description = "Official Binance Dual Investment SDK - A lightweight library that
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_dual_investment/py.typed"]
 packages = [
   { include = "binance_sdk_dual_investment", from = "src" }
 ]

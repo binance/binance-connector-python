@@ -5,7 +5,7 @@ description = "Official Binance Convert SDK - A lightweight library that provide
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_convert/py.typed"]
 packages = [
   { include = "binance_sdk_convert", from = "src" }
 ]

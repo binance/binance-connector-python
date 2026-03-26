@@ -5,7 +5,7 @@ description = "Official Binance Staking SDK - A lightweight library that provide
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_staking/py.typed"]
 packages = [
   { include = "binance_sdk_staking", from = "src" }
 ]

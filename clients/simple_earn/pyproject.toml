@@ -5,7 +5,7 @@ description = "Official Binance Simple Earn SDK - A lightweight library that pro
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_simple_earn/py.typed"]
 packages = [
   { include = "binance_sdk_simple_earn", from = "src" }
 ]

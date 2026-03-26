@@ -5,7 +5,7 @@ description = "Official Binance SubAccount SDK - A lightweight library that prov
 authors = ["Binance"]
 license = "MIT"
 readme = "README.md"
-include = ["CHANGELOG.md", "LICENSE", "README.md"]
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_sdk_sub_account/py.typed"]
 packages = [
   { include = "binance_sdk_sub_account", from = "src" }
 ]
