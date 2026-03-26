@@ -27,10 +27,11 @@ class VaspListResponseInner(BaseModel):
     VaspListResponseInner
     """  # noqa: E501
 
-    vasp_name: Optional[StrictStr] = Field(default=None, alias="vaspName")
     vasp_code: Optional[StrictStr] = Field(default=None, alias="vaspCode")
+    vasp_name: Optional[StrictStr] = Field(default=None, alias="vaspName")
+    identifier: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["vaspName", "vaspCode"]
+    __properties: ClassVar[List[str]] = ["vaspCode", "vaspName", "identifier"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +96,11 @@ class VaspListResponseInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"vaspName": obj.get("vaspName"), "vaspCode": obj.get("vaspCode")}
+            {
+                "vaspCode": obj.get("vaspCode"),
+                "vaspName": obj.get("vaspName"),
+                "identifier": obj.get("identifier"),
+            }
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

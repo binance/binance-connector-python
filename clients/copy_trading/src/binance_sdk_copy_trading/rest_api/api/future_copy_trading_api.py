@@ -42,6 +42,7 @@ class FutureCopyTradingApi:
                 https://developers.binance.com/docs/copy_trading/future-copy-trading/Get-Futures-Lead-Trader-Status
 
                 Get Futures Lead Trader Status
+
         Weight: 20
 
                 Args:
@@ -81,6 +82,7 @@ class FutureCopyTradingApi:
                 https://developers.binance.com/docs/copy_trading/future-copy-trading/Get-Futures-Lead-Trading-Symbol-Whitelist
 
                 Get Futures Lead Trading Symbol Whitelist
+
         Weight: 20
 
                 Args:

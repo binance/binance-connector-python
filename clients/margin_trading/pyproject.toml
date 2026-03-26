@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-margin-trading"
-version = "6.0.0"
+version = "6.1.0"
 description = "Official Binance MarginTrading SDK - A lightweight library that provides a convenient interface to Binance's MarginTrading REST API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
@@ -18,7 +18,7 @@ websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = "3.6.0"
+binance-common = "3.7.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]

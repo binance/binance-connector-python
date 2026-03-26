@@ -383,9 +383,6 @@ from .query_insurance_fund_balance_snapshot_response2_inner_assets_inner import 
     QueryInsuranceFundBalanceSnapshotResponse2InnerAssetsInner as QueryInsuranceFundBalanceSnapshotResponse2InnerAssetsInner,
 )
 from .query_order_response import QueryOrderResponse as QueryOrderResponse
-from .query_order_response_result import (
-    QueryOrderResponseResult as QueryOrderResponseResult,
-)
 from .query_user_rate_limit_response import (
     QueryUserRateLimitResponse as QueryUserRateLimitResponse,
 )

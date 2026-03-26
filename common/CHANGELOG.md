@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.8.0 - 2026-03-26
+
+### Added (2)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+- Added clear cache option to `Signer` class to allow clearing cached signatures.
+
+### Updated (4)
+
+- Fix bug with exposing secrets on messages logging.
+- Updated `print` statement to be logged instead of printed.
+- Updated mutable default parameter to avoid shared state between instances.
+- Updated `tox.ini` file
+
+## 3.7.0 - 2026-03-16
+
+### Added (1)
+
+- Added `serverShutdown` event handler.
+
 ## 3.6.0 - 2026-02-11
 
 ### Updated (2)

@@ -31,6 +31,8 @@ from binance_sdk_spot.rest_api.models import DepthResponse
 from binance_sdk_spot.rest_api.models import GetTradesResponse
 from binance_sdk_spot.rest_api.models import HistoricalTradesResponse
 from binance_sdk_spot.rest_api.models import KlinesResponse
+from binance_sdk_spot.rest_api.models import ReferencePriceResponse
+from binance_sdk_spot.rest_api.models import ReferencePriceCalculationResponse
 from binance_sdk_spot.rest_api.models import TickerResponse
 from binance_sdk_spot.rest_api.models import Ticker24hrResponse
 from binance_sdk_spot.rest_api.models import TickerBookTickerResponse
@@ -41,6 +43,7 @@ from binance_sdk_spot.rest_api.models import UiKlinesResponse
 
 from binance_sdk_spot.rest_api.models import DepthSymbolStatusEnum
 from binance_sdk_spot.rest_api.models import KlinesIntervalEnum
+from binance_sdk_spot.rest_api.models import ReferencePriceCalculationSymbolStatusEnum
 from binance_sdk_spot.rest_api.models import TickerWindowSizeEnum
 from binance_sdk_spot.rest_api.models import TickerTypeEnum
 from binance_sdk_spot.rest_api.models import TickerSymbolStatusEnum
@@ -828,6 +831,239 @@ class TestMarketApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.klines(**params)
+
+    def test_reference_price_success(self):
+        """Test reference_price() successfully with required parameters only."""
+
+        params = {"symbol": "BNBUSDT"}
+
+        expected_response = {
+            "symbol": "BAZUSD",
+            "referencePrice": "10.00",
+            "timestamp": 1770736694138,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.reference_price(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/api/v3/referencePrice" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "BNBUSDT"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ReferencePriceResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ReferencePriceResponse, "from_dict"):
+            expected = ReferencePriceResponse.from_dict(expected_response)
+        else:
+            expected = ReferencePriceResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_reference_price_success_with_optional_params(self):
+        """Test reference_price() successfully with optional parameters."""
+
+        params = {"symbol": "BNBUSDT"}
+
+        expected_response = {
+            "symbol": "BAZUSD",
+            "referencePrice": "10.00",
+            "timestamp": 1770736694138,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.reference_price(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/api/v3/referencePrice" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ReferencePriceResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ReferencePriceResponse, "from_dict"):
+            expected = ReferencePriceResponse.from_dict(expected_response)
+        else:
+            expected = ReferencePriceResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_reference_price_missing_required_param_symbol(self):
+        """Test that reference_price() raises RequiredError when 'symbol' is missing."""
+        params = {"symbol": "BNBUSDT"}
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.reference_price(**params)
+
+    def test_reference_price_server_error(self):
+        """Test that reference_price() raises an error when the server returns an error."""
+
+        params = {"symbol": "BNBUSDT"}
+
+        mock_error = Exception("ResponseError")
+        self.client.reference_price = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.reference_price(**params)
+
+    def test_reference_price_calculation_success(self):
+        """Test reference_price_calculation() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        expected_response = {
+            "symbol": "BAZUSD",
+            "calculationType": "EXTERNAL",
+            "bucketCount": 10,
+            "bucketWidthMs": 1000,
+            "externalCalculationId": 42,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.reference_price_calculation(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/api/v3/referencePrice/calculation" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "BNBUSDT"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ReferencePriceCalculationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ReferencePriceCalculationResponse, "from_dict")
+        ):
+            expected = ReferencePriceCalculationResponse.from_dict(expected_response)
+        else:
+            expected = ReferencePriceCalculationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_reference_price_calculation_success_with_optional_params(self):
+        """Test reference_price_calculation() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "symbol_status": ReferencePriceCalculationSymbolStatusEnum["TRADING"].value,
+        }
+
+        expected_response = {
+            "symbol": "BAZUSD",
+            "calculationType": "EXTERNAL",
+            "bucketCount": 10,
+            "bucketWidthMs": 1000,
+            "externalCalculationId": 42,
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.reference_price_calculation(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/api/v3/referencePrice/calculation" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ReferencePriceCalculationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(ReferencePriceCalculationResponse, "from_dict")
+        ):
+            expected = ReferencePriceCalculationResponse.from_dict(expected_response)
+        else:
+            expected = ReferencePriceCalculationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_reference_price_calculation_missing_required_param_symbol(self):
+        """Test that reference_price_calculation() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.reference_price_calculation(**params)
+
+    def test_reference_price_calculation_server_error(self):
+        """Test that reference_price_calculation() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.reference_price_calculation = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.reference_price_calculation(**params)
 
     def test_ticker_success(self):
         """Test ticker() successfully with required parameters only."""

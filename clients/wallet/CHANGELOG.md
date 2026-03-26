@@ -1,5 +1,19 @@
 # Changelog
 
+## 9.1.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 9.0.0 - 2026-03-09
+
+### Changed (1)
+
+- Modified response for `vasp_list()` (`GET /sapi/v1/localentity/vasp`):
+  - items: property `identifier` added
+  - items: item property `identifier` added
+
 ## 8.1.0 - 2026-02-11
 
 ### Changed (2)

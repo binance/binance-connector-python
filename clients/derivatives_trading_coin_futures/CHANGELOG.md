@@ -1,5 +1,23 @@
 # Changelog
 
+## 5.1.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 5.0.0 - 2026-03-09
+
+### Changed (1)
+
+#### REST API
+
+- Modified response for `exchange_information()` (`GET /dapi/v1/exchangeInfo`):
+  - `symbols`.items: property `orderTypes` added
+  - `symbols`.items: property `OrderType` deleted
+  - `symbols`.items: item property `orderTypes` added
+  - `symbols`.items: item property `OrderType` deleted
+
 ## 4.1.1 - 2026-02-25
 
 ### Changed (1)

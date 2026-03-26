@@ -25,9 +25,9 @@ class ConfigurationRestAPI:
 
     def __init__(
         self,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
-        base_path: str = None,
+        base_path: Optional[str] = None,
         timeout: int = 1000,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         keep_alive: bool = True,
@@ -38,15 +38,15 @@ class ConfigurationRestAPI:
         time_unit: Optional[str] = None,
         private_key: Optional[Union[bytes, str]] = None,
         private_key_passphrase: Optional[str] = None,
-        custom_headers: Optional[dict[str, Union[str, List[str]]]] = {},
+        custom_headers: Optional[dict[str, Union[str, List[str]]]] = None,
     ):
         """
         Initialize the API configuration.
 
         Args:
-            api_key (str): API key for authentication.
+            api_key (Optional[str]): API key for authentication (default: None).
             api_secret (Optional[str]): API secret for authentication (default: None).
-            base_path (str): Base API URL (default: None).
+            base_path (Optional[str]): Base API URL (default: None).
             timeout (int): Request timeout in milliseconds (default: 1000).
             proxy (Optional[Dict[str, Union[str, int, Dict[str, str]]]]): Proxy settings (default: None).
             keep_alive (bool): Enable Keep-Alive (default: True).
@@ -77,7 +77,7 @@ class ConfigurationRestAPI:
         self.base_headers = {
             "Accept": "application/json",
             "X-MBX-APIKEY": str(self.api_key) if self.api_key else "",
-            **parse_custom_headers(custom_headers)
+            **parse_custom_headers(custom_headers if custom_headers else {}),
         }
 
 
@@ -99,31 +99,31 @@ class ConfigurationWebSocketAPI:
 
     def __init__(
         self,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         api_secret: Optional[str] = None,
         private_key: Optional[Union[bytes, str]] = None,
         private_key_passphrase: Optional[str] = None,
-        stream_url: str = "wss://ws-api.binance.com/ws-api/v3",
+        stream_url: Optional[str] = None,
         timeout: int = 5000,
         reconnect_delay: int = 5000,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,
         pool_size: int = 2,
-        time_unit: TimeUnit = None,
+        time_unit: Optional[TimeUnit] = None,
         https_agent: Optional[ssl.SSLContext] = None,
         session_re_logon: Optional[bool] = True,
-        return_rate_limits: Optional[bool] = True
+        return_rate_limits: Optional[bool] = True,
     ):
         """
         Initialize the API configuration.
 
         Args:
-            api_key (str): API key for authentication.
+            api_key (Optional[str]): API key for authentication (default: None).
             api_secret (Optional[str]): API secret for authentication (default: None).
             private_key (Optional[Union[bytes, str]]): Private key for authentication (default: None).
             private_key_passphrase (Optional[str]): Passphrase for private key (default: None).
-            stream_url (str): Base WebSocket API URL (default: "wss://ws-api.binance.com/ws-api/v3").
+            stream_url (Optional[str]): Base WebSocket API URL (default: None).
             timeout (int): Request timeout in milliseconds (default: 5000).
             reconnect_delay (int): Delay (ms) between reconnections (default: 5000).
             compression (int): Compression level (default: 0).
@@ -168,20 +168,20 @@ class ConfigurationWebSocketStreams:
 
     def __init__(
         self,
-        stream_url: str = "wss://stream.binance.com:9443/stream",
+        stream_url: Optional[str] = None,
         reconnect_delay: int = 5000,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,
         pool_size: int = 2,
-        time_unit: TimeUnit = None,
+        time_unit: Optional[TimeUnit] = None,
         https_agent: Optional[ssl.SSLContext] = None,
     ):
         """
         Initialize the Websocket Stream configuration.
 
         Args:
-            stream_url (str): Base WebSocket Stream URL (default: "wss://stream.binance.com:9443").
+            stream_url (Optional[str]): Base WebSocket Stream URL (default: None).
             reconnect_delay (int): Delay (ms) between reconnections (default: 5000).
             compression (int): Compression level (default: 0).
             proxy (Optional[Dict[str, Union[str, int, Dict[str, str]]]]): Proxy settings (default: None).

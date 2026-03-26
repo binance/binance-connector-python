@@ -7,6 +7,7 @@ T = TypeVar("T")
 T_Response = TypeVar("T_Response")
 T_Stream = TypeVar("T_Stream")
 
+
 class RateLimit(BaseModel):
     """Represents a single rate limit entry.
 
@@ -38,7 +39,7 @@ class ApiResponse(Generic[T]):
         data_function: Callable[[], T],
         status: int,
         headers: dict,
-        rate_limits: List[RateLimit] = None,
+        rate_limits: Optional[List[RateLimit]] = None,
     ):
         self._data_function = data_function
         self.status = status
@@ -81,8 +82,8 @@ class WebsocketApiResponse(Generic[T]):
 
     def __init__(
         self,
-        data_function: T = None,
-        rate_limits: List[WebsocketApiRateLimit] = None,
+        data_function: Optional[T] = None,
+        rate_limits: Optional[List[WebsocketApiRateLimit]] = None,
     ):
         self._data_function = data_function
         self.rate_limits = rate_limits or []
@@ -92,6 +93,8 @@ class WebsocketApiResponse(Generic[T]):
 
         :return: The parsed data of type T.
         """
+        if self._data_function is None:
+            raise ValueError("No data function provided for this response.")
         return self._data_function()
 
 
@@ -131,6 +134,7 @@ class WebsocketApiOptions(Generic[T]):
         self.api_key = api_key
         self.is_signed = is_signed
         self.skip_auth = skip_auth
+
 
 class WebsocketApiUserDataEndpoints(BaseModel):
     """Represents the WebSocket user data endpoints."""

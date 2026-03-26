@@ -31,6 +31,7 @@ from ..models import KlineResponse
 from ..models import KlineOffsetResponse
 from ..models import MiniTickerResponse
 from ..models import PartialBookDepthResponse
+from ..models import ReferencePriceResponse
 from ..models import RollingWindowTickerResponse
 from ..models import TickerResponse
 from ..models import TradeResponse
@@ -512,6 +513,50 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=PartialBookDepthResponse,
+            stream_url="",
+        )
+
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Reference Price Streams
+        /<symbol>@referencePrice
+        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#reference-price-streams
+
+
+
+        Args:
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        stream = ws_streams_placeholder(
+            "/<symbol>@referencePrice".replace("/", "", 1),
+            {
+                "symbol": symbol,
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=ReferencePriceResponse,
             stream_url="",
         )
 

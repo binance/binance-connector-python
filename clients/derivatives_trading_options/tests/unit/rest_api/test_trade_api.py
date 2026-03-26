@@ -368,7 +368,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
         }
 
-        expected_response = {"code": 0, "msg": "success"}
+        expected_response = {"code": "0", "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -423,7 +423,7 @@ class TestTradeApi:
 
         params = {"symbol": "symbol_example", "recv_window": 5000}
 
-        expected_response = {"code": 0, "msg": "success"}
+        expected_response = {"code": "0", "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 

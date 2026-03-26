@@ -86,6 +86,16 @@ from .exchange_max_num_orders_filter import (
     ExchangeMaxNumOrdersFilter as ExchangeMaxNumOrdersFilter,
 )
 from .execution_report import ExecutionReport as ExecutionReport
+from .execution_rules_response import ExecutionRulesResponse as ExecutionRulesResponse
+from .execution_rules_response_result import (
+    ExecutionRulesResponseResult as ExecutionRulesResponseResult,
+)
+from .execution_rules_response_result_symbol_rules_inner import (
+    ExecutionRulesResponseResultSymbolRulesInner as ExecutionRulesResponseResultSymbolRulesInner,
+)
+from .execution_rules_response_result_symbol_rules_inner_rules_inner import (
+    ExecutionRulesResponseResultSymbolRulesInnerRulesInner as ExecutionRulesResponseResultSymbolRulesInnerRulesInner,
+)
 from .external_lock_update import ExternalLockUpdate as ExternalLockUpdate
 from .iceberg_parts_filter import IcebergPartsFilter as IcebergPartsFilter
 from .klines_response import KlinesResponse as KlinesResponse
@@ -307,6 +317,16 @@ from .percent_price_filter import PercentPriceFilter as PercentPriceFilter
 from .ping_response import PingResponse as PingResponse
 from .price_filter import PriceFilter as PriceFilter
 from .rate_limits import RateLimits as RateLimits
+from .reference_price_calculation_response import (
+    ReferencePriceCalculationResponse as ReferencePriceCalculationResponse,
+)
+from .reference_price_calculation_response_result import (
+    ReferencePriceCalculationResponseResult as ReferencePriceCalculationResponseResult,
+)
+from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
+from .reference_price_response_result import (
+    ReferencePriceResponseResult as ReferencePriceResponseResult,
+)
 from .session_logon_response import SessionLogonResponse as SessionLogonResponse
 from .session_logon_response_result import (
     SessionLogonResponseResult as SessionLogonResponseResult,
@@ -416,8 +436,12 @@ from .user_data_stream_unsubscribe_response import (
 
 
 from .enums import ExchangeInfoSymbolStatusEnum as ExchangeInfoSymbolStatusEnum
+from .enums import ExecutionRulesSymbolStatusEnum as ExecutionRulesSymbolStatusEnum
 from .enums import DepthSymbolStatusEnum as DepthSymbolStatusEnum
 from .enums import KlinesIntervalEnum as KlinesIntervalEnum
+from .enums import (
+    ReferencePriceCalculationSymbolStatusEnum as ReferencePriceCalculationSymbolStatusEnum,
+)
 from .enums import TickerTypeEnum as TickerTypeEnum
 from .enums import TickerWindowSizeEnum as TickerWindowSizeEnum
 from .enums import TickerSymbolStatusEnum as TickerSymbolStatusEnum

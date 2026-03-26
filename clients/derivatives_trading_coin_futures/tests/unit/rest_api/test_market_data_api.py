@@ -797,7 +797,7 @@ class TestMarketDataApi:
                             "multiplierDecimal": "4",
                         },
                     ],
-                    "OrderType": [
+                    "orderTypes": [
                         "LIMIT",
                         "MARKET",
                         "STOP",

@@ -875,7 +875,7 @@ class SubAccountRestAPI:
         * This function only support VIP level 7-9.
         * Only master account can use the function
         * Quantity should be positive number only
-        * The function support normal account, PM PRO and PM PRO SPAN.
+        * The function support normal account, PM PRO, PM PRO SPAN and PM Retail.
         * Only support for from account has positions
         * For all orders in the same orderArgs request, if any symbol’s total close position quantity is bigger than the symbol’s current position quantity, all batch orders in the same list will fail simultaneously.
         * Only support cross margin mode
