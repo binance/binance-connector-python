@@ -59,7 +59,7 @@ DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL = "https://fapi.binance.com"
 DERIVATIVES_TRADING_USDS_FUTURES_REST_API_TESTNET_URL = (
     "https://testnet.binancefuture.com"
 )
-DERIVATIVES_TRADING_USDS_FUTURES_REST_API_DEMO_URL = 'https://demo-fapi.binance.com'
+DERIVATIVES_TRADING_USDS_FUTURES_REST_API_DEMO_URL = "https://demo-fapi.binance.com"
 DERIVATIVES_TRADING_USDS_FUTURES_WS_API_PROD_URL = (
     "wss://ws-fapi.binance.com/ws-fapi/v1"
 )
@@ -125,13 +125,13 @@ SIMPLE_EARN_REST_API_PROD_URL = "https://api.binance.com"
 # Spot Constants
 SPOT_REST_API_PROD_URL = "https://api.binance.com"
 SPOT_REST_API_TESTNET_URL = "https://testnet.binance.vision"
-SPOT_REST_API_DEMO_URL = 'https://demo-api.binance.com'
+SPOT_REST_API_DEMO_URL = "https://demo-api.binance.com"
 SPOT_WS_API_PROD_URL = "wss://ws-api.binance.com:443/ws-api/v3"
 SPOT_WS_API_TESTNET_URL = "wss://ws-api.testnet.binance.vision/ws-api/v3"
-SPOT_WS_API_DEMO_URL = 'wss://demo-ws-api.binance.com/ws-api/v3'
+SPOT_WS_API_DEMO_URL = "wss://demo-ws-api.binance.com/ws-api/v3"
 SPOT_WS_STREAMS_PROD_URL = "wss://stream.binance.com:9443"
 SPOT_WS_STREAMS_TESTNET_URL = "wss://stream.testnet.binance.vision"
-SPOT_WS_STREAMS_DEMO_URL = 'wss://demo-stream.binance.com:9443'
+SPOT_WS_STREAMS_DEMO_URL = "wss://demo-stream.binance.com:9443"
 SPOT_REST_API_MARKET_URL = "https://data-api.binance.vision"
 SPOT_WS_STREAMS_MARKET_URL = "wss://data-stream.binance.vision"
 

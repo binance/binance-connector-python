@@ -46,6 +46,7 @@ from binance_common.utils import (
     parse_user_event,
     parse_rate_limit_headers,
     parse_ws_rate_limit_headers,
+    redact_sensitive_info,
     resolve_model_from_event,
     send_request,
     should_retry_request,
@@ -190,6 +191,144 @@ class TestEd25519Signature(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             verifier.verify(payload.encode("utf-8"), decoded_signature)
+
+
+class TestClearRsaCache(unittest.TestCase):
+    def setUp(self):
+        Signers.clear_rsa_cache()
+
+    def tearDown(self):
+        Signers.clear_rsa_cache()
+
+    def test_clear_rsa_cache_removes_keys_and_signers(self):
+        private_key = RSA.generate(2048)
+        private_pem = private_key.export_key().decode("utf-8")
+
+        Signers.get_rsa_signer(private_pem, None)
+
+        self.assertGreater(len(Signers._rsa_keys), 0)
+        self.assertGreater(len(Signers._rsa_signers), 0)
+
+        Signers.clear_rsa_cache()
+
+        self.assertEqual(len(Signers._rsa_keys), 0)
+        self.assertEqual(len(Signers._rsa_signers), 0)
+
+    def test_clear_rsa_cache_when_already_empty(self):
+        self.assertEqual(len(Signers._rsa_keys), 0)
+        self.assertEqual(len(Signers._rsa_signers), 0)
+
+        try:
+            Signers.clear_rsa_cache()
+            cleared = True
+        except Exception:
+            cleared = False
+
+        self.assertTrue(cleared)
+        self.assertEqual(len(Signers._rsa_keys), 0)
+        self.assertEqual(len(Signers._rsa_signers), 0)
+
+    def test_clear_rsa_cache_does_not_affect_ed25519_cache(self):
+        rsa_private_key = RSA.generate(2048)
+        rsa_private_pem = rsa_private_key.export_key().decode("utf-8")
+        Signers.get_rsa_signer(rsa_private_pem, None)
+
+        ed25519_private_key = ECC.generate(curve="ed25519")
+        ed25519_private_pem = ed25519_private_key.export_key(format="PEM")
+        Signers.get_ed25519_signer(ed25519_private_pem, None)
+
+        ed25519_keys_before = len(Signers._ed25519_keys)
+        ed25519_signers_before = len(Signers._ed25519_signers)
+
+        Signers.clear_rsa_cache()
+
+        self.assertEqual(len(Signers._rsa_keys), 0)
+        self.assertEqual(len(Signers._rsa_signers), 0)
+        self.assertEqual(len(Signers._ed25519_keys), ed25519_keys_before)
+        self.assertEqual(len(Signers._ed25519_signers), ed25519_signers_before)
+
+        Signers.clear_ed25519_cache()
+
+    def test_clear_rsa_cache_forces_key_reimport(self):
+        private_key = RSA.generate(2048)
+        private_pem = private_key.export_key().decode("utf-8")
+
+        signer_before = Signers.get_rsa_signer(private_pem, None)
+
+        Signers.clear_rsa_cache()
+
+        signer_after = Signers.get_rsa_signer(private_pem, None)
+
+        self.assertIsNot(signer_before, signer_after)
+
+
+class TestClearEd25519Cache(unittest.TestCase):
+    def setUp(self):
+        Signers.clear_ed25519_cache()
+
+    def tearDown(self):
+        Signers.clear_ed25519_cache()
+
+    def test_clear_ed25519_cache_removes_keys_and_signers(self):
+        private_key = ECC.generate(curve="ed25519")
+        private_pem = private_key.export_key(format="PEM")
+
+        Signers.get_ed25519_signer(private_pem, None)
+
+        self.assertGreater(len(Signers._ed25519_keys), 0)
+        self.assertGreater(len(Signers._ed25519_signers), 0)
+
+        Signers.clear_ed25519_cache()
+
+        self.assertEqual(len(Signers._ed25519_keys), 0)
+        self.assertEqual(len(Signers._ed25519_signers), 0)
+
+    def test_clear_ed25519_cache_when_already_empty(self):
+        self.assertEqual(len(Signers._ed25519_keys), 0)
+        self.assertEqual(len(Signers._ed25519_signers), 0)
+
+        try:
+            Signers.clear_ed25519_cache()
+            cleared = True
+        except Exception:
+            cleared = False
+
+        self.assertTrue(cleared)
+        self.assertEqual(len(Signers._ed25519_keys), 0)
+        self.assertEqual(len(Signers._ed25519_signers), 0)
+
+    def test_clear_ed25519_cache_does_not_affect_rsa_cache(self):
+        rsa_private_key = RSA.generate(2048)
+        rsa_private_pem = rsa_private_key.export_key().decode("utf-8")
+        Signers.get_rsa_signer(rsa_private_pem, None)
+
+        ed25519_private_key = ECC.generate(curve="ed25519")
+        ed25519_private_pem = ed25519_private_key.export_key(format="PEM")
+        Signers.get_ed25519_signer(ed25519_private_pem, None)
+
+        rsa_keys_before = len(Signers._rsa_keys)
+        rsa_signers_before = len(Signers._rsa_signers)
+
+        Signers.clear_ed25519_cache()
+
+        self.assertEqual(len(Signers._ed25519_keys), 0)
+        self.assertEqual(len(Signers._ed25519_signers), 0)
+        self.assertEqual(len(Signers._rsa_keys), rsa_keys_before)
+        self.assertEqual(len(Signers._rsa_signers), rsa_signers_before)
+
+        Signers.clear_rsa_cache()
+
+    def test_clear_ed25519_cache_forces_key_reimport(self):
+        private_key = ECC.generate(curve="ed25519")
+        private_pem = private_key.export_key(format="PEM")
+
+        signer_before = Signers.get_ed25519_signer(private_pem, None)
+
+        Signers.clear_ed25519_cache()
+
+        signer_after = Signers.get_ed25519_signer(private_pem, None)
+
+        self.assertIsNot(signer_before, signer_after)
 
 
 class TestCleanNoneValue(unittest.TestCase):
@@ -1531,6 +1670,66 @@ class TestParseUserEvent(unittest.TestCase):
         instance = parse_user_event(payload, UserResponse)
         self.assertIsInstance(instance, UserResponse)
         self.assertEqual(instance.actual_instance["x"], "wrong_type")
+
+
+class TestRedactSensitiveInfo(unittest.TestCase):
+    def test_redact_simple_dict(self):
+        config = {"apiKey": "myapikey", "otherKey": "value"}
+        expected = {"apiKey": "[REDACTED]", "otherKey": "value"}
+        result = redact_sensitive_info(config)
+        self.assertEqual(result, expected)
+
+    def test_redact_nested_dict(self):
+        config = {
+            "params": {
+                "apiKey": "myapikey",
+                "nested": {"signature": "mysignature", "keep": "this"},
+            },
+            "normal": "value",
+        }
+        expected = {
+            "params": {
+                "apiKey": "[REDACTED]",
+                "nested": {"signature": "[REDACTED]", "keep": "this"},
+            },
+            "normal": "value",
+        }
+        result = redact_sensitive_info(config)
+        self.assertEqual(result, expected)
+
+    def test_redact_ordereddict(self):
+        config = OrderedDict(
+            [
+                ("apiKey", "keyvalue"),
+                (
+                    "params",
+                    OrderedDict([("signature", "signature"), ("other", "data")]),
+                ),
+            ]
+        )
+        expected = OrderedDict(
+            [
+                ("apiKey", "[REDACTED]"),
+                (
+                    "params",
+                    OrderedDict([("signature", "[REDACTED]"), ("other", "data")]),
+                ),
+            ]
+        )
+        result = redact_sensitive_info(config)
+        self.assertEqual(result, expected)
+
+    def test_redact_list_of_dicts(self):
+        config = {"list": [{"apiKey": "key1"}, {"normal": "value"}]}
+        expected = {"list": [{"apiKey": "[REDACTED]"}, {"normal": "value"}]}
+        result = redact_sensitive_info(config)
+        self.assertEqual(result, expected)
+
+    def test_no_sensitive_keys(self):
+        config = {"foo": "bar", "baz": [1, 2, 3], "nested": {"a": 1}}
+        expected = config.copy()
+        result = redact_sensitive_info(config)
+        self.assertEqual(result, expected)
 
 
 if __name__ == "__main__":

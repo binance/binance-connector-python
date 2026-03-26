@@ -746,11 +746,14 @@ class TestWebSocketStreamBase:
         assert "test_stream" not in mock_registry.stream_connections_map
 
     @pytest.mark.asyncio
-    async def test_on_sets_callback_for_websocket_stream(self, websocket_stream, mock_connection):
+    async def test_on_sets_callback_for_websocket_stream(
+        self, websocket_stream, mock_connection
+    ):
         await websocket_stream.subscribe(["test_stream"])
 
         def callback(x):
             return x
+
         websocket_stream.on("message", callback, "test_stream")
 
         assert mock_connection.stream_callback_map["test_stream"] == [callback]
@@ -1410,6 +1413,7 @@ class TestWebSocketAPIBase:
 
         def callback(x):
             return x
+
         ws_api.on("message", callback, "0")
 
         assert mock_connection.stream_callback_map["0"] == [callback]

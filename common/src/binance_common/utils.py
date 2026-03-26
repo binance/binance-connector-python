@@ -3,6 +3,7 @@ import hashlib
 import hmac
 import importlib
 import json
+import logging
 import re
 import requests
 import requests.adapters
@@ -48,7 +49,7 @@ T = TypeVar("T", bound=BaseModel)
 class CustomHTTPSAdapter(requests.adapters.HTTPAdapter):
     """A custom HTTPS adapter that supports SSLContext (including certificate pinning)."""
 
-    def __init__(self, ssl_context: ssl.SSLContext = None, **kwargs):
+    def __init__(self, ssl_context: Optional[ssl.SSLContext] = None, **kwargs):
         self.ssl_context = ssl_context or create_urllib3_context()
         super().__init__(**kwargs)
 
@@ -262,7 +263,9 @@ def get_signature(
         )
 
 
-def should_retry_request(error, method: str = None, retries_left: int = None) -> bool:
+def should_retry_request(
+    error, method: Optional[str] = None, retries_left: Optional[int] = None
+) -> bool:
     """Determines whether a request should be retried based on the error.
 
     :param error: The error object to check.
@@ -295,14 +298,15 @@ def send_request(
     payload: Optional[dict] = None,
     body: Optional[dict] = None,
     time_unit: Optional[str] = None,
-    response_model: Type[T] = None,
+    response_model: Optional[Type[T]] = None,
     is_signed: bool = False,
     signer: Optional[Signers] = None,
 ) -> ApiResponse[T]:
     """Sends an HTTP request with the specified configuration, method, path, and
     optional payload and time unit.
 
-    The `send_request` function is responsible for sending an HTTP request with the provided parameters. It handles retries, error handling, and response processing. The function takes the following parameters:
+    The `send_request` function is responsible for sending an HTTP request with the provided parameters.
+    It handles retries, error handling, and response processing. The function takes the following parameters:
 
     - `configuration`: The configuration object containing the necessary information for sending the request.
     - `method`: The HTTP method to use (e.g. "GET", "POST", etc.).
@@ -424,17 +428,27 @@ def send_request(
                 or (not isinstance(parsed[0], list) if is_list else False)
             )
             if (is_list and not is_flat_list) or not response_model:
-                data_function = lambda: parsed
+
+                def data_function():
+                    return parsed
+
             elif is_oneof or is_list or hasattr(response_model, "from_dict"):
-                data_function = lambda: response_model.from_dict(parsed)
+
+                def data_function():
+                    return response_model.from_dict(parsed)
+
             else:
-                data_function = lambda: response_model.model_validate(parsed)
+
+                def data_function():
+                    return response_model.model_validate(parsed)
 
             try:
                 data_function()
                 final_data_function = data_function
             except Exception:
-                final_data_function = lambda: parsed
+
+                def final_data_function():
+                    return parsed
 
             return ApiResponse[T](
                 data_function=final_data_function,
@@ -558,16 +572,19 @@ def parse_proxies(
     return {"https": proxy_url, "http": proxy_url}
 
 
-def ws_streams_placeholder(stream: str, params: dict = {}) -> str:
+def ws_streams_placeholder(stream: str, params: Optional[dict] = None) -> str:
     """Replaces placeholders in the stream string with values from the params dictionary.
 
     Args:
         stream (str): The stream string with placeholders.
-        params (dict): A dictionary containing values to replace the placeholders.
+        params (Optional[dict]): A dictionary containing values to replace the placeholders. Defaults to None.
 
     Returns:
         str: The stream string with placeholders replaced by actual values.
     """
+    if params is None:
+        params = {}
+
     params = {k: v for k, v in params.items() if v is not None}
 
     normalized_variables = {
@@ -698,17 +715,19 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
 
 
 def websocket_api_signature(
-    config, payload: Optional[Dict] = {}, signer: Signers = None
+    config, payload: Optional[Dict] = None, signer: Optional[Signers] = None
 ) -> dict:
     """Generate signature for websocket API
 
     Args:
         payload (Optional[Dict]): Payload.
-        signer (Signers): Signer for the payload.
+        signer (Optional[Signers]): Signer for the payload.
     Returns:
         dict: The generated signature for the WebSocket API.
     """
 
+    if payload is None:
+        payload = {}
     payload["apiKey"] = config.api_key
     payload["timestamp"] = get_timestamp()
     parameters = OrderedDict(sorted(payload.items()))
@@ -803,5 +822,31 @@ def parse_user_event(payload: dict, response_model_cls: Type[BaseModel]) -> Base
         return response_model_cls(**kwargs)
 
     except Exception as e:
-        print(f"Failed to parse {event_name}: {e}")
+        logging.warning(f"Failed to parse {event_name}: {e}")
         return response_model_cls(actual_instance=payload)
+
+
+def redact_sensitive_info(config: dict) -> dict:
+    """Redacts sensitive information from the configuration for logging purposes.
+
+    Args:
+        config (Union[ConfigurationWebSocketAPI, ConfigurationRestAPI]): The configuration object to redact.
+    Returns:
+        dict: A dictionary representation of the configuration with sensitive information redacted.
+    """
+    redacted_config = copy.deepcopy(config)
+    SENSITIVE_KEYS = ["apiKey", "signature"]
+
+    if isinstance(redacted_config, dict) or isinstance(redacted_config, OrderedDict):
+        for key, value in redacted_config.items():
+            if key in SENSITIVE_KEYS:
+                redacted_config[key] = "[REDACTED]"
+            else:
+                if isinstance(value, (dict, OrderedDict, list)):
+                    redacted_config[key] = redact_sensitive_info(value)
+    elif isinstance(redacted_config, list):
+        for i, item in enumerate(redacted_config):
+            if isinstance(item, (dict, OrderedDict, list)):
+                redacted_config[i] = redact_sensitive_info(item)
+
+    return redacted_config
