@@ -144,6 +144,8 @@ class UserDataStreamEventsResponse(BaseModel):
 
     @model_validator(mode="before")
     def wrap_actual_instance(cls, values):
+        if isinstance(values, dict) and "actual_instance" in values:
+            return values
         return {"actual_instance": values}
 
     @field_validator("actual_instance")
