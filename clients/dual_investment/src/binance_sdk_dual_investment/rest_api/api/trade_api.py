@@ -44,7 +44,7 @@ class TradeApi:
         """
                 Change Auto-Compound status(USER_DATA)
                 POST /sapi/v1/dci/product/auto_compound/edit-status
-                https://developers.binance.com/docs/dual_investment/trade/Change-Auto-Compound-status
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Change-Auto-Compound-status
 
                 Change Auto-Compound status
 
@@ -69,6 +69,7 @@ class TradeApi:
                 error_message="Missing required parameter 'position_id'",
             )
 
+        body = {}
         payload = {
             "position_id": position_id,
             "auto_compound_plan": auto_compound_plan,
@@ -81,6 +82,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/dci/product/auto_compound/edit-status",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoCompoundStatusResponse,
             is_signed=True,
@@ -94,7 +96,7 @@ class TradeApi:
         """
                 Check Dual Investment accounts(USER_DATA)
                 GET /sapi/v1/dci/product/accounts
-                https://developers.binance.com/docs/dual_investment/trade/Check-Dual-Investment-accounts
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Check-Dual-Investment-accounts
 
                 Check Dual Investment accounts
 
@@ -111,6 +113,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -119,6 +122,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/dci/product/accounts",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckDualInvestmentAccountsResponse,
             is_signed=True,
@@ -135,7 +139,7 @@ class TradeApi:
         """
                 Get Dual Investment positions(USER_DATA)
                 GET /sapi/v1/dci/product/positions
-                https://developers.binance.com/docs/dual_investment/trade/Get-Dual-Investment-positions
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Get-Dual-Investment-positions
 
                 Get Dual Investment positions (batch)
 
@@ -155,6 +159,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "status": status,
             "page_size": page_size,
@@ -168,6 +173,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/dci/product/positions",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDualInvestmentPositionsResponse,
             is_signed=True,
@@ -185,7 +191,7 @@ class TradeApi:
         """
                 Subscribe Dual Investment products(USER_DATA)
                 POST /sapi/v1/dci/product/subscribe
-                https://developers.binance.com/docs/dual_investment/trade/Subscribe-Dual-Investment-products
+                https://developers.binance.com/docs/advanced_earn/dual-investment/trade/Subscribe-Dual-Investment-products
 
                 Subscribe Dual Investment products
 
@@ -228,6 +234,7 @@ class TradeApi:
                 error_message="Missing required parameter 'auto_compound_plan'",
             )
 
+        body = {}
         payload = {
             "id": id,
             "order_id": order_id,
@@ -242,6 +249,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/dci/product/subscribe",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeDualInvestmentProductsResponse,
             is_signed=True,

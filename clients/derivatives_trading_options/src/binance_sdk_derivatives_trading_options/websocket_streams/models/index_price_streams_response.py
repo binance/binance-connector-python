@@ -16,23 +16,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import ConfigDict
+from typing import Any, ClassVar, Dict
+from binance_sdk_derivatives_trading_options.websocket_streams.models.index_price_streams_response_inner import (
+    IndexPriceStreamsResponseInner,
+)
+from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class IndexPriceStreamsResponse(BaseModel):
+class IndexPriceStreamsResponse(IndexPriceStreamsResponseInner):
     """
     IndexPriceStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = None
-    E: Optional[StrictInt] = Field(default=None, alias="E")
-    s: Optional[StrictStr] = None
-    p: Optional[StrictStr] = None
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "s", "p"]
+    __properties: ClassVar[List[str]] = []
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,24 +61,14 @@ class IndexPriceStreamsResponse(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
@@ -92,12 +80,5 @@ class IndexPriceStreamsResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {"e": obj.get("e"), "E": obj.get("E"), "s": obj.get("s"), "p": obj.get("p")}
-        )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
+        _obj = cls.model_validate({})
         return _obj

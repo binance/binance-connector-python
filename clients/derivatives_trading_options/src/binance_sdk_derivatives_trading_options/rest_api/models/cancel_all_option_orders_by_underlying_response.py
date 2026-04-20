@@ -29,9 +29,8 @@ class CancelAllOptionOrdersByUnderlyingResponse(BaseModel):
 
     code: Optional[StrictInt] = None
     msg: Optional[StrictStr] = None
-    data: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "msg", "data"]
+    __properties: ClassVar[List[str]] = ["code", "msg"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,9 +94,7 @@ class CancelAllOptionOrdersByUnderlyingResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {"code": obj.get("code"), "msg": obj.get("msg"), "data": obj.get("data")}
-        )
+        _obj = cls.model_validate({"code": obj.get("code"), "msg": obj.get("msg")})
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:

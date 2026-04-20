@@ -16,17 +16,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
@@ -39,16 +30,19 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
     symbol: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    quantity: Optional[Union[StrictFloat, StrictInt]] = None
-    price: Optional[Union[StrictFloat, StrictInt]] = None
+    quantity: Optional[StrictStr] = None
+    price: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
-    reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    post_only: Optional[StrictBool] = Field(default=None, alias="postOnly")
+    reduce_only: Optional[StrictStr] = Field(default=None, alias="reduceOnly")
+    post_only: Optional[StrictStr] = Field(default=None, alias="postOnly")
     new_order_resp_type: Optional[StrictStr] = Field(
         default=None, alias="newOrderRespType"
     )
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
-    is_mmp: Optional[StrictBool] = Field(default=None, alias="isMmp")
+    is_mmp: Optional[StrictStr] = Field(default=None, alias="isMmp")
+    self_trade_prevention_mode: Optional[StrictStr] = Field(
+        default=None, alias="selfTradePreventionMode"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",
@@ -62,6 +56,7 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
         "newOrderRespType",
         "clientOrderId",
         "isMmp",
+        "selfTradePreventionMode",
     ]
 
     @field_validator("side")
@@ -90,8 +85,8 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
         if value is None:
             return value
 
-        if value not in set(["GTC", "IOC", "FOK"]):
-            raise ValueError("must be one of enum values ('GTC', 'IOC', 'FOK')")
+        if value not in set(["GTC", "IOC", "FOK", "GTX"]):
+            raise ValueError("must be one of enum values ('GTC', 'IOC', 'FOK', 'GTX')")
         return value
 
     @field_validator("new_order_resp_type")
@@ -102,6 +97,18 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
 
         if value not in set(["ACK", "RESULT"]):
             raise ValueError("must be one of enum values ('ACK', 'RESULT')")
+        return value
+
+    @field_validator("self_trade_prevention_mode")
+    def self_trade_prevention_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["EXPIRE_TAKER", "EXPIRE_BOTH", "EXPIRE_MAKER"]):
+            raise ValueError(
+                "must be one of enum values ('EXPIRE_TAKER', 'EXPIRE_BOTH', 'EXPIRE_MAKER')"
+            )
         return value
 
     model_config = ConfigDict(
@@ -179,6 +186,7 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
                 "newOrderRespType": obj.get("newOrderRespType"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "isMmp": obj.get("isMmp"),
+                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
             }
         )
         # store additional fields in additional_properties

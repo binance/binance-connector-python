@@ -29,6 +29,8 @@ from .models import DailyAccountSnapshotResponse
 from .models import GetApiKeyPermissionResponse
 from .models import AssetDetailResponse
 from .models import AssetDividendRecordResponse
+from .models import DustConvertResponse
+from .models import DustConvertibleAssetsResponse
 from .models import DustTransferResponse
 from .models import DustlogResponse
 from .models import FundingWalletResponse
@@ -60,6 +62,7 @@ from .models import DepositHistoryV2Response
 from .models import FetchAddressVerificationListResponse
 from .models import SubmitDepositQuestionnaireResponse
 from .models import SubmitDepositQuestionnaireTravelRuleResponse
+from .models import SubmitDepositQuestionnaireV2Response
 from .models import VaspListResponse
 from .models import WithdrawHistoryV1Response
 from .models import WithdrawHistoryV2Response
@@ -93,7 +96,11 @@ class WalletRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -101,25 +108,8 @@ class WalletRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -129,7 +119,36 @@ class WalletRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -320,6 +339,7 @@ class WalletRestAPI:
 
     def asset_detail(
         self,
+        asset: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AssetDetailResponse]:
         """
@@ -333,6 +353,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -343,7 +364,7 @@ class WalletRestAPI:
 
         """
 
-        return self._assetApi.asset_detail(recv_window)
+        return self._assetApi.asset_detail(asset, recv_window)
 
     def asset_dividend_record(
         self,
@@ -382,6 +403,72 @@ class WalletRestAPI:
             asset, start_time, end_time, limit, recv_window
         )
 
+    def dust_convert(
+        self,
+        asset: Union[str, None],
+        client_id: Optional[str] = None,
+        target_asset: Optional[str] = None,
+        third_party_client_id: Optional[str] = None,
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertResponse]:
+        """
+                Dust Convert (USER_DATA)
+
+                Convert dust assets
+
+        Weight: 10
+
+                Args:
+                    asset (Union[str, None]):
+                    client_id (Optional[str] = None): A unique id for the request
+                    target_asset (Optional[str] = None):
+                    third_party_client_id (Optional[str] = None):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._assetApi.dust_convert(
+            asset,
+            client_id,
+            target_asset,
+            third_party_client_id,
+            dust_quota_asset_to_target_asset_price,
+        )
+
+    def dust_convertible_assets(
+        self,
+        target_asset: Union[str, None],
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertibleAssetsResponse]:
+        """
+                Dust Convertible Assets (USER_DATA)
+
+                Query dust convertible assets
+
+        Weight: 1
+
+                Args:
+                    target_asset (Union[str, None]):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertibleAssetsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._assetApi.dust_convertible_assets(
+            target_asset, dust_quota_asset_to_target_asset_price
+        )
+
     def dust_transfer(
         self,
         asset: Union[str, None],
@@ -414,6 +501,7 @@ class WalletRestAPI:
 
     def dustlog(
         self,
+        account_type: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -429,6 +517,7 @@ class WalletRestAPI:
         Weight: 1
 
                 Args:
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -441,7 +530,7 @@ class WalletRestAPI:
 
         """
 
-        return self._assetApi.dustlog(start_time, end_time, recv_window)
+        return self._assetApi.dustlog(account_type, start_time, end_time, recv_window)
 
     def funding_wallet(
         self,
@@ -580,8 +669,6 @@ class WalletRestAPI:
                 Query User Delegation History(For Master Account)(USER_DATA)
 
                 Query User Delegation History
-
-        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint
 
         Weight: 60
 
@@ -1337,6 +1424,7 @@ class WalletRestAPI:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 
@@ -1394,6 +1482,7 @@ class WalletRestAPI:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 
@@ -1455,7 +1544,7 @@ class WalletRestAPI:
     def submit_deposit_questionnaire(
         self,
         sub_account_id: Union[str, None],
-        deposit_id: Union[str, None],
+        deposit_id: Union[int, None],
         questionnaire: Union[str, None],
         beneficiary_pii: Union[str, None],
         signature: Union[str, None],
@@ -1479,7 +1568,7 @@ class WalletRestAPI:
 
                 Args:
                     sub_account_id (Union[str, None]): External user ID.
-                    deposit_id (Union[str, None]): Wallet deposit ID.
+                    deposit_id (Union[int, None]): Wallet deposit ID
                     questionnaire (Union[str, None]): JSON format questionnaire answers.
                     beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
                     signature (Union[str, None]): Must be the last parameter.
@@ -1541,6 +1630,39 @@ class WalletRestAPI:
 
         return self._travelRuleApi.submit_deposit_questionnaire_travel_rule(
             tran_id, questionnaire
+        )
+
+    def submit_deposit_questionnaire_v2(
+        self,
+        deposit_id: Union[int, None],
+        questionnaire: Union[str, None],
+    ) -> ApiResponse[SubmitDepositQuestionnaireV2Response]:
+        """
+                Submit Deposit Questionnaire V2 (For local entities that require travel rule) (supporting network) (USER_DATA)
+
+                Submit questionnaire for local entities that require travel rule.
+        The questionnaire is only applies to transactions from unhosted wallets or VASPs that are not
+        yet onboarded with GTR.
+
+        * Questionnaire is different for each local entity, please refer
+        * If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`,
+
+        Weight: 600
+
+                Args:
+                    deposit_id (Union[int, None]): Wallet deposit ID
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+
+                Returns:
+                    ApiResponse[SubmitDepositQuestionnaireV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.submit_deposit_questionnaire_v2(
+            deposit_id, questionnaire
         )
 
     def vasp_list(

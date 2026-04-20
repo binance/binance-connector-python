@@ -102,6 +102,7 @@ class PayApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -115,6 +116,7 @@ class PayApi:
             method="GET",
             path="/sapi/v1/pay/transactions",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetPayTradeHistoryResponse,
             is_signed=True,

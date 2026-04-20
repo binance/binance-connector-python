@@ -1,5 +1,63 @@
 # Changelog
 
+## 4.3.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 4.2.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 4.1.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 4.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+- Modified response for `place_limit_order()` (`POST /sapi/v1/convert/limit/placeOrder`):
+  - property `status` added
+  - property `orderId` added
+  - property `fromAmount` deleted
+  - property `inverseRatio` deleted
+  - property `quoteId` deleted
+  - property `ratio` deleted
+  - property `toAmount` deleted
+  - property `validTimestamp` deleted
+
+## 3.2.0 - 2026-01-23
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.1`
+
+## 3.1.0 - 2026-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+## 3.0.0 - 2025-12-22
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
 ## 2.1.0 - 2025-10-10
 
 ### Changed (1)

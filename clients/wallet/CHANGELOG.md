@@ -1,5 +1,92 @@
 # Changelog
 
+## 9.2.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 9.1.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 9.0.0 - 2026-03-09
+
+### Changed (1)
+
+- Modified response for `vasp_list()` (`GET /sapi/v1/localentity/vasp`):
+  - items: property `identifier` added
+  - items: item property `identifier` added
+
+## 8.1.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 8.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+- Modified response for `asset_dividend_record()` (`GET /sapi/v1/asset/assetDividend`):
+  - `rows`.items: property `direction` added
+  - `rows`.items: item property `direction` added
+
+## 7.0.0 - 2026-01-23
+
+### Changed (5)
+
+- Updated `binance-common` library to version `3.4.1`
+- Added parameter `accountType`
+  - affected methods:
+    - `dustlog()` (`GET /sapi/v1/asset/dribblet`)
+- Added parameter `asset`
+  - affected methods:
+    - `asset_detail()` (`GET /sapi/v1/asset/assetDetail`)
+- Modified response for `withdraw_history_v1()` (`GET /sapi/v1/localentity/withdraw/history`):
+  - items: property `addressTag` deleted
+  - items: item property `addressTag` deleted
+
+- Modified response for `withdraw_history_v2()` (`GET /sapi/v2/localentity/withdraw/history`):
+  - items: property `addressTag` deleted
+  - items: item property `addressTag` deleted
+
+## 6.0.0 - 2026-01-13
+
+### Added (1)
+
+- `submit_deposit_questionnaire_v2()` (`PUT /sapi/v2/localentity/deposit/provide-info`)
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.4.0`
+- Modified parameter `depositId`:
+  - type `string` → `integer`
+  - affected methods:
+    - `submit_deposit_questionnaire()` (`PUT /sapi/v1/localentity/broker/deposit/provide-info`)
+
+## 5.0.0 - 2025-12-22
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+- Modified parameter `dustQuotaAssetToTargetAssetPrice`:
+  - type `BIGDECIMAL` → `number`
+  - affected methods:
+    - `dust_convert()` (`POST /sapi/v1/asset/dust-convert/convert`)
+    - `dust_convertible_assets()` (`POST /sapi/v1/asset/dust-convert/query-convertible-assets`)
+
 ## 4.1.0 - 2025-10-10
 
 ### Changed (2)

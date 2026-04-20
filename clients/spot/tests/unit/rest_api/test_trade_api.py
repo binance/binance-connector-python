@@ -32,6 +32,8 @@ from binance_sdk_spot.rest_api.models import NewOrderResponse
 from binance_sdk_spot.rest_api.models import OrderAmendKeepPriorityResponse
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceResponse
 from binance_sdk_spot.rest_api.models import OrderListOcoResponse
+from binance_sdk_spot.rest_api.models import OrderListOpoResponse
+from binance_sdk_spot.rest_api.models import OrderListOpocoResponse
 from binance_sdk_spot.rest_api.models import OrderListOtoResponse
 from binance_sdk_spot.rest_api.models import OrderListOtocoResponse
 from binance_sdk_spot.rest_api.models import OrderOcoResponse
@@ -73,6 +75,34 @@ from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoNewOrderRespTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoWorkingPegOffsetTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpoPendingPegOffsetTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingSideEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAboveTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoNewOrderRespTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoSelfTradePreventionModeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingPegOffsetTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAboveTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAbovePegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAbovePegOffsetTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowTimeInForceEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowPegPriceTypeEnum
+from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowPegOffsetTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingTypeEnum
@@ -2132,6 +2162,887 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.order_list_oco(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_order_list_opo_success(self, mock_get_signature):
+        """Test order_list_opo() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+
+        expected_response = {
+            "orderListId": 0,
+            "contingencyType": "OTO",
+            "listStatusType": "EXEC_STARTED",
+            "listOrderStatus": "EXECUTING",
+            "listClientOrderId": "H94qCqO27P74OEiO4X8HOG",
+            "transactionTime": 1762998011671,
+            "symbol": "BTCUSDT",
+            "orders": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 2,
+                    "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
+                },
+            ],
+            "orderReports": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                    "transactTime": 1762998011671,
+                    "price": "0.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 2,
+                    "orderListId": 0,
+                    "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
+                    "transactTime": 1762998011671,
+                    "price": "102264.00000000",
+                    "origQty": "0.00060000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "BUY",
+                    "workingTime": 1762998011671,
+                    "selfTradePreventionMode": "NONE",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.order_list_opo(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/orderList/opo" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["symbol"] == "BNBUSDT"
+        assert normalized["workingType"] == OrderListOpoWorkingTypeEnum["LIMIT"].value
+        assert normalized["workingSide"] == OrderListOpoWorkingSideEnum["BUY"].value
+        assert normalized["workingPrice"] == 1.0
+        assert normalized["workingQuantity"] == 1.0
+        assert normalized["pendingType"] == OrderListOpoPendingTypeEnum["LIMIT"].value
+        assert normalized["pendingSide"] == OrderListOpoPendingSideEnum["BUY"].value
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OrderListOpoResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(OrderListOpoResponse, "from_dict"):
+            expected = OrderListOpoResponse.from_dict(expected_response)
+        else:
+            expected = OrderListOpoResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_order_list_opo_success_with_optional_params(self, mock_get_signature):
+        """Test order_list_opo() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListOpoWorkingTimeInForceEnum["GTC"].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListOpoPendingTimeInForceEnum["GTC"].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+
+        expected_response = {
+            "orderListId": 0,
+            "contingencyType": "OTO",
+            "listStatusType": "EXEC_STARTED",
+            "listOrderStatus": "EXECUTING",
+            "listClientOrderId": "H94qCqO27P74OEiO4X8HOG",
+            "transactionTime": 1762998011671,
+            "symbol": "BTCUSDT",
+            "orders": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 2,
+                    "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
+                },
+            ],
+            "orderReports": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                    "transactTime": 1762998011671,
+                    "price": "0.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 2,
+                    "orderListId": 0,
+                    "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
+                    "transactTime": 1762998011671,
+                    "price": "102264.00000000",
+                    "origQty": "0.00060000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "BUY",
+                    "workingTime": 1762998011671,
+                    "selfTradePreventionMode": "NONE",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.order_list_opo(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/orderList/opo" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OrderListOpoResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(OrderListOpoResponse, "from_dict"):
+            expected = OrderListOpoResponse.from_dict(expected_response)
+        else:
+            expected = OrderListOpoResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_order_list_opo_missing_required_param_symbol(self):
+        """Test that order_list_opo() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_working_type(self):
+        """Test that order_list_opo() raises RequiredError when 'working_type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["working_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_type'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_working_side(self):
+        """Test that order_list_opo() raises RequiredError when 'working_side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["working_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_side'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_working_price(self):
+        """Test that order_list_opo() raises RequiredError when 'working_price' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["working_price"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_price'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_working_quantity(self):
+        """Test that order_list_opo() raises RequiredError when 'working_quantity' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["working_quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_quantity'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_pending_type(self):
+        """Test that order_list_opo() raises RequiredError when 'pending_type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["pending_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_type'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_missing_required_param_pending_side(self):
+        """Test that order_list_opo() raises RequiredError when 'pending_side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+        params["pending_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_side'"
+        ):
+            self.client.order_list_opo(**params)
+
+    def test_order_list_opo_server_error(self):
+        """Test that order_list_opo() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListOpoPendingSideEnum["BUY"].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.order_list_opo = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.order_list_opo(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_order_list_opoco_success(self, mock_get_signature):
+        """Test order_list_opoco() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+
+        expected_response = {
+            "orderListId": 2,
+            "contingencyType": "OTO",
+            "listStatusType": "EXEC_STARTED",
+            "listOrderStatus": "EXECUTING",
+            "listClientOrderId": "bcedxMpQG6nFrZUPQyshoL",
+            "transactionTime": 1763000506354,
+            "symbol": "BTCUSDT",
+            "orders": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 9,
+                    "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
+                },
+            ],
+            "orderReports": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "orderListId": 2,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                    "transactTime": 1763000506354,
+                    "price": "104261.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "orderListId": 2,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                    "transactTime": 1763000506354,
+                    "price": "101613.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "SELL",
+                    "stopPrice": "10100.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 9,
+                    "orderListId": 2,
+                    "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
+                    "transactTime": 1763000506354,
+                    "price": "102496.00000000",
+                    "origQty": "0.00170000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "BUY",
+                    "workingTime": 1763000506354,
+                    "selfTradePreventionMode": "NONE",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.order_list_opoco(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/orderList/opoco" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["symbol"] == "BNBUSDT"
+        assert normalized["workingType"] == OrderListOpocoWorkingTypeEnum["LIMIT"].value
+        assert normalized["workingSide"] == OrderListOpocoWorkingSideEnum["BUY"].value
+        assert normalized["workingPrice"] == 1.0
+        assert normalized["workingQuantity"] == 1.0
+        assert normalized["pendingSide"] == OrderListOpocoPendingSideEnum["BUY"].value
+        assert (
+            normalized["pendingAboveType"]
+            == OrderListOpocoPendingAboveTypeEnum["STOP_LOSS_LIMIT"].value
+        )
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OrderListOpocoResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(OrderListOpocoResponse, "from_dict"):
+            expected = OrderListOpocoResponse.from_dict(expected_response)
+        else:
+            expected = OrderListOpocoResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_order_list_opoco_success_with_optional_params(self, mock_get_signature):
+        """Test order_list_opoco() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListOpocoWorkingTimeInForceEnum["GTC"].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListOpocoPendingBelowTypeEnum["STOP_LOSS"].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+
+        expected_response = {
+            "orderListId": 2,
+            "contingencyType": "OTO",
+            "listStatusType": "EXEC_STARTED",
+            "listOrderStatus": "EXECUTING",
+            "listClientOrderId": "bcedxMpQG6nFrZUPQyshoL",
+            "transactionTime": 1763000506354,
+            "symbol": "BTCUSDT",
+            "orders": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 9,
+                    "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
+                },
+            ],
+            "orderReports": [
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "orderListId": 2,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                    "transactTime": 1763000506354,
+                    "price": "104261.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "orderListId": 2,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                    "transactTime": 1763000506354,
+                    "price": "101613.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "SELL",
+                    "stopPrice": "10100.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 9,
+                    "orderListId": 2,
+                    "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
+                    "transactTime": 1763000506354,
+                    "price": "102496.00000000",
+                    "origQty": "0.00170000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT",
+                    "side": "BUY",
+                    "workingTime": 1763000506354,
+                    "selfTradePreventionMode": "NONE",
+                },
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.order_list_opoco(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/api/v3/orderList/opoco" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(OrderListOpocoResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(OrderListOpocoResponse, "from_dict"):
+            expected = OrderListOpocoResponse.from_dict(expected_response)
+        else:
+            expected = OrderListOpocoResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_order_list_opoco_missing_required_param_symbol(self):
+        """Test that order_list_opoco() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_working_type(self):
+        """Test that order_list_opoco() raises RequiredError when 'working_type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["working_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_type'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_working_side(self):
+        """Test that order_list_opoco() raises RequiredError when 'working_side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["working_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_side'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_working_price(self):
+        """Test that order_list_opoco() raises RequiredError when 'working_price' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["working_price"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_price'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_working_quantity(self):
+        """Test that order_list_opoco() raises RequiredError when 'working_quantity' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["working_quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_quantity'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_pending_side(self):
+        """Test that order_list_opoco() raises RequiredError when 'pending_side' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["pending_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_side'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_missing_required_param_pending_above_type(self):
+        """Test that order_list_opoco() raises RequiredError when 'pending_above_type' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+        params["pending_above_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_above_type'"
+        ):
+            self.client.order_list_opoco(**params)
+
+    def test_order_list_opoco_server_error(self):
+        """Test that order_list_opoco() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.order_list_opoco = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.order_list_opoco(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_order_list_oto_success(self, mock_get_signature):

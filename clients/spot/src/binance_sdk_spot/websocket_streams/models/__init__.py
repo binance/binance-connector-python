@@ -24,8 +24,6 @@ from .all_mini_ticker_response import AllMiniTickerResponse as AllMiniTickerResp
 from .all_mini_ticker_response_inner import (
     AllMiniTickerResponseInner as AllMiniTickerResponseInner,
 )
-from .all_ticker_response import AllTickerResponse as AllTickerResponse
-from .all_ticker_response_inner import AllTickerResponseInner as AllTickerResponseInner
 from .asset_filters import AssetFilters as AssetFilters
 from .avg_price_response import AvgPriceResponse as AvgPriceResponse
 from .book_ticker_response import BookTickerResponse as BookTickerResponse
@@ -72,6 +70,7 @@ from .percent_price_by_side_filter import (
 from .percent_price_filter import PercentPriceFilter as PercentPriceFilter
 from .price_filter import PriceFilter as PriceFilter
 from .rate_limits import RateLimits as RateLimits
+from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
 from .rolling_window_ticker_response import (
     RollingWindowTickerResponse as RollingWindowTickerResponse,
 )

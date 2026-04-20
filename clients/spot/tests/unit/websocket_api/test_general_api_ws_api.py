@@ -23,7 +23,9 @@ from binance_sdk_spot.websocket_api.api import GeneralApi
 
 
 from binance_sdk_spot.websocket_api.models import ExchangeInfoSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import ExecutionRulesSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import ExchangeInfoResponse
+from binance_sdk_spot.websocket_api.models import ExecutionRulesResponse
 from binance_sdk_spot.websocket_api.models import PingResponse
 from binance_sdk_spot.websocket_api.models import TimeResponse
 
@@ -88,6 +90,7 @@ class TestWebSocketGeneralApi:
                         "icebergAllowed": True,
                         "ocoAllowed": True,
                         "otoAllowed": True,
+                        "opoAllowed": True,
                         "quoteOrderQtyMarketAllowed": True,
                         "allowTrailingStop": True,
                         "cancelReplaceAllowed": True,
@@ -230,6 +233,7 @@ class TestWebSocketGeneralApi:
                         "icebergAllowed": True,
                         "ocoAllowed": True,
                         "otoAllowed": True,
+                        "opoAllowed": True,
                         "quoteOrderQtyMarketAllowed": True,
                         "allowTrailingStop": True,
                         "cancelReplaceAllowed": True,
@@ -327,6 +331,136 @@ class TestWebSocketGeneralApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.exchange_info()
+
+    @pytest.mark.asyncio
+    async def test_execution_rules_success(self):
+        """Test execution_rules() successfully with required parameters only."""
+
+        expected_response = {
+            "id": "5162affb-0aba-4821-b475-f2625006eb43",
+            "status": 200,
+            "result": {
+                "symbolRules": [
+                    {
+                        "symbol": "BAZUSD",
+                        "rules": [
+                            {
+                                "ruleType": "PRICE_RANGE",
+                                "bidLimitMultUp": "1.0001",
+                                "bidLimitMultDown": "0.9999",
+                                "askLimitMultUp": "1.0001",
+                                "askLimitMultDown": "0.9999",
+                            }
+                        ],
+                    }
+                ]
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.execution_rules()
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/executionRules".replace(
+            "/", "", 1
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={"method": "/executionRules".replace("/", "", 1), "params": {}},
+            response_model=ExecutionRulesResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_execution_rules_success_with_optional_params(self):
+        """Test execution_rules() successfully with optional parameters."""
+
+        params = {
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "symbol": "BNBUSDT",
+            "symbols": ["symbols_example"],
+            "symbol_status": ExecutionRulesSymbolStatusEnum["TRADING"].value,
+        }
+
+        expected_response = {
+            "id": "5162affb-0aba-4821-b475-f2625006eb43",
+            "status": 200,
+            "result": {
+                "symbolRules": [
+                    {
+                        "symbol": "BAZUSD",
+                        "rules": [
+                            {
+                                "ruleType": "PRICE_RANGE",
+                                "bidLimitMultUp": "1.0001",
+                                "bidLimitMultDown": "0.9999",
+                                "askLimitMultUp": "1.0001",
+                                "askLimitMultDown": "0.9999",
+                            }
+                        ],
+                    }
+                ]
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.execution_rules(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/executionRules".replace(
+            "/", "", 1
+        )
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["symbol"] == "BNBUSDT"
+        assert params["symbols"] == ["symbols_example"]
+        assert (
+            params["symbol_status"] == ExecutionRulesSymbolStatusEnum["TRADING"].value
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={"method": "/executionRules".replace("/", "", 1), "params": params},
+            response_model=ExecutionRulesResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_execution_rules_server_error(self):
+        """Test that execution_rules() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.execution_rules()
 
     @pytest.mark.asyncio
     async def test_ping_success(self):

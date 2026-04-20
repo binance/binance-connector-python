@@ -19,6 +19,7 @@ from binance_common.utils import send_request
 from ..models import GetBorrowInterestRateResponse
 from ..models import GetCollateralAssetDataResponse
 from ..models import GetLoanableAssetsDataResponse
+from ..models import GetVIPLoanInterestRateHistoryResponse
 
 
 class MarketDataApi:
@@ -66,6 +67,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'loan_coin'",
             )
 
+        body = {}
         payload = {"loan_coin": loan_coin, "recv_window": recv_window}
 
         return send_request(
@@ -74,6 +76,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/request/interestRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetBorrowInterestRateResponse,
             is_signed=True,
@@ -106,6 +109,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"collateral_coin": collateral_coin, "recv_window": recv_window}
 
         return send_request(
@@ -114,6 +118,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/collateral/data",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCollateralAssetDataResponse,
             is_signed=True,
@@ -148,6 +153,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "vip_level": vip_level,
@@ -160,8 +166,80 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/loanable/data",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanableAssetsDataResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_vip_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanInterestRateHistoryResponse]:
+        """
+                Get VIP Loan Interest Rate History (USER_DATA)
+                GET /sapi/v1/loan/vip/interestRateHistory
+                https://developers.binance.com/docs/vip_loan/market-data/Get-VIP-Loan-Interest-Rate-History
+
+                Check VIP Loan flexible interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and end Time is 180 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetVIPLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if coin is None:
+            raise RequiredError(
+                field="coin", error_message="Missing required parameter 'coin'"
+            )
+        if recv_window is None:
+            raise RequiredError(
+                field="recv_window",
+                error_message="Missing required parameter 'recv_window'",
+            )
+
+        body = {}
+        payload = {
+            "coin": coin,
+            "recv_window": recv_window,
+            "start_time": start_time,
+            "end_time": end_time,
+            "current": current,
+            "limit": limit,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/loan/vip/interestRateHistory",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetVIPLoanInterestRateHistoryResponse,
             is_signed=True,
             signer=self._signer,
         )

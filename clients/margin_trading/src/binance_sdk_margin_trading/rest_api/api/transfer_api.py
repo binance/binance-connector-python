@@ -60,7 +60,7 @@ class TransferApi:
                 Args:
                     asset (Optional[str] = None):
                     type (Optional[str] = None): Transfer Type: ROLL_IN, ROLL_OUT
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -75,6 +75,7 @@ class TransferApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "type": type,
@@ -92,6 +93,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/margin/transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCrossMarginTransferHistoryResponse,
             is_signed=True,
@@ -133,6 +135,7 @@ class TransferApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "isolated_symbol": isolated_symbol,
@@ -145,6 +148,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/margin/maxTransferable",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMaxTransferOutAmountResponse,
             is_signed=True,

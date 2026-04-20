@@ -905,7 +905,6 @@ class TestMiningApi:
 
         params = {
             "config_id": 1,
-            "user_name": "user_name_example",
         }
 
         expected_response = {
@@ -955,7 +954,6 @@ class TestMiningApi:
         assert "/sapi/v1/mining/hash-transfer/profit/details" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
         assert normalized["configId"] == 1
-        assert normalized["userName"] == "user_name_example"
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -981,13 +979,7 @@ class TestMiningApi:
     ):
         """Test hashrate_resale_detail() successfully with optional parameters."""
 
-        params = {
-            "config_id": 1,
-            "user_name": "user_name_example",
-            "page_index": 1,
-            "page_size": 56,
-            "recv_window": 5000,
-        }
+        params = {"config_id": 1, "page_index": 1, "page_size": 56, "recv_window": 5000}
 
         expected_response = {
             "code": 0,
@@ -1053,7 +1045,6 @@ class TestMiningApi:
         """Test that hashrate_resale_detail() raises RequiredError when 'config_id' is missing."""
         params = {
             "config_id": 1,
-            "user_name": "user_name_example",
         }
         params["config_id"] = None
 
@@ -1062,25 +1053,11 @@ class TestMiningApi:
         ):
             self.client.hashrate_resale_detail(**params)
 
-    def test_hashrate_resale_detail_missing_required_param_user_name(self):
-        """Test that hashrate_resale_detail() raises RequiredError when 'user_name' is missing."""
-        params = {
-            "config_id": 1,
-            "user_name": "user_name_example",
-        }
-        params["user_name"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'user_name'"
-        ):
-            self.client.hashrate_resale_detail(**params)
-
     def test_hashrate_resale_detail_server_error(self):
         """Test that hashrate_resale_detail() raises an error when the server returns an error."""
 
         params = {
             "config_id": 1,
-            "user_name": "user_name_example",
         }
 
         mock_error = Exception("ResponseError")
@@ -1107,6 +1084,7 @@ class TestMiningApi:
                         "startDay": 20201210,
                         "endDay": 20210405,
                         "status": 1,
+                        "type": 0,
                     },
                     {
                         "configId": 166,
@@ -1117,6 +1095,7 @@ class TestMiningApi:
                         "startDay": 20201226,
                         "endDay": 20201227,
                         "status": 0,
+                        "type": 0,
                     },
                 ],
                 "totalNum": 21,
@@ -1181,6 +1160,7 @@ class TestMiningApi:
                         "startDay": 20201210,
                         "endDay": 20210405,
                         "status": 1,
+                        "type": 0,
                     },
                     {
                         "configId": 166,
@@ -1191,6 +1171,7 @@ class TestMiningApi:
                         "startDay": 20201226,
                         "endDay": 20201227,
                         "status": 0,
+                        "type": 0,
                     },
                 ],
                 "totalNum": 21,

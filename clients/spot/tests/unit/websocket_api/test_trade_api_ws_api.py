@@ -65,6 +65,74 @@ from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoNewOrderRespT
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOcoSelfTradePreventionModeEnum,
 )
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoWorkingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoWorkingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoPendingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoPendingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoNewOrderRespTypeEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoSelfTradePreventionModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoWorkingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoWorkingPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoWorkingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoPendingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoPendingPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpoPendingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpocoWorkingTypeEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpocoWorkingSideEnum
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpocoPendingSideEnum
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingAboveTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoNewOrderRespTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoSelfTradePreventionModeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoWorkingTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoWorkingPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoWorkingPegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingAboveTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingAbovePegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingBelowTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingBelowTimeInForceEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingBelowPegPriceTypeEnum,
+)
+from binance_sdk_spot.websocket_api.models import (
+    OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum,
+)
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoWorkingTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoWorkingSideEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoPendingTypeEnum
@@ -168,6 +236,8 @@ from binance_sdk_spot.websocket_api.models import OrderCancelReplaceResponse
 from binance_sdk_spot.websocket_api.models import OrderListCancelResponse
 from binance_sdk_spot.websocket_api.models import OrderListPlaceResponse
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOcoResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpoResponse
+from binance_sdk_spot.websocket_api.models import OrderListPlaceOpocoResponse
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoResponse
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoResponse
 from binance_sdk_spot.websocket_api.models import OrderPlaceResponse
@@ -3122,6 +3192,1774 @@ class TestWebSocketTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.order_list_place_oco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_success(self):
+        """Test order_list_place_opo() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+        }
+
+        expected_response = {
+            "id": "1762941318128",
+            "status": 200,
+            "result": {
+                "orderListId": 2,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "OiOgqvRagBefpzdM5gjYX3",
+                "transactionTime": 1762941318142,
+                "symbol": "BTCUSDT",
+                "orders": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 3,
+                        "clientOrderId": "x7ISSjywZxFXOdzwsThNnd",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 2,
+                        "clientOrderId": "pUzhKBbc0ZVdMScIRAqitH",
+                    },
+                ],
+                "orderReports": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 3,
+                        "orderListId": 2,
+                        "clientOrderId": "x7ISSjywZxFXOdzwsThNnd",
+                        "transactTime": 1762941318142,
+                        "price": "0.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "GTC",
+                        "type": "MARKET",
+                        "side": "SELL",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 2,
+                        "orderListId": 2,
+                        "clientOrderId": "pUzhKBbc0ZVdMScIRAqitH",
+                        "transactTime": 1762941318142,
+                        "price": "101496.00000000",
+                        "origQty": "0.00070000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT",
+                        "side": "BUY",
+                        "workingTime": 1762941318142,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                ],
+            },
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.order_list_place_opo(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/orderList.place.opo".replace(
+            "/", "", 1
+        )
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert params["working_type"] == OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value
+
+        assert params["working_side"] == OrderListPlaceOpoWorkingSideEnum["BUY"].value
+
+        assert params["working_price"] == 1.0
+
+        assert params["working_quantity"] == 1.0
+
+        assert params["pending_type"] == OrderListPlaceOpoPendingTypeEnum["LIMIT"].value
+
+        assert params["pending_side"] == OrderListPlaceOpoPendingSideEnum["BUY"].value
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/orderList.place.opo".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=OrderListPlaceOpoResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_success_with_optional_params(self):
+        """Test order_list_place_opo() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+
+        expected_response = {
+            "id": "1762941318128",
+            "status": 200,
+            "result": {
+                "orderListId": 2,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "OiOgqvRagBefpzdM5gjYX3",
+                "transactionTime": 1762941318142,
+                "symbol": "BTCUSDT",
+                "orders": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 3,
+                        "clientOrderId": "x7ISSjywZxFXOdzwsThNnd",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 2,
+                        "clientOrderId": "pUzhKBbc0ZVdMScIRAqitH",
+                    },
+                ],
+                "orderReports": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 3,
+                        "orderListId": 2,
+                        "clientOrderId": "x7ISSjywZxFXOdzwsThNnd",
+                        "transactTime": 1762941318142,
+                        "price": "0.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "GTC",
+                        "type": "MARKET",
+                        "side": "SELL",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 2,
+                        "orderListId": 2,
+                        "clientOrderId": "pUzhKBbc0ZVdMScIRAqitH",
+                        "transactTime": 1762941318142,
+                        "price": "101496.00000000",
+                        "origQty": "0.00070000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT",
+                        "side": "BUY",
+                        "workingTime": 1762941318142,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                ],
+            },
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.order_list_place_opo(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/orderList.place.opo".replace(
+            "/", "", 1
+        )
+        assert params["symbol"] == "BNBUSDT"
+        assert params["working_type"] == OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value
+        assert params["working_side"] == OrderListPlaceOpoWorkingSideEnum["BUY"].value
+        assert params["working_price"] == 1.0
+        assert params["working_quantity"] == 1.0
+        assert params["pending_type"] == OrderListPlaceOpoPendingTypeEnum["LIMIT"].value
+        assert params["pending_side"] == OrderListPlaceOpoPendingSideEnum["BUY"].value
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["list_client_order_id"] == "list_client_order_id_example"
+        assert (
+            params["new_order_resp_type"]
+            == OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value
+        )
+        assert (
+            params["self_trade_prevention_mode"]
+            == OrderListPlaceOpoSelfTradePreventionModeEnum["NONE"].value
+        )
+        assert params["working_client_order_id"] == "working_client_order_id_example"
+        assert params["working_iceberg_qty"] == 1.0
+        assert (
+            params["working_time_in_force"]
+            == OrderListPlaceOpoWorkingTimeInForceEnum["GTC"].value
+        )
+        assert params["working_strategy_id"] == 1
+        assert params["working_strategy_type"] == 1
+        assert (
+            params["working_peg_price_type"]
+            == OrderListPlaceOpoWorkingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["working_peg_offset_type"]
+            == OrderListPlaceOpoWorkingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["working_peg_offset_value"] == 1
+        assert params["pending_client_order_id"] == "pending_client_order_id_example"
+        assert params["pending_price"] == 1.0
+        assert params["pending_stop_price"] == 1.0
+        assert params["pending_trailing_delta"] == 1.0
+        assert params["pending_iceberg_qty"] == 1.0
+        assert (
+            params["pending_time_in_force"]
+            == OrderListPlaceOpoPendingTimeInForceEnum["GTC"].value
+        )
+        assert params["pending_strategy_id"] == 1
+        assert params["pending_strategy_type"] == 1
+        assert (
+            params["pending_peg_price_type"]
+            == OrderListPlaceOpoPendingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["pending_peg_offset_type"]
+            == OrderListPlaceOpoPendingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["pending_peg_offset_value"] == 1
+        assert params["recv_window"] == 5000.0
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/orderList.place.opo".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=OrderListPlaceOpoResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_symbol(self):
+        """Test that order_list_place_opo() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_working_type(self):
+        """Test that order_list_place_opo() raises RequiredError when 'working_type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_type'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_working_side(self):
+        """Test that order_list_place_opo() raises RequiredError when 'working_side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_side'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_working_price(self):
+        """Test that order_list_place_opo() raises RequiredError when 'working_price' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_price"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_price'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_working_quantity(self):
+        """Test that order_list_place_opo() raises RequiredError when 'working_quantity' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_quantity'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_pending_type(self):
+        """Test that order_list_place_opo() raises RequiredError when 'pending_type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["pending_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_type'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_missing_required_param_pending_side(self):
+        """Test that order_list_place_opo() raises RequiredError when 'pending_side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_client_order_id": "pending_client_order_id_example",
+            "pending_price": 1.0,
+            "pending_stop_price": 1.0,
+            "pending_trailing_delta": 1.0,
+            "pending_iceberg_qty": 1.0,
+            "pending_time_in_force": OrderListPlaceOpoPendingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_strategy_id": 1,
+            "pending_strategy_type": 1,
+            "pending_peg_price_type": OrderListPlaceOpoPendingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_peg_offset_type": OrderListPlaceOpoPendingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["pending_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_side'"
+        ):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opo_server_error(self):
+        """Test that order_list_place_opo() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.order_list_place_opo(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_success(self):
+        """Test order_list_place_opoco() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+
+        expected_response = {
+            "id": "1763000139090",
+            "status": 200,
+            "result": {
+                "orderListId": 1,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "TVbG6ymkYMXTj7tczbOsBf",
+                "transactionTime": 1763000139104,
+                "symbol": "BTCUSDT",
+                "orders": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 8,
+                        "clientOrderId": "i76cGJWN9J1FpADS56TtQZ",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 7,
+                        "clientOrderId": "kyIKnMLKQclE5FmyYgaMSo",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 6,
+                        "clientOrderId": "3czuJSeyjPwV9Xo28j1Dv3",
+                    },
+                ],
+                "orderReports": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 8,
+                        "orderListId": 1,
+                        "clientOrderId": "i76cGJWN9J1FpADS56TtQZ",
+                        "transactTime": 1763000139104,
+                        "price": "104261.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT_MAKER",
+                        "side": "SELL",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 7,
+                        "orderListId": 1,
+                        "clientOrderId": "kyIKnMLKQclE5FmyYgaMSo",
+                        "transactTime": 1763000139104,
+                        "price": "101613.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "IOC",
+                        "type": "STOP_LOSS_LIMIT",
+                        "side": "SELL",
+                        "stopPrice": "10100.00000000",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 6,
+                        "orderListId": 1,
+                        "clientOrderId": "3czuJSeyjPwV9Xo28j1Dv3",
+                        "transactTime": 1763000139104,
+                        "price": "102496.00000000",
+                        "origQty": "0.00170000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT",
+                        "side": "BUY",
+                        "workingTime": 1763000139104,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                ],
+            },
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.order_list_place_opoco(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/orderList.place.opoco".replace(
+            "/", "", 1
+        )
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert (
+            params["working_type"] == OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value
+        )
+
+        assert params["working_side"] == OrderListPlaceOpocoWorkingSideEnum["BUY"].value
+
+        assert params["working_price"] == 1.0
+
+        assert params["working_quantity"] == 1.0
+
+        assert params["pending_side"] == OrderListPlaceOpocoPendingSideEnum["BUY"].value
+
+        assert (
+            params["pending_above_type"]
+            == OrderListPlaceOpocoPendingAboveTypeEnum["STOP_LOSS_LIMIT"].value
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/orderList.place.opoco".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=OrderListPlaceOpocoResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_success_with_optional_params(self):
+        """Test order_list_place_opoco() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+
+        expected_response = {
+            "id": "1763000139090",
+            "status": 200,
+            "result": {
+                "orderListId": 1,
+                "contingencyType": "OTO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "TVbG6ymkYMXTj7tczbOsBf",
+                "transactionTime": 1763000139104,
+                "symbol": "BTCUSDT",
+                "orders": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 8,
+                        "clientOrderId": "i76cGJWN9J1FpADS56TtQZ",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 7,
+                        "clientOrderId": "kyIKnMLKQclE5FmyYgaMSo",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 6,
+                        "clientOrderId": "3czuJSeyjPwV9Xo28j1Dv3",
+                    },
+                ],
+                "orderReports": [
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 8,
+                        "orderListId": 1,
+                        "clientOrderId": "i76cGJWN9J1FpADS56TtQZ",
+                        "transactTime": 1763000139104,
+                        "price": "104261.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT_MAKER",
+                        "side": "SELL",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 7,
+                        "orderListId": 1,
+                        "clientOrderId": "kyIKnMLKQclE5FmyYgaMSo",
+                        "transactTime": 1763000139104,
+                        "price": "101613.00000000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "PENDING_NEW",
+                        "timeInForce": "IOC",
+                        "type": "STOP_LOSS_LIMIT",
+                        "side": "SELL",
+                        "stopPrice": "10100.00000000",
+                        "workingTime": -1,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 6,
+                        "orderListId": 1,
+                        "clientOrderId": "3czuJSeyjPwV9Xo28j1Dv3",
+                        "transactTime": 1763000139104,
+                        "price": "102496.00000000",
+                        "origQty": "0.00170000",
+                        "executedQty": "0.00000000",
+                        "origQuoteOrderQty": "0.00000000",
+                        "cummulativeQuoteQty": "0.00000000",
+                        "status": "NEW",
+                        "timeInForce": "GTC",
+                        "type": "LIMIT",
+                        "side": "BUY",
+                        "workingTime": 1763000139104,
+                        "selfTradePreventionMode": "NONE",
+                    },
+                ],
+            },
+        }
+
+        self.mock_websocket_api.send_signed_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.order_list_place_opoco(**params)
+
+        actual_call_args = self.mock_websocket_api.send_signed_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/orderList.place.opoco".replace(
+            "/", "", 1
+        )
+        assert params["symbol"] == "BNBUSDT"
+        assert (
+            params["working_type"] == OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value
+        )
+        assert params["working_side"] == OrderListPlaceOpocoWorkingSideEnum["BUY"].value
+        assert params["working_price"] == 1.0
+        assert params["working_quantity"] == 1.0
+        assert params["pending_side"] == OrderListPlaceOpocoPendingSideEnum["BUY"].value
+        assert (
+            params["pending_above_type"]
+            == OrderListPlaceOpocoPendingAboveTypeEnum["STOP_LOSS_LIMIT"].value
+        )
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["list_client_order_id"] == "list_client_order_id_example"
+        assert (
+            params["new_order_resp_type"]
+            == OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value
+        )
+        assert (
+            params["self_trade_prevention_mode"]
+            == OrderListPlaceOpocoSelfTradePreventionModeEnum["NONE"].value
+        )
+        assert params["working_client_order_id"] == "working_client_order_id_example"
+        assert params["working_iceberg_qty"] == 1.0
+        assert (
+            params["working_time_in_force"]
+            == OrderListPlaceOpocoWorkingTimeInForceEnum["GTC"].value
+        )
+        assert params["working_strategy_id"] == 1
+        assert params["working_strategy_type"] == 1
+        assert (
+            params["working_peg_price_type"]
+            == OrderListPlaceOpocoWorkingPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["working_peg_offset_type"]
+            == OrderListPlaceOpocoWorkingPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["working_peg_offset_value"] == 1
+        assert (
+            params["pending_above_client_order_id"]
+            == "pending_above_client_order_id_example"
+        )
+        assert params["pending_above_price"] == 1.0
+        assert params["pending_above_stop_price"] == 1.0
+        assert params["pending_above_trailing_delta"] == 1.0
+        assert params["pending_above_iceberg_qty"] == 1.0
+        assert (
+            params["pending_above_time_in_force"]
+            == OrderListPlaceOpocoPendingAboveTimeInForceEnum["GTC"].value
+        )
+        assert params["pending_above_strategy_id"] == 1
+        assert params["pending_above_strategy_type"] == 1
+        assert (
+            params["pending_above_peg_price_type"]
+            == OrderListPlaceOpocoPendingAbovePegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["pending_above_peg_offset_type"]
+            == OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["pending_above_peg_offset_value"] == 1
+        assert (
+            params["pending_below_type"]
+            == OrderListPlaceOpocoPendingBelowTypeEnum["STOP_LOSS"].value
+        )
+        assert (
+            params["pending_below_client_order_id"]
+            == "pending_below_client_order_id_example"
+        )
+        assert params["pending_below_price"] == 1.0
+        assert params["pending_below_stop_price"] == 1.0
+        assert params["pending_below_trailing_delta"] == 1.0
+        assert params["pending_below_iceberg_qty"] == 1.0
+        assert (
+            params["pending_below_time_in_force"]
+            == OrderListPlaceOpocoPendingBelowTimeInForceEnum["GTC"].value
+        )
+        assert params["pending_below_strategy_id"] == 1
+        assert params["pending_below_strategy_type"] == 1
+        assert (
+            params["pending_below_peg_price_type"]
+            == OrderListPlaceOpocoPendingBelowPegPriceTypeEnum["PRIMARY_PEG"].value
+        )
+        assert (
+            params["pending_below_peg_offset_type"]
+            == OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
+        )
+        assert params["pending_below_peg_offset_value"] == 1
+        assert params["recv_window"] == 5000.0
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_signed_message.assert_called_once_with(
+            payload={
+                "method": "/orderList.place.opoco".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=OrderListPlaceOpocoResponse,
+            signer=None,
+        )
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_symbol(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_working_type(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'working_type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_type'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_working_side(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'working_side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_side'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_working_price(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'working_price' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_price"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_price'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_working_quantity(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'working_quantity' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["working_quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'working_quantity'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_pending_side(self):
+        """Test that order_list_place_opoco() raises RequiredError when 'pending_side' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["pending_side"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_side'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_missing_required_param_pending_above_type(
+        self,
+    ):
+        """Test that order_list_place_opoco() raises RequiredError when 'pending_above_type' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "list_client_order_id": "list_client_order_id_example",
+            "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "working_client_order_id": "working_client_order_id_example",
+            "working_iceberg_qty": 1.0,
+            "working_time_in_force": OrderListPlaceOpocoWorkingTimeInForceEnum[
+                "GTC"
+            ].value,
+            "working_strategy_id": 1,
+            "working_strategy_type": 1,
+            "working_peg_price_type": OrderListPlaceOpocoWorkingPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "working_peg_offset_type": OrderListPlaceOpocoWorkingPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "working_peg_offset_value": 1,
+            "pending_above_client_order_id": "pending_above_client_order_id_example",
+            "pending_above_price": 1.0,
+            "pending_above_stop_price": 1.0,
+            "pending_above_trailing_delta": 1.0,
+            "pending_above_iceberg_qty": 1.0,
+            "pending_above_time_in_force": OrderListPlaceOpocoPendingAboveTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_above_strategy_id": 1,
+            "pending_above_strategy_type": 1,
+            "pending_above_peg_price_type": OrderListPlaceOpocoPendingAbovePegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_above_peg_offset_type": OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_above_peg_offset_value": 1,
+            "pending_below_type": OrderListPlaceOpocoPendingBelowTypeEnum[
+                "STOP_LOSS"
+            ].value,
+            "pending_below_client_order_id": "pending_below_client_order_id_example",
+            "pending_below_price": 1.0,
+            "pending_below_stop_price": 1.0,
+            "pending_below_trailing_delta": 1.0,
+            "pending_below_iceberg_qty": 1.0,
+            "pending_below_time_in_force": OrderListPlaceOpocoPendingBelowTimeInForceEnum[
+                "GTC"
+            ].value,
+            "pending_below_strategy_id": 1,
+            "pending_below_strategy_type": 1,
+            "pending_below_peg_price_type": OrderListPlaceOpocoPendingBelowPegPriceTypeEnum[
+                "PRIMARY_PEG"
+            ].value,
+            "pending_below_peg_offset_type": OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum[
+                "PRICE_LEVEL"
+            ].value,
+            "pending_below_peg_offset_value": 1,
+            "recv_window": 5000.0,
+        }
+        params["pending_above_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'pending_above_type'"
+        ):
+            await self.websocket_api.order_list_place_opoco(**params)
+
+    @pytest.mark.asyncio
+    async def test_order_list_place_opoco_server_error(self):
+        """Test that order_list_place_opoco() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "working_type": OrderListPlaceOpocoWorkingTypeEnum["LIMIT"].value,
+            "working_side": OrderListPlaceOpocoWorkingSideEnum["BUY"].value,
+            "working_price": 1.0,
+            "working_quantity": 1.0,
+            "pending_side": OrderListPlaceOpocoPendingSideEnum["BUY"].value,
+            "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_signed_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.order_list_place_opoco(**params)
 
     @pytest.mark.asyncio
     async def test_order_list_place_oto_success(self):

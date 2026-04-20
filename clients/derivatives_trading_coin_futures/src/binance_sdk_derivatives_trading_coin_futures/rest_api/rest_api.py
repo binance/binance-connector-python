@@ -62,7 +62,7 @@ from .models import TopTraderLongShortRatioPositionsResponse
 from .models import ClassicPortfolioMarginAccountInformationResponse
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
-
+from .models import AutoCancelAllOpenOrdersResponse
 from .models import CancelAllOpenOrdersResponse
 from .models import CancelMultipleOrdersResponse
 from .models import CancelOrderResponse
@@ -76,13 +76,14 @@ from .models import ModifyIsolatedPositionMarginResponse
 from .models import ModifyMultipleOrdersResponse
 from .models import ModifyOrderResponse
 from .models import NewOrderResponse
+from .models import PlaceMultipleOrdersResponse
 from .models import PositionAdlQuantileEstimationResponse
 from .models import PositionInformationResponse
 from .models import QueryCurrentOpenOrderResponse
 from .models import QueryOrderResponse
 from .models import UsersForceOrdersResponse
 
-
+from .models import KeepaliveUserDataStreamResponse
 from .models import StartUserDataStreamResponse
 
 
@@ -118,6 +119,7 @@ from .models import UsersForceOrdersAutoCloseTypeEnum
 
 
 from .models import ModifyMultipleOrdersBatchOrdersParameterInner
+from .models import PlaceMultipleOrdersBatchOrdersParameterInner
 
 T = TypeVar("T")
 
@@ -150,7 +152,11 @@ class DerivativesTradingCoinFuturesRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -158,25 +164,8 @@ class DerivativesTradingCoinFuturesRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -186,7 +175,36 @@ class DerivativesTradingCoinFuturesRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -1610,7 +1628,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         symbol: Union[str, None],
         countdown_time: Union[int, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AutoCancelAllOpenOrdersResponse]:
         """
                 Auto-Cancel All Open Orders (TRADE)
 
@@ -1629,7 +1647,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[AutoCancelAllOpenOrdersResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -2173,6 +2191,36 @@ class DerivativesTradingCoinFuturesRestAPI:
             recv_window,
         )
 
+    def place_multiple_orders(
+        self,
+        batch_orders: Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[PlaceMultipleOrdersResponse]:
+        """
+                Place Multiple Orders(TRADE)
+
+                Place multiple orders
+
+        * Parameter rules are same with `New Order`
+        * Batch orders are processed concurrently, and the order of matching is not guaranteed.
+        * The order of returned contents for batch orders is the same as the order of the order list.
+
+        Weight: 5
+
+                Args:
+                    batch_orders (Union[List[PlaceMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[PlaceMultipleOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.place_multiple_orders(batch_orders, recv_window)
+
     def position_adl_quantile_estimation(
         self,
         symbol: Optional[str] = None,
@@ -2376,7 +2424,7 @@ class DerivativesTradingCoinFuturesRestAPI:
 
     def keepalive_user_data_stream(
         self,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[KeepaliveUserDataStreamResponse]:
         """
                 Keepalive User Data Stream (USER_STREAM)
 
@@ -2387,7 +2435,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                 Args:
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[KeepaliveUserDataStreamResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.

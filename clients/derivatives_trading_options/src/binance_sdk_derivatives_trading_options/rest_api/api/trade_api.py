@@ -27,6 +27,7 @@ from ..models import PlaceMultipleOrdersResponse
 from ..models import QueryCurrentOpenOptionOrdersResponse
 from ..models import QueryOptionOrderHistoryResponse
 from ..models import QuerySingleOrderResponse
+from ..models import UserCommissionResponse
 from ..models import UserExerciseRecordResponse
 
 
@@ -34,6 +35,7 @@ from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
 from ..models import NewOrderTimeInForceEnum
 from ..models import NewOrderNewOrderRespTypeEnum
+from ..models import NewOrderSelfTradePreventionModeEnum
 
 
 from ..models import PlaceMultipleOrdersOrdersParameterInner
@@ -64,15 +66,17 @@ class TradeApi:
         """
                 Account Trade List (USER_DATA)
                 GET /eapi/v1/userTrades
-                https://developers.binance.com/docs/derivatives/option/trade/Account-Trade-List
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Account-Trade-List
 
                 Get trades for a specific account and symbol.
+
+        * Only support querying trades in the past 3 months
 
         Weight: 5
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades, e.g 4611875134427365376
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
                     limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
@@ -86,6 +90,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -101,6 +106,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/userTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountTradeListResponse,
             is_signed=True,
@@ -115,7 +121,7 @@ class TradeApi:
         """
                 Cancel All Option Orders By Underlying (TRADE)
                 DELETE /eapi/v1/allOpenOrdersByUnderlying
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-All-Option-Orders-By-Underlying
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-All-Option-Orders-By-Underlying
 
                 Cancel all active orders on specified underlying.
 
@@ -139,6 +145,7 @@ class TradeApi:
                 error_message="Missing required parameter 'underlying'",
             )
 
+        body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -147,6 +154,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/allOpenOrdersByUnderlying",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOptionOrdersByUnderlyingResponse,
             is_signed=True,
@@ -161,7 +169,7 @@ class TradeApi:
         """
                 Cancel all Option orders on specific symbol (TRADE)
                 DELETE /eapi/v1/allOpenOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-all-Option-orders-on-specific-symbol
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-all-Option-orders-on-specific-symbol
 
                 Cancel all active order on a symbol.
 
@@ -184,6 +192,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -192,6 +201,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOptionOrdersOnSpecificSymbolResponse,
             is_signed=True,
@@ -208,7 +218,7 @@ class TradeApi:
         """
                 Cancel Multiple Option Orders (TRADE)
                 DELETE /eapi/v1/batchOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-Multiple-Option-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-Multiple-Option-Orders
 
                 Cancel multiple orders.
 
@@ -235,6 +245,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_ids": order_ids,
@@ -248,6 +259,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/batchOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMultipleOptionOrdersResponse,
             is_signed=True,
@@ -264,7 +276,7 @@ class TradeApi:
         """
                 Cancel Option Order (TRADE)
                 DELETE /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/Cancel-Option-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Cancel-Option-Order
 
                 Cancel an active order.
 
@@ -291,6 +303,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -304,6 +317,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelOptionOrderResponse,
             is_signed=True,
@@ -323,12 +337,15 @@ class TradeApi:
         new_order_resp_type: Optional[NewOrderNewOrderRespTypeEnum] = None,
         client_order_id: Optional[str] = None,
         is_mmp: Optional[bool] = None,
+        self_trade_prevention_mode: Optional[
+            NewOrderSelfTradePreventionModeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
                 New Order (TRADE)
                 POST /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/New-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/New-Order
 
                 Send a new order.
 
@@ -346,6 +363,7 @@ class TradeApi:
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", Default "ACK"
                     client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
                     is_mmp (Optional[bool] = None): is market maker protection order, true/false
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire maker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; Default `EXPIRE_MAKER`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -373,6 +391,7 @@ class TradeApi:
                 field="quantity", error_message="Missing required parameter 'quantity'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -385,6 +404,7 @@ class TradeApi:
             "new_order_resp_type": new_order_resp_type,
             "client_order_id": client_order_id,
             "is_mmp": is_mmp,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
             "recv_window": recv_window,
         }
 
@@ -394,6 +414,7 @@ class TradeApi:
             method="POST",
             path="/eapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
             is_signed=True,
@@ -408,7 +429,7 @@ class TradeApi:
         """
                 Option Position Information (USER_DATA)
                 GET /eapi/v1/position
-                https://developers.binance.com/docs/derivatives/option/trade/Option-Position-Information
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Option-Position-Information
 
                 Get current position information.
 
@@ -426,6 +447,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -434,6 +456,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/position",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OptionPositionInformationResponse,
             is_signed=True,
@@ -448,7 +471,7 @@ class TradeApi:
         """
                 Place Multiple Orders(TRADE)
                 POST /eapi/v1/batchOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Place-Multiple-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Place-Multiple-Orders
 
                 Send multiple option orders.
 
@@ -474,6 +497,7 @@ class TradeApi:
                 field="orders", error_message="Missing required parameter 'orders'"
             )
 
+        body = {}
         payload = {"orders": orders, "recv_window": recv_window}
 
         return send_request(
@@ -482,6 +506,7 @@ class TradeApi:
             method="POST",
             path="/eapi/v1/batchOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceMultipleOrdersResponse,
             is_signed=True,
@@ -499,7 +524,7 @@ class TradeApi:
         """
                 Query Current Open Option Orders (USER_DATA)
                 GET /eapi/v1/openOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Current-Open-Option-Orders
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Current-Open-Option-Orders
 
                 Query current all open orders, status: ACCEPTED PARTIALLY_FILLED
 
@@ -520,6 +545,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -534,6 +560,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentOpenOptionOrdersResponse,
             is_signed=True,
@@ -552,7 +579,7 @@ class TradeApi:
         """
                 Query Option Order History (TRADE)
                 GET /eapi/v1/historyOrders
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Option-Order-History
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Option-Order-History
 
                 Query all finished orders within 5 days, finished status: CANCELLED FILLED REJECTED.
 
@@ -579,6 +606,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -594,6 +622,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/historyOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOptionOrderHistoryResponse,
             is_signed=True,
@@ -610,7 +639,7 @@ class TradeApi:
         """
                 Query Single Order (TRADE)
                 GET /eapi/v1/order
-                https://developers.binance.com/docs/derivatives/option/trade/Query-Single-Order
+                https://developers.binance.com/docs/derivatives/options-trading/trade/Query-Single-Order
 
                 Check an order status.
 
@@ -643,6 +672,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -656,8 +686,49 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySingleOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def user_commission(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[UserCommissionResponse]:
+        """
+                User Commission (USER_DATA)
+                GET /eapi/v1/commission
+                https://developers.binance.com/docs/derivatives/options-trading/trade/User-Commission
+
+                Get account commission.
+
+        Weight: 5
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[UserCommissionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/eapi/v1/commission",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=UserCommissionResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -673,7 +744,7 @@ class TradeApi:
         """
                 User Exercise Record (USER_DATA)
                 GET /eapi/v1/exerciseRecord
-                https://developers.binance.com/docs/derivatives/option/trade/User-Exercise-Record
+                https://developers.binance.com/docs/derivatives/options-trading/trade/User-Exercise-Record
 
                 Get account exercise records.
 
@@ -694,6 +765,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -708,6 +780,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/exerciseRecord",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UserExerciseRecordResponse,
             is_signed=True,

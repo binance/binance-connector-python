@@ -27,9 +27,9 @@ class AccountApiTradingStatusResponseDataTriggerCondition(BaseModel):
     AccountApiTradingStatusResponseDataTriggerCondition
     """  # noqa: E501
 
-    GCR: Optional[StrictInt] = Field(default=None, alias="GCR")
+    gcr: Optional[StrictInt] = Field(default=None, alias="GCR")
     ifer: Optional[StrictInt] = Field(default=None, alias="IFER")
-    UFR: Optional[StrictInt] = Field(default=None, alias="UFR")
+    ufr: Optional[StrictInt] = Field(default=None, alias="UFR")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["GCR", "IFER", "UFR"]
 

@@ -21,14 +21,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_spot.rest_api.models.klines_item import KlinesItem
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class KlinesResponse(KlinesItem):
+class KlinesResponse(BaseModel):
     """
     KlinesResponse
     """  # noqa: E501

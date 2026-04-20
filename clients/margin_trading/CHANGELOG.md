@@ -1,5 +1,86 @@
 # Changelog
 
+## 6.2.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 6.1.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 6.0.0 - 2026-02-25
+
+### Added (2)
+
+#### REST API
+
+- `get_margin_restricted_assets()` (`GET /sapi/v1/margin/restricted-asset`)
+- `query_prevented_matches()` (`GET /sapi/v1/margin/myPreventedMatches`)
+
+## 5.1.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 5.0.0 - 2026-01-29
+
+### Added (1)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- `get_margin_asset_risk_based_liquidation_ratio()` (`GET /sapi/v1/margin/risk-based-liquidation-ratio`)
+
+## 4.3.0 - 2026-01-23
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.1`
+
+## 4.2.0 - 2026-01-19
+
+### Changed (1)
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
+## 4.1.0 - 2025-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+## 4.0.0 - 2025-12-22
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+## 3.0.0 - 2025-11-14
+
+### Removed (6)
+
+#### REST API
+
+- `close_isolated_margin_user_data_stream()` (`DELETE /sapi/v1/userDataStream/isolated`)
+- `close_margin_user_data_stream()` (`DELETE /sapi/v1/userDataStream`)
+- `keepalive_isolated_margin_user_data_stream()` (`PUT /sapi/v1/userDataStream/isolated`)
+- `keepalive_margin_user_data_stream()` (`PUT /sapi/v1/userDataStream`)
+- `start_isolated_margin_user_data_stream()` (`POST /sapi/v1/userDataStream/isolated`)
+- `start_margin_user_data_stream()` (`POST /sapi/v1/userDataStream`)
+
 ## 2.4.0 - 2025-10-10
 
 ### Changed (2)

@@ -36,6 +36,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     GetAutoRepayFuturesStatusResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    GetDeltaModeStatusResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProAccountBalanceResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
@@ -46,9 +49,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetTransferableEarnAssetBalanceForPortfolioMarginResponse,
-)
-from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    MintBfusdForPortfolioMarginResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginProBankruptcyLoanRepayResponse,
@@ -63,13 +63,13 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    RedeemBfusdForPortfolioMarginResponse,
-)
-from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RepayFuturesNegativeBalanceResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    TransferLdusdtForPortfolioMarginResponse,
+    SwitchDeltaModeResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    TransferLdusdtRwusdForPortfolioMarginResponse,
 )
 
 
@@ -646,6 +646,95 @@ class TestAccountApi:
             self.client.get_auto_repay_futures_status()
 
     @patch("binance_common.utils.get_signature")
+    def test_get_delta_mode_status_success(self, mock_get_signature):
+        """Test get_delta_mode_status() successfully with required parameters only."""
+
+        expected_response = {"deltaEnabled": False}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_delta_mode_status()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDeltaModeStatusResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetDeltaModeStatusResponse, "from_dict"):
+            expected = GetDeltaModeStatusResponse.from_dict(expected_response)
+        else:
+            expected = GetDeltaModeStatusResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_delta_mode_status_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_delta_mode_status() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"deltaEnabled": False}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_delta_mode_status(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDeltaModeStatusResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetDeltaModeStatusResponse, "from_dict"):
+            expected = GetDeltaModeStatusResponse.from_dict(expected_response)
+        else:
+            expected = GetDeltaModeStatusResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_delta_mode_status_server_error(self):
+        """Test that get_delta_mode_status() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_delta_mode_status = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_delta_mode_status()
+
+    @patch("binance_common.utils.get_signature")
     def test_get_portfolio_margin_pro_account_balance_success(self, mock_get_signature):
         """Test get_portfolio_margin_pro_account_balance() successfully with required parameters only."""
 
@@ -1207,178 +1296,6 @@ class TestAccountApi:
             )
 
     @patch("binance_common.utils.get_signature")
-    def test_mint_bfusd_for_portfolio_margin_success(self, mock_get_signature):
-        """Test mint_bfusd_for_portfolio_margin() successfully with required parameters only."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-
-        expected_response = {
-            "fromAsset": "USDT",
-            "targetAsset": "BFUSD",
-            "fromAssetQty": 10,
-            "targetAssetQty": 9.998,
-            "mintRate": 0.9998,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.mint_bfusd_for_portfolio_margin(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/portfolio/mint" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
-        assert normalized["fromAsset"] == "from_asset_example"
-        assert normalized["targetAsset"] == "target_asset_example"
-        assert normalized["amount"] == 1.0
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(MintBfusdForPortfolioMarginResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(MintBfusdForPortfolioMarginResponse, "from_dict")
-        ):
-            expected = MintBfusdForPortfolioMarginResponse.from_dict(expected_response)
-        else:
-            expected = MintBfusdForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    @patch("binance_common.utils.get_signature")
-    def test_mint_bfusd_for_portfolio_margin_success_with_optional_params(
-        self, mock_get_signature
-    ):
-        """Test mint_bfusd_for_portfolio_margin() successfully with optional parameters."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-            "recv_window": 5000,
-        }
-
-        expected_response = {
-            "fromAsset": "USDT",
-            "targetAsset": "BFUSD",
-            "fromAssetQty": 10,
-            "targetAssetQty": 9.998,
-            "mintRate": 0.9998,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.mint_bfusd_for_portfolio_margin(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/portfolio/mint" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(MintBfusdForPortfolioMarginResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(MintBfusdForPortfolioMarginResponse, "from_dict")
-        ):
-            expected = MintBfusdForPortfolioMarginResponse.from_dict(expected_response)
-        else:
-            expected = MintBfusdForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_mint_bfusd_for_portfolio_margin_missing_required_param_from_asset(self):
-        """Test that mint_bfusd_for_portfolio_margin() raises RequiredError when 'from_asset' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["from_asset"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'from_asset'"
-        ):
-            self.client.mint_bfusd_for_portfolio_margin(**params)
-
-    def test_mint_bfusd_for_portfolio_margin_missing_required_param_target_asset(self):
-        """Test that mint_bfusd_for_portfolio_margin() raises RequiredError when 'target_asset' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["target_asset"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'target_asset'"
-        ):
-            self.client.mint_bfusd_for_portfolio_margin(**params)
-
-    def test_mint_bfusd_for_portfolio_margin_missing_required_param_amount(self):
-        """Test that mint_bfusd_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["amount"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
-            self.client.mint_bfusd_for_portfolio_margin(**params)
-
-    def test_mint_bfusd_for_portfolio_margin_server_error(self):
-        """Test that mint_bfusd_for_portfolio_margin() raises an error when the server returns an error."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-
-        mock_error = Exception("ResponseError")
-        self.client.mint_bfusd_for_portfolio_margin = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.mint_bfusd_for_portfolio_margin(**params)
-
-    @patch("binance_common.utils.get_signature")
     def test_portfolio_margin_pro_bankruptcy_loan_repay_success(
         self, mock_get_signature
     ):
@@ -1897,186 +1814,6 @@ class TestAccountApi:
             self.client.query_portfolio_margin_pro_negative_balance_interest_history()
 
     @patch("binance_common.utils.get_signature")
-    def test_redeem_bfusd_for_portfolio_margin_success(self, mock_get_signature):
-        """Test redeem_bfusd_for_portfolio_margin() successfully with required parameters only."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-
-        expected_response = {
-            "fromAsset": "BFUSD",
-            "targetAsset": "USDT",
-            "fromAssetQty": 9.99800001,
-            "targetAssetQty": 9.996000409998,
-            "redeemRate": 0.9998,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
-
-        self.mock_session.request.assert_called_once()
-        mock_get_signature.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/portfolio/redeem" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
-        assert normalized["fromAsset"] == "from_asset_example"
-        assert normalized["targetAsset"] == "target_asset_example"
-        assert normalized["amount"] == 1.0
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(RedeemBfusdForPortfolioMarginResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(RedeemBfusdForPortfolioMarginResponse, "from_dict")
-        ):
-            expected = RedeemBfusdForPortfolioMarginResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = RedeemBfusdForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    @patch("binance_common.utils.get_signature")
-    def test_redeem_bfusd_for_portfolio_margin_success_with_optional_params(
-        self, mock_get_signature
-    ):
-        """Test redeem_bfusd_for_portfolio_margin() successfully with optional parameters."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-            "recv_window": 5000,
-        }
-
-        expected_response = {
-            "fromAsset": "BFUSD",
-            "targetAsset": "USDT",
-            "fromAssetQty": 9.99800001,
-            "targetAssetQty": 9.996000409998,
-            "redeemRate": 0.9998,
-        }
-        mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
-
-        response = self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/portfolio/redeem" in request_kwargs["url"]
-        assert request_kwargs["method"] == "POST"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(RedeemBfusdForPortfolioMarginResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(RedeemBfusdForPortfolioMarginResponse, "from_dict")
-        ):
-            expected = RedeemBfusdForPortfolioMarginResponse.from_dict(
-                expected_response
-            )
-        else:
-            expected = RedeemBfusdForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_redeem_bfusd_for_portfolio_margin_missing_required_param_from_asset(self):
-        """Test that redeem_bfusd_for_portfolio_margin() raises RequiredError when 'from_asset' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["from_asset"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'from_asset'"
-        ):
-            self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-    def test_redeem_bfusd_for_portfolio_margin_missing_required_param_target_asset(
-        self,
-    ):
-        """Test that redeem_bfusd_for_portfolio_margin() raises RequiredError when 'target_asset' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["target_asset"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'target_asset'"
-        ):
-            self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-    def test_redeem_bfusd_for_portfolio_margin_missing_required_param_amount(self):
-        """Test that redeem_bfusd_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-        params["amount"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
-            self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-    def test_redeem_bfusd_for_portfolio_margin_server_error(self):
-        """Test that redeem_bfusd_for_portfolio_margin() raises an error when the server returns an error."""
-
-        params = {
-            "from_asset": "from_asset_example",
-            "target_asset": "target_asset_example",
-            "amount": 1.0,
-        }
-
-        mock_error = Exception("ResponseError")
-        self.client.redeem_bfusd_for_portfolio_margin = MagicMock(
-            side_effect=mock_error
-        )
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.redeem_bfusd_for_portfolio_margin(**params)
-
-    @patch("binance_common.utils.get_signature")
     def test_repay_futures_negative_balance_success(self, mock_get_signature):
         """Test repay_futures_negative_balance() successfully with required parameters only."""
 
@@ -2178,8 +1915,121 @@ class TestAccountApi:
             self.client.repay_futures_negative_balance()
 
     @patch("binance_common.utils.get_signature")
-    def test_transfer_ldusdt_for_portfolio_margin_success(self, mock_get_signature):
-        """Test transfer_ldusdt_for_portfolio_margin() successfully with required parameters only."""
+    def test_switch_delta_mode_success(self, mock_get_signature):
+        """Test switch_delta_mode() successfully with required parameters only."""
+
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.switch_delta_mode(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["deltaEnabled"] == "delta_enabled_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SwitchDeltaModeResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SwitchDeltaModeResponse, "from_dict"):
+            expected = SwitchDeltaModeResponse.from_dict(expected_response)
+        else:
+            expected = SwitchDeltaModeResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_switch_delta_mode_success_with_optional_params(self, mock_get_signature):
+        """Test switch_delta_mode() successfully with optional parameters."""
+
+        params = {"delta_enabled": "delta_enabled_example", "recv_window": 5000}
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.switch_delta_mode(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/delta-mode" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SwitchDeltaModeResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SwitchDeltaModeResponse, "from_dict"):
+            expected = SwitchDeltaModeResponse.from_dict(expected_response)
+        else:
+            expected = SwitchDeltaModeResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_switch_delta_mode_missing_required_param_delta_enabled(self):
+        """Test that switch_delta_mode() raises RequiredError when 'delta_enabled' is missing."""
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+        params["delta_enabled"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'delta_enabled'"
+        ):
+            self.client.switch_delta_mode(**params)
+
+    def test_switch_delta_mode_server_error(self):
+        """Test that switch_delta_mode() raises an error when the server returns an error."""
+
+        params = {
+            "delta_enabled": "delta_enabled_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.switch_delta_mode = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.switch_delta_mode(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_success(
+        self, mock_get_signature
+    ):
+        """Test transfer_ldusdt_rwusd_for_portfolio_margin() successfully with required parameters only."""
 
         params = {
             "asset": "asset_example",
@@ -2191,7 +2041,7 @@ class TestAccountApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.transfer_ldusdt_for_portfolio_margin(**params)
+        response = self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -2215,30 +2065,32 @@ class TestAccountApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(TransferLdusdtForPortfolioMarginResponse)
+        is_oneof = is_one_of_model(TransferLdusdtRwusdForPortfolioMarginResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
         elif (
             is_oneof
             or is_list
-            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+            or hasattr(TransferLdusdtRwusdForPortfolioMarginResponse, "from_dict")
         ):
-            expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
+            expected = TransferLdusdtRwusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
         else:
-            expected = TransferLdusdtForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
+            expected = (
+                TransferLdusdtRwusdForPortfolioMarginResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
             )
 
         assert response.data() == expected
 
     @patch("binance_common.utils.get_signature")
-    def test_transfer_ldusdt_for_portfolio_margin_success_with_optional_params(
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_success_with_optional_params(
         self, mock_get_signature
     ):
-        """Test transfer_ldusdt_for_portfolio_margin() successfully with optional parameters."""
+        """Test transfer_ldusdt_rwusd_for_portfolio_margin() successfully with optional parameters."""
 
         params = {
             "asset": "asset_example",
@@ -2251,7 +2103,7 @@ class TestAccountApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.transfer_ldusdt_for_portfolio_margin(**params)
+        response = self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
@@ -2267,27 +2119,31 @@ class TestAccountApi:
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
         )
-        is_oneof = is_one_of_model(TransferLdusdtForPortfolioMarginResponse)
+        is_oneof = is_one_of_model(TransferLdusdtRwusdForPortfolioMarginResponse)
 
         if is_list and not is_flat_list:
             expected = expected_response
         elif (
             is_oneof
             or is_list
-            or hasattr(TransferLdusdtForPortfolioMarginResponse, "from_dict")
+            or hasattr(TransferLdusdtRwusdForPortfolioMarginResponse, "from_dict")
         ):
-            expected = TransferLdusdtForPortfolioMarginResponse.from_dict(
+            expected = TransferLdusdtRwusdForPortfolioMarginResponse.from_dict(
                 expected_response
             )
         else:
-            expected = TransferLdusdtForPortfolioMarginResponse.model_validate_json(
-                json.dumps(expected_response)
+            expected = (
+                TransferLdusdtRwusdForPortfolioMarginResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
             )
 
         assert response.data() == expected
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_asset(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'asset' is missing."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_asset(
+        self,
+    ):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'asset' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -2296,12 +2152,12 @@ class TestAccountApi:
         params["asset"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'asset'"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_transfer_type(
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_transfer_type(
         self,
     ):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'transfer_type' is missing."""
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'transfer_type' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -2312,10 +2168,12 @@ class TestAccountApi:
         with pytest.raises(
             RequiredError, match="Missing required parameter 'transfer_type'"
         ):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_missing_required_param_amount(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_missing_required_param_amount(
+        self,
+    ):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises RequiredError when 'amount' is missing."""
         params = {
             "asset": "asset_example",
             "transfer_type": "transfer_type_example",
@@ -2324,10 +2182,10 @@ class TestAccountApi:
         params["amount"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)
 
-    def test_transfer_ldusdt_for_portfolio_margin_server_error(self):
-        """Test that transfer_ldusdt_for_portfolio_margin() raises an error when the server returns an error."""
+    def test_transfer_ldusdt_rwusd_for_portfolio_margin_server_error(self):
+        """Test that transfer_ldusdt_rwusd_for_portfolio_margin() raises an error when the server returns an error."""
 
         params = {
             "asset": "asset_example",
@@ -2336,9 +2194,9 @@ class TestAccountApi:
         }
 
         mock_error = Exception("ResponseError")
-        self.client.transfer_ldusdt_for_portfolio_margin = MagicMock(
+        self.client.transfer_ldusdt_rwusd_for_portfolio_margin = MagicMock(
             side_effect=mock_error
         )
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.transfer_ldusdt_for_portfolio_margin(**params)
+            self.client.transfer_ldusdt_rwusd_for_portfolio_margin(**params)

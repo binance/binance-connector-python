@@ -24,6 +24,7 @@ from .models import FlexibleLoanRepayResponse
 from .models import GetFlexibleLoanAssetsDataResponse
 from .models import GetFlexibleLoanBorrowHistoryResponse
 from .models import GetFlexibleLoanCollateralAssetsDataResponse
+from .models import GetFlexibleLoanInterestRateHistoryResponse
 from .models import GetFlexibleLoanLiquidationHistoryResponse
 from .models import GetFlexibleLoanLtvAdjustmentHistoryResponse
 from .models import GetFlexibleLoanOngoingOrdersResponse
@@ -61,7 +62,11 @@ class CryptoLoanRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -69,25 +74,8 @@ class CryptoLoanRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -97,7 +85,36 @@ class CryptoLoanRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -181,7 +198,7 @@ class CryptoLoanRestAPI:
                 Borrow Flexible Loan
 
 
-        * Only available for master account
+        * This API endpoint is available for both the master account and the sub-account.
         * You can customize LTV by entering loanAmount and collateralAmount.
 
         Weight: 6000
@@ -353,6 +370,46 @@ class CryptoLoanRestAPI:
 
         return self._flexibleRateApi.get_flexible_loan_collateral_assets_data(
             collateral_coin, recv_window
+        )
+
+    def get_flexible_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]:
+        """
+                Get Flexible Loan Interest Rate History (USER_DATA)
+
+                Check Flexible Loan interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and endTime is 90 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetFlexibleLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._flexibleRateApi.get_flexible_loan_interest_rate_history(
+            coin, recv_window, start_time, end_time, current, limit
         )
 
     def get_flexible_loan_liquidation_history(

@@ -16,16 +16,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_derivatives_trading_usds_futures.rest_api.models.kline_candlestick_data_response_item import (
-    KlineCandlestickDataResponseItem,
-)
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class KlineCandlestickDataResponse(KlineCandlestickDataResponseItem):
+class KlineCandlestickDataResponse(BaseModel):
     """
     KlineCandlestickDataResponse
     """  # noqa: E501

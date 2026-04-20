@@ -35,6 +35,10 @@ from .account_trade_list_response import (
 from .account_trade_list_response_inner import (
     AccountTradeListResponseInner as AccountTradeListResponseInner,
 )
+from .adl_risk_response import AdlRiskResponse as AdlRiskResponse
+from .adl_risk_response1 import AdlRiskResponse1 as AdlRiskResponse1
+from .adl_risk_response2 import AdlRiskResponse2 as AdlRiskResponse2
+from .adl_risk_response2_inner import AdlRiskResponse2Inner as AdlRiskResponse2Inner
 from .all_orders_response import AllOrdersResponse as AllOrdersResponse
 from .all_orders_response_inner import AllOrdersResponseInner as AllOrdersResponseInner
 from .auto_cancel_all_open_orders_response import (
@@ -42,6 +46,12 @@ from .auto_cancel_all_open_orders_response import (
 )
 from .basis_response import BasisResponse as BasisResponse
 from .basis_response_inner import BasisResponseInner as BasisResponseInner
+from .cancel_algo_order_response import (
+    CancelAlgoOrderResponse as CancelAlgoOrderResponse,
+)
+from .cancel_all_algo_open_orders_response import (
+    CancelAllAlgoOpenOrdersResponse as CancelAllAlgoOpenOrdersResponse,
+)
 from .cancel_all_open_orders_response import (
     CancelAllOpenOrdersResponse as CancelAllOpenOrdersResponse,
 )
@@ -88,11 +98,11 @@ from .compressed_aggregate_trades_list_response_inner import (
 from .continuous_contract_kline_candlestick_data_response import (
     ContinuousContractKlineCandlestickDataResponse as ContinuousContractKlineCandlestickDataResponse,
 )
-from .continuous_contract_kline_candlestick_data_response_item import (
-    ContinuousContractKlineCandlestickDataResponseItem as ContinuousContractKlineCandlestickDataResponseItem,
+from .current_all_algo_open_orders_response import (
+    CurrentAllAlgoOpenOrdersResponse as CurrentAllAlgoOpenOrdersResponse,
 )
-from .continuous_contract_kline_candlestick_data_response_item_inner import (
-    ContinuousContractKlineCandlestickDataResponseItemInner as ContinuousContractKlineCandlestickDataResponseItemInner,
+from .current_all_algo_open_orders_response_inner import (
+    CurrentAllAlgoOpenOrdersResponseInner as CurrentAllAlgoOpenOrdersResponseInner,
 )
 from .current_all_open_orders_response import (
     CurrentAllOpenOrdersResponse as CurrentAllOpenOrdersResponse,
@@ -123,6 +133,9 @@ from .futures_account_balance_v3_response import (
 )
 from .futures_account_configuration_response import (
     FuturesAccountConfigurationResponse as FuturesAccountConfigurationResponse,
+)
+from .futures_tradfi_perps_contract_response import (
+    FuturesTradfiPerpsContractResponse as FuturesTradfiPerpsContractResponse,
 )
 from .futures_trading_quantitative_rules_indicators_response import (
     FuturesTradingQuantitativeRulesIndicatorsResponse as FuturesTradingQuantitativeRulesIndicatorsResponse,
@@ -205,23 +218,11 @@ from .get_position_margin_change_history_response_inner import (
 from .index_price_kline_candlestick_data_response import (
     IndexPriceKlineCandlestickDataResponse as IndexPriceKlineCandlestickDataResponse,
 )
-from .index_price_kline_candlestick_data_response_item import (
-    IndexPriceKlineCandlestickDataResponseItem as IndexPriceKlineCandlestickDataResponseItem,
-)
-from .index_price_kline_candlestick_data_response_item_inner import (
-    IndexPriceKlineCandlestickDataResponseItemInner as IndexPriceKlineCandlestickDataResponseItemInner,
-)
 from .keepalive_user_data_stream_response import (
     KeepaliveUserDataStreamResponse as KeepaliveUserDataStreamResponse,
 )
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
-)
-from .kline_candlestick_data_response_item import (
-    KlineCandlestickDataResponseItem as KlineCandlestickDataResponseItem,
-)
-from .kline_candlestick_data_response_item_inner import (
-    KlineCandlestickDataResponseItemInner as KlineCandlestickDataResponseItemInner,
 )
 from .list_all_convert_pairs_response import (
     ListAllConvertPairsResponse as ListAllConvertPairsResponse,
@@ -235,12 +236,6 @@ from .long_short_ratio_response_inner import (
 )
 from .mark_price_kline_candlestick_data_response import (
     MarkPriceKlineCandlestickDataResponse as MarkPriceKlineCandlestickDataResponse,
-)
-from .mark_price_kline_candlestick_data_response_item import (
-    MarkPriceKlineCandlestickDataResponseItem as MarkPriceKlineCandlestickDataResponseItem,
-)
-from .mark_price_kline_candlestick_data_response_item_inner import (
-    MarkPriceKlineCandlestickDataResponseItemInner as MarkPriceKlineCandlestickDataResponseItemInner,
 )
 from .mark_price_response import MarkPriceResponse as MarkPriceResponse
 from .mark_price_response1 import MarkPriceResponse1 as MarkPriceResponse1
@@ -273,6 +268,7 @@ from .multi_assets_mode_asset_index_response2 import (
 from .multi_assets_mode_asset_index_response2_inner import (
     MultiAssetsModeAssetIndexResponse2Inner as MultiAssetsModeAssetIndexResponse2Inner,
 )
+from .new_algo_order_response import NewAlgoOrderResponse as NewAlgoOrderResponse
 from .new_order_response import NewOrderResponse as NewOrderResponse
 from .notional_and_leverage_brackets_response import (
     NotionalAndLeverageBracketsResponse as NotionalAndLeverageBracketsResponse,
@@ -346,17 +342,18 @@ from .position_information_v3_response_inner import (
 from .premium_index_kline_data_response import (
     PremiumIndexKlineDataResponse as PremiumIndexKlineDataResponse,
 )
-from .premium_index_kline_data_response_item import (
-    PremiumIndexKlineDataResponseItem as PremiumIndexKlineDataResponseItem,
-)
-from .premium_index_kline_data_response_item_inner import (
-    PremiumIndexKlineDataResponseItemInner as PremiumIndexKlineDataResponseItemInner,
-)
 from .quarterly_contract_settlement_price_response import (
     QuarterlyContractSettlementPriceResponse as QuarterlyContractSettlementPriceResponse,
 )
 from .quarterly_contract_settlement_price_response_inner import (
     QuarterlyContractSettlementPriceResponseInner as QuarterlyContractSettlementPriceResponseInner,
+)
+from .query_algo_order_response import QueryAlgoOrderResponse as QueryAlgoOrderResponse
+from .query_all_algo_orders_response import (
+    QueryAllAlgoOrdersResponse as QueryAllAlgoOrdersResponse,
+)
+from .query_all_algo_orders_response_inner import (
+    QueryAllAlgoOrdersResponseInner as QueryAllAlgoOrdersResponseInner,
 )
 from .query_current_open_order_response import (
     QueryCurrentOpenOrderResponse as QueryCurrentOpenOrderResponse,
@@ -397,6 +394,13 @@ from .recent_trades_list_response import (
 )
 from .recent_trades_list_response_inner import (
     RecentTradesListResponseInner as RecentTradesListResponseInner,
+)
+from .rpi_order_book_response import RpiOrderBookResponse as RpiOrderBookResponse
+from .rpi_order_book_response_asks_item import (
+    RpiOrderBookResponseAsksItem as RpiOrderBookResponseAsksItem,
+)
+from .rpi_order_book_response_bids_item import (
+    RpiOrderBookResponseBidsItem as RpiOrderBookResponseBidsItem,
 )
 from .send_quote_request_response import (
     SendQuoteRequestResponse as SendQuoteRequestResponse,
@@ -477,6 +481,24 @@ from .top_trader_long_short_ratio_positions_response import (
 from .top_trader_long_short_ratio_positions_response_inner import (
     TopTraderLongShortRatioPositionsResponseInner as TopTraderLongShortRatioPositionsResponseInner,
 )
+from .trading_schedule_response import (
+    TradingScheduleResponse as TradingScheduleResponse,
+)
+from .trading_schedule_response_market_schedules import (
+    TradingScheduleResponseMarketSchedules as TradingScheduleResponseMarketSchedules,
+)
+from .trading_schedule_response_market_schedules_commodity import (
+    TradingScheduleResponseMarketSchedulesCOMMODITY as TradingScheduleResponseMarketSchedulesCOMMODITY,
+)
+from .trading_schedule_response_market_schedules_commodity_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesCOMMODITYSessionsInner as TradingScheduleResponseMarketSchedulesCOMMODITYSessionsInner,
+)
+from .trading_schedule_response_market_schedules_equity import (
+    TradingScheduleResponseMarketSchedulesEQUITY as TradingScheduleResponseMarketSchedulesEQUITY,
+)
+from .trading_schedule_response_market_schedules_equity_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesEQUITYSessionsInner as TradingScheduleResponseMarketSchedulesEQUITYSessionsInner,
+)
 from .user_commission_rate_response import (
     UserCommissionRateResponse as UserCommissionRateResponse,
 )
@@ -521,10 +543,18 @@ from .enums import (
 )
 from .enums import ModifyOrderSideEnum as ModifyOrderSideEnum
 from .enums import ModifyOrderPriceMatchEnum as ModifyOrderPriceMatchEnum
+from .enums import NewAlgoOrderSideEnum as NewAlgoOrderSideEnum
+from .enums import NewAlgoOrderPositionSideEnum as NewAlgoOrderPositionSideEnum
+from .enums import NewAlgoOrderTimeInForceEnum as NewAlgoOrderTimeInForceEnum
+from .enums import NewAlgoOrderWorkingTypeEnum as NewAlgoOrderWorkingTypeEnum
+from .enums import NewAlgoOrderPriceMatchEnum as NewAlgoOrderPriceMatchEnum
+from .enums import NewAlgoOrderNewOrderRespTypeEnum as NewAlgoOrderNewOrderRespTypeEnum
+from .enums import (
+    NewAlgoOrderSelfTradePreventionModeEnum as NewAlgoOrderSelfTradePreventionModeEnum,
+)
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderPositionSideEnum as NewOrderPositionSideEnum
 from .enums import NewOrderTimeInForceEnum as NewOrderTimeInForceEnum
-from .enums import NewOrderWorkingTypeEnum as NewOrderWorkingTypeEnum
 from .enums import NewOrderNewOrderRespTypeEnum as NewOrderNewOrderRespTypeEnum
 from .enums import NewOrderPriceMatchEnum as NewOrderPriceMatchEnum
 from .enums import (

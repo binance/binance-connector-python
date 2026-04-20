@@ -29,26 +29,28 @@ class NewSymbolInfoResponse(BaseModel):
 
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
-    u: Optional[StrictStr] = None
-    qa: Optional[StrictStr] = None
     s: Optional[StrictStr] = None
-    unit: Optional[StrictInt] = None
-    mq: Optional[StrictStr] = None
+    ps: Optional[StrictStr] = None
+    qa: Optional[StrictStr] = None
     d: Optional[StrictStr] = None
     sp: Optional[StrictStr] = None
-    ed: Optional[StrictInt] = None
+    dt: Optional[StrictInt] = None
+    u: Optional[StrictInt] = None
+    ot: Optional[StrictInt] = None
+    cs: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
         "E",
-        "u",
-        "qa",
         "s",
-        "unit",
-        "mq",
+        "ps",
+        "qa",
         "d",
         "sp",
-        "ed",
+        "dt",
+        "u",
+        "ot",
+        "cs",
     ]
 
     model_config = ConfigDict(
@@ -113,14 +115,15 @@ class NewSymbolInfoResponse(BaseModel):
             {
                 "e": obj.get("e"),
                 "E": obj.get("E"),
-                "u": obj.get("u"),
-                "qa": obj.get("qa"),
                 "s": obj.get("s"),
-                "unit": obj.get("unit"),
-                "mq": obj.get("mq"),
+                "ps": obj.get("ps"),
+                "qa": obj.get("qa"),
                 "d": obj.get("d"),
                 "sp": obj.get("sp"),
-                "ed": obj.get("ed"),
+                "dt": obj.get("dt"),
+                "u": obj.get("u"),
+                "ot": obj.get("ot"),
+                "cs": obj.get("cs"),
             }
         )
         # store additional fields in additional_properties

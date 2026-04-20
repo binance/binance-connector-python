@@ -2093,7 +2093,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
-            "limit": 100,
+            "limit": 500,
             "recv_window": 5000.0,
         }
 
@@ -2148,7 +2148,7 @@ class TestWebSocketAccountApi:
         assert params["order_id"] == 1
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["from_execution_id"] == 1
-        assert params["limit"] == 100
+        assert params["limit"] == 500
         assert params["recv_window"] == 5000.0
 
         assert result is not None
@@ -2171,7 +2171,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
-            "limit": 100,
+            "limit": 500,
             "recv_window": 5000.0,
         }
         params["symbol"] = None
@@ -2188,7 +2188,7 @@ class TestWebSocketAccountApi:
             "order_id": 1,
             "id": "e9d6b4349871b40611412680b3445fac",
             "from_execution_id": 1,
-            "limit": 100,
+            "limit": 500,
             "recv_window": 5000.0,
         }
         params["order_id"] = None

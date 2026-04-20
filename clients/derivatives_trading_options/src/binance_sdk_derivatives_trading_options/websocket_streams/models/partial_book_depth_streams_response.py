@@ -37,12 +37,13 @@ class PartialBookDepthStreamsResponse(BaseModel):
     E: Optional[StrictInt] = Field(default=None, alias="E")
     T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
+    U: Optional[StrictInt] = Field(default=None, alias="U")
     u: Optional[StrictInt] = None
     pu: Optional[StrictInt] = None
     b: Optional[List[PartialBookDepthStreamsResponseBItem]] = None
     a: Optional[List[PartialBookDepthStreamsResponseAItem]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "T", "s", "u", "pu", "b", "a"]
+    __properties: ClassVar[List[str]] = ["e", "E", "T", "s", "U", "u", "pu", "b", "a"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -122,6 +123,7 @@ class PartialBookDepthStreamsResponse(BaseModel):
                 "E": obj.get("E"),
                 "T": obj.get("T"),
                 "s": obj.get("s"),
+                "U": obj.get("U"),
                 "u": obj.get("u"),
                 "pu": obj.get("pu"),
                 "b": (

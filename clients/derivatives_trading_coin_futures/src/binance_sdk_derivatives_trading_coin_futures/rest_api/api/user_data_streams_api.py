@@ -15,6 +15,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 
+from ..models import KeepaliveUserDataStreamResponse
 from ..models import StartUserDataStreamResponse
 
 
@@ -53,6 +54,7 @@ class UserDataStreamsApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -61,12 +63,13 @@ class UserDataStreamsApi:
             method="DELETE",
             path="/dapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
     def keepalive_user_data_stream(
         self,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[KeepaliveUserDataStreamResponse]:
         """
                 Keepalive User Data Stream (USER_STREAM)
                 PUT /dapi/v1/listenKey
@@ -79,13 +82,14 @@ class UserDataStreamsApi:
                 Args:
 
                 Returns:
-                    ApiResponse[None]
+                    ApiResponse[KeepaliveUserDataStreamResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -94,7 +98,9 @@ class UserDataStreamsApi:
             method="PUT",
             path="/dapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
+            response_model=KeepaliveUserDataStreamResponse,
         )
 
     def start_user_data_stream(
@@ -119,6 +125,7 @@ class UserDataStreamsApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -127,6 +134,7 @@ class UserDataStreamsApi:
             method="POST",
             path="/dapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
         )

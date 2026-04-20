@@ -18,14 +18,14 @@ import json
 
 from pydantic import ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_derivatives_trading_coin_futures.rest_api.models.current_all_open_orders_response_inner import (
-    CurrentAllOpenOrdersResponseInner,
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models.all_orders_response_inner import (
+    AllOrdersResponseInner,
 )
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class CurrentAllOpenOrdersResponse(CurrentAllOpenOrdersResponseInner):
+class CurrentAllOpenOrdersResponse(AllOrdersResponseInner):
     """
     CurrentAllOpenOrdersResponse
     """  # noqa: E501

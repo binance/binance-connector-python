@@ -38,6 +38,7 @@ from ..models import QueryMarginAccountsOpenOcoResponse
 from ..models import QueryMarginAccountsOpenOrdersResponse
 from ..models import QueryMarginAccountsOrderResponse
 from ..models import QueryMarginAccountsTradeListResponse
+from ..models import QueryPreventedMatchesResponse
 from ..models import QuerySpecialKeyResponse
 from ..models import QuerySpecialKeyListResponse
 
@@ -78,16 +79,14 @@ class TradeApi:
                 POST /sapi/v1/margin/apiKey
                 https://developers.binance.com/docs/margin_trading/trade/Create-Special-Key-of-Low-Latency-Trading
 
-                **Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher. **
-
-        **If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
+                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 7 or higher.
+        - If you are VIP level 6 or below, please contact your VIP manager for eligibility criterias.
 
         **Supported Products:**
 
         - Cross Margin
         - Isolated Margin
         - Portfolio Margin Pro
-        - Cross Margin Pro (Additional agreement required and subject to meeting eligibility criteria)
 
         **Unsupported Products:**
 
@@ -100,10 +99,6 @@ class TradeApi:
         * RSA
 
         We recommend to **use Ed25519 API keys** as it should provide the best performance and security out of all supported key types. We accept PKCS#8 (BEGIN PUBLIC KEY). For how to generate an RSA key pair to send API requests on Binance. Please refer to the document below [FAQ](https://www.binance.com/en/support/faq/how-to-generate-an-rsa-key-pair-to-send-api-requests-on-binance-2b79728f331e43079b27440d9d15c5db) .
-
-        Read [REST API](https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#signed-trade-and-user_data-endpoint-security) or [WebSocket API](https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md#request-security) documentation to learn how to use different API keys
-
-        You need to enable Permits “Enable Spot & Margin Trading” option for the API Key which requests this endpoint.
 
         Weight: 1(UID)
 
@@ -128,6 +123,7 @@ class TradeApi:
                 field="api_name", error_message="Missing required parameter 'api_name'"
             )
 
+        body = {}
         payload = {
             "api_name": api_name,
             "symbol": symbol,
@@ -143,6 +139,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CreateSpecialKeyResponse,
             is_signed=True,
@@ -181,6 +178,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"api_name": api_name, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -189,6 +187,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -229,6 +228,7 @@ class TradeApi:
                 field="ip", error_message="Missing required parameter 'ip'"
             )
 
+        body = {}
         payload = {"ip": ip, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -237,6 +237,7 @@ class TradeApi:
             method="PUT",
             path="/sapi/v1/margin/apiKey/ip",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -263,7 +264,7 @@ class TradeApi:
         Weight: 1(IP)
 
                 Args:
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -278,6 +279,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -293,6 +295,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/forceLiquidationRec",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetForceLiquidationRecordResponse,
             is_signed=True,
@@ -323,6 +326,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -331,6 +335,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/exchange-small-liability",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSmallLiabilityExchangeCoinListResponse,
             is_signed=True,
@@ -357,7 +362,7 @@ class TradeApi:
                 Args:
                     current (Union[int, None]): Currently querying page. Start from 1. Default:1
                     size (Union[int, None]): Default:10, Max:100
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -378,6 +383,7 @@ class TradeApi:
                 field="size", error_message="Missing required parameter 'size'"
             )
 
+        body = {}
         payload = {
             "current": current,
             "size": size,
@@ -392,6 +398,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/exchange-small-liability-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSmallLiabilityExchangeHistoryResponse,
             is_signed=True,
@@ -416,7 +423,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -432,6 +439,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -444,6 +452,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelAllOpenOrdersOnASymbolResponse,
             is_signed=True,
@@ -472,7 +481,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
@@ -491,6 +500,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -506,6 +516,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelOcoResponse,
             is_signed=True,
@@ -534,7 +545,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
@@ -553,6 +564,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -568,6 +580,7 @@ class TradeApi:
             method="DELETE",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountCancelOrderResponse,
             is_signed=True,
@@ -612,7 +625,7 @@ class TradeApi:
                     quantity (Union[float, None]):
                     price (Union[float, None]):
                     stop_price (Union[float, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     limit_client_order_id (Optional[str] = None): A unique Id for the limit order
                     limit_iceberg_qty (Optional[float] = None):
@@ -656,6 +669,7 @@ class TradeApi:
                 error_message="Missing required parameter 'stop_price'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -683,6 +697,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/oco",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOcoResponse,
             is_signed=True,
@@ -723,7 +738,7 @@ class TradeApi:
                     symbol (Union[str, None]):
                     side (Union[MarginAccountNewOrderSideEnum, None]):
                     type (Union[str, None]): `MARGIN`,`ISOLATED`
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     quantity (Optional[float] = None):
                     quote_order_qty (Optional[float] = None):
                     price (Optional[float] = None):
@@ -758,6 +773,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -783,6 +799,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOrderResponse,
             is_signed=True,
@@ -844,7 +861,7 @@ class TradeApi:
                     pending_type (Union[str, None]): Supported values: [Order Types](https://developers.binance.com/docs/binance-spot-api-docs/enums#order-types-ordertypes-type) Note that `MARKET` orders using `quoteOrderQty` are not supported.
                     pending_side (Union[str, None]): BUY, SELL
                     pending_quantity (Union[float, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     new_order_resp_type (Optional[MarginAccountNewOtoNewOrderRespTypeEnum] = None): Set the response JSON. ACK, RESULT, or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
                     side_effect_type (Optional[str] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT. More info in [FAQ](https://www.binance.com/en/support/faq/how-to-use-the-sideeffecttype-parameter-with-the-margin-order-endpoints-f9fc51cda1984bf08b95e0d96c4570bc)
@@ -912,6 +929,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_quantity'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -944,6 +962,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/oto",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOtoResponse,
             is_signed=True,
@@ -1011,7 +1030,7 @@ class TradeApi:
                     pending_side (Union[str, None]): BUY, SELL
                     pending_quantity (Union[float, None]):
                     pending_above_type (Union[str, None]): Supported values: `LIMIT_MAKER`, `STOP_LOSS`, and `STOP_LOSS_LIMIT`
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     side_effect_type (Optional[str] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT. More info in [FAQ](https://www.binance.com/en/support/faq/how-to-use-the-sideeffecttype-parameter-with-the-margin-order-endpoints-f9fc51cda1984bf08b95e0d96c4570bc)
                     auto_repay_at_cancel (Optional[bool] = None): Only when MARGIN_BUY or AUTO_BORROW_REPAY order takes effect, true means that the debt generated by the order needs to be repay after the order is cancelled. The default is true
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
@@ -1082,6 +1101,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_above_type'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1121,6 +1141,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/order/otoco",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountNewOtocoResponse,
             is_signed=True,
@@ -1163,6 +1184,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {"type": type, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1171,6 +1193,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/manual-liquidation",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginManualLiquidationResponse,
             is_signed=True,
@@ -1193,7 +1216,7 @@ class TradeApi:
         Weight: 20(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -1205,6 +1228,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1217,6 +1241,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/rateLimit/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentMarginOrderCountUsageResponse,
             is_signed=True,
@@ -1243,12 +1268,12 @@ class TradeApi:
         Weight: 200(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1259,6 +1284,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1275,6 +1301,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/allOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsAllOcoResponse,
             is_signed=True,
@@ -1306,11 +1333,11 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1326,6 +1353,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1342,6 +1370,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsAllOrdersResponse,
             is_signed=True,
@@ -1366,7 +1395,7 @@ class TradeApi:
         Weight: 10(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     orig_client_order_id (Optional[str] = None):
@@ -1380,6 +1409,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1394,6 +1424,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/orderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOcoResponse,
             is_signed=True,
@@ -1416,7 +1447,7 @@ class TradeApi:
         Weight: 10(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -1428,6 +1459,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "is_isolated": is_isolated,
             "symbol": symbol,
@@ -1440,6 +1472,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/openOrderList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOpenOcoResponse,
             is_signed=True,
@@ -1467,7 +1500,7 @@ class TradeApi:
 
                 Args:
                     symbol (Optional[str] = None): isolated margin pair
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1478,6 +1511,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1490,6 +1524,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOpenOrdersResponse,
             is_signed=True,
@@ -1518,7 +1553,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     recv_window (Optional[int] = None): No more than 60000
@@ -1536,6 +1571,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1550,6 +1586,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsOrderResponse,
             is_signed=True,
@@ -1581,12 +1618,12 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1602,6 +1639,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "is_isolated": is_isolated,
@@ -1619,8 +1657,70 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/myTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAccountsTradeListResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_prevented_matches(
+        self,
+        symbol: Union[str, None],
+        prevented_match_id: Optional[int] = None,
+        order_id: Optional[int] = None,
+        from_prevented_match_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+        is_isolated: Optional[str] = None,
+    ) -> ApiResponse[QueryPreventedMatchesResponse]:
+        """
+                Query Prevented Matches(USER_DATA)
+                GET /sapi/v1/margin/myPreventedMatches
+                https://developers.binance.com/docs/margin_trading/trade/Query-Margin-Prevented-Matches
+
+
+        Weight: 10(IP)
+
+                Args:
+                    symbol (Union[str, None]):
+                    prevented_match_id (Optional[int] = None):
+                    order_id (Optional[int] = None):
+                    from_prevented_match_id (Optional[int] = None):
+                    recv_window (Optional[int] = None): No more than 60000
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
+
+                Returns:
+                    ApiResponse[QueryPreventedMatchesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {
+            "symbol": symbol,
+            "prevented_match_id": prevented_match_id,
+            "order_id": order_id,
+            "from_prevented_match_id": from_prevented_match_id,
+            "recv_window": recv_window,
+            "is_isolated": is_isolated,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/margin/myPreventedMatches",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryPreventedMatchesResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1653,6 +1753,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1661,6 +1762,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/apiKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySpecialKeyResponse,
             is_signed=True,
@@ -1693,6 +1795,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1701,6 +1804,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/margin/api-key-list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySpecialKeyListResponse,
             is_signed=True,
@@ -1743,6 +1847,7 @@ class TradeApi:
                 error_message="Missing required parameter 'asset_names'",
             )
 
+        body = {}
         payload = {"asset_names": asset_names, "recv_window": recv_window}
 
         return send_request(
@@ -1751,6 +1856,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/margin/exchange-small-liability",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,

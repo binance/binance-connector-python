@@ -24,7 +24,6 @@ from binance_common.websocket import (
 from ..models import AggTradeResponse
 from ..models import AllMarketRollingWindowTickerResponse
 from ..models import AllMiniTickerResponse
-from ..models import AllTickerResponse
 from ..models import AvgPriceResponse
 from ..models import BookTickerResponse
 from ..models import DiffBookDepthResponse
@@ -32,6 +31,7 @@ from ..models import KlineResponse
 from ..models import KlineOffsetResponse
 from ..models import MiniTickerResponse
 from ..models import PartialBookDepthResponse
+from ..models import ReferencePriceResponse
 from ..models import RollingWindowTickerResponse
 from ..models import TickerResponse
 from ..models import TradeResponse
@@ -90,7 +90,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AggTradeResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AggTradeResponse,
+            stream_url="",
         )
 
     async def all_market_rolling_window_ticker(
@@ -136,6 +139,7 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketRollingWindowTickerResponse,
+            stream_url="",
         )
 
     async def all_mini_ticker(
@@ -168,40 +172,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AllMiniTickerResponse
-        )
-
-    async def all_ticker(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-        WebSocket All Market Tickers Stream
-        /!ticker@arr
-        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#all-market-tickers-stream
-
-        24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
-
-        Args:
-                id (Optional[str] = None): Unique WebSocket request ID.
-
-        Returns:
-            RequestStreamHandle
-
-        Raises:
-            RequiredError: If a required parameter is missing.
-
-        """
-
-        stream = ws_streams_placeholder(
-            "/!ticker@arr".replace("/", "", 1),
-            {
-                "id": id,
-            },
-        )
-
-        return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AllTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AllMiniTickerResponse,
+            stream_url="",
         )
 
     async def avg_price(
@@ -242,7 +216,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=AvgPriceResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=AvgPriceResponse,
+            stream_url="",
         )
 
     async def book_ticker(
@@ -284,7 +261,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=BookTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=BookTickerResponse,
+            stream_url="",
         )
 
     async def diff_book_depth(
@@ -328,7 +308,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=DiffBookDepthResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=DiffBookDepthResponse,
+            stream_url="",
         )
 
     async def kline(
@@ -378,7 +361,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=KlineResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=KlineResponse,
+            stream_url="",
         )
 
     async def kline_offset(
@@ -426,7 +412,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=KlineOffsetResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=KlineOffsetResponse,
+            stream_url="",
         )
 
     async def mini_ticker(
@@ -467,7 +456,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=MiniTickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=MiniTickerResponse,
+            stream_url="",
         )
 
     async def partial_book_depth(
@@ -518,7 +510,54 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=PartialBookDepthResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=PartialBookDepthResponse,
+            stream_url="",
+        )
+
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Reference Price Streams
+        /<symbol>@referencePrice
+        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#reference-price-streams
+
+
+
+        Args:
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        stream = ws_streams_placeholder(
+            "/<symbol>@referencePrice".replace("/", "", 1),
+            {
+                "symbol": symbol,
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=ReferencePriceResponse,
+            stream_url="",
         )
 
     async def rolling_window_ticker(
@@ -570,6 +609,7 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=RollingWindowTickerResponse,
+            stream_url="",
         )
 
     async def ticker(
@@ -610,7 +650,10 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=TickerResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=TickerResponse,
+            stream_url="",
         )
 
     async def trade(
@@ -651,5 +694,8 @@ class WebSocketStreamsApi:
         )
 
         return await RequestStream(
-            self.websocket_base, stream=stream, response_model=TradeResponse
+            self.websocket_base,
+            stream=stream,
+            response_model=TradeResponse,
+            stream_url="",
         )

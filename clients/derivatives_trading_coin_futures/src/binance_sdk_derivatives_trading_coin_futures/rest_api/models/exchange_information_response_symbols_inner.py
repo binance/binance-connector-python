@@ -31,7 +31,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
     """  # noqa: E501
 
     filters: Optional[List[ExchangeInformationResponseSymbolsInnerFiltersInner]] = None
-    order_type: Optional[List[StrictStr]] = Field(default=None, alias="OrderType")
+    order_types: Optional[List[StrictStr]] = Field(default=None, alias="orderTypes")
     time_in_force: Optional[List[StrictStr]] = Field(default=None, alias="timeInForce")
     liquidation_fee: Optional[StrictStr] = Field(default=None, alias="liquidationFee")
     market_take_bound: Optional[StrictStr] = Field(
@@ -72,7 +72,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "filters",
-        "OrderType",
+        "orderTypes",
         "timeInForce",
         "liquidationFee",
         "marketTakeBound",
@@ -179,7 +179,7 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
                     if obj.get("filters") is not None
                     else None
                 ),
-                "OrderType": obj.get("OrderType"),
+                "orderTypes": obj.get("orderTypes"),
                 "timeInForce": obj.get("timeInForce"),
                 "liquidationFee": obj.get("liquidationFee"),
                 "marketTakeBound": obj.get("marketTakeBound"),

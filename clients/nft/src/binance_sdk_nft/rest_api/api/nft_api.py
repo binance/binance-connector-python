@@ -63,6 +63,7 @@ class NFTApi:
 
         """
 
+        body = {}
         payload = {"limit": limit, "page": page, "recv_window": recv_window}
 
         return send_request(
@@ -71,6 +72,7 @@ class NFTApi:
             method="GET",
             path="/sapi/v1/nft/user/getAsset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetNFTAssetResponse,
             is_signed=True,
@@ -113,6 +115,7 @@ class NFTApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -127,6 +130,7 @@ class NFTApi:
             method="GET",
             path="/sapi/v1/nft/history/deposit",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetNFTDepositHistoryResponse,
             is_signed=True,
@@ -176,6 +180,7 @@ class NFTApi:
                 error_message="Missing required parameter 'order_type'",
             )
 
+        body = {}
         payload = {
             "order_type": order_type,
             "start_time": start_time,
@@ -191,6 +196,7 @@ class NFTApi:
             method="GET",
             path="/sapi/v1/nft/history/transactions",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetNFTTransactionHistoryResponse,
             is_signed=True,
@@ -232,6 +238,7 @@ class NFTApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -246,6 +253,7 @@ class NFTApi:
             method="GET",
             path="/sapi/v1/nft/history/withdraw",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetNFTWithdrawHistoryResponse,
             is_signed=True,

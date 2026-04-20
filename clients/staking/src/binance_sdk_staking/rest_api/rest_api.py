@@ -90,7 +90,11 @@ class StakingRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -98,25 +102,8 @@ class StakingRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -126,7 +113,36 @@ class StakingRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -181,6 +197,7 @@ class StakingRestAPI:
 
     def get_eth_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -200,6 +217,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -215,11 +233,12 @@ class StakingRestAPI:
         """
 
         return self._ethStakingApi.get_eth_redemption_history(
-            start_time, end_time, current, size, recv_window
+            redeem_id, start_time, end_time, current, size, recv_window
         )
 
     def get_eth_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -239,6 +258,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -254,7 +274,7 @@ class StakingRestAPI:
         """
 
         return self._ethStakingApi.get_eth_staking_history(
-            start_time, end_time, current, size, recv_window
+            purchase_id, start_time, end_time, current, size, recv_window
         )
 
     def get_wbeth_rate_history(
@@ -1185,6 +1205,7 @@ class StakingRestAPI:
 
     def get_sol_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -1204,6 +1225,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -1219,11 +1241,12 @@ class StakingRestAPI:
         """
 
         return self._solStakingApi.get_sol_redemption_history(
-            start_time, end_time, current, size, recv_window
+            redeem_id, start_time, end_time, current, size, recv_window
         )
 
     def get_sol_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -1243,6 +1266,7 @@ class StakingRestAPI:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -1258,7 +1282,7 @@ class StakingRestAPI:
         """
 
         return self._solStakingApi.get_sol_staking_history(
-            start_time, end_time, current, size, recv_window
+            purchase_id, start_time, end_time, current, size, recv_window
         )
 
     def get_sol_staking_quota_details(

@@ -23,15 +23,26 @@ from binance_common.errors import RequiredError
 from binance_sdk_spot.websocket_api.api import MarketApi
 
 
+from binance_sdk_spot.websocket_api.models import DepthSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import KlinesIntervalEnum
+from binance_sdk_spot.websocket_api.models import (
+    ReferencePriceCalculationSymbolStatusEnum,
+)
 from binance_sdk_spot.websocket_api.models import TickerTypeEnum
 from binance_sdk_spot.websocket_api.models import TickerWindowSizeEnum
+from binance_sdk_spot.websocket_api.models import TickerSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import Ticker24hrTypeEnum
+from binance_sdk_spot.websocket_api.models import Ticker24hrSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import TickerBookSymbolStatusEnum
+from binance_sdk_spot.websocket_api.models import TickerPriceSymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import TickerTradingDayTypeEnum
+from binance_sdk_spot.websocket_api.models import TickerTradingDaySymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
 from binance_sdk_spot.websocket_api.models import AvgPriceResponse
 from binance_sdk_spot.websocket_api.models import DepthResponse
 from binance_sdk_spot.websocket_api.models import KlinesResponse
+from binance_sdk_spot.websocket_api.models import ReferencePriceResponse
+from binance_sdk_spot.websocket_api.models import ReferencePriceCalculationResponse
 from binance_sdk_spot.websocket_api.models import TickerResponse
 from binance_sdk_spot.websocket_api.models import Ticker24hrResponse
 from binance_sdk_spot.websocket_api.models import TickerBookResponse
@@ -251,6 +262,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
+            "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -306,6 +318,7 @@ class TestWebSocketMarketApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["limit"] == 100
+        assert params["symbol_status"] == DepthSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -322,6 +335,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "id": "e9d6b4349871b40611412680b3445fac",
             "limit": 100,
+            "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
         params["symbol"] = None
 
@@ -543,6 +557,266 @@ class TestWebSocketMarketApi:
             await self.websocket_api.klines(**params)
 
     @pytest.mark.asyncio
+    async def test_reference_price_success(self):
+        """Test reference_price() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        expected_response = {
+            "id": "5132affb-0aba-4821-b475-f262504556b43",
+            "status": 200,
+            "result": {
+                "symbol": "BAZUSD",
+                "referencePrice": "0.00501900",
+                "timestamp": 1770946889251,
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.reference_price(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/referencePrice".replace(
+            "/", "", 1
+        )
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={"method": "/referencePrice".replace("/", "", 1), "params": params},
+            response_model=ReferencePriceResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_reference_price_success_with_optional_params(self):
+        """Test reference_price() successfully with optional parameters."""
+
+        params = {"symbol": "BNBUSDT", "id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "id": "5132affb-0aba-4821-b475-f262504556b43",
+            "status": 200,
+            "result": {
+                "symbol": "BAZUSD",
+                "referencePrice": "0.00501900",
+                "timestamp": 1770946889251,
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.reference_price(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/referencePrice".replace(
+            "/", "", 1
+        )
+        assert params["symbol"] == "BNBUSDT"
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={"method": "/referencePrice".replace("/", "", 1), "params": params},
+            response_model=ReferencePriceResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_reference_price_missing_required_param_symbol(self):
+        """Test that reference_price() raises RequiredError when 'symbol' is missing."""
+
+        params = {"symbol": "BNBUSDT", "id": "e9d6b4349871b40611412680b3445fac"}
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.reference_price(**params)
+
+    @pytest.mark.asyncio
+    async def test_reference_price_server_error(self):
+        """Test that reference_price() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.reference_price(**params)
+
+    @pytest.mark.asyncio
+    async def test_reference_price_calculation_success(self):
+        """Test reference_price_calculation() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        expected_response = {
+            "id": "5132affa-0aba-4831-b475-f262504556b41",
+            "status": 200,
+            "result": {
+                "symbol": "BAZUSD",
+                "calculationType": "EXTERNAL",
+                "bucketCount": 10,
+                "bucketWidthMs": 1000,
+                "externalCalculationId": 42,
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.reference_price_calculation(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"][
+            "method"
+        ] == "/referencePrice.calculation".replace("/", "", 1)
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={
+                "method": "/referencePrice.calculation".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=ReferencePriceCalculationResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_reference_price_calculation_success_with_optional_params(self):
+        """Test reference_price_calculation() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "symbol_status": ReferencePriceCalculationSymbolStatusEnum["TRADING"].value,
+        }
+
+        expected_response = {
+            "id": "5132affa-0aba-4831-b475-f262504556b41",
+            "status": 200,
+            "result": {
+                "symbol": "BAZUSD",
+                "calculationType": "EXTERNAL",
+                "bucketCount": 10,
+                "bucketWidthMs": 1000,
+                "externalCalculationId": 42,
+            },
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.reference_price_calculation(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"][
+            "method"
+        ] == "/referencePrice.calculation".replace("/", "", 1)
+        assert params["symbol"] == "BNBUSDT"
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert (
+            params["symbol_status"]
+            == ReferencePriceCalculationSymbolStatusEnum["TRADING"].value
+        )
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={
+                "method": "/referencePrice.calculation".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=ReferencePriceCalculationResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_reference_price_calculation_missing_required_param_symbol(self):
+        """Test that reference_price_calculation() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "symbol_status": ReferencePriceCalculationSymbolStatusEnum["TRADING"].value,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.reference_price_calculation(**params)
+
+    @pytest.mark.asyncio
+    async def test_reference_price_calculation_server_error(self):
+        """Test that reference_price_calculation() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.reference_price_calculation(**params)
+
+    @pytest.mark.asyncio
     async def test_ticker_success(self):
         """Test ticker() successfully with required parameters only."""
 
@@ -613,6 +887,7 @@ class TestWebSocketMarketApi:
             "symbols": ["symbols_example"],
             "type": TickerTypeEnum["FULL"].value,
             "window_size": TickerWindowSizeEnum["WINDOW_SIZE_1m"].value,
+            "symbol_status": TickerSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -670,6 +945,7 @@ class TestWebSocketMarketApi:
         assert params["symbols"] == ["symbols_example"]
         assert params["type"] == TickerTypeEnum["FULL"].value
         assert params["window_size"] == TickerWindowSizeEnum["WINDOW_SIZE_1m"].value
+        assert params["symbol_status"] == TickerSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -764,6 +1040,7 @@ class TestWebSocketMarketApi:
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
             "type": Ticker24hrTypeEnum["FULL"].value,
+            "symbol_status": Ticker24hrSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -826,6 +1103,7 @@ class TestWebSocketMarketApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
         assert params["type"] == Ticker24hrTypeEnum["FULL"].value
+        assert params["symbol_status"] == Ticker24hrSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -903,6 +1181,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
+            "symbol_status": TickerBookSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -948,6 +1227,7 @@ class TestWebSocketMarketApi:
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
+        assert params["symbol_status"] == TickerBookSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -1021,6 +1301,7 @@ class TestWebSocketMarketApi:
             "id": "e9d6b4349871b40611412680b3445fac",
             "symbol": "BNBUSDT",
             "symbols": ["symbols_example"],
+            "symbol_status": TickerPriceSymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -1062,6 +1343,7 @@ class TestWebSocketMarketApi:
         assert params["id"] == "e9d6b4349871b40611412680b3445fac"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["symbols_example"]
+        assert params["symbol_status"] == TickerPriceSymbolStatusEnum["TRADING"].value
 
         assert result is not None
         assert result.data() == expected_response
@@ -1172,6 +1454,7 @@ class TestWebSocketMarketApi:
             "symbols": ["symbols_example"],
             "time_zone": "time_zone_example",
             "type": TickerTradingDayTypeEnum["FULL"].value,
+            "symbol_status": TickerTradingDaySymbolStatusEnum["TRADING"].value,
         }
 
         expected_response = {
@@ -1250,6 +1533,9 @@ class TestWebSocketMarketApi:
         assert params["symbols"] == ["symbols_example"]
         assert params["time_zone"] == "time_zone_example"
         assert params["type"] == TickerTradingDayTypeEnum["FULL"].value
+        assert (
+            params["symbol_status"] == TickerTradingDaySymbolStatusEnum["TRADING"].value
+        )
 
         assert result is not None
         assert result.data() == expected_response
@@ -1348,7 +1634,7 @@ class TestWebSocketMarketApi:
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
-            "limit": 100,
+            "limit": 500,
         }
 
         expected_response = {
@@ -1403,7 +1689,7 @@ class TestWebSocketMarketApi:
         assert params["from_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
-        assert params["limit"] == 100
+        assert params["limit"] == 500
 
         assert result is not None
         assert result.data() == expected_response
@@ -1425,7 +1711,7 @@ class TestWebSocketMarketApi:
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
-            "limit": 100,
+            "limit": 500,
         }
         params["symbol"] = None
 

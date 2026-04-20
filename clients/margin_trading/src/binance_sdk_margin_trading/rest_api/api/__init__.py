@@ -13,5 +13,4 @@ from .borrow_repay_api import BorrowRepayApi as BorrowRepayApi
 from .market_data_api import MarketDataApi as MarketDataApi
 from .risk_data_stream_api import RiskDataStreamApi as RiskDataStreamApi
 from .trade_api import TradeApi as TradeApi
-from .trade_data_stream_api import TradeDataStreamApi as TradeDataStreamApi
 from .transfer_api import TransferApi as TransferApi

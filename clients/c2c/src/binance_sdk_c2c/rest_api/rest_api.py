@@ -40,7 +40,11 @@ class C2CRestAPI:
         self._c2CApi = C2CApi(self.configuration, self._session, self._signer)
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -48,25 +52,8 @@ class C2CRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -76,16 +63,47 @@ class C2CRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
 
     def get_c2_c_trade_history(
         self,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
+        trade_type: Optional[str] = None,
+        start_timestamp: Optional[int] = None,
+        end_timestamp: Optional[int] = None,
         page: Optional[int] = None,
+        rows: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetC2CTradeHistoryResponse]:
         """
@@ -93,17 +111,18 @@ class C2CRestAPI:
 
                 Get C2C Trade History
 
-        * The max interval between startTime and endTime is 30 days.
-        * If startTime and endTime are not sent, the recent 7 days' data will be returned.
-        * The earliest startTime is supported on June 10, 2020
-        * Return up to 200 records per request.
+        * The max interval between startTimestamp and endTimestamp is 30 days.
+        * If startTimestamp and endTimestamp are not sent, the recent 30 days' data will be returned.
+        * You can only view data from the past 6 months. To see all C2C orders, please check https://c2c.binance.com/en/fiatOrder
 
         Weight: 1
 
                 Args:
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
+                    trade_type (Optional[str] = None): BUY, SELL
+                    start_timestamp (Optional[int] = None):
+                    end_timestamp (Optional[int] = None):
                     page (Optional[int] = None): Default 1
+                    rows (Optional[int] = None): default 100, max 100
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -115,5 +134,5 @@ class C2CRestAPI:
         """
 
         return self._c2CApi.get_c2_c_trade_history(
-            start_time, end_time, page, recv_window
+            trade_type, start_timestamp, end_timestamp, page, rows, recv_window
         )

@@ -28,7 +28,7 @@ async def partial_book_depth_streams():
 
         stream = await connection.partial_book_depth_streams(
             symbol="btcusdt",
-            levels=10,
+            level="example_value",
         )
         stream.on("message", lambda data: print(f"{data}"))
 

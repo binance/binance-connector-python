@@ -37,7 +37,7 @@ class UserDataStreamsApi:
         """
                 Close User Data Stream (USER_STREAM)
                 DELETE /eapi/v1/listenKey
-                https://developers.binance.com/docs/derivatives/option/user-data-streams/Close-User-Data-Stream
+                https://developers.binance.com/docs/derivatives/options-trading/user-data-streams/Close-User-Data-Stream
 
                 Close out a user data stream.
 
@@ -53,6 +53,7 @@ class UserDataStreamsApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -61,6 +62,7 @@ class UserDataStreamsApi:
             method="DELETE",
             path="/eapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -70,7 +72,7 @@ class UserDataStreamsApi:
         """
                 Keepalive User Data Stream (USER_STREAM)
                 PUT /eapi/v1/listenKey
-                https://developers.binance.com/docs/derivatives/option/user-data-streams/Keepalive-User-Data-Stream
+                https://developers.binance.com/docs/derivatives/options-trading/user-data-streams/Keepalive-User-Data-Stream
 
                 Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 60 minutes.
 
@@ -86,6 +88,7 @@ class UserDataStreamsApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -94,6 +97,7 @@ class UserDataStreamsApi:
             method="PUT",
             path="/eapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -103,7 +107,7 @@ class UserDataStreamsApi:
         """
                 Start User Data Stream (USER_STREAM)
                 POST /eapi/v1/listenKey
-                https://developers.binance.com/docs/derivatives/option/user-data-streams/Start-User-Data-Stream
+                https://developers.binance.com/docs/derivatives/options-trading/user-data-streams/Start-User-Data-Stream
 
                 Start a new user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active `listenKey`, that `listenKey` will be returned and its validity will be extended for 60 minutes.
 
@@ -119,6 +123,7 @@ class UserDataStreamsApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -127,6 +132,7 @@ class UserDataStreamsApi:
             method="POST",
             path="/eapi/v1/listenKey",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
         )

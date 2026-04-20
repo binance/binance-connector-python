@@ -82,6 +82,16 @@ from .deposit_history_v2_response_inner import (
 from .deposit_history_v2_response_inner_questionnaire import (
     DepositHistoryV2ResponseInnerQuestionnaire as DepositHistoryV2ResponseInnerQuestionnaire,
 )
+from .dust_convert_response import DustConvertResponse as DustConvertResponse
+from .dust_convert_response_transfer_result_inner import (
+    DustConvertResponseTransferResultInner as DustConvertResponseTransferResultInner,
+)
+from .dust_convertible_assets_response import (
+    DustConvertibleAssetsResponse as DustConvertibleAssetsResponse,
+)
+from .dust_convertible_assets_response_details_inner import (
+    DustConvertibleAssetsResponseDetailsInner as DustConvertibleAssetsResponseDetailsInner,
+)
 from .dust_transfer_response import DustTransferResponse as DustTransferResponse
 from .dust_transfer_response_transfer_result_inner import (
     DustTransferResponseTransferResultInner as DustTransferResponseTransferResultInner,
@@ -180,6 +190,9 @@ from .submit_deposit_questionnaire_response import (
 )
 from .submit_deposit_questionnaire_travel_rule_response import (
     SubmitDepositQuestionnaireTravelRuleResponse as SubmitDepositQuestionnaireTravelRuleResponse,
+)
+from .submit_deposit_questionnaire_v2_response import (
+    SubmitDepositQuestionnaireV2Response as SubmitDepositQuestionnaireV2Response,
 )
 from .system_status_response import SystemStatusResponse as SystemStatusResponse
 from .toggle_bnb_burn_on_spot_trade_and_margin_interest_response import (

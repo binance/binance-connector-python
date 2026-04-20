@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -30,8 +30,14 @@ class SubscribeEthStakingResponse(BaseModel):
     success: Optional[StrictBool] = None
     wbeth_amount: Optional[StrictStr] = Field(default=None, alias="wbethAmount")
     conversion_ratio: Optional[StrictStr] = Field(default=None, alias="conversionRatio")
+    purchase_id: Optional[StrictInt] = Field(default=None, alias="purchaseId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["success", "wbethAmount", "conversionRatio"]
+    __properties: ClassVar[List[str]] = [
+        "success",
+        "wbethAmount",
+        "conversionRatio",
+        "purchaseId",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,6 +106,7 @@ class SubscribeEthStakingResponse(BaseModel):
                 "success": obj.get("success"),
                 "wbethAmount": obj.get("wbethAmount"),
                 "conversionRatio": obj.get("conversionRatio"),
+                "purchaseId": obj.get("purchaseId"),
             }
         )
         # store additional fields in additional_properties

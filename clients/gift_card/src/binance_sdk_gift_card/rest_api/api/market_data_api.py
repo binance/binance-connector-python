@@ -91,6 +91,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'base_token_amount'",
             )
 
+        body = {}
         payload = {
             "base_token": base_token,
             "face_token": face_token,
@@ -104,6 +105,7 @@ class MarketDataApi:
             method="POST",
             path="/sapi/v1/giftcard/buyCode",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CreateADualTokenGiftCardResponse,
             is_signed=True,
@@ -154,6 +156,7 @@ class MarketDataApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"token": token, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -162,6 +165,7 @@ class MarketDataApi:
             method="POST",
             path="/sapi/v1/giftcard/createCode",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CreateASingleTokenGiftCardResponse,
             is_signed=True,
@@ -195,6 +199,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -203,6 +208,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/giftcard/cryptography/rsa-public-key",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchRsaPublicKeyResponse,
             is_signed=True,
@@ -241,6 +247,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'base_token'",
             )
 
+        body = {}
         payload = {"base_token": base_token, "recv_window": recv_window}
 
         return send_request(
@@ -249,6 +256,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/giftcard/buyCode/token-limit",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchTokenLimitResponse,
             is_signed=True,
@@ -298,6 +306,7 @@ class MarketDataApi:
                 field="code", error_message="Missing required parameter 'code'"
             )
 
+        body = {}
         payload = {
             "code": code,
             "external_uid": external_uid,
@@ -310,6 +319,7 @@ class MarketDataApi:
             method="POST",
             path="/sapi/v1/giftcard/redeemCode",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemABinanceGiftCardResponse,
             is_signed=True,
@@ -350,6 +360,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'reference_no'",
             )
 
+        body = {}
         payload = {"reference_no": reference_no, "recv_window": recv_window}
 
         return send_request(
@@ -358,6 +369,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/giftcard/verify",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=VerifyBinanceGiftCardByGiftCardNumberResponse,
             is_signed=True,

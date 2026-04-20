@@ -45,7 +45,7 @@ class MarketMakerEndpointsApi:
         """
                 Auto-Cancel All Open Orders (Kill-Switch) Heartbeat (TRADE)
                 POST /eapi/v1/countdownCancelAllHeartBeat
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Auto-Cancel-All-Open-Orders-Heartbeat
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Auto-Cancel-All-Open-Orders-Heartbeat
 
                 This endpoint resets the time from which the countdown will begin to the time this messaged is received.  It should be called repeatedly as heartbeats.  Multiple heartbeats can be updated at once by specifying the underlying symbols as a list (ex. BTCUSDT,ETHUSDT) in the underlyings parameter.
 
@@ -71,6 +71,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'underlyings'",
             )
 
+        body = {}
         payload = {"underlyings": underlyings, "recv_window": recv_window}
 
         return send_request(
@@ -79,6 +80,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/countdownCancelAllHeartBeat",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -93,7 +95,7 @@ class MarketMakerEndpointsApi:
         """
                 Get Auto-Cancel All Open Orders (Kill-Switch) Config (TRADE)
                 GET /eapi/v1/countdownCancelAll
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Get-Auto-Cancel-All-Open-Orders-Config
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Get-Auto-Cancel-All-Open-Orders-Config
 
                 This endpoint returns the auto-cancel parameters for each underlying symbol. Note only active auto-cancel parameters will be returned, if countdownTime is set to 0 (ie. countdownTime has been turned off), the underlying symbol and corresponding countdownTime parameter will not be returned in the response.
 
@@ -113,6 +115,7 @@ class MarketMakerEndpointsApi:
 
         """
 
+        body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -121,6 +124,7 @@ class MarketMakerEndpointsApi:
             method="GET",
             path="/eapi/v1/countdownCancelAll",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetAutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -135,7 +139,7 @@ class MarketMakerEndpointsApi:
         """
                 Get Market Maker Protection Config (TRADE)
                 GET /eapi/v1/mmp
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Get-Market-Maker-Protection-Config
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Get-Market-Maker-Protection-Config
 
                 Get config for MMP.
 
@@ -153,6 +157,7 @@ class MarketMakerEndpointsApi:
 
         """
 
+        body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -161,6 +166,7 @@ class MarketMakerEndpointsApi:
             method="GET",
             path="/eapi/v1/mmp",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarketMakerProtectionConfigResponse,
             is_signed=True,
@@ -175,7 +181,7 @@ class MarketMakerEndpointsApi:
         """
                 Reset Market Maker Protection Config (TRADE)
                 POST /eapi/v1/mmpReset
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Reset-Market-Maker-Protection-Config
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Reset-Market-Maker-Protection-Config
 
                 Reset MMP, start MMP order again.
 
@@ -193,6 +199,7 @@ class MarketMakerEndpointsApi:
 
         """
 
+        body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -201,6 +208,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/mmpReset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ResetMarketMakerProtectionConfigResponse,
             is_signed=True,
@@ -216,7 +224,7 @@ class MarketMakerEndpointsApi:
         """
                 Set Auto-Cancel All Open Orders (Kill-Switch) Config (TRADE)
                 POST /eapi/v1/countdownCancelAll
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Set-Auto-Cancel-All-Open-Orders-Config
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Set-Auto-Cancel-All-Open-Orders-Config
 
                 This endpoint sets the parameters of the auto-cancel feature which cancels all open orders (both market maker protection and non market maker protection order types) of the underlying symbol at the end of the specified countdown time period if no heartbeat message is sent.  After the countdown time period, all open orders will be cancelled and new orders will be rejected with error code -2010 until either a heartbeat message is sent or the auto-cancel feature is turned off by setting countdownTime to 0.
 
@@ -224,7 +232,7 @@ class MarketMakerEndpointsApi:
         * This rest endpoint sets up the parameters to cancel your open orders in case of an outage or disconnection.
         * Example usage:
         Call this endpoint with a countdownTime value of 10000 (10 seconds) to turn on the auto-cancel feature. If the corresponding countdownCancelAllHeartBeat endpoint is not called within 10 seconds with the specified underlying symbol, all open orders of the specified symbol will be automatically canceled. If this endpoint is called with an countdownTime of 0, the countdown timer will be stopped.
-        * The system will check all countdowns approximately every 1000 milliseconds, **please note that sufficient redundancy should be considered when using this function**. We do not recommend setting the countdown time to be too precise or too small.
+        * The system will check all countdowns approximately every 100 milliseconds, **please note that sufficient redundancy should be considered when using this function**. We do not recommend setting the countdown time to be too precise or too small.
 
         Weight: 1
 
@@ -252,6 +260,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'countdown_time'",
             )
 
+        body = {}
         payload = {
             "underlying": underlying,
             "countdown_time": countdown_time,
@@ -264,6 +273,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/countdownCancelAll",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetAutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -282,7 +292,7 @@ class MarketMakerEndpointsApi:
         """
                 Set Market Maker Protection Config (TRADE)
                 POST /eapi/v1/mmpSet
-                https://developers.binance.com/docs/derivatives/option/market-maker-endpoints/Set-Market-Maker-Protection-Config
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-endpoints/Set-Market-Maker-Protection-Config
 
                 Set config for MMP.
         Market Maker Protection(MMP) is a set of protection mechanism for option market maker, this mechanism is able to prevent mass trading in short period time. Once market maker's account branches the threshold, the Market Maker Protection will be triggered. When Market Maker Protection triggers, all the current MMP orders will be canceled, new MMP orders will be rejected. Market maker can use this time to reevaluate market and modify order price.
@@ -305,6 +315,7 @@ class MarketMakerEndpointsApi:
 
         """
 
+        body = {}
         payload = {
             "underlying": underlying,
             "window_time_in_milliseconds": window_time_in_milliseconds,
@@ -320,6 +331,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/mmpSet",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SetMarketMakerProtectionConfigResponse,
             is_signed=True,

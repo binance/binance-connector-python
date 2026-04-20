@@ -17,4 +17,3 @@ from .account_api import AccountApi as AccountApi
 from .general_api import GeneralApi as GeneralApi
 from .market_api import MarketApi as MarketApi
 from .trade_api import TradeApi as TradeApi
-from .user_data_stream_api import UserDataStreamApi as UserDataStreamApi

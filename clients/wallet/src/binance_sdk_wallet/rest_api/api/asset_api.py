@@ -18,6 +18,8 @@ from binance_common.utils import send_request
 
 from ..models import AssetDetailResponse
 from ..models import AssetDividendRecordResponse
+from ..models import DustConvertResponse
+from ..models import DustConvertibleAssetsResponse
 from ..models import DustTransferResponse
 from ..models import DustlogResponse
 from ..models import FundingWalletResponse
@@ -48,6 +50,7 @@ class AssetApi:
 
     def asset_detail(
         self,
+        asset: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[AssetDetailResponse]:
         """
@@ -63,6 +66,7 @@ class AssetApi:
         Weight: 1
 
                 Args:
+                    asset (Optional[str] = None): If asset is blank, then query all positive assets user have.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -73,7 +77,8 @@ class AssetApi:
 
         """
 
-        payload = {"recv_window": recv_window}
+        body = {}
+        payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
             self._session,
@@ -81,6 +86,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/assetDetail",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AssetDetailResponse,
             is_signed=True,
@@ -122,6 +128,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -136,8 +143,119 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/assetDividend",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AssetDividendRecordResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def dust_convert(
+        self,
+        asset: Union[str, None],
+        client_id: Optional[str] = None,
+        target_asset: Optional[str] = None,
+        third_party_client_id: Optional[str] = None,
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertResponse]:
+        """
+                Dust Convert (USER_DATA)
+                POST /sapi/v1/asset/dust-convert/convert
+                https://developers.binance.com/docs/wallet/asset/Dust-Convert
+
+                Convert dust assets
+
+        Weight: 10
+
+                Args:
+                    asset (Union[str, None]):
+                    client_id (Optional[str] = None): A unique id for the request
+                    target_asset (Optional[str] = None):
+                    third_party_client_id (Optional[str] = None):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if asset is None:
+            raise RequiredError(
+                field="asset", error_message="Missing required parameter 'asset'"
+            )
+
+        body = {}
+        payload = {
+            "asset": asset,
+            "client_id": client_id,
+            "target_asset": target_asset,
+            "third_party_client_id": third_party_client_id,
+            "dust_quota_asset_to_target_asset_price": dust_quota_asset_to_target_asset_price,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/asset/dust-convert/convert",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=DustConvertResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def dust_convertible_assets(
+        self,
+        target_asset: Union[str, None],
+        dust_quota_asset_to_target_asset_price: Optional[float] = None,
+    ) -> ApiResponse[DustConvertibleAssetsResponse]:
+        """
+                Dust Convertible Assets (USER_DATA)
+                POST /sapi/v1/asset/dust-convert/query-convertible-assets
+                https://developers.binance.com/docs/wallet/asset/Dust-Convertible-Assets
+
+                Query dust convertible assets
+
+        Weight: 1
+
+                Args:
+                    target_asset (Union[str, None]):
+                    dust_quota_asset_to_target_asset_price (Optional[float] = None):
+
+                Returns:
+                    ApiResponse[DustConvertibleAssetsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if target_asset is None:
+            raise RequiredError(
+                field="target_asset",
+                error_message="Missing required parameter 'target_asset'",
+            )
+
+        body = {}
+        payload = {
+            "target_asset": target_asset,
+            "dust_quota_asset_to_target_asset_price": dust_quota_asset_to_target_asset_price,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/asset/dust-convert/query-convertible-assets",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=DustConvertibleAssetsResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -177,6 +295,7 @@ class AssetApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "account_type": account_type,
@@ -189,6 +308,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DustTransferResponse,
             is_signed=True,
@@ -197,6 +317,7 @@ class AssetApi:
 
     def dustlog(
         self,
+        account_type: Optional[str] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -214,6 +335,7 @@ class AssetApi:
         Weight: 1
 
                 Args:
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -226,7 +348,9 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {
+            "account_type": account_type,
             "start_time": start_time,
             "end_time": end_time,
             "recv_window": recv_window,
@@ -238,6 +362,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/dribblet",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DustlogResponse,
             is_signed=True,
@@ -275,6 +400,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "need_btc_valuation": need_btc_valuation,
@@ -287,6 +413,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/get-funding-asset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FundingWalletResponse,
             is_signed=True,
@@ -319,6 +446,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {"account_type": account_type, "recv_window": recv_window}
 
         return send_request(
@@ -327,6 +455,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust-btc",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetAssetsThatCanBeConvertedIntoBnbResponse,
             is_signed=True,
@@ -382,6 +511,7 @@ class AssetApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -398,6 +528,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCloudMiningPaymentAndRefundHistoryResponse,
             is_signed=True,
@@ -426,6 +557,7 @@ class AssetApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -434,6 +566,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/spot/open-symbol-list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetOpenSymbolListResponse,
         )
@@ -455,8 +588,6 @@ class AssetApi:
                 https://developers.binance.com/docs/wallet/asset/query-user-delegation
 
                 Query User Delegation History
-
-        * You need to open Enable Spot & Margin Trading permission for the API Key which requests this endpoint
 
         Weight: 60
 
@@ -492,6 +623,7 @@ class AssetApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "start_time": start_time,
@@ -509,6 +641,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/custody/transfer-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserDelegationHistoryResponse,
             is_signed=True,
@@ -564,6 +697,7 @@ class AssetApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "type": type,
             "start_time": start_time,
@@ -581,6 +715,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserUniversalTransferHistoryResponse,
             is_signed=True,
@@ -613,6 +748,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {"quote_asset": quote_asset, "recv_window": recv_window}
 
         return send_request(
@@ -621,6 +757,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/wallet/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserWalletBalanceResponse,
             is_signed=True,
@@ -657,6 +794,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {
             "spot_bnb_burn": spot_bnb_burn,
             "interest_bnb_burn": interest_bnb_burn,
@@ -669,6 +807,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/bnbBurn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ToggleBnbBurnOnSpotTradeAndMarginInterestResponse,
             is_signed=True,
@@ -701,6 +840,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -709,6 +849,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/tradeFee",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TradeFeeResponse,
             is_signed=True,
@@ -746,6 +887,7 @@ class AssetApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "need_btc_valuation": need_btc_valuation,
@@ -758,6 +900,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v3/asset/getUserAsset",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UserAssetResponse,
             is_signed=True,
@@ -846,6 +989,7 @@ class AssetApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "type": type,
             "asset": asset,
@@ -861,6 +1005,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UserUniversalTransferResponse,
             is_signed=True,

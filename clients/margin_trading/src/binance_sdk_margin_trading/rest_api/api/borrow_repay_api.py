@@ -73,6 +73,7 @@ class BorrowRepayApi:
                 error_message="Missing required parameter 'is_isolated'",
             )
 
+        body = {}
         payload = {"assets": assets, "is_isolated": is_isolated}
 
         return send_request(
@@ -81,6 +82,7 @@ class BorrowRepayApi:
             method="GET",
             path="/sapi/v1/margin/next-hourly-interest-rate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFutureHourlyInterestRateResponse,
             is_signed=True,
@@ -122,7 +124,7 @@ class BorrowRepayApi:
                 Args:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -136,6 +138,7 @@ class BorrowRepayApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "isolated_symbol": isolated_symbol,
@@ -152,6 +155,7 @@ class BorrowRepayApi:
             method="GET",
             path="/sapi/v1/margin/interestHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetInterestHistoryResponse,
             is_signed=True,
@@ -214,6 +218,7 @@ class BorrowRepayApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "is_isolated": is_isolated,
@@ -229,6 +234,7 @@ class BorrowRepayApi:
             method="POST",
             path="/sapi/v1/margin/borrow-repay",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginAccountBorrowRepayResponse,
             is_signed=True,
@@ -266,7 +272,7 @@ class BorrowRepayApi:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
                     tx_id (Optional[int] = None): `tranId` in `POST /sapi/v1/margin/loan`
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -285,6 +291,7 @@ class BorrowRepayApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "type": type,
             "asset": asset,
@@ -303,6 +310,7 @@ class BorrowRepayApi:
             method="GET",
             path="/sapi/v1/margin/borrow-repay",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryBorrowRepayRecordsInMarginAccountResponse,
             is_signed=True,
@@ -329,7 +337,7 @@ class BorrowRepayApi:
                 Args:
                     asset (Union[str, None]):
                     vip_level (Optional[int] = None): User's current specific margin data will be returned if vipLevel is omitted
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -346,6 +354,7 @@ class BorrowRepayApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "vip_level": vip_level,
@@ -360,6 +369,7 @@ class BorrowRepayApi:
             method="GET",
             path="/sapi/v1/margin/interestRateHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginInterestRateHistoryResponse,
             is_signed=True,
@@ -402,6 +412,7 @@ class BorrowRepayApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "isolated_symbol": isolated_symbol,
@@ -414,6 +425,7 @@ class BorrowRepayApi:
             method="GET",
             path="/sapi/v1/margin/maxBorrowable",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMaxBorrowResponse,
             is_signed=True,

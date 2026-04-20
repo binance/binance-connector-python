@@ -22,7 +22,8 @@ from binance_common.websocket import (
 from .models import UserDataStreamEventsResponse
 
 
-from .streams.websocket_market_streams_api import WebsocketMarketStreamsApi
+from .streams.market_api import MarketApi
+from .streams.public_api import PublicApi
 
 
 T = TypeVar("T", bound=BaseModel)
@@ -33,10 +34,11 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
-        super().__init__(configuration)
+        super().__init__(configuration, url_paths=["market", "public", "private"])
         self.configuration = configuration
 
-        self._websocketMarketStreamsApi = WebsocketMarketStreamsApi(self)
+        self._marketApi = MarketApi(self)
+        self._publicApi = PublicApi(self)
 
     async def ping_server(self, connection: WebSocketConnection):
         """Sends a ping message to the WebSocket server to check the connection status.
@@ -50,7 +52,12 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         else:
             raise ValueError("WebSocket session is not initialized.")
 
-    async def subscribe(self, streams, response_model: Optional[T] = None):
+    async def subscribe(
+        self,
+        streams,
+        response_model: Optional[T] = None,
+        stream_url: Optional[str] = None,
+    ):
         """Subscribes to the specified WebSocket streams.
 
         Args:
@@ -58,7 +65,9 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
             response_model (Optional[T]): The Pydantic model to validate the response against.
         """
 
-        await super().subscribe(streams, response_model=response_model)
+        await super().subscribe(
+            streams, response_model=response_model, stream_url=stream_url
+        )
 
     async def unsubscribe(self, streams):
         """Unsubscribes from the specified WebSocket streams.
@@ -111,7 +120,10 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self, listenKey, response_model=UserDataStreamEventsResponse
+            self,
+            listenKey,
+            response_model=UserDataStreamEventsResponse,
+            stream_url="private",
         )
 
     async def aggregate_trade_streams(
@@ -123,6 +135,8 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
                 Aggregate Trade Streams
 
                 The Aggregate Trade Streams push market trade information that is aggregated for fills with same price and taking side every 100 milliseconds. Only market trades will be aggregated, which means the insurance fund trades and ADL trades won't be aggregated.
+
+        Retail Price Improvement(RPI) orders are aggregated into field `q` and without special tags to be distinguished.
 
         Update Speed: 100ms
 
@@ -138,31 +152,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.aggregate_trade_streams(symbol, id)
-
-    async def all_book_tickers_stream(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-                All Book Tickers Stream
-
-                Pushes any update to the best bid or ask's price or quantity in real-time for all symbols.
-
-        Update Speed: 5s
-
-                Args:
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    RequestStreamHandle
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._websocketMarketStreamsApi.all_book_tickers_stream(id)
+        return await self._marketApi.aggregate_trade_streams(symbol, id)
 
     async def all_market_liquidation_order_streams(
         self,
@@ -187,11 +177,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return (
-            await self._websocketMarketStreamsApi.all_market_liquidation_order_streams(
-                id
-            )
-        )
+        return await self._marketApi.all_market_liquidation_order_streams(id)
 
     async def all_market_mini_tickers_stream(
         self,
@@ -215,7 +201,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.all_market_mini_tickers_stream(id)
+        return await self._marketApi.all_market_mini_tickers_stream(id)
 
     async def all_market_tickers_streams(
         self,
@@ -239,7 +225,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.all_market_tickers_streams(id)
+        return await self._marketApi.all_market_tickers_streams(id)
 
     async def composite_index_symbol_information_streams(
         self,
@@ -265,7 +251,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.composite_index_symbol_information_streams(
+        return await self._marketApi.composite_index_symbol_information_streams(
             symbol, id
         )
 
@@ -296,7 +282,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.continuous_contract_kline_candlestick_streams(
+        return await self._marketApi.continuous_contract_kline_candlestick_streams(
             pair, contract_type, interval, id
         )
 
@@ -322,67 +308,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.contract_info_stream(id)
-
-    async def diff_book_depth_streams(
-        self,
-        symbol: Union[str, None],
-        id: Optional[str] = None,
-        update_speed: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-                Diff. Book Depth Streams
-
-                Bids and asks, pushed every 250 milliseconds, 500 milliseconds, 100 milliseconds (if existing)
-
-        Update Speed: 250ms, 500ms, 100ms
-
-                Args:
-                    symbol (Union[str, None]): The symbol parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
-                    update_speed (Optional[str] = None): WebSocket stream update speed
-
-                Returns:
-                    RequestStreamHandle
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._websocketMarketStreamsApi.diff_book_depth_streams(
-            symbol, id, update_speed
-        )
-
-    async def individual_symbol_book_ticker_streams(
-        self,
-        symbol: Union[str, None],
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-                Individual Symbol Book Ticker Streams
-
-                Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
-
-        Update Speed: Real-time
-
-                Args:
-                    symbol (Union[str, None]): The symbol parameter
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    RequestStreamHandle
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return (
-            await self._websocketMarketStreamsApi.individual_symbol_book_ticker_streams(
-                symbol, id
-            )
-        )
+        return await self._marketApi.contract_info_stream(id)
 
     async def individual_symbol_mini_ticker_stream(
         self,
@@ -408,11 +334,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return (
-            await self._websocketMarketStreamsApi.individual_symbol_mini_ticker_stream(
-                symbol, id
-            )
-        )
+        return await self._marketApi.individual_symbol_mini_ticker_stream(symbol, id)
 
     async def individual_symbol_ticker_streams(
         self,
@@ -438,9 +360,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.individual_symbol_ticker_streams(
-            symbol, id
-        )
+        return await self._marketApi.individual_symbol_ticker_streams(symbol, id)
 
     async def kline_candlestick_streams(
         self,
@@ -468,9 +388,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.kline_candlestick_streams(
-            symbol, interval, id
-        )
+        return await self._marketApi.kline_candlestick_streams(symbol, interval, id)
 
     async def liquidation_order_streams(
         self,
@@ -497,9 +415,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.liquidation_order_streams(
-            symbol, id
-        )
+        return await self._marketApi.liquidation_order_streams(symbol, id)
 
     async def mark_price_stream(
         self,
@@ -527,9 +443,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.mark_price_stream(
-            symbol, id, update_speed
-        )
+        return await self._marketApi.mark_price_stream(symbol, id, update_speed)
 
     async def mark_price_stream_for_all_market(
         self,
@@ -540,6 +454,10 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
                 Mark Price Stream for All market
 
                 Mark price and funding rate for all symbols pushed every 3 seconds or every second.
+
+        **Note**:
+
+        TradFi symbols will be pushed through a seperate message.
 
         Update Speed: 3000ms or 1000ms
 
@@ -555,9 +473,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.mark_price_stream_for_all_market(
-            id, update_speed
-        )
+        return await self._marketApi.mark_price_stream_for_all_market(id, update_speed)
 
     async def multi_assets_mode_asset_index(
         self,
@@ -581,7 +497,115 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.multi_assets_mode_asset_index(id)
+        return await self._marketApi.multi_assets_mode_asset_index(id)
+
+    async def trading_session_stream(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Trading Session Stream
+
+                Trading session information for the underlying assets of TradFi Perpetual contracts—covering the U.S. equity market and the commodity market—is updated every second. Trading session information for different underlying markets is pushed in separate messages. Session types for the equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING". Session types for the commodity market include "REGULAR" and "NO_TRADING".
+
+        Update Speed: 1s
+
+                Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._marketApi.trading_session_stream(id)
+
+    async def all_book_tickers_stream(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                All Book Tickers Stream
+
+                Pushes any update to the best bid or ask's price or quantity in real-time for all symbols.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
+        Update Speed: 5s
+
+                Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.all_book_tickers_stream(id)
+
+    async def diff_book_depth_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+        update_speed: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Diff. Book Depth Streams
+
+                Bids and asks, pushed every 250 milliseconds, 500 milliseconds, 100 milliseconds (if existing)
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
+        Update Speed: 250ms, 500ms, 100ms
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    update_speed (Optional[str] = None): WebSocket stream update speed
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.diff_book_depth_streams(symbol, id, update_speed)
+
+    async def individual_symbol_book_ticker_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Individual Symbol Book Ticker Streams
+
+                Pushes any update to the best bid or ask's price or quantity in real-time for a specified symbol.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
+
+        Update Speed: Real-time
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.individual_symbol_book_ticker_streams(symbol, id)
 
     async def partial_book_depth_streams(
         self,
@@ -594,6 +618,8 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
                 Partial Book Depth Streams
 
                 Top **<levels\>** bids and asks, Valid **<levels\>** are 5, 10, or 20.
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
 
         Update Speed: 250ms, 500ms or 100ms
 
@@ -611,6 +637,34 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._websocketMarketStreamsApi.partial_book_depth_streams(
+        return await self._publicApi.partial_book_depth_streams(
             symbol, levels, id, update_speed
         )
+
+    async def rpi_diff_book_depth_streams(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                RPI Diff. Book Depth Streams
+
+                Bids and asks including RPI orders, pushed every 500 milliseconds
+
+        RPI(Retail Price Improvement) orders are included and aggreated in the response message. When the quantity of a price level to be updated is equal to 0, it means either all quotations for this price have been filled/canceled, or the quantity of crossed RPI orders for this price are hidden
+
+        Update Speed: 500ms
+
+                Args:
+                    symbol (Union[str, None]): The symbol parameter
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._publicApi.rpi_diff_book_depth_streams(symbol, id)

@@ -50,11 +50,6 @@ class QueryOrderResponse(BaseModel):
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
     working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
     price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
-    price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
-    self_trade_prevention_mode: Optional[StrictStr] = Field(
-        default=None, alias="selfTradePreventionMode"
-    )
-    good_till_date: Optional[StrictInt] = Field(default=None, alias="goodTillDate")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "avgPrice",
@@ -80,9 +75,6 @@ class QueryOrderResponse(BaseModel):
         "updateTime",
         "workingType",
         "priceProtect",
-        "priceMatch",
-        "selfTradePreventionMode",
-        "goodTillDate",
     ]
 
     model_config = ConfigDict(
@@ -172,9 +164,6 @@ class QueryOrderResponse(BaseModel):
                 "updateTime": obj.get("updateTime"),
                 "workingType": obj.get("workingType"),
                 "priceProtect": obj.get("priceProtect"),
-                "priceMatch": obj.get("priceMatch"),
-                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
-                "goodTillDate": obj.get("goodTillDate"),
             }
         )
         # store additional fields in additional_properties

@@ -58,7 +58,12 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         else:
             raise ValueError("WebSocket session is not initialized.")
 
-    async def subscribe(self, streams, response_model: Optional[T] = None):
+    async def subscribe(
+        self,
+        streams,
+        response_model: Optional[T] = None,
+        stream_url: Optional[str] = None,
+    ):
         """Subscribes to the specified WebSocket streams.
 
         Args:
@@ -66,7 +71,9 @@ class SpotWebSocketStreams(WebSocketStreamBase):
             response_model (Optional[T]): The Pydantic model to validate the response against.
         """
 
-        await super().subscribe(streams, response_model=response_model)
+        await super().subscribe(
+            streams, response_model=response_model, stream_url=stream_url
+        )
 
     async def unsubscribe(self, streams):
         """Unsubscribes from the specified WebSocket streams.
@@ -181,28 +188,6 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         """
 
         return await self._webSocketStreamsApi.all_mini_ticker(id)
-
-    async def all_ticker(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-        WebSocket All Market Tickers Stream
-
-        24hr rolling window ticker statistics for all symbols that changed in an array. These are NOT the statistics of the UTC day, but a 24hr rolling window for the previous 24hrs. Note that only tickers that have changed will be present in the array.
-
-        Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
-
-        Returns:
-            RequestStreamHandle
-
-        Raises:
-            RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._webSocketStreamsApi.all_ticker(id)
 
     async def avg_price(
         self,
@@ -386,6 +371,30 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         return await self._webSocketStreamsApi.partial_book_depth(
             symbol, levels, id, update_speed
         )
+
+    async def reference_price(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Reference Price Streams
+
+
+
+        Args:
+            symbol (Union[str, None]): Symbol to query
+            id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._webSocketStreamsApi.reference_price(symbol, id)
 
     async def rolling_window_ticker(
         self,

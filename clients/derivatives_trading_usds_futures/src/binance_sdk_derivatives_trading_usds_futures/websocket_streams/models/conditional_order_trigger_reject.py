@@ -34,7 +34,7 @@ class ConditionalOrderTriggerReject(BaseModel):
     T: Optional[StrictInt] = Field(default=None, alias="T")
     var_or: Optional[ConditionalOrderTriggerRejectOr] = Field(default=None, alias="or")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "T", "var_or"]
+    __properties: ClassVar[List[str]] = ["E", "T", "or"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,7 +78,7 @@ class ConditionalOrderTriggerReject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of var_or
+        # override the default output from pydantic by calling `to_dict()` of or
         if self.var_or:
             _dict["or"] = self.var_or.to_dict()
         # puts key-value pairs in additional_properties in the top level

@@ -35,7 +35,7 @@ class GetOnChainYieldsLockedProductPositionResponseRowsInner(BaseModel):
     duration: Optional[StrictStr] = None
     accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
-    APY: Optional[StrictStr] = Field(default=None, alias="APY")
+    apy: Optional[StrictStr] = Field(default=None, alias="APY")
     reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
     next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
     next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")

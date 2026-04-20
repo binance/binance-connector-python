@@ -33,8 +33,8 @@ class PositionInformationV2ResponseResultInner(BaseModel):
     entry_price: Optional[StrictStr] = Field(default=None, alias="entryPrice")
     break_even_price: Optional[StrictStr] = Field(default=None, alias="breakEvenPrice")
     mark_price: Optional[StrictStr] = Field(default=None, alias="markPrice")
-    unrealized_profit: Optional[StrictStr] = Field(
-        default=None, alias="unrealizedProfit"
+    un_realized_profit: Optional[StrictStr] = Field(
+        default=None, alias="unRealizedProfit"
     )
     liquidation_price: Optional[StrictStr] = Field(
         default=None, alias="liquidationPrice"
@@ -63,7 +63,7 @@ class PositionInformationV2ResponseResultInner(BaseModel):
         "entryPrice",
         "breakEvenPrice",
         "markPrice",
-        "unrealizedProfit",
+        "unRealizedProfit",
         "liquidationPrice",
         "isolatedMargin",
         "notional",
@@ -149,7 +149,7 @@ class PositionInformationV2ResponseResultInner(BaseModel):
                 "entryPrice": obj.get("entryPrice"),
                 "breakEvenPrice": obj.get("breakEvenPrice"),
                 "markPrice": obj.get("markPrice"),
-                "unrealizedProfit": obj.get("unrealizedProfit"),
+                "unRealizedProfit": obj.get("unRealizedProfit"),
                 "liquidationPrice": obj.get("liquidationPrice"),
                 "isolatedMargin": obj.get("isolatedMargin"),
                 "notional": obj.get("notional"),

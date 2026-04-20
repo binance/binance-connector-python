@@ -21,14 +21,13 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import ConfigDict
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict
-from binance_sdk_spot.rest_api.models.ui_klines_item import UiKlinesItem
 from typing import Optional, Set, List
 from typing_extensions import Self
 
 
-class UiKlinesResponse(UiKlinesItem):
+class UiKlinesResponse(BaseModel):
     """
     UiKlinesResponse
     """  # noqa: E501

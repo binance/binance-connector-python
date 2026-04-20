@@ -26,7 +26,7 @@ def submit_deposit_questionnaire():
     try:
         response = client.rest_api.submit_deposit_questionnaire(
             sub_account_id="1",
-            deposit_id="1",
+            deposit_id=1,
             questionnaire="questionnaire_example",
             beneficiary_pii="beneficiary_pii_example",
             signature="signature_example",

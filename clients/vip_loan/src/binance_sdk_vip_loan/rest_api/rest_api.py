@@ -21,10 +21,12 @@ from .api.user_information_api import UserInformationApi
 from .models import GetBorrowInterestRateResponse
 from .models import GetCollateralAssetDataResponse
 from .models import GetLoanableAssetsDataResponse
+from .models import GetVIPLoanInterestRateHistoryResponse
 from .models import VipLoanBorrowResponse
 from .models import VipLoanRenewResponse
 from .models import VipLoanRepayResponse
 from .models import CheckVIPLoanCollateralAccountResponse
+from .models import GetVIPLoanAccruedInterestResponse
 from .models import GetVIPLoanOngoingOrdersResponse
 from .models import QueryApplicationStatusResponse
 
@@ -56,7 +58,11 @@ class VipLoanRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -64,25 +70,8 @@ class VipLoanRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -92,7 +81,36 @@ class VipLoanRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -179,6 +197,46 @@ class VipLoanRestAPI:
 
         return self._marketDataApi.get_loanable_assets_data(
             loan_coin, vip_level, recv_window
+        )
+
+    def get_vip_loan_interest_rate_history(
+        self,
+        coin: Union[str, None],
+        recv_window: Union[int, None],
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanInterestRateHistoryResponse]:
+        """
+                Get VIP Loan Interest Rate History (USER_DATA)
+
+                Check VIP Loan flexible interest rate history
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned
+        * The max interval between startTime and end Time is 180 days.
+        * Time based on UTC+0.
+
+        Weight: 400
+
+                Args:
+                    coin (Union[str, None]):
+                    recv_window (Union[int, None]):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+
+                Returns:
+                    ApiResponse[GetVIPLoanInterestRateHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_vip_loan_interest_rate_history(
+            coin, recv_window, start_time, end_time, current, limit
         )
 
     def vip_loan_borrow(
@@ -322,6 +380,47 @@ class VipLoanRestAPI:
             order_id, collateral_account_id, recv_window
         )
 
+    def get_vip_loan_accrued_interest(
+        self,
+        order_id: Optional[int] = None,
+        loan_coin: Optional[str] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        current: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetVIPLoanAccruedInterestResponse]:
+        """
+                Get VIP Loan Accrued Interest (USER_DATA)
+
+                Check VIP Loan interest record
+
+        * If startTime and endTime are not sent, the recent 90-day data will be returned.
+        * The max interval between startTime and endTime is 90 days.
+
+        Weight: 400
+
+                Args:
+                    order_id (Optional[int] = None):
+                    loan_coin (Optional[str] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetVIPLoanAccruedInterestResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._userInformationApi.get_vip_loan_accrued_interest(
+            order_id, loan_coin, start_time, end_time, current, limit, recv_window
+        )
+
     def get_vip_loan_ongoing_orders(
         self,
         order_id: Optional[int] = None,
@@ -344,8 +443,8 @@ class VipLoanRestAPI:
                     collateral_account_id (Optional[int] = None):
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -380,8 +479,8 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    current (Optional[int] = None): Currently querying page. Start from 1, Default:1, Max: 1000.
-                    limit (Optional[int] = None): Default: 10, Max: 100
+                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
                 Returns:

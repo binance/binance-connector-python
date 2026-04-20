@@ -33,6 +33,7 @@ class OldTradesLookupResponseInner(BaseModel):
     quote_qty: Optional[StrictStr] = Field(default=None, alias="quoteQty")
     time: Optional[StrictInt] = None
     is_buyer_maker: Optional[StrictBool] = Field(default=None, alias="isBuyerMaker")
+    is_rpi_trade: Optional[StrictBool] = Field(default=None, alias="isRPITrade")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",
@@ -41,6 +42,7 @@ class OldTradesLookupResponseInner(BaseModel):
         "quoteQty",
         "time",
         "isBuyerMaker",
+        "isRPITrade",
     ]
 
     model_config = ConfigDict(
@@ -113,6 +115,7 @@ class OldTradesLookupResponseInner(BaseModel):
                 "quoteQty": obj.get("quoteQty"),
                 "time": obj.get("time"),
                 "isBuyerMaker": obj.get("isBuyerMaker"),
+                "isRPITrade": obj.get("isRPITrade"),
             }
         )
         # store additional fields in additional_properties

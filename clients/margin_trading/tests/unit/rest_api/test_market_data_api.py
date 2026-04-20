@@ -32,6 +32,10 @@ from binance_sdk_margin_trading.rest_api.models import GetDelistScheduleResponse
 from binance_sdk_margin_trading.rest_api.models import GetLimitPricePairsResponse
 from binance_sdk_margin_trading.rest_api.models import GetListScheduleResponse
 from binance_sdk_margin_trading.rest_api.models import (
+    GetMarginAssetRiskBasedLiquidationRatioResponse,
+)
+from binance_sdk_margin_trading.rest_api.models import GetMarginRestrictedAssetsResponse
+from binance_sdk_margin_trading.rest_api.models import (
     QueryIsolatedMarginTierDataResponse,
 )
 from binance_sdk_margin_trading.rest_api.models import (
@@ -787,6 +791,116 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_list_schedule()
+
+    def test_get_margin_asset_risk_based_liquidation_ratio_success(self):
+        """Test get_margin_asset_risk_based_liquidation_ratio() successfully with required parameters only."""
+
+        expected_response = [
+            {"asset": "USDC", "riskBasedLiquidationRatio": "0.01"},
+            {"asset": "BUSD", "riskBasedLiquidationRatio": "0.01"},
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_margin_asset_risk_based_liquidation_ratio()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v1/margin/risk-based-liquidation-ratio" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetMarginAssetRiskBasedLiquidationRatioResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetMarginAssetRiskBasedLiquidationRatioResponse, "from_dict")
+        ):
+            expected = GetMarginAssetRiskBasedLiquidationRatioResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetMarginAssetRiskBasedLiquidationRatioResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_margin_asset_risk_based_liquidation_ratio_server_error(self):
+        """Test that get_margin_asset_risk_based_liquidation_ratio() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_margin_asset_risk_based_liquidation_ratio = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_margin_asset_risk_based_liquidation_ratio()
+
+    def test_get_margin_restricted_assets_success(self):
+        """Test get_margin_restricted_assets() successfully with required parameters only."""
+
+        expected_response = {
+            "openLongRestrictedAsset": ["ADA", "CHZ", "ETH", "LTC", "XRP", "币安人生"],
+            "maxCollateralExceededAsset": ["ACH", "BNB", "BTC", "USDT"],
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_margin_restricted_assets()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v1/margin/restricted-asset" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetMarginRestrictedAssetsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetMarginRestrictedAssetsResponse, "from_dict")
+        ):
+            expected = GetMarginRestrictedAssetsResponse.from_dict(expected_response)
+        else:
+            expected = GetMarginRestrictedAssetsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_margin_restricted_assets_server_error(self):
+        """Test that get_margin_restricted_assets() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_margin_restricted_assets = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_margin_restricted_assets()
 
     @patch("binance_common.utils.get_signature")
     def test_query_isolated_margin_tier_data_success(self, mock_get_signature):

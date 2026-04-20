@@ -58,6 +58,7 @@ from binance_sdk_margin_trading.rest_api.models import QueryMarginAccountsOrderR
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsTradeListResponse,
 )
+from binance_sdk_margin_trading.rest_api.models import QueryPreventedMatchesResponse
 from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyResponse
 from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyListResponse
 
@@ -4374,6 +4375,150 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.query_margin_accounts_trade_list(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_prevented_matches_success(self, mock_get_signature):
+        """Test query_prevented_matches() successfully with required parameters only."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        expected_response = [
+            {
+                "symbol": "BTCUSDT",
+                "preventedMatchId": 1,
+                "takerOrderId": 5,
+                "makerSymbol": "BTCUSDT",
+                "makerOrderId": 3,
+                "tradeGroupId": 1,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "price": "1.100000",
+                "makerPreventedQuantity": "1.300000",
+                "transactTime": 1669101687094,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_prevented_matches(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/margin/myPreventedMatches" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "symbol_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryPreventedMatchesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(QueryPreventedMatchesResponse, "from_dict"):
+            expected = QueryPreventedMatchesResponse.from_dict(expected_response)
+        else:
+            expected = QueryPreventedMatchesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_prevented_matches_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_prevented_matches() successfully with optional parameters."""
+
+        params = {
+            "symbol": "symbol_example",
+            "prevented_match_id": 1,
+            "order_id": 1,
+            "from_prevented_match_id": 1,
+            "recv_window": 5000,
+            "is_isolated": "False",
+        }
+
+        expected_response = [
+            {
+                "symbol": "BTCUSDT",
+                "preventedMatchId": 1,
+                "takerOrderId": 5,
+                "makerSymbol": "BTCUSDT",
+                "makerOrderId": 3,
+                "tradeGroupId": 1,
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "price": "1.100000",
+                "makerPreventedQuantity": "1.300000",
+                "transactTime": 1669101687094,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_prevented_matches(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/margin/myPreventedMatches" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryPreventedMatchesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(QueryPreventedMatchesResponse, "from_dict"):
+            expected = QueryPreventedMatchesResponse.from_dict(expected_response)
+        else:
+            expected = QueryPreventedMatchesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_query_prevented_matches_missing_required_param_symbol(self):
+        """Test that query_prevented_matches() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "symbol_example",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.query_prevented_matches(**params)
+
+    def test_query_prevented_matches_server_error(self):
+        """Test that query_prevented_matches() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.query_prevented_matches = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_prevented_matches(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_query_special_key_success(self, mock_get_signature):

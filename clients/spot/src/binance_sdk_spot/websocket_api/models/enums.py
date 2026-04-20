@@ -24,6 +24,22 @@ class ExchangeInfoSymbolStatusEnum(Enum):
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
+class ExecutionRulesSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class DepthSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class KlinesIntervalEnum(Enum):
     INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
@@ -41,6 +57,14 @@ class KlinesIntervalEnum(Enum):
     INTERVAL_3d = "3d"
     INTERVAL_1w = "1w"
     INTERVAL_1M = "1M"
+
+
+class ReferencePriceCalculationSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
 class TickerTypeEnum(Enum):
@@ -139,14 +163,54 @@ class TickerWindowSizeEnum(Enum):
     WINDOW_SIZE_6d = "6d"
 
 
+class TickerSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class Ticker24hrTypeEnum(Enum):
     FULL = "FULL"
     MINI = "MINI"
 
 
+class Ticker24hrSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class TickerBookSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class TickerPriceSymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
 class TickerTradingDayTypeEnum(Enum):
     FULL = "FULL"
     MINI = "MINI"
+
+
+class TickerTradingDaySymbolStatusEnum(Enum):
+    TRADING = "TRADING"
+    END_OF_DAY = "END_OF_DAY"
+    HALT = "HALT"
+    BREAK = "BREAK"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
 
 
 class UiKlinesIntervalEnum(Enum):
@@ -336,6 +400,170 @@ class OrderListPlaceOcoSelfTradePreventionModeEnum(Enum):
     EXPIRE_BOTH = "EXPIRE_BOTH"
     DECREMENT = "DECREMENT"
     NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderListPlaceOpoWorkingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListPlaceOpoWorkingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListPlaceOpoPendingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    MARKET = "MARKET"
+    STOP_LOSS = "STOP_LOSS"
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListPlaceOpoPendingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListPlaceOpoNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+    FULL = "FULL"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+
+
+class OrderListPlaceOpoSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    DECREMENT = "DECREMENT"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderListPlaceOpoWorkingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListPlaceOpoWorkingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListPlaceOpoWorkingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListPlaceOpoPendingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListPlaceOpoPendingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListPlaceOpoPendingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListPlaceOpocoWorkingTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    LIMIT_MAKER = "LIMIT_MAKER"
+
+
+class OrderListPlaceOpocoWorkingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListPlaceOpocoPendingSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class OrderListPlaceOpocoPendingAboveTypeEnum(Enum):
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    STOP_LOSS = "STOP_LOSS"
+    LIMIT_MAKER = "LIMIT_MAKER"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+
+
+class OrderListPlaceOpocoNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+    FULL = "FULL"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+
+
+class OrderListPlaceOpocoSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    DECREMENT = "DECREMENT"
+    NON_REPRESENTABLE = "NON_REPRESENTABLE"
+
+
+class OrderListPlaceOpocoWorkingTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListPlaceOpocoWorkingPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListPlaceOpocoWorkingPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListPlaceOpocoPendingAboveTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListPlaceOpocoPendingAbovePegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
+
+
+class OrderListPlaceOpocoPendingBelowTypeEnum(Enum):
+    STOP_LOSS = "STOP_LOSS"
+    STOP_LOSS_LIMIT = "STOP_LOSS_LIMIT"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_LIMIT = "TAKE_PROFIT_LIMIT"
+
+
+class OrderListPlaceOpocoPendingBelowTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+
+
+class OrderListPlaceOpocoPendingBelowPegPriceTypeEnum(Enum):
+    PRIMARY_PEG = "PRIMARY_PEG"
+    MARKET_PEG = "MARKET_PEG"
+
+
+class OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum(Enum):
+    PRICE_LEVEL = "PRICE_LEVEL"
 
 
 class OrderListPlaceOtoWorkingTypeEnum(Enum):

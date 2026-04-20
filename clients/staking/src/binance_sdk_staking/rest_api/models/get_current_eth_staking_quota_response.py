@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -33,10 +33,26 @@ class GetCurrentEthStakingQuotaResponse(BaseModel):
     left_redemption_personal_quota: Optional[StrictStr] = Field(
         default=None, alias="leftRedemptionPersonalQuota"
     )
+    min_stake_amount: Optional[StrictStr] = Field(default=None, alias="minStakeAmount")
+    min_redeem_amount: Optional[StrictStr] = Field(
+        default=None, alias="minRedeemAmount"
+    )
+    redeem_period: Optional[StrictInt] = Field(default=None, alias="redeemPeriod")
+    stakeable: Optional[StrictBool] = None
+    redeemable: Optional[StrictBool] = None
+    commission_fee: Optional[StrictStr] = Field(default=None, alias="commissionFee")
+    calculating: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "leftStakingPersonalQuota",
         "leftRedemptionPersonalQuota",
+        "minStakeAmount",
+        "minRedeemAmount",
+        "redeemPeriod",
+        "stakeable",
+        "redeemable",
+        "commissionFee",
+        "calculating",
     ]
 
     model_config = ConfigDict(
@@ -105,6 +121,13 @@ class GetCurrentEthStakingQuotaResponse(BaseModel):
             {
                 "leftStakingPersonalQuota": obj.get("leftStakingPersonalQuota"),
                 "leftRedemptionPersonalQuota": obj.get("leftRedemptionPersonalQuota"),
+                "minStakeAmount": obj.get("minStakeAmount"),
+                "minRedeemAmount": obj.get("minRedeemAmount"),
+                "redeemPeriod": obj.get("redeemPeriod"),
+                "stakeable": obj.get("stakeable"),
+                "redeemable": obj.get("redeemable"),
+                "commissionFee": obj.get("commissionFee"),
+                "calculating": obj.get("calculating"),
             }
         )
         # store additional fields in additional_properties

@@ -56,6 +56,7 @@ class FutureCopyTradingApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -64,6 +65,7 @@ class FutureCopyTradingApi:
             method="GET",
             path="/sapi/v1/copyTrading/futures/userStatus",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesLeadTraderStatusResponse,
             is_signed=True,
@@ -94,6 +96,7 @@ class FutureCopyTradingApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -102,6 +105,7 @@ class FutureCopyTradingApi:
             method="GET",
             path="/sapi/v1/copyTrading/futures/leadSymbol",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesLeadTradingSymbolWhitelistResponse,
             is_signed=True,

@@ -108,6 +108,7 @@ class AssetManagementApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "asset": asset,
@@ -122,6 +123,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/futures/transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesTransferForSubAccountResponse,
             is_signed=True,
@@ -159,6 +161,7 @@ class AssetManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -167,6 +170,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/futures/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDetailOnSubAccountsFuturesAccountResponse,
             is_signed=True,
@@ -211,6 +215,7 @@ class AssetManagementApi:
                 error_message="Missing required parameter 'futures_type'",
             )
 
+        body = {}
         payload = {
             "email": email,
             "futures_type": futures_type,
@@ -223,6 +228,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v2/sub-account/futures/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDetailOnSubAccountsFuturesAccountV2Response,
             is_signed=True,
@@ -260,6 +266,7 @@ class AssetManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -268,6 +275,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/margin/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDetailOnSubAccountsMarginAccountResponse,
             is_signed=True,
@@ -294,7 +302,7 @@ class AssetManagementApi:
         * If `startTime` is sent and `endTime` is not sent, return records of [max(startTime, now-90d), now].
         * If `startTime` is not sent and `endTime` is sent, return records of [max(now,endTime-90d), endTime].
 
-        Weight: 150
+        Weight: 1
 
                 Args:
                     symbol (Union[str, None]):
@@ -325,6 +333,7 @@ class AssetManagementApi:
                 field="row", error_message="Missing required parameter 'row'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "page": page,
@@ -340,6 +349,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/futures/move-position",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetMovePositionHistoryForSubAccountResponse,
             is_signed=True,
@@ -389,6 +399,7 @@ class AssetManagementApi:
                 field="coin", error_message="Missing required parameter 'coin'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "coin": coin,
@@ -403,6 +414,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/capital/deposit/subAddress",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSubAccountDepositAddressResponse,
             is_signed=True,
@@ -454,6 +466,7 @@ class AssetManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "coin": coin,
@@ -472,6 +485,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/capital/deposit/subHisrec",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSubAccountDepositHistoryResponse,
             is_signed=True,
@@ -480,6 +494,8 @@ class AssetManagementApi:
 
     def get_summary_of_sub_accounts_futures_account(
         self,
+        page: Union[int, None],
+        limit: Union[int, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetSummaryOfSubAccountsFuturesAccountResponse]:
         """
@@ -492,6 +508,8 @@ class AssetManagementApi:
         Weight: 1
 
                 Args:
+                    page (Union[int, None]): Page
+                    limit (Union[int, None]): Limit (Max: 500)
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -502,7 +520,17 @@ class AssetManagementApi:
 
         """
 
-        payload = {"recv_window": recv_window}
+        if page is None:
+            raise RequiredError(
+                field="page", error_message="Missing required parameter 'page'"
+            )
+        if limit is None:
+            raise RequiredError(
+                field="limit", error_message="Missing required parameter 'limit'"
+            )
+
+        body = {}
+        payload = {"page": page, "limit": limit, "recv_window": recv_window}
 
         return send_request(
             self._session,
@@ -510,6 +538,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/futures/accountSummary",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSummaryOfSubAccountsFuturesAccountResponse,
             is_signed=True,
@@ -552,6 +581,7 @@ class AssetManagementApi:
                 error_message="Missing required parameter 'futures_type'",
             )
 
+        body = {}
         payload = {
             "futures_type": futures_type,
             "page": page,
@@ -565,6 +595,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v2/sub-account/futures/accountSummary",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSummaryOfSubAccountsFuturesAccountV2Response,
             is_signed=True,
@@ -595,6 +626,7 @@ class AssetManagementApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -603,6 +635,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/margin/accountSummary",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetSummaryOfSubAccountsMarginAccountResponse,
             is_signed=True,
@@ -660,6 +693,7 @@ class AssetManagementApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "asset": asset,
@@ -674,6 +708,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/margin/transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginTransferForSubAccountResponse,
             is_signed=True,
@@ -699,7 +734,7 @@ class AssetManagementApi:
         * This function only support VIP level 7-9.
         * Only master account can use the function
         * Quantity should be positive number only
-        * The function support normal account, PM PRO and PM PRO SPAN.
+        * The function support normal account, PM PRO, PM PRO SPAN and PM Retail.
         * Only support for from account has positions
         * For all orders in the same orderArgs request, if any symbol’s total close position quantity is bigger than the symbol’s current position quantity, all batch orders in the same list will fail simultaneously.
         * Only support cross margin mode
@@ -707,7 +742,7 @@ class AssetManagementApi:
         * Not support for MSA.
         * Not support for the symbol under Reduce-Only.
 
-        Weight: 150
+        Weight: 1
 
                 Args:
                     from_user_email (Union[str, None]):
@@ -745,6 +780,7 @@ class AssetManagementApi:
                 error_message="Missing required parameter 'order_args'",
             )
 
+        body = {}
         payload = {
             "from_user_email": from_user_email,
             "to_user_email": to_user_email,
@@ -759,6 +795,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/futures/move-position",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MovePositionForSubAccountResponse,
             is_signed=True,
@@ -796,6 +833,7 @@ class AssetManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -804,6 +842,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v3/sub-account/assets",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountAssetsResponse,
             is_signed=True,
@@ -841,6 +880,7 @@ class AssetManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
+        body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -849,6 +889,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v4/sub-account/assets",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountAssetsAssetManagementResponse,
             is_signed=True,
@@ -901,6 +942,7 @@ class AssetManagementApi:
                 error_message="Missing required parameter 'futures_type'",
             )
 
+        body = {}
         payload = {
             "email": email,
             "futures_type": futures_type,
@@ -917,6 +959,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/futures/internalTransfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountFuturesAssetTransferHistoryResponse,
             is_signed=True,
@@ -962,6 +1005,7 @@ class AssetManagementApi:
 
         """
 
+        body = {}
         payload = {
             "from_email": from_email,
             "to_email": to_email,
@@ -978,6 +1022,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/sub/transfer/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountSpotAssetTransferHistoryResponse,
             is_signed=True,
@@ -1014,6 +1059,7 @@ class AssetManagementApi:
 
         """
 
+        body = {}
         payload = {
             "email": email,
             "page": page,
@@ -1027,6 +1073,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/spotSummary",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountSpotAssetsSummaryResponse,
             is_signed=True,
@@ -1076,6 +1123,7 @@ class AssetManagementApi:
 
         """
 
+        body = {}
         payload = {
             "from_email": from_email,
             "to_email": to_email,
@@ -1093,6 +1141,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/universalTransfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUniversalTransferHistoryResponse,
             is_signed=True,
@@ -1160,6 +1209,7 @@ class AssetManagementApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "from_email": from_email,
             "to_email": to_email,
@@ -1175,6 +1225,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/futures/internalTransfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubAccountFuturesAssetTransferResponse,
             is_signed=True,
@@ -1220,6 +1271,7 @@ class AssetManagementApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "type": type,
@@ -1236,6 +1288,7 @@ class AssetManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/transfer/subUserHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubAccountTransferHistoryResponse,
             is_signed=True,
@@ -1281,6 +1334,7 @@ class AssetManagementApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"asset": asset, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -1289,6 +1343,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/transfer/subToMaster",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TransferToMasterResponse,
             is_signed=True,
@@ -1340,6 +1395,7 @@ class AssetManagementApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "to_email": to_email,
             "asset": asset,
@@ -1353,6 +1409,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/transfer/subToSub",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TransferToSubAccountOfSameMasterResponse,
             is_signed=True,
@@ -1430,6 +1487,7 @@ class AssetManagementApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "from_account_type": from_account_type,
             "to_account_type": to_account_type,
@@ -1448,6 +1506,7 @@ class AssetManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/universalTransfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UniversalTransferResponse,
             is_signed=True,

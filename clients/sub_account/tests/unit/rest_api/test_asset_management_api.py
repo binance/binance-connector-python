@@ -1535,6 +1535,11 @@ class TestAssetManagementApi:
     ):
         """Test get_summary_of_sub_accounts_futures_account() successfully with required parameters only."""
 
+        params = {
+            "page": 56,
+            "limit": 56,
+        }
+
         expected_response = {
             "totalInitialMargin": "9.83137400",
             "totalMaintenanceMargin": "0.41568700",
@@ -1572,10 +1577,13 @@ class TestAssetManagementApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.get_summary_of_sub_accounts_futures_account()
+        response = self.client.get_summary_of_sub_accounts_futures_account(**params)
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -1584,6 +1592,8 @@ class TestAssetManagementApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/sub-account/futures/accountSummary" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
+        assert normalized["page"] == 56
+        assert normalized["limit"] == 56
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -1617,7 +1627,7 @@ class TestAssetManagementApi:
     ):
         """Test get_summary_of_sub_accounts_futures_account() successfully with optional parameters."""
 
-        params = {"recv_window": 5000}
+        params = {"page": 56, "limit": 56, "recv_window": 5000}
 
         expected_response = {
             "totalInitialMargin": "9.83137400",
@@ -1693,8 +1703,39 @@ class TestAssetManagementApi:
 
         assert response.data() == expected
 
+    def test_get_summary_of_sub_accounts_futures_account_missing_required_param_page(
+        self,
+    ):
+        """Test that get_summary_of_sub_accounts_futures_account() raises RequiredError when 'page' is missing."""
+        params = {
+            "page": 56,
+            "limit": 56,
+        }
+        params["page"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
+            self.client.get_summary_of_sub_accounts_futures_account(**params)
+
+    def test_get_summary_of_sub_accounts_futures_account_missing_required_param_limit(
+        self,
+    ):
+        """Test that get_summary_of_sub_accounts_futures_account() raises RequiredError when 'limit' is missing."""
+        params = {
+            "page": 56,
+            "limit": 56,
+        }
+        params["limit"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
+            self.client.get_summary_of_sub_accounts_futures_account(**params)
+
     def test_get_summary_of_sub_accounts_futures_account_server_error(self):
         """Test that get_summary_of_sub_accounts_futures_account() raises an error when the server returns an error."""
+
+        params = {
+            "page": 56,
+            "limit": 56,
+        }
 
         mock_error = Exception("ResponseError")
         self.client.get_summary_of_sub_accounts_futures_account = MagicMock(
@@ -1702,7 +1743,7 @@ class TestAssetManagementApi:
         )
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.get_summary_of_sub_accounts_futures_account()
+            self.client.get_summary_of_sub_accounts_futures_account(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_get_summary_of_sub_accounts_futures_account_v2_success(

@@ -99,6 +99,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -107,6 +108,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountBalanceResponse,
             is_signed=True,
@@ -137,6 +139,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -145,6 +148,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountInformationResponse,
             is_signed=True,
@@ -191,6 +195,7 @@ class AccountApi:
                 error_message="Missing required parameter 'transfer_side'",
             )
 
+        body = {}
         payload = {
             "amount": amount,
             "transfer_side": transfer_side,
@@ -203,6 +208,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/bnb-transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=BnbTransferResponse,
             is_signed=True,
@@ -241,6 +247,7 @@ class AccountApi:
                 error_message="Missing required parameter 'auto_repay'",
             )
 
+        body = {}
         payload = {"auto_repay": auto_repay, "recv_window": recv_window}
 
         return send_request(
@@ -249,6 +256,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/repay-futures-switch",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoRepayFuturesStatusResponse,
             is_signed=True,
@@ -292,6 +300,7 @@ class AccountApi:
                 field="leverage", error_message="Missing required parameter 'leverage'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "leverage": leverage, "recv_window": recv_window}
 
         return send_request(
@@ -300,6 +309,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/cm/leverage",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeCmInitialLeverageResponse,
             is_signed=True,
@@ -338,6 +348,7 @@ class AccountApi:
                 error_message="Missing required parameter 'dual_side_position'",
             )
 
+        body = {}
         payload = {"dual_side_position": dual_side_position, "recv_window": recv_window}
 
         return send_request(
@@ -346,6 +357,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/cm/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeCmPositionModeResponse,
             is_signed=True,
@@ -389,6 +401,7 @@ class AccountApi:
                 field="leverage", error_message="Missing required parameter 'leverage'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "leverage": leverage, "recv_window": recv_window}
 
         return send_request(
@@ -397,6 +410,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/um/leverage",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeUmInitialLeverageResponse,
             is_signed=True,
@@ -435,6 +449,7 @@ class AccountApi:
                 error_message="Missing required parameter 'dual_side_position'",
             )
 
+        body = {}
         payload = {"dual_side_position": dual_side_position, "recv_window": recv_window}
 
         return send_request(
@@ -443,6 +458,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/um/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeUmPositionModeResponse,
             is_signed=True,
@@ -475,6 +491,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -483,6 +500,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/leverageBracket",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CmNotionalAndLeverageBracketsResponse,
             is_signed=True,
@@ -516,6 +534,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -524,6 +543,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/auto-collection",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FundAutoCollectionResponse,
             is_signed=True,
@@ -563,6 +583,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -571,6 +592,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/asset-collection",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FundCollectionByAssetResponse,
             is_signed=True,
@@ -601,6 +623,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -609,6 +632,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/repay-futures-switch",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetAutoRepayFuturesStatusResponse,
             is_signed=True,
@@ -639,6 +663,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -647,6 +672,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCmAccountDetailResponse,
             is_signed=True,
@@ -677,6 +703,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -685,6 +712,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCmCurrentPositionModeResponse,
             is_signed=True,
@@ -733,6 +761,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "income_type": income_type,
@@ -749,6 +778,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/income",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCmIncomeHistoryResponse,
             is_signed=True,
@@ -796,6 +826,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -808,6 +839,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/order/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForUmFuturesOrderHistoryResponse,
             is_signed=True,
@@ -855,6 +887,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -867,6 +900,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/trade/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForUmFuturesTradeHistoryResponse,
             is_signed=True,
@@ -914,6 +948,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -926,6 +961,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/income/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForUmFuturesTransactionHistoryResponse,
             is_signed=True,
@@ -981,6 +1017,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -997,6 +1034,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/margin/marginInterestHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarginBorrowLoanInterestHistoryResponse,
             is_signed=True,
@@ -1027,6 +1065,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1035,6 +1074,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmAccountDetailResponse,
             is_signed=True,
@@ -1065,6 +1105,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1073,6 +1114,7 @@ class AccountApi:
             method="GET",
             path="/papi/v2/um/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmAccountDetailV2Response,
             is_signed=True,
@@ -1103,6 +1145,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1111,6 +1154,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmCurrentPositionModeResponse,
             is_signed=True,
@@ -1151,6 +1195,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -1159,6 +1204,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/order/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmFuturesOrderDownloadLinkByIdResponse,
             is_signed=True,
@@ -1199,6 +1245,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -1207,6 +1254,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/trade/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmFuturesTradeDownloadLinkByIdResponse,
             is_signed=True,
@@ -1247,6 +1295,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -1255,6 +1304,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/income/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmFuturesTransactionDownloadLinkByIdResponse,
             is_signed=True,
@@ -1302,6 +1352,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "income_type": income_type,
@@ -1318,6 +1369,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/income",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUmIncomeHistoryResponse,
             is_signed=True,
@@ -1355,6 +1407,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1363,6 +1416,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/commissionRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUserCommissionRateForCmResponse,
             is_signed=True,
@@ -1400,6 +1454,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1408,6 +1463,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/commissionRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetUserCommissionRateForUmResponse,
             is_signed=True,
@@ -1445,6 +1501,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -1453,6 +1510,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/margin/maxBorrowable",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarginMaxBorrowResponse,
             is_signed=True,
@@ -1486,6 +1544,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1494,6 +1553,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/apiTradingStatus",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PortfolioMarginUmTradingQuantitativeRulesIndicatorsResponse,
             is_signed=True,
@@ -1533,6 +1593,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "margin_asset": margin_asset,
             "pair": pair,
@@ -1545,6 +1606,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/cm/positionRisk",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCmPositionInformationResponse,
             is_signed=True,
@@ -1600,6 +1662,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "tx_id": tx_id,
@@ -1617,6 +1680,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/margin/marginLoan",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginLoanRecordResponse,
             is_signed=True,
@@ -1654,6 +1718,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -1662,6 +1727,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/margin/maxWithdraw",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginMaxWithdrawResponse,
             is_signed=True,
@@ -1717,6 +1783,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "tx_id": tx_id,
@@ -1734,6 +1801,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/margin/repayLoan",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginRepayRecordResponse,
             is_signed=True,
@@ -1778,6 +1846,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -1792,6 +1861,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/portfolio/interest-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginNegativeBalanceInterestHistoryResponse,
             is_signed=True,
@@ -1828,6 +1898,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1836,6 +1907,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/positionRisk",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUmPositionInformationResponse,
             is_signed=True,
@@ -1883,6 +1955,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -1895,6 +1968,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/portfolio/negative-balance-exchange-record",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserNegativeBalanceAutoExchangeRecordResponse,
             is_signed=True,
@@ -1925,6 +1999,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1933,6 +2008,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/rateLimit/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserRateLimitResponse,
             is_signed=True,
@@ -1963,6 +2039,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -1971,6 +2048,7 @@ class AccountApi:
             method="POST",
             path="/papi/v1/repay-futures-negative-balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RepayFuturesNegativeBalanceResponse,
             is_signed=True,
@@ -2001,6 +2079,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -2009,6 +2088,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/accountConfig",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UmFuturesAccountConfigurationResponse,
             is_signed=True,
@@ -2041,6 +2121,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2049,6 +2130,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/symbolConfig",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UmFuturesSymbolConfigurationResponse,
             is_signed=True,
@@ -2081,6 +2163,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -2089,6 +2172,7 @@ class AccountApi:
             method="GET",
             path="/papi/v1/um/leverageBracket",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UmNotionalAndLeverageBracketsResponse,
             is_signed=True,

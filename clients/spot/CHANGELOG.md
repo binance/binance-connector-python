@@ -1,5 +1,166 @@
 # Changelog
 
+## 8.1.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 8.0.0 - 2026-03-16
+
+### Added (7)
+
+#### REST API
+
+- `execution_rules()` (`GET /api/v3/executionRules`)
+- `reference_price()` (`GET /api/v3/referencePrice`)
+- `reference_price_calculation()` (`GET /api/v3/referencePrice/calculation`)
+
+#### WebSocket API
+
+- `execution_rules()` (`executionRules` method)
+- `reference_price()` (`referencePrice` method)
+- `reference_price_calculation()` (`referencePrice.calculation` method)
+
+#### WebSocket Streams
+
+- `reference_price()` (`<symbol>@referencePrice` stream)
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 7.2.0 - 2026-02-25
+
+### Changed (2)
+
+#### REST API
+
+- Updated following response models to remove unused struct:
+  - `KlinesResponse`
+  - `UiKlinesResponse`
+
+#### WebSocket API
+
+- Fixed error in `KlinesResponse` and `UiKlinesResponse` models by removing `KlinesItemInner` struct.
+
+## 7.1.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 7.0.0 - 2026-01-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### WebSocket API
+
+- Added parameter `recvWindow`
+  - affected methods:
+    - `user_data_stream_subscribe_signature()` (`userDataStream.subscribe.signature` method)
+
+## 6.3.0 - 2026-01-23
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.1`
+
+## 6.2.0 - 2026-01-19
+
+### Changed (1)
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
+## 6.1.0 - 2025-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+## 6.0.0 - 2025-12-22
+
+### Added (5)
+
+#### REST API
+
+- `order_list_opo()` (`POST /api/v3/orderList/opo`)
+- `order_list_opoco()` (`POST /api/v3/orderList/opoco`)
+
+#### WebSocket API
+
+- `order_list_place_opo()` (`orderList.place.opo` method)
+- `order_list_place_opoco()` (`orderList.place.opoco` method)
+- `order_amend_keep_priority()` (`order.amend.keepPriority` method)
+
+### Changed (4)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- Modified response for `exchange_info()` (`GET /api/v3/exchangeInfo`):
+  - `symbols`.items: property `opoAllowed` added
+  - `symbols`.items: item property `opoAllowed` added
+
+#### WebSocket API
+
+- Modified response for `exchange_info()` (`exchangeInfo` method):
+  - `result`.`symbols`.items: property `opoAllowed` added
+  - `result`.`symbols`.items: item property `opoAllowed` added
+
+### Removed (1)
+
+#### WebSocket Streams
+
+- `/!ticker@arr()` (`!ticker@arr` stream)
+
+## 5.0.0 - 2025-11-24
+
+### Changed (1)
+
+#### WebSocket Streams
+
+- Marked `all_ticker()` (`!ticker@arr` stream) as deprecated.
+
+## 4.0.0 - 2025-11-14
+
+### Changed (2)
+
+#### REST API
+
+- Added parameter `symbolStatus`
+  - affected methods:
+    - `depth()` (`GET /api/v3/depth`)
+    - `ticker()` (`GET /api/v3/ticker`)
+    - `ticker24hr()` (`GET /api/v3/ticker/24hr`)
+    - `ticker_book_ticker()` (`GET /api/v3/ticker/bookTicker`)
+    - `ticker_price()` (`GET /api/v3/ticker/price`)
+    - `ticker_trading_day()` (`GET /api/v3/ticker/tradingDay`)
+
+#### WebSocket API
+
+- Added parameter `symbolStatus`
+  - affected methods:
+    - `depth()` (`depth` method)
+    - `ticker()` (`ticker` method)
+    - `ticker24hr()` (`ticker.24hr` method)
+    - `ticker_book()` (`ticker.book` method)
+    - `ticker_price()` (`ticker.price` method)
+    - `ticker_trading_day()` (`ticker.tradingDay` method)
+- Marked `order_oco` (`POST /api/v3/order/oco`) as deprecated.
+
+- Marked `order_list_place` (`orderList.place` method) as deprecated.
+
 ## 3.0.0 - 2025-10-10
 
 ### Added (2)

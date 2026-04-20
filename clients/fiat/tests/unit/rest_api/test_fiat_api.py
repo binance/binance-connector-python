@@ -20,8 +20,11 @@ from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_fiat.rest_api.api import FiatApi
+from binance_sdk_fiat.rest_api.models import DepositResponse
+from binance_sdk_fiat.rest_api.models import FiatWithdrawResponse
 from binance_sdk_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
 from binance_sdk_fiat.rest_api.models import GetFiatPaymentsHistoryResponse
+from binance_sdk_fiat.rest_api.models import GetOrderDetailResponse
 
 
 class TestFiatApi:
@@ -47,6 +50,345 @@ class TestFiatApi:
         mock_response.headers = headers
 
         self.mock_session.request.return_value = mock_response
+
+    @patch("binance_common.utils.get_signature")
+    def test_deposit_success(self, mock_get_signature):
+        """Test deposit() successfully with required parameters only."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+        }
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {"orderId": "04595xxxxxxxxx37"},
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.deposit(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/fiat/deposit" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["currency"] == "currency_example"
+        assert normalized["apiPaymentMethod"] == "api_payment_method_example"
+        assert normalized["amount"] == 56
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DepositResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DepositResponse, "from_dict"):
+            expected = DepositResponse.from_dict(expected_response)
+        else:
+            expected = DepositResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_deposit_success_with_optional_params(self, mock_get_signature):
+        """Test deposit() successfully with optional parameters."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "recv_window": 5000,
+            "ext": None,
+        }
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {"orderId": "04595xxxxxxxxx37"},
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.deposit(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/fiat/deposit" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DepositResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DepositResponse, "from_dict"):
+            expected = DepositResponse.from_dict(expected_response)
+        else:
+            expected = DepositResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_deposit_missing_required_param_currency(self):
+        """Test that deposit() raises RequiredError when 'currency' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+        }
+        params["currency"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'currency'"
+        ):
+            self.client.deposit(**params)
+
+    def test_deposit_missing_required_param_api_payment_method(self):
+        """Test that deposit() raises RequiredError when 'api_payment_method' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+        }
+        params["api_payment_method"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'api_payment_method'"
+        ):
+            self.client.deposit(**params)
+
+    def test_deposit_missing_required_param_amount(self):
+        """Test that deposit() raises RequiredError when 'amount' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+        }
+        params["amount"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
+            self.client.deposit(**params)
+
+    def test_deposit_server_error(self):
+        """Test that deposit() raises an error when the server returns an error."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.deposit = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.deposit(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_fiat_withdraw_success(self, mock_get_signature):
+        """Test fiat_withdraw() successfully with required parameters only."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {"orderId": "04595xxxxxxxxx37"},
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.fiat_withdraw(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/fiat/withdraw" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["currency"] == "currency_example"
+        assert normalized["apiPaymentMethod"] == "api_payment_method_example"
+        assert normalized["amount"] == 56
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FiatWithdrawResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(FiatWithdrawResponse, "from_dict"):
+            expected = FiatWithdrawResponse.from_dict(expected_response)
+        else:
+            expected = FiatWithdrawResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_fiat_withdraw_success_with_optional_params(self, mock_get_signature):
+        """Test fiat_withdraw() successfully with optional parameters."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+            "recv_window": 5000,
+            "ext": None,
+        }
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {"orderId": "04595xxxxxxxxx37"},
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.fiat_withdraw(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/fiat/withdraw" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FiatWithdrawResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(FiatWithdrawResponse, "from_dict"):
+            expected = FiatWithdrawResponse.from_dict(expected_response)
+        else:
+            expected = FiatWithdrawResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_fiat_withdraw_missing_required_param_currency(self):
+        """Test that fiat_withdraw() raises RequiredError when 'currency' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+        params["currency"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'currency'"
+        ):
+            self.client.fiat_withdraw(**params)
+
+    def test_fiat_withdraw_missing_required_param_api_payment_method(self):
+        """Test that fiat_withdraw() raises RequiredError when 'api_payment_method' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+        params["api_payment_method"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'api_payment_method'"
+        ):
+            self.client.fiat_withdraw(**params)
+
+    def test_fiat_withdraw_missing_required_param_amount(self):
+        """Test that fiat_withdraw() raises RequiredError when 'amount' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+        params["amount"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
+            self.client.fiat_withdraw(**params)
+
+    def test_fiat_withdraw_missing_required_param_account_info(self):
+        """Test that fiat_withdraw() raises RequiredError when 'account_info' is missing."""
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+        params["account_info"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'account_info'"
+        ):
+            self.client.fiat_withdraw(**params)
+
+    def test_fiat_withdraw_server_error(self):
+        """Test that fiat_withdraw() raises an error when the server returns an error."""
+
+        params = {
+            "currency": "currency_example",
+            "api_payment_method": "api_payment_method_example",
+            "amount": 56,
+            "account_info": (),
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.fiat_withdraw = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.fiat_withdraw(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_get_fiat_deposit_withdraw_history_success(self, mock_get_signature):
@@ -383,3 +725,140 @@ class TestFiatApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_fiat_payments_history(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_order_detail_success(self, mock_get_signature):
+        """Test get_order_detail() successfully with required parameters only."""
+
+        params = {
+            "order_no": "order_no_example",
+        }
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {
+                "orderId": "036752*678",
+                "orderStatus": "ORDER_INITIAL",
+                "amount": "4.33",
+                "fee": "0.43",
+                "fiatCurrency": "***",
+                "errorCode": "",
+                "errorMessage": "",
+                "ext": {},
+            },
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_order_detail(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/fiat/get-order-detail" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["orderNo"] == "order_no_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetOrderDetailResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetOrderDetailResponse, "from_dict"):
+            expected = GetOrderDetailResponse.from_dict(expected_response)
+        else:
+            expected = GetOrderDetailResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_order_detail_success_with_optional_params(self, mock_get_signature):
+        """Test get_order_detail() successfully with optional parameters."""
+
+        params = {"order_no": "order_no_example", "recv_window": 5000}
+
+        expected_response = {
+            "code": "000000",
+            "message": "success",
+            "data": {
+                "orderId": "036752*678",
+                "orderStatus": "ORDER_INITIAL",
+                "amount": "4.33",
+                "fee": "0.43",
+                "fiatCurrency": "***",
+                "errorCode": "",
+                "errorMessage": "",
+                "ext": {},
+            },
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_order_detail(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/fiat/get-order-detail" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetOrderDetailResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetOrderDetailResponse, "from_dict"):
+            expected = GetOrderDetailResponse.from_dict(expected_response)
+        else:
+            expected = GetOrderDetailResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_order_detail_missing_required_param_order_no(self):
+        """Test that get_order_detail() raises RequiredError when 'order_no' is missing."""
+        params = {
+            "order_no": "order_no_example",
+        }
+        params["order_no"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'order_no'"
+        ):
+            self.client.get_order_detail(**params)
+
+    def test_get_order_detail_server_error(self):
+        """Test that get_order_detail() raises an error when the server returns an error."""
+
+        params = {
+            "order_no": "order_no_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_order_detail = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_order_detail(**params)

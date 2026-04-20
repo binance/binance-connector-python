@@ -31,7 +31,7 @@ class KlineCandlestickStreamsResponseK(BaseModel):
     T: Optional[StrictInt] = Field(default=None, alias="T")
     s: Optional[StrictStr] = None
     i: Optional[StrictStr] = None
-    F: Optional[StrictInt] = Field(default=None, alias="F")
+    f: Optional[StrictInt] = None
     L: Optional[StrictInt] = Field(default=None, alias="L")
     o: Optional[StrictStr] = None
     c: Optional[StrictStr] = None
@@ -49,7 +49,7 @@ class KlineCandlestickStreamsResponseK(BaseModel):
         "T",
         "s",
         "i",
-        "F",
+        "f",
         "L",
         "o",
         "c",
@@ -127,7 +127,7 @@ class KlineCandlestickStreamsResponseK(BaseModel):
                 "T": obj.get("T"),
                 "s": obj.get("s"),
                 "i": obj.get("i"),
-                "F": obj.get("F"),
+                "f": obj.get("f"),
                 "L": obj.get("L"),
                 "o": obj.get("o"),
                 "c": obj.get("c"),

@@ -579,14 +579,7 @@ class TestTradeApi:
             "expired_type": "expired_type_example",
         }
 
-        expected_response = {
-            "quoteId": "12415572564",
-            "ratio": "38163.7",
-            "inverseRatio": "0.0000262",
-            "validTimestamp": 1623319461670,
-            "toAmount": "3816.37",
-            "fromAmount": "0.1",
-        }
+        expected_response = {"orderId": 1603680255057330400, "status": "PROCESS"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -645,14 +638,7 @@ class TestTradeApi:
             "recv_window": 5000,
         }
 
-        expected_response = {
-            "quoteId": "12415572564",
-            "ratio": "38163.7",
-            "inverseRatio": "0.0000262",
-            "validTimestamp": 1623319461670,
-            "toAmount": "3816.37",
-            "fromAmount": "0.1",
-        }
+        expected_response = {"orderId": 1603680255057330400, "status": "PROCESS"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 

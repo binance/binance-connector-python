@@ -27,21 +27,10 @@ class PlaceLimitOrderResponse(BaseModel):
     PlaceLimitOrderResponse
     """  # noqa: E501
 
-    quote_id: Optional[StrictStr] = Field(default=None, alias="quoteId")
-    ratio: Optional[StrictStr] = None
-    inverse_ratio: Optional[StrictStr] = Field(default=None, alias="inverseRatio")
-    valid_timestamp: Optional[StrictInt] = Field(default=None, alias="validTimestamp")
-    to_amount: Optional[StrictStr] = Field(default=None, alias="toAmount")
-    from_amount: Optional[StrictStr] = Field(default=None, alias="fromAmount")
+    order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
+    status: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "quoteId",
-        "ratio",
-        "inverseRatio",
-        "validTimestamp",
-        "toAmount",
-        "fromAmount",
-    ]
+    __properties: ClassVar[List[str]] = ["orderId", "status"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,14 +95,7 @@ class PlaceLimitOrderResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "quoteId": obj.get("quoteId"),
-                "ratio": obj.get("ratio"),
-                "inverseRatio": obj.get("inverseRatio"),
-                "validTimestamp": obj.get("validTimestamp"),
-                "toAmount": obj.get("toAmount"),
-                "fromAmount": obj.get("fromAmount"),
-            }
+            {"orderId": obj.get("orderId"), "status": obj.get("status")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

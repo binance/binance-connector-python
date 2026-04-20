@@ -1,5 +1,61 @@
 # Changelog
 
+## 3.4.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 3.3.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 3.2.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 3.1.0 - 2026-01-29
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.5.0`
+
+## 3.0.0 - 2026-01-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.4.1`
+
+- Deleted parameter `userName`
+  - affected methods:
+    - `hashrate_resale_detail()` (`GET /sapi/v1/mining/hash-transfer/profit/details`)
+- Modified response for `hashrate_resale_list()` (`GET /sapi/v1/mining/hash-transfer/config/details/list`):
+  - `data`.`configDetails`.items: property `type` added
+  - `data`.`configDetails`.items: item property `type` added
+
+## 2.1.0 - 2025-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+## 2.0.0 - 2025-12-22
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
 ## 1.7.0 - 2025-10-10
 
 ### Changed (1)

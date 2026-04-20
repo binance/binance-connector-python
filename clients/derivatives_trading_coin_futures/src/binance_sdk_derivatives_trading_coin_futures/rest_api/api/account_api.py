@@ -71,6 +71,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -79,6 +80,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountInformationResponse,
             is_signed=True,
@@ -109,6 +111,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -117,6 +120,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesAccountBalanceResponse,
             is_signed=True,
@@ -147,6 +151,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -155,6 +160,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCurrentPositionModeResponse,
             is_signed=True,
@@ -202,6 +208,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -214,6 +221,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/order/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesOrderHistoryResponse,
             is_signed=True,
@@ -261,6 +269,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -273,6 +282,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/trade/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesTradeHistoryResponse,
             is_signed=True,
@@ -320,6 +330,7 @@ class AccountApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -332,6 +343,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/income/asyn",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDownloadIdForFuturesTransactionHistoryResponse,
             is_signed=True,
@@ -372,6 +384,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -380,6 +393,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/order/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesOrderHistoryDownloadLinkByIdResponse,
             is_signed=True,
@@ -420,6 +434,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -428,6 +443,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/trade/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesTradeDownloadLinkByIdResponse,
             is_signed=True,
@@ -468,6 +484,7 @@ class AccountApi:
                 error_message="Missing required parameter 'download_id'",
             )
 
+        body = {}
         payload = {"download_id": download_id, "recv_window": recv_window}
 
         return send_request(
@@ -476,6 +493,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/income/asyn/id",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesTransactionHistoryDownloadLinkByIdResponse,
             is_signed=True,
@@ -522,6 +540,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "income_type": income_type,
@@ -538,6 +557,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/income",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetIncomeHistoryResponse,
             is_signed=True,
@@ -572,6 +592,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"pair": pair, "recv_window": recv_window}
 
         return send_request(
@@ -580,6 +601,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/leverageBracket",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NotionalBracketForPairResponse,
             is_signed=True,
@@ -612,6 +634,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -620,6 +643,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v2/leverageBracket",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NotionalBracketForSymbolResponse,
             is_signed=True,
@@ -657,6 +681,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -665,6 +690,7 @@ class AccountApi:
             method="GET",
             path="/dapi/v1/commissionRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UserCommissionRateResponse,
             is_signed=True,

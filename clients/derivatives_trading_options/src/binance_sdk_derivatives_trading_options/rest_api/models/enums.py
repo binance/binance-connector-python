@@ -24,8 +24,15 @@ class NewOrderTimeInForceEnum(Enum):
     GTC = "GTC"
     IOC = "IOC"
     FOK = "FOK"
+    GTX = "GTX"
 
 
 class NewOrderNewOrderRespTypeEnum(Enum):
     ACK = "ACK"
     RESULT = "RESULT"
+
+
+class NewOrderSelfTradePreventionModeEnum(Enum):
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    EXPIRE_MAKER = "EXPIRE_MAKER"

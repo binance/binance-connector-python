@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -28,8 +28,9 @@ class StartUserDataStreamResponse(BaseModel):
     """  # noqa: E501
 
     listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
+    expiration: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["listenKey"]
+    __properties: ClassVar[List[str]] = ["listenKey", "expiration"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +94,9 @@ class StartUserDataStreamResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"listenKey": obj.get("listenKey")})
+        _obj = cls.model_validate(
+            {"listenKey": obj.get("listenKey"), "expiration": obj.get("expiration")}
+        )
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:

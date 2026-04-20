@@ -1,5 +1,104 @@
 # Changelog
 
+## 5.3.0 - 2026-03-26
+
+### Added (1)
+
+- Added `py.typed` file to indicate that the package supports type hints.
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.8.0`
+- Updated `tox` file
+
+## 5.2.0 - 2026-03-16
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.7.0`
+
+## 5.1.0 - 2026-02-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.6.0`
+- Updated `pyproject.toml` dependencies
+
+## 5.0.0 - 2026-01-29
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.5.0`
+
+#### REST API
+
+- Modified parameter `strategyType`:
+  - enum added: `LIMIT_MAKER`
+  - affected methods:
+    - `new_cm_conditional_order()` (`POST /papi/v1/cm/conditional/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+
+## 4.0.0 - 2026-01-23
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.4.1`
+
+#### REST API
+
+- Modified response for `query_current_cm_open_order()` (`GET /papi/v1/cm/openOrder`):
+  - type `object` → `array`
+  - property `pair` deleted
+  - property `symbol` deleted
+  - property `positionSide` deleted
+  - property `executedQty` deleted
+  - property `timeInForce` deleted
+  - property `origQty` deleted
+  - property `reduceOnly` deleted
+  - property `time` deleted
+  - property `side` deleted
+  - property `status` deleted
+  - property `type` deleted
+  - property `avgPrice` deleted
+  - property `clientOrderId` deleted
+  - property `cumBase` deleted
+  - property `orderId` deleted
+  - property `origType` deleted
+  - property `price` deleted
+  - property `updateTime` deleted
+
+## 3.2.0 - 2026-01-19
+
+### Changed (1)
+
+- Updated `Subscribe` method in `websocket.py` to accept optional `stream_url` parameter.
+
+## 3.1.0 - 2026-01-13
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.4.0`
+
+## 3.0.0 - 2025-12-22
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.3.0`
+- Add `Body` to Rest API request
+
+#### REST API
+
+- Modified response for `um_position_adl_quantile_estimation()` (`GET /papi/v1/um/adlQuantile`):
+  - items.`adlQuantile`: property `HEDGE` deleted
+  - items.`adlQuantile`: property `HEDGE` deleted
+
+## 2.0.0 - 2025-11-24
+
+### Changed (1)
+
+- Modified response for `user_data()` method:
+  - removed `M` from Executionreport
+
 ## 1.8.0 - 2025-10-10
 
 ### Changed (2)

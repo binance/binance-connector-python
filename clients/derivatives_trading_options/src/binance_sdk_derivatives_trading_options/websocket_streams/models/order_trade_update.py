@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_options.websocket_streams.models.order_trade_update_o_inner import (
-    OrderTradeUpdateOInner,
+from binance_sdk_derivatives_trading_options.websocket_streams.models.order_trade_update_o import (
+    OrderTradeUpdateO,
 )
 from typing import Set
 from typing_extensions import Self
@@ -31,9 +31,10 @@ class OrderTradeUpdate(BaseModel):
     """  # noqa: E501
 
     E: Optional[StrictInt] = Field(default=None, alias="E")
-    o: Optional[List[OrderTradeUpdateOInner]] = None
+    T: Optional[StrictInt] = Field(default=None, alias="T")
+    o: Optional[OrderTradeUpdateO] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "o"]
+    __properties: ClassVar[List[str]] = ["E", "T", "o"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -77,13 +78,9 @@ class OrderTradeUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in o (list)
-        _items = []
+        # override the default output from pydantic by calling `to_dict()` of o
         if self.o:
-            for _item_o in self.o:
-                if _item_o:
-                    _items.append(_item_o.to_dict())
-            _dict["o"] = _items
+            _dict["o"] = self.o.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -103,8 +100,9 @@ class OrderTradeUpdate(BaseModel):
         _obj = cls.model_validate(
             {
                 "E": obj.get("E"),
+                "T": obj.get("T"),
                 "o": (
-                    [OrderTradeUpdateOInner.from_dict(_item) for _item in obj["o"]]
+                    OrderTradeUpdateO.from_dict(obj["o"])
                     if obj.get("o") is not None
                     else None
                 ),

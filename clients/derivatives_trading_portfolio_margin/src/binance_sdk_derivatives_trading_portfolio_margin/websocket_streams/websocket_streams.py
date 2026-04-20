@@ -45,7 +45,12 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
         else:
             raise ValueError("WebSocket session is not initialized.")
 
-    async def subscribe(self, streams, response_model: Optional[T] = None):
+    async def subscribe(
+        self,
+        streams,
+        response_model: Optional[T] = None,
+        stream_url: Optional[str] = None,
+    ):
         """Subscribes to the specified WebSocket streams.
 
         Args:
@@ -53,7 +58,9 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
             response_model (Optional[T]): The Pydantic model to validate the response against.
         """
 
-        await super().subscribe(streams, response_model=response_model)
+        await super().subscribe(
+            streams, response_model=response_model, stream_url=stream_url
+        )
 
     async def unsubscribe(self, streams):
         """Unsubscribes from the specified WebSocket streams.
@@ -106,5 +113,7 @@ class DerivativesTradingPortfolioMarginWebSocketStreams(WebSocketStreamBase):
         """
 
         return await RequestStream(
-            self, listenKey, response_model=UserDataStreamEventsResponse
+            self,
+            listenKey,
+            response_model=UserDataStreamEventsResponse,
         )

@@ -32,18 +32,14 @@ class QueryOptionOrderHistoryResponseInner(BaseModel):
     price: Optional[StrictStr] = None
     quantity: Optional[StrictStr] = None
     executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
-    fee: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    post_only: Optional[StrictBool] = Field(default=None, alias="postOnly")
     create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
     status: Optional[StrictStr] = None
-    reason: Optional[StrictStr] = None
     avg_price: Optional[StrictStr] = Field(default=None, alias="avgPrice")
-    source: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     price_scale: Optional[StrictInt] = Field(default=None, alias="priceScale")
     quantity_scale: Optional[StrictInt] = Field(default=None, alias="quantityScale")
@@ -57,18 +53,14 @@ class QueryOptionOrderHistoryResponseInner(BaseModel):
         "price",
         "quantity",
         "executedQty",
-        "fee",
         "side",
         "type",
         "timeInForce",
         "reduceOnly",
-        "postOnly",
         "createTime",
         "updateTime",
         "status",
-        "reason",
         "avgPrice",
-        "source",
         "clientOrderId",
         "priceScale",
         "quantityScale",
@@ -146,18 +138,14 @@ class QueryOptionOrderHistoryResponseInner(BaseModel):
                 "price": obj.get("price"),
                 "quantity": obj.get("quantity"),
                 "executedQty": obj.get("executedQty"),
-                "fee": obj.get("fee"),
                 "side": obj.get("side"),
                 "type": obj.get("type"),
                 "timeInForce": obj.get("timeInForce"),
                 "reduceOnly": obj.get("reduceOnly"),
-                "postOnly": obj.get("postOnly"),
                 "createTime": obj.get("createTime"),
                 "updateTime": obj.get("updateTime"),
                 "status": obj.get("status"),
-                "reason": obj.get("reason"),
                 "avgPrice": obj.get("avgPrice"),
-                "source": obj.get("source"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "priceScale": obj.get("priceScale"),
                 "quantityScale": obj.get("quantityScale"),

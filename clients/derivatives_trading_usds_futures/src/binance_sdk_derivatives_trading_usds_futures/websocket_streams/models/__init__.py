@@ -18,6 +18,8 @@ from .account_update_ap_inner import AccountUpdateAPInner as AccountUpdateAPInne
 from .aggregate_trade_streams_response import (
     AggregateTradeStreamsResponse as AggregateTradeStreamsResponse,
 )
+from .algo_update import AlgoUpdate as AlgoUpdate
+from .algo_update_o import AlgoUpdateO as AlgoUpdateO
 from .all_book_tickers_stream_response import (
     AllBookTickersStreamResponse as AllBookTickersStreamResponse,
 )
@@ -121,9 +123,21 @@ from .partial_book_depth_streams_response_a_item import (
 from .partial_book_depth_streams_response_b_item import (
     PartialBookDepthStreamsResponseBItem as PartialBookDepthStreamsResponseBItem,
 )
+from .rpi_diff_book_depth_streams_response import (
+    RpiDiffBookDepthStreamsResponse as RpiDiffBookDepthStreamsResponse,
+)
+from .rpi_diff_book_depth_streams_response_a_item import (
+    RpiDiffBookDepthStreamsResponseAItem as RpiDiffBookDepthStreamsResponseAItem,
+)
+from .rpi_diff_book_depth_streams_response_b_item import (
+    RpiDiffBookDepthStreamsResponseBItem as RpiDiffBookDepthStreamsResponseBItem,
+)
 from .strategy_update import StrategyUpdate as StrategyUpdate
 from .strategy_update_su import StrategyUpdateSu as StrategyUpdateSu
 from .trade_lite import TradeLite as TradeLite
+from .trading_session_stream_response import (
+    TradingSessionStreamResponse as TradingSessionStreamResponse,
+)
 from .user_data_stream_events_response import (
     UserDataStreamEventsResponse as UserDataStreamEventsResponse,
 )

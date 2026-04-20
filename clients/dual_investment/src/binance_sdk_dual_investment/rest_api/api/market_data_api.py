@@ -44,7 +44,7 @@ class MarketDataApi:
         """
                 Get Dual Investment product list
                 GET /sapi/v1/dci/product/list
-                https://developers.binance.com/docs/dual_investment/market-data/Get-Dual-Investment-product-list
+                https://developers.binance.com/docs/advanced_earn/dual-investment/market-data/Get-Dual-Investment-product-list
 
                 Get Dual Investment product list
 
@@ -82,6 +82,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'invest_coin'",
             )
 
+        body = {}
         payload = {
             "option_type": option_type,
             "exercised_coin": exercised_coin,
@@ -97,6 +98,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/dci/product/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDualInvestmentProductListResponse,
             is_signed=True,

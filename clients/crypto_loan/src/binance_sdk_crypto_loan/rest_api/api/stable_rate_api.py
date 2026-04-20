@@ -82,6 +82,7 @@ class StableRateApi:
                 error_message="Missing required parameter 'repay_amount'",
             )
 
+        body = {}
         payload = {
             "loan_coin": loan_coin,
             "collateral_coin": collateral_coin,
@@ -95,6 +96,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/repay/collateral/rate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckCollateralRepayRateStableRateResponse,
             is_signed=True,
@@ -138,6 +140,7 @@ class StableRateApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "type": type,
@@ -153,6 +156,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/income",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCryptoLoansIncomeHistoryResponse,
             is_signed=True,
@@ -200,6 +204,7 @@ class StableRateApi:
 
         """
 
+        body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -217,6 +222,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/borrow/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanBorrowHistoryResponse,
             is_signed=True,
@@ -264,6 +270,7 @@ class StableRateApi:
 
         """
 
+        body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -281,6 +288,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/ltv/adjustment/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanLtvAdjustmentHistoryResponse,
             is_signed=True,
@@ -328,6 +336,7 @@ class StableRateApi:
 
         """
 
+        body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -345,6 +354,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/repay/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanRepaymentHistoryResponse,
             is_signed=True,

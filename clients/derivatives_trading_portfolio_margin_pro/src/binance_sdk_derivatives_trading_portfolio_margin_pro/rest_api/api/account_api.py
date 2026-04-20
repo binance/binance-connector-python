@@ -21,18 +21,18 @@ from ..models import ChangeAutoRepayFuturesStatusResponse
 from ..models import FundAutoCollectionResponse
 from ..models import FundCollectionByAssetResponse
 from ..models import GetAutoRepayFuturesStatusResponse
+from ..models import GetDeltaModeStatusResponse
 from ..models import GetPortfolioMarginProAccountBalanceResponse
 from ..models import GetPortfolioMarginProAccountInfoResponse
 from ..models import GetPortfolioMarginProSpanAccountInfoResponse
 from ..models import GetTransferableEarnAssetBalanceForPortfolioMarginResponse
-from ..models import MintBfusdForPortfolioMarginResponse
 from ..models import PortfolioMarginProBankruptcyLoanRepayResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from ..models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
-from ..models import RedeemBfusdForPortfolioMarginResponse
 from ..models import RepayFuturesNegativeBalanceResponse
-from ..models import TransferLdusdtForPortfolioMarginResponse
+from ..models import SwitchDeltaModeResponse
+from ..models import TransferLdusdtRwusdForPortfolioMarginResponse
 
 
 class AccountApi:
@@ -89,6 +89,7 @@ class AccountApi:
                 error_message="Missing required parameter 'transfer_side'",
             )
 
+        body = {}
         payload = {
             "amount": amount,
             "transfer_side": transfer_side,
@@ -101,6 +102,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/bnb-transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=BnbTransferResponse,
             is_signed=True,
@@ -139,6 +141,7 @@ class AccountApi:
                 error_message="Missing required parameter 'auto_repay'",
             )
 
+        body = {}
         payload = {"auto_repay": auto_repay, "recv_window": recv_window}
 
         return send_request(
@@ -147,6 +150,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay-futures-switch",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoRepayFuturesStatusResponse,
             is_signed=True,
@@ -180,6 +184,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -188,6 +193,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/auto-collection",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FundAutoCollectionResponse,
             is_signed=True,
@@ -211,7 +217,7 @@ class AccountApi:
         Weight: 60
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -227,6 +233,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -235,6 +242,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/asset-collection",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FundCollectionByAssetResponse,
             is_signed=True,
@@ -265,6 +273,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -273,8 +282,49 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/repay-futures-switch",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetAutoRepayFuturesStatusResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_delta_mode_status(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDeltaModeStatusResponse]:
+        """
+                Get Delta Mode Status(USER_DATA)
+                GET /sapi/v1/portfolio/delta-mode
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Delta-Mode-Status
+
+                Query the Delta mode status of current account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDeltaModeStatusResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/portfolio/delta-mode",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetDeltaModeStatusResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -305,6 +355,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -313,6 +364,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProAccountBalanceResponse,
             is_signed=True,
@@ -343,6 +395,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -351,6 +404,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProAccountInfoResponse,
             is_signed=True,
@@ -381,6 +435,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -389,6 +444,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v2/portfolio/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProSpanAccountInfoResponse,
             is_signed=True,
@@ -411,7 +467,7 @@ class AccountApi:
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     recv_window (Optional[int] = None):
 
@@ -433,6 +489,7 @@ class AccountApi:
                 error_message="Missing required parameter 'transfer_type'",
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "transfer_type": transfer_type,
@@ -445,72 +502,9 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/earn-asset-balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetTransferableEarnAssetBalanceForPortfolioMarginResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
-    def mint_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[MintBfusdForPortfolioMarginResponse]:
-        """
-                Mint BFUSD for Portfolio Margin(TRADE)
-                POST /sapi/v1/portfolio/mint
-                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Mint-BFUSD-Portfolio-Margin
-
-                Mint BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[MintBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if from_asset is None:
-            raise RequiredError(
-                field="from_asset",
-                error_message="Missing required parameter 'from_asset'",
-            )
-        if target_asset is None:
-            raise RequiredError(
-                field="target_asset",
-                error_message="Missing required parameter 'target_asset'",
-            )
-        if amount is None:
-            raise RequiredError(
-                field="amount", error_message="Missing required parameter 'amount'"
-            )
-
-        payload = {
-            "from_asset": from_asset,
-            "target_asset": target_asset,
-            "amount": amount,
-            "recv_window": recv_window,
-        }
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="POST",
-            path="/sapi/v1/portfolio/mint",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=MintBfusdForPortfolioMarginResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -527,6 +521,8 @@ class AccountApi:
 
                 Repay Portfolio Margin Pro Bankruptcy Loan
 
+        * Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
+
         Weight: 3000
 
                 Args:
@@ -541,6 +537,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"var_from": var_from, "recv_window": recv_window}
 
         return send_request(
@@ -549,6 +546,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PortfolioMarginProBankruptcyLoanRepayResponse,
             is_signed=True,
@@ -581,6 +579,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -589,6 +588,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/pmLoan",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProBankruptcyLoanAmountResponse,
             is_signed=True,
@@ -632,6 +632,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -646,6 +647,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/pmloan-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse,
             is_signed=True,
@@ -684,6 +686,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -698,72 +701,9 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/interest-history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
-            is_signed=True,
-            signer=self._signer,
-        )
-
-    def redeem_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemBfusdForPortfolioMarginResponse]:
-        """
-                Redeem BFUSD for Portfolio Margin(TRADE)
-                POST /sapi/v1/portfolio/redeem
-                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Redeem-BFUSD-Portfolio-Margin
-
-                Redeem BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        if from_asset is None:
-            raise RequiredError(
-                field="from_asset",
-                error_message="Missing required parameter 'from_asset'",
-            )
-        if target_asset is None:
-            raise RequiredError(
-                field="target_asset",
-                error_message="Missing required parameter 'target_asset'",
-            )
-        if amount is None:
-            raise RequiredError(
-                field="amount", error_message="Missing required parameter 'amount'"
-            )
-
-        payload = {
-            "from_asset": from_asset,
-            "target_asset": target_asset,
-            "amount": amount,
-            "recv_window": recv_window,
-        }
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="POST",
-            path="/sapi/v1/portfolio/redeem",
-            payload=payload,
-            time_unit=self._configuration.time_unit,
-            response_model=RedeemBfusdForPortfolioMarginResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -794,6 +734,7 @@ class AccountApi:
 
         """
 
+        body = {}
         payload = {"var_from": var_from, "recv_window": recv_window}
 
         return send_request(
@@ -802,36 +743,85 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay-futures-negative-balance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RepayFuturesNegativeBalanceResponse,
             is_signed=True,
             signer=self._signer,
         )
 
-    def transfer_ldusdt_for_portfolio_margin(
+    def switch_delta_mode(
+        self,
+        delta_enabled: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SwitchDeltaModeResponse]:
+        """
+                Switch Delta Mode(TRADE)
+                POST /sapi/v1/portfolio/delta-mode
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Switch-Delta-Mode
+
+                Switch the Delta mode for existing PM PRO / PM RETAIL accounts.
+
+        Weight: 1500
+
+                Args:
+                    delta_enabled (Union[str, None]): `true` to enable Delta mode; `false` to disable Delta mode
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SwitchDeltaModeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if delta_enabled is None:
+            raise RequiredError(
+                field="delta_enabled",
+                error_message="Missing required parameter 'delta_enabled'",
+            )
+
+        body = {}
+        payload = {"delta_enabled": delta_enabled, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/portfolio/delta-mode",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=SwitchDeltaModeResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def transfer_ldusdt_rwusd_for_portfolio_margin(
         self,
         asset: Union[str, None],
         transfer_type: Union[str, None],
         amount: Union[float, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[TransferLdusdtForPortfolioMarginResponse]:
+    ) -> ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]:
         """
-                Transfer LDUSDT for Portfolio Margin(TRADE)
+                Transfer LDUSDT/RWUSD for Portfolio Margin(TRADE)
                 POST /sapi/v1/portfolio/earn-asset-transfer
                 https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Transfer-LDUSDT-Portfolio-Margin
 
-                Transfer LDUSDT as collateral for all types of Portfolio Margin account
+                Transfer LDUSDT/RWUSD as collateral for all types of Portfolio Margin account
 
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     amount (Union[float, None]):
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[TransferLdusdtForPortfolioMarginResponse]
+                    ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -852,6 +842,7 @@ class AccountApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {
             "asset": asset,
             "transfer_type": transfer_type,
@@ -865,8 +856,9 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/earn-asset-transfer",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
-            response_model=TransferLdusdtForPortfolioMarginResponse,
+            response_model=TransferLdusdtRwusdForPortfolioMarginResponse,
             is_signed=True,
             signer=self._signer,
         )

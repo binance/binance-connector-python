@@ -55,6 +55,7 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
     iceberg_allowed: Optional[StrictBool] = Field(default=None, alias="icebergAllowed")
     oco_allowed: Optional[StrictBool] = Field(default=None, alias="ocoAllowed")
     oto_allowed: Optional[StrictBool] = Field(default=None, alias="otoAllowed")
+    opo_allowed: Optional[StrictBool] = Field(default=None, alias="opoAllowed")
     quote_order_qty_market_allowed: Optional[StrictBool] = Field(
         default=None, alias="quoteOrderQtyMarketAllowed"
     )
@@ -104,6 +105,7 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
         "icebergAllowed",
         "ocoAllowed",
         "otoAllowed",
+        "opoAllowed",
         "quoteOrderQtyMarketAllowed",
         "allowTrailingStop",
         "cancelReplaceAllowed",
@@ -202,6 +204,7 @@ class ExchangeInfoResponseResultSymbolsInner(BaseModel):
                 "icebergAllowed": obj.get("icebergAllowed"),
                 "ocoAllowed": obj.get("ocoAllowed"),
                 "otoAllowed": obj.get("otoAllowed"),
+                "opoAllowed": obj.get("opoAllowed"),
                 "quoteOrderQtyMarketAllowed": obj.get("quoteOrderQtyMarketAllowed"),
                 "allowTrailingStop": obj.get("allowTrailingStop"),
                 "cancelReplaceAllowed": obj.get("cancelReplaceAllowed"),

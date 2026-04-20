@@ -22,21 +22,17 @@ from .api.trade_api import TradeApi
 from .api.user_data_streams_api import UserDataStreamsApi
 
 from .models import AccountFundingFlowResponse
-from .models import GetDownloadIdForOptionTransactionHistoryResponse
-from .models import GetOptionTransactionHistoryDownloadLinkByIdResponse
-from .models import OptionAccountInformationResponse
 from .models import OptionMarginAccountInformationResponse
 from .models import CheckServerTimeResponse
 from .models import ExchangeInformationResponse
 from .models import HistoricalExerciseRecordsResponse
+from .models import IndexPriceResponse
 from .models import KlineCandlestickDataResponse
-from .models import OldTradesLookupResponse
 from .models import OpenInterestResponse
 from .models import OptionMarkPriceResponse
 from .models import OrderBookResponse
 from .models import RecentBlockTradesListResponse
 from .models import RecentTradesListResponse
-from .models import SymbolPriceTickerResponse
 
 from .models import Ticker24hrPriceChangeStatisticsResponse
 from .models import AcceptBlockTradeOrderResponse
@@ -63,6 +59,7 @@ from .models import PlaceMultipleOrdersResponse
 from .models import QueryCurrentOpenOptionOrdersResponse
 from .models import QueryOptionOrderHistoryResponse
 from .models import QuerySingleOrderResponse
+from .models import UserCommissionResponse
 from .models import UserExerciseRecordResponse
 
 
@@ -73,6 +70,7 @@ from .models import NewOrderSideEnum
 from .models import NewOrderTypeEnum
 from .models import NewOrderTimeInForceEnum
 from .models import NewOrderNewOrderRespTypeEnum
+from .models import NewOrderSelfTradePreventionModeEnum
 
 
 from .models import PlaceMultipleOrdersOrdersParameterInner
@@ -111,7 +109,11 @@ class DerivativesTradingOptionsRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -119,25 +121,8 @@ class DerivativesTradingOptionsRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -147,7 +132,36 @@ class DerivativesTradingOptionsRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -165,6 +179,9 @@ class DerivativesTradingOptionsRestAPI:
                 Account Funding Flow (USER_DATA)
 
                 Query account funding flows.
+
+
+        * Only support querying data in the past 3 months
 
         Weight: 1
 
@@ -187,93 +204,6 @@ class DerivativesTradingOptionsRestAPI:
         return self._accountApi.account_funding_flow(
             currency, record_id, start_time, end_time, limit, recv_window
         )
-
-    def get_download_id_for_option_transaction_history(
-        self,
-        start_time: Union[int, None],
-        end_time: Union[int, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]:
-        """
-                Get Download Id For Option Transaction History (USER_DATA)
-
-                Get download id for option transaction history
-
-        * Request Limitation is 5 times per month, shared by > front end download page and rest api
-        * The time between `startTime` and `endTime` can not be longer than 1 year
-
-        Weight: 5
-
-                Args:
-                    start_time (Union[int, None]): Timestamp in ms
-                    end_time (Union[int, None]): Timestamp in ms
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetDownloadIdForOptionTransactionHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_download_id_for_option_transaction_history(
-            start_time, end_time, recv_window
-        )
-
-    def get_option_transaction_history_download_link_by_id(
-        self,
-        download_id: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]:
-        """
-                Get Option Transaction History Download Link by Id (USER_DATA)
-
-                Get option transaction history download Link by Id
-
-        * Download link expiration: 24h
-
-        Weight: 5
-
-                Args:
-                    download_id (Union[str, None]): get by download id api
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[GetOptionTransactionHistoryDownloadLinkByIdResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.get_option_transaction_history_download_link_by_id(
-            download_id, recv_window
-        )
-
-    def option_account_information(
-        self,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[OptionAccountInformationResponse]:
-        """
-                Option Account Information(TRADE)
-
-                Get current account information.
-
-        Weight: 3
-
-                Args:
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[OptionAccountInformationResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.option_account_information(recv_window)
 
     def option_margin_account_information(
         self,
@@ -377,6 +307,30 @@ class DerivativesTradingOptionsRestAPI:
             underlying, start_time, end_time, limit
         )
 
+    def index_price(
+        self,
+        underlying: Union[str, None],
+    ) -> ApiResponse[IndexPriceResponse]:
+        """
+                Index Price
+
+                Get spot index price for option underlying.
+
+        Weight: 1
+
+                Args:
+                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
+
+                Returns:
+                    ApiResponse[IndexPriceResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.index_price(underlying)
+
     def kline_candlestick_data(
         self,
         symbol: Union[str, None],
@@ -413,34 +367,6 @@ class DerivativesTradingOptionsRestAPI:
         return self._marketDataApi.kline_candlestick_data(
             symbol, interval, start_time, end_time, limit
         )
-
-    def old_trades_lookup(
-        self,
-        symbol: Union[str, None],
-        from_id: Optional[int] = None,
-        limit: Optional[int] = None,
-    ) -> ApiResponse[OldTradesLookupResponse]:
-        """
-                Old Trades Lookup (MARKET_DATA)
-
-                Get older market historical trades.
-
-        Weight: 20
-
-                Args:
-                    symbol (Union[str, None]): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
-                    limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
-
-                Returns:
-                    ApiResponse[OldTradesLookupResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketDataApi.old_trades_lookup(symbol, from_id, limit)
 
     def open_interest(
         self,
@@ -504,7 +430,7 @@ class DerivativesTradingOptionsRestAPI:
 
         Weight: limit         | weight
         ------------  | ------------
-        5, 10, 20, 50 | 2
+        5, 10, 20, 50 | 1
         100           | 5
         500           | 10
         1000          | 20
@@ -574,30 +500,6 @@ class DerivativesTradingOptionsRestAPI:
         """
 
         return self._marketDataApi.recent_trades_list(symbol, limit)
-
-    def symbol_price_ticker(
-        self,
-        underlying: Union[str, None],
-    ) -> ApiResponse[SymbolPriceTickerResponse]:
-        """
-                Symbol Price Ticker
-
-                Get spot index price for option underlying.
-
-        Weight: 1
-
-                Args:
-                    underlying (Union[str, None]): Option underlying, e.g BTCUSDT
-
-                Returns:
-                    ApiResponse[SymbolPriceTickerResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketDataApi.symbol_price_ticker(underlying)
 
     def test_connectivity(
         self,
@@ -984,7 +886,7 @@ class DerivativesTradingOptionsRestAPI:
         * This rest endpoint sets up the parameters to cancel your open orders in case of an outage or disconnection.
         * Example usage:
         Call this endpoint with a countdownTime value of 10000 (10 seconds) to turn on the auto-cancel feature. If the corresponding countdownCancelAllHeartBeat endpoint is not called within 10 seconds with the specified underlying symbol, all open orders of the specified symbol will be automatically canceled. If this endpoint is called with an countdownTime of 0, the countdown timer will be stopped.
-        * The system will check all countdowns approximately every 1000 milliseconds, **please note that sufficient redundancy should be considered when using this function**. We do not recommend setting the countdown time to be too precise or too small.
+        * The system will check all countdowns approximately every 100 milliseconds, **please note that sufficient redundancy should be considered when using this function**. We do not recommend setting the countdown time to be too precise or too small.
 
         Weight: 1
 
@@ -1061,11 +963,13 @@ class DerivativesTradingOptionsRestAPI:
 
                 Get trades for a specific account and symbol.
 
+        * Only support querying trades in the past 3 months
+
         Weight: 5
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair, e.g BTC-200730-9000-C
-                    from_id (Optional[int] = None): The UniqueId ID from which to return. The latest deal record is returned by default
+                    from_id (Optional[int] = None): Trade id to fetch from. Default gets most recent trades, e.g 4611875134427365376
                     start_time (Optional[int] = None): Start Time, e.g 1593511200000
                     end_time (Optional[int] = None): End Time, e.g 1593512200000
                     limit (Optional[int] = None): Number of result sets returned Default:100 Max:1000
@@ -1220,6 +1124,9 @@ class DerivativesTradingOptionsRestAPI:
         new_order_resp_type: Optional[NewOrderNewOrderRespTypeEnum] = None,
         client_order_id: Optional[str] = None,
         is_mmp: Optional[bool] = None,
+        self_trade_prevention_mode: Optional[
+            NewOrderSelfTradePreventionModeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
@@ -1241,6 +1148,7 @@ class DerivativesTradingOptionsRestAPI:
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", Default "ACK"
                     client_order_id (Optional[str] = None): User-defined order ID, e.g 10000
                     is_mmp (Optional[bool] = None): is market maker protection order, true/false
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire maker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; Default `EXPIRE_MAKER`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -1263,6 +1171,7 @@ class DerivativesTradingOptionsRestAPI:
             new_order_resp_type,
             client_order_id,
             is_mmp,
+            self_trade_prevention_mode,
             recv_window,
         )
 
@@ -1430,6 +1339,30 @@ class DerivativesTradingOptionsRestAPI:
         return self._tradeApi.query_single_order(
             symbol, order_id, client_order_id, recv_window
         )
+
+    def user_commission(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[UserCommissionResponse]:
+        """
+                User Commission (USER_DATA)
+
+                Get account commission.
+
+        Weight: 5
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[UserCommissionResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.user_commission(recv_window)
 
     def user_exercise_record(
         self,

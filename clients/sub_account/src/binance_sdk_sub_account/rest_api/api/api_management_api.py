@@ -82,6 +82,7 @@ class ApiManagementApi:
                 field="status", error_message="Missing required parameter 'status'"
             )
 
+        body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -96,6 +97,7 @@ class ApiManagementApi:
             method="POST",
             path="/sapi/v2/sub-account/subAccountApi/ipRestriction",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AddIpRestrictionForSubAccountApiKeyResponse,
             is_signed=True,
@@ -149,6 +151,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'ip_address'",
             )
 
+        body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -162,6 +165,7 @@ class ApiManagementApi:
             method="DELETE",
             path="/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteIpListForASubAccountApiKeyResponse,
             is_signed=True,
@@ -206,6 +210,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'sub_account_api_key'",
             )
 
+        body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -218,6 +223,7 @@ class ApiManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/subAccountApi/ipRestriction",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetIpRestrictionForASubAccountApiKeyResponse,
             is_signed=True,

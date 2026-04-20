@@ -29,7 +29,7 @@ class QueryMarginAvailableInventoryResponseAssets(BaseModel):
 
     matic: Optional[StrictStr] = Field(default=None, alias="MATIC")
     stpt: Optional[StrictStr] = Field(default=None, alias="STPT")
-    TVK: Optional[StrictStr] = Field(default=None, alias="TVK")
+    tvk: Optional[StrictStr] = Field(default=None, alias="TVK")
     shib: Optional[StrictStr] = Field(default=None, alias="SHIB")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["MATIC", "STPT", "TVK", "SHIB"]

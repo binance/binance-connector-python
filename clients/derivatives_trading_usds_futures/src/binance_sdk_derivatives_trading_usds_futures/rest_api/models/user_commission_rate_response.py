@@ -34,11 +34,15 @@ class UserCommissionRateResponse(BaseModel):
     taker_commission_rate: Optional[StrictStr] = Field(
         default=None, alias="takerCommissionRate"
     )
+    rpi_commission_rate: Optional[StrictStr] = Field(
+        default=None, alias="rpiCommissionRate"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",
         "makerCommissionRate",
         "takerCommissionRate",
+        "rpiCommissionRate",
     ]
 
     model_config = ConfigDict(
@@ -108,6 +112,7 @@ class UserCommissionRateResponse(BaseModel):
                 "symbol": obj.get("symbol"),
                 "makerCommissionRate": obj.get("makerCommissionRate"),
                 "takerCommissionRate": obj.get("takerCommissionRate"),
+                "rpiCommissionRate": obj.get("rpiCommissionRate"),
             }
         )
         # store additional fields in additional_properties

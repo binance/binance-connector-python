@@ -19,6 +19,8 @@ from binance_common.utils import send_request
 from ..models import AccountTradeListResponse
 from ..models import AllOrdersResponse
 from ..models import AutoCancelAllOpenOrdersResponse
+from ..models import CancelAlgoOrderResponse
+from ..models import CancelAllAlgoOpenOrdersResponse
 from ..models import CancelAllOpenOrdersResponse
 from ..models import CancelMultipleOrdersResponse
 from ..models import CancelOrderResponse
@@ -26,17 +28,22 @@ from ..models import ChangeInitialLeverageResponse
 from ..models import ChangeMarginTypeResponse
 from ..models import ChangeMultiAssetsModeResponse
 from ..models import ChangePositionModeResponse
+from ..models import CurrentAllAlgoOpenOrdersResponse
 from ..models import CurrentAllOpenOrdersResponse
+from ..models import FuturesTradfiPerpsContractResponse
 from ..models import GetOrderModifyHistoryResponse
 from ..models import GetPositionMarginChangeHistoryResponse
 from ..models import ModifyIsolatedPositionMarginResponse
 from ..models import ModifyMultipleOrdersResponse
 from ..models import ModifyOrderResponse
+from ..models import NewAlgoOrderResponse
 from ..models import NewOrderResponse
 from ..models import PlaceMultipleOrdersResponse
 from ..models import PositionAdlQuantileEstimationResponse
 from ..models import PositionInformationV2Response
 from ..models import PositionInformationV3Response
+from ..models import QueryAlgoOrderResponse
+from ..models import QueryAllAlgoOrdersResponse
 from ..models import QueryCurrentOpenOrderResponse
 from ..models import QueryOrderResponse
 from ..models import TestOrderResponse
@@ -47,10 +54,16 @@ from ..models import ChangeMarginTypeMarginTypeEnum
 from ..models import ModifyIsolatedPositionMarginPositionSideEnum
 from ..models import ModifyOrderSideEnum
 from ..models import ModifyOrderPriceMatchEnum
+from ..models import NewAlgoOrderSideEnum
+from ..models import NewAlgoOrderPositionSideEnum
+from ..models import NewAlgoOrderTimeInForceEnum
+from ..models import NewAlgoOrderWorkingTypeEnum
+from ..models import NewAlgoOrderPriceMatchEnum
+from ..models import NewAlgoOrderNewOrderRespTypeEnum
+from ..models import NewAlgoOrderSelfTradePreventionModeEnum
 from ..models import NewOrderSideEnum
 from ..models import NewOrderPositionSideEnum
 from ..models import NewOrderTimeInForceEnum
-from ..models import NewOrderWorkingTypeEnum
 from ..models import NewOrderNewOrderRespTypeEnum
 from ..models import NewOrderPriceMatchEnum
 from ..models import NewOrderSelfTradePreventionModeEnum
@@ -127,6 +140,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -143,6 +157,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/userTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountTradeListResponse,
             is_signed=True,
@@ -195,6 +210,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -210,6 +226,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/allOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AllOrdersResponse,
             is_signed=True,
@@ -262,6 +279,7 @@ class TradeApi:
                 error_message="Missing required parameter 'countdown_time'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "countdown_time": countdown_time,
@@ -274,8 +292,106 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/countdownCancelAll",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AutoCancelAllOpenOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def cancel_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAlgoOrderResponse]:
+        """
+                Cancel Algo Order (TRADE)
+                DELETE /fapi/v1/algoOrder
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Cancel-Algo-Order
+
+                Cancel an active algo order.
+
+        * Either `algoId` or `clientAlgoId` must be sent.
+
+        Weight: 1
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/fapi/v1/algoOrder",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def cancel_all_algo_open_orders(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAllAlgoOpenOrdersResponse]:
+        """
+                Cancel All Algo Open Orders (TRADE)
+                DELETE /fapi/v1/algoOpenOrders
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Cancel-All-Algo-Open-Orders
+
+                Cancel All Algo Open Orders
+
+        Weight: 1
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/fapi/v1/algoOpenOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelAllAlgoOpenOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -311,6 +427,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -319,6 +436,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/allOpenOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOpenOrdersResponse,
             is_signed=True,
@@ -362,6 +480,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id_list": order_id_list,
@@ -375,6 +494,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/batchOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMultipleOrdersResponse,
             is_signed=True,
@@ -418,6 +538,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -431,6 +552,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelOrderResponse,
             is_signed=True,
@@ -474,6 +596,7 @@ class TradeApi:
                 field="leverage", error_message="Missing required parameter 'leverage'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "leverage": leverage, "recv_window": recv_window}
 
         return send_request(
@@ -482,6 +605,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/leverage",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeInitialLeverageResponse,
             is_signed=True,
@@ -526,6 +650,7 @@ class TradeApi:
                 error_message="Missing required parameter 'margin_type'",
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "margin_type": margin_type,
@@ -538,6 +663,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/marginType",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeMarginTypeResponse,
             is_signed=True,
@@ -576,6 +702,7 @@ class TradeApi:
                 error_message="Missing required parameter 'multi_assets_margin'",
             )
 
+        body = {}
         payload = {
             "multi_assets_margin": multi_assets_margin,
             "recv_window": recv_window,
@@ -587,6 +714,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/multiAssetsMargin",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeMultiAssetsModeResponse,
             is_signed=True,
@@ -625,6 +753,7 @@ class TradeApi:
                 error_message="Missing required parameter 'dual_side_position'",
             )
 
+        body = {}
         payload = {"dual_side_position": dual_side_position, "recv_window": recv_window}
 
         return send_request(
@@ -633,8 +762,63 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/positionSide/dual",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangePositionModeResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def current_all_algo_open_orders(
+        self,
+        algo_type: Optional[str] = None,
+        symbol: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CurrentAllAlgoOpenOrdersResponse]:
+        """
+                Current All Algo Open Orders (USER_DATA)
+                GET /fapi/v1/openAlgoOrders
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Current-All-Algo-Open-Orders
+
+                Get all algo open orders on a symbol.
+
+        * If the symbol is not sent, orders for all symbols will be returned in an array.
+
+        Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
+        Careful when accessing this with no symbol.
+
+                Args:
+                    algo_type (Optional[str] = None):
+                    symbol (Optional[str] = None):
+                    algo_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CurrentAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/openAlgoOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=CurrentAllAlgoOpenOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -668,6 +852,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -676,8 +861,49 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CurrentAllOpenOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def futures_tradfi_perps_contract(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[FuturesTradfiPerpsContractResponse]:
+        """
+                Futures TradFi Perps Contract(USER_DATA)
+                POST /fapi/v1/stock/contract
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Futures-TradFi-Perps-Contract
+
+                Sign TradFi-Perps agreement contract
+
+        Weight: 0
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[FuturesTradfiPerpsContractResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/fapi/v1/stock/contract",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=FuturesTradfiPerpsContractResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -726,6 +952,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -742,6 +969,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/orderAmendment",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetOrderModifyHistoryResponse,
             is_signed=True,
@@ -790,6 +1018,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "type": type,
@@ -805,6 +1034,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/positionMargin/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetPositionMarginChangeHistoryResponse,
             is_signed=True,
@@ -859,6 +1089,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "amount": amount,
@@ -873,6 +1104,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/positionMargin",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyIsolatedPositionMarginResponse,
             is_signed=True,
@@ -918,6 +1150,7 @@ class TradeApi:
                 error_message="Missing required parameter 'batch_orders'",
             )
 
+        body = {}
         payload = {"batch_orders": batch_orders, "recv_window": recv_window}
 
         return send_request(
@@ -926,6 +1159,7 @@ class TradeApi:
             method="PUT",
             path="/fapi/v1/batchOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyMultipleOrdersResponse,
             is_signed=True,
@@ -998,6 +1232,7 @@ class TradeApi:
                 field="price", error_message="Missing required parameter 'price'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1015,8 +1250,163 @@ class TradeApi:
             method="PUT",
             path="/fapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def new_algo_order(
+        self,
+        algo_type: Union[str, None],
+        symbol: Union[str, None],
+        side: Union[NewAlgoOrderSideEnum, None],
+        type: Union[str, None],
+        position_side: Optional[NewAlgoOrderPositionSideEnum] = None,
+        time_in_force: Optional[NewAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[str] = None,
+        price_protect: Optional[str] = None,
+        reduce_only: Optional[str] = None,
+        activate_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        new_order_resp_type: Optional[NewAlgoOrderNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            NewAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        good_till_date: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[NewAlgoOrderResponse]:
+        """
+                New Algo Order(TRADE)
+                POST /fapi/v1/algoOrder
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/New-Algo-Order
+
+                Send in a new Algo order.
+
+        * Algo order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Algo order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Condition orders will be triggered when:
+
+        * If parameter`priceProtect`is sent as true:
+        * when price reaches the `triggerPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
+
+        * `STOP`, `STOP_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * `TRAILING_STOP_MARKET`:
+        * BUY: the lowest price after order placed <= `activatePrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activatePrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+
+        * For `TRAILING_STOP_MARKET`, if you got such error code.
+        ``{"code": -2021, "msg": "Order would immediately trigger."}``
+        means that the parameters you send do not meet the following requirements:
+        * BUY: `activatePrice` should be smaller than latest price.
+        * SELL: `activatePrice` should be larger than latest price.
+
+        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+        * Follow the same rules for condition orders.
+        * If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
+        * Cannot be used with `quantity` paremeter
+        * Cannot be used with `reduceOnly` parameter
+        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
+
+        Weight: 0 on IP rate limit(x-mbx-used-weight-1m)
+
+                Args:
+                    algo_type (Union[str, None]): Only support `CONDITIONAL`
+                    symbol (Union[str, None]):
+                    side (Union[NewAlgoOrderSideEnum, None]): `SELL`, `BUY`
+                    type (Union[str, None]):
+                    position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    price (Optional[float] = None):
+                    trigger_price (Optional[float] = None):
+                    working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
+                    activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
+                    client_algo_id (Optional[str] = None):
+                    new_order_resp_type (Optional[NewAlgoOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[NewAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if algo_type is None:
+            raise RequiredError(
+                field="algo_type",
+                error_message="Missing required parameter 'algo_type'",
+            )
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
+        body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            "position_side": position_side,
+            "time_in_force": time_in_force,
+            "quantity": quantity,
+            "price": price,
+            "trigger_price": trigger_price,
+            "working_type": working_type,
+            "price_match": price_match,
+            "close_position": close_position,
+            "price_protect": price_protect,
+            "reduce_only": reduce_only,
+            "activate_price": activate_price,
+            "callback_rate": callback_rate,
+            "client_algo_id": client_algo_id,
+            "new_order_resp_type": new_order_resp_type,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
+            "good_till_date": good_till_date,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/fapi/v1/algoOrder",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=NewAlgoOrderResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1032,12 +1422,6 @@ class TradeApi:
         reduce_only: Optional[str] = None,
         price: Optional[float] = None,
         new_client_order_id: Optional[str] = None,
-        stop_price: Optional[float] = None,
-        close_position: Optional[str] = None,
-        activation_price: Optional[float] = None,
-        callback_rate: Optional[float] = None,
-        working_type: Optional[NewOrderWorkingTypeEnum] = None,
-        price_protect: Optional[str] = None,
         new_order_resp_type: Optional[NewOrderNewOrderRespTypeEnum] = None,
         price_match: Optional[NewOrderPriceMatchEnum] = None,
         self_trade_prevention_mode: Optional[
@@ -1053,40 +1437,10 @@ class TradeApi:
 
                 Send in a new order.
 
-        * Order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
-        * Order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
-        * Condition orders will be triggered when:
-
-        * If parameter`priceProtect`is sent as true:
-        * when price reaches the `stopPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
-        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
-
-        * `STOP`, `STOP_MARKET`:
-        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
-        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
-        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-        * `TRAILING_STOP_MARKET`:
-        * BUY: the lowest price after order placed `<= `activationPrice`, and the latest price >`= the lowest price * (1 + `callbackRate`)
-        * SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
-
-        * For `TRAILING_STOP_MARKET`, if you got such error code.
-        ``{"code": -2021, "msg": "Order would immediately trigger."}``
-        means that the parameters you send do not meet the following requirements:
-        * BUY: `activationPrice` should be smaller than latest price.
-        * SELL: `activationPrice` should be larger than latest price.
-
         * If `newOrderRespType ` is sent as `RESULT` :
         * `MARKET` order: the final FILLED result of the order will be return directly.
         * `LIMIT` order with special `timeInForce`: the final status result of the order(FILLED or EXPIRED) will be returned directly.
 
-        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
-        * Follow the same rules for condition orders.
-        * If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
-        * Cannot be used with `quantity` paremeter
-        * Cannot be used with `reduceOnly` parameter
-        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
         * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
         * In extreme market conditions, timeInForce `GTD` order auto cancel time might be delayed comparing to `goodTillDate`
 
@@ -1100,19 +1454,13 @@ class TradeApi:
                     type (Union[str, None]):
                     position_side (Optional[NewOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[NewOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     price (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
-                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
-                    working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 
@@ -1137,6 +1485,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1147,12 +1496,6 @@ class TradeApi:
             "reduce_only": reduce_only,
             "price": price,
             "new_client_order_id": new_client_order_id,
-            "stop_price": stop_price,
-            "close_position": close_position,
-            "activation_price": activation_price,
-            "callback_rate": callback_rate,
-            "working_type": working_type,
-            "price_protect": price_protect,
             "new_order_resp_type": new_order_resp_type,
             "price_match": price_match,
             "self_trade_prevention_mode": self_trade_prevention_mode,
@@ -1166,6 +1509,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
             is_signed=True,
@@ -1210,6 +1554,7 @@ class TradeApi:
                 error_message="Missing required parameter 'batch_orders'",
             )
 
+        body = {}
         payload = {"batch_orders": batch_orders, "recv_window": recv_window}
 
         return send_request(
@@ -1218,6 +1563,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/batchOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceMultipleOrdersResponse,
             is_signed=True,
@@ -1257,6 +1603,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1265,6 +1612,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/adlQuantile",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PositionAdlQuantileEstimationResponse,
             is_signed=True,
@@ -1299,6 +1647,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1307,6 +1656,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v2/positionRisk",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PositionInformationV2Response,
             is_signed=True,
@@ -1341,6 +1691,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1349,8 +1700,136 @@ class TradeApi:
             method="GET",
             path="/fapi/v3/positionRisk",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PositionInformationV3Response,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAlgoOrderResponse]:
+        """
+                Query Algo Order (USER_DATA)
+                GET /fapi/v1/algoOrder
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Query-Algo-Order
+
+                Check an algo order's status.
+
+        * These orders will not be found:
+        * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+        * order create time + 90 days < current time
+
+        * Either `algoId` or `clientAlgoId` must be sent.
+        * `algoId` is self-increment for each specific `symbol`
+
+        Weight: 1
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/algoOrder",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_all_algo_orders(
+        self,
+        symbol: Union[str, None],
+        algo_id: Optional[int] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAllAlgoOrdersResponse]:
+        """
+                Query All Algo Orders (USER_DATA)
+                GET /fapi/v1/allAlgoOrders
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Query-All-Algo-Orders
+
+                Get all algo orders; active, CANCELED, TRIGGERED or FINISHED .
+
+        * These orders will not be found:
+        * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+        * order create time + 90 days < current time
+
+        * If `algoId` is set, it will get orders >= that `algoId`. Otherwise most recent orders are returned.
+        * The query time period must be less then 7 days( default as the recent 7 days).
+
+        Weight: 5
+
+                Args:
+                    symbol (Union[str, None]):
+                    algo_id (Optional[int] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    page (Optional[int] = None):
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAllAlgoOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "start_time": start_time,
+            "end_time": end_time,
+            "page": page,
+            "limit": limit,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/allAlgoOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryAllAlgoOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1394,6 +1873,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -1407,6 +1887,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/openOrder",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentOpenOrderResponse,
             is_signed=True,
@@ -1455,6 +1936,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -1468,6 +1950,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOrderResponse,
             is_signed=True,
@@ -1551,19 +2034,19 @@ class TradeApi:
                     type (Union[str, None]):
                     position_side (Optional[TestOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[TestOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
-                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    quantity (Optional[float] = None):
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     price (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
                     working_type (Optional[TestOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[TestOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 
@@ -1588,6 +2071,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1617,6 +2101,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/order/test",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TestOrderResponse,
             is_signed=True,
@@ -1660,6 +2145,7 @@ class TradeApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "auto_close_type": auto_close_type,
@@ -1675,6 +2161,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/forceOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=UsersForceOrdersResponse,
             is_signed=True,

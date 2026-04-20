@@ -19,7 +19,6 @@ from .api.borrow_repay_api import BorrowRepayApi
 from .api.market_data_api import MarketDataApi
 from .api.risk_data_stream_api import RiskDataStreamApi
 from .api.trade_api import TradeApi
-from .api.trade_data_stream_api import TradeDataStreamApi
 from .api.transfer_api import TransferApi
 
 from .models import AdjustCrossMarginMaxLeverageResponse
@@ -46,6 +45,8 @@ from .models import GetAllMarginAssetsResponse
 from .models import GetDelistScheduleResponse
 from .models import GetLimitPricePairsResponse
 from .models import GetListScheduleResponse
+from .models import GetMarginAssetRiskBasedLiquidationRatioResponse
+from .models import GetMarginRestrictedAssetsResponse
 from .models import QueryIsolatedMarginTierDataResponse
 from .models import QueryLiabilityCoinLeverageBracketInCrossMarginProModeResponse
 from .models import QueryMarginAvailableInventoryResponse
@@ -75,12 +76,10 @@ from .models import QueryMarginAccountsOpenOcoResponse
 from .models import QueryMarginAccountsOpenOrdersResponse
 from .models import QueryMarginAccountsOrderResponse
 from .models import QueryMarginAccountsTradeListResponse
+from .models import QueryPreventedMatchesResponse
 from .models import QuerySpecialKeyResponse
 from .models import QuerySpecialKeyListResponse
 
-
-from .models import StartIsolatedMarginUserDataStreamResponse
-from .models import StartMarginUserDataStreamResponse
 from .models import GetCrossMarginTransferHistoryResponse
 from .models import QueryMaxTransferOutAmountResponse
 
@@ -123,13 +122,14 @@ class MarginTradingRestAPI:
             self.configuration, self._session, self._signer
         )
         self._tradeApi = TradeApi(self.configuration, self._session, self._signer)
-        self._tradeDataStreamApi = TradeDataStreamApi(
-            self.configuration, self._session, self._signer
-        )
         self._transferApi = TransferApi(self.configuration, self._session, self._signer)
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -137,25 +137,8 @@ class MarginTradingRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -165,7 +148,36 @@ class MarginTradingRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -319,10 +331,10 @@ class MarginTradingRestAPI:
                     asset (Optional[str] = None):
                     symbol (Optional[str] = None): isolated margin pair
                     type (Optional[str] = None): Transfer Type: ROLL_IN, ROLL_OUT
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -533,7 +545,7 @@ class MarginTradingRestAPI:
                 Args:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -616,7 +628,7 @@ class MarginTradingRestAPI:
                     asset (Optional[str] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
                     tx_id (Optional[int] = None): `tranId` in `POST /sapi/v1/margin/loan`
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100
@@ -660,7 +672,7 @@ class MarginTradingRestAPI:
                 Args:
                     asset (Union[str, None]):
                     vip_level (Optional[int] = None): User's current specific margin data will be returned if vipLevel is omitted
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -880,6 +892,50 @@ class MarginTradingRestAPI:
 
         return self._marketDataApi.get_list_schedule(recv_window)
 
+    def get_margin_asset_risk_based_liquidation_ratio(
+        self,
+    ) -> ApiResponse[GetMarginAssetRiskBasedLiquidationRatioResponse]:
+        """
+                Get Margin Asset Risk-Based Liquidation Ratio (MARKET_DATA)
+
+                Get Margin Asset Risk-Based Liquidation Ratio
+
+        Weight: 1
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetMarginAssetRiskBasedLiquidationRatioResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_margin_asset_risk_based_liquidation_ratio()
+
+    def get_margin_restricted_assets(
+        self,
+    ) -> ApiResponse[GetMarginRestrictedAssetsResponse]:
+        """
+                Get Margin Restricted Assets (MARKET_DATA)
+
+                Get Margin Restricted Assets
+
+        Weight: 1
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetMarginRestrictedAssetsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_margin_restricted_assets()
+
     def query_isolated_margin_tier_data(
         self,
         symbol: Union[str, None],
@@ -1062,16 +1118,14 @@ class MarginTradingRestAPI:
         """
                 Create Special Key(Low-Latency Trading)(TRADE)
 
-                **Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 4 or higher. **
-
-        **If you are VIP level 3 or below, please contact your VIP manager for eligibility criterias.**
+                - Binance Margin offers low-latency trading through a [special key](https://www.binance.com/en/support/faq/frequently-asked-questions-on-margin-special-api-key-3208663e900d4d2e9fec4140e1832f4e), available exclusively to users with VIP level 7 or higher.
+        - If you are VIP level 6 or below, please contact your VIP manager for eligibility criterias.
 
         **Supported Products:**
 
         - Cross Margin
         - Isolated Margin
         - Portfolio Margin Pro
-        - Cross Margin Pro (Additional agreement required and subject to meeting eligibility criteria)
 
         **Unsupported Products:**
 
@@ -1084,10 +1138,6 @@ class MarginTradingRestAPI:
         * RSA
 
         We recommend to **use Ed25519 API keys** as it should provide the best performance and security out of all supported key types. We accept PKCS#8 (BEGIN PUBLIC KEY). For how to generate an RSA key pair to send API requests on Binance. Please refer to the document below [FAQ](https://www.binance.com/en/support/faq/how-to-generate-an-rsa-key-pair-to-send-api-requests-on-binance-2b79728f331e43079b27440d9d15c5db) .
-
-        Read [REST API](https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#signed-trade-and-user_data-endpoint-security) or [WebSocket API](https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-api.md#request-security) documentation to learn how to use different API keys
-
-        You need to enable Permits “Enable Spot & Margin Trading” option for the API Key which requests this endpoint.
 
         Weight: 1(UID)
 
@@ -1192,7 +1242,7 @@ class MarginTradingRestAPI:
         Weight: 1(IP)
 
                 Args:
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     isolated_symbol (Optional[str] = None): isolated symbol
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -1253,7 +1303,7 @@ class MarginTradingRestAPI:
                 Args:
                     current (Union[int, None]): Currently querying page. Start from 1. Default:1
                     size (Union[int, None]): Default:10, Max:100
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -1285,7 +1335,7 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1320,7 +1370,7 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
@@ -1363,7 +1413,7 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default
@@ -1422,7 +1472,7 @@ class MarginTradingRestAPI:
                     quantity (Union[float, None]):
                     price (Union[float, None]):
                     stop_price (Union[float, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     limit_client_order_id (Optional[str] = None): A unique Id for the limit order
                     limit_iceberg_qty (Optional[float] = None):
@@ -1497,7 +1547,7 @@ class MarginTradingRestAPI:
                     symbol (Union[str, None]):
                     side (Union[MarginAccountNewOrderSideEnum, None]):
                     type (Union[str, None]): `MARGIN`,`ISOLATED`
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     quantity (Optional[float] = None):
                     quote_order_qty (Optional[float] = None):
                     price (Optional[float] = None):
@@ -1591,7 +1641,7 @@ class MarginTradingRestAPI:
                     pending_type (Union[str, None]): Supported values: [Order Types](https://developers.binance.com/docs/binance-spot-api-docs/enums#order-types-ordertypes-type) Note that `MARKET` orders using `quoteOrderQty` are not supported.
                     pending_side (Union[str, None]): BUY, SELL
                     pending_quantity (Union[float, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
                     new_order_resp_type (Optional[MarginAccountNewOtoNewOrderRespTypeEnum] = None): Set the response JSON. ACK, RESULT, or FULL; MARKET and LIMIT order types default to FULL, all other orders default to ACK.
                     side_effect_type (Optional[str] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT. More info in [FAQ](https://www.binance.com/en/support/faq/how-to-use-the-sideeffecttype-parameter-with-the-margin-order-endpoints-f9fc51cda1984bf08b95e0d96c4570bc)
@@ -1699,7 +1749,7 @@ class MarginTradingRestAPI:
                     pending_side (Union[str, None]): BUY, SELL
                     pending_quantity (Union[float, None]):
                     pending_above_type (Union[str, None]): Supported values: `LIMIT_MAKER`, `STOP_LOSS`, and `STOP_LOSS_LIMIT`
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     side_effect_type (Optional[str] = None): NO_SIDE_EFFECT, MARGIN_BUY, AUTO_REPAY,AUTO_BORROW_REPAY; default NO_SIDE_EFFECT. More info in [FAQ](https://www.binance.com/en/support/faq/how-to-use-the-sideeffecttype-parameter-with-the-margin-order-endpoints-f9fc51cda1984bf08b95e0d96c4570bc)
                     auto_repay_at_cancel (Optional[bool] = None): Only when MARGIN_BUY or AUTO_BORROW_REPAY order takes effect, true means that the debt generated by the order needs to be repay after the order is cancelled. The default is true
                     list_client_order_id (Optional[str] = None): Either `orderListId` or `listClientOrderId` must be provided
@@ -1808,7 +1858,7 @@ class MarginTradingRestAPI:
         Weight: 20(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -1842,12 +1892,12 @@ class MarginTradingRestAPI:
         Weight: 200(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1885,11 +1935,11 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -1920,7 +1970,7 @@ class MarginTradingRestAPI:
         Weight: 10(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     order_list_id (Optional[int] = None): Either `orderListId` or `listClientOrderId` must be provided
                     orig_client_order_id (Optional[str] = None):
@@ -1952,7 +2002,7 @@ class MarginTradingRestAPI:
         Weight: 10(IP)
 
                 Args:
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     symbol (Optional[str] = None): isolated margin pair
                     recv_window (Optional[int] = None): No more than 60000
 
@@ -1987,7 +2037,7 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Optional[str] = None): isolated margin pair
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -2022,7 +2072,7 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     recv_window (Optional[int] = None): No more than 60000
@@ -2062,12 +2112,12 @@ class MarginTradingRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    is_isolated (Optional[str] = None): for isolated margin or not, "TRUE", "FALSE"，default "FALSE"
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
                     order_id (Optional[int] = None):
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
-                    from_id (Optional[int] = None): 如设置fromId, 将返回id > fromId的数据。否则将返回最新数据
-                    limit (Optional[int] = None): Default Value: 500; Max Value: 1000
+                    from_id (Optional[int] = None): If `fromId` is set, data with `id` greater than `fromId` will be returned. Otherwise, the latest data will be returned.
+                    limit (Optional[int] = None): Limit on the number of data records returned per request. Default: 500; Maximum: 1000.
                     recv_window (Optional[int] = None): No more than 60000
 
                 Returns:
@@ -2087,6 +2137,46 @@ class MarginTradingRestAPI:
             from_id,
             limit,
             recv_window,
+        )
+
+    def query_prevented_matches(
+        self,
+        symbol: Union[str, None],
+        prevented_match_id: Optional[int] = None,
+        order_id: Optional[int] = None,
+        from_prevented_match_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+        is_isolated: Optional[str] = None,
+    ) -> ApiResponse[QueryPreventedMatchesResponse]:
+        """
+                Query Prevented Matches(USER_DATA)
+
+
+        Weight: 10(IP)
+
+                Args:
+                    symbol (Union[str, None]):
+                    prevented_match_id (Optional[int] = None):
+                    order_id (Optional[int] = None):
+                    from_prevented_match_id (Optional[int] = None):
+                    recv_window (Optional[int] = None): No more than 60000
+                    is_isolated (Optional[str] = None): For isolated margin or not, "TRUE", "FALSE", default "FALSE"
+
+                Returns:
+                    ApiResponse[QueryPreventedMatchesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.query_prevented_matches(
+            symbol,
+            prevented_match_id,
+            order_id,
+            from_prevented_match_id,
+            recv_window,
+            is_isolated,
         )
 
     def query_special_key(
@@ -2173,156 +2263,6 @@ class MarginTradingRestAPI:
 
         return self._tradeApi.small_liability_exchange(asset_names, recv_window)
 
-    def close_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-        listenkey: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Close Isolated Margin User Data Stream (USER_STREAM)
-
-                Close out a isolated margin user data stream.
-
-        Weight: 3000
-
-                Args:
-                    symbol (Union[str, None]):
-                    listenkey (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.close_isolated_margin_user_data_stream(
-            symbol, listenkey
-        )
-
-    def close_margin_user_data_stream(
-        self,
-        listenkey: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Close Margin User Data Stream (USER_STREAM)
-
-                Close out a Margin user data stream.
-
-        Weight: 3000
-
-                Args:
-                    listenkey (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.close_margin_user_data_stream(listenkey)
-
-    def keepalive_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Keepalive Isolated Margin User Data Stream (USER_STREAM)
-
-                Keepalive an isolated margin user data stream to prevent a time out.
-
-        Weight: 1
-
-                Args:
-                    symbol (Union[str, None]):
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.keepalive_isolated_margin_user_data_stream(
-            symbol, listen_key
-        )
-
-    def keepalive_margin_user_data_stream(
-        self,
-        listen_key: Union[str, None],
-    ) -> ApiResponse[None]:
-        """
-                Keepalive Margin User Data Stream (USER_STREAM)
-
-                Keepalive a margin user data stream to prevent a time out.
-
-        Weight: 1
-
-                Args:
-                    listen_key (Union[str, None]):
-
-                Returns:
-                    ApiResponse[None]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.keepalive_margin_user_data_stream(listen_key)
-
-    def start_isolated_margin_user_data_stream(
-        self,
-        symbol: Union[str, None],
-    ) -> ApiResponse[StartIsolatedMarginUserDataStreamResponse]:
-        """
-                Start Isolated Margin User Data Stream (USER_STREAM)
-
-                Start a new isolated margin user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active listenKey, that listenKey will be returned and its validity will be extended for 60 minutes.
-
-        Weight: 1
-
-                Args:
-                    symbol (Union[str, None]):
-
-                Returns:
-                    ApiResponse[StartIsolatedMarginUserDataStreamResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.start_isolated_margin_user_data_stream(symbol)
-
-    def start_margin_user_data_stream(
-        self,
-    ) -> ApiResponse[StartMarginUserDataStreamResponse]:
-        """
-                Start Margin User Data Stream (USER_STREAM)
-
-                Start a new margin user data stream. The stream will close after 60 minutes unless a keepalive is sent. If the account has an active listenKey, that listenKey will be returned and its validity will be extended for 60 minutes.
-
-        Weight: 1
-
-                Args:
-
-                Returns:
-                    ApiResponse[StartMarginUserDataStreamResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeDataStreamApi.start_margin_user_data_stream()
-
     def get_cross_margin_transfer_history(
         self,
         asset: Optional[str] = None,
@@ -2348,7 +2288,7 @@ class MarginTradingRestAPI:
                 Args:
                     asset (Optional[str] = None):
                     type (Optional[str] = None): Transfer Type: ROLL_IN, ROLL_OUT
-                    start_time (Optional[int] = None): 只支持查询最近90天的数据
+                    start_time (Optional[int] = None): Only supports querying data from the past 90 days.
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
                     size (Optional[int] = None): Default:10 Max:100

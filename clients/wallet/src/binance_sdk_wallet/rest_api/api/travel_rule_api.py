@@ -23,6 +23,7 @@ from ..models import DepositHistoryV2Response
 from ..models import FetchAddressVerificationListResponse
 from ..models import SubmitDepositQuestionnaireResponse
 from ..models import SubmitDepositQuestionnaireTravelRuleResponse
+from ..models import SubmitDepositQuestionnaireV2Response
 from ..models import VaspListResponse
 from ..models import WithdrawHistoryV1Response
 from ..models import WithdrawHistoryV2Response
@@ -126,6 +127,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'signature'",
             )
 
+        body = {}
         payload = {
             "address": address,
             "coin": coin,
@@ -147,6 +149,7 @@ class TravelRuleApi:
             method="POST",
             path="/sapi/v1/localentity/broker/withdraw/apply",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=BrokerWithdrawResponse,
             is_signed=True,
@@ -177,6 +180,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -185,6 +189,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/questionnaire-requirements",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckQuestionnaireRequirementsResponse,
             is_signed=True,
@@ -214,6 +219,7 @@ class TravelRuleApi:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 
@@ -238,6 +244,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -258,6 +265,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/deposit/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DepositHistoryTravelRuleResponse,
             is_signed=True,
@@ -285,6 +293,7 @@ class TravelRuleApi:
 
         * Please notice the default `startTime` and `endTime` to make sure that time interval is within
         * If both ``startTime`` and ``endTime`` are sent, time between ``startTime`` and ``endTime`` must
+        * Please, note that due to network-specific characteristics, the returned source address may be inaccurate. If multiple source addresses are found, only the first one will be returned.
 
         Weight: 1
 
@@ -307,6 +316,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {
             "deposit_id": deposit_id,
             "tx_id": tx_id,
@@ -325,6 +335,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v2/localentity/deposit/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=DepositHistoryV2Response,
             is_signed=True,
@@ -355,6 +366,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -363,6 +375,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/addressVerify/list",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchAddressVerificationListResponse,
             is_signed=True,
@@ -372,7 +385,7 @@ class TravelRuleApi:
     def submit_deposit_questionnaire(
         self,
         sub_account_id: Union[str, None],
-        deposit_id: Union[str, None],
+        deposit_id: Union[int, None],
         questionnaire: Union[str, None],
         beneficiary_pii: Union[str, None],
         signature: Union[str, None],
@@ -398,7 +411,7 @@ class TravelRuleApi:
 
                 Args:
                     sub_account_id (Union[str, None]): External user ID.
-                    deposit_id (Union[str, None]): Wallet deposit ID.
+                    deposit_id (Union[int, None]): Wallet deposit ID
                     questionnaire (Union[str, None]): JSON format questionnaire answers.
                     beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
                     signature (Union[str, None]): Must be the last parameter.
@@ -442,6 +455,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'signature'",
             )
 
+        body = {}
         payload = {
             "sub_account_id": sub_account_id,
             "deposit_id": deposit_id,
@@ -461,6 +475,7 @@ class TravelRuleApi:
             method="PUT",
             path="/sapi/v1/localentity/broker/deposit/provide-info",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireResponse,
             is_signed=True,
@@ -508,6 +523,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'questionnaire'",
             )
 
+        body = {}
         payload = {"tran_id": tran_id, "questionnaire": questionnaire}
 
         return send_request(
@@ -516,8 +532,67 @@ class TravelRuleApi:
             method="PUT",
             path="/sapi/v1/localentity/deposit/provide-info",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireTravelRuleResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def submit_deposit_questionnaire_v2(
+        self,
+        deposit_id: Union[int, None],
+        questionnaire: Union[str, None],
+    ) -> ApiResponse[SubmitDepositQuestionnaireV2Response]:
+        """
+                Submit Deposit Questionnaire V2 (For local entities that require travel rule) (supporting network) (USER_DATA)
+                PUT /sapi/v2/localentity/deposit/provide-info
+                https://developers.binance.com/docs/wallet/travel-rule/deposit-provide-info-v2
+
+                Submit questionnaire for local entities that require travel rule.
+        The questionnaire is only applies to transactions from unhosted wallets or VASPs that are not
+        yet onboarded with GTR.
+
+        * Questionnaire is different for each local entity, please refer
+        * If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`,
+
+        Weight: 600
+
+                Args:
+                    deposit_id (Union[int, None]): Wallet deposit ID
+                    questionnaire (Union[str, None]): JSON format questionnaire answers.
+
+                Returns:
+                    ApiResponse[SubmitDepositQuestionnaireV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if deposit_id is None:
+            raise RequiredError(
+                field="deposit_id",
+                error_message="Missing required parameter 'deposit_id'",
+            )
+        if questionnaire is None:
+            raise RequiredError(
+                field="questionnaire",
+                error_message="Missing required parameter 'questionnaire'",
+            )
+
+        body = {}
+        payload = {"deposit_id": deposit_id, "questionnaire": questionnaire}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="PUT",
+            path="/sapi/v2/localentity/deposit/provide-info",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=SubmitDepositQuestionnaireV2Response,
             is_signed=True,
             signer=self._signer,
         )
@@ -546,6 +621,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -554,6 +630,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/vasp",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=VaspListResponse,
             is_signed=True,
@@ -608,6 +685,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -628,6 +706,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/withdraw/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawHistoryV1Response,
             is_signed=True,
@@ -688,6 +767,7 @@ class TravelRuleApi:
 
         """
 
+        body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -708,6 +788,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v2/localentity/withdraw/history",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawHistoryV2Response,
             is_signed=True,
@@ -781,6 +862,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'questionnaire'",
             )
 
+        body = {}
         payload = {
             "coin": coin,
             "address": address,
@@ -801,6 +883,7 @@ class TravelRuleApi:
             method="POST",
             path="/sapi/v1/localentity/withdraw/apply",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawTravelRuleResponse,
             is_signed=True,

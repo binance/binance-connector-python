@@ -66,6 +66,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -74,6 +75,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v2/eth-staking/account",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=EthStakingAccountResponse,
             is_signed=True,
@@ -104,6 +106,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -112,6 +115,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/eth/quota",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetCurrentEthStakingQuotaResponse,
             is_signed=True,
@@ -120,6 +124,7 @@ class EthStakingApi:
 
     def get_eth_redemption_history(
         self,
+        redeem_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -141,6 +146,7 @@ class EthStakingApi:
         Weight: 150
 
                 Args:
+                    redeem_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -155,7 +161,9 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
+            "redeem_id": redeem_id,
             "start_time": start_time,
             "end_time": end_time,
             "current": current,
@@ -169,6 +177,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/eth/history/redemptionHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetEthRedemptionHistoryResponse,
             is_signed=True,
@@ -177,6 +186,7 @@ class EthStakingApi:
 
     def get_eth_staking_history(
         self,
+        purchase_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         current: Optional[int] = None,
@@ -198,6 +208,7 @@ class EthStakingApi:
         Weight: 150
 
                 Args:
+                    purchase_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     current (Optional[int] = None): Currently querying page. Start from 1. Default:1
@@ -212,7 +223,9 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
+            "purchase_id": purchase_id,
             "start_time": start_time,
             "end_time": end_time,
             "current": current,
@@ -226,6 +239,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/eth/history/stakingHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetEthStakingHistoryResponse,
             is_signed=True,
@@ -269,6 +283,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -283,6 +298,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/eth/history/rateHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetWbethRateHistoryResponse,
             is_signed=True,
@@ -326,6 +342,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -340,6 +357,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/eth/history/wbethRewardsHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetWbethRewardsHistoryResponse,
             is_signed=True,
@@ -383,6 +401,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -397,6 +416,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/wbeth/history/unwrapHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetWbethUnwrapHistoryResponse,
             is_signed=True,
@@ -440,6 +460,7 @@ class EthStakingApi:
 
         """
 
+        body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -454,6 +475,7 @@ class EthStakingApi:
             method="GET",
             path="/sapi/v1/eth-staking/wbeth/history/wrapHistory",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetWbethWrapHistoryResponse,
             is_signed=True,
@@ -495,6 +517,7 @@ class EthStakingApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"amount": amount, "asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -503,6 +526,7 @@ class EthStakingApi:
             method="POST",
             path="/sapi/v1/eth-staking/eth/redeem",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemEthResponse,
             is_signed=True,
@@ -542,6 +566,7 @@ class EthStakingApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -550,6 +575,7 @@ class EthStakingApi:
             method="POST",
             path="/sapi/v2/eth-staking/eth/stake",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeEthStakingResponse,
             is_signed=True,
@@ -589,6 +615,7 @@ class EthStakingApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
+        body = {}
         payload = {"amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -597,6 +624,7 @@ class EthStakingApi:
             method="POST",
             path="/sapi/v1/eth-staking/wbeth/wrap",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=WrapBethResponse,
             is_signed=True,

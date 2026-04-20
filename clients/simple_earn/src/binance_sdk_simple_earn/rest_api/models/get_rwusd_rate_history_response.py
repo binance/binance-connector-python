@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_simple_earn.rest_api.models.get_rwusd_rate_history_response_rows_inner import (
-    GetRwusdRateHistoryResponseRowsInner,
+from binance_sdk_simple_earn.rest_api.models.get_bfusd_rate_history_response_rows_inner import (
+    GetBfusdRateHistoryResponseRowsInner,
 )
 from typing import Set
 from typing_extensions import Self
@@ -30,7 +30,7 @@ class GetRwusdRateHistoryResponse(BaseModel):
     GetRwusdRateHistoryResponse
     """  # noqa: E501
 
-    rows: Optional[List[GetRwusdRateHistoryResponseRowsInner]] = None
+    rows: Optional[List[GetBfusdRateHistoryResponseRowsInner]] = None
     total: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["rows", "total"]
@@ -108,7 +108,7 @@ class GetRwusdRateHistoryResponse(BaseModel):
             {
                 "rows": (
                     [
-                        GetRwusdRateHistoryResponseRowsInner.from_dict(_item)
+                        GetBfusdRateHistoryResponseRowsInner.from_dict(_item)
                         for _item in obj["rows"]
                     ]
                     if obj.get("rows") is not None

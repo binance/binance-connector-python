@@ -61,6 +61,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"from_asset": from_asset, "to_asset": to_asset}
 
         return send_request(
@@ -69,6 +70,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/convert/exchangeInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ListAllConvertPairsResponse,
         )
@@ -97,6 +99,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -105,6 +108,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/convert/assetInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOrderQuantityPrecisionPerAssetResponse,
             is_signed=True,

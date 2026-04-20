@@ -89,6 +89,15 @@ from .get_list_schedule_response import (
 from .get_list_schedule_response_inner import (
     GetListScheduleResponseInner as GetListScheduleResponseInner,
 )
+from .get_margin_asset_risk_based_liquidation_ratio_response import (
+    GetMarginAssetRiskBasedLiquidationRatioResponse as GetMarginAssetRiskBasedLiquidationRatioResponse,
+)
+from .get_margin_asset_risk_based_liquidation_ratio_response_inner import (
+    GetMarginAssetRiskBasedLiquidationRatioResponseInner as GetMarginAssetRiskBasedLiquidationRatioResponseInner,
+)
+from .get_margin_restricted_assets_response import (
+    GetMarginRestrictedAssetsResponse as GetMarginRestrictedAssetsResponse,
+)
 from .get_small_liability_exchange_coin_list_response import (
     GetSmallLiabilityExchangeCoinListResponse as GetSmallLiabilityExchangeCoinListResponse,
 )
@@ -300,6 +309,12 @@ from .query_max_borrow_response import QueryMaxBorrowResponse as QueryMaxBorrowR
 from .query_max_transfer_out_amount_response import (
     QueryMaxTransferOutAmountResponse as QueryMaxTransferOutAmountResponse,
 )
+from .query_prevented_matches_response import (
+    QueryPreventedMatchesResponse as QueryPreventedMatchesResponse,
+)
+from .query_prevented_matches_response_inner import (
+    QueryPreventedMatchesResponseInner as QueryPreventedMatchesResponseInner,
+)
 from .query_special_key_list_response import (
     QuerySpecialKeyListResponse as QuerySpecialKeyListResponse,
 )
@@ -308,12 +323,6 @@ from .query_special_key_list_response_inner import (
 )
 from .query_special_key_response import (
     QuerySpecialKeyResponse as QuerySpecialKeyResponse,
-)
-from .start_isolated_margin_user_data_stream_response import (
-    StartIsolatedMarginUserDataStreamResponse as StartIsolatedMarginUserDataStreamResponse,
-)
-from .start_margin_user_data_stream_response import (
-    StartMarginUserDataStreamResponse as StartMarginUserDataStreamResponse,
 )
 from .start_user_data_stream_response import (
     StartUserDataStreamResponse as StartUserDataStreamResponse,

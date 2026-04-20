@@ -67,6 +67,7 @@ class SpotAlgoApi:
                 field="algo_id", error_message="Missing required parameter 'algo_id'"
             )
 
+        body = {}
         payload = {"algo_id": algo_id, "recv_window": recv_window}
 
         return send_request(
@@ -75,6 +76,7 @@ class SpotAlgoApi:
             method="DELETE",
             path="/sapi/v1/algo/spot/order",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAlgoOrderSpotAlgoResponse,
             is_signed=True,
@@ -105,6 +107,7 @@ class SpotAlgoApi:
 
         """
 
+        body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -113,6 +116,7 @@ class SpotAlgoApi:
             method="GET",
             path="/sapi/v1/algo/spot/openOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentAlgoOpenOrdersSpotAlgoResponse,
             is_signed=True,
@@ -155,6 +159,7 @@ class SpotAlgoApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -171,6 +176,7 @@ class SpotAlgoApi:
             method="GET",
             path="/sapi/v1/algo/spot/historicalOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryHistoricalAlgoOrdersSpotAlgoResponse,
             is_signed=True,
@@ -212,6 +218,7 @@ class SpotAlgoApi:
                 field="algo_id", error_message="Missing required parameter 'algo_id'"
             )
 
+        body = {}
         payload = {
             "algo_id": algo_id,
             "page": page,
@@ -225,6 +232,7 @@ class SpotAlgoApi:
             method="GET",
             path="/sapi/v1/algo/spot/subOrders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubOrdersSpotAlgoResponse,
             is_signed=True,
@@ -284,6 +292,7 @@ class SpotAlgoApi:
                 field="duration", error_message="Missing required parameter 'duration'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -299,6 +308,7 @@ class SpotAlgoApi:
             method="POST",
             path="/sapi/v1/algo/spot/newOrderTwap",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TimeWeightedAveragePriceSpotAlgoResponse,
             is_signed=True,

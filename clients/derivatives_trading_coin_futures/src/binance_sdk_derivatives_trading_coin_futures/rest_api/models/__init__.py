@@ -25,6 +25,9 @@ from .account_trade_list_response_inner import (
 )
 from .all_orders_response import AllOrdersResponse as AllOrdersResponse
 from .all_orders_response_inner import AllOrdersResponseInner as AllOrdersResponseInner
+from .auto_cancel_all_open_orders_response import (
+    AutoCancelAllOpenOrdersResponse as AutoCancelAllOpenOrdersResponse,
+)
 from .basis_response import BasisResponse as BasisResponse
 from .basis_response_inner import BasisResponseInner as BasisResponseInner
 from .cancel_all_open_orders_response import (
@@ -61,17 +64,8 @@ from .compressed_aggregate_trades_list_response_inner import (
 from .continuous_contract_kline_candlestick_data_response import (
     ContinuousContractKlineCandlestickDataResponse as ContinuousContractKlineCandlestickDataResponse,
 )
-from .continuous_contract_kline_candlestick_data_response_item import (
-    ContinuousContractKlineCandlestickDataResponseItem as ContinuousContractKlineCandlestickDataResponseItem,
-)
-from .continuous_contract_kline_candlestick_data_response_item_inner import (
-    ContinuousContractKlineCandlestickDataResponseItemInner as ContinuousContractKlineCandlestickDataResponseItemInner,
-)
 from .current_all_open_orders_response import (
     CurrentAllOpenOrdersResponse as CurrentAllOpenOrdersResponse,
-)
-from .current_all_open_orders_response_inner import (
-    CurrentAllOpenOrdersResponseInner as CurrentAllOpenOrdersResponseInner,
 )
 from .exchange_information_response import (
     ExchangeInformationResponse as ExchangeInformationResponse,
@@ -160,11 +154,8 @@ from .index_price_and_mark_price_response_inner import (
 from .index_price_kline_candlestick_data_response import (
     IndexPriceKlineCandlestickDataResponse as IndexPriceKlineCandlestickDataResponse,
 )
-from .index_price_kline_candlestick_data_response_item import (
-    IndexPriceKlineCandlestickDataResponseItem as IndexPriceKlineCandlestickDataResponseItem,
-)
-from .index_price_kline_candlestick_data_response_item_inner import (
-    IndexPriceKlineCandlestickDataResponseItemInner as IndexPriceKlineCandlestickDataResponseItemInner,
+from .keepalive_user_data_stream_response import (
+    KeepaliveUserDataStreamResponse as KeepaliveUserDataStreamResponse,
 )
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
@@ -178,12 +169,6 @@ from .long_short_ratio_response_inner import (
 )
 from .mark_price_kline_candlestick_data_response import (
     MarkPriceKlineCandlestickDataResponse as MarkPriceKlineCandlestickDataResponse,
-)
-from .mark_price_kline_candlestick_data_response_item import (
-    MarkPriceKlineCandlestickDataResponseItem as MarkPriceKlineCandlestickDataResponseItem,
-)
-from .mark_price_kline_candlestick_data_response_item_inner import (
-    MarkPriceKlineCandlestickDataResponseItemInner as MarkPriceKlineCandlestickDataResponseItemInner,
 )
 from .modify_isolated_position_margin_response import (
     ModifyIsolatedPositionMarginResponse as ModifyIsolatedPositionMarginResponse,
@@ -234,6 +219,15 @@ from .order_book_response_asks_item import (
 from .order_book_response_bids_item import (
     OrderBookResponseBidsItem as OrderBookResponseBidsItem,
 )
+from .place_multiple_orders_batch_orders_parameter_inner import (
+    PlaceMultipleOrdersBatchOrdersParameterInner as PlaceMultipleOrdersBatchOrdersParameterInner,
+)
+from .place_multiple_orders_response import (
+    PlaceMultipleOrdersResponse as PlaceMultipleOrdersResponse,
+)
+from .place_multiple_orders_response_inner import (
+    PlaceMultipleOrdersResponseInner as PlaceMultipleOrdersResponseInner,
+)
 from .position_adl_quantile_estimation_response import (
     PositionAdlQuantileEstimationResponse as PositionAdlQuantileEstimationResponse,
 )
@@ -251,12 +245,6 @@ from .position_information_response_inner import (
 )
 from .premium_index_kline_data_response import (
     PremiumIndexKlineDataResponse as PremiumIndexKlineDataResponse,
-)
-from .premium_index_kline_data_response_item import (
-    PremiumIndexKlineDataResponseItem as PremiumIndexKlineDataResponseItem,
-)
-from .premium_index_kline_data_response_item_inner import (
-    PremiumIndexKlineDataResponseItemInner as PremiumIndexKlineDataResponseItemInner,
 )
 from .query_current_open_order_response import (
     QueryCurrentOpenOrderResponse as QueryCurrentOpenOrderResponse,

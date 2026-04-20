@@ -3410,7 +3410,7 @@ class TestFlexibleLockedApi:
             "amount": 1.0,
             "auto_subscribe": True,
             "source_account": "SPOT",
-            "redeem_to": "",
+            "redeem_to": "SPOT",
             "recv_window": 5000,
         }
 

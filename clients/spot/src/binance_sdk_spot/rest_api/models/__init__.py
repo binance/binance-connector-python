@@ -75,6 +75,13 @@ from .exchange_max_num_order_lists_filter import (
 from .exchange_max_num_orders_filter import (
     ExchangeMaxNumOrdersFilter as ExchangeMaxNumOrdersFilter,
 )
+from .execution_rules_response import ExecutionRulesResponse as ExecutionRulesResponse
+from .execution_rules_response_symbol_rules_inner import (
+    ExecutionRulesResponseSymbolRulesInner as ExecutionRulesResponseSymbolRulesInner,
+)
+from .execution_rules_response_symbol_rules_inner_rules_inner import (
+    ExecutionRulesResponseSymbolRulesInnerRulesInner as ExecutionRulesResponseSymbolRulesInnerRulesInner,
+)
 from .get_account_response import GetAccountResponse as GetAccountResponse
 from .get_account_response_balances_inner import (
     GetAccountResponseBalancesInner as GetAccountResponseBalancesInner,
@@ -96,8 +103,6 @@ from .historical_trades_response_inner import (
     HistoricalTradesResponseInner as HistoricalTradesResponseInner,
 )
 from .iceberg_parts_filter import IcebergPartsFilter as IcebergPartsFilter
-from .klines_item import KlinesItem as KlinesItem
-from .klines_item_inner import KlinesItemInner as KlinesItemInner
 from .klines_response import KlinesResponse as KlinesResponse
 from .lot_size_filter import LotSizeFilter as LotSizeFilter
 from .market_lot_size_filter import MarketLotSizeFilter as MarketLotSizeFilter
@@ -129,9 +134,6 @@ from .my_trades_response_inner import MyTradesResponseInner as MyTradesResponseI
 from .new_order_response import NewOrderResponse as NewOrderResponse
 from .new_order_response_fills_inner import (
     NewOrderResponseFillsInner as NewOrderResponseFillsInner,
-)
-from .new_user_data_stream_response import (
-    NewUserDataStreamResponse as NewUserDataStreamResponse,
 )
 from .notional_filter import NotionalFilter as NotionalFilter
 from .open_order_list_response import OpenOrderListResponse as OpenOrderListResponse
@@ -184,6 +186,20 @@ from .order_list_oco_response_order_reports_inner import (
 from .order_list_oco_response_orders_inner import (
     OrderListOcoResponseOrdersInner as OrderListOcoResponseOrdersInner,
 )
+from .order_list_opo_response import OrderListOpoResponse as OrderListOpoResponse
+from .order_list_opo_response_order_reports_inner import (
+    OrderListOpoResponseOrderReportsInner as OrderListOpoResponseOrderReportsInner,
+)
+from .order_list_opo_response_orders_inner import (
+    OrderListOpoResponseOrdersInner as OrderListOpoResponseOrdersInner,
+)
+from .order_list_opoco_response import OrderListOpocoResponse as OrderListOpocoResponse
+from .order_list_opoco_response_order_reports_inner import (
+    OrderListOpocoResponseOrderReportsInner as OrderListOpocoResponseOrderReportsInner,
+)
+from .order_list_opoco_response_orders_inner import (
+    OrderListOpocoResponseOrdersInner as OrderListOpocoResponseOrdersInner,
+)
 from .order_list_oto_response import OrderListOtoResponse as OrderListOtoResponse
 from .order_list_oto_response_order_reports_inner import (
     OrderListOtoResponseOrderReportsInner as OrderListOtoResponseOrderReportsInner,
@@ -225,6 +241,10 @@ from .rate_limit_order_response_inner import (
     RateLimitOrderResponseInner as RateLimitOrderResponseInner,
 )
 from .rate_limits import RateLimits as RateLimits
+from .reference_price_calculation_response import (
+    ReferencePriceCalculationResponse as ReferencePriceCalculationResponse,
+)
+from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
 from .sor_order_response import SorOrderResponse as SorOrderResponse
 from .sor_order_response_fills_inner import (
     SorOrderResponseFillsInner as SorOrderResponseFillsInner,
@@ -274,16 +294,25 @@ from .ticker_trading_day_response2_inner import (
 )
 from .time_response import TimeResponse as TimeResponse
 from .trailing_delta_filter import TrailingDeltaFilter as TrailingDeltaFilter
-from .ui_klines_item import UiKlinesItem as UiKlinesItem
 from .ui_klines_response import UiKlinesResponse as UiKlinesResponse
 
 
 from .enums import ExchangeInfoSymbolStatusEnum as ExchangeInfoSymbolStatusEnum
+from .enums import ExecutionRulesSymbolStatusEnum as ExecutionRulesSymbolStatusEnum
+from .enums import DepthSymbolStatusEnum as DepthSymbolStatusEnum
 from .enums import KlinesIntervalEnum as KlinesIntervalEnum
+from .enums import (
+    ReferencePriceCalculationSymbolStatusEnum as ReferencePriceCalculationSymbolStatusEnum,
+)
 from .enums import TickerWindowSizeEnum as TickerWindowSizeEnum
 from .enums import TickerTypeEnum as TickerTypeEnum
+from .enums import TickerSymbolStatusEnum as TickerSymbolStatusEnum
 from .enums import Ticker24hrTypeEnum as Ticker24hrTypeEnum
+from .enums import Ticker24hrSymbolStatusEnum as Ticker24hrSymbolStatusEnum
+from .enums import TickerBookTickerSymbolStatusEnum as TickerBookTickerSymbolStatusEnum
+from .enums import TickerPriceSymbolStatusEnum as TickerPriceSymbolStatusEnum
 from .enums import TickerTradingDayTypeEnum as TickerTradingDayTypeEnum
+from .enums import TickerTradingDaySymbolStatusEnum as TickerTradingDaySymbolStatusEnum
 from .enums import UiKlinesIntervalEnum as UiKlinesIntervalEnum
 from .enums import (
     DeleteOrderCancelRestrictionsEnum as DeleteOrderCancelRestrictionsEnum,
@@ -343,6 +372,74 @@ from .enums import (
 from .enums import OrderListOcoNewOrderRespTypeEnum as OrderListOcoNewOrderRespTypeEnum
 from .enums import (
     OrderListOcoSelfTradePreventionModeEnum as OrderListOcoSelfTradePreventionModeEnum,
+)
+from .enums import OrderListOpoWorkingTypeEnum as OrderListOpoWorkingTypeEnum
+from .enums import OrderListOpoWorkingSideEnum as OrderListOpoWorkingSideEnum
+from .enums import OrderListOpoPendingTypeEnum as OrderListOpoPendingTypeEnum
+from .enums import OrderListOpoPendingSideEnum as OrderListOpoPendingSideEnum
+from .enums import OrderListOpoNewOrderRespTypeEnum as OrderListOpoNewOrderRespTypeEnum
+from .enums import (
+    OrderListOpoSelfTradePreventionModeEnum as OrderListOpoSelfTradePreventionModeEnum,
+)
+from .enums import (
+    OrderListOpoWorkingTimeInForceEnum as OrderListOpoWorkingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpoWorkingPegPriceTypeEnum as OrderListOpoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpoWorkingPegOffsetTypeEnum as OrderListOpoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpoPendingTimeInForceEnum as OrderListOpoPendingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpoPendingPegPriceTypeEnum as OrderListOpoPendingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpoPendingPegOffsetTypeEnum as OrderListOpoPendingPegOffsetTypeEnum,
+)
+from .enums import OrderListOpocoWorkingTypeEnum as OrderListOpocoWorkingTypeEnum
+from .enums import OrderListOpocoWorkingSideEnum as OrderListOpocoWorkingSideEnum
+from .enums import OrderListOpocoPendingSideEnum as OrderListOpocoPendingSideEnum
+from .enums import (
+    OrderListOpocoPendingAboveTypeEnum as OrderListOpocoPendingAboveTypeEnum,
+)
+from .enums import (
+    OrderListOpocoNewOrderRespTypeEnum as OrderListOpocoNewOrderRespTypeEnum,
+)
+from .enums import (
+    OrderListOpocoSelfTradePreventionModeEnum as OrderListOpocoSelfTradePreventionModeEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingTimeInForceEnum as OrderListOpocoWorkingTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingPegPriceTypeEnum as OrderListOpocoWorkingPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoWorkingPegOffsetTypeEnum as OrderListOpocoWorkingPegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAboveTimeInForceEnum as OrderListOpocoPendingAboveTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAbovePegPriceTypeEnum as OrderListOpocoPendingAbovePegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingAbovePegOffsetTypeEnum as OrderListOpocoPendingAbovePegOffsetTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowTypeEnum as OrderListOpocoPendingBelowTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowTimeInForceEnum as OrderListOpocoPendingBelowTimeInForceEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowPegPriceTypeEnum as OrderListOpocoPendingBelowPegPriceTypeEnum,
+)
+from .enums import (
+    OrderListOpocoPendingBelowPegOffsetTypeEnum as OrderListOpocoPendingBelowPegOffsetTypeEnum,
 )
 from .enums import OrderListOtoWorkingTypeEnum as OrderListOtoWorkingTypeEnum
 from .enums import OrderListOtoWorkingSideEnum as OrderListOtoWorkingSideEnum

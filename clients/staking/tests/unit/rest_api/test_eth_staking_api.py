@@ -161,6 +161,13 @@ class TestEthStakingApi:
         expected_response = {
             "leftStakingPersonalQuota": "1000",
             "leftRedemptionPersonalQuota": "1000",
+            "minStakeAmount": "0.00010000",
+            "minRedeemAmount": "0.00000001",
+            "redeemPeriod": 20,
+            "stakeable": True,
+            "redeemable": True,
+            "commissionFee": "0.05000000",
+            "calculating": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -211,6 +218,13 @@ class TestEthStakingApi:
         expected_response = {
             "leftStakingPersonalQuota": "1000",
             "leftRedemptionPersonalQuota": "1000",
+            "minStakeAmount": "0.00010000",
+            "minRedeemAmount": "0.00000001",
+            "redeemPeriod": 20,
+            "stakeable": True,
+            "redeemable": True,
+            "commissionFee": "0.05000000",
+            "calculating": False,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -322,6 +336,7 @@ class TestEthStakingApi:
         """Test get_eth_redemption_history() successfully with optional parameters."""
 
         params = {
+            "redeem_id": 1,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "current": 1,
@@ -451,6 +466,7 @@ class TestEthStakingApi:
         """Test get_eth_staking_history() successfully with optional parameters."""
 
         params = {
+            "purchase_id": 1,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "current": 1,
@@ -1016,6 +1032,7 @@ class TestEthStakingApi:
             "ethAmount": "0.23092091",
             "conversionRatio": "1.00121234",
             "arrivalTime": 1575018510000,
+            "redeemId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1066,6 +1083,7 @@ class TestEthStakingApi:
             "ethAmount": "0.23092091",
             "conversionRatio": "1.00121234",
             "arrivalTime": 1575018510000,
+            "redeemId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1134,6 +1152,7 @@ class TestEthStakingApi:
             "success": True,
             "wbethAmount": "0.23092091",
             "conversionRatio": "1.001212342342",
+            "purchaseId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -1185,6 +1204,7 @@ class TestEthStakingApi:
             "success": True,
             "wbethAmount": "0.23092091",
             "conversionRatio": "1.001212342342",
+            "purchaseId": 1234567,
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

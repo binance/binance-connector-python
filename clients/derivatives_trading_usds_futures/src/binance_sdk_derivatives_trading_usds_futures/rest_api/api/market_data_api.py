@@ -16,6 +16,7 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 
+from ..models import AdlRiskResponse
 from ..models import BasisResponse
 from ..models import CheckServerTimeResponse
 from ..models import CompositeIndexSymbolInformationResponse
@@ -39,6 +40,7 @@ from ..models import QuarterlyContractSettlementPriceResponse
 from ..models import QueryIndexPriceConstituentsResponse
 from ..models import QueryInsuranceFundBalanceSnapshotResponse
 from ..models import RecentTradesListResponse
+from ..models import RpiOrderBookResponse
 from ..models import SymbolOrderBookTickerResponse
 from ..models import SymbolPriceTickerResponse
 from ..models import SymbolPriceTickerV2Response
@@ -47,6 +49,7 @@ from ..models import TakerBuySellVolumeResponse
 from ..models import Ticker24hrPriceChangeStatisticsResponse
 from ..models import TopTraderLongShortRatioAccountsResponse
 from ..models import TopTraderLongShortRatioPositionsResponse
+from ..models import TradingScheduleResponse
 
 
 from ..models import BasisContractTypeEnum
@@ -76,6 +79,46 @@ class MarketDataApi:
         self._configuration = configuration
         self._session = session
         self._signer = signer
+
+    def adl_risk(
+        self,
+        symbol: Optional[str] = None,
+    ) -> ApiResponse[AdlRiskResponse]:
+        """
+                ADL Risk
+                GET /fapi/v1/symbolAdlRisk
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/ADL-Risk
+
+                Query the symbol-level ADL risk rating.
+        The ADL risk rating measures the likelihood of ADL during liquidation, and the rating takes into account the insurance fund balance, position concentration on the symbol, order book depth, price volatility, average leverage, unrealized PnL, and margin utilization at the symbol level.
+        The rating can be high, medium and low, and is updated every 30 minutes.
+
+        Weight: 1
+
+                Args:
+                    symbol (Optional[str] = None):
+
+                Returns:
+                    ApiResponse[AdlRiskResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"symbol": symbol}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/symbolAdlRisk",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=AdlRiskResponse,
+        )
 
     def basis(
         self,
@@ -132,6 +175,7 @@ class MarketDataApi:
                 field="limit", error_message="Missing required parameter 'limit'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -147,6 +191,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/basis",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=BasisResponse,
         )
@@ -173,6 +218,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -181,6 +227,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/time",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CheckServerTimeResponse,
         )
@@ -211,6 +258,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -219,6 +267,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/indexInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CompositeIndexSymbolInformationResponse,
         )
@@ -239,6 +288,7 @@ class MarketDataApi:
                 Get compressed, aggregate market trades. Market trades that fill in 100ms with the same price and the same taking side will have the quantity aggregated.
 
 
+        Retail Price Improvement(RPI) orders are aggregated and without special tags to be distinguished.
         * support querying futures trade histories that are not older than one year
         * If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 1 hour.
         * If `fromId`, `startTime`, and `endTime` are not sent, the most recent aggregate trades will be returned.
@@ -267,6 +317,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -281,6 +332,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/aggTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=CompressedAggregateTradesListResponse,
         )
@@ -309,6 +361,7 @@ class MarketDataApi:
         * PERPETUAL
         * CURRENT_QUARTER
         * NEXT_QUARTER
+        * TRADIFI_PERPETUAL
 
         Weight: based on parameter LIMIT
         | LIMIT       | weight |
@@ -348,6 +401,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "contract_type": contract_type,
@@ -363,6 +417,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/continuousKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ContinuousContractKlineCandlestickDataResponse,
         )
@@ -389,6 +444,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -397,6 +453,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/exchangeInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInformationResponse,
         )
@@ -436,6 +493,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -449,6 +507,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/fundingRate",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFundingRateHistoryResponse,
         )
@@ -464,7 +523,7 @@ class MarketDataApi:
                 Query funding rate info for symbols that had FundingRateCap/ FundingRateFloor / fundingIntervalHours adjustment
 
         Weight: 0
-        share 500/5min/IP rate limit with GET /fapi/v1/fundingInfo
+        share 500/5min/IP rate limit with GET /fapi/v1/fundingRate
 
                 Args:
 
@@ -476,6 +535,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -484,6 +544,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/fundingInfo",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetFundingRateInfoResponse,
         )
@@ -539,6 +600,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "pair": pair,
             "interval": interval,
@@ -553,6 +615,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/indexPriceKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=IndexPriceKlineCandlestickDataResponse,
         )
@@ -607,6 +670,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -621,6 +685,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/klines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=KlineCandlestickDataResponse,
         )
@@ -670,6 +735,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -684,6 +750,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/globalLongShortAccountRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=LongShortRatioResponse,
         )
@@ -699,7 +766,7 @@ class MarketDataApi:
 
                 Mark Price and Funding Rate
 
-        Weight: 1
+        Weight: 1 with symbol, 10 without symbol
 
                 Args:
                     symbol (Optional[str] = None):
@@ -712,6 +779,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -720,6 +788,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/premiumIndex",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarkPriceResponse,
         )
@@ -774,6 +843,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -788,6 +858,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/markPriceKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarkPriceKlineCandlestickDataResponse,
         )
@@ -816,6 +887,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -824,6 +896,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/assetIndex",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=MultiAssetsModeAssetIndexResponse,
         )
@@ -864,6 +937,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit, "from_id": from_id}
 
         return send_request(
@@ -872,6 +946,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/historicalTrades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OldTradesLookupResponse,
         )
@@ -905,6 +980,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -913,6 +989,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/openInterest",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OpenInterestResponse,
         )
@@ -962,6 +1039,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -976,6 +1054,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/openInterestHist",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OpenInterestStatisticsResponse,
         )
@@ -991,6 +1070,8 @@ class MarketDataApi:
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Order-Book
 
                 Query symbol orderbook
+
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
 
         Weight: Adjusted based on the limit:
         | Limit         | Weight |
@@ -1017,6 +1098,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -1025,6 +1107,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/depth",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=OrderBookResponse,
         )
@@ -1079,6 +1162,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -1093,6 +1177,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/premiumIndexKlines",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=PremiumIndexKlineDataResponse,
         )
@@ -1126,6 +1211,7 @@ class MarketDataApi:
                 field="pair", error_message="Missing required parameter 'pair'"
             )
 
+        body = {}
         payload = {"pair": pair}
 
         return send_request(
@@ -1134,6 +1220,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/delivery-price",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QuarterlyContractSettlementPriceResponse,
         )
@@ -1148,6 +1235,11 @@ class MarketDataApi:
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Index-Constituents
 
                 Query index price constituents
+
+
+        **Note**:
+
+        Prices from constituents of TradFi perps will be hiden and displayed as -1.
 
         Weight: 2
 
@@ -1167,6 +1259,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1175,6 +1268,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/constituents",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryIndexPriceConstituentsResponse,
         )
@@ -1203,6 +1297,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1211,6 +1306,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/insuranceBalance",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryInsuranceFundBalanceSnapshotResponse,
         )
@@ -1248,6 +1344,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
+        body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -1256,8 +1353,59 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/trades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=RecentTradesListResponse,
+        )
+
+    def rpi_order_book(
+        self,
+        symbol: Union[str, None],
+        limit: Optional[int] = None,
+    ) -> ApiResponse[RpiOrderBookResponse]:
+        """
+                RPI Order Book
+                GET /fapi/v1/rpiDepth
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Order-Book-RPI
+
+                Query symbol orderbook with RPI orders
+
+        RPI(Retail Price Improvement) orders are included and aggreated in the response message. Crossed price levels are hidden and invisible.
+
+        Weight: Adjusted based on the limit:
+        | Limit         | Weight |
+        | ------------- | ------ |
+        | 1000          | 20     |
+
+                Args:
+                    symbol (Union[str, None]):
+                    limit (Optional[int] = None): Default 100; max 1000
+
+                Returns:
+                    ApiResponse[RpiOrderBookResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol, "limit": limit}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/rpiDepth",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=RpiOrderBookResponse,
         )
 
     def symbol_order_book_ticker(
@@ -1271,6 +1419,7 @@ class MarketDataApi:
 
                 Best price/qty on the order book for a symbol or symbols.
 
+        Retail Price Improvement(RPI) orders are not visible and excluded in the response message.
         * If the symbol is not sent, bookTickers for all symbols will be returned in an array.
         * The field `X-MBX-USED-WEIGHT-1M` in response header is not accurate from this endpoint, please ignore.
 
@@ -1288,6 +1437,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1296,6 +1446,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/ticker/bookTicker",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolOrderBookTickerResponse,
         )
@@ -1305,7 +1456,7 @@ class MarketDataApi:
         symbol: Optional[str] = None,
     ) -> ApiResponse[SymbolPriceTickerResponse]:
         """
-                Symbol Price Ticker(Deprecated)
+                Symbol Price Ticker
                 GET /fapi/v1/ticker/price
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Symbol-Price-Ticker
 
@@ -1327,6 +1478,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1335,6 +1487,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/ticker/price",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolPriceTickerResponse,
         )
@@ -1367,6 +1520,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1375,6 +1529,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v2/ticker/price",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=SymbolPriceTickerV2Response,
         )
@@ -1424,6 +1579,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -1438,6 +1594,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/takerlongshortRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TakerBuySellVolumeResponse,
         )
@@ -1464,6 +1621,7 @@ class MarketDataApi:
 
         """
 
+        body = None
         payload = None
 
         return send_request(
@@ -1472,6 +1630,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/ping",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -1503,6 +1662,7 @@ class MarketDataApi:
 
         """
 
+        body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -1511,6 +1671,7 @@ class MarketDataApi:
             method="GET",
             path="/fapi/v1/ticker/24hr",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=Ticker24hrPriceChangeStatisticsResponse,
         )
@@ -1563,6 +1724,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -1577,6 +1739,7 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/topLongShortAccountRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TopTraderLongShortRatioAccountsResponse,
         )
@@ -1629,6 +1792,7 @@ class MarketDataApi:
                 field="period", error_message="Missing required parameter 'period'"
             )
 
+        body = {}
         payload = {
             "symbol": symbol,
             "period": period,
@@ -1643,6 +1807,43 @@ class MarketDataApi:
             method="GET",
             path="/futures/data/topLongShortPositionRatio",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=TopTraderLongShortRatioPositionsResponse,
+        )
+
+    def trading_schedule(
+        self,
+    ) -> ApiResponse[TradingScheduleResponse]:
+        """
+                Trading Schedule
+                GET /fapi/v1/tradingSchedule
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Trading-Schedule
+
+                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period starting from the day prior to the query time, covering both the U.S. equity and commodity markets. Equity market session types include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING", while commodity market session types include "REGULAR" and "NO_TRADING".
+
+        Weight: 5
+
+                Args:
+
+                Returns:
+                    ApiResponse[TradingScheduleResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = None
+        payload = None
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/tradingSchedule",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=TradingScheduleResponse,
         )

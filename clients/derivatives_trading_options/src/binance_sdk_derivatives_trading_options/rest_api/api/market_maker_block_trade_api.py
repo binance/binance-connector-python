@@ -46,7 +46,7 @@ class MarketMakerBlockTradeApi:
         """
                 Accept Block Trade Order (TRADE)
                 POST /eapi/v1/block/order/execute
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Accept-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Accept-Block-Trade-Order
 
                 Accept a block trade order
 
@@ -70,6 +70,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -81,6 +82,7 @@ class MarketMakerBlockTradeApi:
             method="POST",
             path="/eapi/v1/block/order/execute",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AcceptBlockTradeOrderResponse,
             is_signed=True,
@@ -97,7 +99,7 @@ class MarketMakerBlockTradeApi:
         """
                 Account Block Trade List (USER_DATA)
                 GET /eapi/v1/block/user-trades
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Account-Block-Trade-List
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Account-Block-Trade-List
 
                 Gets block trades for a specific account.
 
@@ -117,6 +119,7 @@ class MarketMakerBlockTradeApi:
 
         """
 
+        body = {}
         payload = {
             "end_time": end_time,
             "start_time": start_time,
@@ -130,6 +133,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/user-trades",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=AccountBlockTradeListResponse,
             is_signed=True,
@@ -144,7 +148,7 @@ class MarketMakerBlockTradeApi:
         """
                 Cancel Block Trade Order (TRADE)
                 DELETE /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Cancel-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Cancel-Block-Trade-Order
 
                 Cancel a block trade order.
 
@@ -168,6 +172,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -179,6 +184,7 @@ class MarketMakerBlockTradeApi:
             method="DELETE",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -192,7 +198,7 @@ class MarketMakerBlockTradeApi:
         """
                 Extend Block Trade Order (TRADE)
                 PUT /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Extend-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Extend-Block-Trade-Order
 
                 Extends a block trade expire time by 30 mins from the current time.
 
@@ -216,6 +222,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -227,6 +234,7 @@ class MarketMakerBlockTradeApi:
             method="PUT",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=ExtendBlockTradeOrderResponse,
             is_signed=True,
@@ -242,7 +250,7 @@ class MarketMakerBlockTradeApi:
         """
                 New Block Trade Order (TRADE)
                 POST /eapi/v1/block/order/create
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/New-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/New-Block-Trade-Order
 
                 Send in a new block trade order.
 
@@ -271,6 +279,7 @@ class MarketMakerBlockTradeApi:
                 field="legs", error_message="Missing required parameter 'legs'"
             )
 
+        body = {}
         payload = {"liquidity": liquidity, "legs": legs, "recv_window": recv_window}
 
         return send_request(
@@ -279,6 +288,7 @@ class MarketMakerBlockTradeApi:
             method="POST",
             path="/eapi/v1/block/order/create",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=NewBlockTradeOrderResponse,
             is_signed=True,
@@ -293,7 +303,7 @@ class MarketMakerBlockTradeApi:
         """
                 Query Block Trade Details (USER_DATA)
                 GET /eapi/v1/block/order/execute
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Query-Block-Trade-Detail
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Query-Block-Trade-Detail
 
                 Query block trade details; returns block trade details from counterparty's perspective.
 
@@ -317,6 +327,7 @@ class MarketMakerBlockTradeApi:
                 error_message="Missing required parameter 'block_order_matching_key'",
             )
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "recv_window": recv_window,
@@ -328,6 +339,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/order/execute",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryBlockTradeDetailsResponse,
             is_signed=True,
@@ -345,7 +357,7 @@ class MarketMakerBlockTradeApi:
         """
                 Query Block Trade Order (TRADE)
                 GET /eapi/v1/block/order/orders
-                https://developers.binance.com/docs/derivatives/option/market-maker-block-trade/Query-Block-Trade-Order
+                https://developers.binance.com/docs/derivatives/options-trading/market-maker-block-trade/Query-Block-Trade-Order
 
                 Check block trade order status.
 
@@ -366,6 +378,7 @@ class MarketMakerBlockTradeApi:
 
         """
 
+        body = {}
         payload = {
             "block_order_matching_key": block_order_matching_key,
             "end_time": end_time,
@@ -380,6 +393,7 @@ class MarketMakerBlockTradeApi:
             method="GET",
             path="/eapi/v1/block/order/orders",
             payload=payload,
+            body=body,
             time_unit=self._configuration.time_unit,
             response_model=QueryBlockTradeOrderResponse,
             is_signed=True,

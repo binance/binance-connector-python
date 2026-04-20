@@ -22,18 +22,18 @@ from .models import ChangeAutoRepayFuturesStatusResponse
 from .models import FundAutoCollectionResponse
 from .models import FundCollectionByAssetResponse
 from .models import GetAutoRepayFuturesStatusResponse
+from .models import GetDeltaModeStatusResponse
 from .models import GetPortfolioMarginProAccountBalanceResponse
 from .models import GetPortfolioMarginProAccountInfoResponse
 from .models import GetPortfolioMarginProSpanAccountInfoResponse
 from .models import GetTransferableEarnAssetBalanceForPortfolioMarginResponse
-from .models import MintBfusdForPortfolioMarginResponse
 from .models import PortfolioMarginProBankruptcyLoanRepayResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from .models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
-from .models import RedeemBfusdForPortfolioMarginResponse
 from .models import RepayFuturesNegativeBalanceResponse
-from .models import TransferLdusdtForPortfolioMarginResponse
+from .models import SwitchDeltaModeResponse
+from .models import TransferLdusdtRwusdForPortfolioMarginResponse
 from .models import GetPortfolioMarginAssetLeverageResponse
 from .models import PortfolioMarginCollateralRateResponse
 from .models import PortfolioMarginProTieredCollateralRateResponse
@@ -64,7 +64,11 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         )
 
     def send_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
     ) -> ApiResponse[T]:
         """
         Sends an request to the Binance REST API.
@@ -72,25 +76,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Args:
             endpoint (str): The API endpoint path to send the request to.
             method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
-
-        Returns:
-            ApiResponse[T]: The API response, where T is the expected response type.
-        """
-        return send_request[T](
-            self._session, self.configuration, method, endpoint, params
-        )
-
-    def send_signed_request(
-        self, endpoint: str, method: str, params: Optional[dict] = None
-    ) -> ApiResponse[T]:
-        """
-        Sends a signed request to the Binance REST API.
-
-        Args:
-            endpoint (str): The API endpoint path to send the request to.
-            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
-            params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
 
         Returns:
             ApiResponse[T]: The API response, where T is the expected response type.
@@ -100,7 +87,36 @@ class DerivativesTradingPortfolioMarginProRestAPI:
             self.configuration,
             method,
             endpoint,
-            params,
+            query_params,
+            body_params,
+        )
+
+    def send_signed_request(
+        self,
+        endpoint: str,
+        method: str,
+        query_params: Optional[dict] = None,
+        body_params: Optional[dict] = None,
+    ) -> ApiResponse[T]:
+        """
+        Sends a signed request to the Binance REST API.
+
+        Args:
+            endpoint (str): The API endpoint path to send the request to.
+            method (str): The HTTP method to use for the request (e.g. "GET", "POST", "PUT", "DELETE").
+            query_params (Optional[dict]): The request payload as a dictionary, or None if no payload is required.
+            body_params (Optional[dict]): The request body as a dictionary, or None if no body is required.
+
+        Returns:
+            ApiResponse[T]: The API response, where T is the expected response type.
+        """
+        return send_request[T](
+            self._session,
+            self.configuration,
+            method,
+            endpoint,
+            query_params,
+            body_params,
             is_signed=True,
             signer=self._signer,
         )
@@ -206,7 +222,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 60
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -242,6 +258,30 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
 
         return self._accountApi.get_auto_repay_futures_status(recv_window)
+
+    def get_delta_mode_status(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDeltaModeStatusResponse]:
+        """
+                Get Delta Mode Status(USER_DATA)
+
+                Query the Delta mode status of current account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDeltaModeStatusResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_delta_mode_status(recv_window)
 
     def get_portfolio_margin_pro_account_balance(
         self,
@@ -333,7 +373,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
                     transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
                     recv_window (Optional[int] = None):
 
@@ -351,38 +391,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
             )
         )
 
-    def mint_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[MintBfusdForPortfolioMarginResponse]:
-        """
-                Mint BFUSD for Portfolio Margin(TRADE)
-
-                Mint BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[MintBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.mint_bfusd_for_portfolio_margin(
-            from_asset, target_asset, amount, recv_window
-        )
-
     def portfolio_margin_pro_bankruptcy_loan_repay(
         self,
         var_from: Optional[str] = None,
@@ -392,6 +400,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
                 Portfolio Margin Pro Bankruptcy Loan Repay
 
                 Repay Portfolio Margin Pro Bankruptcy Loan
+
+        * Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
 
         Weight: 3000
 
@@ -514,38 +524,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
             asset, start_time, end_time, size, recv_window
         )
 
-    def redeem_bfusd_for_portfolio_margin(
-        self,
-        from_asset: Union[str, None],
-        target_asset: Union[str, None],
-        amount: Union[float, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[RedeemBfusdForPortfolioMarginResponse]:
-        """
-                Redeem BFUSD for Portfolio Margin(TRADE)
-
-                Redeem BFUSD for all types of Portfolio Margin account
-
-        Weight: 1500
-
-                Args:
-                    from_asset (Union[str, None]): `BFUSD` only
-                    target_asset (Union[str, None]): `USDT` `USDC`
-                    amount (Union[float, None]):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[RedeemBfusdForPortfolioMarginResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._accountApi.redeem_bfusd_for_portfolio_margin(
-            from_asset, target_asset, amount, recv_window
-        )
-
     def repay_futures_negative_balance(
         self,
         var_from: Optional[str] = None,
@@ -572,35 +550,61 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         return self._accountApi.repay_futures_negative_balance(var_from, recv_window)
 
-    def transfer_ldusdt_for_portfolio_margin(
+    def switch_delta_mode(
         self,
-        asset: Union[str, None],
-        transfer_type: Union[str, None],
-        amount: Union[float, None],
+        delta_enabled: Union[str, None],
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[TransferLdusdtForPortfolioMarginResponse]:
+    ) -> ApiResponse[SwitchDeltaModeResponse]:
         """
-                Transfer LDUSDT for Portfolio Margin(TRADE)
+                Switch Delta Mode(TRADE)
 
-                Transfer LDUSDT as collateral for all types of Portfolio Margin account
+                Switch the Delta mode for existing PM PRO / PM RETAIL accounts.
 
         Weight: 1500
 
                 Args:
-                    asset (Union[str, None]): `LDUSDT` only
-                    transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
-                    amount (Union[float, None]):
+                    delta_enabled (Union[str, None]): `true` to enable Delta mode; `false` to disable Delta mode
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[TransferLdusdtForPortfolioMarginResponse]
+                    ApiResponse[SwitchDeltaModeResponse]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
 
         """
 
-        return self._accountApi.transfer_ldusdt_for_portfolio_margin(
+        return self._accountApi.switch_delta_mode(delta_enabled, recv_window)
+
+    def transfer_ldusdt_rwusd_for_portfolio_margin(
+        self,
+        asset: Union[str, None],
+        transfer_type: Union[str, None],
+        amount: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]:
+        """
+                Transfer LDUSDT/RWUSD for Portfolio Margin(TRADE)
+
+                Transfer LDUSDT/RWUSD as collateral for all types of Portfolio Margin account
+
+        Weight: 1500
+
+                Args:
+                    asset (Union[str, None]): `LDUSDT` and `RWUSD`
+                    transfer_type (Union[str, None]): `EARN_TO_FUTURE` /`FUTURE_TO_EARN`
+                    amount (Union[float, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[TransferLdusdtRwusdForPortfolioMarginResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.transfer_ldusdt_rwusd_for_portfolio_margin(
             asset, transfer_type, amount, recv_window
         )
 
