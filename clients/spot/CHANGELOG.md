@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.2.0 - 2026-04-20
+
+### Changed (2)
+
+#### WebSocket API
+
+- Modified response for `reference_price()` (`referencePrice` method):
+  - `result`: property `code` added
+  - `result`: property `msg` added
+- Fix empty user data stream subscription response in `user_data_stream_subscribe_signature()` (`userDataStream.subscribe.signature` method) and `user_data_stream_subscribe()` (`userDataStream.subscribe` method) methods by adding error checks for missing subscription ID and presence of error in the response.
+
 ## 8.1.0 - 2026-03-26
 
 ### Added (1)

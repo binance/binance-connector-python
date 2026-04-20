@@ -27,6 +27,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.a
 from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.account_update import (
     AccountUpdate,
 )
+from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.algo_update import (
+    AlgoUpdate,
+)
 from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.balanceupdate import (
     Balanceupdate,
 )
@@ -60,6 +63,7 @@ from typing_extensions import Self
 USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "AccountConfigUpdate",
     "AccountUpdate",
+    "AlgoUpdate",
     "Balanceupdate",
     "ConditionalOrderTradeUpdate",
     "Executionreport",
@@ -77,32 +81,35 @@ class UserDataStreamEventsResponse(BaseModel):
     UserDataStreamEventsResponse
     """
 
+    # data type: AlgoUpdate
+    oneof_schema_1_validator: Optional[AlgoUpdate] = None
     # data type: ConditionalOrderTradeUpdate
-    oneof_schema_1_validator: Optional[ConditionalOrderTradeUpdate] = None
+    oneof_schema_2_validator: Optional[ConditionalOrderTradeUpdate] = None
     # data type: AccountConfigUpdate
-    oneof_schema_2_validator: Optional[AccountConfigUpdate] = None
+    oneof_schema_3_validator: Optional[AccountConfigUpdate] = None
     # data type: AccountUpdate
-    oneof_schema_3_validator: Optional[AccountUpdate] = None
+    oneof_schema_4_validator: Optional[AccountUpdate] = None
     # data type: OrderTradeUpdate
-    oneof_schema_4_validator: Optional[OrderTradeUpdate] = None
+    oneof_schema_5_validator: Optional[OrderTradeUpdate] = None
     # data type: Liabilitychange
-    oneof_schema_5_validator: Optional[Liabilitychange] = None
+    oneof_schema_6_validator: Optional[Liabilitychange] = None
     # data type: Outboundaccountposition
-    oneof_schema_6_validator: Optional[Outboundaccountposition] = None
+    oneof_schema_7_validator: Optional[Outboundaccountposition] = None
     # data type: Balanceupdate
-    oneof_schema_7_validator: Optional[Balanceupdate] = None
+    oneof_schema_8_validator: Optional[Balanceupdate] = None
     # data type: Executionreport
-    oneof_schema_8_validator: Optional[Executionreport] = None
+    oneof_schema_9_validator: Optional[Executionreport] = None
     # data type: Openorderloss
-    oneof_schema_9_validator: Optional[Openorderloss] = None
+    oneof_schema_10_validator: Optional[Openorderloss] = None
     # data type: Listenkeyexpired
-    oneof_schema_10_validator: Optional[Listenkeyexpired] = None
+    oneof_schema_11_validator: Optional[Listenkeyexpired] = None
     # data type: Risklevelchange
-    oneof_schema_11_validator: Optional[Risklevelchange] = None
+    oneof_schema_12_validator: Optional[Risklevelchange] = None
     actual_instance: Optional[
         Union[
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
             Balanceupdate,
             ConditionalOrderTradeUpdate,
             Executionreport,
@@ -117,6 +124,7 @@ class UserDataStreamEventsResponse(BaseModel):
     one_of_schemas: Set[str] = {
         "AccountConfigUpdate",
         "AccountUpdate",
+        "AlgoUpdate",
         "Balanceupdate",
         "ConditionalOrderTradeUpdate",
         "Executionreport",
@@ -154,6 +162,11 @@ class UserDataStreamEventsResponse(BaseModel):
 
         error_messages = []
         match = 0
+        # validate data type: AlgoUpdate
+        if not isinstance(v, AlgoUpdate):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AlgoUpdate`")
+        else:
+            match += 1
         # validate data type: ConditionalOrderTradeUpdate
         if not isinstance(v, ConditionalOrderTradeUpdate):
             error_messages.append(
@@ -234,13 +247,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
+                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
+                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -257,6 +270,12 @@ class UserDataStreamEventsResponse(BaseModel):
         error_messages = []
         match = 0
 
+        # deserialize data into AlgoUpdate
+        try:
+            instance.actual_instance = AlgoUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into ConditionalOrderTradeUpdate
         try:
             instance.actual_instance = ConditionalOrderTradeUpdate.from_json(json_str)
@@ -327,13 +346,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, Balanceupdate, ConditionalOrderTradeUpdate, Executionreport, Liabilitychange, Listenkeyexpired, Openorderloss, OrderTradeUpdate, Outboundaccountposition, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -358,6 +377,7 @@ class UserDataStreamEventsResponse(BaseModel):
             Dict[str, Any],
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
             Balanceupdate,
             ConditionalOrderTradeUpdate,
             Executionreport,

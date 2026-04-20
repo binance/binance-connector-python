@@ -722,7 +722,7 @@ class TradeApi:
                     below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the below order. Automatically generated if not sent
                     below_iceberg_qty (Optional[int] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
                     below_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
-                    below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT, TAKE_PROFIT` or `TAKE_PROFIT_LIMIT` <br>Either belowStopPrice or belowTrailingDelta or both, must be specified.
+                    below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT` or `TAKE_PROFIT_LIMIT` <br>Either `belowStopPrice` or `belowTrailingDelta` or both, must be specified.
                     below_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](faqs/trailing-stop-faq.md).
                     below_time_in_force (Optional[OrderListOcoBelowTimeInForceEnum] = None):
                     below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the below order within an order strategy.

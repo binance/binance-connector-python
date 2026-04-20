@@ -42,6 +42,7 @@ class ContinuousContractKlineCandlestickDataContractTypeEnum(Enum):
 
 
 class ContinuousContractKlineCandlestickDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"
@@ -60,6 +61,7 @@ class ContinuousContractKlineCandlestickDataIntervalEnum(Enum):
 
 
 class IndexPriceKlineCandlestickDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"
@@ -78,6 +80,7 @@ class IndexPriceKlineCandlestickDataIntervalEnum(Enum):
 
 
 class KlineCandlestickDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"
@@ -108,6 +111,7 @@ class LongShortRatioPeriodEnum(Enum):
 
 
 class MarkPriceKlineCandlestickDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"
@@ -138,6 +142,7 @@ class OpenInterestStatisticsPeriodEnum(Enum):
 
 
 class PremiumIndexKlineDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"

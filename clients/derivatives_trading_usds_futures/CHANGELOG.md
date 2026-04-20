@@ -1,5 +1,27 @@
 # Changelog
 
+## 10.0.0 - 2026-04-20
+
+### Changed (3)
+
+#### REST API
+
+- Deleted parameter `page`
+  - affected methods:
+    - `query_all_algo_orders()` (`GET /fapi/v1/allAlgoOrders`)
+- Modified parameter `interval`:
+  - enum added: `1s`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_data()` (`GET /fapi/v1/continuousKlines`)
+    - `index_price_kline_candlestick_data()` (`GET /fapi/v1/indexPriceKlines`)
+    - `kline_candlestick_data()` (`GET /fapi/v1/klines`)
+    - `mark_price_kline_candlestick_data()` (`GET /fapi/v1/markPriceKlines`)
+    - `premium_index_kline_data()` (`GET /fapi/v1/premiumIndexKlines`)
+- Modified parameter `limit`:
+  - required: `true` → `false`
+  - affected methods:
+    - `basis()` (`GET /futures/data/basis`)
+
 ## 9.1.0 - 2026-03-26
 
 ### Changed (4)

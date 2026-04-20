@@ -1,5 +1,34 @@
 # Changelog
 
+## 4.0.0 - 2026-04-20
+
+### Changed (1)
+
+- Modified response for `get_c2_c_trade_history()` (`GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`):
+  - property `tradeType` added
+  - property `totalPrice` added
+  - property `orderNumber` added
+  - property `takerCommissionRate` added
+  - property `amount` added
+  - property `asset` added
+  - property `fiat` added
+  - property `orderStatus` added
+  - property `takerAmount` added
+  - property `takerCommission` added
+  - property `counterPartNickName` added
+  - property `commission` added
+  - property `payMethodName` added
+  - property `fiatSymbol` added
+  - property `advNo` added
+  - property `unitPrice` added
+  - property `createTime` added
+  - property `additionalKycVerify` added
+  - property `total` deleted
+  - property `code` deleted
+  - property `data` deleted
+  - property `message` deleted
+  - property `success` deleted
+
 ## 3.6.0 - 2026-03-26
 
 ### Added (1)

@@ -34,7 +34,6 @@ def basis():
             pair="pair_example",
             contract_type=BasisContractTypeEnum["PERPETUAL"].value,
             period=BasisPeriodEnum["PERIOD_5m"].value,
-            limit=30,
         )
 
         rate_limits = response.rate_limits

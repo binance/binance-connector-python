@@ -18,6 +18,7 @@ from binance_common.utils import send_request
 
 from ..models import CancelAllCmOpenConditionalOrdersResponse
 from ..models import CancelAllCmOpenOrdersResponse
+from ..models import CancelAllUmAlgoOpenOrdersResponse
 from ..models import CancelAllUmOpenConditionalOrdersResponse
 from ..models import CancelAllUmOpenOrdersResponse
 from ..models import CancelCmConditionalOrderResponse
@@ -25,10 +26,12 @@ from ..models import CancelCmOrderResponse
 from ..models import CancelMarginAccountAllOpenOrdersOnASymbolResponse
 from ..models import CancelMarginAccountOcoOrdersResponse
 from ..models import CancelMarginAccountOrderResponse
+from ..models import CancelUmAlgoOrderResponse
 from ..models import CancelUmConditionalOrderResponse
 from ..models import CancelUmOrderResponse
 from ..models import CmAccountTradeListResponse
 from ..models import CmPositionAdlQuantileEstimationResponse
+from ..models import FuturesTradfiPerpsContractResponse
 from ..models import GetUmFuturesBnbBurnStatusResponse
 from ..models import MarginAccountBorrowResponse
 from ..models import MarginAccountNewOcoResponse
@@ -40,12 +43,14 @@ from ..models import ModifyUmOrderResponse
 from ..models import NewCmConditionalOrderResponse
 from ..models import NewCmOrderResponse
 from ..models import NewMarginOrderResponse
+from ..models import NewUmAlgoOrderResponse
 from ..models import NewUmConditionalOrderResponse
 from ..models import NewUmOrderResponse
 from ..models import QueryAllCmConditionalOrdersResponse
 from ..models import QueryAllCmOrdersResponse
 from ..models import QueryAllCurrentCmOpenConditionalOrdersResponse
 from ..models import QueryAllCurrentCmOpenOrdersResponse
+from ..models import QueryAllCurrentUmOpenAlgoOrdersResponse
 from ..models import QueryAllCurrentUmOpenConditionalOrdersResponse
 from ..models import QueryAllCurrentUmOpenOrdersResponse
 from ..models import QueryAllMarginAccountOrdersResponse
@@ -57,12 +62,14 @@ from ..models import QueryCmOrderResponse
 from ..models import QueryCurrentCmOpenConditionalOrderResponse
 from ..models import QueryCurrentCmOpenOrderResponse
 from ..models import QueryCurrentMarginOpenOrderResponse
+from ..models import QueryCurrentUmOpenAlgoOrderResponse
 from ..models import QueryCurrentUmOpenConditionalOrderResponse
 from ..models import QueryCurrentUmOpenOrderResponse
 from ..models import QueryMarginAccountOrderResponse
 from ..models import QueryMarginAccountsAllOcoResponse
 from ..models import QueryMarginAccountsOcoResponse
 from ..models import QueryMarginAccountsOpenOcoResponse
+from ..models import QueryUmAlgoOrderHistoryResponse
 from ..models import QueryUmConditionalOrderHistoryResponse
 from ..models import QueryUmModifyOrderHistoryResponse
 from ..models import QueryUmOrderResponse
@@ -99,6 +106,14 @@ from ..models import NewMarginOrderNewOrderRespTypeEnum
 from ..models import NewMarginOrderSideEffectTypeEnum
 from ..models import NewMarginOrderTimeInForceEnum
 from ..models import NewMarginOrderSelfTradePreventionModeEnum
+from ..models import NewUmAlgoOrderSideEnum
+from ..models import NewUmAlgoOrderTypeEnum
+from ..models import NewUmAlgoOrderPositionSideEnum
+from ..models import NewUmAlgoOrderTimeInForceEnum
+from ..models import NewUmAlgoOrderWorkingTypeEnum
+from ..models import NewUmAlgoOrderPriceMatchEnum
+from ..models import NewUmAlgoOrderNewOrderRespTypeEnum
+from ..models import NewUmAlgoOrderSelfTradePreventionModeEnum
 from ..models import NewUmConditionalOrderSideEnum
 from ..models import NewUmConditionalOrderStrategyTypeEnum
 from ..models import NewUmConditionalOrderPositionSideEnum
@@ -224,13 +239,60 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def cancel_all_um_algo_open_orders(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAllUmAlgoOpenOrdersResponse]:
+        """
+                Cancel All UM Algo Open Orders (TRADE)
+                DELETE /papi/v1/um/algo/allOpenOrders
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Cancel-All-UM-Algo-Open-Orders
+
+                Cancel All UM Algo Open Orders
+
+        Weight: 1
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAllUmAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/papi/v1/um/algo/allOpenOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelAllUmAlgoOpenOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def cancel_all_um_open_conditional_orders(
         self,
         symbol: Union[str, None],
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAllUmOpenConditionalOrdersResponse]:
         """
-                Cancel All UM Open Conditional Orders (TRADE)
+                Cancel All UM Open Conditional Orders
                 DELETE /papi/v1/um/conditional/allOpenOrders
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Cancel-All-UM-Open-Conditional-Orders
 
@@ -603,6 +665,56 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def cancel_um_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelUmAlgoOrderResponse]:
+        """
+                Cancel UM Algo Order (TRADE)
+                DELETE /papi/v1/um/algo/order
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Cancel-UM-Algo-Order
+
+                Cancel an active UM algo order.
+
+        * Either `algoId` or `clientAlgoId` must be sent.
+
+        Weight: 1
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelUmAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/papi/v1/um/algo/order",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelUmAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def cancel_um_conditional_order(
         self,
         symbol: Union[str, None],
@@ -611,7 +723,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelUmConditionalOrderResponse]:
         """
-                Cancel UM Conditional Order(TRADE)
+                Cancel UM Conditional Order
                 DELETE /papi/v1/um/conditional/order
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Cancel-UM-Conditional-Order
 
@@ -832,6 +944,46 @@ class TradeApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=CmPositionAdlQuantileEstimationResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def futures_tradfi_perps_contract(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[FuturesTradfiPerpsContractResponse]:
+        """
+                Futures TradFi Perps Contract(USER_DATA)
+                POST /papi/v1/um/stock/contract
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Futures-TradFi-Perps-Contract
+
+                Sign TradFi-Perps agreement contract
+
+        Weight: 5
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[FuturesTradfiPerpsContractResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/papi/v1/um/stock/contract",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=FuturesTradfiPerpsContractResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1713,6 +1865,160 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def new_um_algo_order(
+        self,
+        algo_type: Union[str, None],
+        symbol: Union[str, None],
+        side: Union[NewUmAlgoOrderSideEnum, None],
+        type: Union[NewUmAlgoOrderTypeEnum, None],
+        position_side: Optional[NewUmAlgoOrderPositionSideEnum] = None,
+        time_in_force: Optional[NewUmAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewUmAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewUmAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[str] = None,
+        price_protect: Optional[str] = None,
+        reduce_only: Optional[str] = None,
+        activate_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        new_order_resp_type: Optional[NewUmAlgoOrderNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            NewUmAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        good_till_date: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[NewUmAlgoOrderResponse]:
+        """
+                New UM Algo Order (TRADE)
+                POST /papi/v1/um/algo/order
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/New-UM-Algo-Order
+
+                Place new UM conditional order
+
+        * Algo order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Algo order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
+        * Condition orders will be triggered when:
+
+        * If parameter`priceProtect`is sent as true:
+        * when price reaches the `triggerPrice` , the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+        * "triggerProtect" of a symbol can be got from `GET /fapi/v1/exchangeInfo`
+
+        * `STOP`, `STOP_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+        * BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+        * SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+        * `TRAILING_STOP_MARKET`:
+        * BUY: the lowest price after order placed <= `activatePrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+        * SELL: the highest price after order placed >= `activatePrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+
+        * For `TRAILING_STOP_MARKET`, if you got such error code.
+        ``{"code": -2021, "msg": "Order would immediately trigger."}``
+        means that the parameters you send do not meet the following requirements:
+        * BUY: `activatePrice` should be smaller than latest price.
+        * SELL: `activatePrice` should be larger than latest price.
+
+        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+        * Follow the same rules for condition orders.
+        * If triggered, **close all** current long position( if `SELL`) or current short position( if `BUY`).
+        * Cannot be used with `quantity` paremeter
+        * Cannot be used with `reduceOnly` parameter
+        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
+
+        Weight: 1
+
+                Args:
+                    algo_type (Union[str, None]): Only support `CONDITIONAL`
+                    symbol (Union[str, None]):
+                    side (Union[NewUmAlgoOrderSideEnum, None]):
+                    type (Union[NewUmAlgoOrderTypeEnum, None]): `LIMIT`, `MARKET`
+                    position_side (Optional[NewUmAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewUmAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None):
+                    price (Optional[float] = None):
+                    trigger_price (Optional[float] = None):
+                    working_type (Optional[NewUmAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
+                    price_match (Optional[NewUmAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
+                    close_position (Optional[str] = None): true, false; Close-All, used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
+                    activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
+                    client_algo_id (Optional[str] = None):
+                    new_order_resp_type (Optional[NewUmAlgoOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    self_trade_prevention_mode (Optional[NewUmAlgoOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
+                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[NewUmAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if algo_type is None:
+            raise RequiredError(
+                field="algo_type",
+                error_message="Missing required parameter 'algo_type'",
+            )
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
+        body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            "position_side": position_side,
+            "time_in_force": time_in_force,
+            "quantity": quantity,
+            "price": price,
+            "trigger_price": trigger_price,
+            "working_type": working_type,
+            "price_match": price_match,
+            "close_position": close_position,
+            "price_protect": price_protect,
+            "reduce_only": reduce_only,
+            "activate_price": activate_price,
+            "callback_rate": callback_rate,
+            "client_algo_id": client_algo_id,
+            "new_order_resp_type": new_order_resp_type,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
+            "good_till_date": good_till_date,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/papi/v1/um/algo/order",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=NewUmAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def new_um_conditional_order(
         self,
         symbol: Union[str, None],
@@ -1737,7 +2043,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[NewUmConditionalOrderResponse]:
         """
-                New UM Conditional Order (TRADE)
+                New UM Conditional Order
                 POST /papi/v1/um/conditional/order
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/New-UM-Conditional-Order
 
@@ -2177,13 +2483,67 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def query_all_current_um_open_algo_orders(
+        self,
+        algo_type: Optional[str] = None,
+        symbol: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAllCurrentUmOpenAlgoOrdersResponse]:
+        """
+                Query All Current UM Open Algo Orders (USER_DATA)
+                GET /papi/v1/um/algo/openAlgoOrders
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-All-Current-UM-Open-Algo-Orders
+
+                Get all UM open algo orders on a symbol.
+
+        * If the symbol is not sent, orders for all symbols will be returned in an array.
+
+        Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
+        Careful when accessing this with no symbol.
+
+                Args:
+                    algo_type (Optional[str] = None):
+                    symbol (Optional[str] = None):
+                    algo_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAllCurrentUmOpenAlgoOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/um/algo/openAlgoOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryAllCurrentUmOpenAlgoOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def query_all_current_um_open_conditional_orders(
         self,
         symbol: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryAllCurrentUmOpenConditionalOrdersResponse]:
         """
-                Query All Current UM Open Conditional Orders(USER_DATA)
+                Query All Current UM Open Conditional Orders
                 GET /papi/v1/um/conditional/openOrders
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-All-Current-UM-Open-Conditional-Orders
 
@@ -2339,7 +2699,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryAllUmConditionalOrdersResponse]:
         """
-                Query All UM Conditional Orders(USER_DATA)
+                Query All UM Conditional Orders
                 GET /papi/v1/um/conditional/allOrders
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-All-UM-Conditional-Orders
 
@@ -2819,6 +3179,61 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def query_current_um_open_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryCurrentUmOpenAlgoOrderResponse]:
+        """
+                Query Current UM Open Algo Order (USER_DATA)
+                GET /papi/v1/um/algo/algoOrder
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-Current-UM-Open-Algo-Order
+
+                Check an UM algo order's status.
+
+        * These orders will not be found:
+        * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+        * order create time + 90 days < current time
+
+        * Either `algoId` or `clientAlgoId` must be sent.
+        * `algoId` is self-increment for each specific `symbol`
+
+        Weight: 1
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryCurrentUmOpenAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/um/algo/algoOrder",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryCurrentUmOpenAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def query_current_um_open_conditional_order(
         self,
         symbol: Union[str, None],
@@ -2827,7 +3242,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryCurrentUmOpenConditionalOrderResponse]:
         """
-                Query Current UM Open Conditional Order(USER_DATA)
+                Query Current UM Open Conditional Order
                 GET /papi/v1/um/conditional/openOrder
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-Current-UM-Open-Conditional-Order
 
@@ -3136,6 +3551,71 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def query_um_algo_order_history(
+        self,
+        symbol: Union[str, None],
+        algo_id: Optional[int] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryUmAlgoOrderHistoryResponse]:
+        """
+                Query UM Algo Order History (USER_DATA)
+                GET /papi/v1/um/algo/allAlgoOrders
+                https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-UM-Algo-Order-History
+
+                Get all algo orders; ACTIVE, CANCELED, TRIGGERED or FINISHED .
+
+        * If `algoId` is set, it will get orders >= that `algoId`. Otherwise most recent orders are returned.
+        * The query time period must be less then 7 days( default as the recent 7 days).
+
+        Weight: 5
+
+                Args:
+                    symbol (Union[str, None]):
+                    algo_id (Optional[int] = None):
+                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
+                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
+                    limit (Optional[int] = None): Default 100; max 1000
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryUmAlgoOrderHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        body = {}
+        payload = {
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "start_time": start_time,
+            "end_time": end_time,
+            "limit": limit,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/um/algo/allAlgoOrders",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryUmAlgoOrderHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def query_um_conditional_order_history(
         self,
         symbol: Union[str, None],
@@ -3144,7 +3624,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryUmConditionalOrderHistoryResponse]:
         """
-                Query UM Conditional Order History(USER_DATA)
+                Query UM Conditional Order History
                 GET /papi/v1/um/conditional/orderHistory
                 https://developers.binance.com/docs/derivatives/portfolio-margin/trade/Query-UM-Conditional-Order-History
 
@@ -3346,6 +3826,7 @@ class TradeApi:
 
         * If "autoCloseType" is not sent, orders with both of the types will be returned
         * If "startTime" is not sent, data within 7 days before "endTime" can be queried
+        * Only support querying data in the past 90 days
 
         Weight: 20 with symbol, 50 without symbol
 
@@ -3460,6 +3941,7 @@ class TradeApi:
 
         * If `autoCloseType` is not sent, orders with both of the types will be returned
         * If `startTime` is not sent, data within 7 days before `endTime` can be queried
+        * Only support querying data in the past 90 days
 
         Weight: 20 with symbol, 50 without symbol
 

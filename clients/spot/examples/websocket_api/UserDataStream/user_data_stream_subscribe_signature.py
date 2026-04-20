@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 # Create configuration for the WebSocket API
 configuration_ws_api = ConfigurationWebSocketAPI(
     api_key=os.getenv("API_KEY", ""),
-    api_secret=os.getenv("API_SECRET", ""),
+    private_key=os.getenv("ED25519_PRIVATE_KEY", ""),
     stream_url=os.getenv("STREAM_URL", SPOT_WS_API_PROD_URL),
 )
 
@@ -23,6 +23,7 @@ async def user_data_stream_subscribe_signature():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
+        await connection.session_logon()
 
         res = await connection.user_data_stream_subscribe_signature()
         response = res.response
@@ -38,6 +39,7 @@ async def user_data_stream_subscribe_signature():
         res.stream.on("message", lambda data: print(f"{data}"))
         await asyncio.sleep(10)
         await res.stream.unsubscribe()
+        await connection.session_logout()
 
     except Exception as e:
         logging.error(f"user_data_stream_subscribe_signature() error: {e}")

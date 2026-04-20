@@ -21,13 +21,16 @@ from pydantic import (
     field_validator,
 )
 from typing import Any, Optional
+from binance_sdk_derivatives_trading_portfolio_margin_pro.websocket_streams.models.pm_pro_account_update import (
+    PmProAccountUpdate,
+)
 from binance_sdk_derivatives_trading_portfolio_margin_pro.websocket_streams.models.risklevelchange import (
     Risklevelchange,
 )
 from typing import Union, Set, Dict
 from typing_extensions import Self
 
-USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = ["Risklevelchange"]
+USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = ["PmProAccountUpdate", "Risklevelchange"]
 
 
 class UserDataStreamEventsResponse(BaseModel):
@@ -35,10 +38,12 @@ class UserDataStreamEventsResponse(BaseModel):
     UserDataStreamEventsResponse
     """
 
+    # data type: PmProAccountUpdate
+    oneof_schema_1_validator: Optional[PmProAccountUpdate] = None
     # data type: Risklevelchange
-    oneof_schema_1_validator: Optional[Risklevelchange] = None
-    actual_instance: Optional[Union[Risklevelchange]] = None
-    one_of_schemas: Set[str] = {"Risklevelchange"}
+    oneof_schema_2_validator: Optional[Risklevelchange] = None
+    actual_instance: Optional[Union[PmProAccountUpdate, Risklevelchange]] = None
+    one_of_schemas: Set[str] = {"PmProAccountUpdate", "Risklevelchange"}
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -66,6 +71,13 @@ class UserDataStreamEventsResponse(BaseModel):
 
         error_messages = []
         match = 0
+        # validate data type: PmProAccountUpdate
+        if not isinstance(v, PmProAccountUpdate):
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `PmProAccountUpdate`"
+            )
+        else:
+            match += 1
         # validate data type: Risklevelchange
         if not isinstance(v, Risklevelchange):
             error_messages.append(
@@ -76,13 +88,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: Risklevelchange. Details: "
+                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: PmProAccountUpdate, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: Risklevelchange. Details: "
+                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: PmProAccountUpdate, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -99,6 +111,12 @@ class UserDataStreamEventsResponse(BaseModel):
         error_messages = []
         match = 0
 
+        # deserialize data into PmProAccountUpdate
+        try:
+            instance.actual_instance = PmProAccountUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         # deserialize data into Risklevelchange
         try:
             instance.actual_instance = Risklevelchange.from_json(json_str)
@@ -109,13 +127,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: Risklevelchange. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: PmProAccountUpdate, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: Risklevelchange. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: PmProAccountUpdate, Risklevelchange. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -133,7 +151,9 @@ class UserDataStreamEventsResponse(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], Risklevelchange]]:
+    def to_dict(
+        self,
+    ) -> Optional[Union[Dict[str, Any], PmProAccountUpdate, Risklevelchange]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

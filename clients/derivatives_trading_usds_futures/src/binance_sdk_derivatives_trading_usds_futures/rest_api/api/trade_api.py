@@ -30,7 +30,7 @@ from ..models import ChangeMultiAssetsModeResponse
 from ..models import ChangePositionModeResponse
 from ..models import CurrentAllAlgoOpenOrdersResponse
 from ..models import CurrentAllOpenOrdersResponse
-from ..models import FuturesTradfiPerpsContractResponse
+
 from ..models import GetOrderModifyHistoryResponse
 from ..models import GetPositionMarginChangeHistoryResponse
 from ..models import ModifyIsolatedPositionMarginResponse
@@ -871,7 +871,7 @@ class TradeApi:
     def futures_tradfi_perps_contract(
         self,
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[FuturesTradfiPerpsContractResponse]:
+    ) -> ApiResponse[None]:
         """
                 Futures TradFi Perps Contract(USER_DATA)
                 POST /fapi/v1/stock/contract
@@ -885,7 +885,7 @@ class TradeApi:
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[FuturesTradfiPerpsContractResponse]
+                    ApiResponse[None]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -903,7 +903,6 @@ class TradeApi:
             payload=payload,
             body=body,
             time_unit=self._configuration.time_unit,
-            response_model=FuturesTradfiPerpsContractResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -1171,7 +1170,7 @@ class TradeApi:
         symbol: Union[str, None],
         side: Union[ModifyOrderSideEnum, None],
         quantity: Union[float, None],
-        price: Union[float, None],
+        price: Optional[float] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
@@ -1201,7 +1200,7 @@ class TradeApi:
                     symbol (Union[str, None]):
                     side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
                     quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
-                    price (Union[float, None]):
+                    price (Optional[float] = None):
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
@@ -1226,10 +1225,6 @@ class TradeApi:
         if quantity is None:
             raise RequiredError(
                 field="quantity", error_message="Missing required parameter 'quantity'"
-            )
-        if price is None:
-            raise RequiredError(
-                field="price", error_message="Missing required parameter 'price'"
             )
 
         body = {}
@@ -1768,7 +1763,6 @@ class TradeApi:
         algo_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryAllAlgoOrdersResponse]:
@@ -1793,7 +1787,6 @@ class TradeApi:
                     algo_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    page (Optional[int] = None):
                     limit (Optional[int] = None): Default 100; max 1000
                     recv_window (Optional[int] = None):
 
@@ -1816,7 +1809,6 @@ class TradeApi:
             "algo_id": algo_id,
             "start_time": start_time,
             "end_time": end_time,
-            "page": page,
             "limit": limit,
             "recv_window": recv_window,
         }
@@ -2126,6 +2118,7 @@ class TradeApi:
 
         * If "autoCloseType" is not sent, orders with both of the types will be returned
         * If "startTime" is not sent, data within 7 days before "endTime" can be queried
+        * Only support querying data in the past 90 days
 
         Weight: 20 with symbol, 50 without symbol
 

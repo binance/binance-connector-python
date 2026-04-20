@@ -33,7 +33,6 @@ def modify_order():
             symbol="symbol_example",
             side=ModifyOrderSideEnum["BUY"].value,
             quantity=1.0,
-            price=1.0,
         )
 
         rate_limits = response.rate_limits

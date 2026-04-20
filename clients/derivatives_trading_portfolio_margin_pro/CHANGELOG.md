@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.0 - 2026-04-20
+
+### Added (3)
+
+#### REST API
+
+- `delete_margin_call_level()` (`DELETE /sapi/v1/portfolio/margin-call-level`)
+- `get_margin_call_level()` (`GET /sapi/v1/portfolio/margin-call-level`)
+- `set_margin_call_level()` (`POST /sapi/v1/portfolio/margin-call-level`)
+
 ## 5.7.0 - 2026-03-26
 
 ### Added (1)

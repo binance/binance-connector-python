@@ -27,6 +27,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllCmOpenOrdersResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    CancelAllUmAlgoOpenOrdersResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelAllUmOpenConditionalOrdersResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
@@ -48,6 +51,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelMarginAccountOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    CancelUmAlgoOrderResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CancelUmConditionalOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
@@ -58,6 +64,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     CmPositionAdlQuantileEstimationResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    FuturesTradfiPerpsContractResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetUmFuturesBnbBurnStatusResponse,
@@ -93,6 +102,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
@@ -109,6 +121,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentCmOpenOrdersResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    QueryAllCurrentUmOpenAlgoOrdersResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryAllCurrentUmOpenConditionalOrdersResponse,
@@ -144,6 +159,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentMarginOpenOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    QueryCurrentUmOpenAlgoOrderResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryCurrentUmOpenConditionalOrderResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
@@ -160,6 +178,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginAccountsOpenOcoResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    QueryUmAlgoOrderHistoryResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUmConditionalOrderHistoryResponse,
@@ -264,6 +285,30 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSelfTradePreventionModeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderTypeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderPositionSideEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderTimeInForceEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderWorkingTypeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderPriceMatchEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderNewOrderRespTypeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderSelfTradePreventionModeEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderSideEnum,
@@ -586,6 +631,131 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.cancel_all_cm_open_orders(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_cancel_all_um_algo_open_orders_success(self, mock_get_signature):
+        """Test cancel_all_um_algo_open_orders() successfully with required parameters only."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        expected_response = {
+            "code": 200,
+            "msg": "The operation of cancel all open order is done.",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.cancel_all_um_algo_open_orders(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/allOpenOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+        assert normalized["symbol"] == "symbol_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CancelAllUmAlgoOpenOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CancelAllUmAlgoOpenOrdersResponse, "from_dict")
+        ):
+            expected = CancelAllUmAlgoOpenOrdersResponse.from_dict(expected_response)
+        else:
+            expected = CancelAllUmAlgoOpenOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_cancel_all_um_algo_open_orders_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test cancel_all_um_algo_open_orders() successfully with optional parameters."""
+
+        params = {"symbol": "symbol_example", "recv_window": 5000}
+
+        expected_response = {
+            "code": 200,
+            "msg": "The operation of cancel all open order is done.",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.cancel_all_um_algo_open_orders(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/allOpenOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CancelAllUmAlgoOpenOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CancelAllUmAlgoOpenOrdersResponse, "from_dict")
+        ):
+            expected = CancelAllUmAlgoOpenOrdersResponse.from_dict(expected_response)
+        else:
+            expected = CancelAllUmAlgoOpenOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_cancel_all_um_algo_open_orders_missing_required_param_symbol(self):
+        """Test that cancel_all_um_algo_open_orders() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "symbol_example",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.cancel_all_um_algo_open_orders(**params)
+
+    def test_cancel_all_um_algo_open_orders_server_error(self):
+        """Test that cancel_all_um_algo_open_orders() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.cancel_all_um_algo_open_orders = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.cancel_all_um_algo_open_orders(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_cancel_all_um_open_conditional_orders_success(self, mock_get_signature):
@@ -1811,6 +1981,105 @@ class TestTradeApi:
             self.client.cancel_margin_account_order(**params)
 
     @patch("binance_common.utils.get_signature")
+    def test_cancel_um_algo_order_success(self, mock_get_signature):
+        """Test cancel_um_algo_order() successfully with required parameters only."""
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "code": "200",
+            "msg": "success",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.cancel_um_algo_order()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/order" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CancelUmAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(CancelUmAlgoOrderResponse, "from_dict"):
+            expected = CancelUmAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = CancelUmAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_cancel_um_algo_order_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test cancel_um_algo_order() successfully with optional parameters."""
+
+        params = {"algo_id": 1, "client_algo_id": "1", "recv_window": 5000}
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "code": "200",
+            "msg": "success",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.cancel_um_algo_order(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/order" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CancelUmAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(CancelUmAlgoOrderResponse, "from_dict"):
+            expected = CancelUmAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = CancelUmAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_cancel_um_algo_order_server_error(self):
+        """Test that cancel_um_algo_order() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.cancel_um_algo_order = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.cancel_um_algo_order()
+
+    @patch("binance_common.utils.get_signature")
     def test_cancel_um_conditional_order_success(self, mock_get_signature):
         """Test cancel_um_conditional_order() successfully with required parameters only."""
 
@@ -2387,6 +2656,103 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.cm_position_adl_quantile_estimation()
+
+    @patch("binance_common.utils.get_signature")
+    def test_futures_tradfi_perps_contract_success(self, mock_get_signature):
+        """Test futures_tradfi_perps_contract() successfully with required parameters only."""
+
+        expected_response = {"code": 200, "msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.futures_tradfi_perps_contract()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/stock/contract" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
+        ):
+            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
+        else:
+            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_futures_tradfi_perps_contract_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test futures_tradfi_perps_contract() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"code": 200, "msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.futures_tradfi_perps_contract(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/stock/contract" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
+        ):
+            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
+        else:
+            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_futures_tradfi_perps_contract_server_error(self):
+        """Test that futures_tradfi_perps_contract() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.futures_tradfi_perps_contract = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.futures_tradfi_perps_contract()
 
     @patch("binance_common.utils.get_signature")
     def test_get_um_futures_bnb_burn_status_success(self, mock_get_signature):
@@ -4373,6 +4739,244 @@ class TestTradeApi:
             self.client.new_margin_order(**params)
 
     @patch("binance_common.utils.get_signature")
+    def test_new_um_algo_order_success(self, mock_get_signature):
+        """Test new_um_algo_order() successfully with required parameters only."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "algoType": "CONDITIONAL",
+            "orderType": "TAKE_PROFIT",
+            "symbol": "BNBUSDT",
+            "side": "SELL",
+            "positionSide": "BOTH",
+            "timeInForce": "GTC",
+            "quantity": "0.01",
+            "algoStatus": "NEW",
+            "triggerPrice": "750.000",
+            "price": "750.000",
+            "icebergQuantity": None,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
+            "workingType": "CONTRACT_PRICE",
+            "priceMatch": "NONE",
+            "closePosition": False,
+            "priceProtect": False,
+            "reduceOnly": False,
+            "activatePrice": "",
+            "callbackRate": "",
+            "createTime": 1750485492076,
+            "updateTime": 1750485492076,
+            "triggerTime": 0,
+            "goodTillDate": 0,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.new_um_algo_order(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/order" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["algoType"] == "algo_type_example"
+        assert normalized["symbol"] == "symbol_example"
+        assert normalized["side"] == NewUmAlgoOrderSideEnum["BUY"].value
+        assert normalized["type"] == NewUmAlgoOrderTypeEnum["LIMIT"].value
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(NewUmAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(NewUmAlgoOrderResponse, "from_dict"):
+            expected = NewUmAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = NewUmAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_new_um_algo_order_success_with_optional_params(self, mock_get_signature):
+        """Test new_um_algo_order() successfully with optional parameters."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "position_side": NewUmAlgoOrderPositionSideEnum["BOTH"].value,
+            "time_in_force": NewUmAlgoOrderTimeInForceEnum["GTC"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "trigger_price": 1.0,
+            "working_type": NewUmAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
+            "price_match": NewUmAlgoOrderPriceMatchEnum["NONE"].value,
+            "close_position": "close_position_example",
+            "price_protect": "False",
+            "reduce_only": "False",
+            "activate_price": 1.0,
+            "callback_rate": 1.0,
+            "client_algo_id": "1",
+            "new_order_resp_type": NewUmAlgoOrderNewOrderRespTypeEnum["ACK"].value,
+            "self_trade_prevention_mode": NewUmAlgoOrderSelfTradePreventionModeEnum[
+                "NONE"
+            ].value,
+            "good_till_date": 56,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "algoType": "CONDITIONAL",
+            "orderType": "TAKE_PROFIT",
+            "symbol": "BNBUSDT",
+            "side": "SELL",
+            "positionSide": "BOTH",
+            "timeInForce": "GTC",
+            "quantity": "0.01",
+            "algoStatus": "NEW",
+            "triggerPrice": "750.000",
+            "price": "750.000",
+            "icebergQuantity": None,
+            "selfTradePreventionMode": "EXPIRE_MAKER",
+            "workingType": "CONTRACT_PRICE",
+            "priceMatch": "NONE",
+            "closePosition": False,
+            "priceProtect": False,
+            "reduceOnly": False,
+            "activatePrice": "",
+            "callbackRate": "",
+            "createTime": 1750485492076,
+            "updateTime": 1750485492076,
+            "triggerTime": 0,
+            "goodTillDate": 0,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.new_um_algo_order(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/order" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(NewUmAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(NewUmAlgoOrderResponse, "from_dict"):
+            expected = NewUmAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = NewUmAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_new_um_algo_order_missing_required_param_algo_type(self):
+        """Test that new_um_algo_order() raises RequiredError when 'algo_type' is missing."""
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+        params["algo_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'algo_type'"
+        ):
+            self.client.new_um_algo_order(**params)
+
+    def test_new_um_algo_order_missing_required_param_symbol(self):
+        """Test that new_um_algo_order() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.new_um_algo_order(**params)
+
+    def test_new_um_algo_order_missing_required_param_side(self):
+        """Test that new_um_algo_order() raises RequiredError when 'side' is missing."""
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            self.client.new_um_algo_order(**params)
+
+    def test_new_um_algo_order_missing_required_param_type(self):
+        """Test that new_um_algo_order() raises RequiredError when 'type' is missing."""
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+        params["type"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            self.client.new_um_algo_order(**params)
+
+    def test_new_um_algo_order_server_error(self):
+        """Test that new_um_algo_order() raises an error when the server returns an error."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.new_um_algo_order = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.new_um_algo_order(**params)
+
+    @patch("binance_common.utils.get_signature")
     def test_new_um_conditional_order_success(self, mock_get_signature):
         """Test new_um_conditional_order() successfully with required parameters only."""
 
@@ -5381,6 +5985,180 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.query_all_current_cm_open_orders()
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_all_current_um_open_algo_orders_success(self, mock_get_signature):
+        """Test query_all_current_um_open_algo_orders() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "algoId": 2148627,
+                "clientAlgoId": "MRumok0dkhrP4kCm12AHaB",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BNBUSDT",
+                "side": "SELL",
+                "positionSide": "BOTH",
+                "timeInForce": "GTC",
+                "quantity": "0.01",
+                "algoStatus": "NEW",
+                "actualOrderId": "",
+                "actualPrice": "0.00000",
+                "triggerPrice": "750.000",
+                "price": "750.000",
+                "icebergQuantity": None,
+                "tpTriggerPrice": "0.000",
+                "tpPrice": "0.000",
+                "slTriggerPrice": "0.000",
+                "slPrice": "0.000",
+                "tpOrderType": "",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1750514941540,
+                "updateTime": 1750514941540,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_all_current_um_open_algo_orders()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/openAlgoOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryAllCurrentUmOpenAlgoOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryAllCurrentUmOpenAlgoOrdersResponse, "from_dict")
+        ):
+            expected = QueryAllCurrentUmOpenAlgoOrdersResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = QueryAllCurrentUmOpenAlgoOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_all_current_um_open_algo_orders_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_all_current_um_open_algo_orders() successfully with optional parameters."""
+
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "algo_id": 1,
+            "recv_window": 5000,
+        }
+
+        expected_response = [
+            {
+                "algoId": 2148627,
+                "clientAlgoId": "MRumok0dkhrP4kCm12AHaB",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BNBUSDT",
+                "side": "SELL",
+                "positionSide": "BOTH",
+                "timeInForce": "GTC",
+                "quantity": "0.01",
+                "algoStatus": "NEW",
+                "actualOrderId": "",
+                "actualPrice": "0.00000",
+                "triggerPrice": "750.000",
+                "price": "750.000",
+                "icebergQuantity": None,
+                "tpTriggerPrice": "0.000",
+                "tpPrice": "0.000",
+                "slTriggerPrice": "0.000",
+                "slPrice": "0.000",
+                "tpOrderType": "",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1750514941540,
+                "updateTime": 1750514941540,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_all_current_um_open_algo_orders(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/openAlgoOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryAllCurrentUmOpenAlgoOrdersResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryAllCurrentUmOpenAlgoOrdersResponse, "from_dict")
+        ):
+            expected = QueryAllCurrentUmOpenAlgoOrdersResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = QueryAllCurrentUmOpenAlgoOrdersResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_query_all_current_um_open_algo_orders_server_error(self):
+        """Test that query_all_current_um_open_algo_orders() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.query_all_current_um_open_algo_orders = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_all_current_um_open_algo_orders()
 
     @patch("binance_common.utils.get_signature")
     def test_query_all_current_um_open_conditional_orders_success(
@@ -7199,6 +7977,165 @@ class TestTradeApi:
             self.client.query_current_margin_open_order(**params)
 
     @patch("binance_common.utils.get_signature")
+    def test_query_current_um_open_algo_order_success(self, mock_get_signature):
+        """Test query_current_um_open_algo_order() successfully with required parameters only."""
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "algoType": "CONDITIONAL",
+            "orderType": "TAKE_PROFIT",
+            "symbol": "BNBUSDT",
+            "side": "SELL",
+            "positionSide": "BOTH",
+            "timeInForce": "GTC",
+            "quantity": "0.01",
+            "algoStatus": "CANCELED",
+            "actualOrderId": "",
+            "actualPrice": "0.00000",
+            "triggerPrice": "750.000",
+            "price": "750.000",
+            "icebergQuantity": None,
+            "tpTriggerPrice": "0.000",
+            "tpPrice": "0.000",
+            "slTriggerPrice": "0.000",
+            "slPrice": "0.000",
+            "tpOrderType": "",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
+            "workingType": "CONTRACT_PRICE",
+            "priceMatch": "NONE",
+            "closePosition": False,
+            "priceProtect": False,
+            "reduceOnly": False,
+            "createTime": 1750485492076,
+            "updateTime": 1750514545091,
+            "triggerTime": 0,
+            "goodTillDate": 0,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_current_um_open_algo_order()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/algoOrder" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryCurrentUmOpenAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentUmOpenAlgoOrderResponse, "from_dict")
+        ):
+            expected = QueryCurrentUmOpenAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = QueryCurrentUmOpenAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_current_um_open_algo_order_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_current_um_open_algo_order() successfully with optional parameters."""
+
+        params = {"algo_id": 1, "client_algo_id": "1", "recv_window": 5000}
+
+        expected_response = {
+            "algoId": 2146760,
+            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+            "algoType": "CONDITIONAL",
+            "orderType": "TAKE_PROFIT",
+            "symbol": "BNBUSDT",
+            "side": "SELL",
+            "positionSide": "BOTH",
+            "timeInForce": "GTC",
+            "quantity": "0.01",
+            "algoStatus": "CANCELED",
+            "actualOrderId": "",
+            "actualPrice": "0.00000",
+            "triggerPrice": "750.000",
+            "price": "750.000",
+            "icebergQuantity": None,
+            "tpTriggerPrice": "0.000",
+            "tpPrice": "0.000",
+            "slTriggerPrice": "0.000",
+            "slPrice": "0.000",
+            "tpOrderType": "",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
+            "workingType": "CONTRACT_PRICE",
+            "priceMatch": "NONE",
+            "closePosition": False,
+            "priceProtect": False,
+            "reduceOnly": False,
+            "createTime": 1750485492076,
+            "updateTime": 1750514545091,
+            "triggerTime": 0,
+            "goodTillDate": 0,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_current_um_open_algo_order(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/algoOrder" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryCurrentUmOpenAlgoOrderResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryCurrentUmOpenAlgoOrderResponse, "from_dict")
+        ):
+            expected = QueryCurrentUmOpenAlgoOrderResponse.from_dict(expected_response)
+        else:
+            expected = QueryCurrentUmOpenAlgoOrderResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_query_current_um_open_algo_order_server_error(self):
+        """Test that query_current_um_open_algo_order() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.query_current_um_open_algo_order = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_current_um_open_algo_order()
+
+    @patch("binance_common.utils.get_signature")
     def test_query_current_um_open_conditional_order_success(self, mock_get_signature):
         """Test query_current_um_open_conditional_order() successfully with required parameters only."""
 
@@ -8156,6 +9093,194 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.query_margin_accounts_open_oco()
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_um_algo_order_history_success(self, mock_get_signature):
+        """Test query_um_algo_order_history() successfully with required parameters only."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        expected_response = [
+            {
+                "algoId": 2146760,
+                "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BNBUSDT",
+                "side": "SELL",
+                "positionSide": "BOTH",
+                "timeInForce": "GTC",
+                "quantity": "0.01",
+                "algoStatus": "CANCELED",
+                "actualOrderId": "",
+                "actualPrice": "0.00000",
+                "triggerPrice": "750.000",
+                "price": "750.000",
+                "icebergQuantity": None,
+                "tpTriggerPrice": "0.000",
+                "tpPrice": "0.000",
+                "slTriggerPrice": "0.000",
+                "slPrice": "0.000",
+                "tpOrderType": "",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1750485492076,
+                "updateTime": 1750514545091,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_um_algo_order_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/allAlgoOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "symbol_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryUmAlgoOrderHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(QueryUmAlgoOrderHistoryResponse, "from_dict")
+        ):
+            expected = QueryUmAlgoOrderHistoryResponse.from_dict(expected_response)
+        else:
+            expected = QueryUmAlgoOrderHistoryResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_um_algo_order_history_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_um_algo_order_history() successfully with optional parameters."""
+
+        params = {
+            "symbol": "symbol_example",
+            "algo_id": 1,
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "limit": 100,
+            "recv_window": 5000,
+        }
+
+        expected_response = [
+            {
+                "algoId": 2146760,
+                "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
+                "algoType": "CONDITIONAL",
+                "orderType": "TAKE_PROFIT",
+                "symbol": "BNBUSDT",
+                "side": "SELL",
+                "positionSide": "BOTH",
+                "timeInForce": "GTC",
+                "quantity": "0.01",
+                "algoStatus": "CANCELED",
+                "actualOrderId": "",
+                "actualPrice": "0.00000",
+                "triggerPrice": "750.000",
+                "price": "750.000",
+                "icebergQuantity": None,
+                "tpTriggerPrice": "0.000",
+                "tpPrice": "0.000",
+                "slTriggerPrice": "0.000",
+                "slPrice": "0.000",
+                "tpOrderType": "",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
+                "workingType": "CONTRACT_PRICE",
+                "priceMatch": "NONE",
+                "closePosition": False,
+                "priceProtect": False,
+                "reduceOnly": False,
+                "createTime": 1750485492076,
+                "updateTime": 1750514545091,
+                "triggerTime": 0,
+                "goodTillDate": 0,
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_um_algo_order_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/um/algo/allAlgoOrders" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryUmAlgoOrderHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(QueryUmAlgoOrderHistoryResponse, "from_dict")
+        ):
+            expected = QueryUmAlgoOrderHistoryResponse.from_dict(expected_response)
+        else:
+            expected = QueryUmAlgoOrderHistoryResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_query_um_algo_order_history_missing_required_param_symbol(self):
+        """Test that query_um_algo_order_history() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "symbol_example",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.query_um_algo_order_history(**params)
+
+    def test_query_um_algo_order_history_server_error(self):
+        """Test that query_um_algo_order_history() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "symbol_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.query_um_algo_order_history = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_um_algo_order_history(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_query_um_conditional_order_history_success(self, mock_get_signature):

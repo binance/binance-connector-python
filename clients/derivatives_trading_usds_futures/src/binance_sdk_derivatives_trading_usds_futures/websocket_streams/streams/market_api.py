@@ -100,7 +100,7 @@ class MarketApi:
             https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/All-Market-Liquidation-Order-Streams
 
             The All Liquidation Order Snapshot Streams push force liquidation order information for all symbols in the market.
-        For each symbol，only the latest one liquidation order within 1000ms will be pushed as the snapshot. If no liquidation happens in the interval of 1000ms, no stream will be pushed.
+        For each symbol，only the largest one liquidation order within 1000ms will be pushed as the snapshot. If no liquidation happens in the interval of 1000ms, no stream will be pushed.
 
         Update Speed: 1000ms
 
@@ -505,7 +505,7 @@ class MarketApi:
             https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Liquidation-Order-Streams
 
             The Liquidation Order Snapshot Streams push force liquidation order information for specific symbol.
-        For each symbol，only the latest one liquidation order within 1000ms will be pushed as the snapshot. If no liquidation happens in the interval of 1000ms, no stream will be pushed.
+        For each symbol，only the largest one liquidation order within 1000ms will be pushed as the snapshot. If no liquidation happens in the interval of 1000ms, no stream will be pushed.
 
         Update Speed: 1000ms
 

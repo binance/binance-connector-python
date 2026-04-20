@@ -134,9 +134,6 @@ from .futures_account_balance_v3_response import (
 from .futures_account_configuration_response import (
     FuturesAccountConfigurationResponse as FuturesAccountConfigurationResponse,
 )
-from .futures_tradfi_perps_contract_response import (
-    FuturesTradfiPerpsContractResponse as FuturesTradfiPerpsContractResponse,
-)
 from .futures_trading_quantitative_rules_indicators_response import (
     FuturesTradingQuantitativeRulesIndicatorsResponse as FuturesTradingQuantitativeRulesIndicatorsResponse,
 )

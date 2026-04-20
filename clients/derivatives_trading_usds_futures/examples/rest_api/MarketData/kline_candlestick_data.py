@@ -31,7 +31,7 @@ def kline_candlestick_data():
     try:
         response = client.rest_api.kline_candlestick_data(
             symbol="symbol_example",
-            interval=KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            interval=KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         )
 
         rate_limits = response.rate_limits
