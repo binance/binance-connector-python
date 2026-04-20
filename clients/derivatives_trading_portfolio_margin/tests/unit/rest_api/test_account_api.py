@@ -3449,7 +3449,7 @@ class TestAccountApi:
                 "asset": "USDT",
                 "info": "TRANSFER",
                 "time": 1570608000000,
-                "tranId": "9689322392",
+                "tranId": 9689322392,
                 "tradeId": "",
             },
             {
@@ -3459,7 +3459,7 @@ class TestAccountApi:
                 "asset": "USDT",
                 "info": "COMMISSION",
                 "time": 1570636800000,
-                "tranId": "9689322392",
+                "tranId": 9689322392,
                 "tradeId": "2059192",
             },
         ]
@@ -3521,7 +3521,7 @@ class TestAccountApi:
                 "asset": "USDT",
                 "info": "TRANSFER",
                 "time": 1570608000000,
-                "tranId": "9689322392",
+                "tranId": 9689322392,
                 "tradeId": "",
             },
             {
@@ -3531,7 +3531,7 @@ class TestAccountApi:
                 "asset": "USDT",
                 "info": "COMMISSION",
                 "time": 1570636800000,
-                "tranId": "9689322392",
+                "tranId": 9689322392,
                 "tradeId": "2059192",
             },
         ]

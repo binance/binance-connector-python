@@ -33,7 +33,7 @@ class GetUmIncomeHistoryResponseInner(BaseModel):
     asset: Optional[StrictStr] = None
     info: Optional[StrictStr] = None
     time: Optional[StrictInt] = None
-    tran_id: Optional[StrictStr] = Field(default=None, alias="tranId")
+    tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     trade_id: Optional[StrictStr] = Field(default=None, alias="tradeId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

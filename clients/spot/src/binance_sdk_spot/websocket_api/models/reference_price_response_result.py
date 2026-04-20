@@ -35,8 +35,16 @@ class ReferencePriceResponseResult(BaseModel):
     symbol: Optional[StrictStr] = None
     reference_price: Optional[StrictStr] = Field(default=None, alias="referencePrice")
     timestamp: Optional[StrictInt] = None
+    code: Optional[StrictInt] = None
+    msg: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["symbol", "referencePrice", "timestamp"]
+    __properties: ClassVar[List[str]] = [
+        "symbol",
+        "referencePrice",
+        "timestamp",
+        "code",
+        "msg",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +113,8 @@ class ReferencePriceResponseResult(BaseModel):
                 "symbol": obj.get("symbol"),
                 "referencePrice": obj.get("referencePrice"),
                 "timestamp": obj.get("timestamp"),
+                "code": obj.get("code"),
+                "msg": obj.get("msg"),
             }
         )
         # store additional fields in additional_properties

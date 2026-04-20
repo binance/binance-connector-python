@@ -278,7 +278,6 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
         }
 
         expected_response = [
@@ -312,7 +311,6 @@ class TestMarketDataApi:
         assert normalized["pair"] == "pair_example"
         assert normalized["contractType"] == BasisContractTypeEnum["PERPETUAL"].value
         assert normalized["period"] == BasisPeriodEnum["PERIOD_5m"].value
-        assert normalized["limit"] == 30
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -337,7 +335,7 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
+            "limit": 100,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
         }
@@ -389,7 +387,6 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
         }
         params["pair"] = None
 
@@ -402,7 +399,6 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
         }
         params["contract_type"] = None
 
@@ -417,24 +413,10 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
         }
         params["period"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'period'"):
-            self.client.basis(**params)
-
-    def test_basis_missing_required_param_limit(self):
-        """Test that basis() raises RequiredError when 'limit' is missing."""
-        params = {
-            "pair": "pair_example",
-            "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
-            "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
-        }
-        params["limit"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
             self.client.basis(**params)
 
     def test_basis_server_error(self):
@@ -444,7 +426,6 @@ class TestMarketDataApi:
             "pair": "pair_example",
             "contract_type": BasisContractTypeEnum["PERPETUAL"].value,
             "period": BasisPeriodEnum["PERIOD_5m"].value,
-            "limit": 30,
         }
 
         mock_error = Exception("ResponseError")
@@ -785,7 +766,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
 
@@ -828,7 +809,7 @@ class TestMarketDataApi:
         )
         assert (
             normalized["interval"]
-            == ContinuousContractKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value
+            == ContinuousContractKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -868,7 +849,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
@@ -940,7 +921,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["pair"] = None
@@ -958,7 +939,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["contract_type"] = None
@@ -978,7 +959,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["interval"] = None
@@ -997,7 +978,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
 
@@ -1311,7 +1292,7 @@ class TestMarketDataApi:
 
         params = {
             "pair": "pair_example",
-            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         expected_response = [
@@ -1349,7 +1330,7 @@ class TestMarketDataApi:
         assert normalized["pair"] == "pair_example"
         assert (
             normalized["interval"]
-            == IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value
+            == IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -1381,7 +1362,7 @@ class TestMarketDataApi:
 
         params = {
             "pair": "pair_example",
-            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "limit": 100,
@@ -1444,7 +1425,7 @@ class TestMarketDataApi:
         """Test that index_price_kline_candlestick_data() raises RequiredError when 'pair' is missing."""
         params = {
             "pair": "pair_example",
-            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["pair"] = None
 
@@ -1455,7 +1436,7 @@ class TestMarketDataApi:
         """Test that index_price_kline_candlestick_data() raises RequiredError when 'interval' is missing."""
         params = {
             "pair": "pair_example",
-            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["interval"] = None
 
@@ -1469,7 +1450,7 @@ class TestMarketDataApi:
 
         params = {
             "pair": "pair_example",
-            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": IndexPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         mock_error = Exception("ResponseError")
@@ -1485,7 +1466,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         expected_response = [
@@ -1523,7 +1504,7 @@ class TestMarketDataApi:
         assert normalized["symbol"] == "symbol_example"
         assert (
             normalized["interval"]
-            == KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value
+            == KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -1549,7 +1530,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "limit": 100,
@@ -1606,7 +1587,7 @@ class TestMarketDataApi:
         """Test that kline_candlestick_data() raises RequiredError when 'symbol' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["symbol"] = None
 
@@ -1617,7 +1598,7 @@ class TestMarketDataApi:
         """Test that kline_candlestick_data() raises RequiredError when 'interval' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["interval"] = None
 
@@ -1631,7 +1612,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": KlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         mock_error = Exception("ResponseError")
@@ -1900,7 +1881,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         expected_response = [
@@ -1938,7 +1919,7 @@ class TestMarketDataApi:
         assert normalized["symbol"] == "symbol_example"
         assert (
             normalized["interval"]
-            == MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value
+            == MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -1970,7 +1951,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "limit": 100,
@@ -2033,7 +2014,7 @@ class TestMarketDataApi:
         """Test that mark_price_kline_candlestick_data() raises RequiredError when 'symbol' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["symbol"] = None
 
@@ -2044,7 +2025,7 @@ class TestMarketDataApi:
         """Test that mark_price_kline_candlestick_data() raises RequiredError when 'interval' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["interval"] = None
 
@@ -2058,7 +2039,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         mock_error = Exception("ResponseError")
@@ -2695,7 +2676,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         expected_response = [
@@ -2733,7 +2714,7 @@ class TestMarketDataApi:
         assert normalized["symbol"] == "symbol_example"
         assert (
             normalized["interval"]
-            == PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value
+            == PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -2759,7 +2740,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "limit": 100,
@@ -2816,7 +2797,7 @@ class TestMarketDataApi:
         """Test that premium_index_kline_data() raises RequiredError when 'symbol' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["symbol"] = None
 
@@ -2827,7 +2808,7 @@ class TestMarketDataApi:
         """Test that premium_index_kline_data() raises RequiredError when 'interval' is missing."""
         params = {
             "symbol": "symbol_example",
-            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
         }
         params["interval"] = None
 
@@ -2841,7 +2822,7 @@ class TestMarketDataApi:
 
         params = {
             "symbol": "symbol_example",
-            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            "interval": PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
         }
 
         mock_error = Exception("ResponseError")

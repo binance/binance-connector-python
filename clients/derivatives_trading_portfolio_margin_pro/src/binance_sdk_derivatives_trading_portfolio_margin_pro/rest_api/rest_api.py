@@ -19,10 +19,12 @@ from .api.market_data_api import MarketDataApi
 
 from .models import BnbTransferResponse
 from .models import ChangeAutoRepayFuturesStatusResponse
+from .models import DeleteMarginCallLevelResponse
 from .models import FundAutoCollectionResponse
 from .models import FundCollectionByAssetResponse
 from .models import GetAutoRepayFuturesStatusResponse
 from .models import GetDeltaModeStatusResponse
+from .models import GetMarginCallLevelResponse
 from .models import GetPortfolioMarginProAccountBalanceResponse
 from .models import GetPortfolioMarginProAccountInfoResponse
 from .models import GetPortfolioMarginProSpanAccountInfoResponse
@@ -32,6 +34,7 @@ from .models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from .models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from .models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from .models import RepayFuturesNegativeBalanceResponse
+from .models import SetMarginCallLevelResponse
 from .models import SwitchDeltaModeResponse
 from .models import TransferLdusdtRwusdForPortfolioMarginResponse
 from .models import GetPortfolioMarginAssetLeverageResponse
@@ -180,6 +183,30 @@ class DerivativesTradingPortfolioMarginProRestAPI:
             auto_repay, recv_window
         )
 
+    def delete_margin_call_level(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[DeleteMarginCallLevelResponse]:
+        """
+                Delete Margin Call Level (USER_DATA)
+
+                Delete the margin call level for a Portfolio Margin account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[DeleteMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.delete_margin_call_level(recv_window)
+
     def fund_auto_collection(
         self,
         recv_window: Optional[int] = None,
@@ -282,6 +309,30 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
 
         return self._accountApi.get_delta_mode_status(recv_window)
+
+    def get_margin_call_level(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetMarginCallLevelResponse]:
+        """
+                Get Margin Call Level (USER_DATA)
+
+                Get the margin call level for a Portfolio Margin account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_margin_call_level(recv_window)
 
     def get_portfolio_margin_pro_account_balance(
         self,
@@ -549,6 +600,32 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
 
         return self._accountApi.repay_futures_negative_balance(var_from, recv_window)
+
+    def set_margin_call_level(
+        self,
+        margin_call_level: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetMarginCallLevelResponse]:
+        """
+                Set Margin Call Level (USER_DATA)
+
+                Set the margin call level for a Portfolio Margin account. When the account's uniMMR drops to the specified level, a notification will be sent via email and SMS.
+
+        Weight: 1500
+
+                Args:
+                    margin_call_level (Union[float, None]): The value of marginCallLevel must be within the range [1.1, 2.0].
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.set_margin_call_level(margin_call_level, recv_window)
 
     def switch_delta_mode(
         self,

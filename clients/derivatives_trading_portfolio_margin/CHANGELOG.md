@@ -1,5 +1,34 @@
 # Changelog
 
+## 6.0.0 - 2026-04-20
+
+### Added (7)
+
+#### REST API
+
+- `futures_tradfi_perps_contract()` (`POST /papi/v1/um/stock/contract`)
+- `cancel_all_um_algo_open_orders()` (`DELETE /papi/v1/um/algo/allOpenOrders`)
+- `cancel_um_algo_order()` (`DELETE /papi/v1/um/algo/order`)
+- `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- `query_all_current_um_open_algo_orders()` (`GET /papi/v1/um/algo/openAlgoOrders`)
+- `query_current_um_open_algo_order()` (`GET /papi/v1/um/algo/algoOrder`)
+- `query_um_algo_order_history()` (`GET /papi/v1/um/algo/allAlgoOrders`)
+
+### Changed (8)
+
+#### REST API
+
+- Marked `cancel_all_um_open_conditional_orders()` (`DELETE /papi/v1/um/conditional/allOpenOrders`) as deprecated.
+- Marked `cancel_um_conditional_order()` (`DELETE /papi/v1/um/conditional/order`) as deprecated.
+- Marked `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`) as deprecated.
+- Marked `query_all_current_um_open_conditional_orders()` (`GET /papi/v1/um/conditional/openOrders`) as deprecated.
+- Marked `query_all_um_conditional_orders()` (`GET /papi/v1/um/conditional/allOrders`) as deprecated.
+- Marked `query_current_um_open_conditional_order()` (`GET /papi/v1/um/conditional/openOrder`) as deprecated.
+- Marked `query_um_conditional_order_history()` (`GET /papi/v1/um/conditional/orderHistory`) as deprecated.
+- Modified response for `get_um_income_history()` (`GET /papi/v1/um/income`):
+  - items.`tranId`: type `string` → `integer`
+  - items.`tranId`: type `string` → `integer`
+
 ## 5.3.0 - 2026-03-26
 
 ### Added (1)

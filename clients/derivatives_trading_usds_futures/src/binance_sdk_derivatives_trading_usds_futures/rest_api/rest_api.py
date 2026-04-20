@@ -95,7 +95,7 @@ from .models import ChangeMultiAssetsModeResponse
 from .models import ChangePositionModeResponse
 from .models import CurrentAllAlgoOpenOrdersResponse
 from .models import CurrentAllOpenOrdersResponse
-from .models import FuturesTradfiPerpsContractResponse
+
 from .models import GetOrderModifyHistoryResponse
 from .models import GetPositionMarginChangeHistoryResponse
 from .models import ModifyIsolatedPositionMarginResponse
@@ -983,7 +983,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         pair: Union[str, None],
         contract_type: Union[BasisContractTypeEnum, None],
         period: Union[BasisPeriodEnum, None],
-        limit: Union[int, None],
+        limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
     ) -> ApiResponse[BasisResponse]:
@@ -1001,7 +1001,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     pair (Union[str, None]):
                     contract_type (Union[BasisContractTypeEnum, None]):
                     period (Union[BasisPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Union[int, None]): Default 30,Max 500
+                    limit (Optional[int] = None): Default 100; max 1000
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
 
@@ -1469,7 +1469,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                 Get older market historical trades.
 
         * Market trades means trades filled in the order book. Only market trades will be returned, which means the insurance fund trades and ADL trades won't be returned.
-        * Only supports data from within the last three months
+        * Only supports data from within the last one month
 
         Weight: 20
 
@@ -2519,7 +2519,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
     def futures_tradfi_perps_contract(
         self,
         recv_window: Optional[int] = None,
-    ) -> ApiResponse[FuturesTradfiPerpsContractResponse]:
+    ) -> ApiResponse[None]:
         """
                 Futures TradFi Perps Contract(USER_DATA)
 
@@ -2531,7 +2531,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     recv_window (Optional[int] = None):
 
                 Returns:
-                    ApiResponse[FuturesTradfiPerpsContractResponse]
+                    ApiResponse[None]
 
                 Raises:
                     RequiredError: If a required parameter is missing.
@@ -3112,7 +3112,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
         algo_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryAllAlgoOrdersResponse]:
@@ -3135,7 +3134,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     algo_id (Optional[int] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    page (Optional[int] = None):
                     limit (Optional[int] = None): Default 100; max 1000
                     recv_window (Optional[int] = None):
 
@@ -3148,7 +3146,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
 
         return self._tradeApi.query_all_algo_orders(
-            symbol, algo_id, start_time, end_time, page, limit, recv_window
+            symbol, algo_id, start_time, end_time, limit, recv_window
         )
 
     def query_current_open_order(
@@ -3364,6 +3362,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
         * If "autoCloseType" is not sent, orders with both of the types will be returned
         * If "startTime" is not sent, data within 7 days before "endTime" can be queried
+        * Only support querying data in the past 90 days
 
         Weight: 20 with symbol, 50 without symbol
 

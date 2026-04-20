@@ -68,6 +68,11 @@ class Executionreport(BaseModel):
     U: Optional[StrictInt] = Field(default=None, alias="U")
     A: Optional[StrictStr] = Field(default=None, alias="A")
     B: Optional[StrictStr] = Field(default=None, alias="B")
+    Cs: Optional[StrictStr] = Field(default=None, alias="Cs")
+    pl: Optional[StrictStr] = None
+    pL: Optional[StrictStr] = Field(default=None, alias="pL")
+    pY: Optional[StrictStr] = Field(default=None, alias="pY")
+    eR: Optional[StrictStr] = Field(default=None, alias="eR")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "E",
@@ -111,6 +116,11 @@ class Executionreport(BaseModel):
         "U",
         "A",
         "B",
+        "Cs",
+        "pl",
+        "pL",
+        "pY",
+        "eR",
     ]
 
     model_config = ConfigDict(
@@ -214,6 +224,11 @@ class Executionreport(BaseModel):
                 "U": obj.get("U"),
                 "A": obj.get("A"),
                 "B": obj.get("B"),
+                "Cs": obj.get("Cs"),
+                "pl": obj.get("pl"),
+                "pL": obj.get("pL"),
+                "pY": obj.get("pY"),
+                "eR": obj.get("eR"),
             }
         )
         # store additional fields in additional_properties

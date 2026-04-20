@@ -18,10 +18,12 @@ from binance_common.utils import send_request
 
 from ..models import BnbTransferResponse
 from ..models import ChangeAutoRepayFuturesStatusResponse
+from ..models import DeleteMarginCallLevelResponse
 from ..models import FundAutoCollectionResponse
 from ..models import FundCollectionByAssetResponse
 from ..models import GetAutoRepayFuturesStatusResponse
 from ..models import GetDeltaModeStatusResponse
+from ..models import GetMarginCallLevelResponse
 from ..models import GetPortfolioMarginProAccountBalanceResponse
 from ..models import GetPortfolioMarginProAccountInfoResponse
 from ..models import GetPortfolioMarginProSpanAccountInfoResponse
@@ -31,6 +33,7 @@ from ..models import QueryPortfolioMarginProBankruptcyLoanAmountResponse
 from ..models import QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse
 from ..models import QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse
 from ..models import RepayFuturesNegativeBalanceResponse
+from ..models import SetMarginCallLevelResponse
 from ..models import SwitchDeltaModeResponse
 from ..models import TransferLdusdtRwusdForPortfolioMarginResponse
 
@@ -153,6 +156,46 @@ class AccountApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoRepayFuturesStatusResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def delete_margin_call_level(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[DeleteMarginCallLevelResponse]:
+        """
+                Delete Margin Call Level (USER_DATA)
+                DELETE /sapi/v1/portfolio/margin-call-level
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Delete-Margin-Call-Level
+
+                Delete the margin call level for a Portfolio Margin account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[DeleteMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/sapi/v1/portfolio/margin-call-level",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=DeleteMarginCallLevelResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -325,6 +368,46 @@ class AccountApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetDeltaModeStatusResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_margin_call_level(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetMarginCallLevelResponse]:
+        """
+                Get Margin Call Level (USER_DATA)
+                GET /sapi/v1/portfolio/margin-call-level
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Get-Margin-Call-Level
+
+                Get the margin call level for a Portfolio Margin account.
+
+        Weight: 1500
+
+                Args:
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/portfolio/margin-call-level",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetMarginCallLevelResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -746,6 +829,54 @@ class AccountApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=RepayFuturesNegativeBalanceResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def set_margin_call_level(
+        self,
+        margin_call_level: Union[float, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[SetMarginCallLevelResponse]:
+        """
+                Set Margin Call Level (USER_DATA)
+                POST /sapi/v1/portfolio/margin-call-level
+                https://developers.binance.com/docs/derivatives/portfolio-margin-pro/account/Set-Margin-Call-Level
+
+                Set the margin call level for a Portfolio Margin account. When the account's uniMMR drops to the specified level, a notification will be sent via email and SMS.
+
+        Weight: 1500
+
+                Args:
+                    margin_call_level (Union[float, None]): The value of marginCallLevel must be within the range [1.1, 2.0].
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[SetMarginCallLevelResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if margin_call_level is None:
+            raise RequiredError(
+                field="margin_call_level",
+                error_message="Missing required parameter 'margin_call_level'",
+            )
+
+        body = {}
+        payload = {"margin_call_level": margin_call_level, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/portfolio/margin-call-level",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=SetMarginCallLevelResponse,
             is_signed=True,
             signer=self._signer,
         )

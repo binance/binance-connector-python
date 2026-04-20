@@ -125,7 +125,7 @@ class MarketDataApi:
         pair: Union[str, None],
         contract_type: Union[BasisContractTypeEnum, None],
         period: Union[BasisPeriodEnum, None],
-        limit: Union[int, None],
+        limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
     ) -> ApiResponse[BasisResponse]:
@@ -145,7 +145,7 @@ class MarketDataApi:
                     pair (Union[str, None]):
                     contract_type (Union[BasisContractTypeEnum, None]):
                     period (Union[BasisPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
-                    limit (Union[int, None]): Default 30,Max 500
+                    limit (Optional[int] = None): Default 100; max 1000
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
 
@@ -169,10 +169,6 @@ class MarketDataApi:
         if period is None:
             raise RequiredError(
                 field="period", error_message="Missing required parameter 'period'"
-            )
-        if limit is None:
-            raise RequiredError(
-                field="limit", error_message="Missing required parameter 'limit'"
             )
 
         body = {}
@@ -915,7 +911,7 @@ class MarketDataApi:
                 Get older market historical trades.
 
         * Market trades means trades filled in the order book. Only market trades will be returned, which means the insurance fund trades and ADL trades won't be returned.
-        * Only supports data from within the last three months
+        * Only supports data from within the last one month
 
         Weight: 20
 

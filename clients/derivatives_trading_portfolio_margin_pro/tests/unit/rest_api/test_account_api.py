@@ -27,6 +27,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     ChangeAutoRepayFuturesStatusResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    DeleteMarginCallLevelResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     FundAutoCollectionResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
@@ -37,6 +40,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetDeltaModeStatusResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    GetMarginCallLevelResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetPortfolioMarginProAccountBalanceResponse,
@@ -64,6 +70,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RepayFuturesNegativeBalanceResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    SetMarginCallLevelResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     SwitchDeltaModeResponse,
@@ -347,6 +356,95 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.change_auto_repay_futures_status(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_delete_margin_call_level_success(self, mock_get_signature):
+        """Test delete_margin_call_level() successfully with required parameters only."""
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.delete_margin_call_level()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DeleteMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DeleteMarginCallLevelResponse, "from_dict"):
+            expected = DeleteMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = DeleteMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_delete_margin_call_level_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test delete_margin_call_level() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"msg": "success"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.delete_margin_call_level(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(DeleteMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(DeleteMarginCallLevelResponse, "from_dict"):
+            expected = DeleteMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = DeleteMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_delete_margin_call_level_server_error(self):
+        """Test that delete_margin_call_level() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.delete_margin_call_level = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.delete_margin_call_level()
 
     @patch("binance_common.utils.get_signature")
     def test_fund_auto_collection_success(self, mock_get_signature):
@@ -733,6 +831,95 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_delta_mode_status()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_margin_call_level_success(self, mock_get_signature):
+        """Test get_margin_call_level() successfully with required parameters only."""
+
+        expected_response = {"marginCallLevel": "1.67354637"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_margin_call_level()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetMarginCallLevelResponse, "from_dict"):
+            expected = GetMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = GetMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_margin_call_level_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_margin_call_level() successfully with optional parameters."""
+
+        params = {"recv_window": 5000}
+
+        expected_response = {"marginCallLevel": "1.67354637"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_margin_call_level(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetMarginCallLevelResponse, "from_dict"):
+            expected = GetMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = GetMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_margin_call_level_server_error(self):
+        """Test that get_margin_call_level() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_margin_call_level = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_margin_call_level()
 
     @patch("binance_common.utils.get_signature")
     def test_get_portfolio_margin_pro_account_balance_success(self, mock_get_signature):
@@ -1913,6 +2100,119 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.repay_futures_negative_balance()
+
+    @patch("binance_common.utils.get_signature")
+    def test_set_margin_call_level_success(self, mock_get_signature):
+        """Test set_margin_call_level() successfully with required parameters only."""
+
+        params = {
+            "margin_call_level": 5000.0,
+        }
+
+        expected_response = {"marginCallLevel": "1.67354637"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.set_margin_call_level(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["marginCallLevel"] == 5000.0
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SetMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SetMarginCallLevelResponse, "from_dict"):
+            expected = SetMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = SetMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_set_margin_call_level_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test set_margin_call_level() successfully with optional parameters."""
+
+        params = {"margin_call_level": 5000.0, "recv_window": 5000}
+
+        expected_response = {"marginCallLevel": "1.67354637"}
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.set_margin_call_level(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/portfolio/margin-call-level" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(SetMarginCallLevelResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(SetMarginCallLevelResponse, "from_dict"):
+            expected = SetMarginCallLevelResponse.from_dict(expected_response)
+        else:
+            expected = SetMarginCallLevelResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_set_margin_call_level_missing_required_param_margin_call_level(self):
+        """Test that set_margin_call_level() raises RequiredError when 'margin_call_level' is missing."""
+        params = {
+            "margin_call_level": 5000.0,
+        }
+        params["margin_call_level"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'margin_call_level'"
+        ):
+            self.client.set_margin_call_level(**params)
+
+    def test_set_margin_call_level_server_error(self):
+        """Test that set_margin_call_level() raises an error when the server returns an error."""
+
+        params = {
+            "margin_call_level": 5000.0,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.set_margin_call_level = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.set_margin_call_level(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_switch_delta_mode_success(self, mock_get_signature):

@@ -565,12 +565,14 @@ class TestWebSocketMarketApi:
         }
 
         expected_response = {
-            "id": "5132affb-0aba-4821-b475-f262504556b43",
+            "id": "5132affa-0aba-4831-b475-f262504556b41",
             "status": 200,
             "result": {
                 "symbol": "BAZUSD",
                 "referencePrice": "0.00501900",
                 "timestamp": 1770946889251,
+                "code": -2043,
+                "msg": "This symbol doesn't have a reference price.",
             },
         }
 
@@ -611,12 +613,14 @@ class TestWebSocketMarketApi:
         params = {"symbol": "BNBUSDT", "id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
-            "id": "5132affb-0aba-4821-b475-f262504556b43",
+            "id": "5132affa-0aba-4831-b475-f262504556b41",
             "status": 200,
             "result": {
                 "symbol": "BAZUSD",
                 "referencePrice": "0.00501900",
                 "timestamp": 1770946889251,
+                "code": -2043,
+                "msg": "This symbol doesn't have a reference price.",
             },
         }
 

@@ -62,9 +62,7 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CurrentAllOpenOrdersResponse,
 )
-from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
-    FuturesTradfiPerpsContractResponse,
-)
+
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     GetOrderModifyHistoryResponse,
 )
@@ -2179,9 +2177,8 @@ class TestTradeApi:
     def test_futures_tradfi_perps_contract_success(self, mock_get_signature):
         """Test futures_tradfi_perps_contract() successfully with required parameters only."""
 
-        expected_response = {"code": 200, "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
+        self.set_mock_response({})
 
         response = self.client.futures_tradfi_perps_contract()
 
@@ -2197,26 +2194,8 @@ class TestTradeApi:
         assert request_kwargs["method"] == "POST"
 
         assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
 
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
-        ):
-            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
-        else:
-            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
+        assert response.data() == {}
 
     @patch("binance_common.utils.get_signature")
     def test_futures_tradfi_perps_contract_success_with_optional_params(
@@ -2226,9 +2205,8 @@ class TestTradeApi:
 
         params = {"recv_window": 5000}
 
-        expected_response = {"code": 200, "msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
-        self.set_mock_response(expected_response)
+        self.set_mock_response({})
 
         response = self.client.futures_tradfi_perps_contract(**params)
 
@@ -2242,26 +2220,8 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(FuturesTradfiPerpsContractResponse)
 
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(FuturesTradfiPerpsContractResponse, "from_dict")
-        ):
-            expected = FuturesTradfiPerpsContractResponse.from_dict(expected_response)
-        else:
-            expected = FuturesTradfiPerpsContractResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
+        assert response.data() == {}
 
     def test_futures_tradfi_perps_contract_server_error(self):
         """Test that futures_tradfi_perps_contract() raises an error when the server returns an error."""
@@ -3222,19 +3182,6 @@ class TestTradeApi:
         with pytest.raises(
             RequiredError, match="Missing required parameter 'quantity'"
         ):
-            self.client.modify_order(**params)
-
-    def test_modify_order_missing_required_param_price(self):
-        """Test that modify_order() raises RequiredError when 'price' is missing."""
-        params = {
-            "symbol": "symbol_example",
-            "side": ModifyOrderSideEnum["BUY"].value,
-            "quantity": 1.0,
-            "price": 1.0,
-        }
-        params["price"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
             self.client.modify_order(**params)
 
     def test_modify_order_server_error(self):
@@ -4704,7 +4651,6 @@ class TestTradeApi:
             "algo_id": 1,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
-            "page": 56,
             "limit": 100,
             "recv_window": 5000,
         }

@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_pay.rest_api.models.get_pay_trade_history_response_data_inner_funds_detail_inner_wallet_asset_cost_inner import (
-    GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCostInner,
+from binance_sdk_pay.rest_api.models.get_pay_trade_history_response_data_inner_funds_detail_inner_wallet_asset_cost import (
+    GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCost,
 )
 from typing import Set
 from typing_extensions import Self
@@ -33,7 +33,7 @@ class GetPayTradeHistoryResponseDataInnerFundsDetailInner(BaseModel):
     currency: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
     wallet_asset_cost: Optional[
-        List[GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCostInner]
+        GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCost
     ] = Field(default=None, alias="walletAssetCost")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["currency", "amount", "walletAssetCost"]
@@ -84,13 +84,9 @@ class GetPayTradeHistoryResponseDataInnerFundsDetailInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in wallet_asset_cost (list)
-        _items = []
+        # override the default output from pydantic by calling `to_dict()` of wallet_asset_cost
         if self.wallet_asset_cost:
-            for _item_wallet_asset_cost in self.wallet_asset_cost:
-                if _item_wallet_asset_cost:
-                    _items.append(_item_wallet_asset_cost.to_dict())
-            _dict["walletAssetCost"] = _items
+            _dict["walletAssetCost"] = self.wallet_asset_cost.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -112,12 +108,9 @@ class GetPayTradeHistoryResponseDataInnerFundsDetailInner(BaseModel):
                 "currency": obj.get("currency"),
                 "amount": obj.get("amount"),
                 "walletAssetCost": (
-                    [
-                        GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCostInner.from_dict(
-                            _item
-                        )
-                        for _item in obj["walletAssetCost"]
-                    ]
+                    GetPayTradeHistoryResponseDataInnerFundsDetailInnerWalletAssetCost.from_dict(
+                        obj["walletAssetCost"]
+                    )
                     if obj.get("walletAssetCost") is not None
                     else None
                 ),

@@ -31,7 +31,7 @@ def premium_index_kline_data():
     try:
         response = client.rest_api.premium_index_kline_data(
             symbol="symbol_example",
-            interval=PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
+            interval=PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
         )
 
         rate_limits = response.rate_limits

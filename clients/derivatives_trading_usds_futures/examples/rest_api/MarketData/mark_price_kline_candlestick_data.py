@@ -31,7 +31,7 @@ def mark_price_kline_candlestick_data():
     try:
         response = client.rest_api.mark_price_kline_candlestick_data(
             symbol="symbol_example",
-            interval=MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
+            interval=MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value,
         )
 
         rate_limits = response.rate_limits

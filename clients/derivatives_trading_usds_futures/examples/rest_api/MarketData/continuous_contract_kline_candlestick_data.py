@@ -38,7 +38,7 @@ def continuous_contract_kline_candlestick_data():
                 "PERPETUAL"
             ].value,
             interval=ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         )
 

@@ -11,6 +11,3 @@ Do not edit the class manually.
 from .get_c2_c_trade_history_response import (
     GetC2CTradeHistoryResponse as GetC2CTradeHistoryResponse,
 )
-from .get_c2_c_trade_history_response_data_inner import (
-    GetC2CTradeHistoryResponseDataInner as GetC2CTradeHistoryResponseDataInner,
-)

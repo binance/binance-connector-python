@@ -16,11 +16,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_c2c.rest_api.models.get_c2_c_trade_history_response_data_inner import (
-    GetC2CTradeHistoryResponseDataInner,
-)
+
 from typing import Set
 from typing_extensions import Self
 
@@ -30,13 +29,51 @@ class GetC2CTradeHistoryResponse(BaseModel):
     GetC2CTradeHistoryResponse
     """  # noqa: E501
 
-    code: Optional[StrictStr] = None
-    message: Optional[StrictStr] = None
-    data: Optional[List[GetC2CTradeHistoryResponseDataInner]] = None
-    total: Optional[StrictInt] = None
-    success: Optional[StrictBool] = None
+    order_number: Optional[StrictStr] = Field(default=None, alias="orderNumber")
+    adv_no: Optional[StrictStr] = Field(default=None, alias="advNo")
+    trade_type: Optional[StrictStr] = Field(default=None, alias="tradeType")
+    asset: Optional[StrictStr] = None
+    fiat: Optional[StrictStr] = None
+    fiat_symbol: Optional[StrictStr] = Field(default=None, alias="fiatSymbol")
+    amount: Optional[StrictStr] = None
+    total_price: Optional[StrictStr] = Field(default=None, alias="totalPrice")
+    unit_price: Optional[StrictStr] = Field(default=None, alias="unitPrice")
+    order_status: Optional[StrictStr] = Field(default=None, alias="orderStatus")
+    create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
+    commission: Optional[StrictStr] = None
+    taker_commission_rate: Optional[StrictStr] = Field(
+        default=None, alias="takerCommissionRate"
+    )
+    taker_commission: Optional[StrictStr] = Field(default=None, alias="takerCommission")
+    taker_amount: Optional[StrictStr] = Field(default=None, alias="takerAmount")
+    counter_part_nick_name: Optional[StrictStr] = Field(
+        default=None, alias="counterPartNickName"
+    )
+    pay_method_name: Optional[StrictStr] = Field(default=None, alias="payMethodName")
+    additional_kyc_verify: Optional[StrictInt] = Field(
+        default=None, alias="additionalKycVerify"
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message", "data", "total", "success"]
+    __properties: ClassVar[List[str]] = [
+        "orderNumber",
+        "advNo",
+        "tradeType",
+        "asset",
+        "fiat",
+        "fiatSymbol",
+        "amount",
+        "totalPrice",
+        "unitPrice",
+        "orderStatus",
+        "createTime",
+        "commission",
+        "takerCommissionRate",
+        "takerCommission",
+        "takerAmount",
+        "counterPartNickName",
+        "payMethodName",
+        "additionalKycVerify",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,13 +121,6 @@ class GetC2CTradeHistoryResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
-        if self.data:
-            for _item_data in self.data:
-                if _item_data:
-                    _items.append(_item_data.to_dict())
-            _dict["data"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -109,18 +139,24 @@ class GetC2CTradeHistoryResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "code": obj.get("code"),
-                "message": obj.get("message"),
-                "data": (
-                    [
-                        GetC2CTradeHistoryResponseDataInner.from_dict(_item)
-                        for _item in obj["data"]
-                    ]
-                    if obj.get("data") is not None
-                    else None
-                ),
-                "total": obj.get("total"),
-                "success": obj.get("success"),
+                "orderNumber": obj.get("orderNumber"),
+                "advNo": obj.get("advNo"),
+                "tradeType": obj.get("tradeType"),
+                "asset": obj.get("asset"),
+                "fiat": obj.get("fiat"),
+                "fiatSymbol": obj.get("fiatSymbol"),
+                "amount": obj.get("amount"),
+                "totalPrice": obj.get("totalPrice"),
+                "unitPrice": obj.get("unitPrice"),
+                "orderStatus": obj.get("orderStatus"),
+                "createTime": obj.get("createTime"),
+                "commission": obj.get("commission"),
+                "takerCommissionRate": obj.get("takerCommissionRate"),
+                "takerCommission": obj.get("takerCommission"),
+                "takerAmount": obj.get("takerAmount"),
+                "counterPartNickName": obj.get("counterPartNickName"),
+                "payMethodName": obj.get("payMethodName"),
+                "additionalKycVerify": obj.get("additionalKycVerify"),
             }
         )
         # store additional fields in additional_properties

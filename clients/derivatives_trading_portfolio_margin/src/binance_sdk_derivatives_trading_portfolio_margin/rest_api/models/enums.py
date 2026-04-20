@@ -173,6 +173,57 @@ class NewMarginOrderSelfTradePreventionModeEnum(Enum):
     EXPIRE_MAKER = "EXPIRE_MAKER"
 
 
+class NewUmAlgoOrderSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class NewUmAlgoOrderTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    MARKET = "MARKET"
+
+
+class NewUmAlgoOrderPositionSideEnum(Enum):
+    BOTH = "BOTH"
+    LONG = "LONG"
+    SHORT = "SHORT"
+
+
+class NewUmAlgoOrderTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+    GTX = "GTX"
+
+
+class NewUmAlgoOrderWorkingTypeEnum(Enum):
+    MARK_PRICE = "MARK_PRICE"
+
+
+class NewUmAlgoOrderPriceMatchEnum(Enum):
+    NONE = "NONE"
+    OPPONENT = "OPPONENT"
+    OPPONENT_5 = "OPPONENT_5"
+    OPPONENT_10 = "OPPONENT_10"
+    OPPONENT_20 = "OPPONENT_20"
+    QUEUE = "QUEUE"
+    QUEUE_5 = "QUEUE_5"
+    QUEUE_10 = "QUEUE_10"
+    QUEUE_20 = "QUEUE_20"
+
+
+class NewUmAlgoOrderNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+
+
+class NewUmAlgoOrderSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+
+
 class NewUmConditionalOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"
