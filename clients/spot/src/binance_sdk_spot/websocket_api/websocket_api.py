@@ -3033,8 +3033,11 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         response = await self._userDataStreamApi.user_data_stream_subscribe(id)
         data = response.data()
-        if data.get("result") is None or data.get("error") is not None:
+        if isinstance(data, dict) and (data.get("result") is None or data.get("error") is not None):
             raise ValueError(data)
+        elif data.result is None or getattr(data, "error", None) is not None:
+            raise ValueError(data)
+
         stream = await RequestStream(
             self,
             data.result.subscription_id,
@@ -3072,8 +3075,11 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             id, recv_window
         )
         data = response.data()
-        if data.get("result") is None or data.get("error") is not None:
+        if isinstance(data, dict) and (data.get("result") is None or data.get("error") is not None):
             raise ValueError(data)
+        elif data.result is None or getattr(data, "error", None) is not None:
+            raise ValueError(data)
+
         stream = await RequestStream(
             self,
             data.result.subscription_id,

@@ -169,7 +169,7 @@ class TradeApi:
         symbol: Union[str, None],
         side: Union[ModifyOrderSideEnum, None],
         quantity: Union[float, None],
-        price: Union[float, None],
+        price: Optional[float] = None,
         id: Optional[str] = None,
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
@@ -199,7 +199,7 @@ class TradeApi:
                     symbol (Union[str, None]):
                     side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
                     quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
-                    price (Union[float, None]):
+                    price (Optional[float] = None):
                     id (Optional[str] = None): Unique WebSocket request ID.
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
@@ -225,10 +225,6 @@ class TradeApi:
         if quantity is None:
             raise RequiredError(
                 field="quantity", error_message="Missing required parameter 'quantity'"
-            )
-        if price is None:
-            raise RequiredError(
-                field="price", error_message="Missing required parameter 'price'"
             )
 
         params = {

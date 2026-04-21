@@ -1,5 +1,17 @@
 # Changelog
 
+## 10.0.1 - 2026-04-21
+
+### Changed (2)
+
+#### REST API
+
+- Modified parameter `price` to optional `float` for `modify_order()` (`PUT /fapi/v1/order`)
+
+#### WebSocket API
+
+- Modified parameter `price` to optional `float` for `modify_order()` method (`order.modify`)
+
 ## 10.0.0 - 2026-04-20
 
 ### Changed (3)
