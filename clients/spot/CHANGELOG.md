@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.2.1 - 2026-04-21
+
+### Changed (1)
+
+- Update `user_data_stream_subscribe_signature()` and `user_data_stream_subscribe()` error checks.
+
 ## 8.2.0 - 2026-04-20
 
 ### Changed (2)

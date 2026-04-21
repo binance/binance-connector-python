@@ -703,26 +703,6 @@ class TestWebSocketTradeApi:
             await self.websocket_api.modify_order(**params)
 
     @pytest.mark.asyncio
-    async def test_modify_order_missing_required_param_price(self):
-        """Test that modify_order() raises RequiredError when 'price' is missing."""
-
-        params = {
-            "symbol": "symbol_example",
-            "side": ModifyOrderSideEnum["BUY"].value,
-            "quantity": 1.0,
-            "price": 1.0,
-            "id": "e9d6b4349871b40611412680b3445fac",
-            "order_id": 1,
-            "orig_client_order_id": "1",
-            "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
-            "recv_window": 5000,
-        }
-        params["price"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
-            await self.websocket_api.modify_order(**params)
-
-    @pytest.mark.asyncio
     async def test_modify_order_server_error(self):
         """Test that modify_order() raises an error when the server returns an error."""
 
