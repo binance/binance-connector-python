@@ -12,7 +12,7 @@ Collection of auto-generated Python SDK for Binance APIs.
 
 Before using the SDK, ensure you have:
 
-- **Python** (version 3.9 or later)
+- **Python** (version 3.10 or later)
 - **pip** (Python package manager)
 - **poetry** (Python package manager)
 
