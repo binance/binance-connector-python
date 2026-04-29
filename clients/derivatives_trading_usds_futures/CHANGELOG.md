@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.1.0 - 2026-04-29
+
+### Changed (1)
+
+- Updated `binance-common` library to version `3.9.0`
+
 ## 10.0.1 - 2026-04-21
 
 ### Changed (2)

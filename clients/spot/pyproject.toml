@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-spot"
-version = "8.2.1"
+version = "8.3.0"
 description = "Official Binance Spot SDK - A lightweight library that provides a convenient interface to Binance's Spot REST API, WebSocket API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
@@ -18,7 +18,7 @@ websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
 aiohttp = "^3.9"
-binance-common = "3.8.0"
+binance-common = "3.9.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]
