@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.9.0 - 2026-04-29
+
+### Updated (1)
+
+- Fix `WebSocketCommon` reconnection logic to properly handle reconnections and avoid multiple concurrent reconnection attempts.
+
 ## 3.8.0 - 2026-03-26
 
 ### Added (2)

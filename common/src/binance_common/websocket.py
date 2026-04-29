@@ -410,7 +410,7 @@ class WebSocketCommon:
         if configuration.reconnect_delay:
             await asyncio.sleep(configuration.reconnect_delay / 1000)
 
-        await self.connect(configuration.stream_url, configuration, connection.id)
+        await self.init_connection(configuration.stream_url, configuration, connection.url_path, connection.id)
 
         new_connection = next(
             (c for c in self.connections if c.id == connection.id), None

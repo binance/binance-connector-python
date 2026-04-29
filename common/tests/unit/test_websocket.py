@@ -463,6 +463,7 @@ class TestWebSocketCommon:
         # Prepare old connection
         old_conn = mock_connection
         old_conn.id = "abc"
+        old_conn.url_path = None
         old_conn.pending_request = {"1": MagicMock()}
         old_conn.session_logon_request = {
             "method": "session.logon",
@@ -479,7 +480,7 @@ class TestWebSocketCommon:
 
         # Patch methods
         ws_common.close_connection = AsyncMock()
-        ws_common.connect = AsyncMock()
+        ws_common.init_connection = AsyncMock()
         ws_common.session_re_log_on = AsyncMock()
         ws_common._resubscribe_user_streams = AsyncMock()
         ws_common._resubscribe_global_streams = AsyncMock()
@@ -492,8 +493,8 @@ class TestWebSocketCommon:
         await ws_common.reconnect(old_conn, config)
 
         ws_common.close_connection.assert_awaited_once_with(old_conn, False)
-        ws_common.connect.assert_awaited_once_with(
-            config.stream_url, config, old_conn.id
+        ws_common.init_connection.assert_awaited_once_with(
+            config.stream_url, config, old_conn.url_path, old_conn.id
         )
         ws_common.session_re_log_on.assert_awaited_once_with(
             old_conn.session_logon_request, new_conn
