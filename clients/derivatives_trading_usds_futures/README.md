@@ -36,7 +36,7 @@ This is a client library for the Binance Derivatives Trading USDS-M Futures SDK 
 
 ## Installation
 
-To use this library, ensure your environment is running Python version **3.9** or later.
+To use this library, ensure your environment is running Python version **3.10** or later.
 
 ```bash
 pip install binance-sdk-derivatives-trading-usds-futures
