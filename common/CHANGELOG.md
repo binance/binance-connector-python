@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.9.1 - 2026-04-29
+
+### Changed (1)
+
+- Updated `pyproject.toml` dependencies
+
 ## 3.9.0 - 2026-04-29
 
 ### Updated (1)
