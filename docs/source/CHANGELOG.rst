@@ -2,6 +2,14 @@
 Changelog
 =========
 
+3.13.0 - 2025-04-30
+-------------------
+
+Deprecated
+^^^^^^^^^^
+
+* The library is now deprecated. Please refer to the new [Binance Python Connectors](https://github.com/binance/binance-connector-python/tree/master) for the latest SDKs of all Binance APIs, including Spot, Futures, Options, and more.
+
 3.12.0 - 2025-01-09
 -------------------
 

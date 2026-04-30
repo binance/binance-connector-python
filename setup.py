@@ -8,7 +8,7 @@ with open(
 
 NAME = "binance-connector"
 DESCRIPTION = (
-    "This is a lightweight library that works as a connector to Binance public API."
+    "This is a deprecated lightweight library that works as a connector to Binance public API."
 )
 AUTHOR = "Binance"
 URL = "https://github.com/binance/binance-connector-python"
