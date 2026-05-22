@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-common"
-version = "3.9.1"
+version = "3.9.2"
 description = "Binance Common Types and Utilities for Binance Connectors"
 authors = ["Binance"]
 license = "MIT"
@@ -12,11 +12,12 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.15"
-requests = ">=2.33.1"
+requests = ">=2.34.2"
+urllib3 = ">=2.7.0"
 pydantic = ">=2.10.0"
 websockets = "^15.0.1"
 pycryptodome = "^3.17"
-aiohttp = "^3.9"
+aiohttp = "^3.13.5"
 
 [tool.poetry.extras]
 dev = ["pytest"]
