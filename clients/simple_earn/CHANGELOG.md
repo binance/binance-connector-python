@@ -1,5 +1,40 @@
 # Changelog
 
+## 7.0.0 - 2026-05-20
+
+- Updated `binance-common` library to version `3.9.2`
+- Updated `pyproject.toml` dependencies
+
+### Changed (3)
+
+- Modified response for `get_locked_redemption_record()` (`GET /sapi/v1/simple-earn/locked/history/redemptionRecord`):
+  - `rows`.items.`deliverDate`: type `string` → `integer`
+  - `rows`.items.`deliverDate`: type `string` → `integer`
+
+- Modified response for `get_locked_product_position()` (`GET /sapi/v1/simple-earn/locked/position`):
+  - `rows`.items.`deliverDate`: type `string` → `integer`
+  - `rows`.items.`nextPayDate`: type `string` → `integer`
+  - `rows`.items.`partialAmtDeliverDate`: type `string` → `integer`
+  - `rows`.items.`purchaseTime`: type `string` → `integer`
+  - `rows`.items.`rewardsEndDate`: type `string` → `integer`
+  - `rows`.items.`deliverDate`: type `string` → `integer`
+  - `rows`.items.`nextPayDate`: type `string` → `integer`
+  - `rows`.items.`partialAmtDeliverDate`: type `string` → `integer`
+  - `rows`.items.`purchaseTime`: type `string` → `integer`
+  - `rows`.items.`rewardsEndDate`: type `string` → `integer`
+
+- Modified response for `get_locked_subscription_preview()` (`GET /sapi/v1/simple-earn/locked/subscriptionPreview`):
+  - items.`deliverDate`: type `string` → `integer`
+  - items.`nextPayDate`: type `string` → `integer`
+  - items.`nextSubscriptionDate`: type `string` → `integer`
+  - items.`rewardsEndDate`: type `string` → `integer`
+  - items.`valueDate`: type `string` → `integer`
+  - items.`deliverDate`: type `string` → `integer`
+  - items.`nextPayDate`: type `string` → `integer`
+  - items.`nextSubscriptionDate`: type `string` → `integer`
+  - items.`rewardsEndDate`: type `string` → `integer`
+  - items.`valueDate`: type `string` → `integer`
+
 ## 6.6.0 - 2026-04-29
 
 - Updated `binance-common` library to version `3.9.1`

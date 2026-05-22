@@ -1,5 +1,31 @@
 # Changelog
 
+## 7.0.0 - 2026-05-22
+
+- Updated `binance-common` library to version `3.9.2`
+- Updated `pyproject.toml` dependencies
+
+### Changed (4)
+
+#### REST API
+
+- Deleted parameter `closePosition`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `quantity`:
+  - required: `false` → `true`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified response for `new_um_algo_order()` (`POST /papi/v1/um/algo/order`):
+  - property `closePosition` deleted
+
+- Modified response for `cancel_um_algo_order()` (`DELETE /papi/v1/um/algo/order`):
+  - property `complete` added
+  - property `msg` deleted
+  - property `algoId` deleted
+  - property `clientAlgoId` deleted
+  - property `code` deleted
+
 ## 6.2.0 - 2026-04-29
 
 - Updated `binance-common` library to version `3.9.1`

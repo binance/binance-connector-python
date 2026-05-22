@@ -34,7 +34,7 @@ class GetLockedProductPositionResponseRowsInner(BaseModel):
     project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    purchase_time: Optional[StrictStr] = Field(default=None, alias="purchaseTime")
+    purchase_time: Optional[StrictInt] = Field(default=None, alias="purchaseTime")
     duration: Optional[StrictStr] = None
     accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
@@ -55,17 +55,17 @@ class GetLockedProductPositionResponseRowsInner(BaseModel):
         default=None, alias="totalBoostRewardAmt"
     )
     next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
-    next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
+    next_pay_date: Optional[StrictInt] = Field(default=None, alias="nextPayDate")
     pay_period: Optional[StrictStr] = Field(default=None, alias="payPeriod")
     redeem_amount_early: Optional[StrictStr] = Field(
         default=None, alias="redeemAmountEarly"
     )
-    rewards_end_date: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
+    rewards_end_date: Optional[StrictInt] = Field(default=None, alias="rewardsEndDate")
+    deliver_date: Optional[StrictInt] = Field(default=None, alias="deliverDate")
     redeem_period: Optional[StrictStr] = Field(default=None, alias="redeemPeriod")
     redeeming_amt: Optional[StrictStr] = Field(default=None, alias="redeemingAmt")
     redeem_to: Optional[StrictStr] = Field(default=None, alias="redeemTo")
-    partial_amt_deliver_date: Optional[StrictStr] = Field(
+    partial_amt_deliver_date: Optional[StrictInt] = Field(
         default=None, alias="partialAmtDeliverDate"
     )
     can_redeem_early: Optional[StrictBool] = Field(default=None, alias="canRedeemEarly")

@@ -96,6 +96,12 @@ from .get_order_list_response_orders_inner import (
 )
 from .get_order_response import GetOrderResponse as GetOrderResponse
 from .get_trades_response import GetTradesResponse as GetTradesResponse
+from .historical_block_trades_response import (
+    HistoricalBlockTradesResponse as HistoricalBlockTradesResponse,
+)
+from .historical_block_trades_response_inner import (
+    HistoricalBlockTradesResponseInner as HistoricalBlockTradesResponseInner,
+)
 from .historical_trades_response import (
     HistoricalTradesResponse as HistoricalTradesResponse,
 )

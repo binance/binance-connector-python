@@ -23,7 +23,6 @@ async def reference_price_calculation():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.reference_price_calculation(
             symbol="BNBUSDT",
         )

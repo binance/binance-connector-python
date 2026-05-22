@@ -23,7 +23,6 @@ async def execution_rules():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.execution_rules()
 
         rate_limits = response.rate_limits

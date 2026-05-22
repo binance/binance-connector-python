@@ -915,7 +915,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
                 Get UM futures order download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -945,7 +945,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
                 Get UM futures trade download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -975,7 +975,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
                 Get UM futures Transaction download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -2456,7 +2456,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
                     price (Optional[float] = None):
                     working_type (Optional[NewCmConditionalOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
                     new_client_strategy_id (Optional[str] = None):
                     stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the mark price
@@ -2628,14 +2628,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
         symbol: Union[str, None],
         side: Union[NewUmAlgoOrderSideEnum, None],
         type: Union[NewUmAlgoOrderTypeEnum, None],
+        quantity: Union[float, None],
         position_side: Optional[NewUmAlgoOrderPositionSideEnum] = None,
         time_in_force: Optional[NewUmAlgoOrderTimeInForceEnum] = None,
-        quantity: Optional[float] = None,
         price: Optional[float] = None,
         trigger_price: Optional[float] = None,
         working_type: Optional[NewUmAlgoOrderWorkingTypeEnum] = None,
         price_match: Optional[NewUmAlgoOrderPriceMatchEnum] = None,
-        close_position: Optional[str] = None,
         price_protect: Optional[str] = None,
         reduce_only: Optional[str] = None,
         activate_price: Optional[float] = None,
@@ -2677,12 +2676,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
         * BUY: `activatePrice` should be smaller than latest price.
         * SELL: `activatePrice` should be larger than latest price.
 
-        * `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
-        * Follow the same rules for condition orders.
-        * If triggered, **close all** current long position( if `SELL`) or current short position( if `BUY`).
-        * Cannot be used with `quantity` paremeter
-        * Cannot be used with `reduceOnly` parameter
-        * In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
         * `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
 
         Weight: 1
@@ -2692,15 +2685,14 @@ class DerivativesTradingPortfolioMarginRestAPI:
                     symbol (Union[str, None]):
                     side (Union[NewUmAlgoOrderSideEnum, None]):
                     type (Union[NewUmAlgoOrderTypeEnum, None]): `LIMIT`, `MARKET`
+                    quantity (Union[float, None]): Order quantity
                     position_side (Optional[NewUmAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
                     time_in_force (Optional[NewUmAlgoOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None):
                     price (Optional[float] = None):
                     trigger_price (Optional[float] = None):
                     working_type (Optional[NewUmAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_match (Optional[NewUmAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    close_position (Optional[str] = None): true, false; Close-All, used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
@@ -2723,14 +2715,13 @@ class DerivativesTradingPortfolioMarginRestAPI:
             symbol,
             side,
             type,
+            quantity,
             position_side,
             time_in_force,
-            quantity,
             price,
             trigger_price,
             working_type,
             price_match,
-            close_position,
             price_protect,
             reduce_only,
             activate_price,
@@ -2809,7 +2800,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode .
                     price (Optional[float] = None):
                     working_type (Optional[NewUmConditionalOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
                     new_client_strategy_id (Optional[str] = None):
                     stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the mark price

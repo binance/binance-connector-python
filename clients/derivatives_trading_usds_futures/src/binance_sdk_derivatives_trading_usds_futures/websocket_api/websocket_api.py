@@ -582,7 +582,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
                     working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
@@ -709,7 +709,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
                     working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`

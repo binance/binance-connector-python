@@ -23,7 +23,6 @@ async def my_prevented_matches():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.my_prevented_matches(
             symbol="BNBUSDT",
         )

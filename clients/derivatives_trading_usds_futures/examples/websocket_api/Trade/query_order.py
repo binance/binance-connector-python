@@ -29,7 +29,6 @@ async def query_order():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.query_order(
             symbol="symbol_example",
         )

@@ -29,7 +29,6 @@ async def cancel_algo_order():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.cancel_algo_order()
 
         rate_limits = response.rate_limits

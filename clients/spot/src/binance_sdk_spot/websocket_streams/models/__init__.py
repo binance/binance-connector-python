@@ -26,6 +26,7 @@ from .all_mini_ticker_response_inner import (
 )
 from .asset_filters import AssetFilters as AssetFilters
 from .avg_price_response import AvgPriceResponse as AvgPriceResponse
+from .block_trade_response import BlockTradeResponse as BlockTradeResponse
 from .book_ticker_response import BookTickerResponse as BookTickerResponse
 from .diff_book_depth_response import DiffBookDepthResponse as DiffBookDepthResponse
 from .exchange_filters import ExchangeFilters as ExchangeFilters

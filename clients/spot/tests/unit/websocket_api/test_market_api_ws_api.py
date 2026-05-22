@@ -39,6 +39,7 @@ from binance_sdk_spot.websocket_api.models import TickerTradingDayTypeEnum
 from binance_sdk_spot.websocket_api.models import TickerTradingDaySymbolStatusEnum
 from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
 from binance_sdk_spot.websocket_api.models import AvgPriceResponse
+from binance_sdk_spot.websocket_api.models import BlockTradesHistoricalResponse
 from binance_sdk_spot.websocket_api.models import DepthResponse
 from binance_sdk_spot.websocket_api.models import KlinesResponse
 from binance_sdk_spot.websocket_api.models import ReferencePriceResponse
@@ -186,6 +187,190 @@ class TestWebSocketMarketApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.websocket_api.avg_price(**params)
+
+    @pytest.mark.asyncio
+    async def test_block_trades_historical_success(self):
+        """Test block_trades_historical() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+
+        expected_response = {
+            "id": "cffc9c7d-4efc-4ce0-b587-6b87448f052a",
+            "status": 200,
+            "result": [
+                {
+                    "id": 582,
+                    "price": "0.052",
+                    "qty": "5838",
+                    "quoteQty": "303.576",
+                    "time": 1772506983321,
+                    "isBuyerMaker": True,
+                }
+            ],
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                    "count": 10,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+        result = await self.websocket_api.block_trades_historical(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/blockTrades.historical".replace(
+            "/", "", 1
+        )
+
+        assert params["symbol"] == "BNBUSDT"
+
+        assert params["from_id"] == 1
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={
+                "method": "/blockTrades.historical".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=BlockTradesHistoricalResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_block_trades_historical_success_with_optional_params(self):
+        """Test block_trades_historical() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "limit": 500,
+        }
+
+        expected_response = {
+            "id": "cffc9c7d-4efc-4ce0-b587-6b87448f052a",
+            "status": 200,
+            "result": [
+                {
+                    "id": 582,
+                    "price": "0.052",
+                    "qty": "5838",
+                    "quoteQty": "303.576",
+                    "time": 1772506983321,
+                    "isBuyerMaker": True,
+                }
+            ],
+            "rateLimits": [
+                {
+                    "rateLimitType": "REQUEST_WEIGHT",
+                    "interval": "MINUTE",
+                    "intervalNum": 1,
+                    "limit": 6000,
+                    "count": 10,
+                }
+            ],
+        }
+
+        self.mock_websocket_api.send_message = AsyncMock(
+            return_value=WebsocketApiResponse(
+                data_function=lambda: expected_response,
+                rate_limits=(
+                    parse_ws_rate_limit_headers(expected_response["rateLimits"])
+                    if "rateLimits" in expected_response
+                    else None
+                ),
+            )
+        )
+
+        result = await self.websocket_api.block_trades_historical(**params)
+
+        actual_call_args = self.mock_websocket_api.send_message.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "payload" in request_kwargs
+        assert "method" in request_kwargs["payload"]
+        assert request_kwargs["payload"]["method"] == "/blockTrades.historical".replace(
+            "/", "", 1
+        )
+        assert params["symbol"] == "BNBUSDT"
+        assert params["from_id"] == 1
+        assert params["id"] == "e9d6b4349871b40611412680b3445fac"
+        assert params["limit"] == 500
+
+        assert result is not None
+        assert result.data() == expected_response
+        self.mock_websocket_api.send_message.assert_called_once_with(
+            payload={
+                "method": "/blockTrades.historical".replace("/", "", 1),
+                "params": params,
+            },
+            response_model=BlockTradesHistoricalResponse,
+        )
+
+    @pytest.mark.asyncio
+    async def test_block_trades_historical_missing_required_param_symbol(self):
+        """Test that block_trades_historical() raises RequiredError when 'symbol' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "limit": 500,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.websocket_api.block_trades_historical(**params)
+
+    @pytest.mark.asyncio
+    async def test_block_trades_historical_missing_required_param_from_id(self):
+        """Test that block_trades_historical() raises RequiredError when 'from_id' is missing."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "limit": 500,
+        }
+        params["from_id"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'from_id'"):
+            await self.websocket_api.block_trades_historical(**params)
+
+    @pytest.mark.asyncio
+    async def test_block_trades_historical_server_error(self):
+        """Test that block_trades_historical() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.mock_websocket_api.send_message.side_effect = mock_error
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.websocket_api.block_trades_historical(**params)
 
     @pytest.mark.asyncio
     async def test_depth_success(self):

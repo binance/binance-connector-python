@@ -29,7 +29,6 @@ async def close_user_data_stream():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.close_user_data_stream()
 
         rate_limits = response.rate_limits

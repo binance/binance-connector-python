@@ -23,7 +23,6 @@ async def open_order_lists_status():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.open_order_lists_status()
 
         rate_limits = response.rate_limits

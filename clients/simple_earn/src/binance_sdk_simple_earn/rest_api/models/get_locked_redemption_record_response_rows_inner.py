@@ -35,7 +35,7 @@ class GetLockedRedemptionRecordResponseRowsInner(BaseModel):
     amount: Optional[StrictStr] = None
     original_amount: Optional[StrictStr] = Field(default=None, alias="originalAmount")
     type: Optional[StrictStr] = None
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
+    deliver_date: Optional[StrictInt] = Field(default=None, alias="deliverDate")
     loss_amount: Optional[StrictStr] = Field(default=None, alias="lossAmount")
     is_complete: Optional[StrictBool] = Field(default=None, alias="isComplete")
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")

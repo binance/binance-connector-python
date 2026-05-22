@@ -1,5 +1,61 @@
 # Changelog
 
+## 9.0.0 - 2026-05-18
+
+### Added (2)
+
+#### REST API
+
+- `historical_block_trades()` (`GET /api/v3/historicalBlockTrades`)
+
+#### WebSocket API
+
+- `block_trades_historical()` (`blockTrades.historical` method)
+
+#### WebSocket Streams
+
+- `block_trade()` (`<symbol>@blockTrade` stream)
+
+### Changed (3)
+
+- Updated `binance-common` library to version `3.9.2`
+- Updated `pyproject.toml` dependencies
+
+#### REST API
+
+- Modified parameter `selfTradePreventionMode`:
+  - enum added: `TRANSFER`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_oco()` (`POST /api/v3/order/oco`)
+    - `order_test()` (`POST /api/v3/order/test`)
+    - `order_list_oco()` (`POST /api/v3/orderList/oco`)
+    - `order_list_opo()` (`POST /api/v3/orderList/opo`)
+    - `order_list_opoco()` (`POST /api/v3/orderList/opoco`)
+    - `order_list_oto()` (`POST /api/v3/orderList/oto`)
+    - `order_list_otoco()` (`POST /api/v3/orderList/otoco`)
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+- Marked `order_oco()` (`POST /api/v3/order/oco`) as deprecated.
+
+#### WebSocket API
+
+- Modified parameter `selfTradePreventionMode`:
+  - enum added: `TRANSFER`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+    - `order_list_place()` (`orderList.place` method)
+    - `order_list_place_oco()` (`orderList.place.oco` method)
+    - `order_list_place_opo()` (`orderList.place.opo` method)
+    - `order_list_place_opoco()` (`orderList.place.opoco` method)
+    - `order_list_place_oto()` (`orderList.place.oto` method)
+    - `order_list_place_otoco()` (`orderList.place.otoco` method)
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+
 ## 8.4.0 - 2026-04-29
 
 - Updated `binance-common` library to version `3.9.1`

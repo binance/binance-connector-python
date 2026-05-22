@@ -23,7 +23,6 @@ async def exchange_info():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.exchange_info()
 
         rate_limits = response.rate_limits

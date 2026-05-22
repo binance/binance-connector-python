@@ -25,7 +25,6 @@ async def sor_order_place():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.sor_order_place(
             symbol="BNBUSDT",
             side=SorOrderPlaceSideEnum["BUY"].value,

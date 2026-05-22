@@ -46,6 +46,7 @@ from .models import AggTradesResponse
 from .models import AvgPriceResponse
 from .models import DepthResponse
 from .models import GetTradesResponse
+from .models import HistoricalBlockTradesResponse
 from .models import HistoricalTradesResponse
 from .models import KlinesResponse
 from .models import ReferencePriceResponse
@@ -686,7 +687,7 @@ class SpotRestAPI:
                     symbol (Union[str, None]):
                     order_id (Union[int, None]):
                     from_execution_id (Optional[int] = None):
-                    limit (Optional[int] = None): Default:500; Maximum: 1000
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. <br> Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -943,6 +944,33 @@ class SpotRestAPI:
         """
 
         return self._marketApi.get_trades(symbol, limit)
+
+    def historical_block_trades(
+        self,
+        symbol: Union[str, None],
+        from_id: Union[int, None],
+        limit: Optional[int] = None,
+    ) -> ApiResponse[HistoricalBlockTradesResponse]:
+        """
+                Historical Block Trades
+
+                Get block trades.
+        Weight: 25
+
+                Args:
+                    symbol (Union[str, None]):
+                    from_id (Union[int, None]): Block trade ID to fetch from
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
+
+                Returns:
+                    ApiResponse[HistoricalBlockTradesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketApi.historical_block_trades(symbol, from_id, limit)
 
     def historical_trades(
         self,

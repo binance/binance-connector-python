@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -27,7 +27,7 @@ class Listenkeyexpired(BaseModel):
     Listenkeyexpired
     """  # noqa: E501
 
-    E: Optional[StrictStr] = Field(default=None, alias="E")
+    E: Optional[StrictInt] = Field(default=None, alias="E")
     listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "listen_key"]

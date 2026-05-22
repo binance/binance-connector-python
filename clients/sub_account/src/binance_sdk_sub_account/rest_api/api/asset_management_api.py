@@ -286,7 +286,7 @@ class AssetManagementApi:
         self,
         symbol: Union[str, None],
         page: Union[int, None],
-        row: Union[int, None],
+        rows: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -307,7 +307,7 @@ class AssetManagementApi:
                 Args:
                     symbol (Union[str, None]):
                     page (Union[int, None]): Page
-                    row (Union[int, None]):
+                    rows (Union[int, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -328,16 +328,16 @@ class AssetManagementApi:
             raise RequiredError(
                 field="page", error_message="Missing required parameter 'page'"
             )
-        if row is None:
+        if rows is None:
             raise RequiredError(
-                field="row", error_message="Missing required parameter 'row'"
+                field="rows", error_message="Missing required parameter 'rows'"
             )
 
         body = {}
         payload = {
             "symbol": symbol,
             "page": page,
-            "row": row,
+            "rows": rows,
             "start_time": start_time,
             "end_time": end_time,
             "recv_window": recv_window,

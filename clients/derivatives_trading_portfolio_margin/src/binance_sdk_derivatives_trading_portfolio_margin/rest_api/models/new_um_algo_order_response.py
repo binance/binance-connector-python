@@ -45,7 +45,6 @@ class NewUmAlgoOrderResponse(BaseModel):
     )
     working_type: Optional[StrictStr] = Field(default=None, alias="workingType")
     price_match: Optional[StrictStr] = Field(default=None, alias="priceMatch")
-    close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
     price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
     activate_price: Optional[StrictStr] = Field(default=None, alias="activatePrice")
@@ -72,7 +71,6 @@ class NewUmAlgoOrderResponse(BaseModel):
         "selfTradePreventionMode",
         "workingType",
         "priceMatch",
-        "closePosition",
         "priceProtect",
         "reduceOnly",
         "activatePrice",
@@ -163,7 +161,6 @@ class NewUmAlgoOrderResponse(BaseModel):
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
                 "workingType": obj.get("workingType"),
                 "priceMatch": obj.get("priceMatch"),
-                "closePosition": obj.get("closePosition"),
                 "priceProtect": obj.get("priceProtect"),
                 "reduceOnly": obj.get("reduceOnly"),
                 "activatePrice": obj.get("activatePrice"),

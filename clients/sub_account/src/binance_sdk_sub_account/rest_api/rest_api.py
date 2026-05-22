@@ -620,7 +620,7 @@ class SubAccountRestAPI:
         self,
         symbol: Union[str, None],
         page: Union[int, None],
-        row: Union[int, None],
+        rows: Union[int, None],
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -639,7 +639,7 @@ class SubAccountRestAPI:
                 Args:
                     symbol (Union[str, None]):
                     page (Union[int, None]): Page
-                    row (Union[int, None]):
+                    rows (Union[int, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -653,7 +653,7 @@ class SubAccountRestAPI:
         """
 
         return self._assetManagementApi.get_move_position_history_for_sub_account(
-            symbol, page, row, start_time, end_time, recv_window
+            symbol, page, rows, start_time, end_time, recv_window
         )
 
     def get_sub_account_deposit_address(

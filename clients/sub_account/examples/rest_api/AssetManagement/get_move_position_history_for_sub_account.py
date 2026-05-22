@@ -27,7 +27,7 @@ def get_move_position_history_for_sub_account():
         response = client.rest_api.get_move_position_history_for_sub_account(
             symbol="symbol_example",
             page=56,
-            row=56,
+            rows=56,
         )
 
         rate_limits = response.rate_limits

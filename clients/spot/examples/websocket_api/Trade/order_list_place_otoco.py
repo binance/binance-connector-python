@@ -29,7 +29,6 @@ async def order_list_place_otoco():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.order_list_place_otoco(
             symbol="BNBUSDT",
             working_type=OrderListPlaceOtocoWorkingTypeEnum["LIMIT"].value,

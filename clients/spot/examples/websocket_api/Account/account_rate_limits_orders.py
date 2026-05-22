@@ -23,7 +23,6 @@ async def account_rate_limits_orders():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.account_rate_limits_orders()
 
         rate_limits = response.rate_limits
