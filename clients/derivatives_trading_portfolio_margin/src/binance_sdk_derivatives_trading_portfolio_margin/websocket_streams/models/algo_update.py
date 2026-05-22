@@ -16,10 +16,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.algo_update_o import (
-    AlgoUpdateO,
+from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.algo_update_ao import (
+    AlgoUpdateAo,
 )
 from typing import Set
 from typing_extensions import Self
@@ -32,9 +32,10 @@ class AlgoUpdate(BaseModel):
 
     T: Optional[StrictInt] = Field(default=None, alias="T")
     E: Optional[StrictInt] = Field(default=None, alias="E")
-    o: Optional[AlgoUpdateO] = None
+    fs: Optional[StrictStr] = None
+    ao: Optional[AlgoUpdateAo] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["T", "E", "o"]
+    __properties: ClassVar[List[str]] = ["T", "E", "fs", "ao"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,9 +79,9 @@ class AlgoUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of o
-        if self.o:
-            _dict["o"] = self.o.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of ao
+        if self.ao:
+            _dict["ao"] = self.ao.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -101,9 +102,10 @@ class AlgoUpdate(BaseModel):
             {
                 "T": obj.get("T"),
                 "E": obj.get("E"),
-                "o": (
-                    AlgoUpdateO.from_dict(obj["o"])
-                    if obj.get("o") is not None
+                "fs": obj.get("fs"),
+                "ao": (
+                    AlgoUpdateAo.from_dict(obj["ao"])
+                    if obj.get("ao") is not None
                     else None
                 ),
             }

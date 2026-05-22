@@ -213,6 +213,30 @@ class SpotWebSocketStreams(WebSocketStreamBase):
 
         return await self._webSocketStreamsApi.avg_price(symbol, id)
 
+    async def block_trade(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Block Trade Streams
+
+
+
+        Args:
+            symbol (Union[str, None]): Symbol to query
+            id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._webSocketStreamsApi.block_trade(symbol, id)
+
     async def book_ticker(
         self,
         symbol: Union[str, None],

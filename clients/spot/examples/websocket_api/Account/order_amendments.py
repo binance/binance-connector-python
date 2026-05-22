@@ -23,7 +23,6 @@ async def order_amendments():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.order_amendments(
             symbol="BNBUSDT",
             order_id=1,

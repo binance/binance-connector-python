@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.7.0 - 2026-05-22
+
+- Updated `binance-common` library to version `3.9.2`
+- Updated `pyproject.toml` dependencies
+
 ## 3.6.0 - 2026-04-29
 
 - Updated `binance-common` library to version `3.9.1`

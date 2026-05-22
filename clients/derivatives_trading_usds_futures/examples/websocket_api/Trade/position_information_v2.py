@@ -29,7 +29,6 @@ async def position_information_v2():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.position_information_v2()
 
         rate_limits = response.rate_limits

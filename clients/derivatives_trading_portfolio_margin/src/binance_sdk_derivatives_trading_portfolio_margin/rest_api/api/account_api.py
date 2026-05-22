@@ -1173,7 +1173,7 @@ class AccountApi:
 
                 Get UM futures order download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -1223,7 +1223,7 @@ class AccountApi:
 
                 Get UM futures trade download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -1273,7 +1273,7 @@ class AccountApi:
 
                 Get UM futures Transaction download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 

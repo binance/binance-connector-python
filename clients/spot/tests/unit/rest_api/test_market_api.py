@@ -29,6 +29,7 @@ from binance_sdk_spot.rest_api.models import AggTradesResponse
 from binance_sdk_spot.rest_api.models import AvgPriceResponse
 from binance_sdk_spot.rest_api.models import DepthResponse
 from binance_sdk_spot.rest_api.models import GetTradesResponse
+from binance_sdk_spot.rest_api.models import HistoricalBlockTradesResponse
 from binance_sdk_spot.rest_api.models import HistoricalTradesResponse
 from binance_sdk_spot.rest_api.models import KlinesResponse
 from binance_sdk_spot.rest_api.models import ReferencePriceResponse
@@ -553,6 +554,143 @@ class TestMarketApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_trades(**params)
+
+    def test_historical_block_trades_success(self):
+        """Test historical_block_trades() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+
+        expected_response = [
+            {
+                "id": 582,
+                "price": "0.052",
+                "qty": "5838",
+                "quoteQty": "303.576",
+                "time": 1772506983321,
+                "isBuyerMaker": True,
+            }
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.historical_block_trades(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/api/v3/historicalBlockTrades" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["symbol"] == "BNBUSDT"
+        assert normalized["fromId"] == 1
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(HistoricalBlockTradesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(HistoricalBlockTradesResponse, "from_dict"):
+            expected = HistoricalBlockTradesResponse.from_dict(expected_response)
+        else:
+            expected = HistoricalBlockTradesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_historical_block_trades_success_with_optional_params(self):
+        """Test historical_block_trades() successfully with optional parameters."""
+
+        params = {"symbol": "BNBUSDT", "from_id": 1, "limit": 500}
+
+        expected_response = [
+            {
+                "id": 582,
+                "price": "0.052",
+                "qty": "5838",
+                "quoteQty": "303.576",
+                "time": 1772506983321,
+                "isBuyerMaker": True,
+            }
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.historical_block_trades(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/api/v3/historicalBlockTrades" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(HistoricalBlockTradesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(HistoricalBlockTradesResponse, "from_dict"):
+            expected = HistoricalBlockTradesResponse.from_dict(expected_response)
+        else:
+            expected = HistoricalBlockTradesResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_historical_block_trades_missing_required_param_symbol(self):
+        """Test that historical_block_trades() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.historical_block_trades(**params)
+
+    def test_historical_block_trades_missing_required_param_from_id(self):
+        """Test that historical_block_trades() raises RequiredError when 'from_id' is missing."""
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+        params["from_id"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'from_id'"):
+            self.client.historical_block_trades(**params)
+
+    def test_historical_block_trades_server_error(self):
+        """Test that historical_block_trades() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BNBUSDT",
+            "from_id": 1,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.historical_block_trades = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.historical_block_trades(**params)
 
     def test_historical_trades_success(self):
         """Test historical_trades() successfully with required parameters only."""

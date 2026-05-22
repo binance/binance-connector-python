@@ -59,6 +59,7 @@ from .models import ExecutionRulesResponse
 from .models import PingResponse
 from .models import TimeResponse
 from .models import AvgPriceResponse
+from .models import BlockTradesHistoricalResponse
 from .models import DepthResponse
 from .models import KlinesResponse
 from .models import ReferencePriceResponse
@@ -1039,6 +1040,35 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
 
         return await self._marketApi.avg_price(symbol, id)
+
+    async def block_trades_historical(
+        self,
+        symbol: Union[str, None],
+        from_id: Union[int, None],
+        id: Optional[str] = None,
+        limit: Optional[int] = None,
+    ) -> WebsocketApiResponse[BlockTradesHistoricalResponse]:
+        """
+                WebSocket Historical Block Trades
+
+                Get block trades.
+        Weight: 25
+
+                Args:
+                    symbol (Union[str, None]):
+                    from_id (Union[int, None]): Block trade ID to fetch from
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
+
+                Returns:
+                    WebsocketApiResponse[BlockTradesHistoricalResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._marketApi.block_trades_historical(symbol, from_id, id, limit)
 
     async def depth(
         self,
@@ -2861,7 +2891,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         This adds 1 order to the `EXCHANGE_MAX_ORDERS` filter and the `MAX_NUM_ORDERS` filter.
 
-        Read [SOR FAQ](../faqs/sor_faq.md) to learn more.
+        Read [SOR FAQ](faqs/sor_faq.md) to learn more.
         Weight: 1
 
         Unfilled Order Count: 1
@@ -3033,7 +3063,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         response = await self._userDataStreamApi.user_data_stream_subscribe(id)
         data = response.data()
-        if isinstance(data, dict) and (data.get("result") is None or data.get("error") is not None):
+        if isinstance(data, dict) and (
+            data.get("result") is None or data.get("error") is not None
+        ):
             raise ValueError(data)
         elif data.result is None or getattr(data, "error", None) is not None:
             raise ValueError(data)
@@ -3075,7 +3107,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             id, recv_window
         )
         data = response.data()
-        if isinstance(data, dict) and (data.get("result") is None or data.get("error") is not None):
+        if isinstance(data, dict) and (
+            data.get("result") is None or data.get("error") is not None
+        ):
             raise ValueError(data)
         elif data.result is None or getattr(data, "error", None) is not None:
             raise ValueError(data)

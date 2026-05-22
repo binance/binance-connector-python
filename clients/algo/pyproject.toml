@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-algo"
-version = "2.8.0"
+version = "2.9.0"
 description = "Official Binance Algo SDK - A lightweight library that provides a convenient interface to Binance's Algo REST API"
 authors = ["Binance"]
 license = "MIT"
@@ -12,13 +12,14 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.15"
-requests = ">=2.33.1"
+requests = ">=2.34.2"
+urllib3 = ">=2.7.0"
 pydantic = ">=2.10.0"
 websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
-aiohttp = "^3.9"
-binance-common = "3.9.1"
+aiohttp = "^3.13.5"
+binance-common = "3.9.2"
 
 [tool.poetry.extras]
 dev = ["pytest"]

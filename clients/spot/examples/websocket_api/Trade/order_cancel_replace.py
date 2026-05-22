@@ -28,7 +28,6 @@ async def order_cancel_replace():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.order_cancel_replace(
             symbol="BNBUSDT",
             cancel_replace_mode=OrderCancelReplaceCancelReplaceModeEnum[

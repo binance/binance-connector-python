@@ -23,7 +23,6 @@ async def trades_historical():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.trades_historical(
             symbol="BNBUSDT",
         )

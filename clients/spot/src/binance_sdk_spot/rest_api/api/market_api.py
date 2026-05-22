@@ -25,6 +25,7 @@ from ..models import AggTradesResponse
 from ..models import AvgPriceResponse
 from ..models import DepthResponse
 from ..models import GetTradesResponse
+from ..models import HistoricalBlockTradesResponse
 from ..models import HistoricalTradesResponse
 from ..models import KlinesResponse
 from ..models import ReferencePriceResponse
@@ -258,6 +259,56 @@ class MarketApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetTradesResponse,
+        )
+
+    def historical_block_trades(
+        self,
+        symbol: Union[str, None],
+        from_id: Union[int, None],
+        limit: Optional[int] = None,
+    ) -> ApiResponse[HistoricalBlockTradesResponse]:
+        """
+                Historical Block Trades
+                GET /api/v3/historicalBlockTrades
+                https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints#historical-block-trades
+
+                Get block trades.
+        Weight: 25
+
+                Args:
+                    symbol (Union[str, None]):
+                    from_id (Union[int, None]): Block trade ID to fetch from
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
+
+                Returns:
+                    ApiResponse[HistoricalBlockTradesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if from_id is None:
+            raise RequiredError(
+                field="from_id", error_message="Missing required parameter 'from_id'"
+            )
+
+        body = {}
+        payload = {"symbol": symbol, "from_id": from_id, "limit": limit}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v3/historicalBlockTrades",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=HistoricalBlockTradesResponse,
         )
 
     def historical_trades(

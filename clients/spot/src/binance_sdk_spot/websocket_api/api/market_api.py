@@ -19,6 +19,7 @@ from binance_common.signature import Signers
 from binance_common.websocket import WebSocketAPIBase
 
 from ..models import AvgPriceResponse
+from ..models import BlockTradesHistoricalResponse
 from ..models import DepthResponse
 from ..models import KlinesResponse
 from ..models import ReferencePriceResponse
@@ -104,6 +105,60 @@ class MarketApi:
 
         return await self.websocket_api.send_message(
             payload=payload, response_model=AvgPriceResponse
+        )
+
+    async def block_trades_historical(
+        self,
+        symbol: Union[str, None],
+        from_id: Union[int, None],
+        id: Optional[str] = None,
+        limit: Optional[int] = None,
+    ) -> WebsocketApiResponse[BlockTradesHistoricalResponse]:
+        """
+            WebSocket Historical Block Trades
+            /blockTrades.historical
+            https://developers.binance.com/docs/binance-spot-api-docs/websocket-api/market-data-requests#historical-block-trades
+
+            Get block trades.
+        Weight: 25
+
+            Args:
+                    symbol (Union[str, None]):
+                    from_id (Union[int, None]): Block trade ID to fetch from
+                    id (Optional[str] = None): Unique WebSocket request ID.
+                    limit (Optional[int] = None): Default: 500; Maximum: 1000
+
+            Returns:
+                WebsocketApiResponse[BlockTradesHistoricalResponse]
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if from_id is None:
+            raise RequiredError(
+                field="from_id", error_message="Missing required parameter 'from_id'"
+            )
+
+        params = {
+            "symbol": symbol,
+            "from_id": from_id,
+            **({"id": id} if id is not None else {}),
+            **({"limit": limit} if limit is not None else {}),
+        }
+
+        payload = {
+            "method": "/blockTrades.historical".replace("/", "", 1),
+            "params": params,
+        }
+
+        return await self.websocket_api.send_message(
+            payload=payload, response_model=BlockTradesHistoricalResponse
         )
 
     async def depth(

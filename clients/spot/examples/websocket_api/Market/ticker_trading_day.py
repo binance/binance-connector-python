@@ -23,7 +23,6 @@ async def ticker_trading_day():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.ticker_trading_day()
 
         rate_limits = response.rate_limits

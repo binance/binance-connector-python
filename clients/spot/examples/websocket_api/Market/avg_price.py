@@ -23,7 +23,6 @@ async def avg_price():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.avg_price(
             symbol="BNBUSDT",
         )

@@ -953,7 +953,7 @@ class TestAssetManagementApi:
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
         }
 
         expected_response = {
@@ -1014,7 +1014,7 @@ class TestAssetManagementApi:
         assert request_kwargs["method"] == "GET"
         assert normalized["symbol"] == "symbol_example"
         assert normalized["page"] == 56
-        assert normalized["row"] == 56
+        assert normalized["rows"] == 56
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -1049,7 +1049,7 @@ class TestAssetManagementApi:
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "recv_window": 5000,
@@ -1138,7 +1138,7 @@ class TestAssetManagementApi:
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
         }
         params["symbol"] = None
 
@@ -1152,23 +1152,25 @@ class TestAssetManagementApi:
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
         }
         params["page"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'page'"):
             self.client.get_move_position_history_for_sub_account(**params)
 
-    def test_get_move_position_history_for_sub_account_missing_required_param_row(self):
-        """Test that get_move_position_history_for_sub_account() raises RequiredError when 'row' is missing."""
+    def test_get_move_position_history_for_sub_account_missing_required_param_rows(
+        self,
+    ):
+        """Test that get_move_position_history_for_sub_account() raises RequiredError when 'rows' is missing."""
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
         }
-        params["row"] = None
+        params["rows"] = None
 
-        with pytest.raises(RequiredError, match="Missing required parameter 'row'"):
+        with pytest.raises(RequiredError, match="Missing required parameter 'rows'"):
             self.client.get_move_position_history_for_sub_account(**params)
 
     def test_get_move_position_history_for_sub_account_server_error(self):
@@ -1177,7 +1179,7 @@ class TestAssetManagementApi:
         params = {
             "symbol": "symbol_example",
             "page": 56,
-            "row": 56,
+            "rows": 56,
         }
 
         mock_error = Exception("ResponseError")

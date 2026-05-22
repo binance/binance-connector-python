@@ -32,7 +32,6 @@ async def new_algo_order():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.new_algo_order(
             algo_type="algo_type_example",
             symbol="symbol_example",

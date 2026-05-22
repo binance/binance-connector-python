@@ -15,7 +15,7 @@ from .account_update_a import AccountUpdateA as AccountUpdateA
 from .account_update_ab_inner import AccountUpdateABInner as AccountUpdateABInner
 from .account_update_ap_inner import AccountUpdateAPInner as AccountUpdateAPInner
 from .algo_update import AlgoUpdate as AlgoUpdate
-from .algo_update_o import AlgoUpdateO as AlgoUpdateO
+from .algo_update_ao import AlgoUpdateAo as AlgoUpdateAo
 from .balanceupdate import Balanceupdate as Balanceupdate
 from .conditional_order_trade_update import (
     ConditionalOrderTradeUpdate as ConditionalOrderTradeUpdate,

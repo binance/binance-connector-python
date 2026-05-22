@@ -25,6 +25,7 @@ from ..models import AggTradeResponse
 from ..models import AllMarketRollingWindowTickerResponse
 from ..models import AllMiniTickerResponse
 from ..models import AvgPriceResponse
+from ..models import BlockTradeResponse
 from ..models import BookTickerResponse
 from ..models import DiffBookDepthResponse
 from ..models import KlineResponse
@@ -219,6 +220,50 @@ class WebSocketStreamsApi:
             self.websocket_base,
             stream=stream,
             response_model=AvgPriceResponse,
+            stream_url="",
+        )
+
+    async def block_trade(
+        self,
+        symbol: Union[str, None],
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+        WebSocket Block Trade Streams
+        /<symbol>@blockTrade
+        https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams#block-trade-streams
+
+
+
+        Args:
+                symbol (Union[str, None]): Symbol to query
+                id (Optional[str] = None): Unique WebSocket request ID.
+
+        Returns:
+            RequestStreamHandle
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        stream = ws_streams_placeholder(
+            "/<symbol>@blockTrade".replace("/", "", 1),
+            {
+                "symbol": symbol,
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=BlockTradeResponse,
             stream_url="",
         )
 

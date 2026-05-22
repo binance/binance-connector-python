@@ -535,6 +535,116 @@ class TestWebSocketStreams:
             await self.ws_streams.avg_price(**params)
 
     @pytest.mark.asyncio
+    async def test_block_trade_subscription(self):
+        """Test that block_trade() subscribes to the correct WebSocket stream."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        expected_response = {
+            "e": "blockTrade",
+            "E": 1772506983582,
+            "s": "BNBBTC",
+            "t": 582,
+            "p": "0.052",
+            "q": "5838",
+            "T": 1772506983321,
+            "m": True,
+        }
+        stream_endpoint = ws_streams_placeholder(
+            "/<symbol>@blockTrade".replace("/", "", 1),
+            params,
+        )
+
+        def mock_on(event, callback, stream):
+            if event == "message" and stream == stream_endpoint:
+                callback(expected_response)
+
+        self.websocket_client.on = MagicMock(side_effect=mock_on)
+
+        mock_callback = MagicMock()
+
+        stream = await self.ws_streams.block_trade(**params)
+        assert isinstance(stream, RequestStreamHandle)
+        assert callable(stream.on)
+        assert callable(stream.unsubscribe)
+        stream.on("message", mock_callback)
+        mock_callback.assert_called_once_with(expected_response)
+
+    @pytest.mark.asyncio
+    async def test_block_trade_success(self):
+        """Test block_trade() successfully with required parameters only."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        expected_response = {
+            "e": "blockTrade",
+            "E": 1772506983582,
+            "s": "BNBBTC",
+            "t": 582,
+            "p": "0.052",
+            "q": "5838",
+            "T": 1772506983321,
+            "m": True,
+        }
+        self.ws_streams.block_trade = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.block_trade(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_block_trade_success_with_optional_params(self):
+        """Test block_trade() successfully with optional parameters."""
+
+        params = {"symbol": "bnbusdt", "id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "blockTrade",
+            "E": 1772506983582,
+            "s": "BNBBTC",
+            "t": 582,
+            "p": "0.052",
+            "q": "5838",
+            "T": 1772506983321,
+            "m": True,
+        }
+
+        self.ws_streams.block_trade = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.block_trade(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_block_trade_missing_required_param_symbol(self):
+        """Test that block_trade() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "bnbusdt",
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            await self.ws_streams.block_trade(**params)
+
+    @pytest.mark.asyncio
+    async def test_block_trade_server_error(self):
+        """Test that block_trade() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "bnbusdt",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.ws_streams.block_trade = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.ws_streams.block_trade(**params)
+
+    @pytest.mark.asyncio
     async def test_book_ticker_subscription(self):
         """Test that book_ticker() subscribes to the correct WebSocket stream."""
 

@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -42,11 +42,11 @@ class GetLockedSubscriptionPreviewResponseInner(BaseModel):
         default=None, alias="estDailyRewardAmt"
     )
     next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
-    next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
-    value_date: Optional[StrictStr] = Field(default=None, alias="valueDate")
-    rewards_end_date: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
-    next_subscription_date: Optional[StrictStr] = Field(
+    next_pay_date: Optional[StrictInt] = Field(default=None, alias="nextPayDate")
+    value_date: Optional[StrictInt] = Field(default=None, alias="valueDate")
+    rewards_end_date: Optional[StrictInt] = Field(default=None, alias="rewardsEndDate")
+    deliver_date: Optional[StrictInt] = Field(default=None, alias="deliverDate")
+    next_subscription_date: Optional[StrictInt] = Field(
         default=None, alias="nextSubscriptionDate"
     )
     additional_properties: Dict[str, Any] = {}

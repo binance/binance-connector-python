@@ -23,7 +23,6 @@ async def session_logon():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.session_logon()
 
         rate_limits = response.rate_limits

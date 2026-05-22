@@ -23,7 +23,6 @@ async def my_trades():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.my_trades(
             symbol="BNBUSDT",
         )

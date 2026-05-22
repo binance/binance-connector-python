@@ -580,7 +580,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Get futures order history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -610,7 +610,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Get futures trade download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -640,7 +640,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Get futures transaction history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -1080,7 +1080,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
 
         Retail Price Improvement(RPI) orders are aggregated and without special tags to be distinguished.
-        * support querying futures trade histories that are not older than one year
+        * support querying futures trade histories that are not older than 24 hours
         * If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 1 hour.
         * If `fromId`, `startTime`, and `endTime` are not sent, the most recent aggregate trades will be returned.
         * Only market trades will be aggregated and returned, which means the insurance fund trades and ADL trades won't be aggregated.
@@ -2203,7 +2203,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Cancel Algo Order (TRADE)
 
-                Cancel an active algo order.
+                Cancel an active algo (conditional) order, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on USD-M Futures.
 
         * Either `algoId` or `clientAlgoId` must be sent.
 
@@ -2232,7 +2232,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Cancel All Algo Open Orders (TRADE)
 
-                Cancel All Algo Open Orders
+                Cancel all open algo (conditional) orders on a symbol, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on USD-M Futures.
 
         Weight: 1
 
@@ -2462,7 +2462,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Current All Algo Open Orders (USER_DATA)
 
-                Get all algo open orders on a symbol.
+                Get all open algo (conditional) orders on a symbol, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on USD-M Futures.
 
         * If the symbol is not sent, orders for all symbols will be returned in an array.
 
@@ -2783,7 +2783,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 New Algo Order(TRADE)
 
-                Send in a new Algo order.
+                Send in a new algo (conditional) order. Use this endpoint to place **TP/SL (Take Profit / Stop Loss)** and trailing stop orders on USD-M Futures. Supported order types under `algoType=CONDITIONAL` are `STOP_MARKET`, `TAKE_PROFIT_MARKET`, `STOP`, `TAKE_PROFIT`, and `TRAILING_STOP_MARKET`.
 
         * Algo order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
         * Algo order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
@@ -2832,7 +2832,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
                     price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     close_position (Optional[str] = None): `true`, `false`；Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     reduce_only (Optional[str] = None): "true" or "false". default "false". Cannot be sent in Hedge Mode
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
@@ -3080,7 +3080,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Query Algo Order (USER_DATA)
 
-                Check an algo order's status.
+                Check the status of an algo (conditional) order, such as TP/SL (Take Profit / Stop Loss) or trailing stop orders on USD-M Futures.
 
         * These orders will not be found:
         * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
@@ -3118,7 +3118,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Query All Algo Orders (USER_DATA)
 
-                Get all algo orders; active, CANCELED, TRIGGERED or FINISHED .
+                Get all algo (conditional) orders — active, CANCELED, TRIGGERED, or FINISHED — including TP/SL (Take Profit / Stop Loss) and trailing stop orders on USD-M Futures.
 
         * These orders will not be found:
         * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
@@ -3308,7 +3308,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 5 where 1 for 1%
                     working_type (Optional[TestOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[TestOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`

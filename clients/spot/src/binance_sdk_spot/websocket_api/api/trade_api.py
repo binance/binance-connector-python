@@ -2626,7 +2626,7 @@ class TradeApi:
 
         This adds 1 order to the `EXCHANGE_MAX_ORDERS` filter and the `MAX_NUM_ORDERS` filter.
 
-        Read [SOR FAQ](../faqs/sor_faq.md) to learn more.
+        Read [SOR FAQ](faqs/sor_faq.md) to learn more.
         Weight: 1
 
         Unfilled Order Count: 1

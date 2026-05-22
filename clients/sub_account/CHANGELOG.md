@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.0.0 - 2026-05-11
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.9.2`
+- Updated `pyproject.toml` dependencies
+
+- Added parameter `rows`
+  - affected methods:
+    - `get_move_position_history_for_sub_account()` (`GET /sapi/v1/sub-account/futures/move-position`)
+- Deleted parameter `row`
+  - affected methods:
+    - `get_move_position_history_for_sub_account()` (`GET /sapi/v1/sub-account/futures/move-position`)
+
 ## 3.8.0 - 2026-04-29
 
 - Updated `binance-common` library to version `3.9.1`

@@ -610,7 +610,7 @@ class AccountApi:
 
                 Get futures order history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -660,7 +660,7 @@ class AccountApi:
 
                 Get futures trade download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 
@@ -710,7 +710,7 @@ class AccountApi:
 
                 Get futures transaction history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 10
 

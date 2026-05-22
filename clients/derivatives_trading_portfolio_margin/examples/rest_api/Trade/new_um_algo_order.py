@@ -37,6 +37,7 @@ def new_um_algo_order():
             symbol="symbol_example",
             side=NewUmAlgoOrderSideEnum["BUY"].value,
             type=NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            quantity=1.0,
         )
 
         rate_limits = response.rate_limits

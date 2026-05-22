@@ -23,7 +23,6 @@ async def all_orders():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.all_orders(
             symbol="BNBUSDT",
         )

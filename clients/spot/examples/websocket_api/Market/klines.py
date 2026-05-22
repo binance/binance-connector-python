@@ -24,7 +24,6 @@ async def klines():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.klines(
             symbol="BNBUSDT",
             interval=KlinesIntervalEnum["INTERVAL_1s"].value,

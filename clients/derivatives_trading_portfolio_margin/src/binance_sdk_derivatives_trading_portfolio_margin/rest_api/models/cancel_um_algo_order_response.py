@@ -16,7 +16,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -27,12 +27,9 @@ class CancelUmAlgoOrderResponse(BaseModel):
     CancelUmAlgoOrderResponse
     """  # noqa: E501
 
-    algo_id: Optional[StrictInt] = Field(default=None, alias="algoId")
-    client_algo_id: Optional[StrictStr] = Field(default=None, alias="clientAlgoId")
-    code: Optional[StrictStr] = None
-    msg: Optional[StrictStr] = None
+    complete: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["algoId", "clientAlgoId", "code", "msg"]
+    __properties: ClassVar[List[str]] = ["complete"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,14 +93,7 @@ class CancelUmAlgoOrderResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "algoId": obj.get("algoId"),
-                "clientAlgoId": obj.get("clientAlgoId"),
-                "code": obj.get("code"),
-                "msg": obj.get("msg"),
-            }
-        )
+        _obj = cls.model_validate({"complete": obj.get("complete")})
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:

@@ -1984,12 +1984,7 @@ class TestTradeApi:
     def test_cancel_um_algo_order_success(self, mock_get_signature):
         """Test cancel_um_algo_order() successfully with required parameters only."""
 
-        expected_response = {
-            "algoId": 2146760,
-            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
-            "code": "200",
-            "msg": "success",
-        }
+        expected_response = {"complete": True}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -2032,12 +2027,7 @@ class TestTradeApi:
 
         params = {"algo_id": 1, "client_algo_id": "1", "recv_window": 5000}
 
-        expected_response = {
-            "algoId": 2146760,
-            "clientAlgoId": "6B2I9XVcJpCjqPAJ4YoFX7",
-            "code": "200",
-            "msg": "success",
-        }
+        expected_response = {"complete": True}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -4747,6 +4737,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
 
         expected_response = {
@@ -4766,7 +4757,6 @@ class TestTradeApi:
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",
             "priceMatch": "NONE",
-            "closePosition": False,
             "priceProtect": False,
             "reduceOnly": False,
             "activatePrice": "",
@@ -4798,6 +4788,7 @@ class TestTradeApi:
         assert normalized["symbol"] == "symbol_example"
         assert normalized["side"] == NewUmAlgoOrderSideEnum["BUY"].value
         assert normalized["type"] == NewUmAlgoOrderTypeEnum["LIMIT"].value
+        assert normalized["quantity"] == 1.0
 
         assert response is not None
         is_list = isinstance(expected_response, list)
@@ -4826,14 +4817,13 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
             "position_side": NewUmAlgoOrderPositionSideEnum["BOTH"].value,
             "time_in_force": NewUmAlgoOrderTimeInForceEnum["GTC"].value,
-            "quantity": 1.0,
             "price": 1.0,
             "trigger_price": 1.0,
             "working_type": NewUmAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
             "price_match": NewUmAlgoOrderPriceMatchEnum["NONE"].value,
-            "close_position": "close_position_example",
             "price_protect": "False",
             "reduce_only": "False",
             "activate_price": 1.0,
@@ -4864,7 +4854,6 @@ class TestTradeApi:
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",
             "priceMatch": "NONE",
-            "closePosition": False,
             "priceProtect": False,
             "reduceOnly": False,
             "activatePrice": "",
@@ -4913,6 +4902,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
         params["algo_type"] = None
 
@@ -4928,6 +4918,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
         params["symbol"] = None
 
@@ -4941,6 +4932,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
         params["side"] = None
 
@@ -4954,10 +4946,27 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
         params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
+            self.client.new_um_algo_order(**params)
+
+    def test_new_um_algo_order_missing_required_param_quantity(self):
+        """Test that new_um_algo_order() raises RequiredError when 'quantity' is missing."""
+        params = {
+            "algo_type": "algo_type_example",
+            "symbol": "symbol_example",
+            "side": NewUmAlgoOrderSideEnum["BUY"].value,
+            "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
+        }
+        params["quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'quantity'"
+        ):
             self.client.new_um_algo_order(**params)
 
     def test_new_um_algo_order_server_error(self):
@@ -4968,6 +4977,7 @@ class TestTradeApi:
             "symbol": "symbol_example",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["LIMIT"].value,
+            "quantity": 1.0,
         }
 
         mock_error = Exception("ResponseError")
@@ -10395,7 +10405,7 @@ class TestTradeApi:
                 "qty": "0.010",
                 "realizedPnl": "2.58500000",
                 "quoteQty": "285.11000",
-                "commission": "-0.11404400",
+                "commission": "0.11404400",
                 "commissionAsset": "USDT",
                 "time": 1680688557875,
                 "buyer": False,
@@ -10466,7 +10476,7 @@ class TestTradeApi:
                 "qty": "0.010",
                 "realizedPnl": "2.58500000",
                 "quoteQty": "285.11000",
-                "commission": "-0.11404400",
+                "commission": "0.11404400",
                 "commissionAsset": "USDT",
                 "time": 1680688557875,
                 "buyer": False,

@@ -29,7 +29,6 @@ async def symbol_order_book_ticker():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.symbol_order_book_ticker()
 
         rate_limits = response.rate_limits

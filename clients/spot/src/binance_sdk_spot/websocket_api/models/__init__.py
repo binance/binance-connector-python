@@ -59,6 +59,12 @@ from .asset_filters import AssetFilters as AssetFilters
 from .avg_price_response import AvgPriceResponse as AvgPriceResponse
 from .avg_price_response_result import AvgPriceResponseResult as AvgPriceResponseResult
 from .balance_update import BalanceUpdate as BalanceUpdate
+from .block_trades_historical_response import (
+    BlockTradesHistoricalResponse as BlockTradesHistoricalResponse,
+)
+from .block_trades_historical_response_result_inner import (
+    BlockTradesHistoricalResponseResultInner as BlockTradesHistoricalResponseResultInner,
+)
 from .depth_response import DepthResponse as DepthResponse
 from .depth_response_result import DepthResponseResult as DepthResponseResult
 from .event_stream_terminated import EventStreamTerminated as EventStreamTerminated
@@ -98,6 +104,7 @@ from .execution_rules_response_result_symbol_rules_inner_rules_inner import (
 )
 from .external_lock_update import ExternalLockUpdate as ExternalLockUpdate
 from .iceberg_parts_filter import IcebergPartsFilter as IcebergPartsFilter
+from .klines_item_inner import KlinesItemInner as KlinesItemInner
 from .klines_response import KlinesResponse as KlinesResponse
 from .list_status import ListStatus as ListStatus
 from .list_status_o_inner import ListStatusOInner as ListStatusOInner
