@@ -137,21 +137,6 @@ The REST API provides detailed error types to help you handle issues effectively
 
 See the [Error Handling example](./docs/rest_api/error-handling.md) for detailed usage.
 
-#### Testnet
-
-For testing purposes, `/papi/*` endpoints can be used in the [Futures Testnet](https://testnet.binance.vision/). Update the `base_path` in your configuration:
-
-```python
-from binance_common.configuration import ConfigurationRestAPI
-from binance_common.constants import DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_TESTNET_URL
-from binance_sdk_derivatives_trading_portfolio_margin.derivatives_trading_portfolio_margin import DerivativesTradingPortfolioMargin
-
-configuration = ConfigurationRestAPI(api_key="your-api-key", api_secret="your-api-secret", base_path=DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_TESTNET_URL)
-client = DerivativesTradingPortfolioMargin(config_rest_api=configuration)
-```
-
-If `base_path` is not provided, it defaults to `https://papi.binance.com`.
-
 ### Websocket Streams
 
 WebSocket Streams in `derivatives-trading-portfolio-margin` is used for subscribing to user data streams. Use the [websocket-streams](./src/binance_sdk_derivatives_trading_portfolio_margin/websocket_streams/websocket_streams.py) module to interact with it.
@@ -235,24 +220,6 @@ finally:
     if connection:
         await connection.close_connection(close_session=True)
 ```
-
-#### Testnet
-
-Websocket Streams also support a testnet environment for development and testing. Update the `wsURL` in your configuration:
-
-```python
-from binance_common.configuration import ConfigurationWebSocketStreams
-from binance_common.constants import DERIVATIVES_TRADING_PORTFOLIO_MARGIN_WS_API_TESTNET_URL
-from binance_sdk_derivatives_trading_portfolio_margin.derivatives_trading_portfolio_margin import DerivativesTradingPortfolioMargin
-
-config_ws_streams = ConfigurationWebSocketStreams(
-    stream_url=DERIVATIVES_TRADING_PORTFOLIO_MARGIN_WS_STREAMS_TESTNET_URL
-)
-
-client = DerivativesTradingPortfolioMargin(config_ws_streams=config_ws_streams)
-```
-
-If `wsURL` is not provided, it defaults to `wss://fstream.binance.com/pm`.
 
 ### Automatic Connection Renewal
 

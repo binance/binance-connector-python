@@ -406,6 +406,7 @@ class WalletRestAPI:
     def dust_convert(
         self,
         asset: Union[str, None],
+        account_type: Optional[str] = None,
         client_id: Optional[str] = None,
         target_asset: Optional[str] = None,
         third_party_client_id: Optional[str] = None,
@@ -420,6 +421,7 @@ class WalletRestAPI:
 
                 Args:
                     asset (Union[str, None]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     client_id (Optional[str] = None): A unique id for the request
                     target_asset (Optional[str] = None):
                     third_party_client_id (Optional[str] = None):
@@ -435,6 +437,7 @@ class WalletRestAPI:
 
         return self._assetApi.dust_convert(
             asset,
+            account_type,
             client_id,
             target_asset,
             third_party_client_id,
@@ -444,6 +447,7 @@ class WalletRestAPI:
     def dust_convertible_assets(
         self,
         target_asset: Union[str, None],
+        account_type: Optional[str] = None,
         dust_quota_asset_to_target_asset_price: Optional[float] = None,
     ) -> ApiResponse[DustConvertibleAssetsResponse]:
         """
@@ -455,6 +459,7 @@ class WalletRestAPI:
 
                 Args:
                     target_asset (Union[str, None]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     dust_quota_asset_to_target_asset_price (Optional[float] = None):
 
                 Returns:
@@ -466,7 +471,7 @@ class WalletRestAPI:
         """
 
         return self._assetApi.dust_convertible_assets(
-            target_asset, dust_quota_asset_to_target_asset_price
+            target_asset, account_type, dust_quota_asset_to_target_asset_price
         )
 
     def dust_transfer(
@@ -1175,6 +1180,9 @@ class WalletRestAPI:
         * If `network` not send, return with default network of the coin.
         * You can get `network` and `isDefault` in `networkList` of a coin in the response of `Get /sapi/v1/capital/config/getall (HMAC SHA256)`.
         * To check if travel rule is required, by using  `GET /sapi/v1/localentity/questionnaire-requirements` and if it returns anything other than `NIL` you will need update SAPI to `POST /sapi/v1/localentity/withdraw/apply` else you can continue `POST /sapi/v1/capital/withdraw/apply`. Please note that if you are required to comply to travel rule please refer to the Travel Rule SAPI.
+        * For networks that do not support memo/tag, submitting a withdrawal request with a non-empty `addressTag` will return error `-4106 TAG_NOT_SUPPORTED_FOR_NETWORK`. Please omit the `addressTag` field for such networks. You can check whether a network requires a tag via `GET /sapi/v1/capital/config/getall`:
+        * If `withdrawTag` = `true` → memo/tag is required.
+        * If `withdrawTag` = `false` → memo/tag is not supported; omit `addressTag`.
 
         Weight: 900
 

@@ -153,6 +153,7 @@ class AssetApi:
     def dust_convert(
         self,
         asset: Union[str, None],
+        account_type: Optional[str] = None,
         client_id: Optional[str] = None,
         target_asset: Optional[str] = None,
         third_party_client_id: Optional[str] = None,
@@ -169,6 +170,7 @@ class AssetApi:
 
                 Args:
                     asset (Union[str, None]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     client_id (Optional[str] = None): A unique id for the request
                     target_asset (Optional[str] = None):
                     third_party_client_id (Optional[str] = None):
@@ -190,6 +192,7 @@ class AssetApi:
         body = {}
         payload = {
             "asset": asset,
+            "account_type": account_type,
             "client_id": client_id,
             "target_asset": target_asset,
             "third_party_client_id": third_party_client_id,
@@ -212,6 +215,7 @@ class AssetApi:
     def dust_convertible_assets(
         self,
         target_asset: Union[str, None],
+        account_type: Optional[str] = None,
         dust_quota_asset_to_target_asset_price: Optional[float] = None,
     ) -> ApiResponse[DustConvertibleAssetsResponse]:
         """
@@ -225,6 +229,7 @@ class AssetApi:
 
                 Args:
                     target_asset (Union[str, None]):
+                    account_type (Optional[str] = None): `SPOT` or `MARGIN`,default `SPOT`
                     dust_quota_asset_to_target_asset_price (Optional[float] = None):
 
                 Returns:
@@ -244,6 +249,7 @@ class AssetApi:
         body = {}
         payload = {
             "target_asset": target_asset,
+            "account_type": account_type,
             "dust_quota_asset_to_target_asset_price": dust_quota_asset_to_target_asset_price,
         }
 
