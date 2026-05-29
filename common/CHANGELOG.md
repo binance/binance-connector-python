@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.10.0 - 2026-05-29
+
+### Removed (1)
+
+- Removed `DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_TESTNET_URL` and `DERIVATIVES_TRADING_PORTFOLIO_MARGIN_WS_STREAMS_TESTNET_URL` constant as the testnet environment is not available for `portfolio margin`.
+
 ## 3.9.2 - 2026-05-22
 
 ### Changed (1)
