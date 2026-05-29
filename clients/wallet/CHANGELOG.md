@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.0.0 - 2026-05-29
+
+### Changed (2)
+
+- Updated `binance-common` library to version `3.10.0`
+- Added parameter `accountType`
+  - affected methods:
+    - `dust_convert()` (`POST /sapi/v1/asset/dust-convert/convert`)
+    - `dust_convertible_assets()` (`POST /sapi/v1/asset/dust-convert/query-convertible-assets`)
+
 ## 9.5.0 - 2026-05-22
 
 - Updated `binance-common` library to version `3.9.2`

@@ -389,6 +389,7 @@ class TestAssetApi:
 
         params = {
             "asset": "asset_example",
+            "account_type": "SPOT",
             "client_id": "1",
             "target_asset": "target_asset_example",
             "third_party_client_id": "1",
@@ -547,6 +548,7 @@ class TestAssetApi:
 
         params = {
             "target_asset": "target_asset_example",
+            "account_type": "SPOT",
             "dust_quota_asset_to_target_asset_price": 1.0,
         }
 
