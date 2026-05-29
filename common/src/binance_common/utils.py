@@ -427,26 +427,20 @@ def send_request(
                 len(parsed) == 0
                 or (not isinstance(parsed[0], list) if is_list else False)
             )
-            if (is_list and not is_flat_list) or not response_model:
 
+            if (is_list and not is_flat_list) or not response_model:
                 def data_function():
                     return parsed
-
             elif is_oneof or is_list or hasattr(response_model, "from_dict"):
-
                 def data_function():
                     return response_model.from_dict(parsed)
-
             else:
-
                 def data_function():
                     return response_model.model_validate(parsed)
-
             try:
                 data_function()
                 final_data_function = data_function
             except Exception:
-
                 def final_data_function():
                     return parsed
 
