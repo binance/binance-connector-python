@@ -2002,11 +2002,11 @@ class TestWebSocketStreams:
         """Test that trading_session_stream() subscribes to the correct WebSocket stream."""
 
         expected_response = {
-            "e": "EquityUpdate",
-            "E": 1765244143062,
-            "t": 1765242000000,
-            "T": 1765270800000,
-            "S": "OVERNIGHT",
+            "e": "KR_EquityUpdate",
+            "E": 1779962686695,
+            "t": 1779958800000,
+            "T": 1780009200000,
+            "S": "NO_TRADING",
         }
         stream_endpoint = ws_streams_placeholder(
             "/tradingSession".replace("/", "", 1),
@@ -2033,11 +2033,11 @@ class TestWebSocketStreams:
         """Test trading_session_stream() successfully with required parameters only."""
 
         expected_response = {
-            "e": "EquityUpdate",
-            "E": 1765244143062,
-            "t": 1765242000000,
-            "T": 1765270800000,
-            "S": "OVERNIGHT",
+            "e": "KR_EquityUpdate",
+            "E": 1779962686695,
+            "t": 1779958800000,
+            "T": 1780009200000,
+            "S": "NO_TRADING",
         }
         self.ws_streams.trading_session_stream = AsyncMock(
             return_value=expected_response
@@ -2054,11 +2054,11 @@ class TestWebSocketStreams:
         params = {"id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
-            "e": "EquityUpdate",
-            "E": 1765244143062,
-            "t": 1765242000000,
-            "T": 1765270800000,
-            "S": "OVERNIGHT",
+            "e": "KR_EquityUpdate",
+            "E": 1779962686695,
+            "t": 1779958800000,
+            "T": 1780009200000,
+            "S": "NO_TRADING",
         }
 
         self.ws_streams.trading_session_stream = AsyncMock(

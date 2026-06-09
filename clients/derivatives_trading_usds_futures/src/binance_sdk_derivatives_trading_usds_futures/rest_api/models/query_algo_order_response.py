@@ -39,13 +39,11 @@ class QueryAlgoOrderResponse(BaseModel):
     algo_status: Optional[StrictStr] = Field(default=None, alias="algoStatus")
     actual_order_id: Optional[StrictStr] = Field(default=None, alias="actualOrderId")
     actual_price: Optional[StrictStr] = Field(default=None, alias="actualPrice")
+    actual_type: Optional[StrictStr] = Field(default=None, alias="actualType")
+    actual_qty: Optional[StrictStr] = Field(default=None, alias="actualQty")
     trigger_price: Optional[StrictStr] = Field(default=None, alias="triggerPrice")
     price: Optional[StrictStr] = None
     iceberg_quantity: Optional[StrictStr] = Field(default=None, alias="icebergQuantity")
-    tp_trigger_price: Optional[StrictStr] = Field(default=None, alias="tpTriggerPrice")
-    tp_price: Optional[StrictStr] = Field(default=None, alias="tpPrice")
-    sl_trigger_price: Optional[StrictStr] = Field(default=None, alias="slTriggerPrice")
-    sl_price: Optional[StrictStr] = Field(default=None, alias="slPrice")
     tp_order_type: Optional[StrictStr] = Field(default=None, alias="tpOrderType")
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"
@@ -73,13 +71,11 @@ class QueryAlgoOrderResponse(BaseModel):
         "algoStatus",
         "actualOrderId",
         "actualPrice",
+        "actualType",
+        "actualQty",
         "triggerPrice",
         "price",
         "icebergQuantity",
-        "tpTriggerPrice",
-        "tpPrice",
-        "slTriggerPrice",
-        "slPrice",
         "tpOrderType",
         "selfTradePreventionMode",
         "workingType",
@@ -169,13 +165,11 @@ class QueryAlgoOrderResponse(BaseModel):
                 "algoStatus": obj.get("algoStatus"),
                 "actualOrderId": obj.get("actualOrderId"),
                 "actualPrice": obj.get("actualPrice"),
+                "actualType": obj.get("actualType"),
+                "actualQty": obj.get("actualQty"),
                 "triggerPrice": obj.get("triggerPrice"),
                 "price": obj.get("price"),
                 "icebergQuantity": obj.get("icebergQuantity"),
-                "tpTriggerPrice": obj.get("tpTriggerPrice"),
-                "tpPrice": obj.get("tpPrice"),
-                "slTriggerPrice": obj.get("slTriggerPrice"),
-                "slPrice": obj.get("slPrice"),
                 "tpOrderType": obj.get("tpOrderType"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
                 "workingType": obj.get("workingType"),

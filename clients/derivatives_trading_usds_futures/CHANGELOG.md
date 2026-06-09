@@ -1,5 +1,50 @@
 # Changelog
 
+## 11.0.0 - 2026-06-09
+
+### Changed (11)
+
+- Updated `binance-common` library to version `4.0.0`
+- Updated `pyproject.toml` dependencies
+
+#### REST API
+
+- Modified response for `query_algo_order()` (`GET /fapi/v1/algoOrder`):
+  - property `actualType` added
+  - property `actualQty` added
+  - property `slTriggerPrice` deleted
+  - property `tpTriggerPrice` deleted
+  - property `tpPrice` deleted
+  - property `slPrice` deleted
+
+- Modified response for `trading_schedule()` (`GET /fapi/v1/tradingSchedule`):
+  - `marketSchedules`: property `KR_EQUITY` added
+
+- Modified response for `compressed_aggregate_trades_list()` (`GET /fapi/v1/aggTrades`):
+  - items: property `nq` added
+  - items: item property `nq` added
+
+#### WebSocket API
+
+- Deleted parameter `activationPrice`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Deleted parameter `callbackRate`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Deleted parameter `closePosition`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Deleted parameter `priceProtect`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Deleted parameter `stopPrice`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Deleted parameter `workingType`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+
 ## 10.4.0 - 2026-05-29
 
 ### Changed (1)
@@ -14,6 +59,7 @@
 ### Changed (1)
 
 #### WebSocket Streams
+
 - Modified response for `Listenkeyexpired`:
   - `E`: type `StrictStr` → `StrictInt`
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.0.0 - 2026-06-09
+
+### Added (1)
+
+- `get_yield_arena_activities()` (`GET /sapi/v1/earn/arena/activities`)
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.0.0`
+- Updated `pyproject.toml` dependencies
+
 ## 7.1.0 - 2026-05-29
 
 ### Changed (1)

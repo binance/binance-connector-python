@@ -146,11 +146,19 @@ from .get_cloud_mining_payment_and_refund_history_response import (
 from .get_cloud_mining_payment_and_refund_history_response_rows_inner import (
     GetCloudMiningPaymentAndRefundHistoryResponseRowsInner as GetCloudMiningPaymentAndRefundHistoryResponseRowsInner,
 )
+from .get_country_list_response import GetCountryListResponse as GetCountryListResponse
+from .get_country_list_response_countries_inner import (
+    GetCountryListResponseCountriesInner as GetCountryListResponseCountriesInner,
+)
 from .get_open_symbol_list_response import (
     GetOpenSymbolListResponse as GetOpenSymbolListResponse,
 )
 from .get_open_symbol_list_response_inner import (
     GetOpenSymbolListResponseInner as GetOpenSymbolListResponseInner,
+)
+from .get_region_list_response import GetRegionListResponse as GetRegionListResponse
+from .get_region_list_response_regions_inner import (
+    GetRegionListResponseRegionsInner as GetRegionListResponseRegionsInner,
 )
 from .get_spot_delist_schedule_response import (
     GetSpotDelistScheduleResponse as GetSpotDelistScheduleResponse,

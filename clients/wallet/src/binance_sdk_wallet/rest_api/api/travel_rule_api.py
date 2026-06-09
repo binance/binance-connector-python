@@ -21,6 +21,8 @@ from ..models import CheckQuestionnaireRequirementsResponse
 from ..models import DepositHistoryTravelRuleResponse
 from ..models import DepositHistoryV2Response
 from ..models import FetchAddressVerificationListResponse
+from ..models import GetCountryListResponse
+from ..models import GetRegionListResponse
 from ..models import SubmitDepositQuestionnaireResponse
 from ..models import SubmitDepositQuestionnaireTravelRuleResponse
 from ..models import SubmitDepositQuestionnaireV2Response
@@ -378,6 +380,90 @@ class TravelRuleApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=FetchAddressVerificationListResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_country_list(
+        self,
+    ) -> ApiResponse[GetCountryListResponse]:
+        """
+                Get Country List (USER_DATA)
+                GET /sapi/v1/localentity/country/list
+                https://developers.binance.com/docs/wallet/travel-rule/country-list
+
+                Query the active country list for travel rule questionnaires.
+
+        Weight: 1
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetCountryListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = None
+        payload = None
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/localentity/country/list",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetCountryListResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_region_list(
+        self,
+        country_code: Union[str, None],
+    ) -> ApiResponse[GetRegionListResponse]:
+        """
+                Get Region List (USER_DATA)
+                GET /sapi/v1/localentity/region/list
+                https://developers.binance.com/docs/wallet/travel-rule/region-list
+
+                Query the active region/city list for a given country.
+
+        Weight: 1
+
+                Args:
+                    country_code (Union[str, None]): ISO 2-digit country code (from `Country List` API).
+
+                Returns:
+                    ApiResponse[GetRegionListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if country_code is None:
+            raise RequiredError(
+                field="country_code",
+                error_message="Missing required parameter 'country_code'",
+            )
+
+        body = {}
+        payload = {"country_code": country_code}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/localentity/region/list",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetRegionListResponse,
             is_signed=True,
             signer=self._signer,
         )

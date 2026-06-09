@@ -30,12 +30,13 @@ class CompressedAggregateTradesListResponseInner(BaseModel):
     a: Optional[StrictInt] = None
     p: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
+    nq: Optional[StrictStr] = None
     f: Optional[StrictInt] = None
     l: Optional[StrictInt] = None
     T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["a", "p", "q", "f", "l", "T", "m"]
+    __properties: ClassVar[List[str]] = ["a", "p", "q", "nq", "f", "l", "T", "m"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,6 +105,7 @@ class CompressedAggregateTradesListResponseInner(BaseModel):
                 "a": obj.get("a"),
                 "p": obj.get("p"),
                 "q": obj.get("q"),
+                "nq": obj.get("nq"),
                 "f": obj.get("f"),
                 "l": obj.get("l"),
                 "T": obj.get("T"),

@@ -55,9 +55,6 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderTimeInForceEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
-    NewOrderWorkingTypeEnum,
-)
-from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
@@ -703,6 +700,26 @@ class TestWebSocketTradeApi:
             await self.websocket_api.modify_order(**params)
 
     @pytest.mark.asyncio
+    async def test_modify_order_missing_required_param_price(self):
+        """Test that modify_order() raises RequiredError when 'price' is missing."""
+
+        params = {
+            "symbol": "symbol_example",
+            "side": ModifyOrderSideEnum["BUY"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+            "id": "e9d6b4349871b40611412680b3445fac",
+            "order_id": 1,
+            "orig_client_order_id": "1",
+            "price_match": ModifyOrderPriceMatchEnum["NONE"].value,
+            "recv_window": 5000,
+        }
+        params["price"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
+            await self.websocket_api.modify_order(**params)
+
+    @pytest.mark.asyncio
     async def test_modify_order_server_error(self):
         """Test that modify_order() raises an error when the server returns an error."""
 
@@ -1211,12 +1228,6 @@ class TestWebSocketTradeApi:
             "reduce_only": "False",
             "price": 1.0,
             "new_client_order_id": "1",
-            "stop_price": 1.0,
-            "close_position": "close_position_example",
-            "activation_price": 1.0,
-            "callback_rate": 1.0,
-            "working_type": NewOrderWorkingTypeEnum["MARK_PRICE"].value,
-            "price_protect": "False",
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewOrderPriceMatchEnum["NONE"].value,
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
@@ -1309,12 +1320,6 @@ class TestWebSocketTradeApi:
         assert params["reduce_only"] == "False"
         assert params["price"] == 1.0
         assert params["new_client_order_id"] == "1"
-        assert params["stop_price"] == 1.0
-        assert params["close_position"] == "close_position_example"
-        assert params["activation_price"] == 1.0
-        assert params["callback_rate"] == 1.0
-        assert params["working_type"] == NewOrderWorkingTypeEnum["MARK_PRICE"].value
-        assert params["price_protect"] == "False"
         assert (
             params["new_order_resp_type"] == NewOrderNewOrderRespTypeEnum["ACK"].value
         )
@@ -1349,12 +1354,6 @@ class TestWebSocketTradeApi:
             "reduce_only": "False",
             "price": 1.0,
             "new_client_order_id": "1",
-            "stop_price": 1.0,
-            "close_position": "close_position_example",
-            "activation_price": 1.0,
-            "callback_rate": 1.0,
-            "working_type": NewOrderWorkingTypeEnum["MARK_PRICE"].value,
-            "price_protect": "False",
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewOrderPriceMatchEnum["NONE"].value,
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
@@ -1383,12 +1382,6 @@ class TestWebSocketTradeApi:
             "reduce_only": "False",
             "price": 1.0,
             "new_client_order_id": "1",
-            "stop_price": 1.0,
-            "close_position": "close_position_example",
-            "activation_price": 1.0,
-            "callback_rate": 1.0,
-            "working_type": NewOrderWorkingTypeEnum["MARK_PRICE"].value,
-            "price_protect": "False",
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewOrderPriceMatchEnum["NONE"].value,
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[
@@ -1417,12 +1410,6 @@ class TestWebSocketTradeApi:
             "reduce_only": "False",
             "price": 1.0,
             "new_client_order_id": "1",
-            "stop_price": 1.0,
-            "close_position": "close_position_example",
-            "activation_price": 1.0,
-            "callback_rate": 1.0,
-            "working_type": NewOrderWorkingTypeEnum["MARK_PRICE"].value,
-            "price_protect": "False",
             "new_order_resp_type": NewOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewOrderPriceMatchEnum["NONE"].value,
             "self_trade_prevention_mode": NewOrderSelfTradePreventionModeEnum[

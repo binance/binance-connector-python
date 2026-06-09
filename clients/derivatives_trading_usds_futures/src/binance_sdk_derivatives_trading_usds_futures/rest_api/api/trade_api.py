@@ -1170,7 +1170,7 @@ class TradeApi:
         symbol: Union[str, None],
         side: Union[ModifyOrderSideEnum, None],
         quantity: Union[float, None],
-        price: Optional[float] = None,
+        price: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
@@ -1200,7 +1200,7 @@ class TradeApi:
                     symbol (Union[str, None]):
                     side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
                     quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
-                    price (Optional[float] = None):
+                    price (Union[float, None]):
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
@@ -1225,6 +1225,10 @@ class TradeApi:
         if quantity is None:
             raise RequiredError(
                 field="quantity", error_message="Missing required parameter 'quantity'"
+            )
+        if price is None:
+            raise RequiredError(
+                field="price", error_message="Missing required parameter 'price'"
             )
 
         body = {}

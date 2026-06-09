@@ -11,3 +11,4 @@ Do not edit the class manually.
 from .bfusd_api import BfusdApi as BfusdApi
 from .flexible_locked_api import FlexibleLockedApi as FlexibleLockedApi
 from .rwusd_api import RwusdApi as RwusdApi
+from .yield_arena_api import YieldArenaApi as YieldArenaApi
