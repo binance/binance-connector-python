@@ -12,6 +12,7 @@ from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, ECC
 from Crypto.Signature import pkcs1_15, eddsa
+from datetime import datetime, timezone
 from enum import Enum
 from types import SimpleNamespace
 from typing import ClassVar, List, Optional, Union
@@ -34,6 +35,7 @@ from binance_common.models import RateLimit, WebsocketApiOptions
 from binance_common.utils import (
     clean_none_value,
     encoded_string,
+    get_iso_8601,
     get_signature,
     get_timestamp,
     get_uuid,
@@ -52,6 +54,7 @@ from binance_common.utils import (
     should_retry_request,
     transform_query,
     validate_time_unit,
+    web3_signature,
     websocket_api_signature,
     ws_api_payload,
     ws_streams_placeholder,
@@ -423,6 +426,24 @@ class TestGetTimestamp(unittest.TestCase):
         self.assertGreater(timestamp2, timestamp1)
 
 
+class TestGetIso8601(unittest.TestCase):
+    def test_get_iso_8601_returns_string(self):
+        timestamp = get_iso_8601()
+        self.assertIsInstance(timestamp, str)
+
+    def test_get_iso_8601_format(self):
+        timestamp = get_iso_8601()
+        self.assertRegex(
+            timestamp,
+            r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$"
+        )
+
+    def test_get_iso_8601_parseable(self):
+        timestamp = get_iso_8601()
+        parsed = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+        self.assertIsInstance(parsed, datetime)
+
+
 class Dummy:
     def __init__(self, a, b):
         self.a = a
@@ -701,6 +722,122 @@ class TestGetSignature(unittest.TestCase):
             str(context.exception),
             "Either 'api_secret' or 'private_key' must be provided for signed requests.",
         )
+
+
+class TestWeb3Signature(unittest.TestCase):
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    def test_web3_signature_with_api_secret(self, mock_clean_none):
+        config = ConfigurationRestAPI(
+            api_key="test_key",
+            api_secret="test_secret",
+            base_path="https://api.test.com",
+            retries=3,
+            backoff=1,
+            timeout=5000,
+            proxy=None,
+            compression=False,
+            https_agent=None,
+            keep_alive=False,
+        )
+
+        timestamp = "2026-06-03T10:20:30.123Z"
+        result = web3_signature(
+            config=config,
+            method="post",
+            path="/test/path",
+            encoded_payload="a=1&b=2",
+            timestamp=timestamp,
+            body={"foo": "bar"},
+        )
+
+        expected_pre_hash = (
+            '2026-06-03T10:20:30.123ZPOST/test/path?a=1&b=2{"foo":"bar"}'
+        )
+        expected_signature = b64encode(
+            hmac.new(
+                config.api_secret.encode("utf-8"),
+                expected_pre_hash.encode("utf-8"),
+                hashlib.sha256,
+            ).digest()
+        ).decode("utf-8")
+
+        self.assertEqual(result, expected_signature)
+
+    @patch("binance_common.utils.get_signature", return_value="external_signature")
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    def test_web3_signature_without_api_secret_uses_get_signature(
+        self,
+        mock_clean_none,
+        mock_get_signature,
+    ):
+        config = ConfigurationRestAPI(
+            api_key="test_key",
+            api_secret=None,
+            base_path="https://api.test.com",
+            retries=3,
+            backoff=1,
+            timeout=5000,
+            proxy=None,
+            compression=False,
+            https_agent=None,
+            keep_alive=False,
+        )
+
+        timestamp = "2026-06-03T10:20:30.123Z"
+        signer = Mock()
+
+        result = web3_signature(
+            config=config,
+            method="GET",
+            path="/test/path",
+            encoded_payload="a=1",
+            timestamp=timestamp,
+            body={"foo": "bar"},
+            signer=signer,
+        )
+
+        expected_pre_hash = (
+            '2026-06-03T10:20:30.123ZGET/test/path?a=1{"foo":"bar"}'
+        )
+
+        self.assertEqual(result, "external_signature")
+        mock_get_signature.assert_called_once_with(config, expected_pre_hash, signer)
+
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    def test_web3_signature_without_body(self, mock_clean_none):
+        config = ConfigurationRestAPI(
+            api_key="test_key",
+            api_secret="test_secret",
+            base_path="https://api.test.com",
+            retries=3,
+            backoff=1,
+            timeout=5000,
+            proxy=None,
+            compression=False,
+            https_agent=None,
+            keep_alive=False,
+        )
+
+        timestamp = "2026-06-03T10:20:30.123Z"
+        result = web3_signature(
+            config=config,
+            method="GET",
+            path="/test/path",
+            encoded_payload="a=1",
+            timestamp=timestamp,
+            body=None,
+        )
+
+        expected_pre_hash = "2026-06-03T10:20:30.123ZGET/test/path?a=1"
+        expected_signature = b64encode(
+            hmac.new(
+                config.api_secret.encode("utf-8"),
+                expected_pre_hash.encode("utf-8"),
+                hashlib.sha256,
+            ).digest()
+        ).decode("utf-8")
+
+        self.assertEqual(result, expected_signature)
 
 
 class TestShouldRetryRequest(unittest.TestCase):
@@ -1070,6 +1207,138 @@ class TestSendRequest(unittest.TestCase):
             "signature": "signed_signature",
         }
         self.assertEqual(kwargs["params"], expected_signature_payload)
+
+    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
+    @patch("binance_common.utils.web3_signature", return_value="web3_signed_signature")
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.encoded_string", return_value="param=value")
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_web3_signed_request_adds_web3_headers(
+        self,
+        mock_parse_rate_limits,
+        mock_encoded_string,
+        mock_clean_none,
+        mock_web3_signature,
+        mock_get_iso_8601,
+    ):
+        mock_response = Mock(status_code=200)
+        mock_response.json.return_value = {"success": True}
+        mock_response.text = json.dumps({"success": True})
+        mock_response.headers = {}
+
+        self.session.request.return_value = mock_response
+
+        response = send_request(
+            self.session,
+            self.configuration,
+            "POST",
+            self.path,
+            payload={"param": "value"},
+            body={"field": "data"},
+            is_signed=True,
+            web3_headers={"recv_window": "20000", "nonce": "abc123"},
+        )
+
+        self.assertEqual(response.data(), {"success": True})
+        self.session.request.assert_called_once()
+
+        _, kwargs = self.session.request.call_args
+        headers = kwargs["headers"]
+
+        self.assertEqual(kwargs["params"], "param=value")
+        self.assertEqual(kwargs["data"], "param=value")
+        self.assertEqual(headers["X-OC-APIKEY"], self.configuration.api_key)
+        self.assertEqual(headers["X-OC-TIMESTAMP"], "2026-06-03T10:20:30.123Z")
+        self.assertEqual(headers["X-OC-SIGN"], "web3_signed_signature")
+        self.assertEqual(headers["X-OC-RECV-WINDOW"], "20000")
+        self.assertEqual(headers["X-OC-NONCE"], "abc123")
+
+        mock_web3_signature.assert_called_once_with(
+            self.configuration,
+            "POST",
+            self.path,
+            "param=value",
+            "2026-06-03T10:20:30.123Z",
+            {"field": "data"},
+            None,
+        )
+
+    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
+    @patch("binance_common.utils.web3_signature", return_value="web3_signed_signature")
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.encoded_string", return_value="param=value")
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_web3_signed_request_uses_default_recv_window_and_nonce(
+        self,
+        mock_parse_rate_limits,
+        mock_encoded_string,
+        mock_clean_none,
+        mock_web3_signature,
+        mock_get_iso_8601,
+    ):
+        mock_response = Mock(status_code=200)
+        mock_response.json.return_value = {"success": True}
+        mock_response.text = json.dumps({"success": True})
+        mock_response.headers = {}
+
+        self.session.request.return_value = mock_response
+
+        response = send_request(
+            self.session,
+            self.configuration,
+            "GET",
+            self.path,
+            payload={"param": "value"},
+            is_signed=True,
+            web3_headers={},
+        )
+
+        self.assertEqual(response.data(), {"success": True})
+
+        _, kwargs = self.session.request.call_args
+        headers = kwargs["headers"]
+
+        self.assertEqual(headers["X-OC-RECV-WINDOW"], "15000")
+        self.assertEqual(headers["X-OC-NONCE"], "")
+        self.assertEqual(headers["X-OC-SIGN"], "web3_signed_signature")
+
+    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
+    @patch("binance_common.utils.web3_signature")
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.encoded_string", return_value="param=value")
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_web3_unsigned_request_does_not_sign(
+        self,
+        mock_parse_rate_limits,
+        mock_encoded_string,
+        mock_clean_none,
+        mock_web3_signature,
+        mock_get_iso_8601,
+    ):
+        mock_response = Mock(status_code=200)
+        mock_response.json.return_value = {"success": True}
+        mock_response.text = json.dumps({"success": True})
+        mock_response.headers = {}
+
+        self.session.request.return_value = mock_response
+
+        response = send_request(
+            self.session,
+            self.configuration,
+            "GET",
+            self.path,
+            payload={"param": "value"},
+            is_signed=False,
+            web3_headers={},
+        )
+
+        self.assertEqual(response.data(), {"success": True})
+
+        _, kwargs = self.session.request.call_args
+        headers = kwargs["headers"]
+
+        self.assertEqual(headers["X-OC-SIGN"], "")
+        mock_web3_signature.assert_not_called()
 
 
 class TestParseRateLimitHeaders(unittest.TestCase):
