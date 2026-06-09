@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.0.0 - 2026-06-09
+
+### Changed (2)
+
+- Updated `send_request()` to accept web3 requests
+- Updated `pyproject.toml` dependencies
+
 ## 3.10.0 - 2026-05-29
 
 ### Removed (1)

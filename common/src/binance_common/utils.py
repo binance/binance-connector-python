@@ -15,6 +15,7 @@ from base64 import b64encode
 from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
+from datetime import datetime, timezone
 from enum import Enum
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Type, TypeVar, Union, get_args
@@ -116,6 +117,12 @@ def get_timestamp() -> int:
     """Returns the current timestamp in milliseconds."""
 
     return int(time.time() * 1000)
+
+
+def get_iso_8601() -> str:
+    """Returns the current timestamp in ISO 8601 format"""
+
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + f"{datetime.now(timezone.utc).microsecond // 1000:03d}Z"
 
 
 def snake_to_camel(snake_str: str) -> str:
@@ -263,6 +270,43 @@ def get_signature(
         )
 
 
+def web3_signature(
+    config: ConfigurationRestAPI,
+    method: str,
+    path: str,
+    encoded_payload: str,
+    timestamp: str,
+    body: Optional[dict] = None,
+    signer: Optional[Signers] = None,
+) -> str:
+    """Generate a signature for web3 requests
+
+    :param config: The configuration object containing the necessary information for sending the request.
+    :param method: The HTTP method to use (e.g. "GET", "POST", etc.).
+    :param path: The API endpoint path.
+    :param encoded_payload: The request payload.
+    :param timestamp: The current timestamp in ISO 8601 format.
+    :param body: The body data to send with the request.
+    :param signer: setup RSA or ED25519 API Keys
+    """
+
+    method = method.upper()
+    cleaned_body = clean_none_value(body) if body else None
+    body_str = json.dumps(cleaned_body, separators=(",", ":")) if cleaned_body else ""
+    pre_hash = f"{timestamp}{method}{path}?{encoded_payload}{body_str}"
+
+    if config.api_secret:
+        return b64encode(
+            hmac.new(
+                config.api_secret.encode("utf-8"),
+                pre_hash.encode("utf-8"),
+                hashlib.sha256,
+            ).digest()
+        ).decode("utf-8")
+
+    return get_signature(config, pre_hash, signer)
+
+
 def should_retry_request(
     error, method: Optional[str] = None, retries_left: Optional[int] = None
 ) -> bool:
@@ -301,6 +345,7 @@ def send_request(
     response_model: Optional[Type[T]] = None,
     is_signed: bool = False,
     signer: Optional[Signers] = None,
+    web3_headers: Optional[dict] = None,
 ) -> ApiResponse[T]:
     """Sends an HTTP request with the specified configuration, method, path, and
     optional payload and time unit.
@@ -317,23 +362,13 @@ def send_request(
     - `response_model`: The response model to use for deserializing the response (optional).
     - `is_signed`: A boolean indicating whether the request should be signed (optional).
     - `signer`: The signer to use for signing the request (optional).
+    - `web3_headers`: Specific headers for web3 requests
 
     The function returns the JSON response from the server, or raises an appropriate exception if an error occurs.
     """
 
     if payload is None:
         payload = {}
-
-    if is_signed:
-        cleaned_payload = clean_none_value(payload)
-        if body:
-            cleaned_payload.update(clean_none_value(body))
-        cleaned_payload["timestamp"] = get_timestamp()
-        query_string = encoded_string(cleaned_payload)
-        cleaned_payload["signature"] = get_signature(
-            configuration, query_string, signer
-        )
-        payload = cleaned_payload
 
     headers = configuration.base_headers.copy()
 
@@ -365,6 +400,47 @@ def send_request(
         headers["Connection"] = "close"
 
     attempt = 0
+    is_web3_request = web3_headers is not None
+
+    if is_signed and not is_web3_request:
+        cleaned_payload = clean_none_value(payload)
+        if body:
+            cleaned_payload.update(clean_none_value(body))
+        cleaned_payload["timestamp"] = get_timestamp()
+        query_string = encoded_string(cleaned_payload)
+        cleaned_payload["signature"] = get_signature(
+            configuration, query_string, signer
+        )
+        payload = cleaned_payload
+    elif is_web3_request:
+        timestamp = get_iso_8601()
+        query_string = encoded_string(clean_none_value(payload))
+
+        signature = (
+            web3_signature(
+                configuration,
+                method,
+                path,
+                query_string,
+                timestamp,
+                body,
+                signer,
+            )
+            if is_signed
+            else ""
+        )
+
+        web3_headers = web3_headers or {}
+
+        headers.update(
+            {
+                "X-OC-APIKEY": configuration.api_key,
+                "X-OC-TIMESTAMP": timestamp,
+                "X-OC-SIGN": signature,
+                "X-OC-RECV-WINDOW": web3_headers.get("recv_window") or "15000",
+                "X-OC-NONCE": web3_headers.get("nonce") or "",
+            }
+        )
 
     while attempt <= retries:
         try:
