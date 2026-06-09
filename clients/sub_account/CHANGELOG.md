@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.0.0 - 2026-06-09
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.0.0`
+- Updated `pyproject.toml` dependencies
+- Added parameter `includeSource`
+  - affected methods:
+    - `get_sub_account_deposit_history()` (`GET /sapi/v1/capital/deposit/subHisrec`)
+
 ## 4.1.0 - 2026-05-29
 
 ### Changed (1)

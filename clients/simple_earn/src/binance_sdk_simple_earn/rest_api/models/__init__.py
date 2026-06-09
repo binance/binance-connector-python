@@ -177,6 +177,12 @@ from .get_simple_earn_locked_product_list_response_rows_inner_detail import (
 from .get_simple_earn_locked_product_list_response_rows_inner_quota import (
     GetSimpleEarnLockedProductListResponseRowsInnerQuota as GetSimpleEarnLockedProductListResponseRowsInnerQuota,
 )
+from .get_yield_arena_activities_response import (
+    GetYieldArenaActivitiesResponse as GetYieldArenaActivitiesResponse,
+)
+from .get_yield_arena_activities_response_activities_inner import (
+    GetYieldArenaActivitiesResponseActivitiesInner as GetYieldArenaActivitiesResponseActivitiesInner,
+)
 from .redeem_bfusd_response import RedeemBfusdResponse as RedeemBfusdResponse
 from .redeem_flexible_product_response import (
     RedeemFlexibleProductResponse as RedeemFlexibleProductResponse,

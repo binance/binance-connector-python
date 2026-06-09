@@ -25,6 +25,8 @@ from binance_sdk_wallet.rest_api.models import CheckQuestionnaireRequirementsRes
 from binance_sdk_wallet.rest_api.models import DepositHistoryTravelRuleResponse
 from binance_sdk_wallet.rest_api.models import DepositHistoryV2Response
 from binance_sdk_wallet.rest_api.models import FetchAddressVerificationListResponse
+from binance_sdk_wallet.rest_api.models import GetCountryListResponse
+from binance_sdk_wallet.rest_api.models import GetRegionListResponse
 from binance_sdk_wallet.rest_api.models import SubmitDepositQuestionnaireResponse
 from binance_sdk_wallet.rest_api.models import (
     SubmitDepositQuestionnaireTravelRuleResponse,
@@ -862,6 +864,193 @@ class TestTravelRuleApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.fetch_address_verification_list()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_country_list_success(self, mock_get_signature):
+        """Test get_country_list() successfully with required parameters only."""
+
+        expected_response = {
+            "countries": [
+                {
+                    "countryCode": "au",
+                    "countryName": "Australia",
+                    "blockType": "supported",
+                    "depositAllowed": True,
+                    "withdrawalAllowed": True,
+                    "hasRegionRestrictions": True,
+                }
+            ],
+            "lastUpdated": 1716300000000,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_country_list()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/localentity/country/list" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCountryListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetCountryListResponse, "from_dict"):
+            expected = GetCountryListResponse.from_dict(expected_response)
+        else:
+            expected = GetCountryListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_country_list_server_error(self):
+        """Test that get_country_list() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_country_list = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_country_list()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_region_list_success(self, mock_get_signature):
+        """Test get_region_list() successfully with required parameters only."""
+
+        params = {"country_code": "country_code_example"}
+
+        expected_response = {
+            "countryCode": "au",
+            "regions": [
+                {
+                    "regionName": "New South Wales",
+                    "blockType": "supported",
+                    "depositAllowed": True,
+                    "withdrawalAllowed": True,
+                }
+            ],
+            "lastUpdated": 1716300000000,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_region_list(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/localentity/region/list" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["countryCode"] == "country_code_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetRegionListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetRegionListResponse, "from_dict"):
+            expected = GetRegionListResponse.from_dict(expected_response)
+        else:
+            expected = GetRegionListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_region_list_success_with_optional_params(self, mock_get_signature):
+        """Test get_region_list() successfully with optional parameters."""
+
+        params = {"country_code": "country_code_example"}
+
+        expected_response = {
+            "countryCode": "au",
+            "regions": [
+                {
+                    "regionName": "New South Wales",
+                    "blockType": "supported",
+                    "depositAllowed": True,
+                    "withdrawalAllowed": True,
+                }
+            ],
+            "lastUpdated": 1716300000000,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_region_list(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/localentity/region/list" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetRegionListResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetRegionListResponse, "from_dict"):
+            expected = GetRegionListResponse.from_dict(expected_response)
+        else:
+            expected = GetRegionListResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_region_list_missing_required_param_country_code(self):
+        """Test that get_region_list() raises RequiredError when 'country_code' is missing."""
+        params = {"country_code": "country_code_example"}
+        params["country_code"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'country_code'"
+        ):
+            self.client.get_region_list(**params)
+
+    def test_get_region_list_server_error(self):
+        """Test that get_region_list() raises an error when the server returns an error."""
+
+        params = {"country_code": "country_code_example"}
+
+        mock_error = Exception("ResponseError")
+        self.client.get_region_list = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_region_list(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_submit_deposit_questionnaire_success(self, mock_get_signature):

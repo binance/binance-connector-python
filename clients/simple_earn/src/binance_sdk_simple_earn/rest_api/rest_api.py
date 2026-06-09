@@ -17,6 +17,7 @@ from binance_common.utils import send_request
 from .api.bfusd_api import BfusdApi
 from .api.flexible_locked_api import FlexibleLockedApi
 from .api.rwusd_api import RwusdApi
+from .api.yield_arena_api import YieldArenaApi
 
 from .models import GetBfusdAccountResponse
 from .models import GetBfusdQuotaDetailsResponse
@@ -58,6 +59,7 @@ from .models import GetRwusdRewardsHistoryResponse
 from .models import GetRwusdSubscriptionHistoryResponse
 from .models import RedeemRwusdResponse
 from .models import SubscribeRwusdResponse
+from .models import GetYieldArenaActivitiesResponse
 
 
 T = TypeVar("T")
@@ -83,6 +85,9 @@ class SimpleEarnRestAPI:
             self.configuration, self._session, self._signer
         )
         self._rwusdApi = RwusdApi(self.configuration, self._session, self._signer)
+        self._yieldArenaApi = YieldArenaApi(
+            self.configuration, self._session, self._signer
+        )
 
     def send_request(
         self,
@@ -1550,3 +1555,29 @@ class SimpleEarnRestAPI:
         """
 
         return self._rwusdApi.subscribe_rwusd(asset, amount, recv_window)
+
+    def get_yield_arena_activities(
+        self,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetYieldArenaActivitiesResponse]:
+        """
+                Get Yield Arena Activities (USER_DATA)
+
+                Get the list of Earn Yield Arena giveaway activities currently available to the user.
+
+        Supported locales: `en`, `en-GB`, `en-AU`, `cn`, `zh`, `zh-CN`, `tw`, `zh-TW`, `zh-HK`, `ja`, `ja-JP`, `ru`, `ru-RU`, `es`, `es-ES`, `es-LA`, `pt`, `pt-BR`, `pt-PT`, `fr`, `fr-FR`, `de`, `de-DE`, `it`, `it-IT`, `id`, `id-ID`, `vi`, `vi-VN`, `ar`, `ar-SA`, `pl`, `pl-PL`, `uk`, `uk-UA`, `cs`, `cs-CZ`, `ro`, `ro-RO`, `sv`, `sv-SE`, `bg`, `bg-BG`, `da`, `da-DK`, `el`, `el-GR`, `hu`, `hu-HU`, `lv`, `lv-LV`, `sk`, `sk-SK`, `sl`, `sl-SI`.
+
+        Weight: 150
+
+                Args:
+                    recv_window (Optional[int] = None): The value cannot be greater than 60000 (ms)
+
+                Returns:
+                    ApiResponse[GetYieldArenaActivitiesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._yieldArenaApi.get_yield_arena_activities(recv_window)

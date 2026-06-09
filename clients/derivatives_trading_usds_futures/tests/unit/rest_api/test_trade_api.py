@@ -3184,6 +3184,19 @@ class TestTradeApi:
         ):
             self.client.modify_order(**params)
 
+    def test_modify_order_missing_required_param_price(self):
+        """Test that modify_order() raises RequiredError when 'price' is missing."""
+        params = {
+            "symbol": "symbol_example",
+            "side": ModifyOrderSideEnum["BUY"].value,
+            "quantity": 1.0,
+            "price": 1.0,
+        }
+        params["price"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'price'"):
+            self.client.modify_order(**params)
+
     def test_modify_order_server_error(self):
         """Test that modify_order() raises an error when the server returns an error."""
 
@@ -4428,13 +4441,11 @@ class TestTradeApi:
             "algoStatus": "CANCELED",
             "actualOrderId": "",
             "actualPrice": "0.00000",
+            "actualType": "LIMIT",
+            "actualQty": "0.01",
             "triggerPrice": "750.000",
             "price": "750.000",
             "icebergQuantity": None,
-            "tpTriggerPrice": "0.000",
-            "tpPrice": "0.000",
-            "slTriggerPrice": "0.000",
-            "slPrice": "0.000",
             "tpOrderType": "",
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",
@@ -4500,13 +4511,11 @@ class TestTradeApi:
             "algoStatus": "CANCELED",
             "actualOrderId": "",
             "actualPrice": "0.00000",
+            "actualType": "LIMIT",
+            "actualQty": "0.01",
             "triggerPrice": "750.000",
             "price": "750.000",
             "icebergQuantity": None,
-            "tpTriggerPrice": "0.000",
-            "tpPrice": "0.000",
-            "slTriggerPrice": "0.000",
-            "slPrice": "0.000",
             "tpOrderType": "",
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",

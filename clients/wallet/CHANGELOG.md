@@ -1,5 +1,17 @@
 # Changelog
 
+## 11.0.0 - 2026-06-09
+
+### Added (2)
+
+- `get_country_list()` (`GET /sapi/v1/localentity/country/list`)
+- `get_region_list()` (`GET /sapi/v1/localentity/region/list`)
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.0.0`
+- Updated `pyproject.toml` dependencies
+
 ## 10.0.0 - 2026-05-29
 
 ### Changed (2)

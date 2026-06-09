@@ -2023,9 +2023,14 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Trading Schedule
 
-                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period starting from the day prior to the query time, covering both the U.S. equity and commodity markets. Equity market session types include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING", while commodity market session types include "REGULAR" and "NO_TRADING".
+                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market and the commodity market.
 
-        Weight: 5
+                Session types per market:
+                - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
+                - Commodity market: "REGULAR", "NO_TRADING".
+                - Korean equity market: "REGULAR", "NO_TRADING".
+
+                Weight: 5
 
                 Args:
 
@@ -2701,7 +2706,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         symbol: Union[str, None],
         side: Union[ModifyOrderSideEnum, None],
         quantity: Union[float, None],
-        price: Optional[float] = None,
+        price: Union[float, None],
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
@@ -2729,7 +2734,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     symbol (Union[str, None]):
                     side (Union[ModifyOrderSideEnum, None]): `SELL`, `BUY`
                     quantity (Union[float, None]): Order quantity, cannot be sent with `closePosition=true`
-                    price (Optional[float] = None):
+                    price (Union[float, None]):
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`

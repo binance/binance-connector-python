@@ -695,6 +695,7 @@ class SubAccountRestAPI:
     def get_sub_account_deposit_history(
         self,
         email: Union[str, None],
+        include_source: Optional[bool] = None,
         coin: Optional[str] = None,
         status: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -713,6 +714,7 @@ class SubAccountRestAPI:
 
                 Args:
                     email (Union[str, None]): [Sub-account email](#email-address)
+                    include_source (Optional[bool] = None): Default: `false`, return `sourceAddress`field when set to `true`
                     coin (Optional[str] = None):
                     status (Optional[int] = None): 0(0:pending,6: credited but cannot withdraw,7:Wrong Deposit,8:Waiting User confirm,1:success)
                     start_time (Optional[int] = None):
@@ -731,7 +733,16 @@ class SubAccountRestAPI:
         """
 
         return self._assetManagementApi.get_sub_account_deposit_history(
-            email, coin, status, start_time, end_time, limit, offset, recv_window, tx_id
+            email,
+            include_source,
+            coin,
+            status,
+            start_time,
+            end_time,
+            limit,
+            offset,
+            recv_window,
+            tx_id,
         )
 
     def get_summary_of_sub_accounts_futures_account(
@@ -1585,7 +1596,7 @@ class SubAccountRestAPI:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
@@ -1630,7 +1641,7 @@ class SubAccountRestAPI:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
@@ -1673,7 +1684,7 @@ class SubAccountRestAPI:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
                     recv_window (Optional[int] = None):
 

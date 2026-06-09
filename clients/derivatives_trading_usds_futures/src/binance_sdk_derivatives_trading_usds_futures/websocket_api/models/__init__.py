@@ -154,7 +154,6 @@ from .enums import (
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderPositionSideEnum as NewOrderPositionSideEnum
 from .enums import NewOrderTimeInForceEnum as NewOrderTimeInForceEnum
-from .enums import NewOrderWorkingTypeEnum as NewOrderWorkingTypeEnum
 from .enums import NewOrderNewOrderRespTypeEnum as NewOrderNewOrderRespTypeEnum
 from .enums import NewOrderPriceMatchEnum as NewOrderPriceMatchEnum
 from .enums import (

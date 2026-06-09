@@ -627,6 +627,7 @@ class TestMarketDataApi:
                 "a": 26129,
                 "p": "0.01633102",
                 "q": "4.70443515",
+                "nq": "100",
                 "f": 27781,
                 "l": 27781,
                 "T": 1498793709153,
@@ -691,6 +692,7 @@ class TestMarketDataApi:
                 "a": 26129,
                 "p": "0.01633102",
                 "q": "4.70443515",
+                "nq": "100",
                 "f": 27781,
                 "l": 27781,
                 "T": 1498793709153,
@@ -4515,6 +4517,20 @@ class TestMarketDataApi:
                         {
                             "startTime": 1761744600000,
                             "endTime": 1761768000000,
+                            "type": "REGULAR",
+                        },
+                    ]
+                },
+                "KR_EQUITY": {
+                    "sessions": [
+                        {
+                            "startTime": 1779958800000,
+                            "endTime": 1780009200000,
+                            "type": "NO_TRADING",
+                        },
+                        {
+                            "startTime": 1780009200000,
+                            "endTime": 1780030800000,
                             "type": "REGULAR",
                         },
                     ]

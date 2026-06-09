@@ -462,7 +462,7 @@ class ManagedSubAccountApi:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
@@ -545,7 +545,7 @@ class ManagedSubAccountApi:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
 
                 Returns:
@@ -626,7 +626,7 @@ class ManagedSubAccountApi:
                     end_time (Union[int, None]): End Time (The start time and end time interval cannot exceed half a year)
                     page (Union[int, None]): Page
                     limit (Union[int, None]): Limit (Max: 500)
-                    transfers (Optional[str] = None): Transfer Direction (FROM/TO)
+                    transfers (Optional[str] = None): Transfer Direction (from/to)
                     transfer_function_account_type (Optional[str] = None): Transfer function account type (SPOT/MARGIN/ISOLATED_MARGIN/USDT_FUTURE/COIN_FUTURE)
                     recv_window (Optional[int] = None):
 

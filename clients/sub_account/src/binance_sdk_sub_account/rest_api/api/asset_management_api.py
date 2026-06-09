@@ -424,6 +424,7 @@ class AssetManagementApi:
     def get_sub_account_deposit_history(
         self,
         email: Union[str, None],
+        include_source: Optional[bool] = None,
         coin: Optional[str] = None,
         status: Optional[int] = None,
         start_time: Optional[int] = None,
@@ -444,6 +445,7 @@ class AssetManagementApi:
 
                 Args:
                     email (Union[str, None]): [Sub-account email](#email-address)
+                    include_source (Optional[bool] = None): Default: `false`, return `sourceAddress`field when set to `true`
                     coin (Optional[str] = None):
                     status (Optional[int] = None): 0(0:pending,6: credited but cannot withdraw,7:Wrong Deposit,8:Waiting User confirm,1:success)
                     start_time (Optional[int] = None):
@@ -469,6 +471,7 @@ class AssetManagementApi:
         body = {}
         payload = {
             "email": email,
+            "include_source": include_source,
             "coin": coin,
             "status": status,
             "start_time": start_time,

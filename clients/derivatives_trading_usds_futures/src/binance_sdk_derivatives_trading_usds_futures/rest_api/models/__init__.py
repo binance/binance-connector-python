@@ -496,6 +496,12 @@ from .trading_schedule_response_market_schedules_equity import (
 from .trading_schedule_response_market_schedules_equity_sessions_inner import (
     TradingScheduleResponseMarketSchedulesEQUITYSessionsInner as TradingScheduleResponseMarketSchedulesEQUITYSessionsInner,
 )
+from .trading_schedule_response_market_schedules_krequity import (
+    TradingScheduleResponseMarketSchedulesKREQUITY as TradingScheduleResponseMarketSchedulesKREQUITY,
+)
+from .trading_schedule_response_market_schedules_krequity_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesKREQUITYSessionsInner as TradingScheduleResponseMarketSchedulesKREQUITYSessionsInner,
+)
 from .user_commission_rate_response import (
     UserCommissionRateResponse as UserCommissionRateResponse,
 )

@@ -60,6 +60,8 @@ from .models import CheckQuestionnaireRequirementsResponse
 from .models import DepositHistoryTravelRuleResponse
 from .models import DepositHistoryV2Response
 from .models import FetchAddressVerificationListResponse
+from .models import GetCountryListResponse
+from .models import GetRegionListResponse
 from .models import SubmitDepositQuestionnaireResponse
 from .models import SubmitDepositQuestionnaireTravelRuleResponse
 from .models import SubmitDepositQuestionnaireV2Response
@@ -1548,6 +1550,52 @@ class WalletRestAPI:
         """
 
         return self._travelRuleApi.fetch_address_verification_list(recv_window)
+
+    def get_country_list(
+        self,
+    ) -> ApiResponse[GetCountryListResponse]:
+        """
+                Get Country List (USER_DATA)
+
+                Query the active country list for travel rule questionnaires.
+
+        Weight: 1
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetCountryListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.get_country_list()
+
+    def get_region_list(
+        self,
+        country_code: Union[str, None],
+    ) -> ApiResponse[GetRegionListResponse]:
+        """
+                Get Region List (USER_DATA)
+
+                Query the active region/city list for a given country.
+
+        Weight: 1
+
+                Args:
+                    country_code (Union[str, None]): ISO 2-digit country code (from `Country List` API).
+
+                Returns:
+                    ApiResponse[GetRegionListResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._travelRuleApi.get_region_list(country_code)
 
     def submit_deposit_questionnaire(
         self,

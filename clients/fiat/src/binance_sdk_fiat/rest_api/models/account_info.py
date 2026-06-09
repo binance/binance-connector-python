@@ -28,8 +28,16 @@ class AccountInfo(BaseModel):
     """  # noqa: E501
 
     account_number: Optional[StrictStr] = Field(default=None, alias="accountNumber")
+    agency: Optional[StrictStr] = None
+    bank_code_for_pix: Optional[StrictStr] = Field(default=None, alias="bankCodeForPix")
+    account_type: Optional[StrictStr] = Field(default=None, alias="accountType")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["accountNumber"]
+    __properties: ClassVar[List[str]] = [
+        "accountNumber",
+        "agency",
+        "bankCodeForPix",
+        "accountType",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +101,14 @@ class AccountInfo(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"accountNumber": obj.get("accountNumber")})
+        _obj = cls.model_validate(
+            {
+                "accountNumber": obj.get("accountNumber"),
+                "agency": obj.get("agency"),
+                "bankCodeForPix": obj.get("bankCodeForPix"),
+                "accountType": obj.get("accountType"),
+            }
+        )
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
