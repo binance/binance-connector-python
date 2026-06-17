@@ -293,7 +293,11 @@ def web3_signature(
     method = method.upper()
     cleaned_body = clean_none_value(body) if body else None
     body_str = json.dumps(cleaned_body, separators=(",", ":")) if cleaned_body else ""
-    pre_hash = f"{timestamp}{method}{path}?{encoded_payload}{body_str}"
+    pre_hash = (
+        f"{timestamp}{method}/build{path}?{encoded_payload}{body_str}" 
+        if encoded_payload 
+        else f"{timestamp}{method}/build{path}{encoded_payload}{body_str}"
+    )
 
     if config.api_secret:
         return b64encode(

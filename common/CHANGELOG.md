@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.1 - 2026-06-17
+
+### Changed (1)
+
+- Fixed `web3_signature` signature error
+
 ## 4.0.0 - 2026-06-09
 
 ### Changed (2)

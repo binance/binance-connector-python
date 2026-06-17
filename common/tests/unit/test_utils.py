@@ -751,7 +751,7 @@ class TestWeb3Signature(unittest.TestCase):
         )
 
         expected_pre_hash = (
-            '2026-06-03T10:20:30.123ZPOST/test/path?a=1&b=2{"foo":"bar"}'
+            '2026-06-03T10:20:30.123ZPOST/build/test/path?a=1&b=2{"foo":"bar"}'
         )
         expected_signature = b64encode(
             hmac.new(
@@ -797,7 +797,7 @@ class TestWeb3Signature(unittest.TestCase):
         )
 
         expected_pre_hash = (
-            '2026-06-03T10:20:30.123ZGET/test/path?a=1{"foo":"bar"}'
+            '2026-06-03T10:20:30.123ZGET/build/test/path?a=1{"foo":"bar"}'
         )
 
         self.assertEqual(result, "external_signature")
@@ -828,7 +828,7 @@ class TestWeb3Signature(unittest.TestCase):
             body=None,
         )
 
-        expected_pre_hash = "2026-06-03T10:20:30.123ZGET/test/path?a=1"
+        expected_pre_hash = "2026-06-03T10:20:30.123ZGET/build/test/path?a=1"
         expected_signature = b64encode(
             hmac.new(
                 config.api_secret.encode("utf-8"),
@@ -839,6 +839,43 @@ class TestWeb3Signature(unittest.TestCase):
 
         self.assertEqual(result, expected_signature)
 
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    def test_web3_signature_without_encoded_payload(self, mock_clean_none):
+        config = ConfigurationRestAPI(
+            api_key="test_key",
+            api_secret="test_secret",
+            base_path="https://api.test.com",
+            retries=3,
+            backoff=1,
+            timeout=5000,
+            proxy=None,
+            compression=False,
+            https_agent=None,
+            keep_alive=False,
+        )
+
+        timestamp = "2026-06-03T10:20:30.123Z"
+        result = web3_signature(
+            config=config,
+            method="GET",
+            path="/test/path",
+            encoded_payload="",
+            timestamp=timestamp,
+            body={"foo": "bar"},
+        )
+
+        expected_pre_hash = (
+            '2026-06-03T10:20:30.123ZGET/build/test/path{"foo":"bar"}'
+        )
+        expected_signature = b64encode(
+            hmac.new(
+                config.api_secret.encode("utf-8"),
+                expected_pre_hash.encode("utf-8"),
+                hashlib.sha256,
+            ).digest()
+        ).decode("utf-8")
+
+        self.assertEqual(result, expected_signature)
 
 class TestShouldRetryRequest(unittest.TestCase):
     def test_retry_on_retriable_status_code(self):
