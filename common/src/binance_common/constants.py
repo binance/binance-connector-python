@@ -141,5 +141,8 @@ VIP_LOAN_REST_API_PROD_URL = "https://api.binance.com"
 # Wallet constants
 WALLET_REST_API_PROD_URL = "https://api.binance.com"
 
+# W3W Prediction constants
+W3W_PREDICTION_REST_API_PROD_URL = "https://api.binance.com"
+
 # Web3 Wallet constants
 WEB3_WALLET_REST_API_PROD_URL = "https://web3.binance.com/build"
