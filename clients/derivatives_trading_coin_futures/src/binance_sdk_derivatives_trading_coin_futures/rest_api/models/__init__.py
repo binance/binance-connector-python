@@ -160,9 +160,6 @@ from .keepalive_user_data_stream_response import (
 from .kline_candlestick_data_response import (
     KlineCandlestickDataResponse as KlineCandlestickDataResponse,
 )
-from .kline_candlestick_data_response_item import (
-    KlineCandlestickDataResponseItem as KlineCandlestickDataResponseItem,
-)
 from .long_short_ratio_response import LongShortRatioResponse as LongShortRatioResponse
 from .long_short_ratio_response_inner import (
     LongShortRatioResponseInner as LongShortRatioResponseInner,

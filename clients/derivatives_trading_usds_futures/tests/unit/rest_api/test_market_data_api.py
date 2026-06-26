@@ -21,6 +21,9 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 
 from binance_sdk_derivatives_trading_usds_futures.rest_api.api import MarketDataApi
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import AdlRiskResponse
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    AssetIndexResponse,
+)
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import BasisResponse
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     CheckServerTimeResponse,
@@ -57,9 +60,6 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     MarkPriceKlineCandlestickDataResponse,
-)
-from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
-    MultiAssetsModeAssetIndexResponse,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     OldTradesLookupResponse,
@@ -270,6 +270,112 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.adl_risk()
+
+    def test_asset_index_success(self):
+        """Test asset_index() successfully with required parameters only."""
+
+        expected_response = {
+            "symbol": "ADAUSD",
+            "time": 1635740268004,
+            "index": "1.92957370",
+            "bidBuffer": "0.10000000",
+            "askBuffer": "0.10000000",
+            "bidRate": "1.73661633",
+            "askRate": "2.12253107",
+            "autoExchangeBidBuffer": "0.05000000",
+            "autoExchangeAskBuffer": "0.05000000",
+            "autoExchangeBidRate": "1.83309501",
+            "autoExchangeAskRate": "2.02605238",
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.asset_index()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/assetIndex" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AssetIndexResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(AssetIndexResponse, "from_dict"):
+            expected = AssetIndexResponse.from_dict(expected_response)
+        else:
+            expected = AssetIndexResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_asset_index_success_with_optional_params(self):
+        """Test asset_index() successfully with optional parameters."""
+
+        params = {"symbol": "symbol_example"}
+
+        expected_response = {
+            "symbol": "ADAUSD",
+            "time": 1635740268004,
+            "index": "1.92957370",
+            "bidBuffer": "0.10000000",
+            "askBuffer": "0.10000000",
+            "bidRate": "1.73661633",
+            "askRate": "2.12253107",
+            "autoExchangeBidBuffer": "0.05000000",
+            "autoExchangeAskBuffer": "0.05000000",
+            "autoExchangeBidRate": "1.83309501",
+            "autoExchangeAskRate": "2.02605238",
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.asset_index(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/fapi/v1/assetIndex" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(AssetIndexResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(AssetIndexResponse, "from_dict"):
+            expected = AssetIndexResponse.from_dict(expected_response)
+        else:
+            expected = AssetIndexResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_asset_index_server_error(self):
+        """Test that asset_index() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.asset_index = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.asset_index()
 
     def test_basis_success(self):
         """Test basis() successfully with required parameters only."""
@@ -2051,120 +2157,6 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.mark_price_kline_candlestick_data(**params)
-
-    def test_multi_assets_mode_asset_index_success(self):
-        """Test multi_assets_mode_asset_index() successfully with required parameters only."""
-
-        expected_response = {
-            "symbol": "ADAUSD",
-            "time": 1635740268004,
-            "index": "1.92957370",
-            "bidBuffer": "0.10000000",
-            "askBuffer": "0.10000000",
-            "bidRate": "1.73661633",
-            "askRate": "2.12253107",
-            "autoExchangeBidBuffer": "0.05000000",
-            "autoExchangeAskBuffer": "0.05000000",
-            "autoExchangeBidRate": "1.83309501",
-            "autoExchangeAskRate": "2.02605238",
-        }
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.multi_assets_mode_asset_index()
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        self.mock_session.request.assert_called_once()
-
-        assert "url" in request_kwargs
-        assert "/fapi/v1/assetIndex" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(MultiAssetsModeAssetIndexResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(MultiAssetsModeAssetIndexResponse, "from_dict")
-        ):
-            expected = MultiAssetsModeAssetIndexResponse.from_dict(expected_response)
-        else:
-            expected = MultiAssetsModeAssetIndexResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_multi_assets_mode_asset_index_success_with_optional_params(self):
-        """Test multi_assets_mode_asset_index() successfully with optional parameters."""
-
-        params = {"symbol": "symbol_example"}
-
-        expected_response = {
-            "symbol": "ADAUSD",
-            "time": 1635740268004,
-            "index": "1.92957370",
-            "bidBuffer": "0.10000000",
-            "askBuffer": "0.10000000",
-            "bidRate": "1.73661633",
-            "askRate": "2.12253107",
-            "autoExchangeBidBuffer": "0.05000000",
-            "autoExchangeAskBuffer": "0.05000000",
-            "autoExchangeBidRate": "1.83309501",
-            "autoExchangeAskRate": "2.02605238",
-        }
-
-        self.set_mock_response(expected_response)
-
-        response = self.client.multi_assets_mode_asset_index(**params)
-
-        actual_call_args = self.mock_session.request.call_args
-        request_kwargs = actual_call_args.kwargs
-
-        assert "url" in request_kwargs
-        assert "/fapi/v1/assetIndex" in request_kwargs["url"]
-        assert request_kwargs["method"] == "GET"
-
-        self.mock_session.request.assert_called_once()
-        assert response is not None
-        is_list = isinstance(expected_response, list)
-        is_flat_list = (
-            is_list and not isinstance(expected_response[0], list) if is_list else False
-        )
-        is_oneof = is_one_of_model(MultiAssetsModeAssetIndexResponse)
-
-        if is_list and not is_flat_list:
-            expected = expected_response
-        elif (
-            is_oneof
-            or is_list
-            or hasattr(MultiAssetsModeAssetIndexResponse, "from_dict")
-        ):
-            expected = MultiAssetsModeAssetIndexResponse.from_dict(expected_response)
-        else:
-            expected = MultiAssetsModeAssetIndexResponse.model_validate_json(
-                json.dumps(expected_response)
-            )
-
-        assert response.data() == expected
-
-    def test_multi_assets_mode_asset_index_server_error(self):
-        """Test that multi_assets_mode_asset_index() raises an error when the server returns an error."""
-
-        mock_error = Exception("ResponseError")
-        self.client.multi_assets_mode_asset_index = MagicMock(side_effect=mock_error)
-
-        with pytest.raises(Exception, match="ResponseError"):
-            self.client.multi_assets_mode_asset_index()
 
     def test_old_trades_lookup_success(self):
         """Test old_trades_lookup() successfully with required parameters only."""

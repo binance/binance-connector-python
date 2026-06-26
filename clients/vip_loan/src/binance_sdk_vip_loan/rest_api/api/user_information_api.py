@@ -112,7 +112,7 @@ class UserInformationApi:
                     loan_coin (Optional[str] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
@@ -172,7 +172,7 @@ class UserInformationApi:
                     collateral_account_id (Optional[int] = None):
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
@@ -224,7 +224,7 @@ class UserInformationApi:
         Weight: 400
 
                 Args:
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 

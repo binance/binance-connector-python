@@ -29,15 +29,29 @@ class IndividualSymbolBookTickerStreamsResponse(BaseModel):
 
     e: Optional[StrictStr] = None
     u: Optional[StrictInt] = None
+    s: Optional[StrictStr] = None
+    ps: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
     T: Optional[StrictInt] = Field(default=None, alias="T")
-    s: Optional[StrictStr] = None
     b: Optional[StrictStr] = None
     B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
     A: Optional[StrictStr] = Field(default=None, alias="A")
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "u", "E", "T", "s", "b", "B", "a", "A"]
+    __properties: ClassVar[List[str]] = [
+        "e",
+        "u",
+        "s",
+        "ps",
+        "E",
+        "T",
+        "b",
+        "B",
+        "a",
+        "A",
+        "st",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,13 +115,15 @@ class IndividualSymbolBookTickerStreamsResponse(BaseModel):
             {
                 "e": obj.get("e"),
                 "u": obj.get("u"),
+                "s": obj.get("s"),
+                "ps": obj.get("ps"),
                 "E": obj.get("E"),
                 "T": obj.get("T"),
-                "s": obj.get("s"),
                 "b": obj.get("b"),
                 "B": obj.get("B"),
                 "a": obj.get("a"),
                 "A": obj.get("A"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

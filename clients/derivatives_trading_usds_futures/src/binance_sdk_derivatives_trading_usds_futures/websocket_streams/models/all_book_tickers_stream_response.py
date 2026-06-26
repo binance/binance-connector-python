@@ -36,8 +36,22 @@ class AllBookTickersStreamResponse(BaseModel):
     B: Optional[StrictStr] = Field(default=None, alias="B")
     a: Optional[StrictStr] = None
     A: Optional[StrictStr] = Field(default=None, alias="A")
+    ps: Optional[StrictStr] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "u", "E", "T", "s", "b", "B", "a", "A"]
+    __properties: ClassVar[List[str]] = [
+        "e",
+        "u",
+        "E",
+        "T",
+        "s",
+        "b",
+        "B",
+        "a",
+        "A",
+        "ps",
+        "st",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,6 +122,8 @@ class AllBookTickersStreamResponse(BaseModel):
                 "B": obj.get("B"),
                 "a": obj.get("a"),
                 "A": obj.get("A"),
+                "ps": obj.get("ps"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

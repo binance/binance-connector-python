@@ -58,6 +58,7 @@ class TestWebSocketStreams:
             "l": 606073,
             "T": 1591261134199,
             "m": False,
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@aggTrade".replace("/", "", 1),
@@ -98,6 +99,7 @@ class TestWebSocketStreams:
             "l": 606073,
             "T": 1591261134199,
             "m": False,
+            "st": 1,
         }
         self.ws_streams.aggregate_trade_streams = AsyncMock(
             return_value=expected_response
@@ -124,6 +126,7 @@ class TestWebSocketStreams:
             "l": 606073,
             "T": 1591261134199,
             "m": False,
+            "st": 1,
         }
 
         self.ws_streams.aggregate_trade_streams = AsyncMock(
@@ -167,13 +170,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/!bookTicker".replace("/", "", 1),
@@ -203,13 +207,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         self.ws_streams.all_book_tickers_stream = AsyncMock(
             return_value=expected_response
@@ -229,13 +234,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
 
         self.ws_streams.all_book_tickers_stream = AsyncMock(
@@ -277,6 +283,7 @@ class TestWebSocketStreams:
                 "z": "1",
                 "T": 1591154240949,
             },
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/!forceOrder@arr".replace("/", "", 1),
@@ -319,6 +326,7 @@ class TestWebSocketStreams:
                 "z": "1",
                 "T": 1591154240949,
             },
+            "st": 1,
         }
         self.ws_streams.all_market_liquidation_order_streams = AsyncMock(
             return_value=expected_response
@@ -353,6 +361,7 @@ class TestWebSocketStreams:
                 "z": "1",
                 "T": 1591154240949,
             },
+            "st": 1,
         }
 
         self.ws_streams.all_market_liquidation_order_streams = AsyncMock(
@@ -391,6 +400,7 @@ class TestWebSocketStreams:
                 "l": "7000.0",
                 "v": "487476",
                 "q": "33264343847.22378500",
+                "st": 1,
             }
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -429,6 +439,7 @@ class TestWebSocketStreams:
                 "l": "7000.0",
                 "v": "487476",
                 "q": "33264343847.22378500",
+                "st": 1,
             }
         ]
         self.ws_streams.all_market_mini_tickers_stream = AsyncMock(
@@ -457,6 +468,7 @@ class TestWebSocketStreams:
                 "l": "7000.0",
                 "v": "487476",
                 "q": "33264343847.22378500",
+                "st": 1,
             }
         ]
 
@@ -489,7 +501,6 @@ class TestWebSocketStreams:
                 "e": "24hrTicker",
                 "E": 1591268262453,
                 "s": "BTCUSD_200626",
-                "ps": "BTCUSD",
                 "p": "-43.4",
                 "P": "-0.452",
                 "w": "0.00147974",
@@ -505,6 +516,8 @@ class TestWebSocketStreams:
                 "F": 512014,
                 "L": 615289,
                 "n": 103272,
+                "ps": "BTCUSD",
+                "st": 1,
             }
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -536,7 +549,6 @@ class TestWebSocketStreams:
                 "e": "24hrTicker",
                 "E": 1591268262453,
                 "s": "BTCUSD_200626",
-                "ps": "BTCUSD",
                 "p": "-43.4",
                 "P": "-0.452",
                 "w": "0.00147974",
@@ -552,6 +564,8 @@ class TestWebSocketStreams:
                 "F": 512014,
                 "L": 615289,
                 "n": 103272,
+                "ps": "BTCUSD",
+                "st": 1,
             }
         ]
         self.ws_streams.all_market_tickers_streams = AsyncMock(
@@ -573,7 +587,6 @@ class TestWebSocketStreams:
                 "e": "24hrTicker",
                 "E": 1591268262453,
                 "s": "BTCUSD_200626",
-                "ps": "BTCUSD",
                 "p": "-43.4",
                 "P": "-0.452",
                 "w": "0.00147974",
@@ -589,6 +602,8 @@ class TestWebSocketStreams:
                 "F": 512014,
                 "L": 615289,
                 "n": 103272,
+                "ps": "BTCUSD",
+                "st": 1,
             }
         ]
 
@@ -866,6 +881,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/!contractInfo".replace("/", "", 1),
@@ -920,6 +936,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
         self.ws_streams.contract_info_stream = AsyncMock(return_value=expected_response)
 
@@ -962,6 +979,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
 
         self.ws_streams.contract_info_stream = AsyncMock(return_value=expected_response)
@@ -999,6 +1017,7 @@ class TestWebSocketStreams:
             "pu": 17285675,
             "b": [["9517.6", "10"]],
             "a": [["9518.5", "45"]],
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
@@ -1039,6 +1058,7 @@ class TestWebSocketStreams:
             "pu": 17285675,
             "b": [["9517.6", "10"]],
             "a": [["9518.5", "45"]],
+            "st": 1,
         }
         self.ws_streams.diff_book_depth_streams = AsyncMock(
             return_value=expected_response
@@ -1069,6 +1089,7 @@ class TestWebSocketStreams:
             "pu": 17285675,
             "b": [["9517.6", "10"]],
             "a": [["9518.5", "45"]],
+            "st": 1,
         }
 
         self.ws_streams.diff_book_depth_streams = AsyncMock(
@@ -1400,13 +1421,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@bookTicker".replace("/", "", 1),
@@ -1440,13 +1462,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         self.ws_streams.individual_symbol_book_ticker_streams = AsyncMock(
             return_value=expected_response
@@ -1468,13 +1491,14 @@ class TestWebSocketStreams:
             "e": "bookTicker",
             "u": 17242169,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "b": "9548.1",
             "B": "52",
             "a": "9548.5",
             "A": "11",
             "T": 1591268628155,
             "E": 1591268628166,
+            "ps": "BTCUSD",
+            "st": 1,
         }
 
         self.ws_streams.individual_symbol_book_ticker_streams = AsyncMock(
@@ -1533,6 +1557,7 @@ class TestWebSocketStreams:
             "l": "7000.0",
             "v": "487476",
             "q": "33264343847.22378500",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@miniTicker".replace("/", "", 1),
@@ -1573,6 +1598,7 @@ class TestWebSocketStreams:
             "l": "7000.0",
             "v": "487476",
             "q": "33264343847.22378500",
+            "st": 1,
         }
         self.ws_streams.individual_symbol_mini_ticker_stream = AsyncMock(
             return_value=expected_response
@@ -1601,6 +1627,7 @@ class TestWebSocketStreams:
             "l": "7000.0",
             "v": "487476",
             "q": "33264343847.22378500",
+            "st": 1,
         }
 
         self.ws_streams.individual_symbol_mini_ticker_stream = AsyncMock(
@@ -1652,7 +1679,6 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1591268262453,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "p": "-43.4",
             "P": "-0.452",
             "w": "0.00147974",
@@ -1668,6 +1694,8 @@ class TestWebSocketStreams:
             "F": 512014,
             "L": 615289,
             "n": 103272,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@ticker".replace("/", "", 1),
@@ -1701,7 +1729,6 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1591268262453,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "p": "-43.4",
             "P": "-0.452",
             "w": "0.00147974",
@@ -1717,6 +1744,8 @@ class TestWebSocketStreams:
             "F": 512014,
             "L": 615289,
             "n": 103272,
+            "ps": "BTCUSD",
+            "st": 1,
         }
         self.ws_streams.individual_symbol_ticker_streams = AsyncMock(
             return_value=expected_response
@@ -1736,7 +1765,6 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1591268262453,
             "s": "BTCUSD_200626",
-            "ps": "BTCUSD",
             "p": "-43.4",
             "P": "-0.452",
             "w": "0.00147974",
@@ -1752,6 +1780,8 @@ class TestWebSocketStreams:
             "F": 512014,
             "L": 615289,
             "n": 103272,
+            "ps": "BTCUSD",
+            "st": 1,
         }
 
         self.ws_streams.individual_symbol_ticker_streams = AsyncMock(
@@ -2309,6 +2339,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "",
                 "T": 0,
+                "st": 1,
             },
             {
                 "e": "markPriceUpdate",
@@ -2319,6 +2350,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "0.00000000",
                 "T": 1596096000000,
+                "st": 1,
             },
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -2359,6 +2391,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "",
                 "T": 0,
+                "st": 1,
             },
             {
                 "e": "markPriceUpdate",
@@ -2369,6 +2402,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "0.00000000",
                 "T": 1596096000000,
+                "st": 1,
             },
         ]
         self.ws_streams.mark_price_of_all_symbols_of_a_pair = AsyncMock(
@@ -2401,6 +2435,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "",
                 "T": 0,
+                "st": 1,
             },
             {
                 "e": "markPriceUpdate",
@@ -2411,6 +2446,7 @@ class TestWebSocketStreams:
                 "i": "10933.62615417",
                 "r": "0.00000000",
                 "T": 1596096000000,
+                "st": 1,
             },
         ]
 
@@ -2468,6 +2504,7 @@ class TestWebSocketStreams:
             "i": "10933.62615417",
             "r": "",
             "T": 0,
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@markPrice@<updateSpeed>".replace("/", "", 1),
@@ -2506,6 +2543,7 @@ class TestWebSocketStreams:
             "i": "10933.62615417",
             "r": "",
             "T": 0,
+            "st": 1,
         }
         self.ws_streams.mark_price_stream = AsyncMock(return_value=expected_response)
 
@@ -2532,6 +2570,7 @@ class TestWebSocketStreams:
             "i": "10933.62615417",
             "r": "",
             "T": 0,
+            "st": 1,
         }
 
         self.ws_streams.mark_price_stream = AsyncMock(return_value=expected_response)
@@ -2597,6 +2636,7 @@ class TestWebSocketStreams:
                 ["9525.1", "10"],
                 ["9525.3", "6"],
             ],
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@depth<levels>@<updateSpeed>".replace("/", "", 1),
@@ -2650,6 +2690,7 @@ class TestWebSocketStreams:
                 ["9525.1", "10"],
                 ["9525.3", "6"],
             ],
+            "st": 1,
         }
         self.ws_streams.partial_book_depth_streams = AsyncMock(
             return_value=expected_response
@@ -2693,6 +2734,7 @@ class TestWebSocketStreams:
                 ["9525.1", "10"],
                 ["9525.3", "6"],
             ],
+            "st": 1,
         }
 
         self.ws_streams.partial_book_depth_streams = AsyncMock(

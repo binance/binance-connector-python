@@ -33,8 +33,9 @@ class AllMarketLiquidationOrderStreamsResponse(BaseModel):
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
     o: Optional[AllMarketLiquidationOrderStreamsResponseO] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "o"]
+    __properties: ClassVar[List[str]] = ["e", "E", "o", "st"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,6 +107,7 @@ class AllMarketLiquidationOrderStreamsResponse(BaseModel):
                     if obj.get("o") is not None
                     else None
                 ),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

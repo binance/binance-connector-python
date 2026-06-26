@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-vip-loan"
-version = "5.9.0"
+version = "6.0.0"
 description = "Official Binance Vip Loan SDK - A lightweight library that provides a convenient interface to Binance's VipLoan REST API"
 authors = ["Binance"]
 license = "MIT"

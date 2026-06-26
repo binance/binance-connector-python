@@ -42,8 +42,22 @@ class RpiDiffBookDepthStreamsResponse(BaseModel):
     pu: Optional[StrictInt] = None
     b: Optional[List[RpiDiffBookDepthStreamsResponseBItem]] = None
     a: Optional[List[RpiDiffBookDepthStreamsResponseAItem]] = None
+    ps: Optional[StrictStr] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "T", "s", "U", "u", "pu", "b", "a"]
+    __properties: ClassVar[List[str]] = [
+        "e",
+        "E",
+        "T",
+        "s",
+        "U",
+        "u",
+        "pu",
+        "b",
+        "a",
+        "ps",
+        "st",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -142,6 +156,8 @@ class RpiDiffBookDepthStreamsResponse(BaseModel):
                     if obj.get("a") is not None
                     else None
                 ),
+                "ps": obj.get("ps"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

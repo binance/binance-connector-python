@@ -1,5 +1,75 @@
 # Changelog
 
+## 12.0.0 - 2026-06-26
+
+### Changed (15)
+
+#### REST API
+
+- Modified response for `asset_index()` (`GET /fapi/v1/assetIndex`):
+  - oneOf added 2 schema(s)
+  - oneOf removed 2 schema(s)
+
+#### WebSocket Streams
+
+- Modified response for `all_book_tickers_stream()` (`!bookTicker` stream):
+  - property `ps` added
+  - property `st` added
+
+- Modified response for `contract_info_stream()` (`!contractInfo` stream):
+  - property `st` added
+  - property `ps` deleted
+
+- Modified response for `all_market_liquidation_order_streams()` (`!forceOrder@arr` stream):
+  - property `st` added
+  - property `ps` added
+
+- Modified response for `mark_price_stream_for_all_market()` (`!markPrice@arr@<updateSpeed>` stream):
+  - items: property `st` added
+  - items: item property `st` added
+
+- Modified response for `all_market_mini_tickers_stream()` (`!miniTicker@arr` stream):
+  - items: property `st` added
+  - items: property `ps` added
+  - items: item property `st` added
+  - items: item property `ps` added
+
+- Modified response for `all_market_tickers_streams()` (`!ticker@arr` stream):
+  - items: property `ps` added
+  - items: property `st` added
+  - items: item property `ps` added
+  - items: item property `st` added
+
+- Modified response for `aggregate_trade_streams()` (`<symbol>@aggTrade` stream):
+  - property `st` added
+
+- Modified response for `individual_symbol_book_ticker_streams()` (`<symbol>@bookTicker` stream):
+  - property `st` added
+  - property `ps` added
+
+- Modified response for `partial_book_depth_streams()` (`<symbol>@depth<levels>@<updateSpeed>` stream):
+  - property `ps` added
+  - property `st` added
+
+- Modified response for `diff_book_depth_streams()` (`<symbol>@depth@<updateSpeed>` stream):
+  - property `st` added
+  - property `ps` added
+
+- Modified response for `mark_price_stream()` (`<symbol>@markPrice@<updateSpeed>` stream):
+  - property `st` added
+
+- Modified response for `individual_symbol_mini_ticker_stream()` (`<symbol>@miniTicker` stream):
+  - property `ps` added
+  - property `st` added
+
+- Modified response for `rpi_diff_book_depth_streams()` (`<symbol>@rpiDepth@500ms` stream):
+  - property `st` added
+  - property `ps` added
+
+- Modified response for `individual_symbol_ticker_streams()` (`<symbol>@ticker` stream):
+  - property `ps` added
+  - property `st` added
+
 ## 11.0.0 - 2026-06-09
 
 ### Changed (11)

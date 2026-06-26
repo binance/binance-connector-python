@@ -22,7 +22,9 @@ from .models import GetBorrowInterestRateResponse
 from .models import GetCollateralAssetDataResponse
 from .models import GetLoanableAssetsDataResponse
 from .models import GetVIPLoanInterestRateHistoryResponse
+from .models import QueryVIPLoanFixedRateMarketResponse
 from .models import VipLoanBorrowResponse
+from .models import VipLoanFixedRateBorrowResponse
 from .models import VipLoanRenewResponse
 from .models import VipLoanRepayResponse
 from .models import CheckVIPLoanCollateralAccountResponse
@@ -224,7 +226,7 @@ class VipLoanRestAPI:
                     recv_window (Union[int, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
 
                 Returns:
@@ -237,6 +239,40 @@ class VipLoanRestAPI:
 
         return self._marketDataApi.get_vip_loan_interest_rate_history(
             coin, recv_window, start_time, end_time, current, limit
+        )
+
+    def query_vip_loan_fixed_rate_market(
+        self,
+        loan_coin: Union[str, None],
+        duration: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryVIPLoanFixedRateMarketResponse]:
+        """
+                Query VIP Loan Fixed Rate Market(USER_DATA)
+
+                Query the VIP Loan fixed rate market. Returns a paginated list of fixed-rate supply orders.
+
+        Weight: 6000
+
+                Args:
+                    loan_coin (Union[str, None]):
+                    duration (Optional[int] = None): Duration in days, minimum 1
+                    current (Optional[int] = None): Page number, default 1, minimum 1
+                    size (Optional[int] = None): Page size, default 10, range [1, 100]
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryVIPLoanFixedRateMarketResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.query_vip_loan_fixed_rate_market(
+            loan_coin, duration, current, size, recv_window
         )
 
     def vip_loan_borrow(
@@ -267,7 +303,7 @@ class VipLoanRestAPI:
                     loan_coin (Union[str, None]):
                     loan_amount (Union[float, None]):
                     collateral_account_id (Union[str, None]): Multiple split by `,`
-                    collateral_coin (Union[str, None]): Multiple split by `,`
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire spot account balance)
                     is_flexible_rate (Union[bool, None]): Default: TRUE. TRUE : flexible rate; FALSE: fixed rate
                     loan_term (Optional[int] = None): Mandatory for fixed rate. Optional for fixed interest rate. Eg: 30/60 days
                     recv_window (Optional[int] = None):
@@ -288,6 +324,56 @@ class VipLoanRestAPI:
             collateral_coin,
             is_flexible_rate,
             loan_term,
+            recv_window,
+        )
+
+    def vip_loan_fixed_rate_borrow(
+        self,
+        supply_request: Union[str, None],
+        borrow_coin: Union[str, None],
+        loan_term: Union[int, None],
+        borrow_uid: Union[int, None],
+        collateral_coin: Union[str, None],
+        collateral_account_id: Union[str, None],
+        auto_repay: Optional[bool] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VipLoanFixedRateBorrowResponse]:
+        """
+                VIP Loan Fixed Rate Borrow(TRADE)
+
+                Submit a fixed rate borrow request by matching market supply orders.
+
+        * **Rate limit:** 2 requests per second per account.
+        * When multiple `supplyRequest` entries are provided, all `requestId` values must correspond to the same `borrowCoin` and `loanTerm` (validated by collateral facade).
+
+        Weight: 6000
+
+                Args:
+                    supply_request (Union[str, None]): Supply request string, positional encoding (no key). Multiple entries separated by `;`, fields separated by `:`, order: `<requestId>:<interestRate>:<amount>`. Example: `1212:0.12:100;3434:0.13:50`
+                    borrow_coin (Union[str, None]): Borrow coin
+                    loan_term (Union[int, None]): 30/60 days
+                    borrow_uid (Union[int, None]): Borrow receiving account UID
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire spot account balance)
+                    collateral_account_id (Union[str, None]): Multiple split by `,`
+                    auto_repay (Optional[bool] = None): Default: `true`. `true`: auto repay at expiration; `false`: auto-convert to flexible (floating rate) at expiration
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[VipLoanFixedRateBorrowResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tradeApi.vip_loan_fixed_rate_borrow(
+            supply_request,
+            borrow_coin,
+            loan_term,
+            borrow_uid,
+            collateral_coin,
+            collateral_account_id,
+            auto_repay,
             recv_window,
         )
 
@@ -405,7 +491,7 @@ class VipLoanRestAPI:
                     loan_coin (Optional[str] = None):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
@@ -443,7 +529,7 @@ class VipLoanRestAPI:
                     collateral_account_id (Optional[int] = None):
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 
@@ -479,7 +565,7 @@ class VipLoanRestAPI:
         Weight: 400
 
                 Args:
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
                     recv_window (Optional[int] = None):
 

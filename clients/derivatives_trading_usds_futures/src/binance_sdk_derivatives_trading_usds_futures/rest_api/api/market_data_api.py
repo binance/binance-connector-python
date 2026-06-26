@@ -17,6 +17,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import AdlRiskResponse
+from ..models import AssetIndexResponse
 from ..models import BasisResponse
 from ..models import CheckServerTimeResponse
 from ..models import CompositeIndexSymbolInformationResponse
@@ -30,7 +31,6 @@ from ..models import KlineCandlestickDataResponse
 from ..models import LongShortRatioResponse
 from ..models import MarkPriceResponse
 from ..models import MarkPriceKlineCandlestickDataResponse
-from ..models import MultiAssetsModeAssetIndexResponse
 from ..models import OldTradesLookupResponse
 from ..models import OpenInterestResponse
 from ..models import OpenInterestStatisticsResponse
@@ -120,6 +120,44 @@ class MarketDataApi:
             response_model=AdlRiskResponse,
         )
 
+    def asset_index(
+        self,
+        symbol: Optional[str] = None,
+    ) -> ApiResponse[AssetIndexResponse]:
+        """
+                Asset Index
+                GET /fapi/v1/assetIndex
+                https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Asset-Index
+
+                Asset index price.
+
+        Weight: 1 for a single symbol; 10 when the symbol parameter is omitted
+
+                Args:
+                    symbol (Optional[str] = None):
+
+                Returns:
+                    ApiResponse[AssetIndexResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"symbol": symbol}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/fapi/v1/assetIndex",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=AssetIndexResponse,
+        )
+
     def basis(
         self,
         pair: Union[str, None],
@@ -142,7 +180,7 @@ class MarketDataApi:
         Weight: 0
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     contract_type (Union[BasisContractTypeEnum, None]):
                     period (Union[BasisPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
                     limit (Optional[int] = None): Default 100; max 1000
@@ -368,7 +406,7 @@ class MarketDataApi:
         | > 1000      | 10     |
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     contract_type (Union[ContinuousContractKlineCandlestickDataContractTypeEnum, None]):
                     interval (Union[ContinuousContractKlineCandlestickDataIntervalEnum, None]):
                     start_time (Optional[int] = None):
@@ -561,7 +599,6 @@ class MarketDataApi:
                 Kline/candlestick bars for the index price of a pair.
         Klines are uniquely identified by their open time.
 
-
         * If startTime and endTime are not sent, the most recent klines are returned.
 
         Weight: based on parameter LIMIT
@@ -573,7 +610,7 @@ class MarketDataApi:
         | > 1000      | 10     |
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     interval (Union[IndexPriceKlineCandlestickDataIntervalEnum, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -857,44 +894,6 @@ class MarketDataApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=MarkPriceKlineCandlestickDataResponse,
-        )
-
-    def multi_assets_mode_asset_index(
-        self,
-        symbol: Optional[str] = None,
-    ) -> ApiResponse[MultiAssetsModeAssetIndexResponse]:
-        """
-                Multi-Assets Mode Asset Index
-                GET /fapi/v1/assetIndex
-                https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Multi-Assets-Mode-Asset-Index
-
-                asset index for Multi-Assets mode
-
-        Weight: 1 for a single symbol; 10 when the symbol parameter is omitted
-
-                Args:
-                    symbol (Optional[str] = None):
-
-                Returns:
-                    ApiResponse[MultiAssetsModeAssetIndexResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        body = {}
-        payload = {"symbol": symbol}
-
-        return send_request(
-            self._session,
-            self._configuration,
-            method="GET",
-            path="/fapi/v1/assetIndex",
-            payload=payload,
-            body=body,
-            time_unit=self._configuration.time_unit,
-            response_model=MultiAssetsModeAssetIndexResponse,
         )
 
     def old_trades_lookup(
@@ -1192,7 +1191,7 @@ class MarketDataApi:
         Weight: 0
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
 
                 Returns:
                     ApiResponse[QuarterlyContractSettlementPriceResponse]
@@ -1818,12 +1817,12 @@ class MarketDataApi:
 
                 Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market and the commodity market.
 
-                Session types per market:
-                - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
-                - Commodity market: "REGULAR", "NO_TRADING".
-                - Korean equity market: "REGULAR", "NO_TRADING".
+        Session types per market:
+        - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
+        - Commodity market: "REGULAR", "NO_TRADING".
+        - Korean equity market: "REGULAR", "NO_TRADING".
 
-                Weight: 5
+        Weight: 5
 
                 Args:
 

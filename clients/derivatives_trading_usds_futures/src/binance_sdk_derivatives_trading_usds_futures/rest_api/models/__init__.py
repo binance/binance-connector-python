@@ -41,6 +41,12 @@ from .adl_risk_response2 import AdlRiskResponse2 as AdlRiskResponse2
 from .adl_risk_response2_inner import AdlRiskResponse2Inner as AdlRiskResponse2Inner
 from .all_orders_response import AllOrdersResponse as AllOrdersResponse
 from .all_orders_response_inner import AllOrdersResponseInner as AllOrdersResponseInner
+from .asset_index_response import AssetIndexResponse as AssetIndexResponse
+from .asset_index_response1 import AssetIndexResponse1 as AssetIndexResponse1
+from .asset_index_response2 import AssetIndexResponse2 as AssetIndexResponse2
+from .asset_index_response2_inner import (
+    AssetIndexResponse2Inner as AssetIndexResponse2Inner,
+)
 from .auto_cancel_all_open_orders_response import (
     AutoCancelAllOpenOrdersResponse as AutoCancelAllOpenOrdersResponse,
 )
@@ -253,18 +259,6 @@ from .modify_multiple_orders_response_inner import (
     ModifyMultipleOrdersResponseInner as ModifyMultipleOrdersResponseInner,
 )
 from .modify_order_response import ModifyOrderResponse as ModifyOrderResponse
-from .multi_assets_mode_asset_index_response import (
-    MultiAssetsModeAssetIndexResponse as MultiAssetsModeAssetIndexResponse,
-)
-from .multi_assets_mode_asset_index_response1 import (
-    MultiAssetsModeAssetIndexResponse1 as MultiAssetsModeAssetIndexResponse1,
-)
-from .multi_assets_mode_asset_index_response2 import (
-    MultiAssetsModeAssetIndexResponse2 as MultiAssetsModeAssetIndexResponse2,
-)
-from .multi_assets_mode_asset_index_response2_inner import (
-    MultiAssetsModeAssetIndexResponse2Inner as MultiAssetsModeAssetIndexResponse2Inner,
-)
 from .new_algo_order_response import NewAlgoOrderResponse as NewAlgoOrderResponse
 from .new_order_response import NewOrderResponse as NewOrderResponse
 from .notional_and_leverage_brackets_response import (

@@ -101,7 +101,7 @@ class TradeApi:
         * If startTime and endTime are both not sent, then the last 7 days' data will be returned.
         * The time between startTime and endTime cannot be longer than 7 days.
 
-        Weight: 20 with symbol，40 with pair
+        Weight: 20 with symbol，40 with pair (after CM migration: 5 flat)
 
                 Args:
                     symbol (Optional[str] = None):
@@ -174,7 +174,7 @@ class TradeApi:
         * If orderId is set, it will get orders >= that orderId. Otherwise most recent orders are returned.
         * The query time period must be less then 7 days( default as the recent 7 days).
 
-        Weight: 20 with symbol, 40 with pair
+        Weight: 20 with symbol, 40 with pair (after CM migration: 5 flat)
 
                 Args:
                     symbol (Optional[str] = None):
@@ -399,7 +399,6 @@ class TradeApi:
 
                 Cancel an active order.
 
-
         * Either `orderId` or `origClientOrderId` must be sent.
 
         Weight: 1
@@ -567,7 +566,11 @@ class TradeApi:
                 POST /dapi/v1/positionSide/dual
                 https://developers.binance.com/docs/derivatives/coin-margined-futures/trade/rest-api/Change-Position-Mode
 
-                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***
+                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***.
+
+        **After CM migration**, UM and CM share the **same** `dualSidePosition` setting. Calling this endpoint flips both UM and CM at once. If either side has any open order or open position, the change is rejected:
+        - `-4067` (open orders exist)
+        - `-4068` (open position exists)
 
         Weight: 1
 
@@ -802,7 +805,7 @@ class TradeApi:
                 Args:
                     symbol (Union[str, None]):
                     amount (Union[float, None]):
-                    type (Union[ModifyIsolatedPositionMarginTypeEnum, None]):
+                    type (Union[ModifyIsolatedPositionMarginTypeEnum, None]): **After CM migration, stop-type values (`STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`) are no longer accepted by this endpoint and will return `-4120`. Use the new `/dapi/v1/algoOrder` endpoint instead.**
                     position_side (Optional[ModifyIsolatedPositionMarginPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     recv_window (Optional[int] = None):
 
@@ -921,7 +924,7 @@ class TradeApi:
                 Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
 
         * Either `orderId` or `origClientOrderId` must be sent, and the `orderId` will prevail if both are sent.
-        * Either `quantity` or `price` must be sent.
+        * Either `quantity` or `price` must be sent. *(After CM migration, both `quantity` and `price` are required.)*
         * When the new `quantity` or `price` doesn't satisfy PRICE_FILTER / PERCENT_FILTER / LOT_SIZE, amendment will be rejected and the order will stay as it is.
         * However the order will be cancelled by the amendment in the following situations:
         * when the order is in partially filled status and the new `quantity` <= `executedQty`
@@ -1013,7 +1016,6 @@ class TradeApi:
 
                 Send in a new order.
 
-
         * Order with type `STOP`,  parameter `timeInForce` can be sent ( default `GTC`).
         * Order with type `TAKE_PROFIT`,  parameter `timeInForce` can be sent ( default `GTC`).
         * Condition orders will be triggered when:
@@ -1056,7 +1058,7 @@ class TradeApi:
                 Args:
                     symbol (Union[str, None]):
                     side (Union[NewOrderSideEnum, None]): `SELL`, `BUY`
-                    type (Union[NewOrderTypeEnum, None]):
+                    type (Union[NewOrderTypeEnum, None]): **After CM migration, stop-type values (`STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`) are no longer accepted by this endpoint and will return `-4120`. Use the new `/dapi/v1/algoOrder` endpoint instead.**
                     position_side (Optional[NewOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.
                     time_in_force (Optional[NewOrderTimeInForceEnum] = None):
                     quantity (Optional[float] = None): quantity measured by contract number, Cannot be sent with `closePosition`=`true`
@@ -1068,7 +1070,7 @@ class TradeApi:
                     activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 10 where 1 for 1%
                     working_type (Optional[NewOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[str] = None): "TRUE" or "FALSE", default "FALSE". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
+                    price_protect (Optional[str] = None): "true" or "false", default "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
                     self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `EXPIRE_MAKER`
@@ -1424,9 +1426,9 @@ class TradeApi:
                 User's Force Orders
 
         * If "autoCloseType" is not sent, orders with both of the types will be returned
-        * If "startTime" is not sent, data within 200 days before "endTime" can be queried
+        * Only support querying data in the past 90 days
 
-        Weight: 20 with symbol, 50 without symbol
+        Weight: 20 (after CM migration: 20 with symbol / 50 without symbol)
 
                 Args:
                     symbol (Optional[str] = None):

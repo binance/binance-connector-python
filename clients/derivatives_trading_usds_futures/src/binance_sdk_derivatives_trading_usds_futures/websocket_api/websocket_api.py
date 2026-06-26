@@ -461,7 +461,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
                 Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
 
         * Either `orderId` or `origClientOrderId` must be sent, and the `orderId` will prevail if both are sent.
-        * Both `quantity` and `price` must be sent, which is different from dapi modify order endpoint.
+        * Both `quantity` and `price` must be sent. *(After CM migration, the dapi modify order endpoint follows the same rule.)*
         * When the new `quantity` or `price` doesn't satisfy PRICE_FILTER / PERCENT_FILTER / LOT_SIZE, amendment will be rejected and the order will stay as it is.
         * However the order will be cancelled by the amendment in the following situations:
         * when the order is in partially filled status and the new `quantity` <= `executedQty`

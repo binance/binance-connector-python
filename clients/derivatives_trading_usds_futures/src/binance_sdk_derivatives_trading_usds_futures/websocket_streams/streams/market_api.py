@@ -20,6 +20,7 @@ from ..models import AggregateTradeStreamsResponse
 from ..models import AllMarketLiquidationOrderStreamsResponse
 from ..models import AllMarketMiniTickersStreamResponse
 from ..models import AllMarketTickersStreamsResponse
+from ..models import AssetIndexResponse
 from ..models import CompositeIndexSymbolInformationStreamsResponse
 from ..models import ContinuousContractKlineCandlestickStreamsResponse
 from ..models import ContractInfoStreamResponse
@@ -29,7 +30,6 @@ from ..models import KlineCandlestickStreamsResponse
 from ..models import LiquidationOrderStreamsResponse
 from ..models import MarkPriceStreamResponse
 from ..models import MarkPriceStreamForAllMarketResponse
-from ..models import MultiAssetsModeAssetIndexResponse
 from ..models import TradingSessionStreamResponse
 
 
@@ -202,6 +202,44 @@ class MarketApi:
             self.websocket_base,
             stream=stream,
             response_model=AllMarketTickersStreamsResponse,
+            stream_url="market",
+        )
+
+    async def asset_index(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+            Asset Index
+            /!assetIndex@arr
+            https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Asset-Index
+
+            Asset index price.
+
+        Update Speed: 1s
+
+            Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+            Returns:
+                RequestStreamHandle
+
+            Raises:
+                RequiredError: If a required parameter is missing.
+
+        """
+
+        stream = ws_streams_placeholder(
+            "/!assetIndex@arr".replace("/", "", 1),
+            {
+                "id": id,
+            },
+        )
+
+        return await RequestStream(
+            self.websocket_base,
+            stream=stream,
+            response_model=AssetIndexResponse,
             stream_url="market",
         )
 
@@ -635,44 +673,6 @@ class MarketApi:
             stream_url="market",
         )
 
-    async def multi_assets_mode_asset_index(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-            Multi-Assets Mode Asset Index
-            /!assetIndex@arr
-            https://developers.binance.com/docs/derivatives/usds-margined-futures/websocket-market-streams/Multi-Assets-Mode-Asset-Index
-
-            Asset index for multi-assets mode user
-
-        Update Speed: 1s
-
-            Args:
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-            Returns:
-                RequestStreamHandle
-
-            Raises:
-                RequiredError: If a required parameter is missing.
-
-        """
-
-        stream = ws_streams_placeholder(
-            "/!assetIndex@arr".replace("/", "", 1),
-            {
-                "id": id,
-            },
-        )
-
-        return await RequestStream(
-            self.websocket_base,
-            stream=stream,
-            response_model=MultiAssetsModeAssetIndexResponse,
-            stream_url="market",
-        )
-
     async def trading_session_stream(
         self,
         id: Optional[str] = None,
@@ -684,13 +684,13 @@ class MarketApi:
 
             Trading session information for the underlying assets of TradFi Perpetual contracts, covering the U.S. equity market, Korean equity market, and the commodity market, is updated every second. Trading session information for different underlying markets is pushed in separate messages.
 
-            **Event type:**
+        **Event type:**
 
-            - `EquityUpdate`: Session types for the U.S. equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING".
-            - `CommodityUpdate`: Session types for the commodity market include "REGULAR" and "NO_TRADING".
-            - `KR_EquityUpdate`: Session types for the Korean equity market include "REGULAR" and "NO_TRADING".
+        - `EquityUpdate`: Session types for the U.S. equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING".
+        - `CommodityUpdate`: Session types for the commodity market include "REGULAR" and "NO_TRADING".
+        - `KR_EquityUpdate`: Session types for the Korean equity market include "REGULAR" and "NO_TRADING".
 
-            Update Speed: 1s
+        Update Speed: 1s
 
             Args:
                     id (Optional[str] = None): Unique WebSocket request ID.

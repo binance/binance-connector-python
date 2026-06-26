@@ -731,7 +731,11 @@ class TradeApi:
                 POST /fapi/v1/positionSide/dual
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Change-Position-Mode
 
-                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***
+                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***.
+
+        **After CM migration**, UM and CM share the **same** `dualSidePosition` setting. Calling this endpoint flips both UM and CM at once. If either side has any open order or open position, the change is rejected:
+        - `-4067` (open orders exist)
+        - `-4068` (open position exists)
 
         Weight: 1
 
@@ -1182,7 +1186,6 @@ class TradeApi:
                 https://developers.binance.com/docs/derivatives/usds-margined-futures/trade/rest-api/Modify-Order
 
                 Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
-
 
         * Either `orderId` or `origClientOrderId` must be sent, and the `orderId` will prevail if both are sent.
         * Both `quantity` and `price` must be sent, which is different from dapi modify order endpoint.

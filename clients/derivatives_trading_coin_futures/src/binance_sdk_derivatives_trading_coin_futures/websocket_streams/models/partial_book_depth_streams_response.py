@@ -43,6 +43,7 @@ class PartialBookDepthStreamsResponse(BaseModel):
     pu: Optional[StrictInt] = None
     b: Optional[List[PartialBookDepthStreamsResponseBItem]] = None
     a: Optional[List[PartialBookDepthStreamsResponseAItem]] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
@@ -55,6 +56,7 @@ class PartialBookDepthStreamsResponse(BaseModel):
         "pu",
         "b",
         "a",
+        "st",
     ]
 
     model_config = ConfigDict(
@@ -155,6 +157,7 @@ class PartialBookDepthStreamsResponse(BaseModel):
                     if obj.get("a") is not None
                     else None
                 ),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

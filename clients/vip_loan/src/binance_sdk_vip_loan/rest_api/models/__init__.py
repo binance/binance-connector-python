@@ -56,6 +56,15 @@ from .query_application_status_response import (
 from .query_application_status_response_rows_inner import (
     QueryApplicationStatusResponseRowsInner as QueryApplicationStatusResponseRowsInner,
 )
+from .query_vip_loan_fixed_rate_market_response import (
+    QueryVIPLoanFixedRateMarketResponse as QueryVIPLoanFixedRateMarketResponse,
+)
+from .query_vip_loan_fixed_rate_market_response_rows_inner import (
+    QueryVIPLoanFixedRateMarketResponseRowsInner as QueryVIPLoanFixedRateMarketResponseRowsInner,
+)
 from .vip_loan_borrow_response import VipLoanBorrowResponse as VipLoanBorrowResponse
+from .vip_loan_fixed_rate_borrow_response import (
+    VipLoanFixedRateBorrowResponse as VipLoanFixedRateBorrowResponse,
+)
 from .vip_loan_renew_response import VipLoanRenewResponse as VipLoanRenewResponse
 from .vip_loan_repay_response import VipLoanRepayResponse as VipLoanRepayResponse

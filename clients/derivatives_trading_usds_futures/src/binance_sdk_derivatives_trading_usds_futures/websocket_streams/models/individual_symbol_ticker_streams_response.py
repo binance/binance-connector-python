@@ -45,6 +45,8 @@ class IndividualSymbolTickerStreamsResponse(BaseModel):
     F: Optional[StrictInt] = Field(default=None, alias="F")
     L: Optional[StrictInt] = Field(default=None, alias="L")
     n: Optional[StrictInt] = None
+    ps: Optional[StrictStr] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
@@ -65,6 +67,8 @@ class IndividualSymbolTickerStreamsResponse(BaseModel):
         "F",
         "L",
         "n",
+        "ps",
+        "st",
     ]
 
     model_config = ConfigDict(
@@ -145,6 +149,8 @@ class IndividualSymbolTickerStreamsResponse(BaseModel):
                 "F": obj.get("F"),
                 "L": obj.get("L"),
                 "n": obj.get("n"),
+                "ps": obj.get("ps"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

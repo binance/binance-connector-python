@@ -21,6 +21,7 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 
 from binance_sdk_vip_loan.rest_api.api import TradeApi
 from binance_sdk_vip_loan.rest_api.models import VipLoanBorrowResponse
+from binance_sdk_vip_loan.rest_api.models import VipLoanFixedRateBorrowResponse
 from binance_sdk_vip_loan.rest_api.models import VipLoanRenewResponse
 from binance_sdk_vip_loan.rest_api.models import VipLoanRepayResponse
 
@@ -291,6 +292,261 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.vip_loan_borrow(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_vip_loan_fixed_rate_borrow_success(self, mock_get_signature):
+        """Test vip_loan_fixed_rate_borrow() successfully with required parameters only."""
+
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+
+        expected_response = {
+            "borrowCoin": "BUSD",
+            "borrowAmount": "100.5",
+            "actualReceivedAmount": "98.75",
+            "collateralCoin": "BNB,ETH,BTC",
+            "collateralAccountId": "12345,67890,13579",
+            "borrowInterestRate": "0.01501231",
+            "duration": "30Days",
+            "autoRepay": True,
+            "orderId": 123456789,
+            "status": "Succeeds",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.vip_loan_fixed_rate_borrow(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/fixed/borrow" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["supplyRequest"] == "supply_request_example"
+        assert normalized["borrowCoin"] == "borrow_coin_example"
+        assert normalized["loanTerm"] == 56
+        assert normalized["borrowUid"] == 56
+        assert normalized["collateralCoin"] == "collateral_coin_example"
+        assert normalized["collateralAccountId"] == "1"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VipLoanFixedRateBorrowResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(VipLoanFixedRateBorrowResponse, "from_dict")
+        ):
+            expected = VipLoanFixedRateBorrowResponse.from_dict(expected_response)
+        else:
+            expected = VipLoanFixedRateBorrowResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_vip_loan_fixed_rate_borrow_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test vip_loan_fixed_rate_borrow() successfully with optional parameters."""
+
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+            "auto_repay": False,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "borrowCoin": "BUSD",
+            "borrowAmount": "100.5",
+            "actualReceivedAmount": "98.75",
+            "collateralCoin": "BNB,ETH,BTC",
+            "collateralAccountId": "12345,67890,13579",
+            "borrowInterestRate": "0.01501231",
+            "duration": "30Days",
+            "autoRepay": True,
+            "orderId": 123456789,
+            "status": "Succeeds",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.vip_loan_fixed_rate_borrow(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/fixed/borrow" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VipLoanFixedRateBorrowResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(VipLoanFixedRateBorrowResponse, "from_dict")
+        ):
+            expected = VipLoanFixedRateBorrowResponse.from_dict(expected_response)
+        else:
+            expected = VipLoanFixedRateBorrowResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_supply_request(self):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'supply_request' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["supply_request"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'supply_request'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_borrow_coin(self):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'borrow_coin' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["borrow_coin"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'borrow_coin'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_loan_term(self):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'loan_term' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["loan_term"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'loan_term'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_borrow_uid(self):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'borrow_uid' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["borrow_uid"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'borrow_uid'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_collateral_coin(self):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'collateral_coin' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["collateral_coin"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'collateral_coin'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_missing_required_param_collateral_account_id(
+        self,
+    ):
+        """Test that vip_loan_fixed_rate_borrow() raises RequiredError when 'collateral_account_id' is missing."""
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+        params["collateral_account_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'collateral_account_id'"
+        ):
+            self.client.vip_loan_fixed_rate_borrow(**params)
+
+    def test_vip_loan_fixed_rate_borrow_server_error(self):
+        """Test that vip_loan_fixed_rate_borrow() raises an error when the server returns an error."""
+
+        params = {
+            "supply_request": "supply_request_example",
+            "borrow_coin": "borrow_coin_example",
+            "loan_term": 56,
+            "borrow_uid": 56,
+            "collateral_coin": "collateral_coin_example",
+            "collateral_account_id": "1",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.vip_loan_fixed_rate_borrow = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.vip_loan_fixed_rate_borrow(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_vip_loan_renew_success(self, mock_get_signature):

@@ -38,6 +38,7 @@ class AggregateTradeStreamsResponse(BaseModel):
     l: Optional[StrictInt] = None
     T: Optional[StrictInt] = Field(default=None, alias="T")
     m: Optional[StrictBool] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
@@ -51,6 +52,7 @@ class AggregateTradeStreamsResponse(BaseModel):
         "l",
         "T",
         "m",
+        "st",
     ]
 
     model_config = ConfigDict(
@@ -124,6 +126,7 @@ class AggregateTradeStreamsResponse(BaseModel):
                 "l": obj.get("l"),
                 "T": obj.get("T"),
                 "m": obj.get("m"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

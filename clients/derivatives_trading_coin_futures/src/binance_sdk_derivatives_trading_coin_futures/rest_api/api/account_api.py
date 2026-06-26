@@ -180,10 +180,11 @@ class AccountApi:
 
                 Get Download Id For Futures Order History
 
-        * Request Limitation is 10 times per month, shared by front end download page and rest api
+        * Request Limitation is 8 times per month, shared by front end download page and rest api
+        * This endpoint uses the IP rate limit bucket and costs 1000 weight per call. The maximum is 2 calls per minute; the 3rd call within the same minute will trigger a ban.
         * The time between `startTime` and `endTime` can not be longer than 1 year
 
-        Weight: 5
+        Weight: 1000
 
                 Args:
                     start_time (Union[int, None]): Timestamp in ms
@@ -241,10 +242,11 @@ class AccountApi:
 
                 Get download id for futures trade history
 
-        * Request Limitation is 5 times per month, shared by front end download page and rest api
+        * Request Limitation is 8 times per month, shared by front end download page and rest api
+        * This endpoint uses the IP rate limit bucket and costs 1000 weight per call. The maximum is 2 calls per minute; the 3rd call within the same minute will trigger a ban.
         * The time between `startTime` and `endTime` can not be longer than 1 year
 
-        Weight: 5
+        Weight: 1000
 
                 Args:
                     start_time (Union[int, None]): Timestamp in ms
@@ -302,10 +304,11 @@ class AccountApi:
 
                 Get download id for futures transaction history
 
-        * Request Limitation is 5 times per month, shared by front end download page and rest api
+        * Request Limitation is 8 times per month, shared by front end download page and rest api
+        * This endpoint uses the IP rate limit bucket and costs 1000 weight per call. The maximum is 2 calls per minute; the 3rd call within the same minute will trigger a ban.
         * The time between `startTime` and `endTime` can not be longer than 1 year
 
-        Weight: 5
+        Weight: 1000
 
                 Args:
                     start_time (Union[int, None]): Timestamp in ms
@@ -362,7 +365,7 @@ class AccountApi:
 
                 Get futures order history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 5
 
@@ -412,7 +415,7 @@ class AccountApi:
 
                 Get futures trade download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 5
 
@@ -462,7 +465,7 @@ class AccountApi:
 
                 Get futures transaction history download link by Id
 
-        * Download link expiration: 24h
+        * Download link expiration: 7 days
 
         Weight: 5
 
@@ -620,7 +623,7 @@ class AccountApi:
 
                 Get the symbol's notional bracket list.
 
-        Weight: 1
+        Weight: 1 (after CM migration: 1 with symbol / 2 without symbol)
 
                 Args:
                     symbol (Optional[str] = None):

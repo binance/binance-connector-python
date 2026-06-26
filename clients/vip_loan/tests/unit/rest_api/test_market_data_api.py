@@ -24,6 +24,7 @@ from binance_sdk_vip_loan.rest_api.models import GetBorrowInterestRateResponse
 from binance_sdk_vip_loan.rest_api.models import GetCollateralAssetDataResponse
 from binance_sdk_vip_loan.rest_api.models import GetLoanableAssetsDataResponse
 from binance_sdk_vip_loan.rest_api.models import GetVIPLoanInterestRateHistoryResponse
+from binance_sdk_vip_loan.rest_api.models import QueryVIPLoanFixedRateMarketResponse
 
 
 class TestMarketDataApi:
@@ -601,3 +602,158 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_vip_loan_interest_rate_history(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_vip_loan_fixed_rate_market_success(self, mock_get_signature):
+        """Test query_vip_loan_fixed_rate_market() successfully with required parameters only."""
+
+        params = {
+            "loan_coin": "loan_coin_example",
+        }
+
+        expected_response = {
+            "total": 25,
+            "rows": [
+                {
+                    "requestId": 1234567890,
+                    "requestNo": 100001,
+                    "coin": "USDT",
+                    "interestRate": "0.05",
+                    "duration": 30,
+                    "minimumAmount": "100",
+                    "availableAmount": "1000000",
+                    "estimatedInterest": "4109.59",
+                }
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_vip_loan_fixed_rate_market(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/fixed/market" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["loanCoin"] == "loan_coin_example"
+
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryVIPLoanFixedRateMarketResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryVIPLoanFixedRateMarketResponse, "from_dict")
+        ):
+            expected = QueryVIPLoanFixedRateMarketResponse.from_dict(expected_response)
+        else:
+            expected = QueryVIPLoanFixedRateMarketResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_vip_loan_fixed_rate_market_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_vip_loan_fixed_rate_market() successfully with optional parameters."""
+
+        params = {
+            "loan_coin": "loan_coin_example",
+            "duration": 56,
+            "current": 1,
+            "size": 5000,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "total": 25,
+            "rows": [
+                {
+                    "requestId": 1234567890,
+                    "requestNo": 100001,
+                    "coin": "USDT",
+                    "interestRate": "0.05",
+                    "duration": 30,
+                    "minimumAmount": "100",
+                    "availableAmount": "1000000",
+                    "estimatedInterest": "4109.59",
+                }
+            ],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_vip_loan_fixed_rate_market(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/loan/vip/fixed/market" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryVIPLoanFixedRateMarketResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryVIPLoanFixedRateMarketResponse, "from_dict")
+        ):
+            expected = QueryVIPLoanFixedRateMarketResponse.from_dict(expected_response)
+        else:
+            expected = QueryVIPLoanFixedRateMarketResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_query_vip_loan_fixed_rate_market_missing_required_param_loan_coin(self):
+        """Test that query_vip_loan_fixed_rate_market() raises RequiredError when 'loan_coin' is missing."""
+        params = {
+            "loan_coin": "loan_coin_example",
+        }
+        params["loan_coin"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'loan_coin'"
+        ):
+            self.client.query_vip_loan_fixed_rate_market(**params)
+
+    def test_query_vip_loan_fixed_rate_market_server_error(self):
+        """Test that query_vip_loan_fixed_rate_market() raises an error when the server returns an error."""
+
+        params = {
+            "loan_coin": "loan_coin_example",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.query_vip_loan_fixed_rate_market = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_vip_loan_fixed_rate_market(**params)
