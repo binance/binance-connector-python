@@ -30,7 +30,6 @@ class AllMarketTickersStreamsResponseInner(BaseModel):
     e: Optional[StrictStr] = None
     E: Optional[StrictInt] = Field(default=None, alias="E")
     s: Optional[StrictStr] = None
-    ps: Optional[StrictStr] = None
     p: Optional[StrictStr] = None
     P: Optional[StrictStr] = Field(default=None, alias="P")
     w: Optional[StrictStr] = None
@@ -46,12 +45,13 @@ class AllMarketTickersStreamsResponseInner(BaseModel):
     F: Optional[StrictInt] = Field(default=None, alias="F")
     L: Optional[StrictInt] = Field(default=None, alias="L")
     n: Optional[StrictInt] = None
+    ps: Optional[StrictStr] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
         "E",
         "s",
-        "ps",
         "p",
         "P",
         "w",
@@ -67,6 +67,8 @@ class AllMarketTickersStreamsResponseInner(BaseModel):
         "F",
         "L",
         "n",
+        "ps",
+        "st",
     ]
 
     model_config = ConfigDict(
@@ -132,7 +134,6 @@ class AllMarketTickersStreamsResponseInner(BaseModel):
                 "e": obj.get("e"),
                 "E": obj.get("E"),
                 "s": obj.get("s"),
-                "ps": obj.get("ps"),
                 "p": obj.get("p"),
                 "P": obj.get("P"),
                 "w": obj.get("w"),
@@ -148,6 +149,8 @@ class AllMarketTickersStreamsResponseInner(BaseModel):
                 "F": obj.get("F"),
                 "L": obj.get("L"),
                 "n": obj.get("n"),
+                "ps": obj.get("ps"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

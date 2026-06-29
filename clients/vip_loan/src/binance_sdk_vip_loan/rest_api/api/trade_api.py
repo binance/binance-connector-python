@@ -17,6 +17,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import VipLoanBorrowResponse
+from ..models import VipLoanFixedRateBorrowResponse
 from ..models import VipLoanRenewResponse
 from ..models import VipLoanRepayResponse
 
@@ -64,7 +65,7 @@ class TradeApi:
                     loan_coin (Union[str, None]):
                     loan_amount (Union[float, None]):
                     collateral_account_id (Union[str, None]): Multiple split by `,`
-                    collateral_coin (Union[str, None]): Multiple split by `,`
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire spot account balance)
                     is_flexible_rate (Union[bool, None]): Default: TRUE. TRUE : flexible rate; FALSE: fixed rate
                     loan_term (Optional[int] = None): Mandatory for fixed rate. Optional for fixed interest rate. Eg: 30/60 days
                     recv_window (Optional[int] = None):
@@ -129,6 +130,103 @@ class TradeApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=VipLoanBorrowResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def vip_loan_fixed_rate_borrow(
+        self,
+        supply_request: Union[str, None],
+        borrow_coin: Union[str, None],
+        loan_term: Union[int, None],
+        borrow_uid: Union[int, None],
+        collateral_coin: Union[str, None],
+        collateral_account_id: Union[str, None],
+        auto_repay: Optional[bool] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VipLoanFixedRateBorrowResponse]:
+        """
+                VIP Loan Fixed Rate Borrow(TRADE)
+                POST /sapi/v1/loan/vip/fixed/borrow
+                https://developers.binance.com/docs/vip_loan/trade/VIP-Loan-Fixed-Rate-Borrow
+
+                Submit a fixed rate borrow request by matching market supply orders.
+
+        * **Rate limit:** 2 requests per second per account.
+        * When multiple `supplyRequest` entries are provided, all `requestId` values must correspond to the same `borrowCoin` and `loanTerm` (validated by collateral facade).
+
+        Weight: 6000
+
+                Args:
+                    supply_request (Union[str, None]): Supply request string, positional encoding (no key). Multiple entries separated by `;`, fields separated by `:`, order: `<requestId>:<interestRate>:<amount>`. Example: `1212:0.12:100;3434:0.13:50`
+                    borrow_coin (Union[str, None]): Borrow coin
+                    loan_term (Union[int, None]): 30/60 days
+                    borrow_uid (Union[int, None]): Borrow receiving account UID
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire spot account balance)
+                    collateral_account_id (Union[str, None]): Multiple split by `,`
+                    auto_repay (Optional[bool] = None): Default: `true`. `true`: auto repay at expiration; `false`: auto-convert to flexible (floating rate) at expiration
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[VipLoanFixedRateBorrowResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if supply_request is None:
+            raise RequiredError(
+                field="supply_request",
+                error_message="Missing required parameter 'supply_request'",
+            )
+        if borrow_coin is None:
+            raise RequiredError(
+                field="borrow_coin",
+                error_message="Missing required parameter 'borrow_coin'",
+            )
+        if loan_term is None:
+            raise RequiredError(
+                field="loan_term",
+                error_message="Missing required parameter 'loan_term'",
+            )
+        if borrow_uid is None:
+            raise RequiredError(
+                field="borrow_uid",
+                error_message="Missing required parameter 'borrow_uid'",
+            )
+        if collateral_coin is None:
+            raise RequiredError(
+                field="collateral_coin",
+                error_message="Missing required parameter 'collateral_coin'",
+            )
+        if collateral_account_id is None:
+            raise RequiredError(
+                field="collateral_account_id",
+                error_message="Missing required parameter 'collateral_account_id'",
+            )
+
+        body = {}
+        payload = {
+            "supply_request": supply_request,
+            "borrow_coin": borrow_coin,
+            "loan_term": loan_term,
+            "borrow_uid": borrow_uid,
+            "collateral_coin": collateral_coin,
+            "collateral_account_id": collateral_account_id,
+            "auto_repay": auto_repay,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/loan/vip/fixed/borrow",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=VipLoanFixedRateBorrowResponse,
             is_signed=True,
             signer=self._signer,
         )

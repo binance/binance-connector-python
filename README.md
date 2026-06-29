@@ -44,6 +44,7 @@ Before using the SDK, ensure you have:
 - [binance-sdk-sub-account](./clients/sub_account/) - Sub Account connector (Pypi package: [`binance-sdk-sub-account`](https://pypi.org/project/binance-sdk-sub-account/))
 - [binance-sdk-vip-loan](./clients/vip_loan/) - VIP Loan connector (Pypi package: [`binance-sdk-vip-loan`](https://pypi.org/project/binance-sdk-vip-loan/))
 - [binance-sdk-wallet](./clients/wallet/) - Wallet connector (Pypi package: [`binance-sdk-wallet`](https://pypi.org/project/binance-sdk-wallet/))
+- [binance-sdk-w3w-prediction](./clients/w3w_prediction/) - W3W Prediction connector (Pypi package: [`binance-sdk-w3w-prediction`](https://pypi.org/project/binance-sdk-wallet/))
 
 ## Documentation
 

@@ -36,8 +36,22 @@ class IndividualSymbolMiniTickerStreamResponse(BaseModel):
     l: Optional[StrictStr] = None
     v: Optional[StrictStr] = None
     q: Optional[StrictStr] = None
+    ps: Optional[StrictStr] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "s", "c", "o", "h", "l", "v", "q"]
+    __properties: ClassVar[List[str]] = [
+        "e",
+        "E",
+        "s",
+        "c",
+        "o",
+        "h",
+        "l",
+        "v",
+        "q",
+        "ps",
+        "st",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,6 +122,8 @@ class IndividualSymbolMiniTickerStreamResponse(BaseModel):
                 "l": obj.get("l"),
                 "v": obj.get("v"),
                 "q": obj.get("q"),
+                "ps": obj.get("ps"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

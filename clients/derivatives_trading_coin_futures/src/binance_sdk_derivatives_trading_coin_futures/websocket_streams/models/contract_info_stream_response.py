@@ -39,6 +39,7 @@ class ContractInfoStreamResponse(BaseModel):
     ot: Optional[StrictInt] = None
     cs: Optional[StrictStr] = None
     bks: Optional[List[ContractInfoStreamResponseBksInner]] = None
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "e",
@@ -50,6 +51,7 @@ class ContractInfoStreamResponse(BaseModel):
         "ot",
         "cs",
         "bks",
+        "st",
     ]
 
     model_config = ConfigDict(
@@ -135,6 +137,7 @@ class ContractInfoStreamResponse(BaseModel):
                     if obj.get("bks") is not None
                     else None
                 ),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties

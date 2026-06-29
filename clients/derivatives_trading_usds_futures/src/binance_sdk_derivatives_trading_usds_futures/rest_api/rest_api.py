@@ -47,6 +47,7 @@ from .models import ListAllConvertPairsResponse
 from .models import OrderStatusResponse
 from .models import SendQuoteRequestResponse
 from .models import AdlRiskResponse
+from .models import AssetIndexResponse
 from .models import BasisResponse
 from .models import CheckServerTimeResponse
 from .models import CompositeIndexSymbolInformationResponse
@@ -60,7 +61,6 @@ from .models import KlineCandlestickDataResponse
 from .models import LongShortRatioResponse
 from .models import MarkPriceResponse
 from .models import MarkPriceKlineCandlestickDataResponse
-from .models import MultiAssetsModeAssetIndexResponse
 from .models import OldTradesLookupResponse
 from .models import OpenInterestResponse
 from .models import OpenInterestStatisticsResponse
@@ -978,6 +978,30 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
         return self._marketDataApi.adl_risk(symbol)
 
+    def asset_index(
+        self,
+        symbol: Optional[str] = None,
+    ) -> ApiResponse[AssetIndexResponse]:
+        """
+                Asset Index
+
+                Asset index price.
+
+        Weight: 1 for a single symbol; 10 when the symbol parameter is omitted
+
+                Args:
+                    symbol (Optional[str] = None):
+
+                Returns:
+                    ApiResponse[AssetIndexResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.asset_index(symbol)
+
     def basis(
         self,
         pair: Union[str, None],
@@ -998,7 +1022,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     contract_type (Union[BasisContractTypeEnum, None]):
                     period (Union[BasisPeriodEnum, None]): "5m","15m","30m","1h","2h","4h","6h","12h","1d"
                     limit (Optional[int] = None): Default 100; max 1000
@@ -1140,7 +1164,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     contract_type (Union[ContinuousContractKlineCandlestickDataContractTypeEnum, None]):
                     interval (Union[ContinuousContractKlineCandlestickDataIntervalEnum, None]):
                     start_time (Optional[int] = None):
@@ -1255,7 +1279,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
                 Kline/candlestick bars for the index price of a pair.
         Klines are uniquely identified by their open time.
 
-
         * If startTime and endTime are not sent, the most recent klines are returned.
 
         Weight: based on parameter LIMIT
@@ -1267,7 +1290,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         | > 1000      | 10     |
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
                     interval (Union[IndexPriceKlineCandlestickDataIntervalEnum, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1432,30 +1455,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
         return self._marketDataApi.mark_price_kline_candlestick_data(
             symbol, interval, start_time, end_time, limit
         )
-
-    def multi_assets_mode_asset_index(
-        self,
-        symbol: Optional[str] = None,
-    ) -> ApiResponse[MultiAssetsModeAssetIndexResponse]:
-        """
-                Multi-Assets Mode Asset Index
-
-                asset index for Multi-Assets mode
-
-        Weight: 1 for a single symbol; 10 when the symbol parameter is omitted
-
-                Args:
-                    symbol (Optional[str] = None):
-
-                Returns:
-                    ApiResponse[MultiAssetsModeAssetIndexResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._marketDataApi.multi_assets_mode_asset_index(symbol)
 
     def old_trades_lookup(
         self,
@@ -1639,7 +1638,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Weight: 0
 
                 Args:
-                    pair (Union[str, None]):
+                    pair (Union[str, None]): After CM migration, accepts both UM and CM pair values.
 
                 Returns:
                     ApiResponse[QuarterlyContractSettlementPriceResponse]
@@ -2025,12 +2024,12 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market and the commodity market.
 
-                Session types per market:
-                - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
-                - Commodity market: "REGULAR", "NO_TRADING".
-                - Korean equity market: "REGULAR", "NO_TRADING".
+        Session types per market:
+        - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
+        - Commodity market: "REGULAR", "NO_TRADING".
+        - Korean equity market: "REGULAR", "NO_TRADING".
 
-                Weight: 5
+        Weight: 5
 
                 Args:
 
@@ -2439,7 +2438,11 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Change Position Mode(TRADE)
 
-                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***
+                Change user's position mode (Hedge Mode or One-way Mode ) on ***EVERY symbol***.
+
+        **After CM migration**, UM and CM share the **same** `dualSidePosition` setting. Calling this endpoint flips both UM and CM at once. If either side has any open order or open position, the change is rejected:
+        - `-4067` (open orders exist)
+        - `-4068` (open position exists)
 
         Weight: 1
 
@@ -2716,7 +2719,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
                 Modify Order (TRADE)
 
                 Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
-
 
         * Either `orderId` or `origClientOrderId` must be sent, and the `orderId` will prevail if both are sent.
         * Both `quantity` and `price` must be sent, which is different from dapi modify order endpoint.

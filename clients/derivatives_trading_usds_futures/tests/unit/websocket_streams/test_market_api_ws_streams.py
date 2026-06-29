@@ -57,6 +57,7 @@ class TestWebSocketStreams:
             "l": 105,
             "T": 123456785,
             "m": True,
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@aggTrade".replace("/", "", 1),
@@ -98,6 +99,7 @@ class TestWebSocketStreams:
             "l": 105,
             "T": 123456785,
             "m": True,
+            "st": 1,
         }
         self.ws_streams.aggregate_trade_streams = AsyncMock(
             return_value=expected_response
@@ -125,6 +127,7 @@ class TestWebSocketStreams:
             "l": 105,
             "T": 123456785,
             "m": True,
+            "st": 1,
         }
 
         self.ws_streams.aggregate_trade_streams = AsyncMock(
@@ -180,6 +183,8 @@ class TestWebSocketStreams:
                 "z": "0.014",
                 "T": 1568014460893,
             },
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/!forceOrder@arr".replace("/", "", 1),
@@ -221,6 +226,8 @@ class TestWebSocketStreams:
                 "z": "0.014",
                 "T": 1568014460893,
             },
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         self.ws_streams.all_market_liquidation_order_streams = AsyncMock(
             return_value=expected_response
@@ -254,6 +261,8 @@ class TestWebSocketStreams:
                 "z": "0.014",
                 "T": 1568014460893,
             },
+            "ps": "BTCUSDT",
+            "st": 1,
         }
 
         self.ws_streams.all_market_liquidation_order_streams = AsyncMock(
@@ -291,6 +300,8 @@ class TestWebSocketStreams:
                 "l": "0.0010",
                 "v": "10000",
                 "q": "18",
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -328,6 +339,8 @@ class TestWebSocketStreams:
                 "l": "0.0010",
                 "v": "10000",
                 "q": "18",
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
         self.ws_streams.all_market_mini_tickers_stream = AsyncMock(
@@ -355,6 +368,8 @@ class TestWebSocketStreams:
                 "l": "0.0010",
                 "v": "10000",
                 "q": "18",
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
 
@@ -402,6 +417,8 @@ class TestWebSocketStreams:
                 "F": 0,
                 "L": 18150,
                 "n": 18151,
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -448,6 +465,8 @@ class TestWebSocketStreams:
                 "F": 0,
                 "L": 18150,
                 "n": 18151,
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
         self.ws_streams.all_market_tickers_streams = AsyncMock(
@@ -484,6 +503,8 @@ class TestWebSocketStreams:
                 "F": 0,
                 "L": 18150,
                 "n": 18151,
+                "ps": "BTCUSDT",
+                "st": 1,
             }
         ]
 
@@ -504,6 +525,153 @@ class TestWebSocketStreams:
 
         with pytest.raises(Exception, match="ResponseError"):
             await self.ws_streams.all_market_tickers_streams()
+
+    @pytest.mark.asyncio
+    async def test_asset_index_subscription(self):
+        """Test that asset_index() subscribes to the correct WebSocket stream."""
+
+        expected_response = [
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "ADAUSD",
+                "i": "0.27462452",
+                "b": "0.10000000",
+                "a": "0.10000000",
+                "B": "0.24716207",
+                "A": "0.30208698",
+                "q": "0.05000000",
+                "g": "0.05000000",
+                "Q": "0.26089330",
+                "G": "0.28835575",
+            },
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "USDTUSD",
+                "i": "0.99987691",
+                "b": "0.00010000",
+                "a": "0.00010000",
+                "B": "0.99977692",
+                "A": "0.99997689",
+                "q": "0.00010000",
+                "g": "0.00010000",
+                "Q": "0.99977692",
+                "G": "0.99997689",
+            },
+        ]
+        stream_endpoint = ws_streams_placeholder(
+            "/!assetIndex@arr".replace("/", "", 1),
+            {},
+        )
+
+        def mock_on(event, callback, stream):
+            if event == "message" and stream == stream_endpoint:
+                callback(expected_response)
+
+        self.websocket_client.on = MagicMock(side_effect=mock_on)
+
+        mock_callback = MagicMock()
+
+        stream = await self.ws_streams.asset_index()
+        assert isinstance(stream, RequestStreamHandle)
+        assert callable(stream.on)
+        assert callable(stream.unsubscribe)
+        stream.on("message", mock_callback)
+        mock_callback.assert_called_once_with(expected_response)
+
+    @pytest.mark.asyncio
+    async def test_asset_index_success(self):
+        """Test asset_index() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "ADAUSD",
+                "i": "0.27462452",
+                "b": "0.10000000",
+                "a": "0.10000000",
+                "B": "0.24716207",
+                "A": "0.30208698",
+                "q": "0.05000000",
+                "g": "0.05000000",
+                "Q": "0.26089330",
+                "G": "0.28835575",
+            },
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "USDTUSD",
+                "i": "0.99987691",
+                "b": "0.00010000",
+                "a": "0.00010000",
+                "B": "0.99977692",
+                "A": "0.99997689",
+                "q": "0.00010000",
+                "g": "0.00010000",
+                "Q": "0.99977692",
+                "G": "0.99997689",
+            },
+        ]
+        self.ws_streams.asset_index = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.asset_index()
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_asset_index_success_with_optional_params(self):
+        """Test asset_index() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = [
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "ADAUSD",
+                "i": "0.27462452",
+                "b": "0.10000000",
+                "a": "0.10000000",
+                "B": "0.24716207",
+                "A": "0.30208698",
+                "q": "0.05000000",
+                "g": "0.05000000",
+                "Q": "0.26089330",
+                "G": "0.28835575",
+            },
+            {
+                "e": "assetIndexUpdate",
+                "E": 1686749230000,
+                "s": "USDTUSD",
+                "i": "0.99987691",
+                "b": "0.00010000",
+                "a": "0.00010000",
+                "B": "0.99977692",
+                "A": "0.99997689",
+                "q": "0.00010000",
+                "g": "0.00010000",
+                "Q": "0.99977692",
+                "G": "0.99997689",
+            },
+        ]
+
+        self.ws_streams.asset_index = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.asset_index(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
+    async def test_asset_index_server_error(self):
+        """Test that asset_index() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.ws_streams.asset_index = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            await self.ws_streams.asset_index()
 
     @pytest.mark.asyncio
     async def test_composite_index_symbol_information_streams_subscription(self):
@@ -901,7 +1069,6 @@ class TestWebSocketStreams:
             "e": "contractInfo",
             "E": 1669356423908,
             "s": "IOTAUSDT",
-            "ps": "IOTAUSDT",
             "ct": "PERPETUAL",
             "dt": 4133404800000,
             "ot": 1569398400000,
@@ -926,6 +1093,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/!contractInfo".replace("/", "", 1),
@@ -955,7 +1123,6 @@ class TestWebSocketStreams:
             "e": "contractInfo",
             "E": 1669356423908,
             "s": "IOTAUSDT",
-            "ps": "IOTAUSDT",
             "ct": "PERPETUAL",
             "dt": 4133404800000,
             "ot": 1569398400000,
@@ -980,6 +1147,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
         self.ws_streams.contract_info_stream = AsyncMock(return_value=expected_response)
 
@@ -997,7 +1165,6 @@ class TestWebSocketStreams:
             "e": "contractInfo",
             "E": 1669356423908,
             "s": "IOTAUSDT",
-            "ps": "IOTAUSDT",
             "ct": "PERPETUAL",
             "dt": 4133404800000,
             "ot": 1569398400000,
@@ -1022,6 +1189,7 @@ class TestWebSocketStreams:
                     "ma": 20,
                 },
             ],
+            "st": 1,
         }
 
         self.ws_streams.contract_info_stream = AsyncMock(return_value=expected_response)
@@ -1058,6 +1226,8 @@ class TestWebSocketStreams:
             "l": "0.0010",
             "v": "10000",
             "q": "18",
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@miniTicker".replace("/", "", 1),
@@ -1097,6 +1267,8 @@ class TestWebSocketStreams:
             "l": "0.0010",
             "v": "10000",
             "q": "18",
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         self.ws_streams.individual_symbol_mini_ticker_stream = AsyncMock(
             return_value=expected_response
@@ -1124,6 +1296,8 @@ class TestWebSocketStreams:
             "l": "0.0010",
             "v": "10000",
             "q": "18",
+            "ps": "BTCUSDT",
+            "st": 1,
         }
 
         self.ws_streams.individual_symbol_mini_ticker_stream = AsyncMock(
@@ -1190,6 +1364,8 @@ class TestWebSocketStreams:
             "F": 0,
             "L": 18150,
             "n": 18151,
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@ticker".replace("/", "", 1),
@@ -1238,6 +1414,8 @@ class TestWebSocketStreams:
             "F": 0,
             "L": 18150,
             "n": 18151,
+            "ps": "BTCUSDT",
+            "st": 1,
         }
         self.ws_streams.individual_symbol_ticker_streams = AsyncMock(
             return_value=expected_response
@@ -1272,6 +1450,8 @@ class TestWebSocketStreams:
             "F": 0,
             "L": 18150,
             "n": 18151,
+            "ps": "BTCUSDT",
+            "st": 1,
         }
 
         self.ws_streams.individual_symbol_ticker_streams = AsyncMock(
@@ -1640,6 +1820,7 @@ class TestWebSocketStreams:
             "P": "11784.25641265",
             "r": "0.00038167",
             "T": 1562306400000,
+            "st": 1,
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@markPrice@<updateSpeed>".replace("/", "", 1),
@@ -1679,6 +1860,7 @@ class TestWebSocketStreams:
             "P": "11784.25641265",
             "r": "0.00038167",
             "T": 1562306400000,
+            "st": 1,
         }
         self.ws_streams.mark_price_stream = AsyncMock(return_value=expected_response)
 
@@ -1706,6 +1888,7 @@ class TestWebSocketStreams:
             "P": "11784.25641265",
             "r": "0.00038167",
             "T": 1562306400000,
+            "st": 1,
         }
 
         self.ws_streams.mark_price_stream = AsyncMock(return_value=expected_response)
@@ -1754,6 +1937,7 @@ class TestWebSocketStreams:
                 "P": "11784.25641265",
                 "r": "0.00030000",
                 "T": 1562306400000,
+                "st": 1,
             }
         ]
         stream_endpoint = ws_streams_placeholder(
@@ -1791,6 +1975,7 @@ class TestWebSocketStreams:
                 "P": "11784.25641265",
                 "r": "0.00030000",
                 "T": 1562306400000,
+                "st": 1,
             }
         ]
         self.ws_streams.mark_price_stream_for_all_market = AsyncMock(
@@ -1821,6 +2006,7 @@ class TestWebSocketStreams:
                 "P": "11784.25641265",
                 "r": "0.00030000",
                 "T": 1562306400000,
+                "st": 1,
             }
         ]
 
@@ -1845,168 +2031,15 @@ class TestWebSocketStreams:
             await self.ws_streams.mark_price_stream_for_all_market()
 
     @pytest.mark.asyncio
-    async def test_multi_assets_mode_asset_index_subscription(self):
-        """Test that multi_assets_mode_asset_index() subscribes to the correct WebSocket stream."""
-
-        expected_response = [
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "ADAUSD",
-                "i": "0.27462452",
-                "b": "0.10000000",
-                "a": "0.10000000",
-                "B": "0.24716207",
-                "A": "0.30208698",
-                "q": "0.05000000",
-                "g": "0.05000000",
-                "Q": "0.26089330",
-                "G": "0.28835575",
-            },
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "USDTUSD",
-                "i": "0.99987691",
-                "b": "0.00010000",
-                "a": "0.00010000",
-                "B": "0.99977692",
-                "A": "0.99997689",
-                "q": "0.00010000",
-                "g": "0.00010000",
-                "Q": "0.99977692",
-                "G": "0.99997689",
-            },
-        ]
-        stream_endpoint = ws_streams_placeholder(
-            "/!assetIndex@arr".replace("/", "", 1),
-            {},
-        )
-
-        def mock_on(event, callback, stream):
-            if event == "message" and stream == stream_endpoint:
-                callback(expected_response)
-
-        self.websocket_client.on = MagicMock(side_effect=mock_on)
-
-        mock_callback = MagicMock()
-
-        stream = await self.ws_streams.multi_assets_mode_asset_index()
-        assert isinstance(stream, RequestStreamHandle)
-        assert callable(stream.on)
-        assert callable(stream.unsubscribe)
-        stream.on("message", mock_callback)
-        mock_callback.assert_called_once_with(expected_response)
-
-    @pytest.mark.asyncio
-    async def test_multi_assets_mode_asset_index_success(self):
-        """Test multi_assets_mode_asset_index() successfully with required parameters only."""
-
-        expected_response = [
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "ADAUSD",
-                "i": "0.27462452",
-                "b": "0.10000000",
-                "a": "0.10000000",
-                "B": "0.24716207",
-                "A": "0.30208698",
-                "q": "0.05000000",
-                "g": "0.05000000",
-                "Q": "0.26089330",
-                "G": "0.28835575",
-            },
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "USDTUSD",
-                "i": "0.99987691",
-                "b": "0.00010000",
-                "a": "0.00010000",
-                "B": "0.99977692",
-                "A": "0.99997689",
-                "q": "0.00010000",
-                "g": "0.00010000",
-                "Q": "0.99977692",
-                "G": "0.99997689",
-            },
-        ]
-        self.ws_streams.multi_assets_mode_asset_index = AsyncMock(
-            return_value=expected_response
-        )
-
-        response = await self.ws_streams.multi_assets_mode_asset_index()
-        assert response is not None
-        assert response == expected_response
-
-    @pytest.mark.asyncio
-    async def test_multi_assets_mode_asset_index_success_with_optional_params(self):
-        """Test multi_assets_mode_asset_index() successfully with optional parameters."""
-
-        params = {"id": "e9d6b4349871b40611412680b3445fac"}
-
-        expected_response = [
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "ADAUSD",
-                "i": "0.27462452",
-                "b": "0.10000000",
-                "a": "0.10000000",
-                "B": "0.24716207",
-                "A": "0.30208698",
-                "q": "0.05000000",
-                "g": "0.05000000",
-                "Q": "0.26089330",
-                "G": "0.28835575",
-            },
-            {
-                "e": "assetIndexUpdate",
-                "E": 1686749230000,
-                "s": "USDTUSD",
-                "i": "0.99987691",
-                "b": "0.00010000",
-                "a": "0.00010000",
-                "B": "0.99977692",
-                "A": "0.99997689",
-                "q": "0.00010000",
-                "g": "0.00010000",
-                "Q": "0.99977692",
-                "G": "0.99997689",
-            },
-        ]
-
-        self.ws_streams.multi_assets_mode_asset_index = AsyncMock(
-            return_value=expected_response
-        )
-
-        response = await self.ws_streams.multi_assets_mode_asset_index(**params)
-        assert response is not None
-        assert response == expected_response
-
-    @pytest.mark.asyncio
-    async def test_multi_assets_mode_asset_index_server_error(self):
-        """Test that multi_assets_mode_asset_index() raises an error when the server returns an error."""
-
-        mock_error = Exception("ResponseError")
-        self.ws_streams.multi_assets_mode_asset_index = MagicMock(
-            side_effect=mock_error
-        )
-
-        with pytest.raises(Exception, match="ResponseError"):
-            await self.ws_streams.multi_assets_mode_asset_index()
-
-    @pytest.mark.asyncio
     async def test_trading_session_stream_subscription(self):
         """Test that trading_session_stream() subscribes to the correct WebSocket stream."""
 
         expected_response = {
-            "e": "KR_EquityUpdate",
-            "E": 1779962686695,
-            "t": 1779958800000,
-            "T": 1780009200000,
-            "S": "NO_TRADING",
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
         }
         stream_endpoint = ws_streams_placeholder(
             "/tradingSession".replace("/", "", 1),
@@ -2033,11 +2066,11 @@ class TestWebSocketStreams:
         """Test trading_session_stream() successfully with required parameters only."""
 
         expected_response = {
-            "e": "KR_EquityUpdate",
-            "E": 1779962686695,
-            "t": 1779958800000,
-            "T": 1780009200000,
-            "S": "NO_TRADING",
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
         }
         self.ws_streams.trading_session_stream = AsyncMock(
             return_value=expected_response
@@ -2054,11 +2087,11 @@ class TestWebSocketStreams:
         params = {"id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
-            "e": "KR_EquityUpdate",
-            "E": 1779962686695,
-            "t": 1779958800000,
-            "T": 1780009200000,
-            "S": "NO_TRADING",
+            "e": "EquityUpdate",
+            "E": 1765244143062,
+            "t": 1765242000000,
+            "T": 1765270800000,
+            "S": "OVERNIGHT",
         }
 
         self.ws_streams.trading_session_stream = AsyncMock(

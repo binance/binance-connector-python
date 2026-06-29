@@ -1,5 +1,53 @@
 # Changelog
 
+## 6.0.0 - 2026-06-29
+
+### Changed (13)
+
+#### WebSocket Streams
+
+- Modified response for `all_book_tickers_stream()` (`!bookTicker` stream):
+  - property `st` added
+
+- Modified response for `contract_info_stream()` (`!contractInfo` stream):
+  - property `st` added
+
+- Modified response for `all_market_liquidation_order_streams()` (`!forceOrder@arr` stream):
+  - property `st` added
+
+- Modified response for `all_market_mini_tickers_stream()` (`!miniTicker@arr` stream):
+  - items: property `st` added
+  - items: item property `st` added
+
+- Modified response for `all_market_tickers_streams()` (`!ticker@arr` stream):
+  - items: property `st` added
+  - items: item property `st` added
+
+- Modified response for `aggregate_trade_streams()` (`<symbol>@aggTrade` stream):
+  - property `st` added
+
+- Modified response for `individual_symbol_book_ticker_streams()` (`<symbol>@bookTicker` stream):
+  - property `st` added
+
+- Modified response for `partial_book_depth_streams()` (`<symbol>@depth<levels>@<updateSpeed>` stream):
+  - property `st` added
+
+- Modified response for `diff_book_depth_streams()` (`<symbol>@depth@<updateSpeed>` stream):
+  - property `st` added
+
+- Modified response for `mark_price_stream()` (`<symbol>@markPrice@<updateSpeed>` stream):
+  - property `st` added
+
+- Modified response for `individual_symbol_mini_ticker_stream()` (`<symbol>@miniTicker` stream):
+  - property `st` added
+
+- Modified response for `individual_symbol_ticker_streams()` (`<symbol>@ticker` stream):
+  - property `st` added
+
+- Modified response for `mark_price_of_all_symbols_of_a_pair()` (`<pair>@markPrice@<updateSpeed>` stream):
+  - items: property `st` added
+  - items: item property `st` added
+
 ## 5.7.0 - 2026-06-09
 
 ### Changed (2)

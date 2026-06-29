@@ -227,6 +227,30 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         return await self._marketApi.all_market_tickers_streams(id)
 
+    async def asset_index(
+        self,
+        id: Optional[str] = None,
+    ) -> RequestStreamHandle:
+        r"""
+                Asset Index
+
+                Asset index price.
+
+        Update Speed: 1s
+
+                Args:
+                    id (Optional[str] = None): Unique WebSocket request ID.
+
+                Returns:
+                    RequestStreamHandle
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._marketApi.asset_index(id)
+
     async def composite_index_symbol_information_streams(
         self,
         symbol: Union[str, None],
@@ -475,30 +499,6 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         return await self._marketApi.mark_price_stream_for_all_market(id, update_speed)
 
-    async def multi_assets_mode_asset_index(
-        self,
-        id: Optional[str] = None,
-    ) -> RequestStreamHandle:
-        r"""
-                Multi-Assets Mode Asset Index
-
-                Asset index for multi-assets mode user
-
-        Update Speed: 1s
-
-                Args:
-                    id (Optional[str] = None): Unique WebSocket request ID.
-
-                Returns:
-                    RequestStreamHandle
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return await self._marketApi.multi_assets_mode_asset_index(id)
-
     async def trading_session_stream(
         self,
         id: Optional[str] = None,
@@ -508,13 +508,13 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
                 Trading session information for the underlying assets of TradFi Perpetual contracts, covering the U.S. equity market, Korean equity market, and the commodity market, is updated every second. Trading session information for different underlying markets is pushed in separate messages.
 
-                **Event type:**
+        **Event type:**
 
-                - `EquityUpdate`: Session types for the U.S. equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING".
-                - `CommodityUpdate`: Session types for the commodity market include "REGULAR" and "NO_TRADING".
-                - `KR_EquityUpdate`: Session types for the Korean equity market include "REGULAR" and "NO_TRADING".
+        - `EquityUpdate`: Session types for the U.S. equity market include "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", and "NO_TRADING".
+        - `CommodityUpdate`: Session types for the commodity market include "REGULAR" and "NO_TRADING".
+        - `KR_EquityUpdate`: Session types for the Korean equity market include "REGULAR" and "NO_TRADING".
 
-                Update Speed: 1s
+        Update Speed: 1s
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.

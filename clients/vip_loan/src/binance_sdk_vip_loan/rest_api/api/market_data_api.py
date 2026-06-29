@@ -20,6 +20,7 @@ from ..models import GetBorrowInterestRateResponse
 from ..models import GetCollateralAssetDataResponse
 from ..models import GetLoanableAssetsDataResponse
 from ..models import GetVIPLoanInterestRateHistoryResponse
+from ..models import QueryVIPLoanFixedRateMarketResponse
 
 
 class MarketDataApi:
@@ -200,7 +201,7 @@ class MarketDataApi:
                     recv_window (Union[int, None]):
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page. Start from 1; default: 1; max: 1000
+                    current (Optional[int] = None): Page number, default 1, minimum 1
                     limit (Optional[int] = None): Default: 10; max: 100
 
                 Returns:
@@ -240,6 +241,66 @@ class MarketDataApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetVIPLoanInterestRateHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_vip_loan_fixed_rate_market(
+        self,
+        loan_coin: Union[str, None],
+        duration: Optional[int] = None,
+        current: Optional[int] = None,
+        size: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryVIPLoanFixedRateMarketResponse]:
+        """
+                Query VIP Loan Fixed Rate Market(USER_DATA)
+                GET /sapi/v1/loan/vip/fixed/market
+                https://developers.binance.com/docs/vip_loan/market-data/Query-VIP-Loan-Fixed-Rate-Market
+
+                Query the VIP Loan fixed rate market. Returns a paginated list of fixed-rate supply orders.
+
+        Weight: 6000
+
+                Args:
+                    loan_coin (Union[str, None]):
+                    duration (Optional[int] = None): Duration in days, minimum 1
+                    current (Optional[int] = None): Page number, default 1, minimum 1
+                    size (Optional[int] = None): Page size, default 10, range [1, 100]
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryVIPLoanFixedRateMarketResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if loan_coin is None:
+            raise RequiredError(
+                field="loan_coin",
+                error_message="Missing required parameter 'loan_coin'",
+            )
+
+        body = {}
+        payload = {
+            "loan_coin": loan_coin,
+            "duration": duration,
+            "current": current,
+            "size": size,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/loan/vip/fixed/market",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryVIPLoanFixedRateMarketResponse,
             is_signed=True,
             signer=self._signer,
         )

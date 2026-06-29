@@ -41,6 +41,10 @@ from .all_market_tickers_streams_response import (
 from .all_market_tickers_streams_response_inner import (
     AllMarketTickersStreamsResponseInner as AllMarketTickersStreamsResponseInner,
 )
+from .asset_index_response import AssetIndexResponse as AssetIndexResponse
+from .asset_index_response_inner import (
+    AssetIndexResponseInner as AssetIndexResponseInner,
+)
 from .composite_index_symbol_information_streams_response import (
     CompositeIndexSymbolInformationStreamsResponse as CompositeIndexSymbolInformationStreamsResponse,
 )
@@ -105,12 +109,6 @@ from .mark_price_stream_for_all_market_response_inner import (
 )
 from .mark_price_stream_response import (
     MarkPriceStreamResponse as MarkPriceStreamResponse,
-)
-from .multi_assets_mode_asset_index_response import (
-    MultiAssetsModeAssetIndexResponse as MultiAssetsModeAssetIndexResponse,
-)
-from .multi_assets_mode_asset_index_response_inner import (
-    MultiAssetsModeAssetIndexResponseInner as MultiAssetsModeAssetIndexResponseInner,
 )
 from .order_trade_update import OrderTradeUpdate as OrderTradeUpdate
 from .order_trade_update_o import OrderTradeUpdateO as OrderTradeUpdateO

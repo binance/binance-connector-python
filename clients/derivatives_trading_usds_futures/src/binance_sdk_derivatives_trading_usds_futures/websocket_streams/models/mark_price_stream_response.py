@@ -36,8 +36,20 @@ class MarkPriceStreamResponse(BaseModel):
     P: Optional[StrictStr] = Field(default=None, alias="P")
     r: Optional[StrictStr] = None
     T: Optional[StrictInt] = Field(default=None, alias="T")
+    st: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "ap", "i", "P", "r", "T"]
+    __properties: ClassVar[List[str]] = [
+        "e",
+        "E",
+        "s",
+        "p",
+        "ap",
+        "i",
+        "P",
+        "r",
+        "T",
+        "st",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,6 +120,7 @@ class MarkPriceStreamResponse(BaseModel):
                 "P": obj.get("P"),
                 "r": obj.get("r"),
                 "T": obj.get("T"),
+                "st": obj.get("st"),
             }
         )
         # store additional fields in additional_properties
