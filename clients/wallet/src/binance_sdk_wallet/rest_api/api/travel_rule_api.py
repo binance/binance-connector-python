@@ -392,7 +392,7 @@ class TravelRuleApi:
                 GET /sapi/v1/localentity/country/list
                 https://developers.binance.com/docs/wallet/travel-rule/country-list
 
-                Query the active country list for travel rule questionnaires.
+                Query the active country list for travel rule questionnaires. Currently, only supports AU entity.
 
         Weight: 1
 
@@ -431,7 +431,7 @@ class TravelRuleApi:
                 GET /sapi/v1/localentity/region/list
                 https://developers.binance.com/docs/wallet/travel-rule/region-list
 
-                Query the active region/city list for a given country.
+                Query the active region/city list for a given country. Currently, only supports AU entity.
 
         Weight: 1
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 7.0.0 - 2026-06-30
+
+### Changed (1)
+
+#### REST API
+
+- Modified response for `query_index_price_constituents()` (`GET /dapi/v1/constituents`):
+  - `constituents`.items: property `price` added
+  - `constituents`.items: property `weight` added
+  - `constituents`.items: item property `price` added
+  - `constituents`.items: item property `weight` added
+
 ## 6.0.0 - 2026-06-29
 
 ### Changed (13)

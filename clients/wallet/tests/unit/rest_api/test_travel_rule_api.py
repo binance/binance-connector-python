@@ -78,7 +78,7 @@ class TestTravelRuleApi:
 
         expected_response = {
             "trId": 123456,
-            "accpted": True,
+            "accepted": True,
             "info": "Withdraw request accepted",
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -145,7 +145,7 @@ class TestTravelRuleApi:
 
         expected_response = {
             "trId": 123456,
-            "accpted": True,
+            "accepted": True,
             "info": "Withdraw request accepted",
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -877,7 +877,7 @@ class TestTravelRuleApi:
                     "blockType": "supported",
                     "depositAllowed": True,
                     "withdrawalAllowed": True,
-                    "hasRegionRestrictions": True,
+                    "hasRegionRestrictions": False,
                 }
             ],
             "lastUpdated": 1716300000000,
@@ -2031,7 +2031,7 @@ class TestTravelRuleApi:
 
         expected_response = {
             "trId": 123456,
-            "accpted": True,
+            "accepted": True,
             "info": "Withdraw request accepted",
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2097,7 +2097,7 @@ class TestTravelRuleApi:
 
         expected_response = {
             "trId": 123456,
-            "accpted": True,
+            "accepted": True,
             "info": "Withdraw request accepted",
         }
         mock_get_signature.return_value = "mocked_signature"
