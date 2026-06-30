@@ -29,8 +29,10 @@ class QueryIndexPriceConstituentsResponseConstituentsInner(BaseModel):
 
     exchange: Optional[StrictStr] = None
     symbol: Optional[StrictStr] = None
+    price: Optional[StrictStr] = None
+    weight: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["exchange", "symbol"]
+    __properties: ClassVar[List[str]] = ["exchange", "symbol", "price", "weight"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +97,12 @@ class QueryIndexPriceConstituentsResponseConstituentsInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "symbol": obj.get("symbol")}
+            {
+                "exchange": obj.get("exchange"),
+                "symbol": obj.get("symbol"),
+                "price": obj.get("price"),
+                "weight": obj.get("weight"),
+            }
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

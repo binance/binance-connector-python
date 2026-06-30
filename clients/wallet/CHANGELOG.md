@@ -1,5 +1,17 @@
 # Changelog
 
+## 12.0.0 - 2026-06-30
+
+### Changed (2)
+
+- Modified response for `broker_withdraw()` (`POST /sapi/v1/localentity/broker/withdraw/apply`):
+  - property `accepted` added
+  - property `accpted` deleted
+
+- Modified response for `withdraw_travel_rule()` (`POST /sapi/v1/localentity/withdraw/apply`):
+  - property `accepted` added
+  - property `accpted` deleted
+
 ## 11.0.0 - 2026-06-09
 
 ### Added (2)

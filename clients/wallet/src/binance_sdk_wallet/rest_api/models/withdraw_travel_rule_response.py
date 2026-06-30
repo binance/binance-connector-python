@@ -28,10 +28,10 @@ class WithdrawTravelRuleResponse(BaseModel):
     """  # noqa: E501
 
     tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
-    accpted: Optional[StrictBool] = None
+    accepted: Optional[StrictBool] = None
     info: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["trId", "accpted", "info"]
+    __properties: ClassVar[List[str]] = ["trId", "accepted", "info"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -98,7 +98,7 @@ class WithdrawTravelRuleResponse(BaseModel):
         _obj = cls.model_validate(
             {
                 "trId": obj.get("trId"),
-                "accpted": obj.get("accpted"),
+                "accepted": obj.get("accepted"),
                 "info": obj.get("info"),
             }
         )
