@@ -30,18 +30,18 @@ def place_multiple_orders():
         response = client.rest_api.place_multiple_orders(
             orders=[
                 PlaceMultipleOrdersOrdersParameterInner(
-                    symbol="",
+                    symbol="BTC-200730-9000-C",
                     side="BUY",
                     type="LIMIT",
-                    quantity="1.0",
-                    price="1.0",
+                    quantity=1.0,
+                    price=1.0,
                     time_in_force="GTC",
-                    reduce_only="False）",
-                    post_only="False）",
+                    reduce_only=False,
+                    post_only=False,
                     new_order_resp_type="ACK",
                     client_order_id="1",
-                    is_mmp="",
-                    self_trade_prevention_mode="EXPIRE_TAKER",
+                    is_mmp=True,
+                    self_trade_prevention_mode="EXPIRE_MAKER",
                 )
             ],
         )

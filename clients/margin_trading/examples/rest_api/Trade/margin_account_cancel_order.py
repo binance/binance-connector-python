@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_cancel_order():
     try:
         response = client.rest_api.margin_account_cancel_order(
-            symbol="symbol_example",
+            symbol="LTCBTC",
         )
 
         rate_limits = response.rate_limits

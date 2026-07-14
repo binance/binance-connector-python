@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def get_um_futures_order_download_link_by_id():
     try:
         response = client.rest_api.get_um_futures_order_download_link_by_id(
-            download_id="1",
+            download_id="545923594199212032",
         )
 
         rate_limits = response.rate_limits

@@ -26,7 +26,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 
 def open_interest():
     try:
-        response = client.rest_api.open_interest(symbol="symbol_example")
+        response = client.rest_api.open_interest(symbol="BTCUSD_200626")
 
         rate_limits = response.rate_limits
         logging.info(f"open_interest() rate limits: {rate_limits}")

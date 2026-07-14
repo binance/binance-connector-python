@@ -24,9 +24,9 @@ def order_oco():
         response = client.rest_api.order_oco(
             symbol="BNBUSDT",
             side=OrderOcoSideEnum["BUY"].value,
-            quantity=1.0,
-            price=1.0,
-            stop_price=1.0,
+            quantity=1,
+            price=1,
+            stop_price=1,
         )
 
         rate_limits = response.rate_limits

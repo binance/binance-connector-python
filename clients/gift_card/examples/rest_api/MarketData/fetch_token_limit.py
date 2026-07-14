@@ -25,7 +25,7 @@ client = GiftCard(config_rest_api=configuration_rest_api)
 def fetch_token_limit():
     try:
         response = client.rest_api.fetch_token_limit(
-            base_token="base_token_example",
+            base_token="BUSD",
         )
 
         rate_limits = response.rate_limits

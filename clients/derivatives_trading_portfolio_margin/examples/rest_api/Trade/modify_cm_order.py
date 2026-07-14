@@ -30,7 +30,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def modify_cm_order():
     try:
         response = client.rest_api.modify_cm_order(
-            symbol="symbol_example",
+            symbol="BTCUSD_PERP",
             side=ModifyCmOrderSideEnum["BUY"].value,
             quantity=1.0,
             price=1.0,

@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def query_um_order():
     try:
         response = client.rest_api.query_um_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

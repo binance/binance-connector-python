@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def deposit_assets_into_the_managed_sub_account():
     try:
         response = client.rest_api.deposit_assets_into_the_managed_sub_account(
-            to_email="to_email_example",
-            asset="asset_example",
+            to_email="abc@test.com",
+            asset="BTC",
             amount=1.0,
         )
 

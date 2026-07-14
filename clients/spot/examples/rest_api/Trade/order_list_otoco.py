@@ -28,10 +28,10 @@ def order_list_otoco():
             symbol="BNBUSDT",
             working_type=OrderListOtocoWorkingTypeEnum["LIMIT"].value,
             working_side=OrderListOtocoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
-            working_quantity=1.0,
+            working_price=1,
+            working_quantity=1,
             pending_side=OrderListOtocoPendingSideEnum["BUY"].value,
-            pending_quantity=1.0,
+            pending_quantity=1,
             pending_above_type=OrderListOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,

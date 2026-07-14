@@ -6,6 +6,9 @@ from binance_sdk_dual_investment.dual_investment import (
     ConfigurationRestAPI,
     DUAL_INVESTMENT_REST_API_PROD_URL,
 )
+from binance_sdk_dual_investment.rest_api.models import (
+    ChangeAutoCompoundStatusAutoCompoundPlanEnum,
+)
 
 
 # Configure logging
@@ -25,7 +28,10 @@ client = DualInvestment(config_rest_api=configuration_rest_api)
 def change_auto_compound_status():
     try:
         response = client.rest_api.change_auto_compound_status(
-            position_id="1",
+            position_id="741590",
+            auto_compound_plan=ChangeAutoCompoundStatusAutoCompoundPlanEnum[
+                "NONE"
+            ].value,
         )
 
         rate_limits = response.rate_limits

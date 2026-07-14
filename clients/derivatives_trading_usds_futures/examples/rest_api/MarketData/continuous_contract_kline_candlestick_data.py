@@ -33,12 +33,12 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def continuous_contract_kline_candlestick_data():
     try:
         response = client.rest_api.continuous_contract_kline_candlestick_data(
-            pair="pair_example",
+            pair="BTCUSDT",
             contract_type=ContinuousContractKlineCandlestickDataContractTypeEnum[
                 "PERPETUAL"
             ].value,
             interval=ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1s"
+                "INTERVAL_1m"
             ].value,
         )
 

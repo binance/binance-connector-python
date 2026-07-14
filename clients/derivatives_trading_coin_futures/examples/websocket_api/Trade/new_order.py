@@ -8,6 +8,7 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     ConfigurationWebSocketAPI,
 )
 
+
 from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     NewOrderSideEnum,
 )
@@ -35,11 +36,10 @@ async def new_order():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.new_order(
-            symbol="symbol_example",
-            side=NewOrderSideEnum["BUY"].value,
-            type=NewOrderTypeEnum["LIMIT"].value,
+            symbol="BTCUSD_PERP",
+            side=NewOrderSideEnum[""].value,
+            type=NewOrderTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

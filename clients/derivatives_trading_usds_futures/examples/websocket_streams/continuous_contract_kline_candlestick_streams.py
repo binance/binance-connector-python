@@ -9,6 +9,13 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
 )
 
 
+from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models import (
+    ContinuousContractKlineCandlestickStreamsContractTypeEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models import (
+    ContinuousContractKlineCandlestickStreamsIntervalEnum,
+)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -30,8 +37,10 @@ async def continuous_contract_kline_candlestick_streams():
 
         stream = await connection.continuous_contract_kline_candlestick_streams(
             pair="btcusdt",
-            contract_type="next_quarter",
-            interval="1m",
+            contract_type=ContinuousContractKlineCandlestickStreamsContractTypeEnum[
+                ""
+            ].value,
+            interval=ContinuousContractKlineCandlestickStreamsIntervalEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

@@ -1,5 +1,72 @@
 # Changelog
 
+## 13.0.0 - 2026-07-14
+
+### Changed (14)
+
+- Updated `binance-common` library to version `4.0.3`
+- Added parameter `recvWindow`
+  - affected methods:
+    - `get_country_list()` (`GET /sapi/v1/localentity/country/list`)
+    - `get_region_list()` (`GET /sapi/v1/localentity/region/list`)
+- Deleted parameter `signature`
+  - affected methods:
+    - `submit_deposit_questionnaire()` (`PUT /sapi/v1/localentity/broker/deposit/provide-info`)
+    - `broker_withdraw()` (`POST /sapi/v1/localentity/broker/withdraw/apply`)
+- Modified parameter `accountType`:
+  - enum added: `SPOT`, `MARGIN`
+  - affected methods:
+    - `dustlog()` (`GET /sapi/v1/asset/dribblet`)
+    - `dust_transfer()` (`POST /sapi/v1/asset/dust`)
+    - `get_assets_that_can_be_converted_into_bnb()` (`POST /sapi/v1/asset/dust-btc`)
+- Modified parameter `depositId`:
+  - type `string` → `integer`
+  - affected methods:
+    - `deposit_history_v2()` (`GET /sapi/v2/localentity/deposit/history`)
+- Modified parameter `fromSymbol`:
+  - enum added: `ISOLATEDMARGIN_MARGIN`, `ISOLATEDMARGIN_ISOLATEDMARGIN`
+  - affected methods:
+    - `query_user_universal_transfer_history()` (`GET /sapi/v1/asset/transfer`)
+    - `user_universal_transfer()` (`POST /sapi/v1/asset/transfer`)
+- Modified parameter `needBtcValuation`:
+  - type `string` → `boolean`
+  - affected methods:
+    - `funding_wallet()` (`POST /sapi/v1/asset/get-funding-asset`)
+- Modified parameter `status`:
+  - enum added: `0`, `1`, `2`, `6`, `7`, `8`
+  - affected methods:
+    - `deposit_history()` (`GET /sapi/v1/capital/deposit/hisrec`)
+- Modified parameter `subAccountId`:
+  - type `integer` → `string`
+  - affected methods:
+    - `one_click_arrival_deposit_apply()` (`POST /sapi/v1/capital/deposit/credit-apply`)
+- Modified parameter `toSymbol`:
+  - enum added: `MARGIN_ISOLATEDMARGIN`, `ISOLATEDMARGIN_ISOLATEDMARGIN`
+  - affected methods:
+    - `query_user_universal_transfer_history()` (`GET /sapi/v1/asset/transfer`)
+    - `user_universal_transfer()` (`POST /sapi/v1/asset/transfer`)
+- Modified parameter `type`:
+  - enum added: `SPOT`, `MARGIN`, `FUTURES`
+  - affected methods:
+    - `daily_account_snapshot()` (`GET /sapi/v1/accountSnapshot`)
+- Modified parameter `type`:
+  - enum added: `DELEGATE`, `UNDELEGATE`
+  - affected methods:
+    - `query_user_delegation_history()` (`GET /sapi/v1/asset/custody/transfer-history`)
+- Modified parameter `type`:
+  - enum added: `MAIN_UMFUTURE`, `MAIN_CMFUTURE`, `MAIN_MARGIN`, `UMFUTURE_MAIN`, `UMFUTURE_MARGIN`, `CMFUTURE_MAIN`, `CMFUTURE_MARGIN`, `MARGIN_MAIN`, `MARGIN_UMFUTURE`, `MARGIN_CMFUTURE`, `ISOLATEDMARGIN_MARGIN`, `MARGIN_ISOLATEDMARGIN`, `ISOLATEDMARGIN_ISOLATEDMARGIN`, `MAIN_FUNDING`, `FUNDING_MAIN`, `FUNDING_UMFUTURE`, `UMFUTURE_FUNDING`, `MARGIN_FUNDING`, `FUNDING_MARGIN`, `FUNDING_CMFUTURE`, `CMFUTURE_FUNDING`, `MAIN_OPTION`, `OPTION_MAIN`, `UMFUTURE_OPTION`, `OPTION_UMFUTURE`, `MARGIN_OPTION`, `OPTION_MARGIN`, `FUNDING_OPTION`, `OPTION_FUNDING`, `MAIN_PORTFOLIO_MARGIN`, `PORTFOLIO_MARGIN_MAIN`
+  - affected methods:
+    - `user_universal_transfer()` (`POST /sapi/v1/asset/transfer`)
+- Modified response for `deposit_history_travel_rule()` (`GET /sapi/v1/localentity/deposit/history`):
+  - items: property `completeTime` added
+  - items: property `travelRuleStatusV2` added
+  - items: property `unlockConfirm` deleted
+  - items: property `walletType` deleted
+  - items: item property `completeTime` added
+  - items: item property `travelRuleStatusV2` added
+  - items: item property `unlockConfirm` deleted
+  - items: item property `walletType` deleted
+
 ## 12.0.0 - 2026-06-30
 
 ### Changed (2)

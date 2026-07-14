@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def toggle_bnb_burn_on_futures_trade():
     try:
         response = client.rest_api.toggle_bnb_burn_on_futures_trade(
-            fee_burn="fee_burn_example",
+            fee_burn="True",
         )
 
         rate_limits = response.rate_limits

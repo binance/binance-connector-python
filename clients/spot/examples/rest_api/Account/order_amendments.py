@@ -21,8 +21,8 @@ client = Spot(config_rest_api=configuration_rest_api)
 def order_amendments():
     try:
         response = client.rest_api.order_amendments(
-            symbol="BNBUSDT",
-            order_id=1,
+            symbol="BTCUSDT",
+            order_id=9,
         )
 
         rate_limits = response.rate_limits

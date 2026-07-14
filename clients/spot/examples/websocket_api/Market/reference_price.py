@@ -24,7 +24,7 @@ async def reference_price():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.reference_price(
-            symbol="BNBUSDT",
+            symbol="BAZUSD",
         )
 
         rate_limits = response.rate_limits

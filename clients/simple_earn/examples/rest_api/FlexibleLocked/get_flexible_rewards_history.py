@@ -24,9 +24,7 @@ client = SimpleEarn(config_rest_api=configuration_rest_api)
 
 def get_flexible_rewards_history():
     try:
-        response = client.rest_api.get_flexible_rewards_history(
-            type="s",
-        )
+        response = client.rest_api.get_flexible_rewards_history()
 
         rate_limits = response.rate_limits
         logging.info(f"get_flexible_rewards_history() rate limits: {rate_limits}")

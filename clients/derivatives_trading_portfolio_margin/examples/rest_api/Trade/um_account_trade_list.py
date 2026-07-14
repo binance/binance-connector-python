@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def um_account_trade_list():
     try:
         response = client.rest_api.um_account_trade_list(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

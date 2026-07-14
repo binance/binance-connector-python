@@ -30,8 +30,8 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def premium_index_kline_data():
     try:
         response = client.rest_api.premium_index_kline_data(
-            symbol="symbol_example",
-            interval=PremiumIndexKlineDataIntervalEnum["INTERVAL_1s"].value,
+            symbol="BTCUSDT",
+            interval=PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
         )
 
         rate_limits = response.rate_limits

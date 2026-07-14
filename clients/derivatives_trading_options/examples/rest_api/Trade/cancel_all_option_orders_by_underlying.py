@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def cancel_all_option_orders_by_underlying():
     try:
         response = client.rest_api.cancel_all_option_orders_by_underlying(
-            underlying="underlying_example",
+            underlying="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

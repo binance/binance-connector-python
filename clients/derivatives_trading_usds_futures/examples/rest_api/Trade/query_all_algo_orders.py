@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def query_all_algo_orders():
     try:
         response = client.rest_api.query_all_algo_orders(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

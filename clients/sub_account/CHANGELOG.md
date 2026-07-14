@@ -1,5 +1,44 @@
 # Changelog
 
+## 6.0.0 - 2026-07-14
+
+### Added (4)
+
+- `create_sub_account_api_key()` (`POST /sapi/v1/sub-account/subAccountApi`)
+- `delete_sub_account_api_key()` (`DELETE /sapi/v1/sub-account/subAccountApi`)
+- `modify_sub_account_api_key_permission()` (`POST /sapi/v1/sub-account/subAccountApiPermission`)
+- `query_sub_account_api_key()` (`GET /sapi/v1/sub-account/subAccountApi`)
+
+### Changed (7)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified parameter `fromAccountType`:
+  - enum added: `SPOT`, `USDT_FUTURE`, `COIN_FUTURE`, `MARGIN`, `ISOLATED_MARGIN`
+  - affected methods:
+    - `universal_transfer()` (`POST /sapi/v1/sub-account/universalTransfer`)
+- Modified parameter `productType`:
+  - enum added: `UM`
+  - affected methods:
+    - `move_position_for_sub_account()` (`POST /sapi/v1/sub-account/futures/move-position`)
+- Modified parameter `status`:
+  - type `string` → `integer`
+  - affected methods:
+    - `add_ip_restriction_for_sub_account_api_key()` (`POST /sapi/v2/sub-account/subAccountApi/ipRestriction`)
+- Modified parameter `toAccountType`:
+  - enum added: `SPOT`, `USDT_FUTURE`, `COIN_FUTURE`, `MARGIN`, `ISOLATED_MARGIN`
+  - affected methods:
+    - `universal_transfer()` (`POST /sapi/v1/sub-account/universalTransfer`)
+- Modified parameter `transferFunctionAccountType`:
+  - enum added: `SPOT`, `MARGIN`, `ISOLATED_MARGIN`, `USDT_FUTURE`, `COIN_FUTURE`
+  - affected methods:
+    - `query_managed_sub_account_transfer_log_sub_account_trading()` (`GET /sapi/v1/managed-subaccount/query-trans-log`)
+    - `query_managed_sub_account_transfer_log_master_account_investor()` (`GET /sapi/v1/managed-subaccount/queryTransLogForInvestor`)
+    - `query_managed_sub_account_transfer_log_master_account_trading()` (`GET /sapi/v1/managed-subaccount/queryTransLogForTradeParent`)
+- Modified parameter `type`:
+  - enum added: `SPOT`, `MARGIN`, `FUTURES`
+  - affected methods:
+    - `query_managed_sub_account_snapshot()` (`GET /sapi/v1/managed-subaccount/accountSnapshot`)
+
 ## 5.0.0 - 2026-06-09
 
 ### Changed (3)

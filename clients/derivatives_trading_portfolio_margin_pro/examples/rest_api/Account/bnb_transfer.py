@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_po
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    BnbTransferTransferSideEnum,
+)
 
 
 # Configure logging
@@ -28,7 +31,7 @@ def bnb_transfer():
     try:
         response = client.rest_api.bnb_transfer(
             amount=1.0,
-            transfer_side="transfer_side_example",
+            transfer_side=BnbTransferTransferSideEnum["TO_UM"].value,
         )
 
         rate_limits = response.rate_limits

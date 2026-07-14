@@ -26,7 +26,7 @@ def order_list_oco():
         response = client.rest_api.order_list_oco(
             symbol="BNBUSDT",
             side=OrderListOcoSideEnum["BUY"].value,
-            quantity=1.0,
+            quantity=1,
             above_type=OrderListOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             below_type=OrderListOcoBelowTypeEnum["STOP_LOSS"].value,
         )

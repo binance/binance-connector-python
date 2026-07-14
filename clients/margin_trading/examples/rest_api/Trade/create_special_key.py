@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def create_special_key():
     try:
         response = client.rest_api.create_special_key(
-            api_name="api_name_example",
+            api_name="apiName",
         )
 
         rate_limits = response.rate_limits

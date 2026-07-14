@@ -9,6 +9,10 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
 )
 
 
+from binance_sdk_derivatives_trading_usds_futures.websocket_streams.models import (
+    PartialBookDepthStreamsLevelsEnum,
+)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -30,7 +34,7 @@ async def partial_book_depth_streams():
 
         stream = await connection.partial_book_depth_streams(
             symbol="btcusdt",
-            levels=10,
+            levels=PartialBookDepthStreamsLevelsEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

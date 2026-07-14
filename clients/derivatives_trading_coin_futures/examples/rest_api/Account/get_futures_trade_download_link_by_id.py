@@ -27,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def get_futures_trade_download_link_by_id():
     try:
         response = client.rest_api.get_futures_trade_download_link_by_id(
-            download_id="1",
+            download_id="545923594199212032",
         )
 
         rate_limits = response.rate_limits

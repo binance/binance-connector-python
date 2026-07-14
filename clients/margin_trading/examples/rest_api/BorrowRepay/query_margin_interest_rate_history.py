@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def query_margin_interest_rate_history():
     try:
         response = client.rest_api.query_margin_interest_rate_history(
-            asset="asset_example",
+            asset="BTC",
         )
 
         rate_limits = response.rate_limits

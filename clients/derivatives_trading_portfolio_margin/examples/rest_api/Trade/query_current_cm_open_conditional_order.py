@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def query_current_cm_open_conditional_order():
     try:
         response = client.rest_api.query_current_cm_open_conditional_order(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
         )
 
         rate_limits = response.rate_limits

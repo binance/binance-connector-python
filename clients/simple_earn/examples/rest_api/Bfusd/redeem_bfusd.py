@@ -6,6 +6,7 @@ from binance_sdk_simple_earn.simple_earn import (
     ConfigurationRestAPI,
     SIMPLE_EARN_REST_API_PROD_URL,
 )
+from binance_sdk_simple_earn.rest_api.models import RedeemBfusdTypeEnum
 
 
 # Configure logging
@@ -26,7 +27,7 @@ def redeem_bfusd():
     try:
         response = client.rest_api.redeem_bfusd(
             amount=1.0,
-            type="s",
+            type=RedeemBfusdTypeEnum["STANDARD"].value,
         )
 
         rate_limits = response.rate_limits

@@ -24,7 +24,13 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 
 def set_market_maker_protection_config():
     try:
-        response = client.rest_api.set_market_maker_protection_config()
+        response = client.rest_api.set_market_maker_protection_config(
+            underlying="BTCUSDT",
+            window_time_in_milliseconds=1000,
+            frozen_time_in_milliseconds=1000,
+            qty_limit=1.0,
+            delta_limit=1.0,
+        )
 
         rate_limits = response.rate_limits
         logging.info(f"set_market_maker_protection_config() rate limits: {rate_limits}")

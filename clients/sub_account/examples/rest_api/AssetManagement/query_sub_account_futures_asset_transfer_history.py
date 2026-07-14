@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def query_sub_account_futures_asset_transfer_history():
     try:
         response = client.rest_api.query_sub_account_futures_asset_transfer_history(
-            email="sub-account-email@email.com",
-            futures_type=56,
+            email="123@test.com",
+            futures_type=1,
         )
 
         rate_limits = response.rate_limits

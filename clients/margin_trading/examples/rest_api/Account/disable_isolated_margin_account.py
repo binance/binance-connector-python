@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def disable_isolated_margin_account():
     try:
         response = client.rest_api.disable_isolated_margin_account(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def dust_convert():
     try:
         response = client.rest_api.dust_convert(
-            asset="asset_example",
+            asset="USDT",
         )
 
         rate_limits = response.rate_limits

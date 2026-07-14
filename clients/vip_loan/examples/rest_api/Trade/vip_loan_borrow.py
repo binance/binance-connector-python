@@ -26,10 +26,10 @@ def vip_loan_borrow():
     try:
         response = client.rest_api.vip_loan_borrow(
             loan_account_id=1,
-            loan_coin="loan_coin_example",
+            loan_coin="BTC",
             loan_amount=1.0,
-            collateral_account_id="1",
-            collateral_coin="collateral_coin_example",
+            collateral_account_id="12345678,12345678,12345678",
+            collateral_coin="BUSD,USDT,ETH",
             is_flexible_rate=True,
         )
 

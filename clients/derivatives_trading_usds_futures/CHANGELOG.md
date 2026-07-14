@@ -1,5 +1,286 @@
 # Changelog
 
+## 13.0.0 - 2026-07-14
+
+### Changed (57)
+
+- Updated `binance-common` library to version `4.0.3`
+
+#### REST API
+
+- Modified parameter `algo_type`:
+  - enum added: `CONDITIONAL`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+- Modified parameter `batch_orders`:
+  - items.`goodTillDate`: type `string` → `integer`
+  - items.`price`: type `string` → `number`
+  - items.`priceMatch`: enum removed: `NONE`
+  - items.`quantity`: type `string` → `number`
+  - items.`reduceOnly`: enum added: `true`, `false`
+  - items.`selfTradePreventionMode`: enum added: `NONE`
+  - items.`type`: enum added: `LIMIT`, `MARKET`, `STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+  - items.`goodTillDate`: type `string` → `integer`
+  - items.`price`: type `string` → `number`
+  - items.`priceMatch`: enum removed: `NONE`
+  - items.`quantity`: type `string` → `number`
+  - items.`reduceOnly`: enum added: `true`, `false`
+  - items.`selfTradePreventionMode`: enum added: `NONE`
+  - items.`type`: enum added: `LIMIT`, `MARKET`, `STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+  - affected methods:
+    - `place_multiple_orders()` (`POST /fapi/v1/batchOrders`)
+- Modified parameter `batch_orders`:
+  - items: property `timestamp` added
+  - items.`orderId`: type `string` → `integer`
+  - items.`price`: type `string` → `number`
+  - items.`priceMatch`: enum removed: `NONE`
+  - items.`quantity`: type `string` → `number`
+  - items.`recvWindow`: type `string` → `integer`
+  - items.`stopPrice`: type `string` → `number`
+  - items: item property `timestamp` added
+  - items.`orderId`: type `string` → `integer`
+  - items.`price`: type `string` → `number`
+  - items.`priceMatch`: enum removed: `NONE`
+  - items.`quantity`: type `string` → `number`
+  - items.`recvWindow`: type `string` → `integer`
+  - items.`stopPrice`: type `string` → `number`
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`)
+- Modified parameter `close_position`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `contract_type`:
+  - enum removed: `CURRENT_MONTH`, `NEXT_MONTH`, `PERPETUAL_DELIVERING`
+  - enum added: `TRADIFI_PERPETUAL`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_data()` (`GET /fapi/v1/continuousKlines`)
+- Modified parameter `contract_type`:
+  - enum removed: `CURRENT_MONTH`, `NEXT_MONTH`, `PERPETUAL_DELIVERING`
+  - affected methods:
+    - `basis()` (`GET /futures/data/basis`)
+- Modified parameter `income_type`:
+  - enum added: `TRANSFER`, `WELCOME_BONUS`, `REALIZED_PNL`, `FUNDING_FEE`, `COMMISSION`, `INSURANCE_CLEAR`, `REFERRAL_KICKBACK`, `COMMISSION_REBATE`, `API_REBATE`, `CONTEST_REWARD`, `CROSS_COLLATERAL_TRANSFER`, `OPTIONS_PREMIUM_FEE`, `OPTIONS_SETTLE_PROFIT`, `INTERNAL_TRANSFER`, `AUTO_EXCHANGE`, `DELIVERED_SETTELMENT`, `COIN_SWAP_DEPOSIT`, `COIN_SWAP_WITHDRAW`, `POSITION_LIMIT_INCREASE_FEE`, `STRATEGY_UMFUTURES_TRANSFER`, `FEE_RETURN`, `BFUSD_REWARD`
+  - affected methods:
+    - `get_income_history()` (`GET /fapi/v1/income`)
+- Modified parameter `interval`:
+  - enum removed: `1s`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_data()` (`GET /fapi/v1/continuousKlines`)
+    - `index_price_kline_candlestick_data()` (`GET /fapi/v1/indexPriceKlines`)
+    - `kline_candlestick_data()` (`GET /fapi/v1/klines`)
+    - `mark_price_kline_candlestick_data()` (`GET /fapi/v1/markPriceKlines`)
+    - `premium_index_kline_data()` (`GET /fapi/v1/premiumIndexKlines`)
+- Modified parameter `order_id_list`:
+  - maxLength `null` → `10`
+  - affected methods:
+    - `cancel_multiple_orders()` (`DELETE /fapi/v1/batchOrders`)
+- Modified parameter `orig_client_order_id_list`:
+  - maxLength `null` → `10`
+  - affected methods:
+    - `cancel_multiple_orders()` (`DELETE /fapi/v1/batchOrders`)
+- Modified parameter `position_side`:
+  - enum removed: `BOTH`, `LONG`, `SHORT`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `new_order()` (`POST /fapi/v1/order`)
+    - `modify_isolated_position_margin()` (`POST /fapi/v1/positionMargin`)
+- Modified parameter `price_match`:
+  - enum removed: `NONE`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `new_order()` (`POST /fapi/v1/order`)
+    - `modify_order()` (`PUT /fapi/v1/order`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `price_protect`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `reduce_only`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `new_order()` (`POST /fapi/v1/order`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `self_trade_prevention_mode`:
+  - enum added: `NONE`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `type`:
+  - enum added: `LIMIT`, `MARKET`, `STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+  - affected methods:
+    - `new_algo_order()` (`POST /fapi/v1/algoOrder`)
+- Modified parameter `type`:
+  - enum added: `LIMIT`, `MARKET`, `STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+  - affected methods:
+    - `new_order()` (`POST /fapi/v1/order`)
+    - `test_order()` (`POST /fapi/v1/order/test`)
+- Modified parameter `type`:
+  - type `string` → `integer`
+  - affected methods:
+    - `modify_isolated_position_margin()` (`POST /fapi/v1/positionMargin`)
+- Modified parameter `type`:
+  - type `integer` → `string`
+  - affected methods:
+    - `get_position_margin_change_history()` (`GET /fapi/v1/positionMargin/history`)
+- Modified response for `order_book()` (`GET /fapi/v1/depth`):
+  - `asks`.items: minItems `0` → `2`
+  - `asks`.items: maxItems `null` → `2`
+  - `bids`.items: minItems `0` → `2`
+  - `bids`.items: maxItems `null` → `2`
+
+- Modified response for `query_insurance_fund_balance_snapshot()` (`GET /fapi/v1/insuranceBalance`):
+  - oneOf modified
+
+- Modified response for `notional_and_leverage_brackets()` (`GET /fapi/v1/leverageBracket`):
+  - oneOf modified
+
+- Modified response for `query_order()` (`GET /fapi/v1/order`):
+  - property `selfTradePreventionMode` added
+  - property `goodTillDate` added
+  - property `priceMatch` added
+
+- Modified response for `mark_price()` (`GET /fapi/v1/premiumIndex`):
+  - oneOf modified
+
+- Modified response for `rpi_order_book()` (`GET /fapi/v1/rpiDepth`):
+  - `asks`.items: minItems `0` → `2`
+  - `asks`.items: maxItems `null` → `2`
+  - `bids`.items: minItems `0` → `2`
+  - `bids`.items: maxItems `null` → `2`
+
+- Modified response for `adl_risk()` (`GET /fapi/v1/symbolAdlRisk`):
+  - oneOf modified
+
+- Modified response for `ticker24hr_price_change_statistics()` (`GET /fapi/v1/ticker/24hr`):
+  - oneOf modified
+
+- Modified response for `symbol_order_book_ticker()` (`GET /fapi/v1/ticker/bookTicker`):
+  - oneOf modified
+
+- Modified response for `symbol_price_ticker()` (`GET /fapi/v1/ticker/price`):
+  - oneOf modified
+
+- Modified response for `symbol_price_ticker_v2()` (`GET /fapi/v2/ticker/price`):
+  - oneOf modified
+
+- Modified response for `long_short_ratio()` (`GET /futures/data/globalLongShortAccountRatio`):
+  - items.`timestamp`: type `string` → `integer`
+  - items.`timestamp`: type `string` → `integer`
+
+- Modified response for `open_interest_statistics()` (`GET /futures/data/openInterestHist`):
+  - items.`timestamp`: type `string` → `integer`
+  - items.`timestamp`: type `string` → `integer`
+
+- Modified response for `taker_buy_sell_volume()` (`GET /futures/data/takerlongshortRatio`):
+  - items.`timestamp`: type `string` → `integer`
+  - items.`timestamp`: type `string` → `integer`
+
+- Modified response for `top_trader_long_short_ratio_accounts()` (`GET /futures/data/topLongShortAccountRatio`):
+  - items.`timestamp`: type `string` → `integer`
+  - items.`timestamp`: type `string` → `integer`
+
+- Modified response for `top_trader_long_short_ratio_positions()` (`GET /futures/data/topLongShortPositionRatio`):
+  - items.`timestamp`: type `string` → `integer`
+  - items.`timestamp`: type `string` → `integer`
+
+- Marked `symbol_price_ticker()` (`GET /fapi/v1/ticker/price`) as deprecated.
+
+#### WebSocket API
+
+- Modified parameter `algo_type`:
+  - enum added: `CONDITIONAL`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `close_position`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `price_match`:
+  - enum removed: `NONE`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+    - `modify_order()` (`order.modify` method)
+    - `new_order()` (`order.place` method)
+- Modified parameter `price_protect`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `reduce_only`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+    - `new_order()` (`order.place` method)
+- Modified parameter `self_trade_prevention_mode`:
+  - enum added: `NONE`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `self_trade_prevention_mode`:
+  - enum added: `NONE`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Modified parameter `time_in_force`:
+  - enum removed: `GTX`, `GTD`, `RPI`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `type`:
+  - enum added: `STOP_MARKET`, `TAKE_PROFIT_MARKET`, `STOP`, `TAKE_PROFIT`, `TRAILING_STOP_MARKET`
+  - affected methods:
+    - `new_algo_order()` (`algoOrder.place` method)
+- Modified parameter `type`:
+  - enum added: `LIMIT`, `MARKET`
+  - affected methods:
+    - `new_order()` (`order.place` method)
+- Modified response for `order_book()` (`depth` method):
+  - property `asks` added
+  - property `bids` added
+  - `result`: property `bids` deleted
+  - `result`: property `asks` deleted
+
+- Modified response for `query_order()` (`order.status` method):
+  - `result`: property `goodTillDate` added
+  - `result`: property `selfTradePreventionMode` added
+  - `result`: property `priceMatch` added
+
+- Modified response for `symbol_order_book_ticker()` (`ticker.book` method):
+  - oneOf modified
+
+- Modified response for `symbol_price_ticker()` (`ticker.price` method):
+  - oneOf modified
+
+#### WebSocket Streams
+
+- Modified parameter `contract_type`:
+  - enum added: `perpetual`, `current_quarter`, `next_quarter`, `tradifi_perpetual`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_streams()` (`<pair>_<contractType>@continuousKline_<interval>` stream)
+- Modified parameter `interval`:
+  - enum added: `1s`, `1m`, `3m`, `5m`, `15m`, `30m`, `1h`, `2h`, `4h`, `6h`, `8h`, `12h`, `1d`, `3d`, `1w`, `1M`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_streams()` (`<pair>_<contractType>@continuousKline_<interval>` stream)
+- Modified parameter `interval`:
+  - enum added: `1m`, `3m`, `5m`, `15m`, `30m`, `1h`, `2h`, `4h`, `6h`, `8h`, `12h`, `1d`, `3d`, `1w`, `1M`
+  - affected methods:
+    - `kline_candlestick_streams()` (`<symbol>@kline_<interval>` stream)
+- Modified parameter `levels`:
+  - type `integer` → `string`
+  - enum added: `5`, `10`, `20`
+  - affected methods:
+    - `partial_book_depth_streams()` (`<symbol>@depth<levels>@<updateSpeed>` stream)
+- Modified parameter `update_speed`:
+  - enum added: `1s`
+  - affected methods:
+    - `mark_price_stream_for_all_market()` (`!markPrice@arr@<updateSpeed>` stream)
+    - `mark_price_stream()` (`<symbol>@markPrice@<updateSpeed>` stream)
+- Modified parameter `update_speed`:
+  - enum added: `100ms`, `500ms`
+  - affected methods:
+    - `partial_book_depth_streams()` (`<symbol>@depth<levels>@<updateSpeed>` stream)
+    - `diff_book_depth_streams()` (`<symbol>@depth@<updateSpeed>` stream)
+
 ## 12.0.0 - 2026-06-29
 
 ### Changed (15)

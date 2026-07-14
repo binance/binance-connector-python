@@ -4,9 +4,13 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoWorkingSideEnum
+
+
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtocoPendingSideEnum
+
 from binance_sdk_spot.websocket_api.models import (
     OrderListPlaceOtocoPendingAboveTypeEnum,
 )
@@ -31,15 +35,13 @@ async def order_list_place_otoco():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place_otoco(
             symbol="BNBUSDT",
-            working_type=OrderListPlaceOtocoWorkingTypeEnum["LIMIT"].value,
-            working_side=OrderListPlaceOtocoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
-            working_quantity=1.0,
-            pending_side=OrderListPlaceOtocoPendingSideEnum["BUY"].value,
-            pending_quantity=1.0,
-            pending_above_type=OrderListPlaceOtocoPendingAboveTypeEnum[
-                "STOP_LOSS_LIMIT"
-            ].value,
+            working_type=OrderListPlaceOtocoWorkingTypeEnum[""].value,
+            working_side=OrderListPlaceOtocoWorkingSideEnum[""].value,
+            working_price=1,
+            working_quantity=1,
+            pending_side=OrderListPlaceOtocoPendingSideEnum[""].value,
+            pending_quantity=1,
+            pending_above_type=OrderListPlaceOtocoPendingAboveTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

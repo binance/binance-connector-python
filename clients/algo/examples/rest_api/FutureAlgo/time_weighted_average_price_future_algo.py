@@ -2,6 +2,7 @@ import os
 import logging
 
 from binance_sdk_algo.algo import Algo, ConfigurationRestAPI, ALGO_REST_API_PROD_URL
+from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceFutureAlgoSideEnum
 
 
 # Configure logging
@@ -22,8 +23,8 @@ def time_weighted_average_price_future_algo():
     try:
         response = client.rest_api.time_weighted_average_price_future_algo(
             symbol="BTCUSDT",
-            side="BUY",
-            quantity=1.0,
+            side=TimeWeightedAveragePriceFutureAlgoSideEnum["BUY"].value,
+            quantity=1,
             duration=5000,
         )
 

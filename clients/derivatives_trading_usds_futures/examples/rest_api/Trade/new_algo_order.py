@@ -7,7 +7,13 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
     DERIVATIVES_TRADING_USDS_FUTURES_REST_API_PROD_URL,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    NewAlgoOrderAlgoTypeEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    NewAlgoOrderTypeEnum,
 )
 
 
@@ -30,10 +36,10 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def new_algo_order():
     try:
         response = client.rest_api.new_algo_order(
-            algo_type="algo_type_example",
-            symbol="symbol_example",
+            algo_type=NewAlgoOrderAlgoTypeEnum["CONDITIONAL"].value,
+            symbol="BNBUSDT",
             side=NewAlgoOrderSideEnum["BUY"].value,
-            type="type_example",
+            type=NewAlgoOrderTypeEnum["STOP_MARKET"].value,
         )
 
         rate_limits = response.rate_limits

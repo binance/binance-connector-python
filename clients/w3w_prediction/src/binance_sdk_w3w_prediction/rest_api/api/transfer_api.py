@@ -52,9 +52,9 @@ class TransferApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateInboundTransferResponse]:
         """
-                Create Inbound Transfer
+                Create Inbound Transfer (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/transfer/inbound
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-inbound-transfer
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-inbound-transfer
 
                 Transfer funds from the prediction wallet back to the user's CEX account (SPOT or FUNDING). Requires SAS authorization.
 
@@ -138,9 +138,9 @@ class TransferApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateOutboundTransferResponse]:
         """
-                Create Outbound Transfer
+                Create Outbound Transfer (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/transfer/outbound
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-outbound-transfer
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-outbound-transfer
 
                 Transfer funds from the user's CEX account (SPOT or FUNDING) into the prediction wallet. Requires SAS authorization.
 
@@ -229,9 +229,9 @@ class TransferApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferListResponse]:
         """
-                Query Transfer List
+                Query Transfer List (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/transfer/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-list
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-list
 
                 Get the authenticated user's prediction wallet transfer history within a date range.
 
@@ -303,9 +303,9 @@ class TransferApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferStatusResponse]:
         """
-                Query Transfer Status
+                Query Transfer Status (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/transfer/status
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-status
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-status
 
                 Query the current status of a prediction wallet transfer by transfer ID.
 

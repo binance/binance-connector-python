@@ -33,7 +33,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def new_margin_order():
     try:
         response = client.rest_api.new_margin_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=NewMarginOrderSideEnum["BUY"].value,
             type=NewMarginOrderTypeEnum["LIMIT"].value,
         )

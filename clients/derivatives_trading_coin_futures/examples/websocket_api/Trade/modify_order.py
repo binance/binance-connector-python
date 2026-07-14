@@ -8,9 +8,11 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     ConfigurationWebSocketAPI,
 )
 
+
 from binance_sdk_derivatives_trading_coin_futures.websocket_api.models import (
     ModifyOrderSideEnum,
 )
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -32,10 +34,9 @@ async def modify_order():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.modify_order(
-            symbol="symbol_example",
-            side=ModifyOrderSideEnum["BUY"].value,
+            symbol="BTCUSD_PERP",
+            side=ModifyOrderSideEnum[""].value,
             quantity=1.0,
             price=1.0,
         )

@@ -6,6 +6,7 @@ from binance_sdk_wallet.wallet import (
     ConfigurationRestAPI,
     WALLET_REST_API_PROD_URL,
 )
+from binance_sdk_wallet.rest_api.models import UserUniversalTransferTypeEnum
 
 
 # Configure logging
@@ -25,8 +26,8 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def user_universal_transfer():
     try:
         response = client.rest_api.user_universal_transfer(
-            type="type_example",
-            asset="asset_example",
+            type=UserUniversalTransferTypeEnum["MAIN_UMFUTURE"].value,
+            asset="BTC",
             amount=1.0,
         )
 

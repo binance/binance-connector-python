@@ -9,6 +9,9 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderSideEnum,
 )
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    TestOrderTypeEnum,
+)
 
 
 # Configure logging
@@ -30,9 +33,9 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def test_order():
     try:
         response = client.rest_api.test_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=TestOrderSideEnum["BUY"].value,
-            type="type_example",
+            type=TestOrderTypeEnum["LIMIT"].value,
         )
 
         rate_limits = response.rate_limits

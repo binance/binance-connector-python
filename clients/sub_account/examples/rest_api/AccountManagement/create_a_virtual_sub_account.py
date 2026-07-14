@@ -25,7 +25,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def create_a_virtual_sub_account():
     try:
         response = client.rest_api.create_a_virtual_sub_account(
-            sub_account_string="sub_account_string_example",
+            sub_account_string="testSubAccount",
         )
 
         rate_limits = response.rate_limits

@@ -25,9 +25,9 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def get_move_position_history_for_sub_account():
     try:
         response = client.rest_api.get_move_position_history_for_sub_account(
-            symbol="symbol_example",
-            page=56,
-            rows=56,
+            symbol="BTCUSDT",
+            page=1,
+            rows=1,
         )
 
         rate_limits = response.rate_limits

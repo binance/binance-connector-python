@@ -35,7 +35,7 @@ Before using the SDK, ensure you have:
 - [binance-sdk-gift-card](./clients/gift_card/) - Gift Card connector (Pypi package: [`binance-sdk-gift-card`](https://pypi.org/project/binance-sdk-gift-card/))
 - [binance-sdk-margin-trading](./clients/margin_trading/) - Margin Trading connector (Pypi package: [`binance-sdk-margin-trading`](https://pypi.org/project/binance-sdk-margin-trading/))
 - [binance-sdk-mining](./clients/mining/) - Mining connector (Pypi package: [`binance-sdk-mining`](https://pypi.org/project/binance-sdk-mining/))
-- [binance-sdk-nft](./clients/nft/) - NFT connector (Pypi package: [`binance-sdk-nft`](https://pypi.org/project/binance-sdk-nft/))
+- **Deprecated**: ~~[binance-sdk-nft](./clients/nft/) - NFT connector (Pypi package: [`binance-sdk-nft`](https://pypi.org/project/binance-sdk-nft/))~~
 - [binance-sdk-pay](./clients/pay/) - Pay connector (Pypi package: [`binance-sdk-pay`](https://pypi.org/project/binance-sdk-pay/))
 - [binance-sdk-rebate](./clients/rebate/) - Rebate connector (Pypi package: [`binance-sdk-rebate`](https://pypi.org/project/binance-sdk-rebate/))
 - [binance-sdk-simple-earn](./clients/simple_earn/) - Simple Earn connector (Pypi package: [`binance-sdk-simple-earn`](https://pypi.org/project/binance-sdk-simple-earn/))

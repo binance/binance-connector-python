@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.derivatives_trading_portfo
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    ChangeAutoRepayFuturesStatusAutoRepayEnum,
+)
 
 
 # Configure logging
@@ -27,7 +30,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def change_auto_repay_futures_status():
     try:
         response = client.rest_api.change_auto_repay_futures_status(
-            auto_repay="True",
+            auto_repay=ChangeAutoRepayFuturesStatusAutoRepayEnum["TRUE"].value,
         )
 
         rate_limits = response.rate_limits

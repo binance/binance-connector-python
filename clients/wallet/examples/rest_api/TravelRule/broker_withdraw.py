@@ -26,12 +26,11 @@ def broker_withdraw():
     try:
         response = client.rest_api.broker_withdraw(
             address="address_example",
-            coin="coin_example",
+            coin="BTC",
             amount=1.0,
             withdraw_order_id="1",
             questionnaire="questionnaire_example",
             originator_pii="originator_pii_example",
-            signature="signature_example",
         )
 
         rate_limits = response.rate_limits

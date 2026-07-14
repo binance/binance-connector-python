@@ -30,10 +30,10 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def modify_order():
     try:
         response = client.rest_api.modify_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=ModifyOrderSideEnum["BUY"].value,
             quantity=1.0,
-            price=1.0,
+            price=30005,
         )
 
         rate_limits = response.rate_limits

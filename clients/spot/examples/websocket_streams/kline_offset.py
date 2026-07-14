@@ -7,6 +7,8 @@ from binance_sdk_spot.spot import (
     SPOT_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,
 )
+
+
 from binance_sdk_spot.websocket_streams.models import KlineOffsetIntervalEnum
 
 # Configure logging
@@ -28,7 +30,7 @@ async def kline_offset():
 
         stream = await connection.kline_offset(
             symbol="bnbusdt",
-            interval=KlineOffsetIntervalEnum["INTERVAL_1s"].value,
+            interval=KlineOffsetIntervalEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

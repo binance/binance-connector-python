@@ -8,8 +8,12 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
     ConfigurationWebSocketAPI,
 )
 
+
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewOrderTypeEnum,
 )
 
 # Configure logging
@@ -33,9 +37,9 @@ async def new_order():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.new_order(
-            symbol="symbol_example",
-            side=NewOrderSideEnum["BUY"].value,
-            type="type_example",
+            symbol="BTCUSDT",
+            side=NewOrderSideEnum[""].value,
+            type=NewOrderTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

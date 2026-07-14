@@ -1,5 +1,36 @@
 # Changelog
 
+## 6.0.0 - 2026-07-14
+
+### Changed (7)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified parameter `asset`:
+  - enum added: `WBETH`, `BETH`
+  - affected methods:
+    - `redeem_eth()` (`POST /sapi/v1/eth-staking/eth/redeem`)
+- Modified parameter `positionId`:
+  - type `integer` → `string`
+  - affected methods:
+    - `get_on_chain_yields_locked_redemption_record()` (`GET /sapi/v1/onchain-yields/locked/history/redemptionRecord`)
+    - `get_on_chain_yields_locked_product_position()` (`GET /sapi/v1/onchain-yields/locked/position`)
+- Modified parameter `redeemTo`:
+  - enum added: `SPOT`, `FLEXIBLE`
+  - affected methods:
+    - `set_on_chain_yields_locked_product_redeem_option()` (`POST /sapi/v1/onchain-yields/locked/setRedeemOption`)
+- Modified parameter `redeemTo`:
+  - enum added: `SPOT`, `FLEXIBLE`
+  - affected methods:
+    - `subscribe_on_chain_yields_locked_product()` (`POST /sapi/v1/onchain-yields/locked/subscribe`)
+- Modified parameter `sourceAccount`:
+  - enum added: `SPOT`, `FUND`, `ALL`
+  - affected methods:
+    - `subscribe_on_chain_yields_locked_product()` (`POST /sapi/v1/onchain-yields/locked/subscribe`)
+- Modified parameter `type`:
+  - enum added: `CLAIM`, `DISTRIBUTE`
+  - affected methods:
+    - `get_boost_rewards_history()` (`GET /sapi/v1/sol-staking/sol/history/boostRewardsHistory`)
+
 ## 5.11.0 - 2026-06-09
 
 ### Changed (2)

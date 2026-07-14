@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def get_ip_restriction_for_a_sub_account_api_key():
     try:
         response = client.rest_api.get_ip_restriction_for_a_sub_account_api_key(
-            email="sub-account-email@email.com",
-            sub_account_api_key="sub_account_api_key_example",
+            email="123@test.com",
+            sub_account_api_key="k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf",
         )
 
         rate_limits = response.rate_limits

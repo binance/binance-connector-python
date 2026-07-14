@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.0.0 - 2026-07-14
+
+### Changed (7)
+
+- Updated `binance-common` library to version `4.0.3`
+- Added parameter `auto_compound_plan`
+  - affected methods:
+    - `change_auto_compound_status()` (`POST /sapi/v1/dci/product/auto_compound/edit-status`)
+- Deleted parameter `auto_compound_plan`
+  - affected methods:
+    - `change_auto_compound_status()` (`POST /sapi/v1/dci/product/auto_compound/edit-status`)
+- Modified parameter `auto_compound_plan`:
+  - enum added: `NONE`, `STANDARD`, `ADVANCED`
+  - affected methods:
+    - `subscribe_dual_investment_products()` (`POST /sapi/v1/dci/product/subscribe`)
+- Modified parameter `option_type`:
+  - enum added: `CALL`, `PUT`
+  - affected methods:
+    - `get_dual_investment_product_list()` (`GET /sapi/v1/dci/product/list`)
+- Modified parameter `status`:
+  - enum added: `PENDING`, `PURCHASE_SUCCESS`, `SETTLED`, `PURCHASE_FAIL`, `REFUNDING`, `REFUND_SUCCESS`, `SETTLING`
+  - affected methods:
+    - `get_dual_investment_positions()` (`GET /sapi/v1/dci/product/positions`)
+- Modified response for `get_dual_investment_positions()` (`GET /sapi/v1/dci/product/positions`):
+  - `list`.items: property `subscriptionTime` added
+  - `list`.items: item property `subscriptionTime` added
+
 ## 2.11.0 - 2026-06-09
 
 ### Changed (2)

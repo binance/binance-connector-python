@@ -25,7 +25,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def enable_options_for_sub_account():
     try:
         response = client.rest_api.enable_options_for_sub_account(
-            email="sub-account-email@email.com",
+            email="123@test.com",
         )
 
         rate_limits = response.rate_limits

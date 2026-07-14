@@ -6,6 +6,9 @@ from binance_sdk_staking.staking import (
     ConfigurationRestAPI,
     STAKING_REST_API_PROD_URL,
 )
+from binance_sdk_staking.rest_api.models import (
+    SetOnChainYieldsLockedProductRedeemOptionRedeemToEnum,
+)
 
 
 # Configure logging
@@ -26,7 +29,9 @@ def set_on_chain_yields_locked_product_redeem_option():
     try:
         response = client.rest_api.set_on_chain_yields_locked_product_redeem_option(
             position_id="1",
-            redeem_to="redeem_to_example",
+            redeem_to=SetOnChainYieldsLockedProductRedeemOptionRedeemToEnum[
+                "SPOT"
+            ].value,
         )
 
         rate_limits = response.rate_limits

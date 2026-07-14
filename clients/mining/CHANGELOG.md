@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.0.0 - 2026-07-14
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified response for `statistic_list()` (`GET /sapi/v1/mining/statistics/user/status`):
+  - `data`.`profitToday`: property `BCH` deleted
+  - `data`.`profitToday`: property `BSV` deleted
+  - `data`.`profitToday`: property `BTC` deleted
+  - `data`.`profitYesterday`: property `BCH` deleted
+  - `data`.`profitYesterday`: property `BSV` deleted
+  - `data`.`profitYesterday`: property `BTC` deleted
+
 ## 3.9.0 - 2026-06-09
 
 ### Changed (2)

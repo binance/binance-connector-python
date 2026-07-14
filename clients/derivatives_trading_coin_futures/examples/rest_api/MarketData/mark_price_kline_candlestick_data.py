@@ -30,7 +30,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def mark_price_kline_candlestick_data():
     try:
         response = client.rest_api.mark_price_kline_candlestick_data(
-            symbol="symbol_example",
+            symbol="BTCUSD",
             interval=MarkPriceKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         )
 

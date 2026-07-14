@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def user_commission_rate():
     try:
         response = client.rest_api.user_commission_rate(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

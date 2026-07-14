@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.0.0 - 2026-07-14
+
+### Added (1)
+
+- `get_vip_loan_repayment_history()` (`GET /sapi/v1/loan/vip/repay/history`)
+
+### Changed (1)
+
+- Updated `binance-common` library to version `4.0.3`
+
 ## 6.0.0 - 2026-06-29
 
 ### Added (2)

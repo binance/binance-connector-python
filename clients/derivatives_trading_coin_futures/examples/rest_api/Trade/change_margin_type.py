@@ -30,7 +30,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def change_margin_type():
     try:
         response = client.rest_api.change_margin_type(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
             margin_type=ChangeMarginTypeMarginTypeEnum["ISOLATED"].value,
         )
 

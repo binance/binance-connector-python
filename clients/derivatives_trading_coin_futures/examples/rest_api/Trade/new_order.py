@@ -33,7 +33,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def new_order():
     try:
         response = client.rest_api.new_order(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
             side=NewOrderSideEnum["BUY"].value,
             type=NewOrderTypeEnum["LIMIT"].value,
         )

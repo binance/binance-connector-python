@@ -25,7 +25,7 @@ client = VipLoan(config_rest_api=configuration_rest_api)
 def query_vip_loan_fixed_rate_market():
     try:
         response = client.rest_api.query_vip_loan_fixed_rate_market(
-            loan_coin="loan_coin_example",
+            loan_coin="USDT",
         )
 
         rate_limits = response.rate_limits

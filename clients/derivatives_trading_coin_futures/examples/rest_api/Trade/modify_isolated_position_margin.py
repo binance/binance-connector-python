@@ -6,9 +6,6 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_COIN_FUTURES_REST_API_PROD_URL,
 )
-from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
-    ModifyIsolatedPositionMarginTypeEnum,
-)
 
 
 # Configure logging
@@ -30,9 +27,9 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def modify_isolated_position_margin():
     try:
         response = client.rest_api.modify_isolated_position_margin(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             amount=1.0,
-            type=ModifyIsolatedPositionMarginTypeEnum["LIMIT"].value,
+            type=1,
         )
 
         rate_limits = response.rate_limits

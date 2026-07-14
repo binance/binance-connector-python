@@ -25,7 +25,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def get_sub_account_deposit_history():
     try:
         response = client.rest_api.get_sub_account_deposit_history(
-            email="sub-account-email@email.com",
+            email="123@test.com",
         )
 
         rate_limits = response.rate_limits

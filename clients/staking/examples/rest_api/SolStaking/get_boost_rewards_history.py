@@ -6,6 +6,7 @@ from binance_sdk_staking.staking import (
     ConfigurationRestAPI,
     STAKING_REST_API_PROD_URL,
 )
+from binance_sdk_staking.rest_api.models import GetBoostRewardsHistoryTypeEnum
 
 
 # Configure logging
@@ -25,7 +26,7 @@ client = Staking(config_rest_api=configuration_rest_api)
 def get_boost_rewards_history():
     try:
         response = client.rest_api.get_boost_rewards_history(
-            type="CLAIM",
+            type=GetBoostRewardsHistoryTypeEnum["CLAIM"].value,
         )
 
         rate_limits = response.rate_limits

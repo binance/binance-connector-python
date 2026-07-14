@@ -58,9 +58,9 @@ class TradeApi:
         ] = None,
     ) -> ApiResponse[BatchCancelOrdersResponse]:
         """
-                Batch Cancel Orders
+                Batch Cancel Orders (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/batch-cancel
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#batch-cancel-orders
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#batch-cancel-orders
 
                 Cancel one or more active prediction orders in a single request. Requires SAS authorization.
 
@@ -139,9 +139,9 @@ class TradeApi:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[GetQuoteResponse]:
         """
-                Get Quote
+                Get Quote (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/get-quote
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#get-quote
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#get-quote
 
                 Get a price quote for a prediction order. The returned `quoteId` must be used in the subsequent Place Order request.
 
@@ -245,9 +245,9 @@ class TradeApi:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[PlaceOrderResponse]:
         """
-                Place Order
+                Place Order (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/place-order-bundle
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#place-order
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#place-order
 
                 Place a prediction order using a previously obtained quote. Requires SAS authorization.
 
@@ -356,9 +356,9 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryActiveOrdersResponse]:
         """
-                Query Active Orders
+                Query Active Orders (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/order/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-active-orders
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-active-orders
 
                 Get active (open) prediction orders for the authenticated user.
 
@@ -426,9 +426,9 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryOrderHistoryResponse]:
         """
-                Query Order History
+                Query Order History (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/order/history
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-order-history
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-order-history
 
                 Get historical prediction orders (all statuses) for the authenticated user, with optional filters.
 

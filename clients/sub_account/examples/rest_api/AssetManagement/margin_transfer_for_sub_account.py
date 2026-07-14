@@ -25,10 +25,10 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def margin_transfer_for_sub_account():
     try:
         response = client.rest_api.margin_transfer_for_sub_account(
-            email="sub-account-email@email.com",
-            asset="asset_example",
+            email="123@test.com",
+            asset="BTC",
             amount=1.0,
-            type=56,
+            type=1,
         )
 
         rate_limits = response.rate_limits

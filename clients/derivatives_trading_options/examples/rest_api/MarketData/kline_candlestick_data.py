@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_OPTIONS_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_options.rest_api.models import (
+    KlineCandlestickDataIntervalEnum,
+)
 
 
 # Configure logging
@@ -25,8 +28,8 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def kline_candlestick_data():
     try:
         response = client.rest_api.kline_candlestick_data(
-            symbol="symbol_example",
-            interval="interval_example",
+            symbol="BTC-200730-9000-C",
+            interval=KlineCandlestickDataIntervalEnum["INTERVAL_1m"].value,
         )
 
         rate_limits = response.rate_limits

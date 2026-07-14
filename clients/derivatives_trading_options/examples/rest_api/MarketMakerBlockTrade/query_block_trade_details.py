@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def query_block_trade_details():
     try:
         response = client.rest_api.query_block_trade_details(
-            block_order_matching_key="block_order_matching_key_example",
+            block_order_matching_key="12b96c28-ba05-8906-c89t-703215cfb2e6",
         )
 
         rate_limits = response.rate_limits

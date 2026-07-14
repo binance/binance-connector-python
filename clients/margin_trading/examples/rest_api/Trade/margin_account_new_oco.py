@@ -26,7 +26,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_new_oco():
     try:
         response = client.rest_api.margin_account_new_oco(
-            symbol="symbol_example",
+            symbol="LTCBTC",
             side=MarginAccountNewOcoSideEnum["BUY"].value,
             quantity=1.0,
             price=1.0,

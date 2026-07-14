@@ -30,7 +30,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def open_interest_statistics():
     try:
         response = client.rest_api.open_interest_statistics(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             period=OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         )
 

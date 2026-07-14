@@ -33,7 +33,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def open_interest_statistics():
     try:
         response = client.rest_api.open_interest_statistics(
-            pair="pair_example",
+            pair="BTCUSD",
             contract_type=OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             period=OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         )

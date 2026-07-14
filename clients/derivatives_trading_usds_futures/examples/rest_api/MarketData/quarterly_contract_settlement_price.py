@@ -26,9 +26,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 
 def quarterly_contract_settlement_price():
     try:
-        response = client.rest_api.quarterly_contract_settlement_price(
-            pair="pair_example"
-        )
+        response = client.rest_api.quarterly_contract_settlement_price(pair="BTCUSDT")
 
         rate_limits = response.rate_limits
         logging.info(

@@ -31,7 +31,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def basis():
     try:
         response = client.rest_api.basis(
-            pair="pair_example",
+            pair="BTCUSDT",
             contract_type=BasisContractTypeEnum["PERPETUAL"].value,
             period=BasisPeriodEnum["PERIOD_5m"].value,
         )

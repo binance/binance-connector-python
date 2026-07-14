@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def compressed_aggregate_trades_list():
     try:
         response = client.rest_api.compressed_aggregate_trades_list(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

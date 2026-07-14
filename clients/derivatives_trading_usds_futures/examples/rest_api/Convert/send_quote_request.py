@@ -27,8 +27,8 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def send_quote_request():
     try:
         response = client.rest_api.send_quote_request(
-            from_asset="from_asset_example",
-            to_asset="to_asset_example",
+            from_asset="BTC",
+            to_asset="USDT",
         )
 
         rate_limits = response.rate_limits

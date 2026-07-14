@@ -25,12 +25,12 @@ client = VipLoan(config_rest_api=configuration_rest_api)
 def vip_loan_fixed_rate_borrow():
     try:
         response = client.rest_api.vip_loan_fixed_rate_borrow(
-            supply_request="supply_request_example",
-            borrow_coin="borrow_coin_example",
-            loan_term=56,
-            borrow_uid=56,
-            collateral_coin="collateral_coin_example",
-            collateral_account_id="1",
+            supply_request="1212:0.12:100;3434:0.13:50",
+            borrow_coin="BUSD",
+            loan_term=30,
+            borrow_uid=12345678,
+            collateral_coin="BNB,ETH,BTC",
+            collateral_account_id="12345,67890,13579",
         )
 
         rate_limits = response.rate_limits

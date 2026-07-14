@@ -27,6 +27,7 @@ async def open_interest():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.open_interest(
+            underlying="btcusdt",
             expiration_date="220930",
         )
         stream.on("message", lambda data: print(f"{data}"))

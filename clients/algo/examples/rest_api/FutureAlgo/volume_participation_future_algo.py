@@ -2,6 +2,8 @@ import os
 import logging
 
 from binance_sdk_algo.algo import Algo, ConfigurationRestAPI, ALGO_REST_API_PROD_URL
+from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoSideEnum
+from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoUrgencyEnum
 
 
 # Configure logging
@@ -22,9 +24,9 @@ def volume_participation_future_algo():
     try:
         response = client.rest_api.volume_participation_future_algo(
             symbol="BTCUSDT",
-            side="BUY",
-            quantity=1.0,
-            urgency="LOW",
+            side=VolumeParticipationFutureAlgoSideEnum["BUY"].value,
+            quantity=1,
+            urgency=VolumeParticipationFutureAlgoUrgencyEnum["LOW"].value,
         )
 
         rate_limits = response.rate_limits

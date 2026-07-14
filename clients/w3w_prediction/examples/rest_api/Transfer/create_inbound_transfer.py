@@ -10,6 +10,7 @@ from binance_sdk_w3w_prediction.rest_api.models import (
     CreateInboundTransferAccountTypeEnum,
 )
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

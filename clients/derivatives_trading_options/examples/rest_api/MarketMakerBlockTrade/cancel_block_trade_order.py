@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def cancel_block_trade_order():
     try:
         response = client.rest_api.cancel_block_trade_order(
-            block_order_matching_key="block_order_matching_key_example",
+            block_order_matching_key="7d046e6e-a429-4335-ab9d-6a681febcde5",
         )
 
         rate_limits = response.rate_limits

@@ -27,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def get_order_modify_history():
     try:
         response = client.rest_api.get_order_modify_history(
-            symbol="symbol_example",
+            symbol="BTCUSD_PERP",
         )
 
         rate_limits = response.rate_limits

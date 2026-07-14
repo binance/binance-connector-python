@@ -25,7 +25,7 @@ async def order_amend_keep_priority():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_amend_keep_priority(
             symbol="BNBUSDT",
-            new_qty=1.0,
+            new_qty=1,
         )
 
         rate_limits = response.rate_limits

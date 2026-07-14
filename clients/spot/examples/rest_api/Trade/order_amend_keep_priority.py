@@ -22,7 +22,7 @@ def order_amend_keep_priority():
     try:
         response = client.rest_api.order_amend_keep_priority(
             symbol="BNBUSDT",
-            new_qty=1.0,
+            new_qty=1,
         )
 
         rate_limits = response.rate_limits

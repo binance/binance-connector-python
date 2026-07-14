@@ -21,7 +21,7 @@ client = Spot(config_rest_api=configuration_rest_api)
 def all_orders():
     try:
         response = client.rest_api.all_orders(
-            symbol="BNBUSDT",
+            symbol="LTCBTC",
         )
 
         rate_limits = response.rate_limits

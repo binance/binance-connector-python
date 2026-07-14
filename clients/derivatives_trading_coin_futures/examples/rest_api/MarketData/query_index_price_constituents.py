@@ -26,9 +26,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 
 def query_index_price_constituents():
     try:
-        response = client.rest_api.query_index_price_constituents(
-            symbol="symbol_example"
-        )
+        response = client.rest_api.query_index_price_constituents(symbol="BTCUSD")
 
         rate_limits = response.rate_limits
         logging.info(f"query_index_price_constituents() rate limits: {rate_limits}")

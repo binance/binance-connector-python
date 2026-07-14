@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def extend_block_trade_order():
     try:
         response = client.rest_api.extend_block_trade_order(
-            block_order_matching_key="block_order_matching_key_example",
+            block_order_matching_key="3668822b8-1baa-6a2f-adb8-d3de6289b361",
         )
 
         rate_limits = response.rate_limits

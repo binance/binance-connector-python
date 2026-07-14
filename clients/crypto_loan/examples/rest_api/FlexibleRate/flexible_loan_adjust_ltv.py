@@ -6,6 +6,7 @@ from binance_sdk_crypto_loan.crypto_loan import (
     ConfigurationRestAPI,
     CRYPTO_LOAN_REST_API_PROD_URL,
 )
+from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanAdjustLtvDirectionEnum
 
 
 # Configure logging
@@ -25,10 +26,10 @@ client = CryptoLoan(config_rest_api=configuration_rest_api)
 def flexible_loan_adjust_ltv():
     try:
         response = client.rest_api.flexible_loan_adjust_ltv(
-            loan_coin="loan_coin_example",
-            collateral_coin="collateral_coin_example",
-            adjustment_amount=1.0,
-            direction="direction_example",
+            loan_coin="BUSD",
+            collateral_coin="BNB",
+            adjustment_amount=1,
+            direction=FlexibleLoanAdjustLtvDirectionEnum["ADDITIONAL"].value,
         )
 
         rate_limits = response.rate_limits

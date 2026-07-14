@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def dust_convertible_assets():
     try:
         response = client.rest_api.dust_convertible_assets(
-            target_asset="target_asset_example",
+            target_asset="BTC",
         )
 
         rate_limits = response.rate_limits

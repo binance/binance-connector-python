@@ -13,11 +13,13 @@ from binance_common.errors import (
 )
 from binance_common.constants import (
     ALPHA_REST_API_PROD_URL,
+    ALPHA_WS_STREAMS_PROD_URL,
 )
 
 __all__ = [
     "Alpha",
     "ALPHA_REST_API_PROD_URL",
+    "ALPHA_WS_STREAMS_PROD_URL",
     "ClientError",
     "RequiredError",
     "UnauthorizedError",

@@ -3,6 +3,7 @@ import logging
 
 from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD_URL
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

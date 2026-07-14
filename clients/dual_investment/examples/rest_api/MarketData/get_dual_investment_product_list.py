@@ -6,6 +6,9 @@ from binance_sdk_dual_investment.dual_investment import (
     ConfigurationRestAPI,
     DUAL_INVESTMENT_REST_API_PROD_URL,
 )
+from binance_sdk_dual_investment.rest_api.models import (
+    GetDualInvestmentProductListOptionTypeEnum,
+)
 
 
 # Configure logging
@@ -25,9 +28,9 @@ client = DualInvestment(config_rest_api=configuration_rest_api)
 def get_dual_investment_product_list():
     try:
         response = client.rest_api.get_dual_investment_product_list(
-            option_type="option_type_example",
-            exercised_coin="exercised_coin_example",
-            invest_coin="invest_coin_example",
+            option_type=GetDualInvestmentProductListOptionTypeEnum["CALL"].value,
+            exercised_coin="USDT",
+            invest_coin="BNB",
         )
 
         rate_limits = response.rate_limits

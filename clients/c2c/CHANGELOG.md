@@ -1,5 +1,42 @@
 # Changelog
 
+## 5.0.0 - 2026-07-14
+
+### Changed (4)
+
+- Updated `binance-common` library to version `4.0.3`
+- Deleted parameter `recvWindow`
+  - affected methods:
+    - `get_c2_c_trade_history()` (`GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`)
+- Modified parameter `tradeType`:
+  - enum added: `BUY`, `SELL`
+  - affected methods:
+    - `get_c2_c_trade_history()` (`GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`)
+- Modified response for `get_c2_c_trade_history()` (`GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`):
+  - property `code` added
+  - property `data` added
+  - property `message` added
+  - property `success` added
+  - property `total` added
+  - property `unit_price` deleted
+  - property `adv_no` deleted
+  - property `create_time` deleted
+  - property `asset` deleted
+  - property `counter_part_nick_name` deleted
+  - property `trade_type` deleted
+  - property `order_status` deleted
+  - property `taker_commission` deleted
+  - property `additional_kyc_verify` deleted
+  - property `fiat` deleted
+  - property `order_number` deleted
+  - property `amount` deleted
+  - property `commission` deleted
+  - property `taker_commission_rate` deleted
+  - property `taker_amount` deleted
+  - property `pay_method_name` deleted
+  - property `total_price` deleted
+  - property `fiat_symbol` deleted
+
 ## 4.5.0 - 2026-06-09
 
 ### Changed (2)

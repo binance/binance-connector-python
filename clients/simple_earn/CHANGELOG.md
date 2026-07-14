@@ -1,5 +1,60 @@
 # Changelog
 
+## 9.0.0 - 2026-07-14
+
+### Changed (12)
+
+- Updated `binance-common` library to version `4.0.3`
+- Added parameter `lang`
+  - affected methods:
+    - `get_yield_arena_activities()` (`GET /sapi/v1/earn/arena/activities`)
+- Modified parameter `aprPeriod`:
+  - enum added: `DAY`, `YEAR`
+  - affected methods:
+    - `get_rate_history()` (`GET /sapi/v1/simple-earn/flexible/history/rateHistory`)
+- Modified parameter `asset`:
+  - enum added: `USDC`, `USDT`
+  - affected methods:
+    - `get_bfusd_subscription_history()` (`GET /sapi/v1/bfusd/history/subscriptionHistory`)
+    - `get_rwusd_subscription_history()` (`GET /sapi/v1/rwusd/history/subscriptionHistory`)
+- Modified parameter `asset`:
+  - enum added: `USDT`, `USDC`
+  - affected methods:
+    - `subscribe_rwusd()` (`POST /sapi/v1/rwusd/subscribe`)
+- Modified parameter `destAccount`:
+  - enum added: `SPOT`, `FUND`
+  - affected methods:
+    - `redeem_flexible_product()` (`POST /sapi/v1/simple-earn/flexible/redeem`)
+- Modified parameter `positionId`:
+  - type `integer` → `string`
+  - affected methods:
+    - `get_locked_redemption_record()` (`GET /sapi/v1/simple-earn/locked/history/redemptionRecord`)
+    - `get_locked_rewards_history()` (`GET /sapi/v1/simple-earn/locked/history/rewardsRecord`)
+    - `get_locked_product_position()` (`GET /sapi/v1/simple-earn/locked/position`)
+- Modified parameter `redeemTo`:
+  - enum added: `SPOT`, `FLEXIBLE`
+  - affected methods:
+    - `set_locked_product_redeem_option()` (`POST /sapi/v1/simple-earn/locked/setRedeemOption`)
+- Modified parameter `redeemTo`:
+  - enum added: `SPOT`, `FLEXIBLE`
+  - affected methods:
+    - `subscribe_locked_product()` (`POST /sapi/v1/simple-earn/locked/subscribe`)
+- Modified parameter `sourceAccount`:
+  - enum added: `SPOT`, `FUND`, `ALL`
+  - affected methods:
+    - `subscribe_flexible_product()` (`POST /sapi/v1/simple-earn/flexible/subscribe`)
+    - `subscribe_locked_product()` (`POST /sapi/v1/simple-earn/locked/subscribe`)
+- Modified parameter `type`:
+  - enum added: `FAST`, `STANDARD`
+  - affected methods:
+    - `redeem_bfusd()` (`POST /sapi/v1/bfusd/redeem`)
+    - `redeem_rwusd()` (`POST /sapi/v1/rwusd/redeem`)
+- Modified parameter `type`:
+  - required: `true` → `false`
+  - enum added: `BONUS`, `REALTIME`, `REWARDS`, `ALL`
+  - affected methods:
+    - `get_flexible_rewards_history()` (`GET /sapi/v1/simple-earn/flexible/history/rewardsRecord`)
+
 ## 8.0.0 - 2026-06-09
 
 ### Added (1)

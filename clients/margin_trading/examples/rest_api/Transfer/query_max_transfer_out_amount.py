@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def query_max_transfer_out_amount():
     try:
         response = client.rest_api.query_max_transfer_out_amount(
-            asset="asset_example",
+            asset="BTC",
         )
 
         rate_limits = response.rate_limits

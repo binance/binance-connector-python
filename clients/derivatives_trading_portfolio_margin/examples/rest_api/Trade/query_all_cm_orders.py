@@ -26,9 +26,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 
 def query_all_cm_orders():
     try:
-        response = client.rest_api.query_all_cm_orders(
-            symbol="symbol_example",
-        )
+        response = client.rest_api.query_all_cm_orders()
 
         rate_limits = response.rate_limits
         logging.info(f"query_all_cm_orders() rate limits: {rate_limits}")

@@ -146,6 +146,7 @@ class TestMarketDataApi:
         assert normalized["marketTopicId"] == 4229564
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -247,6 +248,7 @@ class TestMarketDataApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -324,6 +326,7 @@ class TestMarketDataApi:
         assert request_kwargs["method"] == "GET"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -408,6 +411,7 @@ class TestMarketDataApi:
         assert request_kwargs["method"] == "GET"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -488,6 +492,7 @@ class TestMarketDataApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -565,6 +570,7 @@ class TestMarketDataApi:
         assert normalized["query"] == "BTC price"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -625,6 +631,7 @@ class TestMarketDataApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -696,6 +703,7 @@ class TestMarketDataApi:
         assert normalized["marketId"] == 5567895
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -740,6 +748,7 @@ class TestMarketDataApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -814,6 +823,7 @@ class TestMarketDataApi:
         assert normalized["tokenId"] == "112233"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -859,6 +869,7 @@ class TestMarketDataApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False

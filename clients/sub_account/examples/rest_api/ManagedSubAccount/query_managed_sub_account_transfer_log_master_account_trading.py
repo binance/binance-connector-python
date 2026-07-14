@@ -25,11 +25,11 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def query_managed_sub_account_transfer_log_master_account_trading():
     try:
         response = client.rest_api.query_managed_sub_account_transfer_log_master_account_trading(
-            email="sub-account-email@email.com",
+            email="abc@test.com",
             start_time=1623319461670,
             end_time=1641782889000,
-            page=56,
-            limit=56,
+            page=1,
+            limit=10,
         )
 
         rate_limits = response.rate_limits

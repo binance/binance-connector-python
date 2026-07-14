@@ -6,6 +6,9 @@ from binance_sdk_sub_account.sub_account import (
     ConfigurationRestAPI,
     SUB_ACCOUNT_REST_API_PROD_URL,
 )
+from binance_sdk_sub_account.rest_api.models import (
+    MovePositionForSubAccountProductTypeEnum,
+)
 
 from binance_sdk_sub_account.rest_api.models import (
     MovePositionForSubAccountOrderArgsParameterInner,
@@ -28,9 +31,9 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def move_position_for_sub_account():
     try:
         response = client.rest_api.move_position_for_sub_account(
-            from_user_email="from_user_email_example",
-            to_user_email="to_user_email_example",
-            product_type="product_type_example",
+            from_user_email="testFrom@google.com",
+            to_user_email="testTo@google.com",
+            product_type=MovePositionForSubAccountProductTypeEnum["UM"].value,
             order_args=[
                 MovePositionForSubAccountOrderArgsParameterInner(
                     symbol="BTCUSDT",

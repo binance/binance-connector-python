@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMarginPro(config_rest_api=configuration_rest
 def set_margin_call_level():
     try:
         response = client.rest_api.set_margin_call_level(
-            margin_call_level=5000.0,
+            margin_call_level=1.5,
         )
 
         rate_limits = response.rate_limits

@@ -28,8 +28,8 @@ def query_managed_sub_account_transfer_log_sub_account_trading():
             client.rest_api.query_managed_sub_account_transfer_log_sub_account_trading(
                 start_time=1623319461670,
                 end_time=1641782889000,
-                page=56,
-                limit=56,
+                page=1,
+                limit=10,
             )
         )
 

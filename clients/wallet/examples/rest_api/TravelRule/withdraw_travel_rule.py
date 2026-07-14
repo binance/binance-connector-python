@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def withdraw_travel_rule():
     try:
         response = client.rest_api.withdraw_travel_rule(
-            coin="coin_example",
+            coin="BTC",
             address="address_example",
             amount=1.0,
             questionnaire="questionnaire_example",

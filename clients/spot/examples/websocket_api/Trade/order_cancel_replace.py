@@ -4,6 +4,7 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+
 from binance_sdk_spot.websocket_api.models import (
     OrderCancelReplaceCancelReplaceModeEnum,
 )
@@ -30,11 +31,9 @@ async def order_cancel_replace():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_cancel_replace(
             symbol="BNBUSDT",
-            cancel_replace_mode=OrderCancelReplaceCancelReplaceModeEnum[
-                "STOP_ON_FAILURE"
-            ].value,
-            side=OrderCancelReplaceSideEnum["BUY"].value,
-            type=OrderCancelReplaceTypeEnum["MARKET"].value,
+            cancel_replace_mode=OrderCancelReplaceCancelReplaceModeEnum[""].value,
+            side=OrderCancelReplaceSideEnum[""].value,
+            type=OrderCancelReplaceTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

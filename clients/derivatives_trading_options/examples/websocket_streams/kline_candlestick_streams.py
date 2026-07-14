@@ -9,6 +9,10 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
 )
 
 
+from binance_sdk_derivatives_trading_options.websocket_streams.models import (
+    KlineCandlestickStreamsIntervalEnum,
+)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +32,7 @@ async def kline_candlestick_streams():
 
         stream = await connection.kline_candlestick_streams(
             symbol="btcusdt",
-            interval="1m",
+            interval=KlineCandlestickStreamsIntervalEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 
