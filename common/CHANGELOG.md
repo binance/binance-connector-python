@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.3 - 2026-07-14
+
+### Added (1)
+
+- Added `Alpha Websocket Streams` base url
+
 ## 4.0.2 - 2026-06-26
 
 ### Added (1)

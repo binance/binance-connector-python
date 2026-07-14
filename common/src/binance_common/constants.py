@@ -19,6 +19,7 @@ ALGO_REST_API_PROD_URL = "https://api.binance.com"
 
 # Alpha constants
 ALPHA_REST_API_PROD_URL = "https://www.binance.com"
+ALPHA_WS_STREAMS_PROD_URL = "wss://nbstream.binance.com/w3w/wsa"
 
 # Auto Invest constants
 AUTO_INVEST_REST_API_PROD_URL = "https://api.binance.com"
