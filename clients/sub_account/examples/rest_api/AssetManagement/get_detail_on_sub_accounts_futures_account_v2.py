@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def get_detail_on_sub_accounts_futures_account_v2():
     try:
         response = client.rest_api.get_detail_on_sub_accounts_futures_account_v2(
-            email="sub-account-email@email.com",
-            futures_type=56,
+            email="123@test.com",
+            futures_type=1,
         )
 
         rate_limits = response.rate_limits

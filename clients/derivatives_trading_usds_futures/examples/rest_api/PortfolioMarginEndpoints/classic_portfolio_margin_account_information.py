@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def classic_portfolio_margin_account_information():
     try:
         response = client.rest_api.classic_portfolio_margin_account_information(
-            asset="asset_example",
+            asset="BTC",
         )
 
         rate_limits = response.rate_limits

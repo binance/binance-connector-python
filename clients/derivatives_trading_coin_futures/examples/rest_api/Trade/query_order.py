@@ -27,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def query_order():
     try:
         response = client.rest_api.query_order(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
         )
 
         rate_limits = response.rate_limits

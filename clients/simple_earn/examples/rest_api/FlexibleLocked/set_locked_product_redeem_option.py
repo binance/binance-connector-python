@@ -6,6 +6,9 @@ from binance_sdk_simple_earn.simple_earn import (
     ConfigurationRestAPI,
     SIMPLE_EARN_REST_API_PROD_URL,
 )
+from binance_sdk_simple_earn.rest_api.models import (
+    SetLockedProductRedeemOptionRedeemToEnum,
+)
 
 
 # Configure logging
@@ -26,7 +29,7 @@ def set_locked_product_redeem_option():
     try:
         response = client.rest_api.set_locked_product_redeem_option(
             position_id="1",
-            redeem_to="redeem_to_example",
+            redeem_to=SetLockedProductRedeemOptionRedeemToEnum["SPOT"].value,
         )
 
         rate_limits = response.rate_limits

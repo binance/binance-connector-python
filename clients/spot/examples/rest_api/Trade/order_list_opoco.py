@@ -28,8 +28,8 @@ def order_list_opoco():
             symbol="BNBUSDT",
             working_type=OrderListOpocoWorkingTypeEnum["LIMIT"].value,
             working_side=OrderListOpocoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
-            working_quantity=1.0,
+            working_price=1,
+            working_quantity=1,
             pending_side=OrderListOpocoPendingSideEnum["BUY"].value,
             pending_above_type=OrderListOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"

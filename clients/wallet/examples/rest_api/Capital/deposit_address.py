@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def deposit_address():
     try:
         response = client.rest_api.deposit_address(
-            coin="coin_example",
+            coin="BTC",
         )
 
         rate_limits = response.rate_limits

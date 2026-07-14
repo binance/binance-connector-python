@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def order_book():
     try:
         response = client.rest_api.order_book(
-            symbol="symbol_example",
+            symbol="BTC-200730-9000-C",
         )
 
         rate_limits = response.rate_limits

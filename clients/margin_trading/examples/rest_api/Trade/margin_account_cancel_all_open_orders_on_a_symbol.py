@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_cancel_all_open_orders_on_a_symbol():
     try:
         response = client.rest_api.margin_account_cancel_all_open_orders_on_a_symbol(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

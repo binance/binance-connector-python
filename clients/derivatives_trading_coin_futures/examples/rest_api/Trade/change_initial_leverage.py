@@ -27,8 +27,8 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def change_initial_leverage():
     try:
         response = client.rest_api.change_initial_leverage(
-            symbol="symbol_example",
-            leverage=56,
+            symbol="BTCUSD_200925",
+            leverage=1,
         )
 
         rate_limits = response.rate_limits

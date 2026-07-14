@@ -21,8 +21,8 @@ client = Spot(config_rest_api=configuration_rest_api)
 def historical_block_trades():
     try:
         response = client.rest_api.historical_block_trades(
-            symbol="BNBUSDT",
-            from_id=1,
+            symbol="BNBBTC",
+            from_id=582,
         )
 
         rate_limits = response.rate_limits

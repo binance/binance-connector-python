@@ -6,6 +6,8 @@ from binance_sdk_sub_account.sub_account import (
     ConfigurationRestAPI,
     SUB_ACCOUNT_REST_API_PROD_URL,
 )
+from binance_sdk_sub_account.rest_api.models import UniversalTransferFromAccountTypeEnum
+from binance_sdk_sub_account.rest_api.models import UniversalTransferToAccountTypeEnum
 
 
 # Configure logging
@@ -25,9 +27,9 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def universal_transfer():
     try:
         response = client.rest_api.universal_transfer(
-            from_account_type="from_account_type_example",
-            to_account_type="to_account_type_example",
-            asset="asset_example",
+            from_account_type=UniversalTransferFromAccountTypeEnum["SPOT"].value,
+            to_account_type=UniversalTransferToAccountTypeEnum["SPOT"].value,
+            asset="BTC",
             amount=1.0,
         )
 

@@ -45,9 +45,9 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPortfolioResponse]:
         """
-                Get Portfolio
+                Get Portfolio (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/pnl/portfolio
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-portfolio
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-portfolio
 
                 Get the authenticated user's prediction portfolio overview including active positions count, aggregated PnL, and full position list.
 
@@ -105,9 +105,9 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetQuotaStatusResponse]:
         """
-                Get Quota Status
+                Get Quota Status (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/quota/limit/status
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-quota-status
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-quota-status
 
                 Query the current user's daily trading quota limit and remaining allowance for prediction markets.
 
@@ -147,9 +147,9 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ListPredictionWalletsResponse]:
         """
-                List Prediction Wallets
+                List Prediction Wallets (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/wallet/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#list-prediction-wallets
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#list-prediction-wallets
 
                 Get all prediction wallets registered for the authenticated user.
 
@@ -189,9 +189,9 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPaymentOptionBalancesResponse]:
         """
-                Query Payment Option Balances
+                Query Payment Option Balances (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/balance/payment-options
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#query-payment-option-balances
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#query-payment-option-balances
 
                 Get available balances for each payment option that can be used for prediction trading.
 

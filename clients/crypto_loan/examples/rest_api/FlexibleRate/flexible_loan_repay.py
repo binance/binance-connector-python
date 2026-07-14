@@ -25,9 +25,9 @@ client = CryptoLoan(config_rest_api=configuration_rest_api)
 def flexible_loan_repay():
     try:
         response = client.rest_api.flexible_loan_repay(
-            loan_coin="loan_coin_example",
-            collateral_coin="collateral_coin_example",
-            repay_amount=1.0,
+            loan_coin="BUSD",
+            collateral_coin="BNB",
+            repay_amount=1,
         )
 
         rate_limits = response.rate_limits

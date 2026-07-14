@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def edit_ip_for_special_key():
     try:
         response = client.rest_api.edit_ip_for_special_key(
-            ip="ip_example",
+            ip="24.156.99.202",
         )
 
         rate_limits = response.rate_limits

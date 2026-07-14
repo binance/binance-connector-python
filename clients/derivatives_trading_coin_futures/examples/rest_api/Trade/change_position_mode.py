@@ -27,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def change_position_mode():
     try:
         response = client.rest_api.change_position_mode(
-            dual_side_position="dual_side_position_example",
+            dual_side_position="True",
         )
 
         rate_limits = response.rate_limits

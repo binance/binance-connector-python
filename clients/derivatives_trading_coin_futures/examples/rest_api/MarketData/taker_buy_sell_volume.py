@@ -33,7 +33,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def taker_buy_sell_volume():
     try:
         response = client.rest_api.taker_buy_sell_volume(
-            pair="pair_example",
+            pair="BTCUSD",
             contract_type=TakerBuySellVolumeContractTypeEnum["PERPETUAL"].value,
             period=TakerBuySellVolumePeriodEnum["PERIOD_5m"].value,
         )

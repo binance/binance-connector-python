@@ -116,6 +116,7 @@ class TestTradeApi:
         assert normalized["walletId"] == "5b5c1ec3be4e4416a5872b21c1ca5d20"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -168,6 +169,7 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -293,6 +295,7 @@ class TestTradeApi:
         assert normalized["slippageBps"] == 1200
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -370,6 +373,7 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -552,6 +556,7 @@ class TestTradeApi:
         assert normalized["slippageBps"] == 1200
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -605,6 +610,7 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -830,6 +836,7 @@ class TestTradeApi:
         )
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -908,6 +915,7 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -1014,6 +1022,7 @@ class TestTradeApi:
         )
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -1095,6 +1104,7 @@ class TestTradeApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False

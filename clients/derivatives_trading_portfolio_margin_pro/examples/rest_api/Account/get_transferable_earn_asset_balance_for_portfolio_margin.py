@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_po
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
+)
 
 
 # Configure logging
@@ -26,11 +29,11 @@ client = DerivativesTradingPortfolioMarginPro(config_rest_api=configuration_rest
 
 def get_transferable_earn_asset_balance_for_portfolio_margin():
     try:
-        response = (
-            client.rest_api.get_transferable_earn_asset_balance_for_portfolio_margin(
-                asset="asset_example",
-                transfer_type="transfer_type_example",
-            )
+        response = client.rest_api.get_transferable_earn_asset_balance_for_portfolio_margin(
+            asset="LDUSDT",
+            transfer_type=GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum[
+                "EARN_TO_FUTURE"
+            ].value,
         )
 
         rate_limits = response.rate_limits

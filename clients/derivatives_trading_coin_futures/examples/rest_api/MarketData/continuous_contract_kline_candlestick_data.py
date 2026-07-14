@@ -33,7 +33,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def continuous_contract_kline_candlestick_data():
     try:
         response = client.rest_api.continuous_contract_kline_candlestick_data(
-            pair="pair_example",
+            pair="BTCUSD",
             contract_type=ContinuousContractKlineCandlestickDataContractTypeEnum[
                 "PERPETUAL"
             ].value,

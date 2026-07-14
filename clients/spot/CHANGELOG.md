@@ -1,5 +1,1094 @@
 # Changelog
 
+## 10.0.0 - 2026-07-14
+
+### Changed (77)
+
+- Updated `binance-common` library to version `4.0.3`
+
+#### REST API
+
+- Modified parameter `cancelRestrictions`:
+  - enum removed: `NEW`, `PARTIALLY_FILLED`
+  - affected methods:
+    - `delete_order()` (`DELETE /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+- Modified parameter `newOrderRespType`:
+  - enum removed: `MARKET`, `LIMIT`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_oco()` (`POST /api/v3/order/oco`)
+    - `order_test()` (`POST /api/v3/order/test`)
+    - `order_list_oco()` (`POST /api/v3/orderList/oco`)
+    - `order_list_opo()` (`POST /api/v3/orderList/opo`)
+    - `order_list_opoco()` (`POST /api/v3/orderList/opoco`)
+    - `order_list_oto()` (`POST /api/v3/orderList/oto`)
+    - `order_list_otoco()` (`POST /api/v3/orderList/otoco`)
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+- Modified parameter `pegOffsetType`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_test()` (`POST /api/v3/order/test`)
+- Modified parameter `pegPriceType`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_test()` (`POST /api/v3/order/test`)
+- Modified parameter `permissions`:
+  - items: enum added: `SPOT`, `MARGIN`, `LEVERAGED`, `TRD_GRP_002`, `TRD_GRP_003`, `TRD_GRP_004`, `TRD_GRP_005`, `TRD_GRP_006`, `TRD_GRP_007`, `TRD_GRP_008`, `TRD_GRP_009`, `TRD_GRP_010`, `TRD_GRP_011`, `TRD_GRP_012`, `TRD_GRP_013`, `TRD_GRP_014`, `TRD_GRP_015`, `TRD_GRP_016`, `TRD_GRP_017`, `TRD_GRP_018`, `TRD_GRP_019`, `TRD_GRP_020`, `TRD_GRP_021`, `TRD_GRP_022`, `TRD_GRP_023`, `TRD_GRP_024`, `TRD_GRP_025`
+  - affected methods:
+    - `exchange_info()` (`GET /api/v3/exchangeInfo`)
+- Modified parameter `selfTradePreventionMode`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_oco()` (`POST /api/v3/order/oco`)
+    - `order_test()` (`POST /api/v3/order/test`)
+    - `order_list_oco()` (`POST /api/v3/orderList/oco`)
+    - `order_list_opo()` (`POST /api/v3/orderList/opo`)
+    - `order_list_opoco()` (`POST /api/v3/orderList/opoco`)
+    - `order_list_oto()` (`POST /api/v3/orderList/oto`)
+    - `order_list_otoco()` (`POST /api/v3/orderList/otoco`)
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+- Modified parameter `symbolStatus`:
+  - enum removed: `END_OF_DAY`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `depth()` (`GET /api/v3/depth`)
+    - `exchange_info()` (`GET /api/v3/exchangeInfo`)
+    - `execution_rules()` (`GET /api/v3/executionRules`)
+    - `reference_price_calculation()` (`GET /api/v3/referencePrice/calculation`)
+    - `ticker_book_ticker()` (`GET /api/v3/ticker/bookTicker`)
+    - `ticker_price()` (`GET /api/v3/ticker/price`)
+    - `ticker_trading_day()` (`GET /api/v3/ticker/tradingDay`)
+- Modified parameter `symbolStatus`:
+  - enum removed: `END_OF_DAY`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `ticker()` (`GET /api/v3/ticker`)
+    - `ticker24hr()` (`GET /api/v3/ticker/24hr`)
+- Modified parameter `timeInForce`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_test()` (`POST /api/v3/order/test`)
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+- Modified parameter `type`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `new_order()` (`POST /api/v3/order`)
+    - `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`)
+    - `order_test()` (`POST /api/v3/order/test`)
+- Modified parameter `type`:
+  - enum removed: `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`, `LIMIT_MAKER`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `sor_order()` (`POST /api/v3/sor/order`)
+    - `sor_order_test()` (`POST /api/v3/sor/order/test`)
+- Modified parameter `windowSize`:
+  - enum added: `7d`
+  - affected methods:
+    - `ticker()` (`GET /api/v3/ticker`)
+- Modified response for `all_orders()` (`GET /api/v3/allOrders`):
+  - items: property `usedSor` added
+  - items: property `workingFloor` added
+  - items: property `pegOffsetValue` added
+  - items: property `pegOffsetType` added
+  - items: property `preventedQuantity` added
+  - items: property `strategyType` added
+  - items: property `pegPriceType` added
+  - items: property `peggedPrice` added
+  - items: property `trailingTime` added
+  - items: property `trailingDelta` added
+  - items: property `strategyId` added
+  - items: property `preventedMatchId` added
+  - items: property `expiryReason` added
+  - items: item property `usedSor` added
+  - items: item property `workingFloor` added
+  - items: item property `pegOffsetValue` added
+  - items: item property `pegOffsetType` added
+  - items: item property `preventedQuantity` added
+  - items: item property `strategyType` added
+  - items: item property `pegPriceType` added
+  - items: item property `peggedPrice` added
+  - items: item property `trailingTime` added
+  - items: item property `trailingDelta` added
+  - items: item property `strategyId` added
+  - items: item property `preventedMatchId` added
+  - items: item property `expiryReason` added
+
+- Modified response for `depth()` (`GET /api/v3/depth`):
+  - `asks`.items: minItems `0` → `2`
+  - `asks`.items: maxItems `null` → `2`
+  - `bids`.items: minItems `0` → `2`
+  - `bids`.items: maxItems `null` → `2`
+
+- Modified response for `exchange_info()` (`GET /api/v3/exchangeInfo`):
+  - property `sors` added
+  - `exchangeFilters`.items: oneOf modified
+  - `symbols`.items.`filters`.items: oneOf modified
+  - `symbols`.items.`filters`.items: oneOf modified
+
+- Modified response for `klines()` (`GET /api/v3/klines`):
+  - items.items: oneOf added 2 schema(s)
+  - items.items: oneOf removed 2 schema(s)
+
+- Modified response for `my_filters()` (`GET /api/v3/myFilters`):
+  - `assetFilters`.items: oneOf modified
+  - `exchangeFilters`.items: oneOf modified
+  - `symbolFilters`.items: oneOf modified
+
+- Modified response for `get_open_orders()` (`GET /api/v3/openOrders`):
+  - items: property `strategyId` added
+  - items: property `peggedPrice` added
+  - items: property `pegOffsetType` added
+  - items: property `preventedMatchId` added
+  - items: property `expiryReason` added
+  - items: property `trailingTime` added
+  - items: property `pegOffsetValue` added
+  - items: property `preventedQuantity` added
+  - items: property `trailingDelta` added
+  - items: property `strategyType` added
+  - items: property `usedSor` added
+  - items: property `workingFloor` added
+  - items: property `pegPriceType` added
+  - items: item property `strategyId` added
+  - items: item property `peggedPrice` added
+  - items: item property `pegOffsetType` added
+  - items: item property `preventedMatchId` added
+  - items: item property `expiryReason` added
+  - items: item property `trailingTime` added
+  - items: item property `pegOffsetValue` added
+  - items: item property `preventedQuantity` added
+  - items: item property `trailingDelta` added
+  - items: item property `strategyType` added
+  - items: item property `usedSor` added
+  - items: item property `workingFloor` added
+  - items: item property `pegPriceType` added
+
+- Modified response for `delete_order()` (`DELETE /api/v3/order`):
+  - property `pegOffsetValue` added
+  - property `icebergQty` added
+  - property `pegOffsetType` added
+  - property `expiryReason` added
+  - property `trailingDelta` added
+  - property `peggedPrice` added
+  - property `trailingTime` added
+  - property `strategyId` added
+  - property `usedSor` added
+  - property `strategyType` added
+  - property `preventedMatchId` added
+  - property `workingFloor` added
+  - property `stopPrice` added
+  - property `pegPriceType` added
+  - property `preventedQuantity` added
+
+- Modified response for `get_order()` (`GET /api/v3/order`):
+  - property `pegOffsetType` added
+  - property `peggedPrice` added
+  - property `pegPriceType` added
+  - property `trailingTime` added
+  - property `pegOffsetValue` added
+  - property `preventedMatchId` added
+  - property `strategyId` added
+  - property `strategyType` added
+  - property `usedSor` added
+  - property `expiryReason` added
+  - property `trailingDelta` added
+  - property `workingFloor` added
+  - property `preventedQuantity` added
+
+- Modified response for `order_amend_keep_priority()` (`PUT /api/v3/order/amend/keepPriority`):
+  - `amendedOrder`: property `usedSor` added
+  - `amendedOrder`: property `strategyType` added
+  - `amendedOrder`: property `pegOffsetValue` added
+  - `amendedOrder`: property `expiryReason` added
+  - `amendedOrder`: property `pegPriceType` added
+  - `amendedOrder`: property `workingFloor` added
+  - `amendedOrder`: property `stopPrice` added
+  - `amendedOrder`: property `pegOffsetType` added
+  - `amendedOrder`: property `peggedPrice` added
+  - `amendedOrder`: property `preventedQuantity` added
+  - `amendedOrder`: property `strategyId` added
+  - `amendedOrder`: property `icebergQty` added
+  - `amendedOrder`: property `preventedMatchId` added
+  - `amendedOrder`: property `trailingDelta` added
+  - `amendedOrder`: property `trailingTime` added
+
+- Modified response for `order_cancel_replace()` (`POST /api/v3/order/cancelReplace`):
+  - property `msg` deleted
+  - property `code` deleted
+  - property `data` deleted
+  - `cancelResponse`: property `preventedMatchId` added
+  - `cancelResponse`: property `strategyType` added
+  - `cancelResponse`: property `preventedQuantity` added
+  - `cancelResponse`: property `pegOffsetType` added
+  - `cancelResponse`: property `trailingDelta` added
+  - `cancelResponse`: property `strategyId` added
+  - `cancelResponse`: property `icebergQty` added
+  - `cancelResponse`: property `pegOffsetValue` added
+  - `cancelResponse`: property `pegPriceType` added
+  - `cancelResponse`: property `workingFloor` added
+  - `cancelResponse`: property `expiryReason` added
+  - `cancelResponse`: property `peggedPrice` added
+  - `cancelResponse`: property `stopPrice` added
+  - `cancelResponse`: property `trailingTime` added
+  - `cancelResponse`: property `usedSor` added
+  - `newOrderResponse`: property `icebergQty` added
+  - `newOrderResponse`: property `strategyType` added
+  - `newOrderResponse`: property `preventedMatchId` added
+  - `newOrderResponse`: property `pegOffsetType` added
+  - `newOrderResponse`: property `trailingDelta` added
+  - `newOrderResponse`: property `stopPrice` added
+  - `newOrderResponse`: property `preventedQuantity` added
+  - `newOrderResponse`: property `pegOffsetValue` added
+  - `newOrderResponse`: property `pegPriceType` added
+  - `newOrderResponse`: property `peggedPrice` added
+  - `newOrderResponse`: property `workingFloor` added
+  - `newOrderResponse`: property `strategyId` added
+  - `newOrderResponse`: property `trailingTime` added
+  - `newOrderResponse`: property `expiryReason` added
+  - `newOrderResponse`: property `usedSor` added
+  - `newOrderResponse`.`fills`.items: type `string` → `object`
+  - `newOrderResponse`.`fills`.items: property `qty` added
+  - `newOrderResponse`.`fills`.items: property `tradeId` added
+  - `newOrderResponse`.`fills`.items: property `commission` added
+  - `newOrderResponse`.`fills`.items: property `commissionAsset` added
+  - `newOrderResponse`.`fills`.items: property `price` added
+  - `newOrderResponse`.`fills`.items: item property `qty` added
+  - `newOrderResponse`.`fills`.items: item property `tradeId` added
+  - `newOrderResponse`.`fills`.items: item property `commission` added
+  - `newOrderResponse`.`fills`.items: item property `commissionAsset` added
+  - `newOrderResponse`.`fills`.items: item property `price` added
+
+- Modified response for `delete_order_list()` (`DELETE /api/v3/orderList`):
+  - `orderReports`.items: property `pegOffsetValue` added
+  - `orderReports`.items: property `peggedPrice` added
+  - `orderReports`.items: property `pegPriceType` added
+  - `orderReports`.items: property `strategyId` added
+  - `orderReports`.items: property `strategyType` added
+  - `orderReports`.items: property `workingFloor` added
+  - `orderReports`.items: property `trailingDelta` added
+  - `orderReports`.items: property `preventedQuantity` added
+  - `orderReports`.items: property `preventedMatchId` added
+  - `orderReports`.items: property `pegOffsetType` added
+  - `orderReports`.items: property `usedSor` added
+  - `orderReports`.items: property `trailingTime` added
+  - `orderReports`.items: property `expiryReason` added
+  - `orderReports`.items: property `icebergQty` added
+  - `orderReports`.items: property `selfTradePreventionMode` deleted
+  - `orderReports`.items: item property `pegOffsetValue` added
+  - `orderReports`.items: item property `peggedPrice` added
+  - `orderReports`.items: item property `pegPriceType` added
+  - `orderReports`.items: item property `strategyId` added
+  - `orderReports`.items: item property `strategyType` added
+  - `orderReports`.items: item property `workingFloor` added
+  - `orderReports`.items: item property `trailingDelta` added
+  - `orderReports`.items: item property `preventedQuantity` added
+  - `orderReports`.items: item property `preventedMatchId` added
+  - `orderReports`.items: item property `pegOffsetType` added
+  - `orderReports`.items: item property `usedSor` added
+  - `orderReports`.items: item property `trailingTime` added
+  - `orderReports`.items: item property `expiryReason` added
+  - `orderReports`.items: item property `icebergQty` added
+  - `orderReports`.items: item property `selfTradePreventionMode` deleted
+
+- Modified response for `order_list_opo()` (`POST /api/v3/orderList/opo`):
+  - `orderReports`.items: property `strategyId` added
+  - `orderReports`.items: property `workingFloor` added
+  - `orderReports`.items: property `strategyType` added
+  - `orderReports`.items: property `pegPriceType` added
+  - `orderReports`.items: property `pegOffsetType` added
+  - `orderReports`.items: property `icebergQty` added
+  - `orderReports`.items: property `stopPrice` added
+  - `orderReports`.items: property `usedSor` added
+  - `orderReports`.items: property `preventedQuantity` added
+  - `orderReports`.items: property `preventedMatchId` added
+  - `orderReports`.items: property `trailingTime` added
+  - `orderReports`.items: property `expiryReason` added
+  - `orderReports`.items: property `pegOffsetValue` added
+  - `orderReports`.items: property `peggedPrice` added
+  - `orderReports`.items: property `trailingDelta` added
+  - `orderReports`.items: item property `strategyId` added
+  - `orderReports`.items: item property `workingFloor` added
+  - `orderReports`.items: item property `strategyType` added
+  - `orderReports`.items: item property `pegPriceType` added
+  - `orderReports`.items: item property `pegOffsetType` added
+  - `orderReports`.items: item property `icebergQty` added
+  - `orderReports`.items: item property `stopPrice` added
+  - `orderReports`.items: item property `usedSor` added
+  - `orderReports`.items: item property `preventedQuantity` added
+  - `orderReports`.items: item property `preventedMatchId` added
+  - `orderReports`.items: item property `trailingTime` added
+  - `orderReports`.items: item property `expiryReason` added
+  - `orderReports`.items: item property `pegOffsetValue` added
+  - `orderReports`.items: item property `peggedPrice` added
+  - `orderReports`.items: item property `trailingDelta` added
+
+- Modified response for `order_list_opoco()` (`POST /api/v3/orderList/opoco`):
+  - `orderReports`.items: property `usedSor` added
+  - `orderReports`.items: property `pegPriceType` added
+  - `orderReports`.items: property `peggedPrice` added
+  - `orderReports`.items: property `trailingTime` added
+  - `orderReports`.items: property `strategyId` added
+  - `orderReports`.items: property `trailingDelta` added
+  - `orderReports`.items: property `workingFloor` added
+  - `orderReports`.items: property `pegOffsetValue` added
+  - `orderReports`.items: property `preventedQuantity` added
+  - `orderReports`.items: property `strategyType` added
+  - `orderReports`.items: property `pegOffsetType` added
+  - `orderReports`.items: property `expiryReason` added
+  - `orderReports`.items: property `icebergQty` added
+  - `orderReports`.items: property `preventedMatchId` added
+  - `orderReports`.items: item property `usedSor` added
+  - `orderReports`.items: item property `pegPriceType` added
+  - `orderReports`.items: item property `peggedPrice` added
+  - `orderReports`.items: item property `trailingTime` added
+  - `orderReports`.items: item property `strategyId` added
+  - `orderReports`.items: item property `trailingDelta` added
+  - `orderReports`.items: item property `workingFloor` added
+  - `orderReports`.items: item property `pegOffsetValue` added
+  - `orderReports`.items: item property `preventedQuantity` added
+  - `orderReports`.items: item property `strategyType` added
+  - `orderReports`.items: item property `pegOffsetType` added
+  - `orderReports`.items: item property `expiryReason` added
+  - `orderReports`.items: item property `icebergQty` added
+  - `orderReports`.items: item property `preventedMatchId` added
+
+- Modified response for `order_list_oto()` (`POST /api/v3/orderList/oto`):
+  - `orderReports`.items: property `pegOffsetValue` added
+  - `orderReports`.items: property `peggedPrice` added
+  - `orderReports`.items: property `expiryReason` added
+  - `orderReports`.items: property `usedSor` added
+  - `orderReports`.items: property `preventedQuantity` added
+  - `orderReports`.items: property `icebergQty` added
+  - `orderReports`.items: property `pegPriceType` added
+  - `orderReports`.items: property `pegOffsetType` added
+  - `orderReports`.items: property `workingFloor` added
+  - `orderReports`.items: property `strategyId` added
+  - `orderReports`.items: property `trailingTime` added
+  - `orderReports`.items: property `strategyType` added
+  - `orderReports`.items: property `trailingDelta` added
+  - `orderReports`.items: property `preventedMatchId` added
+  - `orderReports`.items: property `stopPrice` added
+  - `orderReports`.items: item property `pegOffsetValue` added
+  - `orderReports`.items: item property `peggedPrice` added
+  - `orderReports`.items: item property `expiryReason` added
+  - `orderReports`.items: item property `usedSor` added
+  - `orderReports`.items: item property `preventedQuantity` added
+  - `orderReports`.items: item property `icebergQty` added
+  - `orderReports`.items: item property `pegPriceType` added
+  - `orderReports`.items: item property `pegOffsetType` added
+  - `orderReports`.items: item property `workingFloor` added
+  - `orderReports`.items: item property `strategyId` added
+  - `orderReports`.items: item property `trailingTime` added
+  - `orderReports`.items: item property `strategyType` added
+  - `orderReports`.items: item property `trailingDelta` added
+  - `orderReports`.items: item property `preventedMatchId` added
+  - `orderReports`.items: item property `stopPrice` added
+
+- Modified response for `order_list_otoco()` (`POST /api/v3/orderList/otoco`):
+  - `orderReports`.items: property `trailingTime` added
+  - `orderReports`.items: property `expiryReason` added
+  - `orderReports`.items: property `pegOffsetValue` added
+  - `orderReports`.items: property `pegOffsetType` added
+  - `orderReports`.items: property `trailingDelta` added
+  - `orderReports`.items: property `usedSor` added
+  - `orderReports`.items: property `workingFloor` added
+  - `orderReports`.items: property `strategyType` added
+  - `orderReports`.items: property `peggedPrice` added
+  - `orderReports`.items: property `icebergQty` added
+  - `orderReports`.items: property `preventedMatchId` added
+  - `orderReports`.items: property `preventedQuantity` added
+  - `orderReports`.items: property `strategyId` added
+  - `orderReports`.items: property `pegPriceType` added
+  - `orderReports`.items: item property `trailingTime` added
+  - `orderReports`.items: item property `expiryReason` added
+  - `orderReports`.items: item property `pegOffsetValue` added
+  - `orderReports`.items: item property `pegOffsetType` added
+  - `orderReports`.items: item property `trailingDelta` added
+  - `orderReports`.items: item property `usedSor` added
+  - `orderReports`.items: item property `workingFloor` added
+  - `orderReports`.items: item property `strategyType` added
+  - `orderReports`.items: item property `peggedPrice` added
+  - `orderReports`.items: item property `icebergQty` added
+  - `orderReports`.items: item property `preventedMatchId` added
+  - `orderReports`.items: item property `preventedQuantity` added
+  - `orderReports`.items: item property `strategyId` added
+  - `orderReports`.items: item property `pegPriceType` added
+
+- Modified response for `ticker()` (`GET /api/v3/ticker`):
+  - oneOf modified
+
+- Modified response for `ticker24hr()` (`GET /api/v3/ticker/24hr`):
+  - oneOf modified
+
+- Modified response for `ticker_book_ticker()` (`GET /api/v3/ticker/bookTicker`):
+  - oneOf modified
+
+- Modified response for `ticker_price()` (`GET /api/v3/ticker/price`):
+  - oneOf modified
+
+- Modified response for `ticker_trading_day()` (`GET /api/v3/ticker/tradingDay`):
+  - oneOf modified
+
+- Modified response for `ui_klines()` (`GET /api/v3/uiKlines`):
+  - items.items: oneOf added 2 schema(s)
+  - items.items: oneOf removed 2 schema(s)
+
+- Marked `order_oco()` (`POST /api/v3/order/oco`) as deprecated.
+
+#### WebSocket API
+
+- Modified parameter `cancelRestrictions`:
+  - enum removed: `NEW`, `PARTIALLY_FILLED`
+  - affected methods:
+    - `order_cancel()` (`order.cancel` method)
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+- Modified parameter `newOrderRespType`:
+  - enum removed: `MARKET`, `LIMIT`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+    - `order_list_place()` (`orderList.place` method)
+    - `order_list_place_oco()` (`orderList.place.oco` method)
+    - `order_list_place_opo()` (`orderList.place.opo` method)
+    - `order_list_place_opoco()` (`orderList.place.opoco` method)
+    - `order_list_place_oto()` (`orderList.place.oto` method)
+    - `order_list_place_otoco()` (`orderList.place.otoco` method)
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+- Modified parameter `pegOffsetType`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+- Modified parameter `pegPriceType`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+- Modified parameter `selfTradePreventionMode`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+    - `order_list_place()` (`orderList.place` method)
+    - `order_list_place_oco()` (`orderList.place.oco` method)
+    - `order_list_place_opo()` (`orderList.place.opo` method)
+    - `order_list_place_opoco()` (`orderList.place.opoco` method)
+    - `order_list_place_oto()` (`orderList.place.oto` method)
+    - `order_list_place_otoco()` (`orderList.place.otoco` method)
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+- Modified parameter `symbolStatus`:
+  - enum removed: `END_OF_DAY`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `depth()` (`depth` method)
+    - `exchange_info()` (`exchangeInfo` method)
+    - `execution_rules()` (`executionRules` method)
+    - `ticker()` (`ticker` method)
+    - `ticker24hr()` (`ticker.24hr` method)
+    - `ticker_book()` (`ticker.book` method)
+    - `ticker_price()` (`ticker.price` method)
+    - `ticker_trading_day()` (`ticker.tradingDay` method)
+- Modified parameter `symbolStatus`:
+  - enum removed: `END_OF_DAY`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `reference_price_calculation()` (`referencePrice.calculation` method)
+- Modified parameter `timeInForce`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+- Modified parameter `type`:
+  - enum removed: `NON_REPRESENTABLE`
+  - affected methods:
+    - `order_cancel_replace()` (`order.cancelReplace` method)
+    - `order_place()` (`order.place` method)
+    - `order_test()` (`order.test` method)
+- Modified parameter `type`:
+  - enum removed: `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`, `LIMIT_MAKER`, `NON_REPRESENTABLE`
+  - affected methods:
+    - `sor_order_place()` (`sor.order.place` method)
+    - `sor_order_test()` (`sor.order.test` method)
+- Modified parameter `windowSize`:
+  - enum added: `7d`
+  - affected methods:
+    - `ticker()` (`ticker` method)
+- Modified response for `all_orders()` (`allOrders` method):
+  - `result`.items: property `pegOffsetValue` added
+  - `result`.items: property `trailingDelta` added
+  - `result`.items: property `strategyId` added
+  - `result`.items: property `expiryReason` added
+  - `result`.items: property `trailingTime` added
+  - `result`.items: property `peggedPrice` added
+  - `result`.items: property `strategyType` added
+  - `result`.items: property `pegOffsetType` added
+  - `result`.items: property `pegPriceType` added
+  - `result`.items: property `usedSor` added
+  - `result`.items: property `workingFloor` added
+  - `result`.items: item property `pegOffsetValue` added
+  - `result`.items: item property `trailingDelta` added
+  - `result`.items: item property `strategyId` added
+  - `result`.items: item property `expiryReason` added
+  - `result`.items: item property `trailingTime` added
+  - `result`.items: item property `peggedPrice` added
+  - `result`.items: item property `strategyType` added
+  - `result`.items: item property `pegOffsetType` added
+  - `result`.items: item property `pegPriceType` added
+  - `result`.items: item property `usedSor` added
+  - `result`.items: item property `workingFloor` added
+
+- Modified response for `depth()` (`depth` method):
+  - `result`.`asks`.items: minItems `0` → `2`
+  - `result`.`asks`.items: maxItems `null` → `2`
+  - `result`.`bids`.items: minItems `0` → `2`
+  - `result`.`bids`.items: maxItems `null` → `2`
+
+- Modified response for `exchange_info()` (`exchangeInfo` method):
+  - property `exchangeFilters` added
+  - property `serverTime` added
+  - property `sors` added
+  - property `symbols` added
+  - property `timezone` added
+  - property `result` deleted
+  - property `status` deleted
+  - property `id` deleted
+
+- Modified response for `klines()` (`klines` method):
+  - `result`.items: minItems `0` → `12`
+  - `result`.items: maxItems `null` → `12`
+  - `result`.items.items: oneOf added 2 schema(s)
+  - `result`.items.items: oneOf removed 2 schema(s)
+
+- Modified response for `my_filters()` (`myFilters` method):
+  - property `symbolFilters` added
+  - property `assetFilters` added
+  - property `exchangeFilters` added
+  - property `id` deleted
+  - property `result` deleted
+  - property `status` deleted
+
+- Modified response for `open_orders_cancel_all()` (`openOrders.cancelAll` method):
+  - `result`.items: property `pegPriceType` added
+  - `result`.items: property `preventedQuantity` added
+  - `result`.items: property `peggedPrice` added
+  - `result`.items: property `preventedMatchId` added
+  - `result`.items: property `usedSor` added
+  - `result`.items: property `pegOffsetType` added
+  - `result`.items: property `pegOffsetValue` added
+  - `result`.items: property `expiryReason` added
+  - `result`.items: property `workingFloor` added
+  - `result`.items.`orderReports`.items: property `trailingDelta` added
+  - `result`.items.`orderReports`.items: property `icebergQty` added
+  - `result`.items.`orderReports`.items: property `peggedPrice` added
+  - `result`.items.`orderReports`.items: property `pegOffsetType` added
+  - `result`.items.`orderReports`.items: property `strategyId` added
+  - `result`.items.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.items.`orderReports`.items: property `usedSor` added
+  - `result`.items.`orderReports`.items: property `trailingTime` added
+  - `result`.items.`orderReports`.items: property `preventedQuantity` added
+  - `result`.items.`orderReports`.items: property `workingFloor` added
+  - `result`.items.`orderReports`.items: property `pegPriceType` added
+  - `result`.items.`orderReports`.items: property `expiryReason` added
+  - `result`.items.`orderReports`.items: property `strategyType` added
+  - `result`.items.`orderReports`.items: property `preventedMatchId` added
+  - `result`.items.`orderReports`.items: item property `trailingDelta` added
+  - `result`.items.`orderReports`.items: item property `icebergQty` added
+  - `result`.items.`orderReports`.items: item property `peggedPrice` added
+  - `result`.items.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.items.`orderReports`.items: item property `strategyId` added
+  - `result`.items.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.items.`orderReports`.items: item property `usedSor` added
+  - `result`.items.`orderReports`.items: item property `trailingTime` added
+  - `result`.items.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.items.`orderReports`.items: item property `workingFloor` added
+  - `result`.items.`orderReports`.items: item property `pegPriceType` added
+  - `result`.items.`orderReports`.items: item property `expiryReason` added
+  - `result`.items.`orderReports`.items: item property `strategyType` added
+  - `result`.items.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.items: item property `pegPriceType` added
+  - `result`.items: item property `preventedQuantity` added
+  - `result`.items: item property `peggedPrice` added
+  - `result`.items: item property `preventedMatchId` added
+  - `result`.items: item property `usedSor` added
+  - `result`.items: item property `pegOffsetType` added
+  - `result`.items: item property `pegOffsetValue` added
+  - `result`.items: item property `expiryReason` added
+  - `result`.items: item property `workingFloor` added
+  - `result`.items.`orderReports`.items: property `trailingDelta` added
+  - `result`.items.`orderReports`.items: property `icebergQty` added
+  - `result`.items.`orderReports`.items: property `peggedPrice` added
+  - `result`.items.`orderReports`.items: property `pegOffsetType` added
+  - `result`.items.`orderReports`.items: property `strategyId` added
+  - `result`.items.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.items.`orderReports`.items: property `usedSor` added
+  - `result`.items.`orderReports`.items: property `trailingTime` added
+  - `result`.items.`orderReports`.items: property `preventedQuantity` added
+  - `result`.items.`orderReports`.items: property `workingFloor` added
+  - `result`.items.`orderReports`.items: property `pegPriceType` added
+  - `result`.items.`orderReports`.items: property `expiryReason` added
+  - `result`.items.`orderReports`.items: property `strategyType` added
+  - `result`.items.`orderReports`.items: property `preventedMatchId` added
+  - `result`.items.`orderReports`.items: item property `trailingDelta` added
+  - `result`.items.`orderReports`.items: item property `icebergQty` added
+  - `result`.items.`orderReports`.items: item property `peggedPrice` added
+  - `result`.items.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.items.`orderReports`.items: item property `strategyId` added
+  - `result`.items.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.items.`orderReports`.items: item property `usedSor` added
+  - `result`.items.`orderReports`.items: item property `trailingTime` added
+  - `result`.items.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.items.`orderReports`.items: item property `workingFloor` added
+  - `result`.items.`orderReports`.items: item property `pegPriceType` added
+  - `result`.items.`orderReports`.items: item property `expiryReason` added
+  - `result`.items.`orderReports`.items: item property `strategyType` added
+  - `result`.items.`orderReports`.items: item property `preventedMatchId` added
+
+- Modified response for `open_orders_status()` (`openOrders.status` method):
+  - `result`.items: property `expiryReason` added
+  - `result`.items: property `workingFloor` added
+  - `result`.items: property `pegOffsetType` added
+  - `result`.items: property `usedSor` added
+  - `result`.items: property `strategyId` added
+  - `result`.items: property `peggedPrice` added
+  - `result`.items: property `strategyType` added
+  - `result`.items: property `pegOffsetValue` added
+  - `result`.items: property `trailingTime` added
+  - `result`.items: property `trailingDelta` added
+  - `result`.items: property `preventedMatchId` added
+  - `result`.items: property `preventedQuantity` added
+  - `result`.items: property `pegPriceType` added
+  - `result`.items: item property `expiryReason` added
+  - `result`.items: item property `workingFloor` added
+  - `result`.items: item property `pegOffsetType` added
+  - `result`.items: item property `usedSor` added
+  - `result`.items: item property `strategyId` added
+  - `result`.items: item property `peggedPrice` added
+  - `result`.items: item property `strategyType` added
+  - `result`.items: item property `pegOffsetValue` added
+  - `result`.items: item property `trailingTime` added
+  - `result`.items: item property `trailingDelta` added
+  - `result`.items: item property `preventedMatchId` added
+  - `result`.items: item property `preventedQuantity` added
+  - `result`.items: item property `pegPriceType` added
+
+- Modified response for `order_amend_keep_priority()` (`order.amend.keepPriority` method):
+  - `result`.`amendedOrder`: property `icebergQty` added
+  - `result`.`amendedOrder`: property `strategyType` added
+  - `result`.`amendedOrder`: property `pegOffsetType` added
+  - `result`.`amendedOrder`: property `workingFloor` added
+  - `result`.`amendedOrder`: property `stopPrice` added
+  - `result`.`amendedOrder`: property `expiryReason` added
+  - `result`.`amendedOrder`: property `pegPriceType` added
+  - `result`.`amendedOrder`: property `pegOffsetValue` added
+  - `result`.`amendedOrder`: property `trailingDelta` added
+  - `result`.`amendedOrder`: property `strategyId` added
+  - `result`.`amendedOrder`: property `usedSor` added
+  - `result`.`amendedOrder`: property `preventedQuantity` added
+  - `result`.`amendedOrder`: property `trailingTime` added
+  - `result`.`amendedOrder`: property `preventedMatchId` added
+  - `result`.`amendedOrder`: property `peggedPrice` added
+
+- Modified response for `order_cancel()` (`order.cancel` method):
+  - `result`: property `peggedPrice` added
+  - `result`: property `pegOffsetType` added
+  - `result`: property `pegOffsetValue` added
+  - `result`: property `preventedMatchId` added
+  - `result`: property `expiryReason` added
+  - `result`: property `pegPriceType` added
+  - `result`: property `trailingTime` added
+  - `result`: property `preventedQuantity` added
+  - `result`: property `workingFloor` added
+  - `result`: property `usedSor` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+
+- Modified response for `order_cancel_replace()` (`order.cancelReplace` method):
+  - `result`.`cancelResponse`: property `trailingDelta` added
+  - `result`.`cancelResponse`: property `pegOffsetType` added
+  - `result`.`cancelResponse`: property `expiryReason` added
+  - `result`.`cancelResponse`: property `pegOffsetValue` added
+  - `result`.`cancelResponse`: property `peggedPrice` added
+  - `result`.`cancelResponse`: property `usedSor` added
+  - `result`.`cancelResponse`: property `trailingTime` added
+  - `result`.`cancelResponse`: property `strategyId` added
+  - `result`.`cancelResponse`: property `workingFloor` added
+  - `result`.`cancelResponse`: property `strategyType` added
+  - `result`.`cancelResponse`: property `preventedMatchId` added
+  - `result`.`cancelResponse`: property `preventedQuantity` added
+  - `result`.`cancelResponse`: property `icebergQty` added
+  - `result`.`cancelResponse`: property `pegPriceType` added
+  - `result`.`cancelResponse`: property `stopPrice` added
+  - `result`.`newOrderResponse`: property `strategyId` added
+  - `result`.`newOrderResponse`: property `icebergQty` added
+  - `result`.`newOrderResponse`: property `pegOffsetType` added
+  - `result`.`newOrderResponse`: property `expiryReason` added
+  - `result`.`newOrderResponse`: property `peggedPrice` added
+  - `result`.`newOrderResponse`: property `trailingDelta` added
+  - `result`.`newOrderResponse`: property `usedSor` added
+  - `result`.`newOrderResponse`: property `stopPrice` added
+  - `result`.`newOrderResponse`: property `pegOffsetValue` added
+  - `result`.`newOrderResponse`: property `strategyType` added
+  - `result`.`newOrderResponse`: property `trailingTime` added
+  - `result`.`newOrderResponse`: property `workingFloor` added
+  - `result`.`newOrderResponse`: property `pegPriceType` added
+  - `result`.`newOrderResponse`: property `preventedQuantity` added
+  - `result`.`newOrderResponse`: property `preventedMatchId` added
+
+- Modified response for `order_place()` (`order.place` method):
+  - `result`: property `strategyType` added
+  - `result`: property `workingFloor` added
+  - `result`: property `preventedQuantity` added
+  - `result`: property `strategyId` added
+  - `result`: property `stopPrice` added
+  - `result`: property `expiryReason` added
+  - `result`: property `usedSor` added
+  - `result`: property `trailingDelta` added
+  - `result`: property `pegOffsetType` added
+  - `result`: property `preventedMatchId` added
+  - `result`: property `pegPriceType` added
+  - `result`: property `icebergQty` added
+  - `result`: property `pegOffsetValue` added
+  - `result`: property `peggedPrice` added
+  - `result`: property `trailingTime` added
+
+- Modified response for `order_status()` (`order.status` method):
+  - `result`: property `pegPriceType` added
+  - `result`: property `workingFloor` added
+  - `result`: property `expiryReason` added
+  - `result`: property `usedSor` added
+  - `result`: property `pegOffsetType` added
+  - `result`: property `pegOffsetValue` added
+  - `result`: property `peggedPrice` added
+
+- Modified response for `order_list_cancel()` (`orderList.cancel` method):
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+
+- Modified response for `order_list_place()` (`orderList.place` method):
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+
+- Modified response for `order_list_place_oco()` (`orderList.place.oco` method):
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+
+- Modified response for `order_list_place_opo()` (`orderList.place.opo` method):
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `stopPrice` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `stopPrice` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+
+- Modified response for `order_list_place_opoco()` (`orderList.place.opoco` method):
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+
+- Modified response for `order_list_place_oto()` (`orderList.place.oto` method):
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `stopPrice` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `stopPrice` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+
+- Modified response for `order_list_place_otoco()` (`orderList.place.otoco` method):
+  - `result`.`orderReports`.items: property `icebergQty` added
+  - `result`.`orderReports`.items: property `trailingDelta` added
+  - `result`.`orderReports`.items: property `pegOffsetType` added
+  - `result`.`orderReports`.items: property `peggedPrice` added
+  - `result`.`orderReports`.items: property `expiryReason` added
+  - `result`.`orderReports`.items: property `workingFloor` added
+  - `result`.`orderReports`.items: property `pegOffsetValue` added
+  - `result`.`orderReports`.items: property `trailingTime` added
+  - `result`.`orderReports`.items: property `usedSor` added
+  - `result`.`orderReports`.items: property `pegPriceType` added
+  - `result`.`orderReports`.items: property `strategyId` added
+  - `result`.`orderReports`.items: property `strategyType` added
+  - `result`.`orderReports`.items: property `preventedMatchId` added
+  - `result`.`orderReports`.items: property `preventedQuantity` added
+  - `result`.`orderReports`.items: item property `icebergQty` added
+  - `result`.`orderReports`.items: item property `trailingDelta` added
+  - `result`.`orderReports`.items: item property `pegOffsetType` added
+  - `result`.`orderReports`.items: item property `peggedPrice` added
+  - `result`.`orderReports`.items: item property `expiryReason` added
+  - `result`.`orderReports`.items: item property `workingFloor` added
+  - `result`.`orderReports`.items: item property `pegOffsetValue` added
+  - `result`.`orderReports`.items: item property `trailingTime` added
+  - `result`.`orderReports`.items: item property `usedSor` added
+  - `result`.`orderReports`.items: item property `pegPriceType` added
+  - `result`.`orderReports`.items: item property `strategyId` added
+  - `result`.`orderReports`.items: item property `strategyType` added
+  - `result`.`orderReports`.items: item property `preventedMatchId` added
+  - `result`.`orderReports`.items: item property `preventedQuantity` added
+
+- Modified response for `reference_price()` (`referencePrice` method):
+  - property `rateLimits` added
+
+- Modified response for `reference_price_calculation()` (`referencePrice.calculation` method):
+  - property `rateLimits` added
+
+- Modified response for `sor_order_place()` (`sor.order.place` method):
+  - `result`.items: property `pegOffsetType` added
+  - `result`.items: property `peggedPrice` added
+  - `result`.items: property `stopPrice` added
+  - `result`.items: property `strategyType` added
+  - `result`.items: property `expiryReason` added
+  - `result`.items: property `icebergQty` added
+  - `result`.items: property `pegPriceType` added
+  - `result`.items: property `preventedMatchId` added
+  - `result`.items: property `strategyId` added
+  - `result`.items: property `pegOffsetValue` added
+  - `result`.items: property `trailingDelta` added
+  - `result`.items: property `preventedQuantity` added
+  - `result`.items: property `trailingTime` added
+  - `result`.items: item property `pegOffsetType` added
+  - `result`.items: item property `peggedPrice` added
+  - `result`.items: item property `stopPrice` added
+  - `result`.items: item property `strategyType` added
+  - `result`.items: item property `expiryReason` added
+  - `result`.items: item property `icebergQty` added
+  - `result`.items: item property `pegPriceType` added
+  - `result`.items: item property `preventedMatchId` added
+  - `result`.items: item property `strategyId` added
+  - `result`.items: item property `pegOffsetValue` added
+  - `result`.items: item property `trailingDelta` added
+  - `result`.items: item property `preventedQuantity` added
+  - `result`.items: item property `trailingTime` added
+
+- Modified response for `ticker()` (`ticker` method):
+  - oneOf modified
+
+- Modified response for `ticker24hr()` (`ticker.24hr` method):
+  - oneOf modified
+
+- Modified response for `ticker_book()` (`ticker.book` method):
+  - oneOf modified
+
+- Modified response for `ticker_price()` (`ticker.price` method):
+  - oneOf modified
+
+- Modified response for `ui_klines()` (`uiKlines` method):
+  - `result`.items: minItems `0` → `12`
+  - `result`.items: maxItems `null` → `12`
+  - `result`.items.items: oneOf added 2 schema(s)
+  - `result`.items.items: oneOf removed 2 schema(s)
+
+- Marked `order_list_place()` (`orderList.place` method) as deprecated.
+
+#### WebSocket Streams
+
+- Modified parameter `updateSpeed`:
+  - enum added: `100ms`
+  - affected methods:
+    - `partial_book_depth()` (`<symbol>@depth<levels>@<updateSpeed>` stream)
+    - `diff_book_depth()` (`<symbol>@depth@<updateSpeed>` stream)
+- Modified response for `partial_book_depth()` (`<symbol>@depth<levels>@<updateSpeed>` stream):
+  - `asks`.items: minItems `0` → `2`
+  - `asks`.items: maxItems `null` → `2`
+  - `bids`.items: minItems `0` → `2`
+  - `bids`.items: maxItems `null` → `2`
+
+- Modified response for `diff_book_depth()` (`<symbol>@depth@<updateSpeed>` stream):
+  - `a`.items: minItems `0` → `2`
+  - `a`.items: maxItems `null` → `2`
+  - `b`.items: minItems `0` → `2`
+  - `b`.items: maxItems `null` → `2`
+
 ## 9.2.0 - 2026-06-09
 
 ### Changed (2)

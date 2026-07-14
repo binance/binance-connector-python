@@ -33,7 +33,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def new_cm_order():
     try:
         response = client.rest_api.new_cm_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=NewCmOrderSideEnum["BUY"].value,
             type=NewCmOrderTypeEnum["LIMIT"].value,
         )

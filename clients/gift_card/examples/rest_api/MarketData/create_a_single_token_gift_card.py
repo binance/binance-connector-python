@@ -25,8 +25,8 @@ client = GiftCard(config_rest_api=configuration_rest_api)
 def create_a_single_token_gift_card():
     try:
         response = client.rest_api.create_a_single_token_gift_card(
-            token="token_example",
-            amount=1.0,
+            token="BNB",
+            amount=1,
         )
 
         rate_limits = response.rate_limits

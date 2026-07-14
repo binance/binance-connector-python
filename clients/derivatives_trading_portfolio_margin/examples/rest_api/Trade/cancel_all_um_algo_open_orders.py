@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def cancel_all_um_algo_open_orders():
     try:
         response = client.rest_api.cancel_all_um_algo_open_orders(
-            symbol="symbol_example",
+            symbol="BNBUSDT",
         )
 
         rate_limits = response.rate_limits

@@ -25,7 +25,7 @@ client = VipLoan(config_rest_api=configuration_rest_api)
 def get_borrow_interest_rate():
     try:
         response = client.rest_api.get_borrow_interest_rate(
-            loan_coin="loan_coin_example",
+            loan_coin="BTC",
         )
 
         rate_limits = response.rate_limits

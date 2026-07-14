@@ -25,8 +25,8 @@ client = CryptoLoan(config_rest_api=configuration_rest_api)
 def check_collateral_repay_rate():
     try:
         response = client.rest_api.check_collateral_repay_rate(
-            loan_coin="loan_coin_example",
-            collateral_coin="collateral_coin_example",
+            loan_coin="BUSD",
+            collateral_coin="BNB",
         )
 
         rate_limits = response.rate_limits

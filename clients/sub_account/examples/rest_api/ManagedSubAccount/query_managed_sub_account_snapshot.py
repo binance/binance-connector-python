@@ -6,6 +6,9 @@ from binance_sdk_sub_account.sub_account import (
     ConfigurationRestAPI,
     SUB_ACCOUNT_REST_API_PROD_URL,
 )
+from binance_sdk_sub_account.rest_api.models import (
+    QueryManagedSubAccountSnapshotTypeEnum,
+)
 
 
 # Configure logging
@@ -25,8 +28,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def query_managed_sub_account_snapshot():
     try:
         response = client.rest_api.query_managed_sub_account_snapshot(
-            email="sub-account-email@email.com",
-            type="type_example",
+            email="abc@test.com",
+            type=QueryManagedSubAccountSnapshotTypeEnum["SPOT"].value,
         )
 
         rate_limits = response.rate_limits

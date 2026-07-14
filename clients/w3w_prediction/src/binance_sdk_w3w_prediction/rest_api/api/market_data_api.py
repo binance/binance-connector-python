@@ -48,7 +48,7 @@ class MarketDataApi:
         """
                 Get Market Detail
                 GET /sapi/v1/w3w/wallet/prediction/market/detail
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#get-market-detail
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#get-market-detail
 
                 Get full details for a specific prediction market topic, including variant data and timeline.
 
@@ -93,7 +93,7 @@ class MarketDataApi:
         """
                 List Prediction Categories
                 GET /sapi/v1/w3w/wallet/prediction/category/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#list-prediction-categories
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#list-prediction-categories
 
                 Get all available prediction market categories (L1 and L2).
 
@@ -137,7 +137,7 @@ class MarketDataApi:
         """
                 List Prediction Markets
                 GET /sapi/v1/w3w/wallet/prediction/market/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#list-prediction-markets
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#list-prediction-markets
 
                 Get a paginated list of prediction market topics, with optional category and sort filters.
 
@@ -190,7 +190,7 @@ class MarketDataApi:
         """
                 Market Search
                 GET /sapi/v1/w3w/wallet/prediction/market/search
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#market-search
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#market-search
 
                 Semantic search for prediction market topics by keyword.
 
@@ -236,7 +236,7 @@ class MarketDataApi:
         """
                 Query Last Trade Price
                 GET /sapi/v1/w3w/wallet/prediction/order-book/last-trade-price
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#query-last-trade-price
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#query-last-trade-price
 
                 Get the most recent trade price for a prediction market.
 
@@ -284,7 +284,7 @@ class MarketDataApi:
         """
                 Query Order Book
                 GET /sapi/v1/w3w/wallet/prediction/order-book
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#query-order-book
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/market-data#query-order-book
 
                 Get the current order book (bids and asks) for a specific prediction market outcome token.
 

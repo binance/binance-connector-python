@@ -2,6 +2,7 @@ import os
 import logging
 
 from binance_sdk_alpha.alpha import Alpha, ConfigurationRestAPI, ALPHA_REST_API_PROD_URL
+from binance_sdk_alpha.rest_api.models import KlinesIntervalEnum
 
 
 # Configure logging
@@ -21,8 +22,8 @@ client = Alpha(config_rest_api=configuration_rest_api)
 def klines():
     try:
         response = client.rest_api.klines(
-            symbol="symbol_example",
-            interval="interval_example",
+            symbol="ALPHA_175USDT",
+            interval=KlinesIntervalEnum["INTERVAL_1s"].value,
         )
 
         rate_limits = response.rate_limits

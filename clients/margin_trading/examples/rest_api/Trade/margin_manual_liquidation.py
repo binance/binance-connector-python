@@ -6,6 +6,7 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import MarginManualLiquidationTypeEnum
 
 
 # Configure logging
@@ -25,7 +26,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_manual_liquidation():
     try:
         response = client.rest_api.margin_manual_liquidation(
-            type="type_example",
+            type=MarginManualLiquidationTypeEnum["MARGIN"].value,
         )
 
         rate_limits = response.rate_limits

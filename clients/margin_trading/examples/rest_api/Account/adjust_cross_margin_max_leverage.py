@@ -24,7 +24,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 
 def adjust_cross_margin_max_leverage():
     try:
-        response = client.rest_api.adjust_cross_margin_max_leverage(max_leverage=56)
+        response = client.rest_api.adjust_cross_margin_max_leverage(max_leverage=3)
 
         rate_limits = response.rate_limits
         logging.info(f"adjust_cross_margin_max_leverage() rate limits: {rate_limits}")

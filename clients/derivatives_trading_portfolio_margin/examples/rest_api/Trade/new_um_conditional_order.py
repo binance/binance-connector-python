@@ -33,7 +33,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def new_um_conditional_order():
     try:
         response = client.rest_api.new_um_conditional_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=NewUmConditionalOrderSideEnum["BUY"].value,
             strategy_type=NewUmConditionalOrderStrategyTypeEnum["STOP"].value,
         )

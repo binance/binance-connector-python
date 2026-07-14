@@ -21,7 +21,7 @@ client = Spot(config_rest_api=configuration_rest_api)
 def my_trades():
     try:
         response = client.rest_api.my_trades(
-            symbol="BNBUSDT",
+            symbol="BNBBTC",
         )
 
         rate_limits = response.rate_limits

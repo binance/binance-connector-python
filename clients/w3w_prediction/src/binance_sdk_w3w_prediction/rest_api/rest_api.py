@@ -75,6 +75,7 @@ from .models import GetQuotaStatusResponse
 from .models import ListPredictionWalletsResponse
 from .models import QueryPaymentOptionBalancesResponse
 
+
 T = TypeVar("T")
 
 
@@ -327,7 +328,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPositionByTokenResponse]:
         """
-                Get Position by Token
+                Get Position by Token (USER_DATA)
 
                 Get the authenticated user's position detail for a specific prediction token.
 
@@ -362,7 +363,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPnLResponse]:
         """
-                Query PnL
+                Query PnL (USER_DATA)
 
                 Query profit and loss records for the authenticated user's prediction positions. When `tokenId` is provided, returns a single record in `pnl`; otherwise returns a list in `pnlList`.
 
@@ -404,7 +405,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsResponse]:
         """
-                Query Positions
+                Query Positions (USER_DATA)
 
                 Get the authenticated user's prediction token positions with portfolio summary and tab-based filtering.
 
@@ -438,7 +439,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsByFilterResponse]:
         """
-                Query Positions by Filter
+                Query Positions by Filter (USER_DATA)
 
                 Get prediction positions filtered by wallet address and/or market topic ID. Both parameters are optional.
 
@@ -475,7 +476,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySettledPositionHistoryResponse]:
         """
-                Query Settled Position History
+                Query Settled Position History (USER_DATA)
 
                 Get the authenticated user's settled (resolved) prediction position history with optional filters.
 
@@ -520,7 +521,7 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[BatchRedeemResponse]:
         """
-                Batch Redeem
+                Batch Redeem (TRADE)
 
                 Redeem one or more settled prediction tokens on-chain to claim winnings. Requires SAS authorization.
 
@@ -553,7 +554,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetRedeemStatusResponse]:
         """
-                Get Redeem Status
+                Get Redeem Status (USER_DATA)
 
                 Query the on-chain transaction status of a previously submitted redeem request.
 
@@ -595,7 +596,7 @@ class W3wPredictionRestAPI:
         ] = None,
     ) -> ApiResponse[BatchCancelOrdersResponse]:
         """
-                Batch Cancel Orders
+                Batch Cancel Orders (TRADE)
 
                 Cancel one or more active prediction orders in a single request. Requires SAS authorization.
 
@@ -647,7 +648,7 @@ class W3wPredictionRestAPI:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[GetQuoteResponse]:
         """
-                Get Quote
+                Get Quote (TRADE)
 
                 Get a price quote for a prediction order. The returned `quoteId` must be used in the subsequent Place Order request.
 
@@ -708,7 +709,7 @@ class W3wPredictionRestAPI:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[PlaceOrderResponse]:
         """
-                Place Order
+                Place Order (TRADE)
 
                 Place a prediction order using a previously obtained quote. Requires SAS authorization.
 
@@ -768,7 +769,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryActiveOrdersResponse]:
         """
-                Query Active Orders
+                Query Active Orders (USER_DATA)
 
                 Get active (open) prediction orders for the authenticated user.
 
@@ -816,7 +817,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryOrderHistoryResponse]:
         """
-                Query Order History
+                Query Order History (USER_DATA)
 
                 Get historical prediction orders (all statuses) for the authenticated user, with optional filters.
 
@@ -866,7 +867,7 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateInboundTransferResponse]:
         """
-                Create Inbound Transfer
+                Create Inbound Transfer (TRADE)
 
                 Transfer funds from the prediction wallet back to the user's CEX account (SPOT or FUNDING). Requires SAS authorization.
 
@@ -915,7 +916,7 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateOutboundTransferResponse]:
         """
-                Create Outbound Transfer
+                Create Outbound Transfer (TRADE)
 
                 Transfer funds from the user's CEX account (SPOT or FUNDING) into the prediction wallet. Requires SAS authorization.
 
@@ -964,7 +965,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferListResponse]:
         """
-                Query Transfer List
+                Query Transfer List (USER_DATA)
 
                 Get the authenticated user's prediction wallet transfer history within a date range.
 
@@ -1007,7 +1008,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferStatusResponse]:
         """
-                Query Transfer Status
+                Query Transfer Status (USER_DATA)
 
                 Query the current status of a prediction wallet transfer by transfer ID.
 
@@ -1041,7 +1042,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPortfolioResponse]:
         """
-                Get Portfolio
+                Get Portfolio (USER_DATA)
 
                 Get the authenticated user's prediction portfolio overview including active positions count, aggregated PnL, and full position list.
 
@@ -1079,7 +1080,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetQuotaStatusResponse]:
         """
-                Get Quota Status
+                Get Quota Status (USER_DATA)
 
                 Query the current user's daily trading quota limit and remaining allowance for prediction markets.
 
@@ -1105,7 +1106,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ListPredictionWalletsResponse]:
         """
-                List Prediction Wallets
+                List Prediction Wallets (USER_DATA)
 
                 Get all prediction wallets registered for the authenticated user.
 
@@ -1131,7 +1132,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPaymentOptionBalancesResponse]:
         """
-                Query Payment Option Balances
+                Query Payment Option Balances (USER_DATA)
 
                 Get available balances for each payment option that can be used for prediction trading.
 

@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMarginPro(config_rest_api=configuration_rest
 def fund_collection_by_asset():
     try:
         response = client.rest_api.fund_collection_by_asset(
-            asset="asset_example",
+            asset="USDT",
         )
 
         rate_limits = response.rate_limits

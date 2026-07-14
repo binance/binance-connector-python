@@ -21,7 +21,7 @@ client = Alpha(config_rest_api=configuration_rest_api)
 def aggregated_trades():
     try:
         response = client.rest_api.aggregated_trades(
-            symbol="symbol_example",
+            symbol="ALPHA_118USDC",
         )
 
         rate_limits = response.rate_limits

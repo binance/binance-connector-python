@@ -9,6 +9,13 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
 )
 
 
+from binance_sdk_derivatives_trading_options.websocket_streams.models import (
+    PartialBookDepthStreamsLevelEnum,
+)
+from binance_sdk_derivatives_trading_options.websocket_streams.models import (
+    PartialBookDepthStreamsUpdateSpeedEnum,
+)
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -28,7 +35,8 @@ async def partial_book_depth_streams():
 
         stream = await connection.partial_book_depth_streams(
             symbol="btcusdt",
-            level="example_value",
+            level=PartialBookDepthStreamsLevelEnum[""].value,
+            update_speed=PartialBookDepthStreamsUpdateSpeedEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

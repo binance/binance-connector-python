@@ -21,7 +21,7 @@ client = Spot(config_rest_api=configuration_rest_api)
 def my_allocations():
     try:
         response = client.rest_api.my_allocations(
-            symbol="BNBUSDT",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

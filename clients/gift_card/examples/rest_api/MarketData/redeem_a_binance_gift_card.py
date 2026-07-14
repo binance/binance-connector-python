@@ -25,7 +25,7 @@ client = GiftCard(config_rest_api=configuration_rest_api)
 def redeem_a_binance_gift_card():
     try:
         response = client.rest_api.redeem_a_binance_gift_card(
-            code="code_example",
+            code="6H9EKF5ECCWFBHGE",
         )
 
         rate_limits = response.rate_limits

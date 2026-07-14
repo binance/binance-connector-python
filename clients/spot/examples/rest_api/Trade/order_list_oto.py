@@ -28,11 +28,11 @@ def order_list_oto():
             symbol="BNBUSDT",
             working_type=OrderListOtoWorkingTypeEnum["LIMIT"].value,
             working_side=OrderListOtoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
-            working_quantity=1.0,
+            working_price=1,
+            working_quantity=1,
             pending_type=OrderListOtoPendingTypeEnum["LIMIT"].value,
             pending_side=OrderListOtoPendingSideEnum["BUY"].value,
-            pending_quantity=1.0,
+            pending_quantity=1,
         )
 
         rate_limits = response.rate_limits

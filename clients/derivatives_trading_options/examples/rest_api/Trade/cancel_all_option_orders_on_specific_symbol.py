@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def cancel_all_option_orders_on_specific_symbol():
     try:
         response = client.rest_api.cancel_all_option_orders_on_specific_symbol(
-            symbol="symbol_example",
+            symbol="BTC-200730-9000-C",
         )
 
         rate_limits = response.rate_limits

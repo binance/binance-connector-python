@@ -30,7 +30,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def taker_buy_sell_volume():
     try:
         response = client.rest_api.taker_buy_sell_volume(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             period=TakerBuySellVolumePeriodEnum["PERIOD_5m"].value,
         )
 

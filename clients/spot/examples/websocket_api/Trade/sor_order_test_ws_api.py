@@ -4,8 +4,10 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+
 from binance_sdk_spot.websocket_api.models import SorOrderTestSideEnum
 from binance_sdk_spot.websocket_api.models import SorOrderTestTypeEnum
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -27,9 +29,9 @@ async def sor_order_test():
         connection = await client.websocket_api.create_connection()
         response = await connection.sor_order_test(
             symbol="BNBUSDT",
-            side=SorOrderTestSideEnum["BUY"].value,
-            type=SorOrderTestTypeEnum["MARKET"].value,
-            quantity=1.0,
+            side=SorOrderTestSideEnum[""].value,
+            type=SorOrderTestTypeEnum[""].value,
+            quantity=1,
         )
 
         rate_limits = response.rate_limits

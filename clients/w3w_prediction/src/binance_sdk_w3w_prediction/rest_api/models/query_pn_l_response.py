@@ -31,7 +31,7 @@ class QueryPnLResponse(BaseModel):
 
     chain_id: Optional[StrictStr] = Field(default=None, alias="chainId")
     wallet_address: Optional[StrictStr] = Field(default=None, alias="walletAddress")
-    pnl: Optional[StrictStr] = None
+    pnl: Optional[Dict[str, Any]] = None
     pnl_list: Optional[List[GetPortfolioResponsePositionsInner]] = Field(
         default=None, alias="pnlList"
     )

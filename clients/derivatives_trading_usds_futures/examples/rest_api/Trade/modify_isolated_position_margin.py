@@ -27,9 +27,9 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def modify_isolated_position_margin():
     try:
         response = client.rest_api.modify_isolated_position_margin(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             amount=1.0,
-            type="type_example",
+            type=1,
         )
 
         rate_limits = response.rate_limits

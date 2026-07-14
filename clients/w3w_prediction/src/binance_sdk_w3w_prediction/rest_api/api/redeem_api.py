@@ -41,9 +41,9 @@ class RedeemApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[BatchRedeemResponse]:
         """
-                Batch Redeem
+                Batch Redeem (TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/batch-redeem
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#batch-redeem
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#batch-redeem
 
                 Redeem one or more settled prediction tokens on-chain to claim winnings. Requires SAS authorization.
 
@@ -109,9 +109,9 @@ class RedeemApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetRedeemStatusResponse]:
         """
-                Get Redeem Status
+                Get Redeem Status (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/redeem/status
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#get-redeem-status
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#get-redeem-status
 
                 Query the on-chain transaction status of a previously submitted redeem request.
 

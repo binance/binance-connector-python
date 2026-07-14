@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def dust_transfer():
     try:
         response = client.rest_api.dust_transfer(
-            asset="asset_example",
+            asset="BTC",
         )
 
         rate_limits = response.rate_limits

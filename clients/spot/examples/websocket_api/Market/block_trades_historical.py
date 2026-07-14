@@ -23,10 +23,9 @@ async def block_trades_historical():
     connection = None
     try:
         connection = await client.websocket_api.create_connection()
-
         response = await connection.block_trades_historical(
-            symbol="BNBUSDT",
-            from_id=1,
+            symbol="BNBBTC",
+            from_id=582,
         )
 
         rate_limits = response.rate_limits

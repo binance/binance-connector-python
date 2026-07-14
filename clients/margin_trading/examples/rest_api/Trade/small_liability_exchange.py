@@ -7,6 +7,7 @@ from binance_sdk_margin_trading.margin_trading import (
     MARGIN_TRADING_REST_API_PROD_URL,
 )
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -24,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def small_liability_exchange():
     try:
         response = client.rest_api.small_liability_exchange(
-            asset_names=["BTC"],
+            asset_names="BTC,ETH",
         )
 
         rate_limits = response.rate_limits

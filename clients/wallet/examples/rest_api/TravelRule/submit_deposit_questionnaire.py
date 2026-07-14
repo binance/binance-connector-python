@@ -29,7 +29,6 @@ def submit_deposit_questionnaire():
             deposit_id=1,
             questionnaire="questionnaire_example",
             beneficiary_pii="beneficiary_pii_example",
-            signature="signature_example",
         )
 
         rate_limits = response.rate_limits

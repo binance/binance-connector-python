@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def get_user_commission_rate_for_cm():
     try:
         response = client.rest_api.get_user_commission_rate_for_cm(
-            symbol="symbol_example",
+            symbol="BTCUSD_PERP",
         )
 
         rate_limits = response.rate_limits

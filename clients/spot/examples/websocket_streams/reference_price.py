@@ -27,7 +27,7 @@ async def reference_price():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.reference_price(
-            symbol="bnbusdt",
+            symbol="bazusd",
         )
         stream.on("message", lambda data: print(f"{data}"))
 

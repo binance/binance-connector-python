@@ -4,6 +4,7 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+
 from binance_sdk_spot.websocket_api.models import UiKlinesIntervalEnum
 
 # Configure logging
@@ -26,7 +27,7 @@ async def ui_klines():
         connection = await client.websocket_api.create_connection()
         response = await connection.ui_klines(
             symbol="BNBUSDT",
-            interval=UiKlinesIntervalEnum["INTERVAL_1s"].value,
+            interval=UiKlinesIntervalEnum[""].value,
         )
 
         rate_limits = response.rate_limits

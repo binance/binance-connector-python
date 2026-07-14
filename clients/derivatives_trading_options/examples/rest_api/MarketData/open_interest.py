@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def open_interest():
     try:
         response = client.rest_api.open_interest(
-            underlying_asset="underlying_asset_example", expiration="expiration_example"
+            underlying_asset="ETH/BTC", expiration="221225"
         )
 
         rate_limits = response.rate_limits

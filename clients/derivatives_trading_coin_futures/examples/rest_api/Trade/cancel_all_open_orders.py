@@ -27,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def cancel_all_open_orders():
     try:
         response = client.rest_api.cancel_all_open_orders(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
         )
 
         rate_limits = response.rate_limits

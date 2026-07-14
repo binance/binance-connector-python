@@ -6,6 +6,18 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountNewOtoWorkingTypeEnum,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountNewOtoWorkingSideEnum,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountNewOtoPendingTypeEnum,
+)
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountNewOtoPendingSideEnum,
+)
 
 
 # Configure logging
@@ -25,14 +37,14 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_new_oto():
     try:
         response = client.rest_api.margin_account_new_oto(
-            symbol="symbol_example",
-            working_type="working_type_example",
-            working_side="working_side_example",
+            symbol="BTCUSDT",
+            working_type=MarginAccountNewOtoWorkingTypeEnum["LIMIT"].value,
+            working_side=MarginAccountNewOtoWorkingSideEnum["SELL"].value,
             working_price=1.0,
             working_quantity=1.0,
             working_iceberg_qty=1.0,
-            pending_type="Order Types",
-            pending_side="pending_side_example",
+            pending_type=MarginAccountNewOtoPendingTypeEnum["LIMIT"].value,
+            pending_side=MarginAccountNewOtoPendingSideEnum["BUY"].value,
             pending_quantity=1.0,
         )
 

@@ -30,7 +30,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def premium_index_kline_data():
     try:
         response = client.rest_api.premium_index_kline_data(
-            symbol="symbol_example",
+            symbol="BTCUSD",
             interval=PremiumIndexKlineDataIntervalEnum["INTERVAL_1m"].value,
         )
 

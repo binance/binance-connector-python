@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.derivatives_trading_portfo
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    ChangeCmPositionModeDualSidePositionEnum,
+)
 
 
 # Configure logging
@@ -27,7 +30,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def change_cm_position_mode():
     try:
         response = client.rest_api.change_cm_position_mode(
-            dual_side_position="dual_side_position_example",
+            dual_side_position=ChangeCmPositionModeDualSidePositionEnum["TRUE"].value,
         )
 
         rate_limits = response.rate_limits

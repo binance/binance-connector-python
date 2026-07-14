@@ -6,6 +6,9 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryBorrowRepayRecordsInMarginAccountTypeEnum,
+)
 
 
 # Configure logging
@@ -25,7 +28,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def query_borrow_repay_records_in_margin_account():
     try:
         response = client.rest_api.query_borrow_repay_records_in_margin_account(
-            type="type_example",
+            type=QueryBorrowRepayRecordsInMarginAccountTypeEnum["BORROW"].value,
         )
 
         rate_limits = response.rate_limits

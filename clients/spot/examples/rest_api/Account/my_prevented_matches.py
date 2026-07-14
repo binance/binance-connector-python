@@ -21,7 +21,7 @@ client = Spot(config_rest_api=configuration_rest_api)
 def my_prevented_matches():
     try:
         response = client.rest_api.my_prevented_matches(
-            symbol="BNBUSDT",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

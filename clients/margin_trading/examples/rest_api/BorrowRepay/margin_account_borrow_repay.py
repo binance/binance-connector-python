@@ -6,6 +6,10 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    MarginAccountBorrowRepayIsIsolatedEnum,
+)
+from binance_sdk_margin_trading.rest_api.models import MarginAccountBorrowRepayTypeEnum
 
 
 # Configure logging
@@ -25,11 +29,10 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_borrow_repay():
     try:
         response = client.rest_api.margin_account_borrow_repay(
-            asset="asset_example",
-            is_isolated="FALSE",
-            symbol="symbol_example",
-            amount="amount_example",
-            type="type_example",
+            asset="USDT",
+            is_isolated=MarginAccountBorrowRepayIsIsolatedEnum["TRUE"].value,
+            amount="1.0",
+            type=MarginAccountBorrowRepayTypeEnum["BORROW"].value,
         )
 
         rate_limits = response.rate_limits

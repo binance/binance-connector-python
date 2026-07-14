@@ -25,7 +25,7 @@ client = SimpleEarn(config_rest_api=configuration_rest_api)
 def subscribe_bfusd():
     try:
         response = client.rest_api.subscribe_bfusd(
-            asset="asset_example",
+            asset="USDT",
             amount=1.0,
         )
 

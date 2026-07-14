@@ -30,7 +30,7 @@ async def order_book():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.order_book(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

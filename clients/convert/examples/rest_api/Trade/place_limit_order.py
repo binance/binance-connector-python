@@ -6,6 +6,8 @@ from binance_sdk_convert.convert import (
     ConfigurationRestAPI,
     CONVERT_REST_API_PROD_URL,
 )
+from binance_sdk_convert.rest_api.models import PlaceLimitOrderSideEnum
+from binance_sdk_convert.rest_api.models import PlaceLimitOrderExpiredTypeEnum
 
 
 # Configure logging
@@ -25,11 +27,11 @@ client = Convert(config_rest_api=configuration_rest_api)
 def place_limit_order():
     try:
         response = client.rest_api.place_limit_order(
-            base_asset="base_asset_example",
-            quote_asset="quote_asset_example",
-            limit_price=1.0,
-            side="BUY",
-            expired_type="expired_type_example",
+            base_asset="BTC",
+            quote_asset="USDT",
+            limit_price=1,
+            side=PlaceLimitOrderSideEnum["BUY"].value,
+            expired_type=PlaceLimitOrderExpiredTypeEnum["EXPIRED_TYPE_1_D"].value,
         )
 
         rate_limits = response.rate_limits

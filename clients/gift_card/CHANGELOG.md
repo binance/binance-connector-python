@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0.0 - 2026-07-14
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified parameter `external_uid`:
+  - maxLength `null` → `400`
+  - affected methods:
+    - `redeem_a_binance_gift_card()` (`POST /sapi/v1/giftcard/redeemCode`)
+
 ## 2.11.0 - 2026-06-09
 
 ### Changed (2)

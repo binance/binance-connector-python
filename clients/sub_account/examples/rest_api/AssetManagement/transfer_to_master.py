@@ -25,7 +25,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def transfer_to_master():
     try:
         response = client.rest_api.transfer_to_master(
-            asset="asset_example",
+            asset="BTC",
             amount=1.0,
         )
 

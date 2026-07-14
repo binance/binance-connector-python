@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.derivatives_trading_portfo
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    ToggleBnbBurnOnUmFuturesTradeFeeBurnEnum,
+)
 
 
 # Configure logging
@@ -27,7 +30,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def toggle_bnb_burn_on_um_futures_trade():
     try:
         response = client.rest_api.toggle_bnb_burn_on_um_futures_trade(
-            fee_burn="fee_burn_example",
+            fee_burn=ToggleBnbBurnOnUmFuturesTradeFeeBurnEnum["TRUE"].value,
         )
 
         rate_limits = response.rate_limits

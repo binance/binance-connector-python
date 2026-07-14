@@ -6,6 +6,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_po
     ConfigurationRestAPI,
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL,
 )
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    SwitchDeltaModeDeltaEnabledEnum,
+)
 
 
 # Configure logging
@@ -27,7 +30,7 @@ client = DerivativesTradingPortfolioMarginPro(config_rest_api=configuration_rest
 def switch_delta_mode():
     try:
         response = client.rest_api.switch_delta_mode(
-            delta_enabled="delta_enabled_example",
+            delta_enabled=SwitchDeltaModeDeltaEnabledEnum["TRUE"].value,
         )
 
         rate_limits = response.rate_limits

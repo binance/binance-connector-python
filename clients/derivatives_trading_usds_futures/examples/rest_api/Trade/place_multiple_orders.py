@@ -32,19 +32,19 @@ def place_multiple_orders():
         response = client.rest_api.place_multiple_orders(
             batch_orders=[
                 PlaceMultipleOrdersBatchOrdersParameterInner(
-                    symbol="",
+                    symbol="BTCUSDT",
                     side="BUY",
                     position_side="BOTH",
-                    type="",
+                    type="LIMIT",
                     time_in_force="GTC",
-                    quantity="1.0",
-                    reduce_only="False",
-                    price="1.0",
+                    quantity=0.001,
+                    reduce_only="false",
+                    price=10001,
                     new_client_order_id="1",
                     new_order_resp_type="ACK",
-                    price_match="NONE",
-                    self_trade_prevention_mode="EXPIRE_TAKER",
-                    good_till_date="",
+                    price_match="OPPONENT",
+                    self_trade_prevention_mode="NONE",
+                    good_till_date=1693207680000,
                 )
             ],
         )

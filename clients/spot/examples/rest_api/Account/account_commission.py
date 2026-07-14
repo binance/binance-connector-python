@@ -20,7 +20,7 @@ client = Spot(config_rest_api=configuration_rest_api)
 
 def account_commission():
     try:
-        response = client.rest_api.account_commission(symbol="BNBUSDT")
+        response = client.rest_api.account_commission(symbol="BTCUSDT")
 
         rate_limits = response.rate_limits
         logging.info(f"account_commission() rate limits: {rate_limits}")

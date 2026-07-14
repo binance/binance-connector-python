@@ -25,9 +25,9 @@ client = GiftCard(config_rest_api=configuration_rest_api)
 def create_a_dual_token_gift_card():
     try:
         response = client.rest_api.create_a_dual_token_gift_card(
-            base_token="base_token_example",
-            face_token="face_token_example",
-            base_token_amount=1.0,
+            base_token="BUSD",
+            face_token="BNB",
+            base_token_amount=1,
         )
 
         rate_limits = response.rate_limits

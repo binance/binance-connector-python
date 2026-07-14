@@ -21,7 +21,7 @@ client = Algo(config_rest_api=configuration_rest_api)
 def cancel_algo_order_spot_algo():
     try:
         response = client.rest_api.cancel_algo_order_spot_algo(
-            algo_id=1,
+            algo_id=14511,
         )
 
         rate_limits = response.rate_limits

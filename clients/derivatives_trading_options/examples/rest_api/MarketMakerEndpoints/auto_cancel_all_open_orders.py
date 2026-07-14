@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def auto_cancel_all_open_orders():
     try:
         response = client.rest_api.auto_cancel_all_open_orders(
-            underlyings="underlyings_example",
+            underlyings="BTCUSDT,ETHUSDT",
         )
 
         rate_limits = response.rate_limits

@@ -1,5 +1,27 @@
 # Changelog
 
+## 5.0.0 - 2026-07-14
+
+### Changed (4)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified parameter `direction`:
+  - enum added: `ADDITIONAL`, `REDUCED`
+  - affected methods:
+    - `flexible_loan_adjust_ltv()` (`POST /sapi/v2/loan/flexible/adjust/ltv`)
+- Modified parameter `repaymentType`:
+  - enum added: `1`, `2`
+  - affected methods:
+    - `flexible_loan_repay()` (`POST /sapi/v2/loan/flexible/repay`)
+- Modified parameter `type`:
+  - enum added: `borrowIn`, `collateralSpent`, `repayAmount`, `collateralReturn`, `addCollateral`, `removeCollateral`, `collateralReturnAfterLiquidation`
+  - affected methods:
+    - `get_crypto_loans_income_history()` (`GET /sapi/v1/loan/income`)
+
+### Removed (1)
+
+- `check_collateral_repay_rate_stable_rate()` (`GET /sapi/v1/loan/repay/collateral/rate`)
+
 ## 4.10.0 - 2026-06-09
 
 ### Changed (2)

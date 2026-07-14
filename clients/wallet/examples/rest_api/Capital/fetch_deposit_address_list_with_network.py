@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def fetch_deposit_address_list_with_network():
     try:
         response = client.rest_api.fetch_deposit_address_list_with_network(
-            coin="coin_example",
+            coin="BTC",
         )
 
         rate_limits = response.rate_limits

@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def withdrawl_assets_from_the_managed_sub_account():
     try:
         response = client.rest_api.withdrawl_assets_from_the_managed_sub_account(
-            from_email="from_email_example",
-            asset="asset_example",
+            from_email="from@test.com",
+            asset="BTC",
             amount=1.0,
         )
 

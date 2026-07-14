@@ -4,6 +4,7 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
+
 from binance_sdk_spot.websocket_api.models import OrderPlaceSideEnum
 from binance_sdk_spot.websocket_api.models import OrderPlaceTypeEnum
 
@@ -27,8 +28,8 @@ async def order_place():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_place(
             symbol="BNBUSDT",
-            side=OrderPlaceSideEnum["BUY"].value,
-            type=OrderPlaceTypeEnum["MARKET"].value,
+            side=OrderPlaceSideEnum[""].value,
+            type=OrderPlaceTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

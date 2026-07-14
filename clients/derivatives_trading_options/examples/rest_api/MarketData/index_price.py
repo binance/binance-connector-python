@@ -24,7 +24,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 
 def index_price():
     try:
-        response = client.rest_api.index_price(underlying="underlying_example")
+        response = client.rest_api.index_price(underlying="BTCUSDT")
 
         rate_limits = response.rate_limits
         logging.info(f"index_price() rate limits: {rate_limits}")

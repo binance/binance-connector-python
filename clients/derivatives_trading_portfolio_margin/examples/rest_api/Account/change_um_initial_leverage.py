@@ -27,8 +27,8 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def change_um_initial_leverage():
     try:
         response = client.rest_api.change_um_initial_leverage(
-            symbol="symbol_example",
-            leverage=56,
+            symbol="BTCUSDT",
+            leverage=21,
         )
 
         rate_limits = response.rate_limits

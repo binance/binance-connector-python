@@ -7,6 +7,8 @@ from binance_sdk_spot.spot import (
     SPOT_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,
 )
+
+
 from binance_sdk_spot.websocket_streams.models import PartialBookDepthLevelsEnum
 
 # Configure logging
@@ -28,7 +30,7 @@ async def partial_book_depth():
 
         stream = await connection.partial_book_depth(
             symbol="bnbusdt",
-            levels=PartialBookDepthLevelsEnum["LEVELS_5"].value,
+            levels=PartialBookDepthLevelsEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

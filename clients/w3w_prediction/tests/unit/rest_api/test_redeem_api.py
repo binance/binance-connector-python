@@ -94,6 +94,7 @@ class TestRedeemApi:
         assert "tokenIds" in normalized
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -148,6 +149,7 @@ class TestRedeemApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -262,6 +264,7 @@ class TestRedeemApi:
         )
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -308,6 +311,7 @@ class TestRedeemApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False

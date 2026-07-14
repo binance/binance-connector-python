@@ -25,7 +25,7 @@ client = CryptoLoan(config_rest_api=configuration_rest_api)
 def get_flexible_loan_interest_rate_history():
     try:
         response = client.rest_api.get_flexible_loan_interest_rate_history(
-            coin="coin_example",
+            coin="USDT",
             recv_window=5000,
         )
 

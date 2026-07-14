@@ -7,6 +7,7 @@ from binance_sdk_margin_trading.margin_trading import (
     MARGIN_TRADING_REST_API_PROD_URL,
 )
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
+from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderTypeEnum
 
 
 # Configure logging
@@ -26,9 +27,9 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def margin_account_new_order():
     try:
         response = client.rest_api.margin_account_new_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
             side=MarginAccountNewOrderSideEnum["BUY"].value,
-            type="type_example",
+            type=MarginAccountNewOrderTypeEnum["LIMIT"].value,
         )
 
         rate_limits = response.rate_limits

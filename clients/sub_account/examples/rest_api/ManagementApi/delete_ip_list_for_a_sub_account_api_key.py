@@ -25,9 +25,9 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def delete_ip_list_for_a_sub_account_api_key():
     try:
         response = client.rest_api.delete_ip_list_for_a_sub_account_api_key(
-            email="sub-account-email@email.com",
-            sub_account_api_key="sub_account_api_key_example",
-            ip_address="ip_address_example",
+            email="123@test.com",
+            sub_account_api_key="k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf",
+            ip_address="69.210.67.14",
         )
 
         rate_limits = response.rate_limits

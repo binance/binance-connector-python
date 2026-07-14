@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def cancel_all_um_open_conditional_orders():
     try:
         response = client.rest_api.cancel_all_um_open_conditional_orders(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

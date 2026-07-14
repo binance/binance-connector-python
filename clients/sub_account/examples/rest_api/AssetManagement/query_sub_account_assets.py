@@ -25,7 +25,7 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def query_sub_account_assets():
     try:
         response = client.rest_api.query_sub_account_assets(
-            email="sub-account-email@email.com",
+            email="123@test.com",
         )
 
         rate_limits = response.rate_limits

@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.0.0 - 2026-07-14
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified response for `get_pay_trade_history()` (`GET /sapi/v1/pay/transactions`):
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `1` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `2` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `1` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `2` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `1` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `2` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `1` deleted
+  - `data`.items.`fundsDetail`.items.`walletAssetCost`: property `2` deleted
+
 ## 4.5.0 - 2026-06-09
 
 ### Changed (2)

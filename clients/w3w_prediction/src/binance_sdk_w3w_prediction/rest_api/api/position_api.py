@@ -43,9 +43,9 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPositionByTokenResponse]:
         """
-                Get Position by Token
+                Get Position by Token (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/position/token
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#get-position-by-token
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#get-position-by-token
 
                 Get the authenticated user's position detail for a specific prediction token.
 
@@ -106,9 +106,9 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPnLResponse]:
         """
-                Query PnL
+                Query PnL (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/pnl/query
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-pn-l
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-pn-l
 
                 Query profit and loss records for the authenticated user's prediction positions. When `tokenId` is provided, returns a single record in `pnl`; otherwise returns a list in `pnlList`.
 
@@ -170,9 +170,9 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsResponse]:
         """
-                Query Positions
+                Query Positions (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/position/list
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions
 
                 Get the authenticated user's prediction token positions with portfolio summary and tab-based filtering.
 
@@ -230,9 +230,9 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsByFilterResponse]:
         """
-                Query Positions by Filter
+                Query Positions by Filter (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/position/filter
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions-by-filter
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions-by-filter
 
                 Get prediction positions filtered by wallet address and/or market topic ID. Both parameters are optional.
 
@@ -285,9 +285,9 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySettledPositionHistoryResponse]:
         """
-                Query Settled Position History
+                Query Settled Position History (USER_DATA)
                 GET /sapi/v1/w3w/wallet/prediction/position/settled-history
-                https://developers.binance.com/en/dev-docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-settled-position-history
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-settled-position-history
 
                 Get the authenticated user's settled (resolved) prediction position history with optional filters.
 

@@ -109,6 +109,7 @@ class TestTransferApi:
         )
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -160,6 +161,7 @@ class TestTransferApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -304,6 +306,7 @@ class TestTransferApi:
         )
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -361,6 +364,7 @@ class TestTransferApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -531,6 +535,7 @@ class TestTransferApi:
         assert normalized["endDate"] == "2026-05-25"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -597,6 +602,7 @@ class TestTransferApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -713,6 +719,7 @@ class TestTransferApi:
         assert normalized["transferId"] == "tf_20260525_out_001"
 
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False
@@ -766,6 +773,7 @@ class TestTransferApi:
 
         self.mock_session.request.assert_called_once()
         assert response is not None
+
         is_list = isinstance(expected_response, list)
         is_flat_list = (
             is_list and not isinstance(expected_response[0], list) if is_list else False

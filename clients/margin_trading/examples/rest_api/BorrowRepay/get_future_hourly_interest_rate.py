@@ -6,6 +6,9 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    GetFutureHourlyInterestRateIsIsolatedEnum,
+)
 
 
 # Configure logging
@@ -25,7 +28,8 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def get_future_hourly_interest_rate():
     try:
         response = client.rest_api.get_future_hourly_interest_rate(
-            assets="assets_example", is_isolated=False
+            assets="BTC,ETH",
+            is_isolated=GetFutureHourlyInterestRateIsIsolatedEnum["TRUE"].value,
         )
 
         rate_limits = response.rate_limits

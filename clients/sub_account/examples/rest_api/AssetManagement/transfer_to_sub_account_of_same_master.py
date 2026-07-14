@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def transfer_to_sub_account_of_same_master():
     try:
         response = client.rest_api.transfer_to_sub_account_of_same_master(
-            to_email="to_email_example",
-            asset="asset_example",
+            to_email="abc@test.com",
+            asset="BTC",
             amount=1.0,
         )
 

@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def cancel_margin_account_order():
     try:
         response = client.rest_api.cancel_margin_account_order(
-            symbol="symbol_example",
+            symbol="LTCBTC",
         )
 
         rate_limits = response.rate_limits

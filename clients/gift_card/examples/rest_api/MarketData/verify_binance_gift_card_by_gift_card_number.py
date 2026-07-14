@@ -25,7 +25,7 @@ client = GiftCard(config_rest_api=configuration_rest_api)
 def verify_binance_gift_card_by_gift_card_number():
     try:
         response = client.rest_api.verify_binance_gift_card_by_gift_card_number(
-            reference_no="reference_no_example",
+            reference_no="0033002328060227",
         )
 
         rate_limits = response.rate_limits

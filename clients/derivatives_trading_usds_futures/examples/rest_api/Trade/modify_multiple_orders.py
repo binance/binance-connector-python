@@ -32,15 +32,16 @@ def modify_multiple_orders():
         response = client.rest_api.modify_multiple_orders(
             batch_orders=[
                 ModifyMultipleOrdersBatchOrdersParameterInner(
-                    order_id="1",
-                    orig_client_order_id="1",
-                    symbol="",
+                    order_id=20072994037,
+                    orig_client_order_id="LJ9R4QZDihCaS8UAOOLpgW",
+                    symbol="BTCUSDT",
                     side="BUY",
-                    quantity="1.0",
-                    price="1.0",
-                    price_match="NONE",
-                    stop_price="1.0",
-                    recv_window="5000",
+                    quantity=1,
+                    price=30005,
+                    price_match="OPPONENT",
+                    stop_price=0,
+                    recv_window=5000,
+                    timestamp=1770736694138,
                 )
             ],
         )

@@ -30,7 +30,7 @@ async def cancel_order():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.cancel_order(
-            symbol="symbol_example",
+            symbol="BTCUSDT",
         )
 
         rate_limits = response.rate_limits

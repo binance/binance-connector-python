@@ -9,7 +9,14 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
 )
 
 from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderAlgoTypeEnum,
+)
+
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     NewAlgoOrderSideEnum,
+)
+from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
+    NewAlgoOrderTypeEnum,
 )
 
 # Configure logging
@@ -33,10 +40,10 @@ async def new_algo_order():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.new_algo_order(
-            algo_type="algo_type_example",
-            symbol="symbol_example",
-            side=NewAlgoOrderSideEnum["BUY"].value,
-            type="type_example",
+            algo_type=NewAlgoOrderAlgoTypeEnum[""].value,
+            symbol="BTCUSDT",
+            side=NewAlgoOrderSideEnum[""].value,
+            type=NewAlgoOrderTypeEnum[""].value,
         )
 
         rate_limits = response.rate_limits

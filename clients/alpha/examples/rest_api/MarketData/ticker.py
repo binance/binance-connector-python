@@ -20,7 +20,7 @@ client = Alpha(config_rest_api=configuration_rest_api)
 
 def ticker():
     try:
-        response = client.rest_api.ticker(symbol="symbol_example")
+        response = client.rest_api.ticker(symbol="ALPHA_175USDT")
 
         rate_limits = response.rate_limits
         logging.info(f"ticker() rate limits: {rate_limits}")

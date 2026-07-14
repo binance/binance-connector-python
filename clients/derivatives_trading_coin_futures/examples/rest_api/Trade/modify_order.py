@@ -30,7 +30,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def modify_order():
     try:
         response = client.rest_api.modify_order(
-            symbol="symbol_example",
+            symbol="BTCUSD_PERP",
             side=ModifyOrderSideEnum["BUY"].value,
         )
 

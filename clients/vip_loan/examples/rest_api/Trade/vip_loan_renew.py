@@ -26,7 +26,7 @@ def vip_loan_renew():
     try:
         response = client.rest_api.vip_loan_renew(
             order_id=1,
-            loan_term=56,
+            loan_term=30,
         )
 
         rate_limits = response.rate_limits

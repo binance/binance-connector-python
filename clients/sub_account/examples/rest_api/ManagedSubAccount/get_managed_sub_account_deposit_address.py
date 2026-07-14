@@ -25,8 +25,8 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def get_managed_sub_account_deposit_address():
     try:
         response = client.rest_api.get_managed_sub_account_deposit_address(
-            email="sub-account-email@email.com",
-            coin="coin_example",
+            email="abc@test.com",
+            coin="USDT",
         )
 
         rate_limits = response.rate_limits

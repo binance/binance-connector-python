@@ -25,8 +25,8 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def set_auto_cancel_all_open_orders():
     try:
         response = client.rest_api.set_auto_cancel_all_open_orders(
-            underlying="underlying_example",
-            countdown_time=56,
+            underlying="BTCUSDT",
+            countdown_time=5000,
         )
 
         rate_limits = response.rate_limits

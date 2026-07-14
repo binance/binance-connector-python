@@ -1,5 +1,175 @@
 # Changelog
 
+## 8.0.0 - 2026-07-14
+
+### Changed (31)
+
+- Updated `binance-common` library to version `4.0.3`
+
+#### REST API
+
+- Modified parameter `algo_type`:
+  - enum added: `CONDITIONAL`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `archived`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `get_margin_borrow_loan_interest_history()` (`GET /papi/v1/margin/marginInterestHistory`)
+    - `query_margin_loan_record()` (`GET /papi/v1/margin/marginLoan`)
+    - `query_margin_repay_record()` (`GET /papi/v1/margin/repayLoan`)
+- Modified parameter `auto_repay`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `change_auto_repay_futures_status()` (`POST /papi/v1/repay-futures-switch`)
+- Modified parameter `auto_repay_at_cancel`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_margin_order()` (`POST /papi/v1/margin/order`)
+- Modified parameter `dual_side_position`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `change_cm_position_mode()` (`POST /papi/v1/cm/positionSide/dual`)
+    - `change_um_position_mode()` (`POST /papi/v1/um/positionSide/dual`)
+- Modified parameter `fee_burn`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `toggle_bnb_burn_on_um_futures_trade()` (`POST /papi/v1/um/feeBurn`)
+- Modified parameter `income_type`:
+  - enum added: `TRANSFER`, `WELCOME_BONUS`, `FUNDING_FEE`, `REALIZED_PNL`, `COMMISSION`, `INSURANCE_CLEAR`, `DELIVERED_SETTELMENT`
+  - affected methods:
+    - `get_cm_income_history()` (`GET /papi/v1/cm/income`)
+- Modified parameter `income_type`:
+  - enum added: `TRANSFER`, `WELCOME_BONUS`, `REALIZED_PNL`, `FUNDING_FEE`, `COMMISSION`, `INSURANCE_CLEAR`, `REFERRAL_KICKBACK`, `COMMISSION_REBATE`, `API_REBATE`, `CONTEST_REWARD`, `CROSS_COLLATERAL_TRANSFER`, `OPTIONS_PREMIUM_FEE`, `OPTIONS_SETTLE_PROFIT`, `INTERNAL_TRANSFER`, `AUTO_EXCHANGE`, `DELIVERED_SETTELMENT`, `COIN_SWAP_DEPOSIT`, `COIN_SWAP_WITHDRAW`, `POSITION_LIMIT_INCREASE_FEE`
+  - affected methods:
+    - `get_um_income_history()` (`GET /papi/v1/um/income`)
+- Modified parameter `new_order_resp_type`:
+  - enum added: `FULL`
+  - affected methods:
+    - `new_margin_order()` (`POST /papi/v1/margin/order`)
+- Modified parameter `price_match`:
+  - enum removed: `NONE`
+  - affected methods:
+    - `new_cm_order()` (`POST /papi/v1/cm/order`)
+    - `modify_cm_order()` (`PUT /papi/v1/cm/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+    - `new_um_order()` (`POST /papi/v1/um/order`)
+    - `modify_um_order()` (`PUT /papi/v1/um/order`)
+- Modified parameter `price_match`:
+  - enum removed: `NONE`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `price_protect`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_cm_conditional_order()` (`POST /papi/v1/cm/conditional/order`)
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+- Modified parameter `reduce_only`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `new_cm_order()` (`POST /papi/v1/cm/order`)
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+    - `new_um_order()` (`POST /papi/v1/um/order`)
+- Modified parameter `side_effect_type`:
+  - enum added: `AUTO_BORROW_REPAY`
+  - affected methods:
+    - `new_margin_order()` (`POST /papi/v1/margin/order`)
+- Modified parameter `strategy_type`:
+  - enum removed: `LIMIT_MAKER`
+  - affected methods:
+    - `new_cm_conditional_order()` (`POST /papi/v1/cm/conditional/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+- Modified parameter `symbol`:
+  - required: `true` → `false`
+  - affected methods:
+    - `query_all_cm_orders()` (`GET /papi/v1/cm/allOrders`)
+- Modified parameter `time_in_force`:
+  - enum removed: `GTX`
+  - affected methods:
+    - `new_margin_order()` (`POST /papi/v1/margin/order`)
+- Modified parameter `time_in_force`:
+  - enum added: `GTD`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `time_in_force`:
+  - enum added: `GTD`
+  - affected methods:
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+    - `new_um_order()` (`POST /papi/v1/um/order`)
+- Modified parameter `transfer_side`:
+  - enum added: `TO_UM`, `FROM_UM`
+  - affected methods:
+    - `bnb_transfer()` (`POST /papi/v1/bnb-transfer`)
+- Modified parameter `type`:
+  - enum added: `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`, `LIMIT_MAKER`
+  - affected methods:
+    - `new_margin_order()` (`POST /papi/v1/margin/order`)
+- Modified parameter `type`:
+  - enum removed: `LIMIT`, `MARKET`
+  - enum added: `STOP`, `TAKE_PROFIT`, `STOP_MARKET`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `workingType`:
+  - enum added: `CONTRACT_PRICE`
+  - affected methods:
+    - `new_cm_conditional_order()` (`POST /papi/v1/cm/conditional/order`)
+    - `new_um_conditional_order()` (`POST /papi/v1/um/conditional/order`)
+- Modified parameter `working_type`:
+  - enum added: `CONTRACT_PRICE`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified response for `account_balance()` (`GET /papi/v1/balance`):
+  - oneOf modified
+
+- Modified response for `query_current_um_open_algo_order()` (`GET /papi/v1/um/algo/algoOrder`):
+  - property `tpOrderType` deleted
+  - property `tpTriggerPrice` deleted
+  - property `slPrice` deleted
+  - property `tpPrice` deleted
+  - property `icebergQuantity` deleted
+  - property `slTriggerPrice` deleted
+
+- Modified response for `query_um_algo_order_history()` (`GET /papi/v1/um/algo/allAlgoOrders`):
+  - items: property `tpTriggerPrice` deleted
+  - items: property `icebergQuantity` deleted
+  - items: property `slPrice` deleted
+  - items: property `tpPrice` deleted
+  - items: property `slTriggerPrice` deleted
+  - items: property `tpOrderType` deleted
+  - items: item property `tpTriggerPrice` deleted
+  - items: item property `icebergQuantity` deleted
+  - items: item property `slPrice` deleted
+  - items: item property `tpPrice` deleted
+  - items: item property `slTriggerPrice` deleted
+  - items: item property `tpOrderType` deleted
+
+- Modified response for `query_all_current_um_open_algo_orders()` (`GET /papi/v1/um/algo/openAlgoOrders`):
+  - items: property `slTriggerPrice` deleted
+  - items: property `tpOrderType` deleted
+  - items: property `actualOrderId` deleted
+  - items: property `slPrice` deleted
+  - items: property `tpPrice` deleted
+  - items: property `actualPrice` deleted
+  - items: property `icebergQuantity` deleted
+  - items: property `tpTriggerPrice` deleted
+  - items: item property `slTriggerPrice` deleted
+  - items: item property `tpOrderType` deleted
+  - items: item property `actualOrderId` deleted
+  - items: item property `slPrice` deleted
+  - items: item property `tpPrice` deleted
+  - items: item property `actualPrice` deleted
+  - items: item property `icebergQuantity` deleted
+  - items: item property `tpTriggerPrice` deleted
+
+- Modified response for `new_um_algo_order()` (`POST /papi/v1/um/algo/order`):
+  - property `icebergQuantity` deleted
+
+- Modified response for `get_um_income_history()` (`GET /papi/v1/um/income`):
+  - items.`tranId`: type `integer` → `string`
+  - items.`tranId`: type `integer` → `string`
+
 ## 7.2.0 - 2026-06-09
 
 ### Changed (2)

@@ -28,8 +28,8 @@ def order_list_opo():
             symbol="BNBUSDT",
             working_type=OrderListOpoWorkingTypeEnum["LIMIT"].value,
             working_side=OrderListOpoWorkingSideEnum["BUY"].value,
-            working_price=1.0,
-            working_quantity=1.0,
+            working_price=1,
+            working_quantity=1,
             pending_type=OrderListOpoPendingTypeEnum["LIMIT"].value,
             pending_side=OrderListOpoPendingSideEnum["BUY"].value,
         )

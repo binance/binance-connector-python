@@ -27,7 +27,7 @@ client = DerivativesTradingPortfolioMargin(config_rest_api=configuration_rest_ap
 def margin_account_repay():
     try:
         response = client.rest_api.margin_account_repay(
-            asset="asset_example",
+            asset="USDT",
             amount=1.0,
         )
 

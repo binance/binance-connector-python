@@ -6,6 +6,7 @@ from binance_sdk_simple_earn.simple_earn import (
     ConfigurationRestAPI,
     SIMPLE_EARN_REST_API_PROD_URL,
 )
+from binance_sdk_simple_earn.rest_api.models import SubscribeRwusdAssetEnum
 
 
 # Configure logging
@@ -25,7 +26,7 @@ client = SimpleEarn(config_rest_api=configuration_rest_api)
 def subscribe_rwusd():
     try:
         response = client.rest_api.subscribe_rwusd(
-            asset="asset_example",
+            asset=SubscribeRwusdAssetEnum["USDC"].value,
             amount=1.0,
         )
 

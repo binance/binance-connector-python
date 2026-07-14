@@ -25,7 +25,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 def query_margin_accounts_trade_list():
     try:
         response = client.rest_api.query_margin_accounts_trade_list(
-            symbol="symbol_example",
+            symbol="BNBBTC",
         )
 
         rate_limits = response.rate_limits

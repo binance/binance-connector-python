@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def withdraw():
     try:
         response = client.rest_api.withdraw(
-            coin="coin_example",
+            coin="BTC",
             address="address_example",
             amount=1.0,
         )

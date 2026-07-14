@@ -24,7 +24,9 @@ client = Wallet(config_rest_api=configuration_rest_api)
 
 def get_region_list():
     try:
-        response = client.rest_api.get_region_list(country_code="country_code_example")
+        response = client.rest_api.get_region_list(
+            country_code="au",
+        )
 
         rate_limits = response.rate_limits
         logging.info(f"get_region_list() rate limits: {rate_limits}")

@@ -25,10 +25,10 @@ client = SubAccount(config_rest_api=configuration_rest_api)
 def sub_account_futures_asset_transfer():
     try:
         response = client.rest_api.sub_account_futures_asset_transfer(
-            from_email="from_email_example",
-            to_email="to_email_example",
-            futures_type=56,
-            asset="asset_example",
+            from_email="abc@test.com",
+            to_email="def@test.com",
+            futures_type=1,
+            asset="BTC",
             amount=1.0,
         )
 

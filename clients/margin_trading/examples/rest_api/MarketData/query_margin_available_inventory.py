@@ -6,6 +6,9 @@ from binance_sdk_margin_trading.margin_trading import (
     ConfigurationRestAPI,
     MARGIN_TRADING_REST_API_PROD_URL,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAvailableInventoryTypeEnum,
+)
 
 
 # Configure logging
@@ -24,7 +27,9 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 
 def query_margin_available_inventory():
     try:
-        response = client.rest_api.query_margin_available_inventory(type="type_example")
+        response = client.rest_api.query_margin_available_inventory(
+            type=QueryMarginAvailableInventoryTypeEnum["MARGIN"].value
+        )
 
         rate_limits = response.rate_limits
         logging.info(f"query_margin_available_inventory() rate limits: {rate_limits}")

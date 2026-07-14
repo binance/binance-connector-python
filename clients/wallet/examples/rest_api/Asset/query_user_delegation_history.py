@@ -25,7 +25,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def query_user_delegation_history():
     try:
         response = client.rest_api.query_user_delegation_history(
-            email="email_example",
+            email="abc@test.com",
             start_time=1623319461670,
             end_time=1641782889000,
         )

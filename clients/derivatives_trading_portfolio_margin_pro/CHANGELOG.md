@@ -1,5 +1,40 @@
 # Changelog
 
+## 7.0.0 - 2026-07-14
+
+### Changed (7)
+
+- Updated `binance-common` library to version `4.0.3`
+
+#### REST API
+
+- Modified parameter `asset`:
+  - enum added: `LDUSDT`, `RWUSD`
+  - affected methods:
+    - `transfer_ldusdt_rwusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/earn-asset-transfer`)
+- Modified parameter `auto_repay`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `change_auto_repay_futures_status()` (`POST /sapi/v1/portfolio/repay-futures-switch`)
+- Modified parameter `delta_enabled`:
+  - enum added: `true`, `false`
+  - affected methods:
+    - `switch_delta_mode()` (`POST /sapi/v1/portfolio/delta-mode`)
+- Modified parameter `from`:
+  - enum added: `SPOT`, `MARGIN`
+  - affected methods:
+    - `portfolio_margin_pro_bankruptcy_loan_repay()` (`POST /sapi/v1/portfolio/repay`)
+    - `repay_futures_negative_balance()` (`POST /sapi/v1/portfolio/repay-futures-negative-balance`)
+- Modified parameter `transferSide`:
+  - enum added: `TO_UM`, `FROM_UM`
+  - affected methods:
+    - `bnb_transfer()` (`POST /sapi/v1/portfolio/bnb-transfer`)
+- Modified parameter `transfer_type`:
+  - enum added: `EARN_TO_FUTURE`, `FUTURE_TO_EARN`
+  - affected methods:
+    - `get_transferable_earn_asset_balance_for_portfolio_margin()` (`GET /sapi/v1/portfolio/earn-asset-balance`)
+    - `transfer_ldusdt_rwusd_for_portfolio_margin()` (`POST /sapi/v1/portfolio/earn-asset-transfer`)
+
 ## 6.5.0 - 2026-06-09
 
 ### Changed (2)

@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.0.0 - 2026-07-14
+
+### Changed (5)
+
+- Updated `binance-common` library to version `4.0.3`
+- Modified parameter `positionSide`:
+  - enum added: `BOTH`, `LONG`, `SHORT`
+  - affected methods:
+    - `time_weighted_average_price_future_algo()` (`POST /sapi/v1/algo/futures/newOrderTwap`)
+    - `volume_participation_future_algo()` (`POST /sapi/v1/algo/futures/newOrderVp`)
+- Modified parameter `side`:
+  - enum added: `BUY`, `SELL`
+  - affected methods:
+    - `query_historical_algo_orders_future_algo()` (`GET /sapi/v1/algo/futures/historicalOrders`)
+    - `time_weighted_average_price_future_algo()` (`POST /sapi/v1/algo/futures/newOrderTwap`)
+    - `volume_participation_future_algo()` (`POST /sapi/v1/algo/futures/newOrderVp`)
+    - `query_historical_algo_orders_spot_algo()` (`GET /sapi/v1/algo/spot/historicalOrders`)
+    - `time_weighted_average_price_spot_algo()` (`POST /sapi/v1/algo/spot/newOrderTwap`)
+- Modified parameter `urgency`:
+  - enum added: `LOW`, `MEDIUM`, `HIGH`
+  - affected methods:
+    - `volume_participation_future_algo()` (`POST /sapi/v1/algo/futures/newOrderVp`)
+
 ## 2.11.0 - 2026-06-09
 
 ### Changed (2)

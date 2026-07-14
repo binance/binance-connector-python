@@ -6,6 +6,7 @@ from binance_sdk_wallet.wallet import (
     ConfigurationRestAPI,
     WALLET_REST_API_PROD_URL,
 )
+from binance_sdk_wallet.rest_api.models import DailyAccountSnapshotTypeEnum
 
 
 # Configure logging
@@ -25,7 +26,7 @@ client = Wallet(config_rest_api=configuration_rest_api)
 def daily_account_snapshot():
     try:
         response = client.rest_api.daily_account_snapshot(
-            type="type_example",
+            type=DailyAccountSnapshotTypeEnum["SPOT"].value,
         )
 
         rate_limits = response.rate_limits

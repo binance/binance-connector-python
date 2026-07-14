@@ -7,6 +7,7 @@ from binance_sdk_spot.spot import (
     SPOT_WS_STREAMS_PROD_URL,
     ConfigurationWebSocketStreams,
 )
+
 from binance_sdk_spot.websocket_streams.models import (
     AllMarketRollingWindowTickerWindowSizeEnum,
 )
@@ -29,9 +30,7 @@ async def all_market_rolling_window_ticker():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.all_market_rolling_window_ticker(
-            window_size=AllMarketRollingWindowTickerWindowSizeEnum[
-                "WINDOW_SIZE_1h"
-            ].value,
+            window_size=AllMarketRollingWindowTickerWindowSizeEnum[""].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

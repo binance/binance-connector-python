@@ -7,6 +7,7 @@ from binance_sdk_w3w_prediction.w3w_prediction import (
     W3W_PREDICTION_REST_API_PROD_URL,
 )
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

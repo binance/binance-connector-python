@@ -26,7 +26,7 @@ def sor_order_test():
             symbol="BNBUSDT",
             side=SorOrderTestSideEnum["BUY"].value,
             type=SorOrderTestTypeEnum["MARKET"].value,
-            quantity=1.0,
+            quantity=1,
         )
 
         rate_limits = response.rate_limits

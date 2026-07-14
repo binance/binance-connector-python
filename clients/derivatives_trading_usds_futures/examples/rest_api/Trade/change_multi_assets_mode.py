@@ -27,7 +27,7 @@ client = DerivativesTradingUsdsFutures(config_rest_api=configuration_rest_api)
 def change_multi_assets_mode():
     try:
         response = client.rest_api.change_multi_assets_mode(
-            multi_assets_margin="multi_assets_margin_example",
+            multi_assets_margin="True",
         )
 
         rate_limits = response.rate_limits

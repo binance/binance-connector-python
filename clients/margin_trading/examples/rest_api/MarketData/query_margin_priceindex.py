@@ -24,7 +24,7 @@ client = MarginTrading(config_rest_api=configuration_rest_api)
 
 def query_margin_priceindex():
     try:
-        response = client.rest_api.query_margin_priceindex(symbol="symbol_example")
+        response = client.rest_api.query_margin_priceindex(symbol="BNBBTC")
 
         rate_limits = response.rate_limits
         logging.info(f"query_margin_priceindex() rate limits: {rate_limits}")

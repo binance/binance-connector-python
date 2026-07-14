@@ -7,6 +7,7 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     DERIVATIVES_TRADING_COIN_FUTURES_REST_API_PROD_URL,
 )
 
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -26,7 +27,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def cancel_multiple_orders():
     try:
         response = client.rest_api.cancel_multiple_orders(
-            symbol="symbol_example",
+            symbol="BTCUSD_200925",
         )
 
         rate_limits = response.rate_limits

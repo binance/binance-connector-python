@@ -25,7 +25,7 @@ client = DerivativesTradingOptions(config_rest_api=configuration_rest_api)
 def recent_trades_list():
     try:
         response = client.rest_api.recent_trades_list(
-            symbol="symbol_example",
+            symbol="BTC-200730-9000-C",
         )
 
         rate_limits = response.rate_limits
