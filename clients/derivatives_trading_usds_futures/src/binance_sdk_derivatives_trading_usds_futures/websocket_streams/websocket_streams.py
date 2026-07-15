@@ -526,7 +526,7 @@ class DerivativesTradingUsdsFuturesWebSocketStreams(WebSocketStreamBase):
 
         > **After CM migration**, the payload is appended with a new `st` field (`1` = UM, `2` = CM); both `fstream` and `dstream` may subscribe to either UM or CM symbols on this stream.
 
-        Update Speed: 3000ms or 1000ms
+        Update Speed: 3s or 1s
 
                 Args:
                     id (Optional[str] = None): Unique WebSocket request ID.

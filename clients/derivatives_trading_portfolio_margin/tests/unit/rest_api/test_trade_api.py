@@ -1264,10 +1264,8 @@ class TestTradeApi:
         }
 
         expected_response = {
-            "avgPrice": "0.0",
             "clientOrderId": "myOrder1",
             "cumQty": "0",
-            "cumBase": "0",
             "executedQty": "0",
             "orderId": 283194212,
             "origQty": "2",
@@ -1333,10 +1331,8 @@ class TestTradeApi:
         }
 
         expected_response = {
-            "avgPrice": "0.0",
             "clientOrderId": "myOrder1",
             "cumQty": "0",
-            "cumBase": "0",
             "executedQty": "0",
             "orderId": 283194212,
             "origQty": "2",
@@ -2260,10 +2256,8 @@ class TestTradeApi:
         }
 
         expected_response = {
-            "avgPrice": "0.00000",
             "clientOrderId": "myOrder1",
             "cumQty": "0",
-            "cumQuote": "0",
             "executedQty": "0",
             "orderId": 4611875134427365000,
             "origQty": "0.40",
@@ -2331,10 +2325,8 @@ class TestTradeApi:
         }
 
         expected_response = {
-            "avgPrice": "0.00000",
             "clientOrderId": "myOrder1",
             "cumQty": "0",
-            "cumQuote": "0",
             "executedQty": "0",
             "orderId": 4611875134427365000,
             "origQty": "0.40",
@@ -4324,10 +4316,8 @@ class TestTradeApi:
         expected_response = {
             "clientOrderId": "testOrder",
             "cumQty": "0",
-            "cumBase": "0",
             "executedQty": "0",
             "orderId": 22542179,
-            "avgPrice": "0.0",
             "origQty": "10",
             "price": "0",
             "reduceOnly": False,
@@ -4403,10 +4393,8 @@ class TestTradeApi:
         expected_response = {
             "clientOrderId": "testOrder",
             "cumQty": "0",
-            "cumBase": "0",
             "executedQty": "0",
             "orderId": 22542179,
-            "avgPrice": "0.0",
             "origQty": "10",
             "price": "0",
             "reduceOnly": False,
@@ -5198,10 +5186,8 @@ class TestTradeApi:
         expected_response = {
             "clientOrderId": "testOrder",
             "cumQty": "0",
-            "cumQuote": "0",
             "executedQty": "0",
             "orderId": 22542179,
-            "avgPrice": "0.00000",
             "origQty": "10",
             "price": "0",
             "reduceOnly": False,
@@ -5283,10 +5269,8 @@ class TestTradeApi:
         expected_response = {
             "clientOrderId": "testOrder",
             "cumQty": "0",
-            "cumQuote": "0",
             "executedQty": "0",
             "orderId": 22542179,
-            "avgPrice": "0.00000",
             "origQty": "10",
             "price": "0",
             "reduceOnly": False,

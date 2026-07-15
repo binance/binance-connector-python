@@ -26,17 +26,11 @@ class CancelCmOrderResponse(BaseModel):
     CancelCmOrderResponse
     """  # noqa: E501
 
-    avg_price: Optional[StrictStr] = Field(
-        default=None, description="Avg Price.", alias="avgPrice"
-    )
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client Order ID.", alias="clientOrderId"
     )
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cum Qty.", alias="cumQty"
-    )
-    cum_base: Optional[StrictStr] = Field(
-        default=None, description="Cum Base.", alias="cumBase"
     )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed Qty.", alias="executedQty"
@@ -77,10 +71,8 @@ class CancelCmOrderResponse(BaseModel):
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "avgPrice",
         "clientOrderId",
         "cumQty",
-        "cumBase",
         "executedQty",
         "orderId",
         "origQty",
@@ -160,10 +152,8 @@ class CancelCmOrderResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "avgPrice": obj.get("avgPrice"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),

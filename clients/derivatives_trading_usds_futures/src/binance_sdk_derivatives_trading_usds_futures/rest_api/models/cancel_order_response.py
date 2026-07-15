@@ -30,11 +30,6 @@ class CancelOrderResponse(BaseModel):
         default=None, description="Client Order Id.", alias="clientOrderId"
     )
     cum_qty: Optional[StrictStr] = Field(default=None, alias="cumQty")
-    cum_quote: Optional[StrictStr] = Field(
-        default=None,
-        description="Cum Quote. Will be removed after CM migration.",
-        alias="cumQuote",
-    )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed Qty.", alias="executedQty"
     )
@@ -45,11 +40,6 @@ class CancelOrderResponse(BaseModel):
         default=None, description="Orig Qty.", alias="origQty"
     )
     price: Optional[StrictStr] = Field(default=None, description="Price.")
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Average execution price. Will be removed after CM migration.",
-        alias="avgPrice",
-    )
     reduce_only: Optional[StrictBool] = Field(
         default=None, description="Reduce Only.", alias="reduceOnly"
     )
@@ -112,12 +102,10 @@ class CancelOrderResponse(BaseModel):
     __properties: ClassVar[List[str]] = [
         "clientOrderId",
         "cumQty",
-        "cumQuote",
         "executedQty",
         "orderId",
         "origQty",
         "price",
-        "avgPrice",
         "reduceOnly",
         "side",
         "positionSide",
@@ -204,12 +192,10 @@ class CancelOrderResponse(BaseModel):
             {
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumQuote": obj.get("cumQuote"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),
                 "price": obj.get("price"),
-                "avgPrice": obj.get("avgPrice"),
                 "reduceOnly": obj.get("reduceOnly"),
                 "side": obj.get("side"),
                 "positionSide": obj.get("positionSide"),

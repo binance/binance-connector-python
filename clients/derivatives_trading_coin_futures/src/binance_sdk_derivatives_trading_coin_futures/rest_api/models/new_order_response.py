@@ -32,21 +32,11 @@ class NewOrderResponse(BaseModel):
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cumulative filled quantity.", alias="cumQty"
     )
-    cum_base: Optional[StrictStr] = Field(
-        default=None,
-        description="Cumulative base asset amount. Will be removed after CM migration.",
-        alias="cumBase",
-    )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed quantity", alias="executedQty"
     )
     order_id: Optional[StrictInt] = Field(
         default=None, description="Sub-order ID", alias="orderId"
-    )
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Average execution price. Will be removed after CM migration.",
-        alias="avgPrice",
     )
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Original order quantity", alias="origQty"
@@ -114,10 +104,8 @@ class NewOrderResponse(BaseModel):
     __properties: ClassVar[List[str]] = [
         "clientOrderId",
         "cumQty",
-        "cumBase",
         "executedQty",
         "orderId",
-        "avgPrice",
         "origQty",
         "price",
         "reduceOnly",
@@ -206,10 +194,8 @@ class NewOrderResponse(BaseModel):
             {
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "price": obj.get("price"),
                 "reduceOnly": obj.get("reduceOnly"),
