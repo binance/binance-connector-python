@@ -38,11 +38,6 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
         default=None, description="Client order ID.", alias="clientOrderId"
     )
     price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Average execution price. Will be removed after CM migration.",
-        alias="avgPrice",
-    )
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Original order quantity", alias="origQty"
     )
@@ -51,11 +46,6 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
     )
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cumulative filled quantity.", alias="cumQty"
-    )
-    cum_base: Optional[StrictStr] = Field(
-        default=None,
-        description="Cumulative base asset amount. Will be removed after CM migration.",
-        alias="cumBase",
     )
     time_in_force: Optional[StrictStr] = Field(
         default=None, description="Time in force", alias="timeInForce"
@@ -112,11 +102,9 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
         "status",
         "clientOrderId",
         "price",
-        "avgPrice",
         "origQty",
         "executedQty",
         "cumQty",
-        "cumBase",
         "timeInForce",
         "type",
         "reduceOnly",
@@ -204,11 +192,9 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "price": obj.get("price"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "reduceOnly": obj.get("reduceOnly"),

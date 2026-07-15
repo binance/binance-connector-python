@@ -1,5 +1,52 @@
 # Changelog
 
+## 14.0.0 - 2026-07-15
+
+### Changed (9)
+
+#### REST API
+
+- Modified response for `cancel_multiple_orders()` (`DELETE /fapi/v1/batchOrders`):
+  - items: property `cumQuote` deleted
+  - items: item property `cumQuote` deleted
+
+- Modified response for `place_multiple_orders()` (`POST /fapi/v1/batchOrders`):
+  - items: property `cumQuote` deleted
+  - items: property `avgPrice` deleted
+  - items: item property `cumQuote` deleted
+  - items: item property `avgPrice` deleted
+
+- Modified response for `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`):
+  - items: property `avgPrice` deleted
+  - items: property `cumBase` deleted
+  - items: item property `avgPrice` deleted
+  - items: item property `cumBase` deleted
+
+- Modified response for `cancel_order()` (`DELETE /fapi/v1/order`):
+  - property `cumQuote` deleted
+  - property `avgPrice` deleted
+
+- Modified response for `new_order()` (`POST /fapi/v1/order`):
+  - property `avgPrice` deleted
+  - property `cumQuote` deleted
+
+- Modified response for `modify_order()` (`PUT /fapi/v1/order`):
+  - property `avgPrice` deleted
+  - property `cumBase` deleted
+
+#### WebSocket API
+
+- Modified response for `cancel_order()` (`order.cancel` method):
+  - `result`: property `cumQuote` deleted
+
+- Modified response for `modify_order()` (`order.modify` method):
+  - `result`: property `avgPrice` deleted
+  - `result`: property `cumQuote` deleted
+
+- Modified response for `new_order()` (`order.place` method):
+  - `result`: property `cumQuote` deleted
+  - `result`: property `avgPrice` deleted
+
 ## 13.0.0 - 2026-07-14
 
 ### Changed (57)

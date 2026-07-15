@@ -11,6 +11,7 @@
 
 This is a client library for the Binance Alpha API, enabling developers to interact programmatically with Binance Alpha. The library provides tools to access curated early-stage token data, track Alpha project metrics and integrate discovery-focused market information into applications through the REST API:
 - [REST API](./src/binance_sdk_alpha/rest_api/rest_api.py)
+- [WebSocket Streams](./src/binance_sdk_alpha/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -18,6 +19,7 @@ This is a client library for the Binance Alpha API, enabling developers to inter
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
+- [Websocket Streams](#websocket-streams)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -26,6 +28,7 @@ This is a client library for the Binance Alpha API, enabling developers to inter
 
 - REST API Endpoints:
   - `/bapi/defi/v1/*`
+- WebSocket Endpoints: Real-time data streaming and request-response communication.
 - Inclusion of test cases and examples for quick onboarding.
 
 ## Installation
@@ -138,6 +141,97 @@ See the [Error Handling example](./docs/rest_api/error-handling.md) for detailed
 
 If `base_path` is not provided, it defaults to `https://www.binance.com`.
 
+### Websocket Streams
+
+WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_sdk_alpha/websocket_streams/websocket_streams.py) module to subscribe to these streams.
+
+```python
+import asyncio
+import logging
+
+from binance_common.configuration import ConfigurationWebSocketStreams
+from binance_common.constants import ALPHA_WS_STREAMS_PROD_URL
+from binance_sdk_alpha.alpha import Alpha
+
+logging.basicConfig(level=logging.INFO)
+
+configuration_ws_streams = ConfigurationWebSocketStreams(
+    stream_url=os.getenv("STREAM_URL", ALPHA_WS_STREAMS_PROD_URL)
+)
+
+client = Alpha(config_ws_streams=configuration_ws_streams)
+```
+
+More examples are available in the [`examples/websocket-streams`](./examples/websocket_streams/) folder.
+
+#### Configuration Options
+
+The WebSocket Streams API supports the following advanced configuration options:
+
+- `reconnect_delay`: Delay (ms) between reconnections.
+- `compression`: Enable response compression.
+- `mode`: Choose between `single` and `pool` connection modes.
+  - `single`: A single WebSocket connection.
+  - `pool`: A pool of WebSocket connections.
+- `pool_size`: Define the number of WebSocket connections in pool mode.
+- `https_agent`: Custom HTTPS agent for advanced TLS configuration.
+- `user_agent`: Custom user agent string for WebSocket Streams.
+
+##### Reconnect Delay
+
+Specify the delay in milliseconds between WebSocket reconnection attempts for streams. See the [Reconnect Delay example](./docs/websocket_streams/reconnect-delay.md) for detailed usage.
+
+##### Compression
+
+Enable or disable compression for WebSocket Streams messages. See the [Compression example](./docs/websocket_streams/compression.md) for detailed usage.
+
+##### Connection Mode
+
+Choose between `single` and `pool` connection modes for WebSocket Streams. The `single` mode uses a single WebSocket connection, while the `pool` mode uses a pool of WebSocket connections. See the [Connection Mode example](./docs/websocket_streams/connection-mode.md) for detailed usage.
+
+##### WebSocket Http Agent
+
+Customize the agent for advanced configurations. See the [WebSocket Http Agent example](./docs/websocket_streams/agent.md) for detailed usage.
+
+#### Unsubscribing from Streams
+
+You can unsubscribe from specific WebSocket streams using the `unsubscribe` method. This is useful for managing active subscriptions without closing the connection.
+
+```python
+import asyncio
+import logging
+
+from binance_common.configuration import ConfigurationWebSocketStreams
+from binance_sdk_alpha.alpha import Alpha
+
+logging.basicConfig(level=logging.INFO)
+
+client = Alpha(config_ws_streams=configuration_ws_streams)
+
+
+async def aggregate_trade_stream():
+    connection = None
+    try:
+        connection = await client.websocket_streams.create_connection()
+
+        stream = await connection.aggregate_trade_stream(
+            symbol="alpha_116usdt",
+        )
+        stream.on("message", lambda data: print(f"{data}"))
+
+        await asyncio.sleep(5)
+        await stream.unsubscribe()
+    except Exception as e:
+        logging.error(f"aggregate_trade_stream() error: {e}")
+    finally:
+        if connection:
+            await connection.close_connection(close_session=True)
+
+
+if __name__ == "__main__":
+    asyncio.run(aggregate_trade_stream())
+```
+
 ## Testing
 
 To run the tests, ensure you have [Poetry](https://python-poetry.org/) installed, then execute the following commands:
@@ -149,6 +243,7 @@ poetry run pytest ./tests
 
 The tests cover:
 * REST API endpoints
+* WebSocket Streams endpoints
 * Error handling
 * Edge cases
 
@@ -166,6 +261,19 @@ To contribute:
 Please ensure that all tests pass if you're making a direct contribution. Submit a pull request only after discussing and confirming the change.
 
 Thank you for your contributions!
+
+## Disclaimer
+
+This SDK is provided by Binance on an "as is" and "as available" basis for use at your own risk. Binance makes no representations or warranties of any kind, whether express or implied, as to the operation of the SDK, its accuracy, reliability, completeness, or fitness for any particular purpose.
+
+To the fullest extent permitted by law, Binance shall not be liable for any losses, damages, or expenses of any kind arising from or in connection with your use of, or inability to use, this SDK, including but not limited to any financial losses resulting from errors, bugs, interruptions, or inaccuracies in the SDK.
+
+Your use of this SDK to access the Binance Platform is subject to the Binance API Key Terms and the Binance Terms of Use, which shall prevail in the event of any conflict with this disclaimer. You are solely responsible for any orders or transactions executed through the Binance Platform using this SDK.
+
+This SDK is not intended to constitute investment advice or a recommendation to buy, sell, or hold any digital asset. You should independently evaluate and verify all information before acting.
+
+- [Binance Terms of Use](https://www.binance.com/en/terms)
+- [Binance API Key Terms](https://www.binance.com/en/about-legal/terms-binance-api)
 
 ## Licence
 

@@ -30,21 +30,11 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
         default=None, description="Client Order Id.", alias="clientOrderId"
     )
     cum_qty: Optional[StrictStr] = Field(default=None, alias="cumQty")
-    cum_quote: Optional[StrictStr] = Field(
-        default=None,
-        description="Cum Quote. Will be removed after CM migration.",
-        alias="cumQuote",
-    )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed Qty.", alias="executedQty"
     )
     order_id: Optional[StrictInt] = Field(
         default=None, description="Order Id.", alias="orderId"
-    )
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Avg Price. Will be removed after CM migration.",
-        alias="avgPrice",
     )
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Orig Qty.", alias="origQty"
@@ -100,10 +90,8 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
     __properties: ClassVar[List[str]] = [
         "clientOrderId",
         "cumQty",
-        "cumQuote",
         "executedQty",
         "orderId",
-        "avgPrice",
         "origQty",
         "price",
         "reduceOnly",
@@ -192,10 +180,8 @@ class PlaceMultipleOrdersResponseInner(BaseModel):
             {
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumQuote": obj.get("cumQuote"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "price": obj.get("price"),
                 "reduceOnly": obj.get("reduceOnly"),

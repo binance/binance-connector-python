@@ -31,19 +31,9 @@ class NewOrderResponseResult(BaseModel):
     status: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     price: Optional[StrictStr] = None
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Average execution price. Will be removed after CM migration.",
-        alias="avgPrice",
-    )
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
     executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
     cum_qty: Optional[StrictStr] = Field(default=None, alias="cumQty")
-    cum_quote: Optional[StrictStr] = Field(
-        default=None,
-        description="Cum Quote. Will be removed after CM migration.",
-        alias="cumQuote",
-    )
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
@@ -67,11 +57,9 @@ class NewOrderResponseResult(BaseModel):
         "status",
         "clientOrderId",
         "price",
-        "avgPrice",
         "origQty",
         "executedQty",
         "cumQty",
-        "cumQuote",
         "timeInForce",
         "type",
         "reduceOnly",
@@ -157,11 +145,9 @@ class NewOrderResponseResult(BaseModel):
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "price": obj.get("price"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),
                 "cumQty": obj.get("cumQty"),
-                "cumQuote": obj.get("cumQuote"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "reduceOnly": obj.get("reduceOnly"),

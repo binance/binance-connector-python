@@ -32,9 +32,6 @@ class NewCmOrderResponse(BaseModel):
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cum Qty.", alias="cumQty"
     )
-    cum_base: Optional[StrictStr] = Field(
-        default=None, description="Cum Base.", alias="cumBase"
-    )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed Qty.", alias="executedQty"
     )
@@ -42,9 +39,6 @@ class NewCmOrderResponse(BaseModel):
         default=None,
         description="Normal orderID after trigger if appliable, only have when the strategy is triggered",
         alias="orderId",
-    )
-    avg_price: Optional[StrictStr] = Field(
-        default=None, description="Avg Price.", alias="avgPrice"
     )
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Orig Qty.", alias="origQty"
@@ -79,10 +73,8 @@ class NewCmOrderResponse(BaseModel):
     __properties: ClassVar[List[str]] = [
         "clientOrderId",
         "cumQty",
-        "cumBase",
         "executedQty",
         "orderId",
-        "avgPrice",
         "origQty",
         "price",
         "reduceOnly",
@@ -162,10 +154,8 @@ class NewCmOrderResponse(BaseModel):
             {
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "price": obj.get("price"),
                 "reduceOnly": obj.get("reduceOnly"),

@@ -28,11 +28,6 @@ class CancelOrderResponseResult(BaseModel):
 
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     cum_qty: Optional[StrictStr] = Field(default=None, alias="cumQty")
-    cum_quote: Optional[StrictStr] = Field(
-        default=None,
-        description="Cum Quote. Will be removed after CM migration.",
-        alias="cumQuote",
-    )
     executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
@@ -61,7 +56,6 @@ class CancelOrderResponseResult(BaseModel):
     __properties: ClassVar[List[str]] = [
         "clientOrderId",
         "cumQty",
-        "cumQuote",
         "executedQty",
         "orderId",
         "origQty",
@@ -152,7 +146,6 @@ class CancelOrderResponseResult(BaseModel):
             {
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumQuote": obj.get("cumQuote"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),

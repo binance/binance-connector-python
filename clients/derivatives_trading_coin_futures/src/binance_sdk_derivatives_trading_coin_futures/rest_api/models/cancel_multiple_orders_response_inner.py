@@ -26,21 +26,11 @@ class CancelMultipleOrdersResponseInner(BaseModel):
     CancelMultipleOrdersResponseInner
     """  # noqa: E501
 
-    avg_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Average execution price. Will be removed after CM migration.",
-        alias="avgPrice",
-    )
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client order ID.", alias="clientOrderId"
     )
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cumulative filled quantity.", alias="cumQty"
-    )
-    cum_base: Optional[StrictStr] = Field(
-        default=None,
-        description="Cumulative base asset amount. Will be removed after CM migration.",
-        alias="cumBase",
     )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed quantity", alias="executedQty"
@@ -116,10 +106,8 @@ class CancelMultipleOrdersResponseInner(BaseModel):
     msg: Optional[StrictStr] = Field(default=None, description="Message details.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "avgPrice",
         "clientOrderId",
         "cumQty",
-        "cumBase",
         "executedQty",
         "orderId",
         "origQty",
@@ -210,10 +198,8 @@ class CancelMultipleOrdersResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "avgPrice": obj.get("avgPrice"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),
