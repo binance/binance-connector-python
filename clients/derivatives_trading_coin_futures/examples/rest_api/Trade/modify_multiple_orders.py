@@ -38,6 +38,7 @@ def modify_multiple_orders():
                     side="BUY",
                     quantity=1,
                     price=30005,
+                    modify_id=1,
                     recv_window=5000,
                     timestamp=1770736694138,
                 )

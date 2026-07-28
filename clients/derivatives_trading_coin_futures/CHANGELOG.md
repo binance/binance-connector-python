@@ -1,5 +1,38 @@
 # Changelog
 
+## 10.0.0 - 2026-07-28
+
+### Changed (7)
+
+#### REST API
+
+- Added parameter `modifyId`
+  - affected methods:
+    - `modify_order()` (`PUT /dapi/v1/order`)
+- Modified parameter `batchOrders`:
+  - items: property `modifyId` added
+  - items: item property `modifyId` added
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /dapi/v1/batchOrders`)
+- Modified response for `modify_multiple_orders()` (`PUT /dapi/v1/batchOrders`):
+  - items: property `modifyId` added
+  - items: item property `modifyId` added
+
+- Modified response for `modify_order()` (`PUT /dapi/v1/order`):
+  - property `modifyId` added
+
+- Modified response for `get_order_modify_history()` (`GET /dapi/v1/orderAmendment`):
+  - items.`amendment`: property `modifyId` added
+  - items.`amendment`: property `modifyId` added
+
+#### WebSocket API
+
+- Added parameter `modifyId`
+  - affected methods:
+    - `modify_order()` (`order.modify` method)
+- Modified response for `modify_order()` (`order.modify` method):
+  - `result`: property `modifyId` added
+
 ## 9.0.0 - 2026-07-15
 
 ### Changed (9)

@@ -121,7 +121,7 @@ class TestWebSocketStreams:
     async def test_aggregate_trade_stream_success_with_optional_params(self):
         """Test aggregate_trade_stream() successfully with optional parameters."""
 
-        params = {"symbol": "alpha_116usdt", "id": "1"}
+        params = {"symbol": "alpha_116usdt", "id": 532601580}
 
         expected_response = {
             "e": "aggTrade",
@@ -231,7 +231,7 @@ class TestWebSocketStreams:
     async def test_all_book_ticker_stream_success_with_optional_params(self):
         """Test all_book_ticker_stream() successfully with optional parameters."""
 
-        params = {"id": "1"}
+        params = {"id": 532601580}
 
         expected_response = {
             "e": "bookTicker",
@@ -325,7 +325,7 @@ class TestWebSocketStreams:
     async def test_all_mini_ticker_stream_success_with_optional_params(self):
         """Test all_mini_ticker_stream() successfully with optional parameters."""
 
-        params = {"id": "1"}
+        params = {"id": 532601580}
 
         expected_response = {
             "e": "24hrMiniTicker",
@@ -435,7 +435,7 @@ class TestWebSocketStreams:
     async def test_all_ticker_stream_success_with_optional_params(self):
         """Test all_ticker_stream() successfully with optional parameters."""
 
-        params = {"id": "1"}
+        params = {"id": 532601580}
 
         expected_response = {
             "e": "24hrTicker",
@@ -550,7 +550,7 @@ class TestWebSocketStreams:
     async def test_all_tokens24h_ticker_stream_success_with_optional_params(self):
         """Test all_tokens24h_ticker_stream() successfully with optional parameters."""
 
-        params = {"id": "1"}
+        params = {"id": 532601580}
 
         expected_response = {
             "e": "tickerList",
@@ -657,7 +657,7 @@ class TestWebSocketStreams:
     async def test_book_ticker_stream_success_with_optional_params(self):
         """Test book_ticker_stream() successfully with optional parameters."""
 
-        params = {"symbol": "alpha_116usdt", "id": "1"}
+        params = {"symbol": "alpha_116usdt", "id": 532601580}
 
         expected_response = {
             "e": "bookTicker",
@@ -786,7 +786,7 @@ class TestWebSocketStreams:
             "contract_address": "G7vQWurMkMMm2dU3iZpXYFTHT9Biio4F4gZCrwFpKNwG",
             "chain_id": "CT_501",
             "interval": ContractKlineStreamIntervalEnum["INTERVAL_1s"].value,
-            "id": "1",
+            "id": 532601580,
         }
 
         expected_response = {
@@ -946,7 +946,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "alpha_116usdt",
             "interval": FullDepthStreamIntervalEnum["INTERVAL_0ms"].value,
-            "id": "1",
+            "id": 532601580,
         }
 
         expected_response = {
@@ -1107,7 +1107,7 @@ class TestWebSocketStreams:
         params = {
             "symbol": "alpha_116usdt",
             "interval": KlineStreamIntervalEnum["INTERVAL_1m"].value,
-            "id": "1",
+            "id": 532601580,
         }
 
         expected_response = {
@@ -1250,7 +1250,7 @@ class TestWebSocketStreams:
     async def test_mini_ticker_stream_success_with_optional_params(self):
         """Test mini_ticker_stream() successfully with optional parameters."""
 
-        params = {"symbol": "alpha_116usdt", "id": "1"}
+        params = {"symbol": "alpha_116usdt", "id": 532601580}
 
         expected_response = {
             "e": "24hrMiniTicker",
@@ -1371,7 +1371,7 @@ class TestWebSocketStreams:
             "symbol": "alpha_116usdt",
             "levels": PartialDepthStreamLevelsEnum["LEVELS_5"].value,
             "interval": PartialDepthStreamIntervalEnum["INTERVAL_0ms"].value,
-            "id": "1",
+            "id": 532601580,
         }
 
         expected_response = {
@@ -1535,7 +1535,7 @@ class TestWebSocketStreams:
     async def test_ticker_stream_success_with_optional_params(self):
         """Test ticker_stream() successfully with optional parameters."""
 
-        params = {"symbol": "alpha_116usdt", "id": "1"}
+        params = {"symbol": "alpha_116usdt", "id": 532601580}
 
         expected_response = {
             "e": "24hrTicker",
@@ -1655,7 +1655,7 @@ class TestWebSocketStreams:
     async def test_trade_stream_success_with_optional_params(self):
         """Test trade_stream() successfully with optional parameters."""
 
-        params = {"symbol": "alpha_116usdt", "id": "1"}
+        params = {"symbol": "alpha_116usdt", "id": 532601580}
 
         expected_response = {
             "e": "trade",

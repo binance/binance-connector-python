@@ -40,8 +40,13 @@ class GetOrderModifyHistoryResponseInnerAmendment(BaseModel):
         default=None,
         description="Order modification count, representing the number of times the order has been modified",
     )
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="user-defined modification identifier, only returned if provided in the request",
+        alias="modifyId",
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["price", "origQty", "count"]
+    __properties: ClassVar[List[str]] = ["price", "origQty", "count", "modifyId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -128,6 +133,7 @@ class GetOrderModifyHistoryResponseInnerAmendment(BaseModel):
                     else None
                 ),
                 "count": obj.get("count"),
+                "modifyId": obj.get("modifyId"),
             }
         )
         # store additional fields in additional_properties

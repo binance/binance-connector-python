@@ -56,6 +56,11 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         description="stop price, only STOP, STOP_MARKET, TAKE_PROFIT, TAKE_PROFIT_MARKET need",
         alias="stopPrice",
     )
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.",
+        alias="modifyId",
+    )
     recv_window: Optional[Annotated[int, Field(le=60000, strict=True)]] = Field(
         default=None, description="Validity window in milliseconds.", alias="recvWindow"
     )
@@ -72,6 +77,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         "price",
         "priceMatch",
         "stopPrice",
+        "modifyId",
         "recvWindow",
         "timestamp",
     ]
@@ -181,6 +187,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
                 "price": obj.get("price"),
                 "priceMatch": obj.get("priceMatch"),
                 "stopPrice": obj.get("stopPrice"),
+                "modifyId": obj.get("modifyId"),
                 "recvWindow": obj.get("recvWindow"),
                 "timestamp": obj.get("timestamp"),
             }

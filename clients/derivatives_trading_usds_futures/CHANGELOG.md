@@ -1,5 +1,42 @@
 # Changelog
 
+## 15.0.0 - 2026-07-28
+
+### Changed (8)
+
+#### REST API
+
+- Added parameter `modifyId`
+  - affected methods:
+    - `modify_order()` (`PUT /fapi/v1/order`)
+- Modified parameter `batchOrders`:
+  - items: property `modifyId` added
+  - items: item property `modifyId` added
+  - affected methods:
+    - `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`)
+- Modified response for `modify_multiple_orders()` (`PUT /fapi/v1/batchOrders`):
+  - items: property `modifyId` added
+  - items: item property `modifyId` added
+
+- Modified response for `modify_order()` (`PUT /fapi/v1/order`):
+  - property `modifyId` added
+
+- Modified response for `get_order_modify_history()` (`GET /fapi/v1/orderAmendment`):
+  - items.`amendment`: property `modifyId` added
+  - items.`amendment`: property `modifyId` added
+
+- Modified response for `get_funding_rate_history()` (`GET /fapi/v1/fundingRate`):
+  - items: property `rateType` added
+  - items: item property `rateType` added
+
+#### WebSocket API
+
+- Added parameter `modifyId`
+  - affected methods:
+    - `modify_order()` (`order.modify` method)
+- Modified response for `modify_order()` (`order.modify` method):
+  - `result`: property `modifyId` added
+
 ## 14.0.0 - 2026-07-15
 
 ### Changed (9)

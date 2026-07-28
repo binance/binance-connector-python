@@ -496,6 +496,7 @@ class TestWebSocketTradeApi:
                 "symbol": "BTCUSDT",
                 "status": "NEW",
                 "clientOrderId": "xGHfltUMExx0TbQstQQfRX",
+                "modifyId": 1,
                 "price": "43769.10",
                 "origQty": "0.110",
                 "executedQty": "0.000",
@@ -576,6 +577,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "1",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
 
@@ -587,6 +589,7 @@ class TestWebSocketTradeApi:
                 "symbol": "BTCUSDT",
                 "status": "NEW",
                 "clientOrderId": "xGHfltUMExx0TbQstQQfRX",
+                "modifyId": 1,
                 "price": "43769.10",
                 "origQty": "0.110",
                 "executedQty": "0.000",
@@ -646,6 +649,7 @@ class TestWebSocketTradeApi:
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "1"
         assert params["price_match"] == ModifyOrderPriceMatchEnum["OPPONENT"].value
+        assert params["modify_id"] == 1
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -669,6 +673,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "1",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -689,6 +694,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "1",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
         params["side"] = None
@@ -709,6 +715,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "1",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
         params["quantity"] = None
@@ -731,6 +738,7 @@ class TestWebSocketTradeApi:
             "order_id": 1,
             "orig_client_order_id": "1",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
         params["price"] = None

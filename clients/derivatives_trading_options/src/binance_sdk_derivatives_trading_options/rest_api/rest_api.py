@@ -553,7 +553,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 24 hour rolling window price change statistics.
 
-        Weight(IP): 5
+        Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair
@@ -1044,7 +1044,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 Cancel all active orders on specified underlying.
 
-        Weight(IP): 1
+        Weight(IP): 5
 
         Security Type: TRADE
 
@@ -1074,7 +1074,7 @@ class DerivativesTradingOptionsRestAPI:
 
                 Cancel all active order on a symbol.
 
-        Weight(IP): 5
+        Weight(IP): 1
 
         Security Type: TRADE
 
@@ -1190,6 +1190,8 @@ class DerivativesTradingOptionsRestAPI:
                 New Order (TRADE)
 
                 Send a new order.
+
+        Weight(IP): 0
 
         Security Type: TRADE
 

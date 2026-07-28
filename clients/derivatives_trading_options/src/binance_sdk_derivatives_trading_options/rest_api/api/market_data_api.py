@@ -548,7 +548,7 @@ class MarketDataApi:
 
                 24 hour rolling window price change statistics.
 
-        Weight(IP): 5
+        Weight: 1 for a single symbol; 40 when the symbol parameter is omitted
 
                 Args:
                     symbol (Optional[str] = None): Option trading pair

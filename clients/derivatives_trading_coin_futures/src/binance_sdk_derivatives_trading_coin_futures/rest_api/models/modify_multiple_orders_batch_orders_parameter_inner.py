@@ -55,6 +55,11 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         default=None,
         description="Latest token price. **After CM migration, this parameter becomes mandatory** (each batch element must send both `price` and `quantity`).",
     )
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.",
+        alias="modifyId",
+    )
     recv_window: Optional[Annotated[int, Field(le=60000, strict=True)]] = Field(
         default=None, alias="recvWindow"
     )
@@ -69,6 +74,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         "side",
         "quantity",
         "price",
+        "modifyId",
         "recvWindow",
         "timestamp",
     ]
@@ -150,6 +156,7 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
                 "side": obj.get("side"),
                 "quantity": obj.get("quantity"),
                 "price": obj.get("price"),
+                "modifyId": obj.get("modifyId"),
                 "recvWindow": obj.get("recvWindow"),
                 "timestamp": obj.get("timestamp"),
             }

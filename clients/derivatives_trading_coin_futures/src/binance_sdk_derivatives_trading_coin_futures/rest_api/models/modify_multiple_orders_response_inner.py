@@ -37,6 +37,11 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client order ID.", alias="clientOrderId"
     )
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="user-defined modification identifier, only returned if provided in the request",
+        alias="modifyId",
+    )
     price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Original order quantity", alias="origQty"
@@ -101,6 +106,7 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
         "pair",
         "status",
         "clientOrderId",
+        "modifyId",
         "price",
         "origQty",
         "executedQty",
@@ -191,6 +197,7 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
                 "pair": obj.get("pair"),
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
+                "modifyId": obj.get("modifyId"),
                 "price": obj.get("price"),
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),

@@ -43,7 +43,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         self,
         configuration: ConfigurationWebSocketStreams,
     ) -> None:
-        super().__init__(configuration)
+        super().__init__(configuration, True)
         self.configuration = configuration
 
         self._defaultApi = DefaultApi(self)
@@ -121,7 +121,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
     async def aggregate_trade_stream(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Aggregate Trade Stream
@@ -130,7 +130,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -144,7 +144,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
     async def all_book_ticker_stream(
         self,
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         All Book Ticker Stream
@@ -152,7 +152,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Pushes best bid/ask updates for all symbols.
 
         Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -166,7 +166,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
     async def all_mini_ticker_stream(
         self,
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         All Mini Ticker Stream
@@ -174,7 +174,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Pushes mini ticker statistics for all symbols.
 
         Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -188,7 +188,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
     async def all_ticker_stream(
         self,
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         All Ticker Stream
@@ -196,7 +196,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Pushes full ticker statistics for all symbols.
 
         Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -210,7 +210,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
     async def all_tokens24h_ticker_stream(
         self,
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         All Tokens 24h Ticker Stream
@@ -218,7 +218,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Pushes 24h ticker-like metrics for all tokens.
 
         Args:
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -233,7 +233,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
     async def book_ticker_stream(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Book Ticker Stream
@@ -242,7 +242,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -259,7 +259,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         contract_address: Union[str, None],
         chain_id: Union[str, None],
         interval: Union[ContractKlineStreamIntervalEnum, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Contract Kline Stream
@@ -270,7 +270,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
             contract_address (Union[str, None]): Contract address.
             chain_id (Union[str, None]): Chain ID.
             interval (Union[ContractKlineStreamIntervalEnum, None]): Kline interval.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -288,7 +288,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         self,
         symbol: Union[str, None],
         interval: Union[FullDepthStreamIntervalEnum, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Full Depth Stream
@@ -298,7 +298,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
             interval (Union[FullDepthStreamIntervalEnum, None]): Update interval.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -314,7 +314,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         self,
         symbol: Union[str, None],
         interval: Union[KlineStreamIntervalEnum, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Kline Stream
@@ -324,7 +324,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
             interval (Union[KlineStreamIntervalEnum, None]): Kline interval.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -339,7 +339,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
     async def mini_ticker_stream(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Mini Ticker Stream
@@ -348,7 +348,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -365,7 +365,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
         symbol: Union[str, None],
         levels: Union[PartialDepthStreamLevelsEnum, None],
         interval: Union[PartialDepthStreamIntervalEnum, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Partial Depth Stream
@@ -376,7 +376,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
             levels (Union[PartialDepthStreamLevelsEnum, None]): Depth levels.
             interval (Union[PartialDepthStreamIntervalEnum, None]): Update interval.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -391,7 +391,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
     async def ticker_stream(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Ticker Stream
@@ -400,7 +400,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -415,7 +415,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
     async def trade_stream(
         self,
         symbol: Union[str, None],
-        id: Optional[str] = None,
+        id: Optional[int] = None,
     ) -> RequestStreamHandle:
         r"""
         Trade Stream
@@ -424,7 +424,7 @@ class AlphaWebSocketStreams(WebSocketStreamBase):
 
         Args:
             symbol (Union[str, None]): Symbol to subscribe, in lowercase stream format.
-            id (Optional[str] = None): Unique WebSocket request ID.
+            id (Optional[int] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle

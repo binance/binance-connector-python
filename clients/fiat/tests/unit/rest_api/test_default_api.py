@@ -62,9 +62,10 @@ class TestDefaultApi:
         """Test deposit() successfully with required parameters only."""
 
         params = {
-            "currency": "currency_example",
-            "api_payment_method": DepositApiPaymentMethodEnum["pix"].value,
-            "amount": "amount_example",
+            "currency": "BRL",
+            "api_payment_method": "pix",
+            "amount": "1",
+            "ext": {},
         }
 
         expected_response = {
@@ -90,11 +91,9 @@ class TestDefaultApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/fiat/deposit" in request_kwargs["url"]
         assert request_kwargs["method"] == "POST"
-        assert normalized["currency"] == "currency_example"
-        assert (
-            normalized["apiPaymentMethod"] == DepositApiPaymentMethodEnum["pix"].value
-        )
-        assert normalized["amount"] == "amount_example"
+        assert normalized["currency"] == "BRL"
+        assert normalized["apiPaymentMethod"] == "pix"
+        assert normalized["amount"] == "1"
 
         assert response is not None
 
@@ -225,12 +224,16 @@ class TestDefaultApi:
         """Test fiat_withdraw() successfully with required parameters only."""
 
         params = {
-            "currency": "currency_example",
-            "api_payment_method": FiatWithdrawApiPaymentMethodEnum[
-                "bank_transfer"
-            ].value,
-            "amount": 56,
-            "account_info": (),
+            "currency": "BRL",
+            "api_payment_method": "bank_transfer",
+            "amount": "10",
+            "account_info": {
+                "account_number": "1056894222",
+                "agency": "1234",
+                "bank_code_for_pix": "222",
+                "account_type": "current",
+            },
+            "ext": {},
         }
 
         expected_response = {
@@ -256,12 +259,13 @@ class TestDefaultApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v2/fiat/withdraw" in request_kwargs["url"]
         assert request_kwargs["method"] == "POST"
-        assert normalized["currency"] == "currency_example"
+        assert normalized["currency"] == "BRL"
+        assert normalized["apiPaymentMethod"] == "bank_transfer"
+        assert normalized["amount"] == "10"
         assert (
-            normalized["apiPaymentMethod"]
-            == FiatWithdrawApiPaymentMethodEnum["bank_transfer"].value
+            normalized["accountInfo"]
+            == '{"accountNumber":"1056894222","agency":"1234","bankCodeForPix":"222","accountType":"current"}'
         )
-        assert normalized["amount"] == 56
 
         assert response is not None
 
