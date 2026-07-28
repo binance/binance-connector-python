@@ -137,6 +137,7 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyOrderPriceMatchEnum,
 )
 
+
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderAlgoTypeEnum,
 )
@@ -2367,6 +2368,7 @@ class TestTradeApi:
                     "price": {"before": "30004", "after": "30003.2"},
                     "origQty": {"before": "1", "after": "1"},
                     "count": 3,
+                    "modifyId": 123,
                 },
             }
         ]
@@ -2437,6 +2439,7 @@ class TestTradeApi:
                     "price": {"before": "30004", "after": "30003.2"},
                     "origQty": {"before": "1", "after": "1"},
                     "count": 3,
+                    "modifyId": 123,
                 },
             }
         ]
@@ -2834,6 +2837,7 @@ class TestTradeApi:
                     price=30005,
                     price_match="OPPONENT",
                     stop_price=0,
+                    modify_id=1,
                     recv_window=5000,
                     timestamp=1770736694138,
                 )
@@ -2847,6 +2851,7 @@ class TestTradeApi:
                 "pair": "BTCUSDT",
                 "status": "NEW",
                 "clientOrderId": "LJ9R4QZDihCaS8UAOOLpgW",
+                "modifyId": 1,
                 "price": "30005",
                 "origQty": "1",
                 "executedQty": "0",
@@ -2925,6 +2930,7 @@ class TestTradeApi:
                     price=30005,
                     price_match="OPPONENT",
                     stop_price=0,
+                    modify_id=1,
                     recv_window=5000,
                     timestamp=1770736694138,
                 )
@@ -2939,6 +2945,7 @@ class TestTradeApi:
                 "pair": "BTCUSDT",
                 "status": "NEW",
                 "clientOrderId": "LJ9R4QZDihCaS8UAOOLpgW",
+                "modifyId": 1,
                 "price": "30005",
                 "origQty": "1",
                 "executedQty": "0",
@@ -3007,6 +3014,7 @@ class TestTradeApi:
                     price=30005,
                     price_match="OPPONENT",
                     stop_price=0,
+                    modify_id=1,
                     recv_window=5000,
                     timestamp=1770736694138,
                 )
@@ -3033,6 +3041,7 @@ class TestTradeApi:
                     price=30005,
                     price_match="OPPONENT",
                     stop_price=0,
+                    modify_id=1,
                     recv_window=5000,
                     timestamp=1770736694138,
                 )
@@ -3062,6 +3071,7 @@ class TestTradeApi:
             "pair": "BTCUSDT",
             "status": "NEW",
             "clientOrderId": "LJ9R4QZDihCaS8UAOOLpgW",
+            "modifyId": 1,
             "price": "30005",
             "origQty": "1",
             "executedQty": "0",
@@ -3135,6 +3145,7 @@ class TestTradeApi:
             "order_id": 20072994037,
             "orig_client_order_id": "LJ9R4QZDihCaS8UAOOLpgW",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
+            "modify_id": 1,
             "recv_window": 5000,
         }
 
@@ -3144,6 +3155,7 @@ class TestTradeApi:
             "pair": "BTCUSDT",
             "status": "NEW",
             "clientOrderId": "LJ9R4QZDihCaS8UAOOLpgW",
+            "modifyId": 1,
             "price": "30005",
             "origQty": "1",
             "executedQty": "0",

@@ -21,41 +21,25 @@ from ..models import NewOrderResponse
 from ..models import PositionInformationResponse
 from ..models import PositionInformationV2Response
 from ..models import QueryOrderResponse
-
-
 from ..models import ModifyOrderSideEnum
-
-
 from ..models import ModifyOrderPriceMatchEnum
-
 from ..models import NewAlgoOrderAlgoTypeEnum
-
 from ..models import NewAlgoOrderSideEnum
 from ..models import NewAlgoOrderTypeEnum
-
 from ..models import NewAlgoOrderPositionSideEnum
 from ..models import NewAlgoOrderTimeInForceEnum
-
-
 from ..models import NewAlgoOrderWorkingTypeEnum
 from ..models import NewAlgoOrderPriceMatchEnum
 from ..models import NewAlgoOrderClosePositionEnum
 from ..models import NewAlgoOrderPriceProtectEnum
 from ..models import NewAlgoOrderReduceOnlyEnum
-
-
 from ..models import NewAlgoOrderNewOrderRespTypeEnum
 from ..models import NewAlgoOrderSelfTradePreventionModeEnum
-
-
 from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
-
 from ..models import NewOrderPositionSideEnum
 from ..models import NewOrderTimeInForceEnum
 from ..models import NewOrderReduceOnlyEnum
-
-
 from ..models import NewOrderNewOrderRespTypeEnum
 from ..models import NewOrderPriceMatchEnum
 from ..models import NewOrderSelfTradePreventionModeEnum
@@ -201,6 +185,7 @@ class TradeApi:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
+        modify_id: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[ModifyOrderResponse]:
         """
@@ -246,6 +231,7 @@ class TradeApi:
                     order_id (Optional[int] = None): Order Id.
                     orig_client_order_id (Optional[str] = None): Orig Client Order Id.
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for LIMIT/STOP/TAKE_PROFIT order; Can't be passed together with price
+                    modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
                     recv_window (Optional[int] = None): Recv Window.
 
             Returns:
@@ -286,6 +272,7 @@ class TradeApi:
                 else {}
             ),
             **({"price_match": price_match} if price_match is not None else {}),
+            **({"modify_id": modify_id} if modify_id is not None else {}),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 

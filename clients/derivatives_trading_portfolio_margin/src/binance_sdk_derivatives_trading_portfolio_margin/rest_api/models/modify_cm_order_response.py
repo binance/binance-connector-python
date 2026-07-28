@@ -41,6 +41,11 @@ class ModifyCmOrderResponse(BaseModel):
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client Order ID.", alias="clientOrderId"
     )
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="user-defined modification identifier, only returned if provided in the request",
+        alias="modifyId",
+    )
     price: Optional[StrictStr] = Field(default=None, description="Price.")
     avg_price: Optional[StrictStr] = Field(
         default=None, description="Avg Price.", alias="avgPrice"
@@ -85,6 +90,7 @@ class ModifyCmOrderResponse(BaseModel):
         "pair",
         "status",
         "clientOrderId",
+        "modifyId",
         "price",
         "avgPrice",
         "origQty",
@@ -169,6 +175,7 @@ class ModifyCmOrderResponse(BaseModel):
                 "pair": obj.get("pair"),
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
+                "modifyId": obj.get("modifyId"),
                 "price": obj.get("price"),
                 "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),

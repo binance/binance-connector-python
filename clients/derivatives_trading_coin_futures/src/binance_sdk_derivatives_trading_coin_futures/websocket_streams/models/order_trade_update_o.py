@@ -41,6 +41,11 @@ class OrderTradeUpdateO(BaseModel):
     x: Optional[StrictStr] = Field(default=None, description="Execution Type")
     X: Optional[StrictStr] = Field(default=None, description="Order Status", alias="X")
     i: Optional[StrictInt] = Field(default=None, description="Order Id")
+    M: Optional[StrictStr] = Field(
+        default=None,
+        description="modifyId, only pushed for AMENDMENT (order modification) events when a modifyId was provided in the request",
+        alias="M",
+    )
     l: Optional[StrictStr] = Field(
         default=None, description="Order Last Filled Quantity"
     )
@@ -111,6 +116,7 @@ class OrderTradeUpdateO(BaseModel):
         "x",
         "X",
         "i",
+        "M",
         "l",
         "z",
         "L",
@@ -208,6 +214,7 @@ class OrderTradeUpdateO(BaseModel):
                 "x": obj.get("x"),
                 "X": obj.get("X"),
                 "i": obj.get("i"),
+                "M": obj.get("M"),
                 "l": obj.get("l"),
                 "z": obj.get("z"),
                 "L": obj.get("L"),

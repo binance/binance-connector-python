@@ -2101,6 +2101,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         - Batch modify orders are processed concurrently, and the order of matching is not guaranteed.
         - The order of returned contents for batch modify orders is the same as the order of the order list.
         - One order can only be modfied for less than 10000 times
+        - `modifyId` is an optional user-defined identifier passed through as-is; the server does not validate its uniqueness. If omitted, it is not included in the response.
 
                 Args:
                     batch_orders (Union[List[ModifyMultipleOrdersBatchOrdersParameterInner], None]): order list. Max 5 orders
@@ -2125,6 +2126,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         quantity: Optional[float] = None,
         price: Optional[float] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
+        modify_id: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifyOrderResponse]:
         """
@@ -2153,6 +2155,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                     quantity (Optional[float] = None): Order quantity, cannot be sent with `closePosition=true`. **After CM migration, this parameter becomes mandatory** (must be sent together with `price`).
                     price (Optional[float] = None): Order price. **After CM migration, this parameter becomes mandatory** (must be sent together with `quantity`).
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
+                    modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -2171,6 +2174,7 @@ class DerivativesTradingCoinFuturesRestAPI:
             quantity,
             price,
             price_match,
+            modify_id,
             recv_window,
         )
 

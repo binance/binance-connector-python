@@ -30,6 +30,11 @@ class ModifyOrderResponseResult(BaseModel):
     symbol: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
+    modify_id: Optional[StrictInt] = Field(
+        default=None,
+        description="user-defined modification identifier, only returned if provided in the request",
+        alias="modifyId",
+    )
     price: Optional[StrictStr] = None
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
     executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
@@ -56,6 +61,7 @@ class ModifyOrderResponseResult(BaseModel):
         "symbol",
         "status",
         "clientOrderId",
+        "modifyId",
         "price",
         "origQty",
         "executedQty",
@@ -144,6 +150,7 @@ class ModifyOrderResponseResult(BaseModel):
                 "symbol": obj.get("symbol"),
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
+                "modifyId": obj.get("modifyId"),
                 "price": obj.get("price"),
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),

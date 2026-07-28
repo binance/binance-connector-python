@@ -132,6 +132,7 @@ class TradeApi:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
+        modify_id: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[ModifyOrderResponse]:
         """
@@ -166,6 +167,7 @@ class TradeApi:
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
+                    modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
                     recv_window (Optional[int] = None):
 
             Returns:
@@ -206,6 +208,7 @@ class TradeApi:
                 else {}
             ),
             **({"price_match": price_match} if price_match is not None else {}),
+            **({"modify_id": modify_id} if modify_id is not None else {}),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 

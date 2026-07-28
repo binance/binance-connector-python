@@ -23,6 +23,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedu
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_equity import (
     TradingScheduleResponseMarketSchedulesEQUITY,
 )
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_hkequity import (
+    TradingScheduleResponseMarketSchedulesHKEQUITY,
+)
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_krequity import (
     TradingScheduleResponseMarketSchedulesKREQUITY,
 )
@@ -44,8 +47,16 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
     kr_equity: Optional[TradingScheduleResponseMarketSchedulesKREQUITY] = Field(
         default=None, alias="KR_EQUITY"
     )
+    hk_equity: Optional[TradingScheduleResponseMarketSchedulesHKEQUITY] = Field(
+        default=None, alias="HK_EQUITY"
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["EQUITY", "COMMODITY", "KR_EQUITY"]
+    __properties: ClassVar[List[str]] = [
+        "EQUITY",
+        "COMMODITY",
+        "KR_EQUITY",
+        "HK_EQUITY",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,6 +113,9 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of kr_equity
         if self.kr_equity:
             _dict["KR_EQUITY"] = self.kr_equity.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of hk_equity
+        if self.hk_equity:
+            _dict["HK_EQUITY"] = self.hk_equity.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -139,6 +153,13 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
                         obj["KR_EQUITY"]
                     )
                     if obj.get("KR_EQUITY") is not None
+                    else None
+                ),
+                "HK_EQUITY": (
+                    TradingScheduleResponseMarketSchedulesHKEQUITY.from_dict(
+                        obj["HK_EQUITY"]
+                    )
+                    if obj.get("HK_EQUITY") is not None
                     else None
                 ),
             }

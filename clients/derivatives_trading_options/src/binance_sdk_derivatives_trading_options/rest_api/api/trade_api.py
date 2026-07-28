@@ -131,7 +131,7 @@ class TradeApi:
 
                 Cancel all active orders on specified underlying.
 
-        Weight(IP): 1
+        Weight(IP): 5
 
         Security Type: TRADE
 
@@ -181,7 +181,7 @@ class TradeApi:
 
                 Cancel all active order on a symbol.
 
-        Weight(IP): 5
+        Weight(IP): 1
 
         Security Type: TRADE
 
@@ -364,6 +364,8 @@ class TradeApi:
                 https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/rest-api/trade#new-order
 
                 Send a new order.
+
+        Weight(IP): 0
 
         Security Type: TRADE
 

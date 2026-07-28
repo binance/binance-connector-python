@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.0.0 - 2026-07-28
+
+### Changed (1)
+
+#### WebSocket Streams
+
+- Modified parameter `id`:
+  - type `string` → `integer`
+  - affected methods:
+    - `all_book_ticker_stream()` (`!bookTicker` stream)
+    - `all_mini_ticker_stream()` (`!miniTicker@arr` stream)
+    - `all_ticker_stream()` (`!ticker@arr` stream)
+    - `aggregate_trade_stream()` (`<symbol>@aggTrade` stream)
+    - `book_ticker_stream()` (`<symbol>@bookTicker` stream)
+    - `partial_depth_stream()` (`<symbol>@depth<levels>@<interval>` stream)
+    - `full_depth_stream()` (`<symbol>@fulldepth@<interval>` stream)
+    - `kline_stream()` (`<symbol>@kline_<interval>` stream)
+    - `mini_ticker_stream()` (<`symbol>@miniTicker` stream)
+    - `ticker_stream()` (`<symbol>@ticker` stream)
+    - `trade_stream()` (`<symbol>@trade` stream)
+    - `contract_kline_stream()` (`came@<contractAddress>@<chainId>@kline_<interval>` stream)
+    - `all_tokens24h_ticker_stream()` (`came@allTokens@ticker24` stream)
+
 ## 2.0.0 - 2026-07-14
 
 ### Added (1)

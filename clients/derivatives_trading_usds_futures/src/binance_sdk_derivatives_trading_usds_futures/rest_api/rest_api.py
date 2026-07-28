@@ -2150,12 +2150,13 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Trading Schedule
 
-                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market and the commodity market.
+                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market, Hong Kong equity market, and the commodity market.
 
         Session types per market:
         - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
         - Commodity market: "REGULAR", "NO_TRADING".
         - Korean equity market: "REGULAR", "NO_TRADING".
+        - Hong Kong equity market: "REGULAR", "NO_TRADING".
 
         Weight(IP): 5
 
@@ -2901,6 +2902,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
+        modify_id: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifyOrderResponse]:
         """
@@ -2931,6 +2933,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
+                    modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -2949,6 +2952,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
             order_id,
             orig_client_order_id,
             price_match,
+            modify_id,
             recv_window,
         )
 

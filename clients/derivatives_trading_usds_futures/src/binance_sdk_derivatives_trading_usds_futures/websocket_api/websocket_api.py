@@ -51,6 +51,7 @@ from .models import ModifyOrderSideEnum
 
 from .models import ModifyOrderPriceMatchEnum
 
+
 from .models import NewAlgoOrderAlgoTypeEnum
 
 from .models import NewAlgoOrderSideEnum
@@ -506,6 +507,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
         order_id: Optional[int] = None,
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
+        modify_id: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> WebsocketApiResponse[ModifyOrderResponse]:
         """
@@ -549,6 +551,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
                     order_id (Optional[int] = None): Order Id.
                     orig_client_order_id (Optional[str] = None): Orig Client Order Id.
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for LIMIT/STOP/TAKE_PROFIT order; Can't be passed together with price
+                    modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
                     recv_window (Optional[int] = None): Recv Window.
 
                 Returns:
@@ -568,6 +571,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
             order_id,
             orig_client_order_id,
             price_match,
+            modify_id,
             recv_window,
         )
 
