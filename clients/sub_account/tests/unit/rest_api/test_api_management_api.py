@@ -1093,7 +1093,7 @@ class TestApiManagementApi:
 
         expected_response = {
             "total": 1,
-            "list": [
+            "rows": [
                 {
                     "email": "123@test.com",
                     "apiName": "myKey",
@@ -1162,7 +1162,7 @@ class TestApiManagementApi:
 
         expected_response = {
             "total": 1,
-            "list": [
+            "rows": [
                 {
                     "email": "123@test.com",
                     "apiName": "myKey",

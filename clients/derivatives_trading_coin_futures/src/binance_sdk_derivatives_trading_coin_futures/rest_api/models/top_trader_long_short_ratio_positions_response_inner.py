@@ -37,7 +37,7 @@ class TopTraderLongShortRatioPositionsResponseInner(BaseModel):
         default=None, description="44.04%", alias="shortPosition"
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp in milliseconds."
+        default=None, description="End time of the period, in milliseconds."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

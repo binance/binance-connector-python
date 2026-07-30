@@ -41,7 +41,7 @@ class OpenInterestStatisticsResponseInner(BaseModel):
         alias="CMCCirculatingSupply",
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp in milliseconds."
+        default=None, description="End time of the period, in milliseconds."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

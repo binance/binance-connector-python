@@ -44,7 +44,7 @@ class BasisResponseInner(BaseModel):
     basis: Optional[StrictStr] = Field(default=None, description="Basis value.")
     pair: Optional[StrictStr] = Field(default=None, description="Pair")
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp in milliseconds."
+        default=None, description="Start time of the period, in milliseconds."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

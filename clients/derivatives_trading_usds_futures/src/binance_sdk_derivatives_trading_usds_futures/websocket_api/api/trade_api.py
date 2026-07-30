@@ -21,25 +21,42 @@ from ..models import NewOrderResponse
 from ..models import PositionInformationResponse
 from ..models import PositionInformationV2Response
 from ..models import QueryOrderResponse
+
+
 from ..models import ModifyOrderSideEnum
+
+
 from ..models import ModifyOrderPriceMatchEnum
+
+
 from ..models import NewAlgoOrderAlgoTypeEnum
+
 from ..models import NewAlgoOrderSideEnum
 from ..models import NewAlgoOrderTypeEnum
+
 from ..models import NewAlgoOrderPositionSideEnum
 from ..models import NewAlgoOrderTimeInForceEnum
+
+
 from ..models import NewAlgoOrderWorkingTypeEnum
 from ..models import NewAlgoOrderPriceMatchEnum
 from ..models import NewAlgoOrderClosePositionEnum
 from ..models import NewAlgoOrderPriceProtectEnum
 from ..models import NewAlgoOrderReduceOnlyEnum
+
+
 from ..models import NewAlgoOrderNewOrderRespTypeEnum
 from ..models import NewAlgoOrderSelfTradePreventionModeEnum
+
+
 from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
+
 from ..models import NewOrderPositionSideEnum
 from ..models import NewOrderTimeInForceEnum
 from ..models import NewOrderReduceOnlyEnum
+
+
 from ..models import NewOrderNewOrderRespTypeEnum
 from ..models import NewOrderPriceMatchEnum
 from ..models import NewOrderSelfTradePreventionModeEnum

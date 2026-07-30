@@ -17,8 +17,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_sub_account.rest_api.models.query_sub_account_api_key_response_list_inner import (
-    QuerySubAccountApiKeyResponseListInner,
+from binance_sdk_sub_account.rest_api.models.query_sub_account_api_key_response_rows_inner import (
+    QuerySubAccountApiKeyResponseRowsInner,
 )
 from typing import Set
 from typing_extensions import Self
@@ -30,9 +30,9 @@ class QuerySubAccountApiKeyResponse(BaseModel):
     """  # noqa: E501
 
     total: Optional[StrictInt] = None
-    list: Optional[List[QuerySubAccountApiKeyResponseListInner]] = None
+    rows: Optional[List[QuerySubAccountApiKeyResponseRowsInner]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["total", "list"]
+    __properties: ClassVar[List[str]] = ["total", "rows"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,13 +80,13 @@ class QuerySubAccountApiKeyResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in list (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in rows (list)
         _items = []
-        if self.list:
-            for _item_list in self.list:
-                if _item_list:
-                    _items.append(_item_list.to_dict())
-            _dict["list"] = _items
+        if self.rows:
+            for _item_rows in self.rows:
+                if _item_rows:
+                    _items.append(_item_rows.to_dict())
+            _dict["rows"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -106,12 +106,12 @@ class QuerySubAccountApiKeyResponse(BaseModel):
         _obj = cls.model_validate(
             {
                 "total": obj.get("total"),
-                "list": (
+                "rows": (
                     [
-                        QuerySubAccountApiKeyResponseListInner.from_dict(_item)
-                        for _item in obj["list"]
+                        QuerySubAccountApiKeyResponseRowsInner.from_dict(_item)
+                        for _item in obj["rows"]
                     ]
-                    if obj.get("list") is not None
+                    if obj.get("rows") is not None
                     else None
                 ),
             }
