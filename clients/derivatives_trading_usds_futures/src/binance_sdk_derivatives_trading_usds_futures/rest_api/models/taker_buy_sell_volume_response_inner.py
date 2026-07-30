@@ -30,7 +30,7 @@ class TakerBuySellVolumeResponseInner(BaseModel):
     buy_vol: Optional[StrictStr] = Field(default=None, alias="buyVol")
     sell_vol: Optional[StrictStr] = Field(default=None, alias="sellVol")
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp in milliseconds."
+        default=None, description="Start time of the period, in milliseconds."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

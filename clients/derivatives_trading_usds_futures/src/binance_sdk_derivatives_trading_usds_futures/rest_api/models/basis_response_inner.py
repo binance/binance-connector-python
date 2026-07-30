@@ -35,7 +35,9 @@ class BasisResponseInner(BaseModel):
     )
     basis: Optional[StrictStr] = None
     pair: Optional[StrictStr] = None
-    timestamp: Optional[StrictInt] = None
+    timestamp: Optional[StrictInt] = Field(
+        default=None, description="Start time of the period, in milliseconds."
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "indexPrice",

@@ -186,6 +186,7 @@ The WebSocket API supports the following advanced configuration options:
 - `private_key_passphrase`: Passphrase for the private key, if encrypted.
 - `https_agent`: Custom HTTPS agent for advanced TLS configuration.
 - `user_agent`: Custom user agent string for WebSocket Streams.
+- `reconnect_attempts`: Maximum number of WebSocket reconnection attempts (max: 10).
 
 ##### Timeout
 
@@ -210,6 +211,10 @@ Use RSA or ED25519 private keys for WebSocket API authentication. See the [Key P
 ##### WebSocket Http Agent
 
 Customize the agent for advanced configurations. See the [WebSocket Http Agent example](./docs/websocket_api/agent.md) for detailed usage.
+
+##### Websocket Reconnect Attempts
+
+Specify how many times a failed reconnection is retried before the connection is given up on. A value between `1` and `10` is accepted; See the [Reconnect Attempts example](./docs/websocket_api/reconnect_attempts.md) for detailed usage.
 
 #### Testnet
 
@@ -291,6 +296,7 @@ The WebSocket Streams API supports the following advanced configuration options:
 - `pool_size`: Define the number of WebSocket connections in pool mode.
 - `https_agent`: Custom HTTPS agent for advanced TLS configuration.
 - `user_agent`: Custom user agent string for WebSocket Streams.
+- `reconnect_attempts`: Maximum number of WebSocket reconnection attempts (max: 10).
 
 ##### Reconnect Delay
 
@@ -311,6 +317,10 @@ Choose between `single` and `pool` connection modes for WebSocket Streams. The `
 ##### WebSocket Http Agent
 
 Customize the agent for advanced configurations. See the [WebSocket Http Agent example](./docs/websocket_streams/agent.md) for detailed usage.
+
+##### Websocket Reconnect Attempts
+
+Specify how many times a failed reconnection is retried before the connection is given up on. A value between `1` and `10` is accepted; See the [Reconnect Attempts example](./docs/websocket_streams/reconnect_attempts.md) for detailed usage.
 
 #### Unsubscribing from Streams
 

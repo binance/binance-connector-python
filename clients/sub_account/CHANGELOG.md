@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.0.0 - 2026-07-30
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.1.0`
+- Modified response for `query_sub_account_api_key()` (`GET /sapi/v1/sub-account/subAccountApi`):
+  - property `rows` added
+  - property `list` deleted
+
 ## 6.0.0 - 2026-07-14
 
 ### Added (4)

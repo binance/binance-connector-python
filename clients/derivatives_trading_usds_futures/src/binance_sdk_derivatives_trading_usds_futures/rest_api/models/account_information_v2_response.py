@@ -62,51 +62,57 @@ class AccountInformationV2Response(BaseModel):
     )
     total_initial_margin: Optional[StrictStr] = Field(
         default=None,
-        description="Total initial margin requirement.",
+        description="Total initial margin requirement. USDT only in single-asset mode; the sum of USD value of all cross positions/open order initial margin in multi-assets mode.",
         alias="totalInitialMargin",
     )
     total_maint_margin: Optional[StrictStr] = Field(
         default=None,
-        description="Total maintenance margin requirement.",
+        description="Total maintenance margin requirement. USDT only in single-asset mode; the sum of USD value of all cross positions maintenance margin in multi-assets mode.",
         alias="totalMaintMargin",
     )
     total_wallet_balance: Optional[StrictStr] = Field(
-        default=None, description="Total wallet balance.", alias="totalWalletBalance"
+        default=None,
+        description="Total wallet balance. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
+        alias="totalWalletBalance",
     )
     total_unrealized_profit: Optional[StrictStr] = Field(
         default=None,
-        description="Total unrealized profit.",
+        description="Total unrealized profit. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
         alias="totalUnrealizedProfit",
     )
     total_margin_balance: Optional[StrictStr] = Field(
-        default=None, description="Total margin balance.", alias="totalMarginBalance"
+        default=None,
+        description="Total margin balance. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
+        alias="totalMarginBalance",
     )
     total_position_initial_margin: Optional[StrictStr] = Field(
         default=None,
-        description="Initial margin required for positions.",
+        description="Initial margin required for positions. USDT only in single-asset mode; the sum of USD value of all cross positions initial margin in multi-assets mode.",
         alias="totalPositionInitialMargin",
     )
     total_open_order_initial_margin: Optional[StrictStr] = Field(
         default=None,
-        description="Initial margin required for open orders.",
+        description="Initial margin required for open orders. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
         alias="totalOpenOrderInitialMargin",
     )
     total_cross_wallet_balance: Optional[StrictStr] = Field(
         default=None,
-        description="Cross wallet balance.",
+        description="Cross wallet balance. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
         alias="totalCrossWalletBalance",
     )
     total_cross_un_pnl: Optional[StrictStr] = Field(
         default=None,
-        description="Unrealized PnL for cross positions.",
+        description="Unrealized PnL for cross positions. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
         alias="totalCrossUnPnl",
     )
     available_balance: Optional[StrictStr] = Field(
-        default=None, description="Available balance.", alias="availableBalance"
+        default=None,
+        description="Available balance. USDT only in single-asset mode; USD-denominated in multi-assets mode.",
+        alias="availableBalance",
     )
     max_withdraw_amount: Optional[StrictStr] = Field(
         default=None,
-        description="Maximum transferable/withdrawable amount.",
+        description="Maximum transferable/withdrawable amount. USDT only in single-asset mode; a maximum virtual USD amount in multi-assets mode.",
         alias="maxWithdrawAmount",
     )
     assets: Optional[List[AccountInformationV2ResponseAssetsInner]] = Field(

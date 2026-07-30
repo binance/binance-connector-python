@@ -206,8 +206,8 @@ from .query_managed_sub_account_transfer_log_sub_account_trading_response import
 from .query_sub_account_api_key_response import (
     QuerySubAccountApiKeyResponse as QuerySubAccountApiKeyResponse,
 )
-from .query_sub_account_api_key_response_list_inner import (
-    QuerySubAccountApiKeyResponseListInner as QuerySubAccountApiKeyResponseListInner,
+from .query_sub_account_api_key_response_rows_inner import (
+    QuerySubAccountApiKeyResponseRowsInner as QuerySubAccountApiKeyResponseRowsInner,
 )
 from .query_sub_account_assets_asset_management_response import (
     QuerySubAccountAssetsAssetManagementResponse as QuerySubAccountAssetsAssetManagementResponse,
