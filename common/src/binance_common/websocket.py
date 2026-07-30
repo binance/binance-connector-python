@@ -1,16 +1,24 @@
 import aiohttp
 import asyncio
+import inspect
 import json
 import logging
 
 from pydantic import BaseModel
 from typing import Callable, Optional, Dict, Generic, Union, TypeVar, Type
+from collections import defaultdict
 
 from binance_common.configuration import (
     ConfigurationWebSocketAPI,
     ConfigurationWebSocketStreams,
 )
-from binance_common.constants import WebsocketMode
+from binance_common.constants import (
+    AUTO_RECONNECT_INTERVAL_SECONDS,
+    DEFAULT_RECONNECT_ATTEMPTS,
+    MAX_RECONNECT_ATTEMPTS,
+    SUBSCRIBE_MESSAGE_DELAY_SECONDS,
+    WebsocketMode,
+)
 from binance_common.models import (
     WebsocketApiResponse,
     WebsocketApiOptions,
@@ -29,6 +37,8 @@ from binance_common.utils import (
 
 T = TypeVar("T", bound=BaseModel)
 
+SUPPORTED_CONNECTION_EVENTS = {"open", "ping", "pong", "close", "error"}
+
 
 class StreamConnectionsMap:
     def __init__(self):
@@ -39,6 +49,26 @@ global_stream_connections = StreamConnectionsMap()
 global_user_stream_connections = StreamConnectionsMap()
 
 
+def _forget_connection_streams(connection: "WebSocketConnection") -> None:
+    """Drop every stream mapping that points at a connection.
+
+    A connection that is gone for good must not be left in the global stream
+    maps, or a later subscribe would treat its streams as still live and
+    silently skip them.
+
+    Args:
+        connection (WebSocketConnection): The connection being forgotten.
+    """
+
+    for stream_map in (global_stream_connections, global_user_stream_connections):
+        for stream in [
+            stream
+            for stream, mapped in stream_map.stream_connections_map.items()
+            if mapped is connection
+        ]:
+            stream_map.stream_connections_map.pop(stream, None)
+
+
 class WebSocketConnection:
     """Represents a WebSocket connection.
 
@@ -46,13 +76,26 @@ class WebSocketConnection:
         id (Union[str, int]): Unique identifier for the WebSocket connection.
         pending_request (dict): Dictionary to hold pending requests.
         stream_callback_map (dict): Map of stream names to their callback functions.
+        connection_callback_map (defaultdict[list]): Map of connection-level event names
+            to lists of registered callback functions.
         response_types (dict): Map of stream names to their response types.
         ws_type (str): Type of WebSocket connection (API or Stream).
         websocket (aiohttp.ClientWebSocketResponse): The WebSocket response object.
         reconnect (bool): Flag indicating if the connection should reconnect.
+        is_open (bool): Flag indicating if the connection is currently open.
+        is_being_replaced (bool): Flag indicating that this connection is being
+            replaced by a reconnect, so it must not be discarded or treated as
+            closed by the user while its replacement is established.
+        close_emitted (bool): Flag indicating that the `close` event has already
+            been emitted for this connection, so it is never reported twice.
         is_session_log_on (bool): Flag indicating if the session is logged on.
         session_logon_request (Optional[dict]): The session logon request data.
         url_path (Optional[str]): The URL path for the WebSocket connection.
+        close_initiated (bool): Flag indicating that the user asked for this
+            connection to be closed, so it must not be reconnected.
+        scheduled_reconnect_task (Optional[asyncio.Task]): The pending automatic
+            reconnect task, kept so it can be cancelled when the connection is
+            replaced or closed.
     """
 
     def __init__(
@@ -65,13 +108,31 @@ class WebSocketConnection:
         self.id = id
         self.pending_request = {}
         self.stream_callback_map = {}
+        self.connection_callback_map = defaultdict(list)
         self.response_types = {}
         self.ws_type = ws_type
         self.websocket = websocket
         self.reconnect = False
+        self.is_open = True
+        self.is_being_replaced = False
+        self.close_emitted = False
         self.is_session_log_on = False
         self.session_logon_request = None
         self.url_path = url_path
+        self.close_initiated = False
+        self.scheduled_reconnect_task = None
+
+    def cancel_scheduled_reconnect(self) -> None:
+        """Cancel the pending automatic reconnect for this connection.
+        """
+
+        if self.scheduled_reconnect_task is None:
+            return
+
+        task = self.scheduled_reconnect_task
+        self.scheduled_reconnect_task = None
+        if task is not asyncio.current_task():
+            task.cancel()
 
 
 class WebSocketCommon:
@@ -92,7 +153,6 @@ class WebSocketCommon:
         self.configuration = configuration
         self.session = None
         self.user_data_endpoints = user_data_endpoints
-        self.close_initiated = False
 
     async def connect(
         self,
@@ -170,6 +230,7 @@ class WebSocketCommon:
                 proxy=proxy,
                 ssl=configuration.https_agent,
                 timeout=configuration.timeout / 1000,
+                autoping=False,
             )
             if ws_id:
                 id = ws_id
@@ -187,6 +248,7 @@ class WebSocketCommon:
                 max_msg_size=20 * 1024 * 1024,
                 proxy=proxy,
                 ssl=configuration.https_agent,
+                autoping=False,
             )
             id = ws_id if ws_id else get_uuid()
 
@@ -197,8 +259,10 @@ class WebSocketCommon:
 
         self.connections.append(connection)
 
-        asyncio.create_task(
-            self.schedule_reconnect(connection, configuration, 23 * 3600)
+        connection.scheduled_reconnect_task = asyncio.create_task(
+            self.schedule_reconnect(
+                connection, configuration, AUTO_RECONNECT_INTERVAL_SECONDS
+            )
         )
         asyncio.create_task(self.receive_loop(connection))
 
@@ -209,6 +273,7 @@ class WebSocketCommon:
             connection (WebSocketConnection): WebSocket connection object.
         """
 
+        loop_reported_close = False
         async for msg in connection.websocket:
             if msg.type == aiohttp.WSMsgType.TEXT:
                 data = json.loads(msg.data)
@@ -217,16 +282,18 @@ class WebSocketCommon:
                 if request_id and request_id in connection.pending_request:
                     future = connection.pending_request.pop(request_id)
                     if data.get("error"):
-                        future.set_exception(
-                            ValueError(f"Error received from server: {data['error']}")
+                        logging.error(
+                            f"Error received from server for request "
+                            f"{request_id}: {data['error']}"
                         )
+                        future.set_exception(ValueError(data["error"]))
                     else:
                         future.set_result(data)
                 elif (
                     data.get("event", {}).get("e") == "serverShutdown"
                     and not connection.reconnect
                     and connection.id not in self.reconnect_tasks
-                    and not getattr(self, "close_initiated", False)
+                    and not connection.close_initiated
                 ):
                     logging.warning(
                         "Server shutdown event received, scheduling reconnect"
@@ -235,10 +302,13 @@ class WebSocketCommon:
                         connection, self.configuration, 5, close_old_connection=False
                     )
                     await self.close_connection(connection, False)
-                    self.reconnect_tasks.remove(connection.id)
                 else:
                     if data.get("error"):
-                        raise ValueError(f"Error received from server: {data['error']}")
+                        logging.error(f"Error received from server: {data['error']}")
+                        self._emit_connection_event(
+                            connection, "error", data["error"]
+                        )
+                        continue
 
                     stream = data.get("stream")
                     subscription_id = data.get("subscriptionId")
@@ -297,21 +367,87 @@ class WebSocketCommon:
                                     else:
                                         callback(payload)
                         except Exception as e:
-                            raise ValueError(f"Error in callback for key {key}: {e}")
+                            logging.error(f"Error in callback for key {key}: {e}")
+                            self._emit_connection_event(connection, "error", e)
                     else:
                         logging.info(f"Received message: {data}")
             elif msg.type == aiohttp.WSMsgType.PING:
-                logging.info("Received PING from server")
-                await connection.websocket.pong()
+                logging.info(f"Received PING from server for {connection.id}")
+                await connection.websocket.pong(msg.data)
+                self._emit_connection_event(connection, "ping", msg.data)
+
             elif msg.type == aiohttp.WSMsgType.PONG:
-                logging.info("Received PONG from server")
+                logging.info(f"Received PONG from server for {connection.id}")
+                self._emit_connection_event(connection, "pong", msg.data)
+
             elif msg.type == aiohttp.WSMsgType.ERROR:
-                logging.error("Received error from server")
-                logging.error(connection.websocket.exception())
+                err = connection.websocket.exception()
+                logging.error(
+                    f"Received error from server on WebSocket {connection.id}: {err}"
+                )
+                self._emit_connection_event(connection, "error", err)
+                self._emit_close_event(connection)
+                await self._discard_connection(connection)
+                loop_reported_close = True
                 break
+
             elif msg.type == aiohttp.WSMsgType.CLOSE:
                 logging.info("WebSocket closed")
+                self._emit_close_event(connection)
+                await self._discard_connection(connection)
+                loop_reported_close = True
                 break
+
+        if not loop_reported_close:
+            logging.info("WebSocket connection closed")
+            self._emit_close_event(connection)
+            await self._discard_connection(connection)
+
+    def _emit_close_event(self, connection: WebSocketConnection) -> None:
+        """Mark a connection closed and emit its `close` event.
+
+        Args:
+            connection (WebSocketConnection): The connection that has closed.
+        """
+
+        connection.is_open = False
+
+        if connection.close_emitted:
+            logging.debug(
+                f"WebSocket {connection.id} already reported as closed; "
+                f"not emitting 'close' again."
+            )
+            return
+
+        connection.close_emitted = True
+        self._emit_connection_event(connection, "close")
+
+    async def _discard_connection(self, connection: WebSocketConnection) -> None:
+        """Close a dead socket and stop handing it out for new messages.
+
+        Args:
+            connection (WebSocketConnection): The connection that has ended.
+        """
+
+        if connection.reconnect or connection.is_being_replaced:
+            return
+
+        connection.cancel_scheduled_reconnect()
+
+        if not connection.websocket.closed:
+            try:
+                await connection.websocket.close()
+                logging.info(f"WebSocket {connection.id} closed after failure.")
+            except Exception as e:
+                logging.error(
+                    f"Error closing failed WebSocket {connection.id}: {e}"
+                )
+
+        if connection in self.connections:
+            self.connections.remove(connection)
+            logging.info(
+                f"WebSocket {connection.id} removed from the connection pool."
+            )
 
     async def send_message(
         self,
@@ -352,6 +488,204 @@ class WebSocketCommon:
         except Exception as e:
             logging.error(f"Error sending ping to WebSocket {connection.id}: {e}")
 
+    def _resolve_connections(
+        self,
+        connection: Optional[Union[WebSocketConnection, str, int]] = None,
+    ) -> list[WebSocketConnection]:
+        """Resolve a connection selector to the connections it designates.
+
+        Args:
+            connection (Optional[Union[WebSocketConnection, str, int]]): A
+                connection object, a connection id, or `None` to select every
+                connection currently in the pool.
+
+        Returns:
+            list[WebSocketConnection]: The matching connections, empty when the
+                selector matches nothing.
+        """
+
+        if connection is None:
+            return list(self.connections)
+
+        if isinstance(connection, WebSocketConnection):
+            return [connection]
+
+        return [c for c in self.connections if str(c.id) == str(connection)]
+
+    def on_connection(
+        self,
+        event: str,
+        callback: Callable[..., None],
+        connection: Optional[Union[WebSocketConnection, str, int]] = None,
+    ) -> None:
+        """Register a callback for a connection-level event.
+
+        Args:
+            event (str): The connection event to listen for. Supported values are
+                `open`, `ping`, `pong`, `close`, and `error`.
+            callback (Callable[..., None]): Callback invoked when the event fires.
+                `ping` and `pong` pass the frame payload, `error` passes the
+                error, and `open` and `close` pass nothing. The callback may also
+                be declared without parameters to ignore the payload.
+            connection (Optional[Union[WebSocketConnection, str, int]]): The
+                connection to observe, given as a connection object or its id.
+                When omitted, every connection of the pool is observed.
+
+        Raises:
+            ValueError: If the provided event is not supported.
+        """
+
+        self._validate_connection_event(event)
+
+        connections = self._resolve_connections(connection)
+
+        if not connections:
+            if connection is None:
+                logging.warning(
+                    f"No WebSocket connections available to register a "
+                    f"'{event}' callback on."
+                )
+            else:
+                logging.warning(f"Connection {connection} not connected.")
+            return
+
+        for target in connections:
+            registered = target.connection_callback_map[event]
+
+            if callback in registered:
+                logging.debug(
+                    f"Connection callback for '{event}' is already registered on "
+                    f"WebSocket {target.id}; ignoring the duplicate."
+                )
+                continue
+
+            registered.append(callback)
+
+            if event == "open" and target.is_open:
+                self._invoke_connection_callback(target, event, callback)
+
+    def off_connection(
+        self,
+        event: str,
+        callback: Optional[Callable[..., None]] = None,
+        connection: Optional[Union[WebSocketConnection, str, int]] = None,
+    ) -> None:
+        """Unregister connection-level callbacks.
+
+        Args:
+            event (str): The connection event to stop listening for.
+            callback (Optional[Callable[..., None]]): The callback to remove. When
+                omitted, every callback registered for the event is removed.
+            connection (Optional[Union[WebSocketConnection, str, int]]): The
+                connection to detach from, given as a connection object or its id.
+                When omitted, every connection of the pool is targeted.
+
+        Raises:
+            ValueError: If the provided event is not supported.
+        """
+
+        self._validate_connection_event(event)
+
+        connections = self._resolve_connections(connection)
+
+        if not connections and connection is not None:
+            logging.warning(f"Connection {connection} not connected.")
+            return
+
+        for target in connections:
+            registered = target.connection_callback_map.get(event)
+            if not registered:
+                continue
+
+            if callback is None:
+                registered.clear()
+                continue
+
+            while callback in registered:
+                registered.remove(callback)
+
+    @staticmethod
+    def _validate_connection_event(event: str) -> None:
+        """Validate that a connection-level event name is supported.
+
+        Args:
+            event (str): The connection event name to validate.
+
+        Raises:
+            ValueError: If the provided event is not supported.
+        """
+
+        if event not in SUPPORTED_CONNECTION_EVENTS:
+            raise ValueError(
+                f"Unsupported connection event: {event}. "
+                f"Supported connection events are: {SUPPORTED_CONNECTION_EVENTS}"
+            )
+
+    def _emit_connection_event(
+        self,
+        connection: WebSocketConnection,
+        event: str,
+        *args,
+    ) -> None:
+        """Invoke callbacks registered for a connection-level event.
+
+        Args:
+            connection (WebSocketConnection): The target WebSocket connection.
+            event (str): The connection event name to emit, such as `open`,
+                `close`, `error`, `ping`, or `pong`.
+            *args: Positional arguments passed to each registered callback.
+        """
+
+        callbacks = connection.connection_callback_map.get(event, [])
+        for callback in list(callbacks):
+            self._invoke_connection_callback(connection, event, callback, *args)
+
+    def _invoke_connection_callback(
+        self,
+        connection: WebSocketConnection,
+        event: str,
+        callback: Callable[..., None],
+        *args,
+    ) -> None:
+        """Invoke a single connection-level callback, isolating its failures.
+
+        Args:
+            connection (WebSocketConnection): The target WebSocket connection.
+            event (str): The connection event name being emitted.
+            callback (Callable[..., None]): Callback to invoke.
+            *args: Positional arguments passed to the callback.
+        """
+
+        if args:
+            try:
+                parameters = inspect.signature(callback).parameters.values()
+            except (TypeError, ValueError):
+                parameters = None
+
+            if parameters is not None:
+                accepted = 0
+                for parameter in parameters:
+                    if parameter.kind is inspect.Parameter.VAR_POSITIONAL:
+                        accepted = len(args)
+                        break
+                    if parameter.kind in (
+                        inspect.Parameter.POSITIONAL_ONLY,
+                        inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                    ):
+                        accepted += 1
+
+                args = args[:accepted]
+
+        try:
+            result = callback(*args)
+            if asyncio.iscoroutine(result):
+                asyncio.ensure_future(result)
+        except Exception as e:
+            logging.error(
+                f"Error in '{event}' connection callback for WebSocket "
+                f"{connection.id}: {e}"
+            )
+
     async def schedule_reconnect(
         self,
         connection: WebSocketConnection,
@@ -364,28 +698,35 @@ class WebSocketCommon:
         Args:
             connection (WebSocketConnection): WebSocket connection object.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
-            delay (int): Delay in seconds.
+            delay (int): Delay in seconds. Use `0` to reconnect immediately;
+                :meth:`reconnect` may also be called directly for that.
             close_old_connection (bool): Whether to close the old connection before reconnecting.
         """
 
-        await asyncio.sleep(delay)
+        if delay:
+            await asyncio.sleep(delay)
 
-        if close_old_connection:
-            connection.reconnect = True
-
-        if connection.is_session_log_on:
-            await WebSocketCommon.send_message(
-                self,
-                {
-                    "method": self.user_data_endpoints.user_data_stream_logout,
-                    "params": {},
-                    "id": get_uuid(),
-                },
-                connection,
+        if connection.close_initiated:
+            logging.debug(
+                f"Skipping reconnect for WebSocket {connection.id}: "
+                f"closed by the user."
             )
-            await asyncio.sleep(1)
-            connection.is_session_log_on = False
-        self.reconnect_tasks.append(connection.id)
+            return
+
+        if connection not in self.connections:
+            logging.debug(
+                f"Skipping reconnect for WebSocket {connection.id}: "
+                f"no longer in the connection pool."
+            )
+            return
+
+        if connection.id in self.reconnect_tasks:
+            logging.debug(
+                f"Skipping reconnect for WebSocket {connection.id}: "
+                f"a reconnect is already in flight."
+            )
+            return
+
         await self.reconnect(connection, configuration, close_old_connection)
 
     async def reconnect(
@@ -394,44 +735,146 @@ class WebSocketCommon:
         configuration: Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams],
         close_old_connection: bool = True,
     ):
-        """Reconnect to the WebSocket server.
+        """Reconnect to the WebSocket server, replacing a connection in place.
 
         Args:
             connection (WebSocketConnection): WebSocket connection object.
             configuration (Union[ConfigurationWebSocketAPI, ConfigurationWebSocketStreams]): Configuration object.
             close_old_connection (bool): Whether to close the old connection before reconnecting.
+
+        Returns:
+            Optional[WebSocketConnection]: The replacement connection, or None
+                when every attempt failed.
         """
 
-        if len(connection.pending_request) > 0:
-            connection.pending_request.clear()
+        connection.cancel_scheduled_reconnect()
 
-        if close_old_connection:
-            await self.close_connection(connection, False)
-        if configuration.reconnect_delay:
-            await asyncio.sleep(configuration.reconnect_delay / 1000)
+        if connection.id not in self.reconnect_tasks:
+            self.reconnect_tasks.append(connection.id)
 
-        await self.init_connection(configuration.stream_url, configuration, connection.url_path, connection.id)
+        try:
+            if close_old_connection:
+                connection.reconnect = True
 
-        new_connection = next(
-            (c for c in self.connections if c.id == connection.id), None
-        )
-        if not new_connection:
-            logging.error("Reconnect failed: new connection not found")
-            return
+            if connection.is_session_log_on:
+                await WebSocketCommon.send_message(
+                    self,
+                    {
+                        "method": self.user_data_endpoints.user_data_stream_logout,
+                        "params": {},
+                        "id": get_uuid(),
+                    },
+                    connection,
+                )
+                await asyncio.sleep(1)
+                connection.is_session_log_on = False
 
-        if connection.session_logon_request and self.configuration.session_re_logon:
-            await self.session_re_log_on(
-                connection.session_logon_request, new_connection
+            if len(connection.pending_request) > 0:
+                connection.pending_request.clear()
+
+            connection.is_being_replaced = True
+
+            if close_old_connection:
+                await self.close_connection(connection, False)
+
+            self._emit_close_event(connection)
+
+            max_attempts = min(
+                getattr(configuration, "reconnect_attempts", None)
+                or DEFAULT_RECONNECT_ATTEMPTS,
+                MAX_RECONNECT_ATTEMPTS,
             )
-            await asyncio.sleep(1)
-            await self._resubscribe_user_streams(connection, new_connection)
+            delay = (configuration.reconnect_delay or 0) / 1000
+            attempt = 0
+            error = None
+            new_connection = None
 
-        await self._resubscribe_global_streams(connection, new_connection)
-        logging.info(f"Reconnected WebSocket {close_old_connection}")
+            while attempt < max_attempts:
+                attempt += 1
 
-        if close_old_connection:
-            self.reconnect_tasks.remove(connection.id)
-            connection.reconnect = False
+                if delay:
+                    await asyncio.sleep(delay)
+
+                if connection.close_initiated:
+                    logging.info(
+                        f"Reconnect for WebSocket {connection.id} abandoned: "
+                        f"closed by the user."
+                    )
+                    return None
+
+                error = None
+                try:
+                    await self.init_connection(
+                        configuration.stream_url,
+                        configuration,
+                        connection.url_path,
+                        connection.id,
+                    )
+                    new_connection = next(
+                        (
+                            c
+                            for c in self.connections
+                            if c.id == connection.id and c is not connection
+                        ),
+                        None,
+                    )
+                    if new_connection is not None:
+                        break
+                    error = ConnectionError(
+                        f"Reconnect failed: no new connection established for "
+                        f"WebSocket {connection.id}"
+                    )
+                except Exception as e:
+                    error = e
+
+                logging.error(
+                    f"Reconnect attempt {attempt}/{max_attempts} failed for "
+                    f"WebSocket {connection.id}: {error}"
+                )
+
+            if new_connection is None:
+                if connection.id in self.reconnect_tasks:
+                    self.reconnect_tasks.remove(connection.id)
+
+                connection.reconnect = False
+                connection.is_being_replaced = False
+                connection.cancel_scheduled_reconnect()
+
+                self._emit_connection_event(connection, "error", error)
+                self._emit_close_event(connection)
+
+                if connection in self.connections:
+                    self.connections.remove(connection)
+                    logging.info(
+                        f"WebSocket {connection.id} removed from the connection "
+                        f"pool after a failed reconnect."
+                    )
+
+                _forget_connection_streams(connection)
+                return None
+
+            if connection.session_logon_request and self.configuration.session_re_logon:
+                await self.session_re_log_on(
+                    connection.session_logon_request, new_connection
+                )
+                await asyncio.sleep(1)
+                await self._resubscribe_user_streams(connection, new_connection)
+
+            if connection.connection_callback_map:
+                new_connection.connection_callback_map = defaultdict(
+                    list,
+                    {event: callbacks.copy() for event, callbacks in connection.connection_callback_map.items()}
+                )
+
+            await self._resubscribe_global_streams(connection, new_connection)
+            self._emit_connection_event(new_connection, "open")
+        finally:
+            if connection.id in self.reconnect_tasks:
+                self.reconnect_tasks.remove(connection.id)
+
+        connection.reconnect = False
+        logging.info(f"Reconnected WebSocket {connection.id}")
+        return new_connection
 
     async def _resubscribe_user_streams(
         self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
@@ -470,20 +913,29 @@ class WebSocketCommon:
             old_connection (WebSocketConnection): The old WebSocket connection.
             new_connection (WebSocketConnection): The new WebSocket connection.
         """
-        for stream, conn in list(
-            global_stream_connections.stream_connections_map.items()
-        ):
-            if conn != old_connection or not isinstance(stream, str):
-                continue
 
-            json_msg = {
-                "method": "SUBSCRIBE",
-                "params": [stream],
-                "id": old_connection.id,
-            }
-            await self.send_message(json_msg, new_connection)
+        streams = [
+            stream
+            for stream, conn in list(
+                global_stream_connections.stream_connections_map.items()
+            )
+            if conn == old_connection and isinstance(stream, str)
+        ]
+
+        if not streams:
+            return
+
+        json_msg = {
+            "method": "SUBSCRIBE",
+            "params": streams,
+            "id": (
+                get_random_int() if getattr(self, "id_strict_int", False) else get_uuid()
+            ),
+        }
+        await self.send_message(json_msg, new_connection)
+
+        for stream in streams:
             global_stream_connections.stream_connections_map[stream] = new_connection
-
             new_connection.stream_callback_map[stream] = (
                 old_connection.stream_callback_map.get(stream)
             )
@@ -535,26 +987,38 @@ class WebSocketCommon:
         if len(self.connections) == 0:
             logging.warning("No WebSocket connections to close.")
         elif connection:
-            try:
-                connection.close_initiated = True
-                await connection.websocket.close()
-                logging.info(f"WebSocket {connection.id} closed.")
-                self.connections.remove(connection)
-            except Exception as e:
-                logging.error(f"Error closing WebSocket {connection.id}: {e}")
+            await self._close_one(connection)
         else:
-            for connection in self.connections[:]:
-                try:
-                    connection.close_initiated = True
-                    await connection.websocket.close()
-                    logging.info(f"WebSocket {connection.id} closed.")
-                    self.connections.remove(connection)
-                except Exception as e:
-                    logging.error(f"Error closing WebSocket {connection.id}: {e}")
+            for pooled_connection in self.connections[:]:
+                await self._close_one(pooled_connection)
 
         if close_session and self.session is not None:
             await self.session.close()
             self.session = None
+
+    async def _close_one(self, connection: WebSocketConnection) -> None:
+        """Close a single connection and stop its background tasks.
+
+        Args:
+            connection (WebSocketConnection): The connection to close.
+        """
+
+        user_initiated = not (connection.reconnect or connection.is_being_replaced)
+
+        try:
+            if user_initiated:
+                connection.close_initiated = True
+            connection.cancel_scheduled_reconnect()
+
+            await connection.websocket.close()
+            logging.info(f"WebSocket {connection.id} closed.")
+            if connection in self.connections:
+                self.connections.remove(connection)
+        except Exception as e:
+            logging.error(f"Error closing WebSocket {connection.id}: {e}")
+
+        if user_initiated:
+            _forget_connection_streams(connection)
 
 
 class WebSocketStreamBase(WebSocketCommon):
@@ -600,6 +1064,8 @@ class WebSocketStreamBase(WebSocketCommon):
 
         Args:
             streams (list[str]): List of streams to subscribe to.
+            response_model (Optional[Type[T]]): Model used to parse the payloads.
+            stream_url (Optional[str]): URL path for the subscription
         """
 
         if not streams:
@@ -623,39 +1089,64 @@ class WebSocketStreamBase(WebSocketCommon):
             if stream not in global_stream_connections.stream_connections_map
         ]
 
-        for stream in streams:
-            if stream_url:
-                candidates = [c for c in self.connections if c.url_path == stream_url]
-            else:
-                candidates = self.connections
+        grouped = self._group_streams_by_connection(streams, stream_url)
 
-            if self.configuration.mode == WebsocketMode.SINGLE:
-                connection = candidates[0] if candidates else None
-            else:
-                connection = (
-                    candidates[self.round_robin_index % len(candidates)]
-                    if candidates
-                    else None
-                )
-                self.round_robin_index = (
-                    (self.round_robin_index + 1) % len(candidates) if candidates else 0
-                )
-
-            if connection is None:
-                logging.warning(f"No matching connection found for stream: {stream}")
-                continue
-
-            logging.info(f"Subscribing to streams: {streams}")
+        for connection, connection_streams in grouped:
+            logging.info(
+                f"Subscribing to streams on WebSocket {connection.id}: "
+                f"{connection_streams}"
+            )
             json_msg = {
                 "method": "SUBSCRIBE",
-                "params": [stream],
+                "params": connection_streams,
                 "id": get_random_int() if self.id_strict_int else get_uuid(),
             }
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(SUBSCRIBE_MESSAGE_DELAY_SECONDS)
             await self.send_message(json_msg, connection)
-            global_stream_connections.stream_connections_map[stream] = connection
-            connection.stream_callback_map.update({stream: []})
-            connection.response_types.update({stream: response_model})
+
+            for stream in connection_streams:
+                global_stream_connections.stream_connections_map[stream] = connection
+                connection.stream_callback_map.update({stream: []})
+                connection.response_types.update({stream: response_model})
+
+    def _group_streams_by_connection(
+        self,
+        streams: list[str],
+        stream_url: Optional[str] = None,
+    ) -> list[tuple[WebSocketConnection, list[str]]]:
+        """Assign streams to connections, grouped so each is sent one message.
+
+        Args:
+            streams (list[str]): The streams to assign.
+            stream_url (Optional[str]): Only consider connections serving this
+                URL path.
+
+        Returns:
+            list[tuple[WebSocketConnection, list[str]]]: Each target connection
+                with the streams assigned to it, in assignment order.
+        """
+
+        if stream_url:
+            candidates = [c for c in self.connections if c.url_path == stream_url]
+        else:
+            candidates = list(self.connections)
+
+        if not candidates:
+            logging.warning(f"No matching connection found for streams: {streams}")
+            return []
+
+        grouped: dict[Union[str, int], tuple[WebSocketConnection, list[str]]] = {}
+
+        for stream in streams:
+            if self.configuration.mode == WebsocketMode.SINGLE:
+                connection = candidates[0]
+            else:
+                connection = candidates[self.round_robin_index % len(candidates)]
+                self.round_robin_index = (self.round_robin_index + 1) % len(candidates)
+
+            grouped.setdefault(connection.id, (connection, []))[1].append(stream)
+
+        return list(grouped.values())
 
     def on(self, event: str, callback: Callable[[T], None], stream: str) -> None:
         """Set the callback function for incoming messages on a specific stream.
@@ -707,24 +1198,31 @@ class WebSocketStreamBase(WebSocketCommon):
             logging.warning(f"Stream {missing_stream} is not subscribed.")
             return
 
+        grouped: dict[Union[str, int], tuple[WebSocketConnection, list[str]]] = {}
         for stream in streams:
-            connection = (
-                global_stream_connections.stream_connections_map[stream]
-                if stream in global_stream_connections.stream_connections_map
-                else None
-            )
-            if connection:
-                json_msg = json.dumps(
-                    {"method": "UNSUBSCRIBE", "params": streams, "id": get_uuid()}
-                )
-                await connection.websocket.send_str(json_msg)
+            connection = global_stream_connections.stream_connections_map.get(stream)
+            if connection is None:
+                raise ValueError(f"Stream {stream} not connected.")
+            grouped.setdefault(connection.id, (connection, []))[1].append(stream)
 
-                logging.info(f"Unsubscribed from stream: {stream}")
+        for connection, connection_streams in grouped.values():
+            json_msg = json.dumps(
+                {
+                    "method": "UNSUBSCRIBE",
+                    "params": connection_streams,
+                    "id": get_random_int() if self.id_strict_int else get_uuid(),
+                }
+            )
+            await connection.websocket.send_str(json_msg)
+
+            logging.info(
+                f"Unsubscribed from streams on WebSocket {connection.id}: "
+                f"{connection_streams}"
+            )
+            for stream in connection_streams:
                 global_stream_connections.stream_connections_map.pop(stream, None)
                 connection.stream_callback_map.pop(stream, None)
                 connection.response_types.pop(stream, None)
-            else:
-                raise ValueError(f"Stream {stream} not connected.")
 
     async def list_subscribe(self) -> dict:
         """List all subscriptions.
@@ -854,7 +1352,7 @@ class WebSocketAPIBase(WebSocketCommon):
                 )
             except Exception as e:
                 logging.warning(f"Connection with user closed: {e}")
-                error_message = str(e)
+                error_message = e.args[0] if e.args else str(e)
 
                 return WebsocketApiResponse[T](
                     data_function=lambda: {"error": error_message},
@@ -961,7 +1459,7 @@ class WebSocketAPIBase(WebSocketCommon):
                 )
             except Exception as e:
                 logging.warning(f"Connection with user closed: {e}")
-                error_message = str(e)
+                error_message = e.args[0] if e.args else str(e)
 
                 return WebsocketApiResponse[T](
                     data_function=lambda: {"error": error_message},
@@ -1055,6 +1553,8 @@ class WebSocketAPIBase(WebSocketCommon):
         )
         if connection:
             global_user_stream_connections.stream_connections_map.pop(id, None)
+            connection.stream_callback_map.pop(id, None)
+            connection.response_types.pop(id, None)
             logging.info(f"Unsubscribed from stream: {id}")
         else:
             raise ValueError(f"Subscription id {id} not connected.")
@@ -1085,6 +1585,27 @@ class RequestStreamHandle(Generic[T]):
             await self._websocket_base.unsubscribe(id=self._stream)
 
     def on(self, event: str, callback: Callable[[T], None]) -> None:
+        """Register a callback for the stream's response payloads.
+
+        Args:
+            event (str): The stream event to listen for. Only `message` is
+                supported. Connection events such as `error` are not stream
+                events: register them on the client with `on_connection()`.
+            callback (Callable[[T], None]): Callback invoked for each message.
+
+        Raises:
+            ValueError: If the provided event is not supported.
+        """
+
+        supported_events = {"message"}
+        if event not in supported_events:
+            raise ValueError(
+                f"Unsupported stream event: {event}. "
+                f"Supported stream events are: {supported_events}. "
+                f"Connection events belong to the connection, not to a stream: "
+                f"register {SUPPORTED_CONNECTION_EVENTS} with "
+                f"client.on_connection()."
+            )
         self._websocket_base.on(event, callback, self._stream)
 
 
