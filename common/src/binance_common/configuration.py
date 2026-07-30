@@ -3,7 +3,12 @@ import ssl
 from typing import Optional, Dict, Union, List
 from http.client import HTTPSConnection
 
-from binance_common.constants import TimeUnit, WebsocketMode
+from binance_common.constants import (
+    DEFAULT_RECONNECT_ATTEMPTS,
+    MAX_RECONNECT_ATTEMPTS,
+    TimeUnit,
+    WebsocketMode,
+)
 from binance_common.headers import parse_custom_headers
 
 
@@ -106,6 +111,7 @@ class ConfigurationWebSocketAPI:
         stream_url: Optional[str] = None,
         timeout: int = 5000,
         reconnect_delay: int = 5000,
+        reconnect_attempts: int = DEFAULT_RECONNECT_ATTEMPTS,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,
@@ -126,6 +132,9 @@ class ConfigurationWebSocketAPI:
             stream_url (Optional[str]): Base WebSocket API URL (default: None).
             timeout (int): Request timeout in milliseconds (default: 5000).
             reconnect_delay (int): Delay (ms) between reconnections (default: 5000).
+            reconnect_attempts (int): How many times to retry a failed reconnect
+                before giving up on the connection. Must be between 1 and 10
+                (default: 3).
             compression (int): Compression level (default: 0).
             proxy (Optional[Dict[str, Union[str, int, Dict[str, str]]]]): Proxy settings (default: None).
             mode (WebsocketMode): WebSocket mode ("single" or "pool") (default: "single").
@@ -134,7 +143,16 @@ class ConfigurationWebSocketAPI:
             https_agent (Optional[ssl.SSLContext]): Custom HTTPS Agent (default: None).
             session_re_logon (Optional[bool]): Enable session re-logon (default: True).
             return_rate_limits (Optional[bool]): Enable rate limits returns (default: True).
+
+        Raises:
+            ValueError: If `reconnect_attempts` is outside the supported range.
         """
+
+        if not 1 <= reconnect_attempts <= MAX_RECONNECT_ATTEMPTS:
+            raise ValueError(
+                f"reconnect_attempts must be between 1 and "
+                f"{MAX_RECONNECT_ATTEMPTS}, got {reconnect_attempts}."
+            )
 
         self.api_key = api_key
         self.api_secret = api_secret
@@ -143,6 +161,7 @@ class ConfigurationWebSocketAPI:
         self.stream_url = stream_url
         self.timeout = timeout
         self.reconnect_delay = reconnect_delay
+        self.reconnect_attempts = reconnect_attempts
         self.compression = compression
         self.proxy = proxy
         self.mode = mode
@@ -170,6 +189,7 @@ class ConfigurationWebSocketStreams:
         self,
         stream_url: Optional[str] = None,
         reconnect_delay: int = 5000,
+        reconnect_attempts: int = DEFAULT_RECONNECT_ATTEMPTS,
         compression: int = 0,
         proxy: Optional[Dict[str, Union[str, int, Dict[str, str]]]] = None,
         mode: WebsocketMode = WebsocketMode.SINGLE,
@@ -183,16 +203,29 @@ class ConfigurationWebSocketStreams:
         Args:
             stream_url (Optional[str]): Base WebSocket Stream URL (default: None).
             reconnect_delay (int): Delay (ms) between reconnections (default: 5000).
+            reconnect_attempts (int): How many times to retry a failed reconnect
+                before giving up on the connection. Must be between 1 and 10
+                (default: 3).
             compression (int): Compression level (default: 0).
             proxy (Optional[Dict[str, Union[str, int, Dict[str, str]]]]): Proxy settings (default: None).
             mode (WebsocketMode): WebSocket mode ("single" or "pool") (default: "single").
             pool_size (int): Number of WebSocket connections in pool (default: 2).
             time_unit (Optional[TimeUnit]): Time unit for time-based responses (default: None).
             https_agent (Optional[ssl.SSLContext]): Custom HTTPS Agent (default: None).
+
+        Raises:
+            ValueError: If `reconnect_attempts` is outside the supported range.
         """
+
+        if not 1 <= reconnect_attempts <= MAX_RECONNECT_ATTEMPTS:
+            raise ValueError(
+                f"reconnect_attempts must be between 1 and "
+                f"{MAX_RECONNECT_ATTEMPTS}, got {reconnect_attempts}."
+            )
 
         self.stream_url = stream_url
         self.reconnect_delay = reconnect_delay
+        self.reconnect_attempts = reconnect_attempts
         self.compression = compression
         self.proxy = proxy
         self.mode = mode

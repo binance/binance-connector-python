@@ -6,11 +6,19 @@ import pytest_asyncio
 import pytest
 import time
 
-from unittest.mock import AsyncMock, MagicMock, patch
+from collections import defaultdict
+from unittest.mock import AsyncMock, call, MagicMock, patch
 from types import SimpleNamespace
 
-from binance_common.configuration import ConfigurationWebSocketAPI
-from binance_common.constants import WebsocketMode
+from binance_common.configuration import (
+    ConfigurationWebSocketAPI,
+    ConfigurationWebSocketStreams,
+)
+from binance_common.constants import (
+    DEFAULT_RECONNECT_ATTEMPTS,
+    MAX_RECONNECT_ATTEMPTS,
+    WebsocketMode,
+)
 from binance_common.websocket import (
     global_stream_connections,
     global_user_stream_connections,
@@ -36,6 +44,7 @@ def config():
     cfg.timeout = 10
     cfg.stream_url = "wss://test.com/ws"
     cfg.reconnect_delay = 0
+    cfg.reconnect_attempts = 1
     cfg.pool_size = 2
     return cfg
 
@@ -61,6 +70,7 @@ def mock_config():
     config.compression = None
     config.timeout = 10
     config.reconnect_delay = 0
+    config.reconnect_attempts = 1
     config.pool_size = 1
     return config
 
@@ -72,7 +82,12 @@ def mock_connection():
     conn.reconnect = False
     conn.websocket = AsyncMock()
     conn.stream_callback_map = {}
+    conn.connection_callback_map = defaultdict(list)
     conn.response_types = {}
+    conn.is_open = True
+    conn.close_initiated = False
+    conn.is_session_log_on = False
+    conn.scheduled_reconnect_task = None
     return conn
 
 
@@ -322,6 +337,41 @@ class TestWebSocketCommon:
         "binance_common.websocket.aiohttp.ClientSession.ws_connect",
         new_callable=AsyncMock,
     )
+    async def test_connect_streams_disables_autoping(
+        self, mock_ws_connect, mock_websocket
+    ):
+        mock_ws_connect.return_value = mock_websocket
+
+        streams_config = ConfigurationWebSocketStreams(stream_url="wss://test.com/ws")
+        streams_config.mode = "single"
+
+        ws_common = WebSocketCommon(streams_config)
+        await ws_common.connect("wss://test.com/ws", streams_config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["autoping"] is False
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_api_disables_autoping(
+        self, mock_ws_connect, mock_websocket, config
+    ):
+        mock_ws_connect.return_value = mock_websocket
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["autoping"] is False
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
     async def test_connect_single_mode_with_url_path(
         self, mock_ws_connect, config, mock_websocket
     ):
@@ -420,39 +470,189 @@ class TestWebSocketCommon:
     async def test_receive_loop_handles_ping_and_pong(self):
         ping_msg = MagicMock()
         ping_msg.type = aiohttp.WSMsgType.PING
+        ping_msg.data = b"ping-payload"
 
         pong_msg = MagicMock()
         pong_msg.type = aiohttp.WSMsgType.PONG
-
-        close_msg = MagicMock()
-        close_msg.type = aiohttp.WSMsgType.CLOSE
+        pong_msg.data = b"pong-payload"
 
         ws_mock = AsyncMock()
         ws_mock.pong = AsyncMock()
-        ws_mock.__aiter__.return_value = [ping_msg, pong_msg, close_msg]
+        ws_mock.__aiter__.return_value = [ping_msg, pong_msg]
 
         conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
 
         ws_common = WebSocketCommon(None)
+        ws_common._emit_connection_event = MagicMock()
+
         await ws_common.receive_loop(conn)
 
-        ws_mock.pong.assert_awaited_once()
+        ws_mock.pong.assert_awaited_once_with(b"ping-payload")
+
+        ws_common._emit_connection_event.assert_has_calls(
+            [
+                call(conn, "ping", b"ping-payload"),
+                call(conn, "pong", b"pong-payload"),
+            ]
+        )
 
     @pytest.mark.asyncio
-    async def test_receive_loop_logs_error_and_closes(self):
+    async def test_receive_loop_pongs_before_ping_callback_runs(self):
+        """A failing ping callback must not prevent the pong reply."""
+
+        ping_msg = MagicMock()
+        ping_msg.type = aiohttp.WSMsgType.PING
+        ping_msg.data = b""
+
+        ws_mock = AsyncMock()
+        ws_mock.pong = AsyncMock()
+        ws_mock.__aiter__.return_value = [ping_msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        conn.connection_callback_map["ping"].append(
+            MagicMock(side_effect=Exception("boom"))
+        )
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        ws_mock.pong.assert_awaited_once_with(b"")
+        assert conn.is_open is False
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_server_error_keeps_loop_alive(self):
+        """A server error payload must not tear down the receive loop."""
+
+        error_msg = MagicMock()
+        error_msg.type = aiohttp.WSMsgType.TEXT
+        error_msg.data = json.dumps({"error": {"code": -1121, "msg": "Invalid symbol"}})
+
+        data_msg = MagicMock()
+        data_msg.type = aiohttp.WSMsgType.TEXT
+        data_msg.data = json.dumps({"stream": "ticker", "data": {"price": "100"}})
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [error_msg, data_msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        error_cb = MagicMock()
+        conn.connection_callback_map["error"].append(error_cb)
+        stream_cb = MagicMock()
+        conn.stream_callback_map["ticker"] = [stream_cb]
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        error_cb.assert_called_once_with({"code": -1121, "msg": "Invalid symbol"})
+        stream_cb.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_stream_callback_error_keeps_loop_alive(self):
+        """A throwing user callback must not tear down the receive loop."""
+
+        msg_data = {"stream": "ticker", "data": {"price": "100"}}
+        first = MagicMock()
+        first.type = aiohttp.WSMsgType.TEXT
+        first.data = json.dumps(msg_data)
+
+        second = MagicMock()
+        second.type = aiohttp.WSMsgType.TEXT
+        second.data = json.dumps(msg_data)
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [first, second]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        failing = MagicMock(side_effect=Exception("callback boom"))
+        conn.stream_callback_map["ticker"] = [failing]
+        error_cb = MagicMock()
+        conn.connection_callback_map["error"].append(error_cb)
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        assert failing.call_count == 2
+        assert error_cb.call_count == 2
+        assert conn.connection_callback_map["close"] == []
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_request_error_only_rejects_future(self):
+        """A per-request error goes to the awaiting caller, not the error event."""
+
+        error = {"code": -1121, "msg": "Invalid symbol"}
+        msg = MagicMock()
+        msg.type = aiohttp.WSMsgType.TEXT
+        msg.data = json.dumps({"id": "123", "error": error})
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketAPI")
+        future = asyncio.Future()
+        conn.pending_request["123"] = future
+        error_cb = MagicMock()
+        conn.connection_callback_map["error"].append(error_cb)
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        error_cb.assert_not_called()
+        assert isinstance(future.exception(), ValueError)
+        assert future.exception().args[0] == error
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_error_emits_connection_error(self):
         error_msg = MagicMock()
         error_msg.type = aiohttp.WSMsgType.ERROR
 
         ws_mock = AsyncMock()
         ws_mock.__aiter__.return_value = [error_msg]
-        ws_mock.exception = MagicMock(return_value=Exception("test error"))
+
+        exc = Exception("test error")
+        ws_mock.exception = MagicMock(return_value=exc)
 
         conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
         ws_common = WebSocketCommon(None)
+        ws_common._emit_connection_event = MagicMock()
 
         await ws_common.receive_loop(conn)
 
-        ws_mock.exception.assert_called_once()
+        assert conn.is_open is False
+        ws_common._emit_connection_event.assert_has_calls(
+            [
+                call(conn, "error", exc),
+                call(conn, "close"),
+            ]
+        )
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_emits_close_on_normal_exit(self):
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = []
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        ws_common = WebSocketCommon(None)
+        ws_common._emit_connection_event = MagicMock()
+
+        await ws_common.receive_loop(conn)
+
+        ws_common._emit_connection_event.assert_called_once_with(conn, "close")
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_emits_close_once_on_close_frame(self):
+        close_msg = MagicMock()
+        close_msg.type = aiohttp.WSMsgType.CLOSE
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [close_msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        ws_common = WebSocketCommon(None)
+        ws_common._emit_connection_event = MagicMock()
+
+        await ws_common.receive_loop(conn)
+
+        ws_common._emit_connection_event.assert_called_once_with(conn, "close")
 
     @pytest.mark.asyncio
     async def test_reconnect_resubscribes(
@@ -460,7 +660,6 @@ class TestWebSocketCommon:
     ):
         ws_common = WebSocketCommon(MagicMock())
 
-        # Prepare old connection
         old_conn = mock_connection
         old_conn.id = "abc"
         old_conn.url_path = None
@@ -473,12 +672,10 @@ class TestWebSocketCommon:
         old_conn.stream_callback_map = {"user_stream": ["cb1"], "trade": ["cb2"]}
         old_conn.response_types = {"user_stream": "rtype1", "trade": "rtype2"}
 
-        # Prepare new connection
         new_conn = MagicMock()
         new_conn.id = "abc"
         ws_common.connections = [new_conn]
 
-        # Patch methods
         ws_common.close_connection = AsyncMock()
         ws_common.init_connection = AsyncMock()
         ws_common.session_re_log_on = AsyncMock()
@@ -489,6 +686,7 @@ class TestWebSocketCommon:
         config = MagicMock()
         config.stream_url = "wss://test.com/ws"
         config.reconnect_delay = 0
+        config.reconnect_attempts = 1
 
         await ws_common.reconnect(old_conn, config)
 
@@ -523,7 +721,6 @@ class TestWebSocketCommon:
         new_conn.stream_callback_map = {}
         new_conn.response_types = {}
 
-        # Simulate registry containing old mapping
         mock_user_registry.stream_connections_map = {"user_stream": old_conn}
 
         with patch.object(
@@ -550,7 +747,6 @@ class TestWebSocketCommon:
         new_conn.stream_callback_map = {}
         new_conn.response_types = {}
 
-        # Simulate registry containing old mapping
         mock_registry.stream_connections_map = {"trade": old_conn}
 
         with patch.object(
@@ -577,6 +773,7 @@ class TestWebSocketCommon:
         conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
 
         ws_common = WebSocketCommon(MagicMock())
+        ws_common.connections = [conn]
         ws_common.reconnect = AsyncMock()
 
         await ws_common.receive_loop(conn)
@@ -599,7 +796,6 @@ class TestWebSocketCommon:
         ws_common = WebSocketCommon(MagicMock())
         ws_common.reconnect = AsyncMock()
 
-        # simulate reconnect already scheduled
         ws_common.reconnect_tasks.append(conn.id)
 
         await ws_common.receive_loop(conn)
@@ -666,6 +862,925 @@ class TestWebSocketCommon:
         await ws_common.receive_loop(conn)
 
         ws_common.reconnect.assert_not_called()
+
+    def test_emit_connection_event_calls_sync_callback(self):
+        ws_common = WebSocketCommon(MagicMock())
+        callback = MagicMock()
+        connection = MagicMock()
+        connection.connection_callback_map = {
+            "connected": [callback]
+        }
+
+        ws_common._emit_connection_event(connection, "connected", connection)
+
+        callback.assert_called_once_with(connection)
+
+    def test_emit_connection_event_calls_multiple_callbacks(self):
+        ws_common = WebSocketCommon(MagicMock())
+        cb1 = MagicMock()
+        cb2 = MagicMock()
+        connection = MagicMock()
+        connection.connection_callback_map = {
+            "connected": [cb1, cb2]
+        }
+
+        ws_common._emit_connection_event(connection, "connected", connection)
+
+        cb1.assert_called_once_with(connection)
+        cb2.assert_called_once_with(connection)
+
+    def test_emit_connection_event_no_callbacks_does_nothing(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = MagicMock()
+        connection.connection_callback_map = {}
+
+        ws_common._emit_connection_event(connection, "connected", connection)
+
+    def test_emit_connection_event_logs_callback_error(self, caplog):
+        ws_common = WebSocketCommon(MagicMock())
+        failing = MagicMock(side_effect=Exception("connection callback failed"))
+        surviving = MagicMock()
+        connection = MagicMock()
+        connection.id = "test_id"
+        connection.connection_callback_map = {"close": [failing, surviving]}
+
+        with caplog.at_level(logging.ERROR):
+            ws_common._emit_connection_event(connection, "close")
+
+        assert "connection callback failed" in caplog.text
+        surviving.assert_called_once_with()
+
+    def test_emit_connection_event_schedules_async_callback(self):
+        ws_common = WebSocketCommon(MagicMock())
+        calls = []
+
+        async def callback():
+            calls.append("called")
+
+        connection = MagicMock()
+        connection.id = "test_id"
+        connection.connection_callback_map = {"close": [callback]}
+
+        async def run():
+            ws_common._emit_connection_event(connection, "close")
+            await asyncio.sleep(0)
+
+        asyncio.run(run())
+
+        assert calls == ["called"]
+
+    def test_emit_connection_event_accepts_zero_arg_callback(self):
+        """A payload-carrying event must still accept a no-parameter callback."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        calls = []
+        connection = MagicMock()
+        connection.id = "test_id"
+        connection.connection_callback_map = {"ping": [lambda: calls.append("no-args")]}
+
+        ws_common._emit_connection_event(connection, "ping", b"payload")
+
+        assert calls == ["no-args"]
+
+    def test_emit_connection_event_passes_payload_when_accepted(self):
+        ws_common = WebSocketCommon(MagicMock())
+        received = []
+        connection = MagicMock()
+        connection.id = "test_id"
+        connection.connection_callback_map = {"ping": [lambda data: received.append(data)]}
+
+        ws_common._emit_connection_event(connection, "ping", b"payload")
+
+        assert received == [b"payload"]
+
+    def test_emit_connection_event_passes_payload_to_var_positional(self):
+        ws_common = WebSocketCommon(MagicMock())
+        received = []
+        connection = MagicMock()
+        connection.id = "test_id"
+        connection.connection_callback_map = {
+            "ping": [lambda *args: received.append(args)]
+        }
+
+        ws_common._emit_connection_event(connection, "ping", b"payload")
+
+        assert received == [(b"payload",)]
+
+    def test_emit_trims_payload_to_accepted_arity(self):
+        """A callback declared without parameters may ignore the payload."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        received = []
+
+        connection.connection_callback_map["ping"] = [
+            lambda: received.append("no-args"),
+            lambda d: received.append(("one-arg", d)),
+            lambda *a: received.append(("var-args", a)),
+        ]
+
+        ws_common._emit_connection_event(connection, "ping", b"x")
+
+        assert received == [
+            "no-args",
+            ("one-arg", b"x"),
+            ("var-args", (b"x",)),
+        ]
+
+    def test_emit_passes_payload_to_unintrospectable_callback(self):
+        """Builtins without a signature must still receive the payload."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock(spec=print)
+        connection.connection_callback_map["ping"] = [callback]
+
+        ws_common._emit_connection_event(connection, "ping", b"x")
+
+        callback.assert_called_once_with(b"x")
+
+    def test_validate_connection_event_rejects_unknown(self):
+        with pytest.raises(ValueError, match="Unsupported connection event: message"):
+            WebSocketCommon._validate_connection_event("message")
+
+    def test_on_connection_invokes_open_immediately(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("open", callback)
+
+        callback.assert_called_once_with()
+        assert connection.connection_callback_map["open"] == [callback]
+
+    def test_on_connection_deduplicates_bound_method(self):
+        """A bound method is a new object per access but must register once."""
+
+        class Handler:
+            def on_close(self):
+                pass
+
+        handler = Handler()
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+
+        ws_common.on_connection("close", handler.on_close)
+        ws_common.on_connection("close", handler.on_close)
+
+        assert connection.connection_callback_map["close"] == [handler.on_close]
+
+    def test_off_connection_accepts_rebound_method(self):
+        """A freshly bound method still removes the registered one."""
+
+        class Handler:
+            def on_close(self):
+                pass
+
+        handler = Handler()
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+
+        ws_common.on_connection("close", handler.on_close)
+        ws_common.off_connection("close", handler.on_close)
+
+        assert connection.connection_callback_map["close"] == []
+
+    def test_on_connection_reports_open_once(self):
+        """A duplicate registration neither re-fires `open` nor doubles up."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("open", callback)
+        ws_common.on_connection("open", callback)
+
+        callback.assert_called_once_with()
+        assert connection.connection_callback_map["open"] == [callback]
+
+    def test_on_connection_skips_open_when_closed(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        connection.is_open = False
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("open", callback)
+
+        callback.assert_not_called()
+
+    def test_on_connection_does_not_invoke_other_events(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("close", callback)
+
+        callback.assert_not_called()
+        assert connection.connection_callback_map["close"] == [callback]
+
+    def test_on_connection_registers_by_connection_id(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("close", callback, "test_id")
+
+        assert connection.connection_callback_map["close"] == [callback]
+
+    def test_on_connection_warns_when_not_connected(self, caplog):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.connections = []
+
+        with caplog.at_level(logging.WARNING):
+            ws_common.on_connection("close", MagicMock(), "missing")
+
+        assert "Connection missing not connected." in caplog.text
+
+    def test_on_connection_accepts_connection_object(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("ping", callback, connection)
+
+        assert connection.connection_callback_map["ping"] == [callback]
+
+    def test_on_connection_registers_on_every_connection(self):
+        """Omitting the selector observes the whole pool."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        first = WebSocketConnection(AsyncMock(), "a", "ConfigurationWebSocketStreams")
+        second = WebSocketConnection(AsyncMock(), "b", "ConfigurationWebSocketStreams")
+        ws_common.connections = [first, second]
+        callback = MagicMock()
+
+        ws_common.on_connection("ping", callback)
+
+        assert first.connection_callback_map["ping"] == [callback]
+        assert second.connection_callback_map["ping"] == [callback]
+
+    def test_on_connection_fires_once_per_connection_event(self):
+        """A ping on the connection reaches a connection-scoped callback once."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        callback = MagicMock()
+
+        ws_common.on_connection("ping", callback, "test_id")
+        ws_common._emit_connection_event(connection, "ping", b"payload")
+
+        callback.assert_called_once_with(b"payload")
+
+
+    def test_off_connection_removes_from_every_connection(self):
+        ws_common = WebSocketCommon(MagicMock())
+        first = WebSocketConnection(AsyncMock(), "a", "ConfigurationWebSocketStreams")
+        second = WebSocketConnection(AsyncMock(), "b", "ConfigurationWebSocketStreams")
+        ws_common.connections = [first, second]
+        callback = MagicMock()
+
+        ws_common.on_connection("ping", callback)
+        ws_common.off_connection("ping", callback)
+
+        assert first.connection_callback_map["ping"] == []
+        assert second.connection_callback_map["ping"] == []
+
+    def test_off_connection_scoped_to_one_connection(self):
+        ws_common = WebSocketCommon(MagicMock())
+        first = WebSocketConnection(AsyncMock(), "a", "ConfigurationWebSocketStreams")
+        second = WebSocketConnection(AsyncMock(), "b", "ConfigurationWebSocketStreams")
+        ws_common.connections = [first, second]
+        callback = MagicMock()
+
+        ws_common.on_connection("ping", callback)
+        ws_common.off_connection("ping", callback, "a")
+
+        assert first.connection_callback_map["ping"] == []
+        assert second.connection_callback_map["ping"] == [callback]
+
+    def test_on_connection_rejects_unknown_event(self):
+        ws_common = WebSocketCommon(MagicMock())
+
+        with pytest.raises(ValueError, match="Unsupported connection event: message"):
+            ws_common.on_connection("message", MagicMock())
+
+    def test_on_connection_warns_when_pool_empty(self, caplog):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.connections = []
+
+        with caplog.at_level(logging.WARNING):
+            ws_common.on_connection("ping", MagicMock())
+
+        assert "No WebSocket connections available" in caplog.text
+
+    def test_on_connection_warns_for_unknown_id(self, caplog):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.connections = []
+
+        with caplog.at_level(logging.WARNING):
+            ws_common.on_connection("ping", MagicMock(), "missing")
+
+        assert "Connection missing not connected." in caplog.text
+
+    def test_off_connection_removes_specific_callback(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+        keep, drop = MagicMock(), MagicMock()
+
+        ws_common.on_connection("close", keep, "test_id")
+        ws_common.on_connection("close", drop, "test_id")
+        ws_common.off_connection("close", drop, "test_id")
+
+        assert connection.connection_callback_map["close"] == [keep]
+
+    def test_off_connection_removes_all_callbacks_for_event(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = [connection]
+
+        ws_common.on_connection("close", MagicMock(), "test_id")
+        ws_common.on_connection("close", MagicMock(), "test_id")
+        ws_common.on_connection("error", MagicMock(), "test_id")
+        ws_common.off_connection("close")
+
+        assert connection.connection_callback_map["close"] == []
+        assert len(connection.connection_callback_map["error"]) == 1
+
+    def test_off_connection_rejects_unknown_event(self):
+        ws_common = WebSocketCommon(MagicMock())
+
+        with pytest.raises(ValueError, match="Unsupported connection event: message"):
+            ws_common.off_connection("message")
+
+    def test_off_connection_leaves_other_connections_untouched(self):
+        ws_common = WebSocketCommon(MagicMock())
+        first = WebSocketConnection(AsyncMock(), "a", "ConfigurationWebSocketStreams")
+        second = WebSocketConnection(AsyncMock(), "b", "ConfigurationWebSocketStreams")
+        ws_common.connections = [first, second]
+        callback = MagicMock()
+
+        ws_common.on_connection("close", callback, "a")
+        ws_common.on_connection("close", callback, "b")
+        ws_common.off_connection("close", callback, "a")
+
+        assert first.connection_callback_map["close"] == []
+        assert second.connection_callback_map["close"] == [callback]
+
+    def test_emit_close_event_fires_while_being_replaced(self):
+        """A rotation still reports the socket it is replacing as closed."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock()
+        connection.connection_callback_map["close"].append(callback)
+        connection.is_being_replaced = True
+
+        ws_common._emit_close_event(connection)
+
+        callback.assert_called_once_with()
+        assert connection.is_open is False
+
+    def test_emit_close_event_reports_close_once(self):
+        """The stale receive loop must not report a second close."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock()
+        connection.connection_callback_map["close"].append(callback)
+
+        ws_common._emit_close_event(connection)
+        ws_common._emit_close_event(connection)
+
+        callback.assert_called_once_with()
+        assert connection.close_emitted is True
+
+    def test_emit_close_event_fires_when_not_reconnecting(self):
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock()
+        connection.connection_callback_map["close"].append(callback)
+
+        ws_common._emit_close_event(connection)
+
+        callback.assert_called_once_with()
+        assert connection.is_open is False
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_error_closes_and_drops_connection(self, caplog):
+        """A failed connection is logged, closed, and removed from the pool."""
+
+        error_msg = MagicMock()
+        error_msg.type = aiohttp.WSMsgType.ERROR
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [error_msg]
+        ws_mock.closed = False
+        exc = Exception("transport blew up")
+        ws_mock.exception = MagicMock(return_value=exc)
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        ws_common = WebSocketCommon(None)
+        ws_common.connections = [conn]
+
+        with caplog.at_level(logging.ERROR):
+            await ws_common.receive_loop(conn)
+
+        assert "transport blew up" in caplog.text
+        ws_mock.close.assert_awaited_once()
+        assert ws_common.connections == []
+        assert conn.is_open is False
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_close_drops_connection(self):
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = []
+        ws_mock.closed = True
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        ws_common = WebSocketCommon(None)
+        ws_common.connections = [conn]
+
+        await ws_common.receive_loop(conn)
+
+        ws_mock.close.assert_not_awaited()
+        assert ws_common.connections == []
+
+    @pytest.mark.asyncio
+    async def test_discard_connection_skipped_during_reconnect(self):
+        """A reconnecting connection is managed by reconnect(), not discarded."""
+
+        ws_mock = AsyncMock()
+        ws_mock.closed = False
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        conn.is_being_replaced = True
+
+        ws_common = WebSocketCommon(None)
+        ws_common.connections = [conn]
+
+        await ws_common._discard_connection(conn)
+
+        ws_mock.close.assert_not_awaited()
+        assert ws_common.connections == [conn]
+
+    @pytest.mark.asyncio
+    async def test_reconnect_reports_failure_when_init_raises(self):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+        events = []
+        conn.connection_callback_map["error"].append(
+            lambda e: events.append(("error", e))
+        )
+        conn.connection_callback_map["close"].append(lambda: events.append("close"))
+
+        boom = OSError("dns failure")
+        ws_common.init_connection = AsyncMock(side_effect=boom)
+        ws_common.close_connection = AsyncMock()
+        ws_common.connections = [conn]
+        ws_common.reconnect_tasks = ["conn-1"]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(conn, config)
+
+        assert events == ["close", ("error", boom)]
+        assert ws_common.reconnect_tasks == []
+        assert conn.reconnect is False
+        assert conn.is_open is False
+        assert ws_common.connections == []
+
+    @pytest.mark.asyncio
+    async def test_reconnect_reports_failure_when_no_new_connection(self):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+        errors = []
+        conn.connection_callback_map["error"].append(lambda e: errors.append(e))
+        closed = []
+        conn.connection_callback_map["close"].append(lambda: closed.append(1))
+
+        ws_common.init_connection = AsyncMock()
+        ws_common.close_connection = AsyncMock()
+        ws_common.connections = []
+        ws_common.reconnect_tasks = ["conn-1"]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(conn, config)
+
+        assert len(errors) == 1
+        assert isinstance(errors[0], ConnectionError)
+        assert closed == [1]
+        assert ws_common.reconnect_tasks == []
+
+    @pytest.mark.asyncio
+    async def test_reconnect_closes_old_then_emits_open_last(
+        self, mock_connection, mock_registry, mock_user_registry
+    ):
+        """A rotation reads as `close` then `open`, the `open` last of all."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.session_logon_request = None
+        events = []
+        old_conn.connection_callback_map["open"].append(lambda: events.append("open"))
+        old_conn.connection_callback_map["close"].append(lambda: events.append("close"))
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            ws_common.connections.append(new_conn)
+
+        resubscribed = []
+
+        async def fake_resubscribe(old, new):
+            resubscribed.append(("order", list(events)))
+
+        ws_common.init_connection = fake_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = fake_resubscribe
+        ws_common.reconnect_tasks = ["conn-1"]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(old_conn, config)
+
+        assert old_conn.is_being_replaced is True
+        assert resubscribed == [("order", ["close"])]
+        assert events == ["close", "open"]
+
+    @pytest.mark.asyncio
+    async def test_reconnect_carries_over_connection_callbacks(
+        self, mock_registry, mock_user_registry
+    ):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.session_logon_request = None
+        callback = MagicMock()
+        old_conn.connection_callback_map["close"].append(callback)
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            ws_common.connections.append(new_conn)
+
+        ws_common.init_connection = fake_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+        ws_common.reconnect_tasks = ["conn-1"]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(old_conn, config)
+
+        assert new_conn.connection_callback_map["close"] == [callback]
+
+    @pytest.mark.asyncio
+    async def test_reconnect_cancels_the_scheduled_rotation(self):
+        """A manual reconnect must not leave the automatic rotation pending."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.session_logon_request = None
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+
+        async def sleep_forever():
+            await asyncio.sleep(3600)
+
+        scheduled = asyncio.ensure_future(sleep_forever())
+        old_conn.scheduled_reconnect_task = scheduled
+
+        async def fake_init(*args, **kwargs):
+            ws_common.connections.append(new_conn)
+
+        ws_common.init_connection = fake_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+        ws_common.connections = [old_conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(old_conn, config)
+
+        await asyncio.sleep(0)
+
+        assert scheduled.cancelled()
+        assert old_conn.scheduled_reconnect_task is None
+
+    @pytest.mark.asyncio
+    async def test_scheduled_rotation_does_not_cancel_itself(self):
+        """The rotation task must survive running its own reconnect.
+
+        When the automatic rotation fires, the task calling `reconnect()` *is*
+        the connection's `scheduled_reconnect_task`, so cancelling it would kill
+        the reconnect midway: the old socket is already closed but the
+        replacement is never established.
+        """
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.session_logon_request = None
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            await asyncio.sleep(0)
+            ws_common.connections.append(new_conn)
+
+        ws_common.init_connection = fake_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+        ws_common.connections = [old_conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+
+        task = asyncio.ensure_future(
+            ws_common.schedule_reconnect(old_conn, config, 0)
+        )
+        old_conn.scheduled_reconnect_task = task
+
+        await task
+
+        assert not task.cancelled()
+        assert new_conn in ws_common.connections
+        assert old_conn.scheduled_reconnect_task is None
+
+    @pytest.mark.asyncio
+    async def test_schedule_reconnect_skips_a_replaced_connection(self):
+        """A stray timer must not reconnect a connection already dropped."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.reconnect = AsyncMock()
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        ws_common.connections = []
+
+        await ws_common.schedule_reconnect(conn, MagicMock(), 0)
+
+        ws_common.reconnect.assert_not_awaited()
+
+    @pytest.mark.asyncio
+    async def test_schedule_reconnect_skips_a_user_closed_connection(self):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.reconnect = AsyncMock()
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.close_initiated = True
+        ws_common.connections = [conn]
+
+        await ws_common.schedule_reconnect(conn, MagicMock(), 0)
+
+        ws_common.reconnect.assert_not_awaited()
+
+    @pytest.mark.asyncio
+    async def test_reconnect_clears_the_marker_after_a_failure(self):
+        """A failed reconnect must not block the next attempt."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+
+        ws_common.init_connection = AsyncMock(side_effect=OSError("down"))
+        ws_common.close_connection = AsyncMock()
+        ws_common.connections = [conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(conn, config)
+
+        assert ws_common.reconnect_tasks == []
+        assert conn.reconnect is False
+
+    @pytest.mark.asyncio
+    async def test_reconnect_retries_until_it_succeeds(self):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        attempts = []
+
+        async def flaky_init(*args, **kwargs):
+            attempts.append(1)
+            if len(attempts) < 3:
+                raise OSError("still down")
+            ws_common.connections.append(new_conn)
+
+        ws_common.init_connection = flaky_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+        ws_common.connections = [conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=3,
+            stream_url="wss://test.com/ws",
+        )
+        result = await ws_common.reconnect(conn, config)
+
+        assert len(attempts) == 3
+        assert result is new_conn
+        assert ws_common.reconnect_tasks == []
+
+    @pytest.mark.asyncio
+    async def test_reconnect_gives_up_after_the_configured_attempts(
+        self, mock_registry
+    ):
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+        errors = []
+        conn.connection_callback_map["error"].append(lambda e: errors.append(e))
+
+        mock_registry.stream_connections_map = {"btcusdt@trade": conn}
+
+        ws_common.init_connection = AsyncMock(side_effect=OSError("down"))
+        ws_common.close_connection = AsyncMock()
+        ws_common.connections = [conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=3,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(conn, config)
+
+        assert ws_common.init_connection.await_count == 3
+        assert len(errors) == 1
+        assert ws_common.connections == []
+        assert mock_registry.stream_connections_map == {}
+
+    @pytest.mark.asyncio
+    async def test_reconnect_never_exceeds_the_maximum_attempts(self):
+        """Retrying is capped even if a caller sets the attempts higher.
+
+        The configuration rejects out-of-range values, so this covers a
+        configuration object built another way, e.g. a stub or an older client.
+        """
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+
+        ws_common.init_connection = AsyncMock(side_effect=OSError("down"))
+        ws_common.close_connection = AsyncMock()
+        ws_common.connections = [conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=99,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(conn, config)
+
+        assert ws_common.init_connection.await_count == MAX_RECONNECT_ATTEMPTS
+
+
+class TestReconnectAttemptsConfiguration:
+    @pytest.mark.parametrize("attempts", [1, 2, 3, 5, MAX_RECONNECT_ATTEMPTS])
+    def test_accepts_the_supported_range(self, attempts):
+        assert (
+            ConfigurationWebSocketStreams(reconnect_attempts=attempts).reconnect_attempts
+            == attempts
+        )
+        assert (
+            ConfigurationWebSocketAPI(reconnect_attempts=attempts).reconnect_attempts
+            == attempts
+        )
+
+    @pytest.mark.parametrize("attempts", [0, -1, MAX_RECONNECT_ATTEMPTS + 1, 99])
+    def test_rejects_values_outside_the_range(self, attempts):
+        for config_cls in (ConfigurationWebSocketStreams, ConfigurationWebSocketAPI):
+            with pytest.raises(ValueError, match="reconnect_attempts must be between"):
+                config_cls(reconnect_attempts=attempts)
+
+    def test_defaults_to_the_default_attempts(self):
+        assert (
+            ConfigurationWebSocketStreams().reconnect_attempts
+            == DEFAULT_RECONNECT_ATTEMPTS
+        )
+        assert (
+            ConfigurationWebSocketAPI().reconnect_attempts == DEFAULT_RECONNECT_ATTEMPTS
+        )
 
 
 class TestWebSocketStreamBase:
@@ -743,7 +1858,9 @@ class TestWebSocketStreamBase:
         with caplog.at_level(logging.WARNING):
             await websocket_stream.subscribe(["test_stream"], stream_url="test_path")
 
-        assert "No matching connection found for stream: test_stream" in caplog.text
+        assert (
+            "No matching connection found for streams: ['test_stream']" in caplog.text
+        )
         assert "test_stream" not in mock_registry.stream_connections_map
 
     @pytest.mark.asyncio
@@ -802,6 +1919,151 @@ class TestWebSocketStreamBase:
         mock_connection.websocket.send_str.assert_called()
 
     @pytest.mark.asyncio
+    async def test_subscribe_batches_streams_into_one_message(
+        self, websocket_stream, mock_connection, mock_registry
+    ):
+        """Streams sharing a connection travel in a single SUBSCRIBE."""
+
+        streams = [f"stream{i}" for i in range(10)]
+        await websocket_stream.subscribe(streams)
+
+        assert mock_connection.websocket.send_str.call_count == 1
+        payload = json.loads(mock_connection.websocket.send_str.call_args[0][0])
+        assert payload["method"] == "SUBSCRIBE"
+        assert payload["params"] == streams
+        assert set(mock_registry.stream_connections_map) == set(streams)
+
+    @pytest.mark.asyncio
+    async def test_subscribe_batches_per_connection_in_pool_mode(
+        self, mock_config, mock_registry
+    ):
+        """Each pooled connection gets one message with only its own streams."""
+
+        mock_config.mode = WebsocketMode.POOL
+        first = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        second = WebSocketConnection(
+            AsyncMock(), "conn-2", "ConfigurationWebSocketStreams"
+        )
+
+        websocket_stream = WebSocketStreamBase(mock_config)
+        websocket_stream.connections = [first, second]
+
+        await websocket_stream.subscribe(["a", "b", "c", "d"])
+
+        first_payload = json.loads(first.websocket.send_str.call_args[0][0])
+        second_payload = json.loads(second.websocket.send_str.call_args[0][0])
+
+        assert first.websocket.send_str.call_count == 1
+        assert second.websocket.send_str.call_count == 1
+        assert first_payload["params"] == ["a", "c"]
+        assert second_payload["params"] == ["b", "d"]
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_batches_streams_into_one_message(
+        self, websocket_stream, mock_connection, mock_registry
+    ):
+        """UNSUBSCRIBE carries each connection's streams exactly once."""
+
+        streams = [f"stream{i}" for i in range(10)]
+        await websocket_stream.subscribe(streams)
+        mock_connection.websocket.send_str.reset_mock()
+
+        await websocket_stream.unsubscribe(streams)
+
+        assert mock_connection.websocket.send_str.call_count == 1
+        payload = json.loads(mock_connection.websocket.send_str.call_args[0][0])
+        assert payload["method"] == "UNSUBSCRIBE"
+        assert payload["params"] == streams
+        assert mock_registry.stream_connections_map == {}
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_only_lists_streams_of_each_connection(
+        self, mock_config, mock_registry
+    ):
+        """A connection must not be told to unsubscribe another's streams."""
+
+        mock_config.mode = WebsocketMode.POOL
+        first = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        second = WebSocketConnection(
+            AsyncMock(), "conn-2", "ConfigurationWebSocketStreams"
+        )
+
+        websocket_stream = WebSocketStreamBase(mock_config)
+        websocket_stream.connections = [first, second]
+
+        await websocket_stream.subscribe(["a", "b", "c", "d"])
+        first.websocket.send_str.reset_mock()
+        second.websocket.send_str.reset_mock()
+
+        await websocket_stream.unsubscribe(["a", "b", "c", "d"])
+
+        assert json.loads(first.websocket.send_str.call_args[0][0])["params"] == [
+            "a",
+            "c",
+        ]
+        assert json.loads(second.websocket.send_str.call_args[0][0])["params"] == [
+            "b",
+            "d",
+        ]
+
+    @pytest.mark.asyncio
+    async def test_resubscribe_global_streams_sends_one_message(
+        self, mock_config, mock_registry
+    ):
+        """A reconnect restores every stream with a single SUBSCRIBE."""
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        streams = ["a", "b", "c"]
+        old_conn.stream_callback_map = {s: [f"cb-{s}"] for s in streams}
+        old_conn.response_types = {s: None for s in streams}
+        mock_registry.stream_connections_map = {s: old_conn for s in streams}
+
+        websocket_stream = WebSocketStreamBase(mock_config)
+        websocket_stream.connections = [new_conn]
+
+        await websocket_stream._resubscribe_global_streams(old_conn, new_conn)
+
+        assert new_conn.websocket.send_str.call_count == 1
+        payload = json.loads(new_conn.websocket.send_str.call_args[0][0])
+        assert payload["params"] == streams
+        assert all(
+            mock_registry.stream_connections_map[s] is new_conn for s in streams
+        )
+
+    @pytest.mark.asyncio
+    async def test_resubscribe_global_streams_uses_an_int_id_when_required(
+        self, mock_config, mock_registry
+    ):
+        """A connector needing integer ids must not get the UUID connection id."""
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.stream_callback_map = {"a": ["cb"]}
+        old_conn.response_types = {"a": None}
+        mock_registry.stream_connections_map = {"a": old_conn}
+
+        websocket_stream = WebSocketStreamBase(mock_config, id_strict_int=True)
+        websocket_stream.connections = [new_conn]
+
+        await websocket_stream._resubscribe_global_streams(old_conn, new_conn)
+
+        payload = json.loads(new_conn.websocket.send_str.call_args[0][0])
+        assert isinstance(payload["id"], int)
+
+    @pytest.mark.asyncio
     async def test_unsubscribe_with_empty_streams(self, websocket_stream, caplog):
         await websocket_stream.unsubscribe([])
 
@@ -821,12 +2083,100 @@ class TestWebSocketStreamBase:
         await websocket_stream.unsubscribe(["non_existent_stream"])
         assert "Stream ['non_existent_stream'] is not subscribed." in caplog.text
 
+    def test_on_connection_fires_once_for_streams_sharing_connection(
+        self, websocket_stream, mock_registry
+    ):
+        """Two streams on one connection still see a single connection event."""
+
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        mock_registry.stream_connections_map = {
+            "btcusdt@trade": connection,
+            "ethusdt@trade": connection,
+        }
+        websocket_stream.connections = [connection]
+        callback = MagicMock()
+
+        websocket_stream.on_connection("close", callback)
+
+        assert connection.connection_callback_map["close"] == [callback]
+
+        websocket_stream._emit_connection_event(connection, "close")
+        callback.assert_called_once_with()
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_keeps_connection_callbacks(
+        self, websocket_stream, mock_registry
+    ):
+        """Connection callbacks outlive the streams flowing over the connection."""
+
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        connection.stream_callback_map["btcusdt@trade"] = []
+        mock_registry.stream_connections_map = {"btcusdt@trade": connection}
+        websocket_stream.connections = [connection]
+        callback = MagicMock()
+
+        websocket_stream.on_connection("close", callback)
+        await websocket_stream.unsubscribe(["btcusdt@trade"])
+
+        assert connection.connection_callback_map["close"] == [callback]
+
+        websocket_stream._emit_connection_event(connection, "close")
+        callback.assert_called_once_with()
+
+    def test_off_connection_for_stream_base(self, websocket_stream, mock_registry):
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        websocket_stream.connections = [connection]
+        callback = MagicMock()
+
+        websocket_stream.on_connection("ping", callback, "conn-1")
+        websocket_stream.off_connection("ping", callback, "conn-1")
+
+        assert connection.connection_callback_map["ping"] == []
+
+    def test_on_connection_unknown_connection_warns(
+        self, websocket_stream, mock_registry, caplog
+    ):
+        websocket_stream.connections = []
+
+        with caplog.at_level(logging.WARNING):
+            websocket_stream.on_connection("ping", MagicMock(), "missing")
+
+        assert "Connection missing not connected." in caplog.text
+
+    def test_handle_has_no_connection_event_methods(self, websocket_stream):
+        """Connection events are not reachable from a stream handle."""
+
+        handle = RequestStreamHandle(websocket_stream, "test_stream")
+
+        assert not hasattr(handle, "on_connection")
+        assert not hasattr(handle, "off_connection")
+
     @pytest.mark.asyncio
     async def test_request_stream_returns_correct_interface(self, websocket_stream):
         result = await RequestStream(websocket_stream, "test_stream")
         assert isinstance(result, RequestStreamHandle)
         assert hasattr(result, "on")
         assert hasattr(result, "unsubscribe")
+
+    def test_handle_on_rejects_connection_events(self, websocket_stream):
+        handle = RequestStreamHandle(websocket_stream, "test_stream")
+
+        with pytest.raises(ValueError, match="Unsupported stream event: error"):
+            handle.on("error", lambda data: data)
+
+    def test_handle_on_points_connection_events_at_the_client(self, websocket_stream):
+        """Rejecting a connection event tells the user where it belongs."""
+
+        handle = RequestStreamHandle(websocket_stream, "test_stream")
+
+        with pytest.raises(ValueError, match="client.on_connection"):
+            handle.on("ping", lambda data: data)
 
     @pytest.mark.asyncio
     async def test_request_stream_with_stream_url(
@@ -1456,3 +2806,42 @@ class TestWebSocketAPIBase:
         ws_api.connections = [mock_connection]
         await ws_api.unsubscribe(id="0")
         assert "Stream 0 is not subscribed." in caplog.text
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_keeps_connection_callbacks(
+        self, ws_api, mock_user_registry
+    ):
+        """Unsubscribing a user data id leaves the connection callbacks alone."""
+
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketAPI"
+        )
+        ws_api.connections = [connection]
+        await ws_api.subscribe_user_data(id="0")
+        callback = MagicMock()
+        ws_api.on_connection("close", callback, "conn-1")
+
+        await ws_api.unsubscribe(id="0")
+
+        assert connection.connection_callback_map["close"] == [callback]
+        assert "0" not in connection.stream_callback_map
+
+    def test_off_connection_for_user_connection(self, ws_api, mock_user_registry):
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketAPI"
+        )
+        ws_api.connections = [connection]
+        callback = MagicMock()
+
+        ws_api.on_connection("pong", callback, "conn-1")
+        ws_api.off_connection("pong", callback, "conn-1")
+
+        assert connection.connection_callback_map["pong"] == []
+
+    def test_on_connection_unknown_id_warns(self, ws_api, mock_user_registry, caplog):
+        ws_api.connections = []
+
+        with caplog.at_level(logging.WARNING):
+            ws_api.on_connection("pong", MagicMock(), "missing")
+
+        assert "Connection missing not connected." in caplog.text

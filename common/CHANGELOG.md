@@ -1,5 +1,23 @@
 # Changelog
 
+## 4.1.0 - 2026-07-30
+
+### Added (1)
+
+- Added `reconnect_attempts` to `ConfigurationWebSocketAPI` and `ConfigurationWebSocketStreams` to retry a failed reconnection instead of giving up after the first attempt. Must be between `1` and `10` (default: `3`).
+
+### Changed (9)
+
+- Update Websocket Response type.
+- Add Websocket optional `open`, `ping`, `pong`, `close`, `error` event type callbacks through `on_connection()`. 
+- Add `off_connection()` to unregister connection event callbacks.
+- Handle Websocket ping/pong manually so the `ping` and `pong` callbacks are received on both Websocket Streams and Websocket API connections.
+- Send a single `SUBSCRIBE`/`UNSUBSCRIBE` message per connection instead of one message per stream, on `subscribe()`, `unsubscribe()` and when streams are restored after a reconnection.
+- Track the scheduled connection rotation per connection and cancel it when that connection is closed, discarded or replaced, so rotations no longer accumulate over time.
+- Allow `reconnect()` to be called directly to reconnect immediately, without going through `schedule_reconnect()`.
+- Fixed a connection closed by the user being reconnected on `serverShutdown`, as the flag guarding it was read from the wrong object and never set.
+- Fixed the connection id being reused as the request id when restoring streams after a reconnection, which sent a UUID where an integer id is required.
+
 ## 4.0.3 - 2026-07-14
 
 ### Added (1)

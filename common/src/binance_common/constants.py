@@ -13,6 +13,11 @@ class WebsocketMode(Enum):
     SINGLE = "single"
     POOL = "pool"
 
+AUTO_RECONNECT_INTERVAL_SECONDS = 23 * 3600
+SUBSCRIBE_MESSAGE_DELAY_SECONDS = 0.5
+DEFAULT_RECONNECT_ATTEMPTS = 3
+MAX_RECONNECT_ATTEMPTS = 10
+
 
 # Algo constants
 ALGO_REST_API_PROD_URL = "https://api.binance.com"
