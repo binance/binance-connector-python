@@ -21,58 +21,72 @@ from typing import Set
 from typing_extensions import Self
 
 
-class UsersForceOrdersResponseInner(BaseModel):
+class CurrentAllOpenOrdersResponseInner(BaseModel):
     """
-    UsersForceOrdersResponseInner
+    CurrentAllOpenOrdersResponseInner
     """  # noqa: E501
 
-    order_id: Optional[StrictInt] = Field(
-        default=None, description="Sub-order ID", alias="orderId"
-    )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
+    avg_price: Optional[StrictStr] = Field(
+        default=None, description="Average execution price", alias="avgPrice"
     )
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client order ID.", alias="clientOrderId"
     )
-    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
-    avg_price: Optional[StrictStr] = Field(
-        default=None, description="Average execution price", alias="avgPrice"
-    )
-    orig_qty: Optional[StrictStr] = Field(
-        default=None, description="Original order quantity", alias="origQty"
+    cum_base: Optional[StrictStr] = Field(
+        default=None, description="Cumulative base asset amount.", alias="cumBase"
     )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed quantity", alias="executedQty"
     )
-    cum_base: Optional[StrictStr] = Field(
-        default=None, description="Cumulative base asset amount.", alias="cumBase"
+    order_id: Optional[StrictInt] = Field(
+        default=None, description="Sub-order ID", alias="orderId"
     )
-    cum_quote: Optional[StrictStr] = Field(
-        default=None, description="Cumulative quote asset amount.", alias="cumQuote"
+    orig_qty: Optional[StrictStr] = Field(
+        default=None, description="Original order quantity", alias="origQty"
     )
-    time_in_force: Optional[StrictStr] = Field(
-        default=None, description="Time in force", alias="timeInForce"
+    orig_type: Optional[StrictStr] = Field(
+        default=None, description="Original order type.", alias="origType"
     )
-    type: Optional[StrictStr] = Field(default=None, description="Order type.")
+    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
     reduce_only: Optional[StrictBool] = Field(
         default=None,
         description="Whether the order is reduce-only.",
         alias="reduceOnly",
     )
-    close_position: Optional[StrictBool] = Field(
-        default=None, description="if Close-All", alias="closePosition"
-    )
     side: Optional[StrictStr] = Field(default=None, description="Trading side")
     position_side: Optional[StrictStr] = Field(
         default=None, description="Position side", alias="positionSide"
+    )
+    status: Optional[StrictStr] = Field(
+        default=None, description="Enum：completed，processing"
     )
     stop_price: Optional[StrictStr] = Field(
         default=None,
         description="please ignore when order type is TRAILING_STOP_MARKET",
         alias="stopPrice",
+    )
+    close_position: Optional[StrictBool] = Field(
+        default=None, description="if Close-All", alias="closePosition"
+    )
+    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time_in_force: Optional[StrictStr] = Field(
+        default=None, description="Time in force", alias="timeInForce"
+    )
+    type: Optional[StrictStr] = Field(default=None, description="Order type.")
+    activate_price: Optional[StrictStr] = Field(
+        default=None,
+        description="activation price, only return with TRAILING_STOP_MARKET order",
+        alias="activatePrice",
+    )
+    price_rate: Optional[StrictStr] = Field(
+        default=None,
+        description="callback rate, only return with TRAILING_STOP_MARKET order",
+        alias="priceRate",
+    )
+    update_time: Optional[StrictInt] = Field(
+        default=None, description="update time", alias="updateTime"
     )
     working_type: Optional[StrictStr] = Field(
         default=None, description="Stop trigger price type.", alias="workingType"
@@ -82,44 +96,42 @@ class UsersForceOrdersResponseInner(BaseModel):
         description="if conditional order trigger is protected",
         alias="priceProtect",
     )
-    orig_type: Optional[StrictStr] = Field(
-        default=None, description="Original order type.", alias="origType"
+    price_match: Optional[StrictStr] = Field(
+        default=None, description="price match mode", alias="priceMatch"
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
-    update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
-    )
-    good_till_date: Optional[StrictInt] = Field(
+    self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None,
-        description="order pre-set auto cancel time for TIF GTD order",
-        alias="goodTillDate",
+        description="self trading preventation mode",
+        alias="selfTradePreventionMode",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "orderId",
-        "symbol",
-        "pair",
-        "status",
-        "clientOrderId",
-        "price",
         "avgPrice",
-        "origQty",
-        "executedQty",
+        "clientOrderId",
         "cumBase",
-        "cumQuote",
-        "timeInForce",
-        "type",
+        "executedQty",
+        "orderId",
+        "origQty",
+        "origType",
+        "price",
         "reduceOnly",
-        "closePosition",
         "side",
         "positionSide",
+        "status",
         "stopPrice",
+        "closePosition",
+        "symbol",
+        "pair",
+        "time",
+        "timeInForce",
+        "type",
+        "activatePrice",
+        "priceRate",
+        "updateTime",
         "workingType",
         "priceProtect",
-        "origType",
-        "time",
-        "updateTime",
-        "goodTillDate",
+        "priceMatch",
+        "selfTradePreventionMode",
     ]
 
     model_config = ConfigDict(
@@ -143,7 +155,7 @@ class UsersForceOrdersResponseInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UsersForceOrdersResponseInner from a JSON string"""
+        """Create an instance of CurrentAllOpenOrdersResponseInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -177,7 +189,7 @@ class UsersForceOrdersResponseInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UsersForceOrdersResponseInner from a dict"""
+        """Create an instance of CurrentAllOpenOrdersResponseInner from a dict"""
         if obj is None:
             return None
 
@@ -186,30 +198,32 @@ class UsersForceOrdersResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "orderId": obj.get("orderId"),
-                "symbol": obj.get("symbol"),
-                "pair": obj.get("pair"),
-                "status": obj.get("status"),
-                "clientOrderId": obj.get("clientOrderId"),
-                "price": obj.get("price"),
                 "avgPrice": obj.get("avgPrice"),
-                "origQty": obj.get("origQty"),
-                "executedQty": obj.get("executedQty"),
+                "clientOrderId": obj.get("clientOrderId"),
                 "cumBase": obj.get("cumBase"),
-                "cumQuote": obj.get("cumQuote"),
-                "timeInForce": obj.get("timeInForce"),
-                "type": obj.get("type"),
+                "executedQty": obj.get("executedQty"),
+                "orderId": obj.get("orderId"),
+                "origQty": obj.get("origQty"),
+                "origType": obj.get("origType"),
+                "price": obj.get("price"),
                 "reduceOnly": obj.get("reduceOnly"),
-                "closePosition": obj.get("closePosition"),
                 "side": obj.get("side"),
                 "positionSide": obj.get("positionSide"),
+                "status": obj.get("status"),
                 "stopPrice": obj.get("stopPrice"),
+                "closePosition": obj.get("closePosition"),
+                "symbol": obj.get("symbol"),
+                "pair": obj.get("pair"),
+                "time": obj.get("time"),
+                "timeInForce": obj.get("timeInForce"),
+                "type": obj.get("type"),
+                "activatePrice": obj.get("activatePrice"),
+                "priceRate": obj.get("priceRate"),
+                "updateTime": obj.get("updateTime"),
                 "workingType": obj.get("workingType"),
                 "priceProtect": obj.get("priceProtect"),
-                "origType": obj.get("origType"),
-                "time": obj.get("time"),
-                "updateTime": obj.get("updateTime"),
-                "goodTillDate": obj.get("goodTillDate"),
+                "priceMatch": obj.get("priceMatch"),
+                "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
             }
         )
         # store additional fields in additional_properties

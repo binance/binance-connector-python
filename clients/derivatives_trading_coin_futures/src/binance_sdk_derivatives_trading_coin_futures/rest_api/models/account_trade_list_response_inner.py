@@ -44,6 +44,9 @@ class AccountTradeListResponseInner(BaseModel):
     base_qty: Optional[StrictStr] = Field(
         default=None, description="Base asset quantity.", alias="baseQty"
     )
+    quote_qty: Optional[StrictStr] = Field(
+        default=None, description="Quote asset quantity.", alias="quoteQty"
+    )
     commission: Optional[StrictStr] = Field(
         default=None, description="Transaction Fee (in Crypto)"
     )
@@ -72,6 +75,7 @@ class AccountTradeListResponseInner(BaseModel):
         "realizedPnl",
         "marginAsset",
         "baseQty",
+        "quoteQty",
         "commission",
         "commissionAsset",
         "time",
@@ -154,6 +158,7 @@ class AccountTradeListResponseInner(BaseModel):
                 "realizedPnl": obj.get("realizedPnl"),
                 "marginAsset": obj.get("marginAsset"),
                 "baseQty": obj.get("baseQty"),
+                "quoteQty": obj.get("quoteQty"),
                 "commission": obj.get("commission"),
                 "commissionAsset": obj.get("commissionAsset"),
                 "time": obj.get("time"),

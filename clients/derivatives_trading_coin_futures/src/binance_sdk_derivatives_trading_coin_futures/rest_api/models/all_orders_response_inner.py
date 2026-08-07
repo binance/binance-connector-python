@@ -35,6 +35,9 @@ class AllOrdersResponseInner(BaseModel):
     cum_base: Optional[StrictStr] = Field(
         default=None, description="Cumulative base asset amount.", alias="cumBase"
     )
+    cum_quote: Optional[StrictStr] = Field(
+        default=None, description="Cumulative quote asset amount.", alias="cumQuote"
+    )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed quantity", alias="executedQty"
     )
@@ -104,11 +107,17 @@ class AllOrdersResponseInner(BaseModel):
         description="self trading preventation mode",
         alias="selfTradePreventionMode",
     )
+    good_till_date: Optional[StrictInt] = Field(
+        default=None,
+        description="order pre-set auto cancel time for TIF GTD order",
+        alias="goodTillDate",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "avgPrice",
         "clientOrderId",
         "cumBase",
+        "cumQuote",
         "executedQty",
         "orderId",
         "origQty",
@@ -132,6 +141,7 @@ class AllOrdersResponseInner(BaseModel):
         "priceProtect",
         "priceMatch",
         "selfTradePreventionMode",
+        "goodTillDate",
     ]
 
     model_config = ConfigDict(
@@ -201,6 +211,7 @@ class AllOrdersResponseInner(BaseModel):
                 "avgPrice": obj.get("avgPrice"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumBase": obj.get("cumBase"),
+                "cumQuote": obj.get("cumQuote"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),
@@ -224,6 +235,7 @@ class AllOrdersResponseInner(BaseModel):
                 "priceProtect": obj.get("priceProtect"),
                 "priceMatch": obj.get("priceMatch"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
+                "goodTillDate": obj.get("goodTillDate"),
             }
         )
         # store additional fields in additional_properties

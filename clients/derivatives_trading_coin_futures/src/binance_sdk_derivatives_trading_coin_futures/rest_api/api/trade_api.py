@@ -990,9 +990,9 @@ class TradeApi:
         - Either `quantity` or `price` must be sent. *(After CM migration, both `quantity` and `price` are required.)*
         - When the new `quantity` or `price` doesn't satisfy PRICE_FILTER / PERCENT_FILTER / LOT_SIZE, amendment will be rejected and the order will stay as it is.
         - However the order will be cancelled by the amendment in the following situations:
-          - when the order is in partially filled status and the new `quantity`
+          - when the order is in partially filled status and the new `quantity` <= `executedQty`
           - When the order is `GTX` and the new price will cause it to be executed immediately
-          - One order can only be modfied for less than 10000 times
+        - One order can only be modfied for less than 10000 times
 
                 Args:
                     symbol (Union[str, None]): Symbol

@@ -1,5 +1,30 @@
 # Changelog
 
+## 12.0.0 - 2026-08-07
+
+### Changed (5)
+
+- Updated `binance-common` library to version `4.2.0`
+- Updated Dependencies
+
+#### REST API
+
+- Modified response for `all_orders()` (`GET /dapi/v1/allOrders`):
+  - items: property `goodTillDate` added
+  - items: property `cumQuote` added
+  - items: item property `goodTillDate` added
+  - items: item property `cumQuote` added
+
+- Modified response for `users_force_orders()` (`GET /dapi/v1/forceOrders`):
+  - items: property `goodTillDate` added
+  - items: property `cumQuote` added
+  - items: item property `goodTillDate` added
+  - items: item property `cumQuote` added
+
+- Modified response for `account_trade_list()` (`GET /dapi/v1/userTrades`):
+  - items: property `quoteQty` added
+  - items: item property `quoteQty` added
+
 ## 11.0.0 - 2026-07-30
 
 ### Changed (1)

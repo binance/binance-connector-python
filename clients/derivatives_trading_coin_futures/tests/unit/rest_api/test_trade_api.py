@@ -197,6 +197,7 @@ class TestTradeApi:
                 "realizedPnl": "0",
                 "marginAsset": "BTC",
                 "baseQty": "0.01136364",
+                "quoteQty": "100",
                 "commission": "0.00000454",
                 "commissionAsset": "BTC",
                 "time": 1590743483586,
@@ -267,6 +268,7 @@ class TestTradeApi:
                 "realizedPnl": "0",
                 "marginAsset": "BTC",
                 "baseQty": "0.01136364",
+                "quoteQty": "100",
                 "commission": "0.00000454",
                 "commissionAsset": "BTC",
                 "time": 1590743483586,
@@ -326,6 +328,7 @@ class TestTradeApi:
                 "avgPrice": "0.0",
                 "clientOrderId": "abc",
                 "cumBase": "0",
+                "cumQuote": "0",
                 "executedQty": "0",
                 "orderId": 1917641,
                 "origQty": "0.40",
@@ -340,7 +343,7 @@ class TestTradeApi:
                 "symbol": "BTCUSD_200925",
                 "pair": "BTCUSD",
                 "time": 1579276756075,
-                "timeInForce": "GTC",
+                "timeInForce": "GTD",
                 "type": "TRAILING_STOP_MARKET",
                 "activatePrice": "9020",
                 "priceRate": "0.3",
@@ -349,6 +352,7 @@ class TestTradeApi:
                 "priceProtect": False,
                 "priceMatch": "NONE",
                 "selfTradePreventionMode": "NONE",
+                "goodTillDate": 1579385751000,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -405,6 +409,7 @@ class TestTradeApi:
                 "avgPrice": "0.0",
                 "clientOrderId": "abc",
                 "cumBase": "0",
+                "cumQuote": "0",
                 "executedQty": "0",
                 "orderId": 1917641,
                 "origQty": "0.40",
@@ -419,7 +424,7 @@ class TestTradeApi:
                 "symbol": "BTCUSD_200925",
                 "pair": "BTCUSD",
                 "time": 1579276756075,
-                "timeInForce": "GTC",
+                "timeInForce": "GTD",
                 "type": "TRAILING_STOP_MARKET",
                 "activatePrice": "9020",
                 "priceRate": "0.3",
@@ -428,6 +433,7 @@ class TestTradeApi:
                 "priceProtect": False,
                 "priceMatch": "NONE",
                 "selfTradePreventionMode": "NONE",
+                "goodTillDate": 1579385751000,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -3552,6 +3558,7 @@ class TestTradeApi:
                 "origQty": "1",
                 "executedQty": "1",
                 "cumBase": "0.00882854",
+                "cumQuote": "100",
                 "timeInForce": "IOC",
                 "type": "LIMIT",
                 "reduceOnly": False,
@@ -3564,6 +3571,7 @@ class TestTradeApi:
                 "origType": "LIMIT",
                 "time": 1596542005019,
                 "updateTime": 1596542005050,
+                "goodTillDate": 0,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
@@ -3626,6 +3634,7 @@ class TestTradeApi:
                 "origQty": "1",
                 "executedQty": "1",
                 "cumBase": "0.00882854",
+                "cumQuote": "100",
                 "timeInForce": "IOC",
                 "type": "LIMIT",
                 "reduceOnly": False,
@@ -3638,6 +3647,7 @@ class TestTradeApi:
                 "origType": "LIMIT",
                 "time": 1596542005019,
                 "updateTime": 1596542005050,
+                "goodTillDate": 0,
             }
         ]
         mock_get_signature.return_value = "mocked_signature"
