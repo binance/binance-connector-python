@@ -47,9 +47,6 @@ class ModifyCmOrderResponse(BaseModel):
         alias="modifyId",
     )
     price: Optional[StrictStr] = Field(default=None, description="Price.")
-    avg_price: Optional[StrictStr] = Field(
-        default=None, description="Avg Price.", alias="avgPrice"
-    )
     orig_qty: Optional[StrictStr] = Field(
         default=None, description="Orig Qty.", alias="origQty"
     )
@@ -58,9 +55,6 @@ class ModifyCmOrderResponse(BaseModel):
     )
     cum_qty: Optional[StrictStr] = Field(
         default=None, description="Cum Qty.", alias="cumQty"
-    )
-    cum_base: Optional[StrictStr] = Field(
-        default=None, description="Cum Base.", alias="cumBase"
     )
     time_in_force: Optional[StrictStr] = Field(
         default=None, description="Time In Force.", alias="timeInForce"
@@ -92,11 +86,9 @@ class ModifyCmOrderResponse(BaseModel):
         "clientOrderId",
         "modifyId",
         "price",
-        "avgPrice",
         "origQty",
         "executedQty",
         "cumQty",
-        "cumBase",
         "timeInForce",
         "type",
         "reduceOnly",
@@ -177,11 +169,9 @@ class ModifyCmOrderResponse(BaseModel):
                 "clientOrderId": obj.get("clientOrderId"),
                 "modifyId": obj.get("modifyId"),
                 "price": obj.get("price"),
-                "avgPrice": obj.get("avgPrice"),
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),
                 "cumQty": obj.get("cumQty"),
-                "cumBase": obj.get("cumBase"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "reduceOnly": obj.get("reduceOnly"),

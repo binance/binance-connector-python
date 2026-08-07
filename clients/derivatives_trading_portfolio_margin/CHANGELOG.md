@@ -1,5 +1,22 @@
 # Changelog
 
+## 12.0.0 - 2026-08-07
+
+### Changed (4)
+
+- Updated `binance-common` library to version `4.2.0`
+- Updated Dependencies
+
+#### REST API
+
+- Modified response for `modify_cm_order()` (`PUT /papi/v1/cm/order`):
+  - property `avgPrice` deleted
+  - property `cumBase` deleted
+
+- Modified response for `modify_um_order()` (`PUT /papi/v1/um/order`):
+  - property `avgPrice` deleted
+  - property `cumQuote` deleted
+
 ## 11.0.0 - 2026-07-30
 
 ### Changed (1)

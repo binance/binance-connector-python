@@ -1473,7 +1473,8 @@ class TradeApi:
         - Both `quantity` and `price` must be sent
         - When the new `quantity` or `price` doesn't satisfy PRICE_FILTER / PERCENT_FILTER / LOT_SIZE, amendment will be rejected and the order will stay as it is.
         - However the order will be cancelled by the amendment in the following situations:
-          - when the order is in partially filled status and the new `quantity`  * When the order is `GTX` and the new price will cause it to be executed immediately
+          - when the order is in partially filled status and the new `quantity` <= `executedQty`
+          - When the order is `GTX` and the new price will cause it to be executed immediately
 
                 Args:
                     symbol (Union[str, None]): Symbol
@@ -1565,7 +1566,9 @@ class TradeApi:
         - Both quantity and price must be sent
         - When the new quantity or price doesn't satisfy PRICE_FILTER / PERCENT_FILTER / LOT_SIZE, amendment will be rejected and the order will stay as it is.
         - However the order will be cancelled by the amendment in the following situations:
-          - when the order is in partially filled status and the new quantity  * When the order is GTX and the new price will cause it to be executed immediately
+          - when the order is in partially filled status and the new quantity <= executedQty
+          - When the order is GTX and the new price will cause it to be executed immediately
+        - The amendment keeps the order's original selfTradePreventionMode.
 
                 Args:
                     symbol (Union[str, None]): Symbol
