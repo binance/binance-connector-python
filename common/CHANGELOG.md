@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.2.0 - 2026-08-07
+
+### Added (1)
+
+- Added a `reconnect` connection event to `on_connection()` and `off_connection()`, fired when a connection is being replaced by a planned reconnect.
+
+### Changed (2)
+
+- `close` is now only emitted when a connection is gone for good: a connection being replaced by a reconnect emits `reconnect` instead, so consumers no longer have to guess against `connection.reconnect` / `reconnect_tasks`.
+- Update Dependencies
+
 ## 4.1.0 - 2026-07-30
 
 ### Added (1)
@@ -18,7 +29,7 @@
 - Fixed a connection closed by the user being reconnected on `serverShutdown`, as the flag guarding it was read from the wrong object and never set.
 - Fixed the connection id being reused as the request id when restoring streams after a reconnection, which sent a UUID where an integer id is required.
 
-## 4.0.3 - 2026-07-14
+## 4.0.3 - 2026-07-13
 
 ### Added (1)
 

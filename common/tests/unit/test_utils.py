@@ -12,7 +12,7 @@ from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, ECC
 from Crypto.Signature import pkcs1_15, eddsa
-from datetime import datetime, timezone
+from datetime import datetime
 from enum import Enum
 from types import SimpleNamespace
 from typing import ClassVar, List, Optional, Union

@@ -17,6 +17,7 @@ from binance_common.constants import (
     DEFAULT_RECONNECT_ATTEMPTS,
     MAX_RECONNECT_ATTEMPTS,
     SUBSCRIBE_MESSAGE_DELAY_SECONDS,
+    SUPPORTED_CONNECTION_EVENTS,
     WebsocketMode,
 )
 from binance_common.models import (
@@ -36,8 +37,6 @@ from binance_common.utils import (
 )
 
 T = TypeVar("T", bound=BaseModel)
-
-SUPPORTED_CONNECTION_EVENTS = {"open", "ping", "pong", "close", "error"}
 
 
 class StreamConnectionsMap:
@@ -88,6 +87,9 @@ class WebSocketConnection:
             closed by the user while its replacement is established.
         close_emitted (bool): Flag indicating that the `close` event has already
             been emitted for this connection, so it is never reported twice.
+        reconnect_emitted (bool): Flag indicating that the `reconnect` event has
+            already been emitted for this connection, so a planned replacement
+            is never reported twice.
         is_session_log_on (bool): Flag indicating if the session is logged on.
         session_logon_request (Optional[dict]): The session logon request data.
         url_path (Optional[str]): The URL path for the WebSocket connection.
@@ -116,6 +118,7 @@ class WebSocketConnection:
         self.is_open = True
         self.is_being_replaced = False
         self.close_emitted = False
+        self.reconnect_emitted = False
         self.is_session_log_on = False
         self.session_logon_request = None
         self.url_path = url_path
@@ -412,6 +415,13 @@ class WebSocketCommon:
 
         connection.is_open = False
 
+        if connection.is_being_replaced:
+            logging.debug(
+                f"WebSocket {connection.id} is being replaced by a reconnect; "
+                f"not emitting 'close'."
+            )
+            return
+
         if connection.close_emitted:
             logging.debug(
                 f"WebSocket {connection.id} already reported as closed; "
@@ -421,6 +431,25 @@ class WebSocketCommon:
 
         connection.close_emitted = True
         self._emit_connection_event(connection, "close")
+
+    def _emit_reconnect_event(self, connection: WebSocketConnection) -> None:
+        """Mark a connection as replaced and emit its `reconnect` event.
+
+        Args:
+            connection (WebSocketConnection): The connection being replaced.
+        """
+
+        connection.is_open = False
+
+        if connection.reconnect_emitted:
+            logging.debug(
+                f"WebSocket {connection.id} already reported as reconnecting; "
+                f"not emitting 'reconnect' again."
+            )
+            return
+
+        connection.reconnect_emitted = True
+        self._emit_connection_event(connection, "reconnect")
 
     async def _discard_connection(self, connection: WebSocketConnection) -> None:
         """Close a dead socket and stop handing it out for new messages.
@@ -522,11 +551,12 @@ class WebSocketCommon:
 
         Args:
             event (str): The connection event to listen for. Supported values are
-                `open`, `ping`, `pong`, `close`, and `error`.
+                `open`, `ping`, `pong`, `reconnect`, `close`, and `error`.
             callback (Callable[..., None]): Callback invoked when the event fires.
                 `ping` and `pong` pass the frame payload, `error` passes the
-                error, and `open` and `close` pass nothing. The callback may also
-                be declared without parameters to ignore the payload.
+                error, and `open`, `reconnect` and `close` pass nothing. The
+                callback may also be declared without parameters to ignore the
+                payload.
             connection (Optional[Union[WebSocketConnection, str, int]]): The
                 connection to observe, given as a connection object or its id.
                 When omitted, every connection of the pool is observed.
@@ -777,7 +807,7 @@ class WebSocketCommon:
             if close_old_connection:
                 await self.close_connection(connection, False)
 
-            self._emit_close_event(connection)
+            self._emit_reconnect_event(connection)
 
             max_attempts = min(
                 getattr(configuration, "reconnect_attempts", None)
@@ -800,6 +830,9 @@ class WebSocketCommon:
                         f"Reconnect for WebSocket {connection.id} abandoned: "
                         f"closed by the user."
                     )
+                    connection.reconnect = False
+                    connection.is_being_replaced = False
+                    self._emit_close_event(connection)
                     return None
 
                 error = None

@@ -1262,8 +1262,8 @@ class TestWebSocketCommon:
         assert first.connection_callback_map["close"] == []
         assert second.connection_callback_map["close"] == [callback]
 
-    def test_emit_close_event_fires_while_being_replaced(self):
-        """A rotation still reports the socket it is replacing as closed."""
+    def test_emit_close_event_silent_while_being_replaced(self):
+        """A planned replacement must not read as the connection being lost."""
 
         ws_common = WebSocketCommon(MagicMock())
         connection = WebSocketConnection(
@@ -1275,7 +1275,25 @@ class TestWebSocketCommon:
 
         ws_common._emit_close_event(connection)
 
+        callback.assert_not_called()
+        assert connection.close_emitted is False
+        assert connection.is_open is False
+
+    def test_emit_reconnect_event_fires_once(self):
+        """The socket being replaced reports `reconnect`, and only once."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        connection = WebSocketConnection(
+            AsyncMock(), "test_id", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock()
+        connection.connection_callback_map["reconnect"].append(callback)
+
+        ws_common._emit_reconnect_event(connection)
+        ws_common._emit_reconnect_event(connection)
+
         callback.assert_called_once_with()
+        assert connection.reconnect_emitted is True
         assert connection.is_open is False
 
     def test_emit_close_event_reports_close_once(self):
@@ -1392,7 +1410,7 @@ class TestWebSocketCommon:
         )
         await ws_common.reconnect(conn, config)
 
-        assert events == ["close", ("error", boom)]
+        assert events == [("error", boom), "close"]
         assert ws_common.reconnect_tasks == []
         assert conn.reconnect is False
         assert conn.is_open is False
@@ -1433,7 +1451,7 @@ class TestWebSocketCommon:
     async def test_reconnect_closes_old_then_emits_open_last(
         self, mock_connection, mock_registry, mock_user_registry
     ):
-        """A rotation reads as `close` then `open`, the `open` last of all."""
+        """A rotation reads as `reconnect` then `open`, the `open` last of all."""
 
         ws_common = WebSocketCommon(MagicMock())
         ws_common.configuration = MagicMock(session_re_logon=False)
@@ -1445,6 +1463,9 @@ class TestWebSocketCommon:
         events = []
         old_conn.connection_callback_map["open"].append(lambda: events.append("open"))
         old_conn.connection_callback_map["close"].append(lambda: events.append("close"))
+        old_conn.connection_callback_map["reconnect"].append(
+            lambda: events.append("reconnect")
+        )
 
         new_conn = WebSocketConnection(
             AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
@@ -1471,8 +1492,8 @@ class TestWebSocketCommon:
         await ws_common.reconnect(old_conn, config)
 
         assert old_conn.is_being_replaced is True
-        assert resubscribed == [("order", ["close"])]
-        assert events == ["close", "open"]
+        assert resubscribed == [("order", ["reconnect"])]
+        assert events == ["reconnect", "open"]
 
     @pytest.mark.asyncio
     async def test_reconnect_carries_over_connection_callbacks(
@@ -1655,6 +1676,89 @@ class TestWebSocketCommon:
 
         assert ws_common.reconnect_tasks == []
         assert conn.reconnect is False
+
+    @pytest.mark.asyncio
+    async def test_reconnect_abandoned_by_the_user_reports_close(self):
+        """Giving up because the user closed the connection is a real close.
+
+        The `reconnect` event has already fired by then, so the connection would
+        otherwise be left reported as reconnecting forever.
+        """
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        conn.session_logon_request = None
+        events = []
+        conn.connection_callback_map["reconnect"].append(
+            lambda: events.append("reconnect")
+        )
+        conn.connection_callback_map["close"].append(lambda: events.append("close"))
+
+        async def close_then_init(*args, **kwargs):
+            raise AssertionError("the reconnect must be abandoned before connecting")
+
+        async def mark_closed(*args, **kwargs):
+            conn.close_initiated = True
+
+        ws_common.init_connection = close_then_init
+        ws_common.close_connection = mark_closed
+        ws_common.connections = [conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=3,
+            stream_url="wss://test.com/ws",
+        )
+        result = await ws_common.reconnect(conn, config)
+
+        assert result is None
+        assert events == ["reconnect", "close"]
+        assert conn.reconnect is False
+        assert conn.is_being_replaced is False
+        assert ws_common.reconnect_tasks == []
+
+    @pytest.mark.asyncio
+    async def test_reconnect_carries_over_reconnect_callbacks(
+        self, mock_registry, mock_user_registry
+    ):
+        """A `reconnect` listener keeps firing across successive rotations."""
+
+        ws_common = WebSocketCommon(MagicMock())
+        ws_common.configuration = MagicMock(session_re_logon=False)
+
+        old_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        old_conn.session_logon_request = None
+        callback = MagicMock()
+        old_conn.connection_callback_map["reconnect"].append(callback)
+
+        new_conn = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            ws_common.connections.append(new_conn)
+
+        ws_common.init_connection = fake_init
+        ws_common.close_connection = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+        ws_common.connections = [old_conn]
+
+        config = MagicMock(
+            reconnect_delay=0,
+            reconnect_attempts=1,
+            stream_url="wss://test.com/ws",
+        )
+        await ws_common.reconnect(old_conn, config)
+
+        callback.assert_called_once_with()
+        assert new_conn.connection_callback_map["reconnect"] == [callback]
+        assert new_conn.reconnect_emitted is False
 
     @pytest.mark.asyncio
     async def test_reconnect_retries_until_it_succeeds(self):
