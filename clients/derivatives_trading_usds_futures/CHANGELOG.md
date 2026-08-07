@@ -1,5 +1,34 @@
 # Changelog
 
+## 17.0.0 - 2026-08-07
+
+### Changed (5)
+
+- Updated `binance-common` library to version `4.2.0`
+- Updated Dependencies
+
+#### REST API
+
+- Modified response for `all_orders()` (`GET /fapi/v1/allOrders`):
+  - items: property `cumBase` added
+  - items: property `pair` added
+  - items: item property `cumBase` added
+  - items: item property `pair` added
+
+- Modified response for `users_force_orders()` (`GET /fapi/v1/forceOrders`):
+  - items: property `pair` added
+  - items: property `cumBase` added
+  - items: item property `pair` added
+  - items: item property `cumBase` added
+
+- Modified response for `account_trade_list()` (`GET /fapi/v1/userTrades`):
+  - items: property `marginAsset` added
+  - items: property `baseQty` added
+  - items: property `pair` added
+  - items: item property `marginAsset` added
+  - items: item property `baseQty` added
+  - items: item property `pair` added
+
 ## 16.0.0 - 2026-07-30
 
 ### Changed (1)

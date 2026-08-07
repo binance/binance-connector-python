@@ -927,7 +927,7 @@ class MarketDataApi:
 
                 Get older market historical trades.
 
-        Weight(IP): 20
+        Weight(IP): 200
 
         Security Type: MARKET_DATA
 

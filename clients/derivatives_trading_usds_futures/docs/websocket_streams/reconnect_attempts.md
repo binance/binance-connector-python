@@ -24,6 +24,7 @@ async def allBookTickersStream():
         connection.on_connection("open", lambda: print("OPEN MESSAGE"))
         connection.on_connection("ping", lambda: print("PING MESSAGE"))
         connection.on_connection("pong", lambda: print("PONG MESSAGE"))
+        connection.on_connection("reconnect", lambda: print("RECONNECT MESSAGE"))
         connection.on_connection("error", lambda data: print(f"ERROR MESSAGE: {data}"))
         connection.on_connection("close", lambda: print("CLOSE MESSAGE"))
 

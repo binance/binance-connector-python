@@ -41,6 +41,12 @@ class AccountTradeListResponseInner(BaseModel):
     quote_qty: Optional[StrictStr] = Field(
         default=None, description="Quote Qty.", alias="quoteQty"
     )
+    base_qty: Optional[StrictStr] = Field(
+        default=None, description="Base Qty.", alias="baseQty"
+    )
+    margin_asset: Optional[StrictStr] = Field(
+        default=None, description="Margin Asset.", alias="marginAsset"
+    )
     realized_pnl: Optional[StrictStr] = Field(
         default=None, description="Realized Pnl.", alias="realizedPnl"
     )
@@ -49,6 +55,7 @@ class AccountTradeListResponseInner(BaseModel):
         default=None, description="Position Side.", alias="positionSide"
     )
     symbol: Optional[StrictStr] = Field(default=None, description="Symbol.")
+    pair: Optional[StrictStr] = Field(default=None, description="Pair.")
     time: Optional[StrictInt] = Field(default=None, description="Time.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -61,10 +68,13 @@ class AccountTradeListResponseInner(BaseModel):
         "price",
         "qty",
         "quoteQty",
+        "baseQty",
+        "marginAsset",
         "realizedPnl",
         "side",
         "positionSide",
         "symbol",
+        "pair",
         "time",
     ]
 
@@ -141,10 +151,13 @@ class AccountTradeListResponseInner(BaseModel):
                 "price": obj.get("price"),
                 "qty": obj.get("qty"),
                 "quoteQty": obj.get("quoteQty"),
+                "baseQty": obj.get("baseQty"),
+                "marginAsset": obj.get("marginAsset"),
                 "realizedPnl": obj.get("realizedPnl"),
                 "side": obj.get("side"),
                 "positionSide": obj.get("positionSide"),
                 "symbol": obj.get("symbol"),
+                "pair": obj.get("pair"),
                 "time": obj.get("time"),
             }
         )

@@ -113,6 +113,9 @@ from .current_all_algo_open_orders_response_inner import (
 from .current_all_open_orders_response import (
     CurrentAllOpenOrdersResponse as CurrentAllOpenOrdersResponse,
 )
+from .current_all_open_orders_response_inner import (
+    CurrentAllOpenOrdersResponseInner as CurrentAllOpenOrdersResponseInner,
+)
 from .exchange_information_response import (
     ExchangeInformationResponse as ExchangeInformationResponse,
 )

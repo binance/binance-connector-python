@@ -28,6 +28,7 @@ class UsersForceOrdersResponseInner(BaseModel):
 
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
     symbol: Optional[StrictStr] = None
+    pair: Optional[StrictStr] = Field(default=None, description="Pair.")
     status: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     price: Optional[StrictStr] = None
@@ -35,6 +36,9 @@ class UsersForceOrdersResponseInner(BaseModel):
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
     executed_qty: Optional[StrictStr] = Field(default=None, alias="executedQty")
     cum_quote: Optional[StrictStr] = Field(default=None, alias="cumQuote")
+    cum_base: Optional[StrictStr] = Field(
+        default=None, description="Cum Base.", alias="cumBase"
+    )
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
@@ -50,6 +54,7 @@ class UsersForceOrdersResponseInner(BaseModel):
     __properties: ClassVar[List[str]] = [
         "orderId",
         "symbol",
+        "pair",
         "status",
         "clientOrderId",
         "price",
@@ -57,6 +62,7 @@ class UsersForceOrdersResponseInner(BaseModel):
         "origQty",
         "executedQty",
         "cumQuote",
+        "cumBase",
         "timeInForce",
         "type",
         "reduceOnly",
@@ -136,6 +142,7 @@ class UsersForceOrdersResponseInner(BaseModel):
             {
                 "orderId": obj.get("orderId"),
                 "symbol": obj.get("symbol"),
+                "pair": obj.get("pair"),
                 "status": obj.get("status"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "price": obj.get("price"),
@@ -143,6 +150,7 @@ class UsersForceOrdersResponseInner(BaseModel):
                 "origQty": obj.get("origQty"),
                 "executedQty": obj.get("executedQty"),
                 "cumQuote": obj.get("cumQuote"),
+                "cumBase": obj.get("cumBase"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "reduceOnly": obj.get("reduceOnly"),

@@ -21,9 +21,9 @@ from typing import Set
 from typing_extensions import Self
 
 
-class AllOrdersResponseInner(BaseModel):
+class CurrentAllOpenOrdersResponseInner(BaseModel):
     """
-    AllOrdersResponseInner
+    CurrentAllOpenOrdersResponseInner
     """  # noqa: E501
 
     avg_price: Optional[StrictStr] = Field(
@@ -34,9 +34,6 @@ class AllOrdersResponseInner(BaseModel):
     )
     cum_quote: Optional[StrictStr] = Field(
         default=None, description="Cum Quote.", alias="cumQuote"
-    )
-    cum_base: Optional[StrictStr] = Field(
-        default=None, description="Cum Base.", alias="cumBase"
     )
     executed_qty: Optional[StrictStr] = Field(
         default=None, description="Executed Qty.", alias="executedQty"
@@ -68,7 +65,6 @@ class AllOrdersResponseInner(BaseModel):
         default=None, description="if Close-All", alias="closePosition"
     )
     symbol: Optional[StrictStr] = Field(default=None, description="Symbol.")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair.")
     time: Optional[StrictInt] = Field(default=None, description="order time")
     time_in_force: Optional[StrictStr] = Field(
         default=None, description="Time In Force.", alias="timeInForce"
@@ -113,7 +109,6 @@ class AllOrdersResponseInner(BaseModel):
         "avgPrice",
         "clientOrderId",
         "cumQuote",
-        "cumBase",
         "executedQty",
         "orderId",
         "origQty",
@@ -126,7 +121,6 @@ class AllOrdersResponseInner(BaseModel):
         "stopPrice",
         "closePosition",
         "symbol",
-        "pair",
         "time",
         "timeInForce",
         "type",
@@ -161,7 +155,7 @@ class AllOrdersResponseInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AllOrdersResponseInner from a JSON string"""
+        """Create an instance of CurrentAllOpenOrdersResponseInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -195,7 +189,7 @@ class AllOrdersResponseInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AllOrdersResponseInner from a dict"""
+        """Create an instance of CurrentAllOpenOrdersResponseInner from a dict"""
         if obj is None:
             return None
 
@@ -207,7 +201,6 @@ class AllOrdersResponseInner(BaseModel):
                 "avgPrice": obj.get("avgPrice"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "cumQuote": obj.get("cumQuote"),
-                "cumBase": obj.get("cumBase"),
                 "executedQty": obj.get("executedQty"),
                 "orderId": obj.get("orderId"),
                 "origQty": obj.get("origQty"),
@@ -220,7 +213,6 @@ class AllOrdersResponseInner(BaseModel):
                 "stopPrice": obj.get("stopPrice"),
                 "closePosition": obj.get("closePosition"),
                 "symbol": obj.get("symbol"),
-                "pair": obj.get("pair"),
                 "time": obj.get("time"),
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
