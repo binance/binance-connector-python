@@ -40,6 +40,7 @@ from .models import FundingWalletResponse
 from .models import GetAssetsThatCanBeConvertedIntoBnbResponse
 from .models import GetCloudMiningPaymentAndRefundHistoryResponse
 from .models import GetOpenSymbolListResponse
+from .models import GetSpotAssetTagsResponse
 from .models import QueryUserDelegationHistoryResponse
 from .models import QueryUserUniversalTransferHistoryResponse
 from .models import QueryUserWalletBalanceResponse
@@ -726,6 +727,32 @@ class WalletRestAPI:
 
         return self._assetApi.get_open_symbol_list()
 
+    def get_spot_asset_tags(
+        self,
+        tag: Optional[str] = None,
+    ) -> ApiResponse[GetSpotAssetTagsResponse]:
+        """
+                Get Spot Asset Tags (MARKET_DATA)
+
+                Get the tags configured for spot-tradable assets.
+
+        Weight(IP): 100
+
+        Security Type: MARKET_DATA
+
+                Args:
+                    tag (Optional[str] = None): Tag filter. Supports multiple comma-separated tags with OR semantics (an asset is returned if it matches any one tag); leading/trailing whitespace around each tag is ignored. Returns all eligible assets when omitted.
+
+                Returns:
+                    ApiResponse[GetSpotAssetTagsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._assetApi.get_spot_asset_tags(tag)
+
     def query_user_delegation_history(
         self,
         email: Union[str, None],
@@ -962,7 +989,7 @@ class WalletRestAPI:
 
                 User universal transfer
 
-        Weight(UID): 900
+        Weight(UID): 300
 
         Security Type: USER_DATA
 
@@ -1114,7 +1141,7 @@ class WalletRestAPI:
                 Args:
                     include_source (Optional[bool] = None): return `sourceAddress` field when set to `true`
                     coin (Optional[str] = None):
-                    status (Optional[DepositHistoryStatusEnum] = None): 0: pending, 6: credited but cannot withdraw, 7: Wrong Deposit, 8: Waiting User confirm, 1: success
+                    status (Optional[DepositHistoryStatusEnum] = None): 0: pending, 1: success, 2: rejected, 6: credited but cannot withdraw, 7: Wrong Deposit, 8: Waiting User confirm
                     start_time (Optional[int] = None): Default: 90 days from current timestamp
                     end_time (Optional[int] = None): Default: present timestamp
                     offset (Optional[int] = None):

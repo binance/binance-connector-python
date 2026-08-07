@@ -1,5 +1,16 @@
 # Changelog
 
+## 13.1.0 - 2026-08-07
+
+### Added (1)
+
+- `get_spot_asset_tags()` (`GET /sapi/v1/spot/asset/tags`)
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.2.0`
+- Updated Dependencies
+
 ## 13.0.0 - 2026-07-14
 
 ### Changed (14)

@@ -160,6 +160,12 @@ from .get_region_list_response import GetRegionListResponse as GetRegionListResp
 from .get_region_list_response_regions_inner import (
     GetRegionListResponseRegionsInner as GetRegionListResponseRegionsInner,
 )
+from .get_spot_asset_tags_response import (
+    GetSpotAssetTagsResponse as GetSpotAssetTagsResponse,
+)
+from .get_spot_asset_tags_response_inner import (
+    GetSpotAssetTagsResponseInner as GetSpotAssetTagsResponseInner,
+)
 from .get_symbols_delist_schedule_for_spot_response import (
     GetSymbolsDelistScheduleForSpotResponse as GetSymbolsDelistScheduleForSpotResponse,
 )

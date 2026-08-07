@@ -26,6 +26,7 @@ from ..models import FundingWalletResponse
 from ..models import GetAssetsThatCanBeConvertedIntoBnbResponse
 from ..models import GetCloudMiningPaymentAndRefundHistoryResponse
 from ..models import GetOpenSymbolListResponse
+from ..models import GetSpotAssetTagsResponse
 from ..models import QueryUserDelegationHistoryResponse
 from ..models import QueryUserUniversalTransferHistoryResponse
 from ..models import QueryUserWalletBalanceResponse
@@ -614,6 +615,46 @@ class AssetApi:
             response_model=GetOpenSymbolListResponse,
         )
 
+    def get_spot_asset_tags(
+        self,
+        tag: Optional[str] = None,
+    ) -> ApiResponse[GetSpotAssetTagsResponse]:
+        """
+                Get Spot Asset Tags (MARKET_DATA)
+                GET /sapi/v1/spot/asset/tags
+                https://developers.binance.com/en/docs/catalog/core-trading-wallet/api/rest-api/asset#get-spot-asset-tags
+
+                Get the tags configured for spot-tradable assets.
+
+        Weight(IP): 100
+
+        Security Type: MARKET_DATA
+
+                Args:
+                    tag (Optional[str] = None): Tag filter. Supports multiple comma-separated tags with OR semantics (an asset is returned if it matches any one tag); leading/trailing whitespace around each tag is ignored. Returns all eligible assets when omitted.
+
+                Returns:
+                    ApiResponse[GetSpotAssetTagsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        body = {}
+        payload = {"tag": tag}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v1/spot/asset/tags",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetSpotAssetTagsResponse,
+        )
+
     def query_user_delegation_history(
         self,
         email: Union[str, None],
@@ -980,7 +1021,7 @@ class AssetApi:
 
                 User universal transfer
 
-        Weight(UID): 900
+        Weight(UID): 300
 
         Security Type: USER_DATA
 

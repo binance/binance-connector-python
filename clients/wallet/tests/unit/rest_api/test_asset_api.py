@@ -34,6 +34,7 @@ from binance_sdk_wallet.rest_api.models import (
     GetCloudMiningPaymentAndRefundHistoryResponse,
 )
 from binance_sdk_wallet.rest_api.models import GetOpenSymbolListResponse
+from binance_sdk_wallet.rest_api.models import GetSpotAssetTagsResponse
 from binance_sdk_wallet.rest_api.models import QueryUserDelegationHistoryResponse
 from binance_sdk_wallet.rest_api.models import QueryUserUniversalTransferHistoryResponse
 from binance_sdk_wallet.rest_api.models import QueryUserWalletBalanceResponse
@@ -1403,6 +1404,104 @@ class TestAssetApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_open_symbol_list()
+
+    def test_get_spot_asset_tags_success(self):
+        """Test get_spot_asset_tags() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "assetCode": "BNB",
+                "assetName": "BNB",
+                "trading": True,
+                "tags": ["Layer1_Layer2", "BSC"],
+            }
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_spot_asset_tags()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v1/spot/asset/tags" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetSpotAssetTagsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetSpotAssetTagsResponse, "from_dict"):
+            expected = GetSpotAssetTagsResponse.from_dict(expected_response)
+        else:
+            expected = GetSpotAssetTagsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_spot_asset_tags_success_with_optional_params(self):
+        """Test get_spot_asset_tags() successfully with optional parameters."""
+
+        params = {"tag": "Layer1_Layer2,BSC"}
+
+        expected_response = [
+            {
+                "assetCode": "BNB",
+                "assetName": "BNB",
+                "trading": True,
+                "tags": ["Layer1_Layer2", "BSC"],
+            }
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_spot_asset_tags(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/sapi/v1/spot/asset/tags" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetSpotAssetTagsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetSpotAssetTagsResponse, "from_dict"):
+            expected = GetSpotAssetTagsResponse.from_dict(expected_response)
+        else:
+            expected = GetSpotAssetTagsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_spot_asset_tags_server_error(self):
+        """Test that get_spot_asset_tags() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_spot_asset_tags = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_spot_asset_tags()
 
     @patch("binance_common.utils.get_signature")
     def test_query_user_delegation_history_success(self, mock_get_signature):

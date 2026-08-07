@@ -178,7 +178,7 @@ class CapitalApi:
                 Args:
                     include_source (Optional[bool] = None): return `sourceAddress` field when set to `true`
                     coin (Optional[str] = None):
-                    status (Optional[DepositHistoryStatusEnum] = None): 0: pending, 6: credited but cannot withdraw, 7: Wrong Deposit, 8: Waiting User confirm, 1: success
+                    status (Optional[DepositHistoryStatusEnum] = None): 0: pending, 1: success, 2: rejected, 6: credited but cannot withdraw, 7: Wrong Deposit, 8: Waiting User confirm
                     start_time (Optional[int] = None): Default: 90 days from current timestamp
                     end_time (Optional[int] = None): Default: present timestamp
                     offset (Optional[int] = None):
