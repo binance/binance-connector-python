@@ -2,7 +2,7 @@ name: Python Connectors CI
 
 on:
   push:
-    branches: 
+    branches:
       - master
   workflow_dispatch:
 
@@ -13,18 +13,66 @@ jobs:
       clients: ${{ steps.detect.outputs.clients }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Detect all clients
+      - name: Detect clients to build
         id: detect
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
         run: |
-          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
-          echo "Detected clients: $ALL_CLIENTS"
-          echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
-          echo "::set-output name=clients::$ALL_CLIENTS"
+          set -euo pipefail
+
+          # Every buildable package in the repository
+          ALL_CLIENTS=()
+
+          if [ -d common ]; then
+            ALL_CLIENTS+=("common")
+          fi
+
+          for client in clients/*; do
+            if [ -d "$client" ]; then
+              ALL_CLIENTS+=("$(basename "$client")")
+            fi
+          done
+
+          build_all() {
+            printf '%s\n' "${ALL_CLIENTS[@]}" | jq -R -s -c 'split("\n") | map(select(. != ""))'
+          }
+
+          BASE_SHA=""
+          if [ "$EVENT_NAME" = "push" ] \
+            && [ -n "${BEFORE_SHA:-}" ] \
+            && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ] \
+            && git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+            BASE_SHA="$BEFORE_SHA"
+          fi
+
+          if [ -z "$BASE_SHA" ]; then
+            echo "No usable diff base (event '$EVENT_NAME'): building every client"
+            CLIENTS_JSON=$(build_all)
+          else
+            CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$CURRENT_SHA")
+
+            echo "Changed files:"
+            echo "$CHANGED_FILES" | sed 's/^/  /'
+
+            CLIENTS_JSON=$(echo "$CHANGED_FILES" | awk -F/ '
+              $1 == "common"  { print "common" }
+              $1 == "clients" && NF > 2 { print $2 }
+            ' | jq -R -s -c 'split("\n") | map(select(. != "")) | unique')
+          fi
+
+          echo "Clients to build: $CLIENTS_JSON"
+          echo "clients=$CLIENTS_JSON" >> "$GITHUB_OUTPUT"
 
   build:
     needs: detect-clients
+    if: ${{ needs.detect-clients.outputs.clients != '[]' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
