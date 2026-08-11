@@ -68,6 +68,10 @@ class AlgoUpdateO(BaseModel):
     rm: Optional[StrictStr] = Field(
         default=None, description="Algo order failed reason"
     )
+    ia: Optional[StrictBool] = Field(
+        default=None,
+        description="Is activated or not, only meaningful for trailing order",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "caid",
@@ -95,6 +99,7 @@ class AlgoUpdateO(BaseModel):
         "tt",
         "gtd",
         "rm",
+        "ia",
     ]
 
     model_config = ConfigDict(
@@ -182,6 +187,7 @@ class AlgoUpdateO(BaseModel):
                 "tt": obj.get("tt"),
                 "gtd": obj.get("gtd"),
                 "rm": obj.get("rm"),
+                "ia": obj.get("ia"),
             }
         )
         # store additional fields in additional_properties

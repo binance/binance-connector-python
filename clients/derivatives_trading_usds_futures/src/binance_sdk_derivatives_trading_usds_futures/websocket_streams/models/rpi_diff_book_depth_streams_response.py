@@ -17,6 +17,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Set
 from typing_extensions import Self
 
@@ -40,11 +41,11 @@ class RpiDiffBookDepthStreamsResponse(BaseModel):
         default=None,
         description="Final update Id in last stream(ie `u` in last stream)",
     )
-    b: Optional[List[List[StrictStr]]] = Field(
-        default=None, description="Bids to be updated"
+    b: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
+        Field(default=None, description="Bids to be updated")
     )
-    a: Optional[List[List[StrictStr]]] = Field(
-        default=None, description="Asks to be updated"
+    a: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
+        Field(default=None, description="Asks to be updated")
     )
     ps: Optional[StrictStr] = Field(
         default=None, description="(After CM migration) Pair symbol"

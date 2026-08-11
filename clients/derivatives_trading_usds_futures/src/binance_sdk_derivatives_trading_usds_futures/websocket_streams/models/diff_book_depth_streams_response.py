@@ -17,6 +17,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from typing import Set
 from typing_extensions import Self
 
@@ -41,8 +42,12 @@ class DiffBookDepthStreamsResponse(BaseModel):
     pu: Optional[StrictInt] = Field(
         default=None, description="Final update ID in the previous stream event."
     )
-    b: Optional[List[List[StrictStr]]] = Field(default=None, description="Bid updates.")
-    a: Optional[List[List[StrictStr]]] = Field(default=None, description="Ask updates.")
+    b: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
+        Field(default=None, description="Bid updates.")
+    )
+    a: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
+        Field(default=None, description="Ask updates.")
+    )
     ps: Optional[StrictStr] = Field(
         default=None, description="(After CM migration) Pair symbol"
     )
