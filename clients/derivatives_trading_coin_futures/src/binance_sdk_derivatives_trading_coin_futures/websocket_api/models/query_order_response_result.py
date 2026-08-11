@@ -31,9 +31,7 @@ class QueryOrderResponseResult(BaseModel):
     )
     symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
     pair: Optional[StrictStr] = Field(default=None, description="Pair")
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client order ID.", alias="clientOrderId"
     )

@@ -30,9 +30,7 @@ class CloseUserDataStreamResponse(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictInt] = None
     result: Optional[Dict[str, Any]] = Field(
         default=None, description="Indicates that combined is set to true."
     )

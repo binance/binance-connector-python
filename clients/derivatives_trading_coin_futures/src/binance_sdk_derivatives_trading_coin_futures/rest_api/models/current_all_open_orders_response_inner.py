@@ -57,9 +57,7 @@ class CurrentAllOpenOrdersResponseInner(BaseModel):
     position_side: Optional[StrictStr] = Field(
         default=None, description="Position side", alias="positionSide"
     )
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     stop_price: Optional[StrictStr] = Field(
         default=None,
         description="please ignore when order type is TRAILING_STOP_MARKET",

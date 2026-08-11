@@ -37,8 +37,11 @@ class AccountUpdateA(BaseModel):
         default=None, description="Balances", alias="B"
     )
     P: Optional[List[AccountUpdateAPInner]] = Field(default=None, alias="P")
+    S: Optional[StrictStr] = Field(
+        default=None, description="Symbol associated with FUNDING_FEE event", alias="S"
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["m", "B", "P"]
+    __properties: ClassVar[List[str]] = ["m", "B", "P", "S"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -125,6 +128,7 @@ class AccountUpdateA(BaseModel):
                     if obj.get("P") is not None
                     else None
                 ),
+                "S": obj.get("S"),
             }
         )
         # store additional fields in additional_properties

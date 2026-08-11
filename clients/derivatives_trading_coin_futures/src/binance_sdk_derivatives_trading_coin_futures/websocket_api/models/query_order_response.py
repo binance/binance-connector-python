@@ -33,9 +33,7 @@ class QueryOrderResponse(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictInt] = None
     result: Optional[QueryOrderResponseResult] = None
     rate_limits: Optional[List[CancelOrderResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

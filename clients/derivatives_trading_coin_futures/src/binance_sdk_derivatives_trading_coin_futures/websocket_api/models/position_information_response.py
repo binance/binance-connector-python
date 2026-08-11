@@ -33,9 +33,7 @@ class PositionInformationResponse(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictInt] = None
     result: Optional[List[PositionInformationResponseResultInner]] = Field(
         default=None, alias="result"
     )
