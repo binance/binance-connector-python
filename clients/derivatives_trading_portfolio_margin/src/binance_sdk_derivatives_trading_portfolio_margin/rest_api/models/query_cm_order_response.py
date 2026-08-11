@@ -54,9 +54,7 @@ class QueryCmOrderResponse(BaseModel):
         default=None, description="Reduce Only.", alias="reduceOnly"
     )
     side: Optional[StrictStr] = Field(default=None, description="Side.")
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     symbol: Optional[StrictStr] = Field(
         default=None, description="Trade symbol, if existing."
     )

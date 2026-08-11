@@ -34,9 +34,7 @@ class ModifyUmOrderResponse(BaseModel):
     symbol: Optional[StrictStr] = Field(
         default=None, description="Trade symbol, if existing."
     )
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client Order ID.", alias="clientOrderId"
     )

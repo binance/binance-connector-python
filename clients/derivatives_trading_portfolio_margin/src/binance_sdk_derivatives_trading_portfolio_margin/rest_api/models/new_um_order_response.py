@@ -53,9 +53,7 @@ class NewUmOrderResponse(BaseModel):
         description="BOTH means that it is the position of One-way Mode",
         alias="positionSide",
     )
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     symbol: Optional[StrictStr] = Field(
         default=None, description="Trade symbol, if existing."
     )

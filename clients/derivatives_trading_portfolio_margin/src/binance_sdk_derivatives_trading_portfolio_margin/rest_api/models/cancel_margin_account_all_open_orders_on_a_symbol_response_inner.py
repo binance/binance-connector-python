@@ -59,9 +59,7 @@ class CancelMarginAccountAllOpenOrdersOnASymbolResponseInner(BaseModel):
     cummulative_quote_qty: Optional[StrictStr] = Field(
         default=None, description="Cummulative Quote Qty.", alias="cummulativeQuoteQty"
     )
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     time_in_force: Optional[StrictStr] = Field(
         default=None, description="Time In Force.", alias="timeInForce"
     )

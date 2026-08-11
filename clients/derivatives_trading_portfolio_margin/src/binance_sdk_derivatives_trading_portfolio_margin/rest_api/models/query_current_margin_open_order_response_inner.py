@@ -51,9 +51,7 @@ class QueryCurrentMarginOpenOrderResponseInner(BaseModel):
     )
     price: Optional[StrictStr] = Field(default=None, description="Price.")
     side: Optional[StrictStr] = Field(default=None, description="Side.")
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     stop_price: Optional[StrictStr] = Field(
         default=None,
         description="please ignore when order type is TRAILING_STOP_MARKET",

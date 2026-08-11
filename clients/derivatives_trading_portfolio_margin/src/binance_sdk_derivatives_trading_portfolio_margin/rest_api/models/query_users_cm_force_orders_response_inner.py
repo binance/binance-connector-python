@@ -35,9 +35,7 @@ class QueryUsersCmForceOrdersResponseInner(BaseModel):
         default=None, description="Trade symbol, if existing."
     )
     pair: Optional[StrictStr] = Field(default=None, description="Pair.")
-    status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
-    )
+    status: Optional[StrictStr] = Field(default=None, description="Status.")
     client_order_id: Optional[StrictStr] = Field(
         default=None, description="Client Order ID.", alias="clientOrderId"
     )
