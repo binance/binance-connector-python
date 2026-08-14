@@ -196,6 +196,7 @@ class MarginAccountNewOtoNewOrderRespTypeEnum(Enum):
 class MarginAccountNewOtoSideEffectTypeEnum(Enum):
     NO_SIDE_EFFECT = "NO_SIDE_EFFECT"
     MARGIN_BUY = "MARGIN_BUY"
+    AUTO_BORROW_REPAY = "AUTO_BORROW_REPAY"
 
 
 class MarginAccountNewOtoSelfTradePreventionModeEnum(Enum):
@@ -246,6 +247,7 @@ class MarginAccountNewOtocoIsIsolatedEnum(Enum):
 class MarginAccountNewOtocoSideEffectTypeEnum(Enum):
     NO_SIDE_EFFECT = "NO_SIDE_EFFECT"
     MARGIN_BUY = "MARGIN_BUY"
+    AUTO_BORROW_REPAY = "AUTO_BORROW_REPAY"
 
 
 class MarginAccountNewOtocoNewOrderRespTypeEnum(Enum):
