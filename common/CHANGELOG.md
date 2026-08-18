@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.3.0 - 2026-08-18
+
+### Added (1)
+
+- Added `Stocks` base url
+
 ## 4.2.0 - 2026-08-07
 
 ### Added (1)
