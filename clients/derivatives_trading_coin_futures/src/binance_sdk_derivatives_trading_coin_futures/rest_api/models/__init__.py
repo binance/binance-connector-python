@@ -317,13 +317,14 @@ from .enums import (
 )
 from .enums import KlineCandlestickDataIntervalEnum as KlineCandlestickDataIntervalEnum
 from .enums import LongShortRatioPeriodEnum as LongShortRatioPeriodEnum
+from .enums import LongShortRatioContractTypeEnum as LongShortRatioContractTypeEnum
 from .enums import (
     MarkPriceKlineCandlestickDataIntervalEnum as MarkPriceKlineCandlestickDataIntervalEnum,
 )
+from .enums import OpenInterestStatisticsPeriodEnum as OpenInterestStatisticsPeriodEnum
 from .enums import (
     OpenInterestStatisticsContractTypeEnum as OpenInterestStatisticsContractTypeEnum,
 )
-from .enums import OpenInterestStatisticsPeriodEnum as OpenInterestStatisticsPeriodEnum
 from .enums import (
     PremiumIndexKlineDataIntervalEnum as PremiumIndexKlineDataIntervalEnum,
 )
@@ -335,7 +336,13 @@ from .enums import (
     TopTraderLongShortRatioAccountsPeriodEnum as TopTraderLongShortRatioAccountsPeriodEnum,
 )
 from .enums import (
+    TopTraderLongShortRatioAccountsContractTypeEnum as TopTraderLongShortRatioAccountsContractTypeEnum,
+)
+from .enums import (
     TopTraderLongShortRatioPositionsPeriodEnum as TopTraderLongShortRatioPositionsPeriodEnum,
+)
+from .enums import (
+    TopTraderLongShortRatioPositionsContractTypeEnum as TopTraderLongShortRatioPositionsContractTypeEnum,
 )
 from .enums import ChangeMarginTypeMarginTypeEnum as ChangeMarginTypeMarginTypeEnum
 from .enums import (

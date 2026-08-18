@@ -70,14 +70,17 @@ from .models import ContinuousContractKlineCandlestickDataIntervalEnum
 from .models import IndexPriceKlineCandlestickDataIntervalEnum
 from .models import KlineCandlestickDataIntervalEnum
 from .models import LongShortRatioPeriodEnum
+from .models import LongShortRatioContractTypeEnum
 from .models import MarkPriceKlineCandlestickDataIntervalEnum
-from .models import OpenInterestStatisticsContractTypeEnum
 from .models import OpenInterestStatisticsPeriodEnum
+from .models import OpenInterestStatisticsContractTypeEnum
 from .models import PremiumIndexKlineDataIntervalEnum
 from .models import TakerBuySellVolumeContractTypeEnum
 from .models import TakerBuySellVolumePeriodEnum
 from .models import TopTraderLongShortRatioAccountsPeriodEnum
+from .models import TopTraderLongShortRatioAccountsContractTypeEnum
 from .models import TopTraderLongShortRatioPositionsPeriodEnum
+from .models import TopTraderLongShortRatioPositionsContractTypeEnum
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
 from .models import AutoCancelAllOpenOrdersResponse
@@ -999,6 +1002,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         self,
         pair: Union[str, None],
         period: Union[LongShortRatioPeriodEnum, None],
+        contract_type: Optional[LongShortRatioContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1017,6 +1021,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                 Args:
                     pair (Union[str, None]): BTCUSD
                     period (Union[LongShortRatioPeriodEnum, None]):
+                    contract_type (Optional[LongShortRatioContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1030,7 +1035,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         """
 
         return self._marketDataApi.long_short_ratio(
-            pair, period, limit, start_time, end_time
+            pair, period, contract_type, limit, start_time, end_time
         )
 
     def mark_price_kline_candlestick_data(
@@ -1142,8 +1147,8 @@ class DerivativesTradingCoinFuturesRestAPI:
     def open_interest_statistics(
         self,
         pair: Union[str, None],
-        contract_type: Union[OpenInterestStatisticsContractTypeEnum, None],
         period: Union[OpenInterestStatisticsPeriodEnum, None],
+        contract_type: Optional[OpenInterestStatisticsContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1161,8 +1166,8 @@ class DerivativesTradingCoinFuturesRestAPI:
 
                 Args:
                     pair (Union[str, None]):
-                    contract_type (Union[OpenInterestStatisticsContractTypeEnum, None]):
                     period (Union[OpenInterestStatisticsPeriodEnum, None]):
+                    contract_type (Optional[OpenInterestStatisticsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1176,7 +1181,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         """
 
         return self._marketDataApi.open_interest_statistics(
-            pair, contract_type, period, limit, start_time, end_time
+            pair, period, contract_type, limit, start_time, end_time
         )
 
     def order_book(
@@ -1471,8 +1476,9 @@ class DerivativesTradingCoinFuturesRestAPI:
 
     def top_trader_long_short_ratio_accounts(
         self,
-        symbol: Union[str, None],
+        pair: Union[str, None],
         period: Union[TopTraderLongShortRatioAccountsPeriodEnum, None],
+        contract_type: Optional[TopTraderLongShortRatioAccountsContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1501,8 +1507,9 @@ class DerivativesTradingCoinFuturesRestAPI:
         - Only the data of the latest 30 days is available.
 
                 Args:
-                    symbol (Union[str, None]): Symbol
+                    pair (Union[str, None]): Pair
                     period (Union[TopTraderLongShortRatioAccountsPeriodEnum, None]):
+                    contract_type (Optional[TopTraderLongShortRatioAccountsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1516,13 +1523,16 @@ class DerivativesTradingCoinFuturesRestAPI:
         """
 
         return self._marketDataApi.top_trader_long_short_ratio_accounts(
-            symbol, period, limit, start_time, end_time
+            pair, period, contract_type, limit, start_time, end_time
         )
 
     def top_trader_long_short_ratio_positions(
         self,
         pair: Union[str, None],
         period: Union[TopTraderLongShortRatioPositionsPeriodEnum, None],
+        contract_type: Optional[
+            TopTraderLongShortRatioPositionsContractTypeEnum
+        ] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1552,6 +1562,7 @@ class DerivativesTradingCoinFuturesRestAPI:
                 Args:
                     pair (Union[str, None]):
                     period (Union[TopTraderLongShortRatioPositionsPeriodEnum, None]):
+                    contract_type (Optional[TopTraderLongShortRatioPositionsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1565,7 +1576,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         """
 
         return self._marketDataApi.top_trader_long_short_ratio_positions(
-            pair, period, limit, start_time, end_time
+            pair, period, contract_type, limit, start_time, end_time
         )
 
     def account_trade_list(

@@ -111,6 +111,12 @@ class LongShortRatioPeriodEnum(Enum):
     PERIOD_1d = "1d"
 
 
+class LongShortRatioContractTypeEnum(Enum):
+    PERPETUAL = "PERPETUAL"
+    CURRENT_QUARTER = "CURRENT_QUARTER"
+    NEXT_QUARTER = "NEXT_QUARTER"
+
+
 class MarkPriceKlineCandlestickDataIntervalEnum(Enum):
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
@@ -129,13 +135,6 @@ class MarkPriceKlineCandlestickDataIntervalEnum(Enum):
     INTERVAL_1M = "1M"
 
 
-class OpenInterestStatisticsContractTypeEnum(Enum):
-    ALL = "ALL"
-    PERPETUAL = "PERPETUAL"
-    CURRENT_QUARTER = "CURRENT_QUARTER"
-    NEXT_QUARTER = "NEXT_QUARTER"
-
-
 class OpenInterestStatisticsPeriodEnum(Enum):
     PERIOD_5m = "5m"
     PERIOD_15m = "15m"
@@ -146,6 +145,12 @@ class OpenInterestStatisticsPeriodEnum(Enum):
     PERIOD_6h = "6h"
     PERIOD_12h = "12h"
     PERIOD_1d = "1d"
+
+
+class OpenInterestStatisticsContractTypeEnum(Enum):
+    PERPETUAL = "PERPETUAL"
+    CURRENT_QUARTER = "CURRENT_QUARTER"
+    NEXT_QUARTER = "NEXT_QUARTER"
 
 
 class PremiumIndexKlineDataIntervalEnum(Enum):
@@ -197,6 +202,12 @@ class TopTraderLongShortRatioAccountsPeriodEnum(Enum):
     PERIOD_1d = "1d"
 
 
+class TopTraderLongShortRatioAccountsContractTypeEnum(Enum):
+    PERPETUAL = "PERPETUAL"
+    CURRENT_QUARTER = "CURRENT_QUARTER"
+    NEXT_QUARTER = "NEXT_QUARTER"
+
+
 class TopTraderLongShortRatioPositionsPeriodEnum(Enum):
     PERIOD_5m = "5m"
     PERIOD_15m = "15m"
@@ -207,6 +218,12 @@ class TopTraderLongShortRatioPositionsPeriodEnum(Enum):
     PERIOD_6h = "6h"
     PERIOD_12h = "12h"
     PERIOD_1d = "1d"
+
+
+class TopTraderLongShortRatioPositionsContractTypeEnum(Enum):
+    PERPETUAL = "PERPETUAL"
+    CURRENT_QUARTER = "CURRENT_QUARTER"
+    NEXT_QUARTER = "NEXT_QUARTER"
 
 
 class ChangeMarginTypeMarginTypeEnum(Enum):

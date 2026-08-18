@@ -1,5 +1,28 @@
 # Changelog
 
+## 13.0.0 - 2026-08-18
+
+### Changed (4)
+
+#### REST API
+
+- Added parameter `contractType`
+  - affected methods:
+    - `long_short_ratio()` (`GET /futures/data/globalLongShortAccountRatio`)
+    - `top_trader_long_short_ratio_accounts()` (`GET /futures/data/topLongShortAccountRatio`)
+    - `top_trader_long_short_ratio_positions()` (`GET /futures/data/topLongShortPositionRatio`)
+- Added parameter `pair`
+  - affected methods:
+    - `top_trader_long_short_ratio_accounts()` (`GET /futures/data/topLongShortAccountRatio`)
+- Deleted parameter `symbol`
+  - affected methods:
+    - `top_trader_long_short_ratio_accounts()` (`GET /futures/data/topLongShortAccountRatio`)
+- Modified parameter `contractType`:
+  - required: `true` → `false`
+  - enum removed: `ALL`
+  - affected methods:
+    - `open_interest_statistics()` (`GET /futures/data/openInterestHist`)
+
 ## 12.0.1 - 2026-08-07
 
 ### Changed (1)

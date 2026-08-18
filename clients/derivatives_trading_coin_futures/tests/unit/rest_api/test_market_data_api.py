@@ -123,6 +123,9 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     LongShortRatioPeriodEnum,
 )
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    LongShortRatioContractTypeEnum,
+)
 
 
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
@@ -131,10 +134,10 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 
 
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
-    OpenInterestStatisticsContractTypeEnum,
+    OpenInterestStatisticsPeriodEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
-    OpenInterestStatisticsPeriodEnum,
+    OpenInterestStatisticsContractTypeEnum,
 )
 
 
@@ -154,10 +157,16 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioAccountsPeriodEnum,
 )
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    TopTraderLongShortRatioAccountsContractTypeEnum,
+)
 
 
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsPeriodEnum,
+)
+from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
+    TopTraderLongShortRatioPositionsContractTypeEnum,
 )
 
 
@@ -1494,6 +1503,7 @@ class TestMarketDataApi:
         params = {
             "pair": "pair_example",
             "period": LongShortRatioPeriodEnum["PERIOD_5m"].value,
+            "contract_type": LongShortRatioContractTypeEnum["PERPETUAL"].value,
             "limit": 30,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
@@ -1963,7 +1973,6 @@ class TestMarketDataApi:
 
         params = {
             "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
 
@@ -1994,10 +2003,6 @@ class TestMarketDataApi:
         assert request_kwargs["method"] == "GET"
         assert normalized["pair"] == "BTCUSD"
         assert (
-            normalized["contractType"]
-            == OpenInterestStatisticsContractTypeEnum["ALL"].value
-        )
-        assert (
             normalized["period"] == OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value
         )
 
@@ -2027,8 +2032,8 @@ class TestMarketDataApi:
 
         params = {
             "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
+            "contract_type": OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             "limit": 30,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
@@ -2081,7 +2086,6 @@ class TestMarketDataApi:
         """Test that open_interest_statistics() raises RequiredError when 'pair' is missing."""
         params = {
             "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
         params["pair"] = None
@@ -2089,25 +2093,10 @@ class TestMarketDataApi:
         with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.open_interest_statistics(**params)
 
-    def test_open_interest_statistics_missing_required_param_contract_type(self):
-        """Test that open_interest_statistics() raises RequiredError when 'contract_type' is missing."""
-        params = {
-            "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
-            "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
-        }
-        params["contract_type"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'contract_type'"
-        ):
-            self.client.open_interest_statistics(**params)
-
     def test_open_interest_statistics_missing_required_param_period(self):
         """Test that open_interest_statistics() raises RequiredError when 'period' is missing."""
         params = {
             "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
         params["period"] = None
@@ -2120,7 +2109,6 @@ class TestMarketDataApi:
 
         params = {
             "pair": "BTCUSD",
-            "contract_type": OpenInterestStatisticsContractTypeEnum["ALL"].value,
             "period": OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         }
 
@@ -3183,7 +3171,7 @@ class TestMarketDataApi:
         """Test top_trader_long_short_ratio_accounts() successfully with required parameters only."""
 
         params = {
-            "symbol": "symbol_example",
+            "pair": "BTCUSD",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
 
@@ -3212,7 +3200,7 @@ class TestMarketDataApi:
         assert "url" in request_kwargs
         assert "/futures/data/topLongShortAccountRatio" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
-        assert normalized["symbol"] == "symbol_example"
+        assert normalized["pair"] == "BTCUSD"
         assert (
             normalized["period"]
             == TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value
@@ -3247,8 +3235,11 @@ class TestMarketDataApi:
         """Test top_trader_long_short_ratio_accounts() successfully with optional parameters."""
 
         params = {
-            "symbol": "symbol_example",
+            "pair": "BTCUSD",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
+            "contract_type": TopTraderLongShortRatioAccountsContractTypeEnum[
+                "PERPETUAL"
+            ].value,
             "limit": 30,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
@@ -3301,21 +3292,21 @@ class TestMarketDataApi:
 
         assert response.data() == expected
 
-    def test_top_trader_long_short_ratio_accounts_missing_required_param_symbol(self):
-        """Test that top_trader_long_short_ratio_accounts() raises RequiredError when 'symbol' is missing."""
+    def test_top_trader_long_short_ratio_accounts_missing_required_param_pair(self):
+        """Test that top_trader_long_short_ratio_accounts() raises RequiredError when 'pair' is missing."""
         params = {
-            "symbol": "symbol_example",
+            "pair": "BTCUSD",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
-        params["symbol"] = None
+        params["pair"] = None
 
-        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+        with pytest.raises(RequiredError, match="Missing required parameter 'pair'"):
             self.client.top_trader_long_short_ratio_accounts(**params)
 
     def test_top_trader_long_short_ratio_accounts_missing_required_param_period(self):
         """Test that top_trader_long_short_ratio_accounts() raises RequiredError when 'period' is missing."""
         params = {
-            "symbol": "symbol_example",
+            "pair": "BTCUSD",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
         params["period"] = None
@@ -3327,7 +3318,7 @@ class TestMarketDataApi:
         """Test that top_trader_long_short_ratio_accounts() raises an error when the server returns an error."""
 
         params = {
-            "symbol": "symbol_example",
+            "pair": "BTCUSD",
             "period": TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         }
 
@@ -3409,6 +3400,9 @@ class TestMarketDataApi:
         params = {
             "pair": "BTCUSD",
             "period": TopTraderLongShortRatioPositionsPeriodEnum["PERIOD_5m"].value,
+            "contract_type": TopTraderLongShortRatioPositionsContractTypeEnum[
+                "PERPETUAL"
+            ].value,
             "limit": 30,
             "start_time": 1623319461670,
             "end_time": 1641782889000,

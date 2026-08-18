@@ -51,14 +51,17 @@ from ..models import ContinuousContractKlineCandlestickDataIntervalEnum
 from ..models import IndexPriceKlineCandlestickDataIntervalEnum
 from ..models import KlineCandlestickDataIntervalEnum
 from ..models import LongShortRatioPeriodEnum
+from ..models import LongShortRatioContractTypeEnum
 from ..models import MarkPriceKlineCandlestickDataIntervalEnum
-from ..models import OpenInterestStatisticsContractTypeEnum
 from ..models import OpenInterestStatisticsPeriodEnum
+from ..models import OpenInterestStatisticsContractTypeEnum
 from ..models import PremiumIndexKlineDataIntervalEnum
 from ..models import TakerBuySellVolumeContractTypeEnum
 from ..models import TakerBuySellVolumePeriodEnum
 from ..models import TopTraderLongShortRatioAccountsPeriodEnum
+from ..models import TopTraderLongShortRatioAccountsContractTypeEnum
 from ..models import TopTraderLongShortRatioPositionsPeriodEnum
+from ..models import TopTraderLongShortRatioPositionsContractTypeEnum
 
 
 class MarketDataApi:
@@ -655,6 +658,7 @@ class MarketDataApi:
         self,
         pair: Union[str, None],
         period: Union[LongShortRatioPeriodEnum, None],
+        contract_type: Optional[LongShortRatioContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -675,6 +679,7 @@ class MarketDataApi:
                 Args:
                     pair (Union[str, None]): BTCUSD
                     period (Union[LongShortRatioPeriodEnum, None]):
+                    contract_type (Optional[LongShortRatioContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -700,6 +705,7 @@ class MarketDataApi:
         payload = {
             "pair": pair,
             "period": period,
+            "contract_type": contract_type,
             "limit": limit,
             "start_time": start_time,
             "end_time": end_time,
@@ -890,8 +896,8 @@ class MarketDataApi:
     def open_interest_statistics(
         self,
         pair: Union[str, None],
-        contract_type: Union[OpenInterestStatisticsContractTypeEnum, None],
         period: Union[OpenInterestStatisticsPeriodEnum, None],
+        contract_type: Optional[OpenInterestStatisticsContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -911,8 +917,8 @@ class MarketDataApi:
 
                 Args:
                     pair (Union[str, None]):
-                    contract_type (Union[OpenInterestStatisticsContractTypeEnum, None]):
                     period (Union[OpenInterestStatisticsPeriodEnum, None]):
+                    contract_type (Optional[OpenInterestStatisticsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -929,11 +935,6 @@ class MarketDataApi:
             raise RequiredError(
                 field="pair", error_message="Missing required parameter 'pair'"
             )
-        if contract_type is None:
-            raise RequiredError(
-                field="contract_type",
-                error_message="Missing required parameter 'contract_type'",
-            )
         if period is None:
             raise RequiredError(
                 field="period", error_message="Missing required parameter 'period'"
@@ -942,8 +943,8 @@ class MarketDataApi:
         body = {}
         payload = {
             "pair": pair,
-            "contract_type": contract_type,
             "period": period,
+            "contract_type": contract_type,
             "limit": limit,
             "start_time": start_time,
             "end_time": end_time,
@@ -1424,8 +1425,9 @@ class MarketDataApi:
 
     def top_trader_long_short_ratio_accounts(
         self,
-        symbol: Union[str, None],
+        pair: Union[str, None],
         period: Union[TopTraderLongShortRatioAccountsPeriodEnum, None],
+        contract_type: Optional[TopTraderLongShortRatioAccountsContractTypeEnum] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1456,8 +1458,9 @@ class MarketDataApi:
         - Only the data of the latest 30 days is available.
 
                 Args:
-                    symbol (Union[str, None]): Symbol
+                    pair (Union[str, None]): Pair
                     period (Union[TopTraderLongShortRatioAccountsPeriodEnum, None]):
+                    contract_type (Optional[TopTraderLongShortRatioAccountsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1470,9 +1473,9 @@ class MarketDataApi:
 
         """
 
-        if symbol is None:
+        if pair is None:
             raise RequiredError(
-                field="symbol", error_message="Missing required parameter 'symbol'"
+                field="pair", error_message="Missing required parameter 'pair'"
             )
         if period is None:
             raise RequiredError(
@@ -1481,8 +1484,9 @@ class MarketDataApi:
 
         body = {}
         payload = {
-            "symbol": symbol,
+            "pair": pair,
             "period": period,
+            "contract_type": contract_type,
             "limit": limit,
             "start_time": start_time,
             "end_time": end_time,
@@ -1503,6 +1507,9 @@ class MarketDataApi:
         self,
         pair: Union[str, None],
         period: Union[TopTraderLongShortRatioPositionsPeriodEnum, None],
+        contract_type: Optional[
+            TopTraderLongShortRatioPositionsContractTypeEnum
+        ] = None,
         limit: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -1534,6 +1541,7 @@ class MarketDataApi:
                 Args:
                     pair (Union[str, None]):
                     period (Union[TopTraderLongShortRatioPositionsPeriodEnum, None]):
+                    contract_type (Optional[TopTraderLongShortRatioPositionsContractTypeEnum] = None): Contract type filter. If omitted, returns aggregated data across all contract types.
                     limit (Optional[int] = None): Maximum number of records to return.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
@@ -1559,6 +1567,7 @@ class MarketDataApi:
         payload = {
             "pair": pair,
             "period": period,
+            "contract_type": contract_type,
             "limit": limit,
             "start_time": start_time,
             "end_time": end_time,

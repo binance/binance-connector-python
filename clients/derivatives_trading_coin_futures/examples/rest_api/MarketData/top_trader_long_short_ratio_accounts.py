@@ -30,7 +30,7 @@ client = DerivativesTradingCoinFutures(config_rest_api=configuration_rest_api)
 def top_trader_long_short_ratio_accounts():
     try:
         response = client.rest_api.top_trader_long_short_ratio_accounts(
-            symbol="symbol_example",
+            pair="BTCUSD",
             period=TopTraderLongShortRatioAccountsPeriodEnum["PERIOD_5m"].value,
         )
 

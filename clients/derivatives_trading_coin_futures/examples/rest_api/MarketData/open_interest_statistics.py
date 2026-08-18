@@ -7,9 +7,6 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     DERIVATIVES_TRADING_COIN_FUTURES_REST_API_PROD_URL,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
-    OpenInterestStatisticsContractTypeEnum,
-)
-from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsPeriodEnum,
 )
 
@@ -34,7 +31,6 @@ def open_interest_statistics():
     try:
         response = client.rest_api.open_interest_statistics(
             pair="BTCUSD",
-            contract_type=OpenInterestStatisticsContractTypeEnum["PERPETUAL"].value,
             period=OpenInterestStatisticsPeriodEnum["PERIOD_5m"].value,
         )
 
