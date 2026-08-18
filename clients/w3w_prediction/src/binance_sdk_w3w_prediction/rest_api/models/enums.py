@@ -24,6 +24,20 @@ class ListPredictionMarketsOrderByEnum(Enum):
     DESC = "DESC"
 
 
+class CreateOtcBlocktradeSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class ListOtcBlocktradesStatusEnum(Enum):
+    OPEN = "OPEN"
+    FULFILLED = "FULFILLED"
+    MATCHED = "MATCHED"
+    CANCELLED = "CANCELLED"
+    EXPIRED = "EXPIRED"
+    FAILED = "FAILED"
+
+
 class GetQuoteSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"
@@ -62,6 +76,16 @@ class QueryActiveOrdersTradeSideEnum(Enum):
 class QueryOrderHistoryOrderTypeEnum(Enum):
     MARKET = "MARKET"
     LIMIT = "LIMIT"
+
+
+class ApplyMmDepositAccountTypeEnum(Enum):
+    SPOT = "SPOT"
+    FUNDING = "FUNDING"
+
+
+class ApplyMmWithdrawWalletTypeEnum(Enum):
+    WALLET_TYPE_0 = 0
+    WALLET_TYPE_1 = 1
 
 
 class CreateInboundTransferAccountTypeEnum(Enum):

@@ -9,6 +9,7 @@ Do not edit the class manually.
 """
 
 from .market_data_api import MarketDataApi as MarketDataApi
+from .otc_api import OtcApi as OtcApi
 from .position_api import PositionApi as PositionApi
 from .redeem_api import RedeemApi as RedeemApi
 from .trade_api import TradeApi as TradeApi

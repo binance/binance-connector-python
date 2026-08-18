@@ -58,7 +58,7 @@ class TradeApi:
         ] = None,
     ) -> ApiResponse[BatchCancelOrdersResponse]:
         """
-                Batch Cancel Orders (TRADE)
+                Batch Cancel Orders (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/batch-cancel
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#batch-cancel-orders
 
@@ -74,7 +74,7 @@ class TradeApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Notes:
         - Use dot notation for nested list fields: `cancelInfoList[0].orderId`, `cancelInfoList[1].orderId`, etc.
@@ -139,7 +139,7 @@ class TradeApi:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[GetQuoteResponse]:
         """
-                Get Quote (TRADE)
+                Get Quote (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/get-quote
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#get-quote
 
@@ -147,7 +147,7 @@ class TradeApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Response Notes:
         - `feeAmount` is a string because it is denominated in wei (18 decimals) and may exceed JavaScript's safe integer range. `feeDiscountBps` is also a string to allow fractional basis-point values in the future. `feeRateBps` and `slippageBps` are integers and will never exceed safe integer bounds.
@@ -245,7 +245,7 @@ class TradeApi:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[PlaceOrderResponse]:
         """
-                Place Order (TRADE)
+                Place Order (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/trade/place-order-bundle
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#place-order
 
@@ -253,7 +253,7 @@ class TradeApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Notes:
         - Validation rules:
@@ -356,7 +356,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryActiveOrdersResponse]:
         """
-                Query Active Orders (USER_DATA)
+                Query Active Orders (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/order/list
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-active-orders
 
@@ -364,7 +364,7 @@ class TradeApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -426,7 +426,7 @@ class TradeApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryOrderHistoryResponse]:
         """
-                Query Order History (USER_DATA)
+                Query Order History (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/order/history
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/trade#query-order-history
 
@@ -434,7 +434,7 @@ class TradeApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address

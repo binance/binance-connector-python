@@ -16,12 +16,16 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 
+from ..models import ApplyMmDepositResponse
+from ..models import ApplyMmWithdrawResponse
 from ..models import CreateInboundTransferResponse
 from ..models import CreateOutboundTransferResponse
 from ..models import QueryTransferListResponse
 from ..models import QueryTransferStatusResponse
 
 
+from ..models import ApplyMmDepositAccountTypeEnum
+from ..models import ApplyMmWithdrawWalletTypeEnum
 from ..models import CreateInboundTransferAccountTypeEnum
 from ..models import CreateOutboundTransferAccountTypeEnum
 from ..models import CreateOutboundTransferSourceBizEnum
@@ -41,6 +45,170 @@ class TransferApi:
         self._session = session
         self._signer = signer
 
+    def apply_mm_deposit(
+        self,
+        from_token: Union[str, None],
+        from_token_amount: Union[str, None],
+        to_token: Union[str, None],
+        account_type: Union[ApplyMmDepositAccountTypeEnum, None],
+        chain_id: Optional[str] = None,
+    ) -> ApiResponse[ApplyMmDepositResponse]:
+        """
+                Apply MM Deposit (PREDICTION_TRADE)
+                POST /sapi/v1/w3w/wallet/prediction/deposit/apply
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#apply-mm-deposit
+
+                Move funds from the user's bound CeDeFi MPC wallet to their CEX account (SPOT/FUNDING) via a contract escrow + credit flow. The maker wallet is resolved server-side by `userId`; the caller does not pass wallet or signature.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - "Note on `fromToken` / `toToken`: typically the same symbol (e.g. both `USDT`). When they differ, the backend may attempt a swap, but cross-symbol conversion is not guaranteed for all pairs — prefer using the same symbol."
+
+                Args:
+                    from_token (Union[str, None]): Source token symbol (e.g. `USDT`)
+                    from_token_amount (Union[str, None]): Source token amount in WEI (18 decimals). Example: `1000000000000000000` = 1 USDT
+                    to_token (Union[str, None]): Target token symbol (e.g. `USDT`)
+                    account_type (Union[ApplyMmDepositAccountTypeEnum, None]): Target CEX account type. Enum: `SPOT`, `FUNDING`
+                    chain_id (Optional[str] = None): Chain ID. Default `56` (BSC)
+
+                Returns:
+                    ApiResponse[ApplyMmDepositResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if from_token is None:
+            raise RequiredError(
+                field="from_token",
+                error_message="Missing required parameter 'from_token'",
+            )
+        if from_token_amount is None:
+            raise RequiredError(
+                field="from_token_amount",
+                error_message="Missing required parameter 'from_token_amount'",
+            )
+        if to_token is None:
+            raise RequiredError(
+                field="to_token", error_message="Missing required parameter 'to_token'"
+            )
+        if account_type is None:
+            raise RequiredError(
+                field="account_type",
+                error_message="Missing required parameter 'account_type'",
+            )
+
+        body = {}
+        payload = {
+            "from_token": from_token,
+            "from_token_amount": from_token_amount,
+            "to_token": to_token,
+            "account_type": account_type,
+            "chain_id": chain_id,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/w3w/wallet/prediction/deposit/apply",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=ApplyMmDepositResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def apply_mm_withdraw(
+        self,
+        coin: Union[str, None],
+        network: Union[str, None],
+        amount: Union[str, None],
+        withdraw_order_id: Optional[str] = None,
+        wallet_type: Optional[ApplyMmWithdrawWalletTypeEnum] = None,
+        name: Optional[str] = None,
+    ) -> ApiResponse[ApplyMmWithdrawResponse]:
+        """
+                Apply MM Withdraw (PREDICTION_TRADE)
+                POST /sapi/v1/w3w/wallet/prediction/withdraw/apply
+                https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#apply-mm-withdraw
+
+                Withdraw funds from the user's CEX account (SPOT/FUNDING) to their bound CeDeFi MPC wallet address. Unlike `v1/capital/withdraw/apply`, the caller does NOT pass `address`; the backend resolves the user's bound CeDeFi MPC wallet address by `userId` and reuses the existing capital withdraw flow with that address as the target.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - walletType Validation:
+
+          | Value           | Behavior                       |
+          | --------------- | ------------------------------- |
+          | `null`          | Allowed — defaults to SPOT      |
+          | `0`             | Allowed — source = SPOT         |
+          | `1`             | Allowed — source = FUNDING      |
+          | Other (e.g. `99`) | Rejected — returns validation error |
+        - "Note on field naming: this endpoint uses `walletType` (INT `0`/`1`) for the source CEX account, while Apply MM Deposit uses `accountType` (STRING `SPOT`/`FUNDING`) for the target. The difference is intentional: withdraw reuses the existing `v1/capital/withdraw/apply` flow, which inherits that flow's integer `walletType` field."
+
+                Args:
+                    coin (Union[str, None]): Coin to withdraw (e.g. `USDT`)
+                    network (Union[str, None]): Network (e.g. `BEP20`)
+                    amount (Union[str, None]): Amount to withdraw (must be > 0)
+                    withdraw_order_id (Optional[str] = None): Client withdraw order id (idempotency key)
+                    wallet_type (Optional[ApplyMmWithdrawWalletTypeEnum] = None): Source CEX account type. Enum: `0` (SPOT), `1` (FUNDING). Default `0`. Must be `0` or `1`; any other value is rejected
+                    name (Optional[str] = None): Remark for the withdraw
+
+                Returns:
+                    ApiResponse[ApplyMmWithdrawResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if coin is None:
+            raise RequiredError(
+                field="coin", error_message="Missing required parameter 'coin'"
+            )
+        if network is None:
+            raise RequiredError(
+                field="network", error_message="Missing required parameter 'network'"
+            )
+        if amount is None:
+            raise RequiredError(
+                field="amount", error_message="Missing required parameter 'amount'"
+            )
+
+        body = {}
+        payload = {
+            "coin": coin,
+            "network": network,
+            "amount": amount,
+            "withdraw_order_id": withdraw_order_id,
+            "wallet_type": wallet_type,
+            "name": name,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/w3w/wallet/prediction/withdraw/apply",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=ApplyMmWithdrawResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def create_inbound_transfer(
         self,
         wallet_id: Union[str, None],
@@ -52,7 +220,7 @@ class TransferApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateInboundTransferResponse]:
         """
-                Create Inbound Transfer (TRADE)
+                Create Inbound Transfer (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/transfer/inbound
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-inbound-transfer
 
@@ -62,7 +230,7 @@ class TransferApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_id (Union[str, None]): Wallet ID
@@ -138,7 +306,7 @@ class TransferApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateOutboundTransferResponse]:
         """
-                Create Outbound Transfer (TRADE)
+                Create Outbound Transfer (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/transfer/outbound
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#create-outbound-transfer
 
@@ -146,7 +314,7 @@ class TransferApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_id (Union[str, None]): Wallet ID
@@ -229,7 +397,7 @@ class TransferApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferListResponse]:
         """
-                Query Transfer List (USER_DATA)
+                Query Transfer List (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/transfer/list
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-list
 
@@ -237,7 +405,7 @@ class TransferApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -303,7 +471,7 @@ class TransferApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferStatusResponse]:
         """
-                Query Transfer Status (USER_DATA)
+                Query Transfer Status (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/transfer/status
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/transfer#query-transfer-status
 
@@ -313,7 +481,7 @@ class TransferApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     transfer_id (Union[str, None]): Transfer ID returned from outbound/inbound transfer

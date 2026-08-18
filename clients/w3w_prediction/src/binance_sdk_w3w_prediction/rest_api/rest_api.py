@@ -15,6 +15,7 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 from .api.market_data_api import MarketDataApi
+from .api.otc_api import OtcApi
 from .api.position_api import PositionApi
 from .api.redeem_api import RedeemApi
 from .api.trade_api import TradeApi
@@ -31,6 +32,21 @@ from .models import QueryOrderBookResponse
 
 from .models import ListPredictionMarketsSortByEnum
 from .models import ListPredictionMarketsOrderByEnum
+from .models import CreateOtcBlocktradeResponse
+from .models import FulfilOtcBlocktradeResponse
+from .models import GetOtcBlocktradeDetailResponse
+from .models import GetOtcBlocktradeEventsResponse
+from .models import GetOtcReservedBalancesResponse
+from .models import ListOtcBlocktradesResponse
+from .models import PreviewOtcBlocktradeResponse
+from .models import RemoveOtcBlocktradesResponse
+
+
+from .models import GetOtcReservedBalancesAssetsParameterInner
+
+
+from .models import CreateOtcBlocktradeSideEnum
+from .models import ListOtcBlocktradesStatusEnum
 from .models import GetPositionByTokenResponse
 from .models import QueryPnLResponse
 from .models import QueryPositionsResponse
@@ -60,12 +76,16 @@ from .models import PlaceOrderOrderTypeEnum
 from .models import PlaceOrderFundingSourceEnum
 from .models import QueryActiveOrdersTradeSideEnum
 from .models import QueryOrderHistoryOrderTypeEnum
+from .models import ApplyMmDepositResponse
+from .models import ApplyMmWithdrawResponse
 from .models import CreateInboundTransferResponse
 from .models import CreateOutboundTransferResponse
 from .models import QueryTransferListResponse
 from .models import QueryTransferStatusResponse
 
 
+from .models import ApplyMmDepositAccountTypeEnum
+from .models import ApplyMmWithdrawWalletTypeEnum
 from .models import CreateInboundTransferAccountTypeEnum
 from .models import CreateOutboundTransferAccountTypeEnum
 from .models import CreateOutboundTransferSourceBizEnum
@@ -97,6 +117,7 @@ class W3wPredictionRestAPI:
         self._marketDataApi = MarketDataApi(
             self.configuration, self._session, self._signer
         )
+        self._otcApi = OtcApi(self.configuration, self._session, self._signer)
         self._positionApi = PositionApi(self.configuration, self._session, self._signer)
         self._redeemApi = RedeemApi(self.configuration, self._session, self._signer)
         self._tradeApi = TradeApi(self.configuration, self._session, self._signer)
@@ -321,6 +342,290 @@ class W3wPredictionRestAPI:
 
         return self._marketDataApi.query_order_book(vendor, market_id, token_id)
 
+    def create_otc_blocktrade(
+        self,
+        market_id: Union[str, None],
+        token_id: Union[str, None],
+        side: Union[CreateOtcBlocktradeSideEnum, None],
+        maker_amount: Union[str, None],
+        taker_amount: Union[str, None],
+        price_per_share: Union[str, None],
+        expiration: Union[int, None],
+    ) -> ApiResponse[CreateOtcBlocktradeResponse]:
+        """
+                Create OTC Blocktrade (PREDICTION_TRADE)
+
+                Create an OTC blocktrade as the maker (BID to buy outcome shares with USDT, or ASK to sell outcome shares for USDT). The maker wallet is resolved server-side by `userId`; signing is done server-side via SAS `typedDataSign`. Returns `orderId` and a one-time `secretToken` to share out-of-band with the intended taker.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - Side & Amount Rules:
+
+          | side   | makerAmount   | takerAmount   |
+          | ------ | ------------- | ------------- |
+          | `BUY`  | USDT (wei)    | shares (wei)  |
+          | `SELL` | shares (wei)  | USDT (wei)    |
+        - "Note on `side` encoding: this request uses a string enum (`BUY`/`SELL`). Responses from Get Blocktrade Detail / Preview / List return `side` as an integer and also include a `quoteType` string — both encode the same concept."
+
+          | Request `side` | Response `side` (Integer) | Response `quoteType` |
+          | --------------- | -------------------------- | ---------------------- |
+          | `BUY`           | `0`                         | `"Bid"`                |
+          | `SELL`          | `1`                         | `"Ask"`                |
+
+                Args:
+                    market_id (Union[str, None]): PredictFun market id
+                    token_id (Union[str, None]): ERC-1155 outcome token id
+                    side (Union[CreateOtcBlocktradeSideEnum, None]): Trade side. Enum: `BUY` (BID), `SELL` (ASK)
+                    maker_amount (Union[str, None]): Maker amount in wei. BID：USDT; ASK：shares
+                    taker_amount (Union[str, None]): Taker amount in wei. BID：shares; ASK：USDT
+                    price_per_share (Union[str, None]): Price per share (decimal ether, e.g. `0.65`)
+                    expiration (Union[int, None]): Expiration timestamp in seconds (GTD order)
+
+                Returns:
+                    ApiResponse[CreateOtcBlocktradeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.create_otc_blocktrade(
+            market_id,
+            token_id,
+            side,
+            maker_amount,
+            taker_amount,
+            price_per_share,
+            expiration,
+        )
+
+    def fulfil_otc_blocktrade(
+        self,
+        order_id: Union[str, None],
+        secret_token: Union[str, None],
+    ) -> ApiResponse[FulfilOtcBlocktradeResponse]:
+        """
+                Fulfil OTC Blocktrade (PREDICTION_TRADE)
+
+                Fulfil an open maker blocktrade as the taker, using the `secretToken` the maker shared out-of-band. All-or-nothing fill (no partial fill); the taker order is the server-derived symmetric inverse of the maker order.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    order_id (Union[str, None]): Maker order id (returned by maker create)
+                    secret_token (Union[str, None]): One-time fulfilment token the maker shared out-of-band
+
+                Returns:
+                    ApiResponse[FulfilOtcBlocktradeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.fulfil_otc_blocktrade(order_id, secret_token)
+
+    def get_otc_blocktrade_detail(
+        self,
+        order_id: Union[str, None],
+    ) -> ApiResponse[GetOtcBlocktradeDetailResponse]:
+        """
+                Get OTC Blocktrade Detail (PREDICTION_TRADE)
+
+                Query the maker's own blocktrade by `orderId`. Returns full order data including status and `secretToken`.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    order_id (Union[str, None]): Maker order id (returned by create)
+
+                Returns:
+                    ApiResponse[GetOtcBlocktradeDetailResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.get_otc_blocktrade_detail(order_id)
+
+    def get_otc_blocktrade_events(
+        self,
+        first: Optional[int] = None,
+        after: Optional[str] = None,
+        event_types: Optional[List[str]] = None,
+        market_id: Optional[int] = None,
+    ) -> ApiResponse[GetOtcBlocktradeEventsResponse]:
+        """
+                Get OTC Blocktrade Events (PREDICTION_TRADE)
+
+                Paginated feed of blocktrade lifecycle and settlement events (CREATE, FULFIL, MATCH_SUBMIT, MATCH_SUCCESS, EXPIRE, FAILED, etc.).
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    first (Optional[int] = None): Page size
+                    after (Optional[str] = None): Pagination cursor
+                    event_types (Optional[List[str]] = None): Filter by event types (e.g. `["MATCH_SUCCESS","EXPIRE"]`)
+                    market_id (Optional[int] = None): Filter by market id
+
+                Returns:
+                    ApiResponse[GetOtcBlocktradeEventsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.get_otc_blocktrade_events(
+            first, after, event_types, market_id
+        )
+
+    def get_otc_reserved_balances(
+        self,
+        assets: Union[List[GetOtcReservedBalancesAssetsParameterInner], None],
+    ) -> ApiResponse[GetOtcReservedBalancesResponse]:
+        """
+                Get OTC Reserved Balances (PREDICTION_TRADE)
+
+                Query PredictFun reserved balances for the caller's bound wallet — these are funds locked by the caller's open OTC blocktrade orders (maker BID locks USDT, maker ASK locks shares). Not tied to a specific blocktrade id; the path nesting under `otc/blocktrade` reflects the cause of the lock, not a per-order query. Returns one entry per requested asset, aligned with the request order. Pass `{type:"USDT"}` for reserved USDT, or `{type:"SHARE", tokenId:"..."}` for a specific outcome token's reserved shares.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - AssetQuery:
+
+          | Name    | Type   | Mandatory | Description |
+          | ------- | ------ | --------- | ----------- |
+          | type    | STRING | YES       | Asset type. Enum: `USDT`, `SHARE` |
+          | tokenId | STRING | NO        | Outcome token id (present for `SHARE` entries only) |
+
+                Args:
+                    assets (Union[List[GetOtcReservedBalancesAssetsParameterInner], None]): Assets to query (max 50)
+
+                Returns:
+                    ApiResponse[GetOtcReservedBalancesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.get_otc_reserved_balances(assets)
+
+    def list_otc_blocktrades(
+        self,
+        first: Optional[int] = None,
+        after: Optional[str] = None,
+        status: Optional[ListOtcBlocktradesStatusEnum] = None,
+    ) -> ApiResponse[ListOtcBlocktradesResponse]:
+        """
+                List OTC Blocktrades (PREDICTION_TRADE)
+
+                List the maker's own blocktrades with optional status filter and cursor pagination.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    first (Optional[int] = None): Page size
+                    after (Optional[str] = None): Pagination cursor (from previous response)
+                    status (Optional[ListOtcBlocktradesStatusEnum] = None): Filter by status. Enum: `OPEN`, `FULFILLED`, `MATCHED`, `CANCELLED`, `EXPIRED`, `FAILED`
+
+                Returns:
+                    ApiResponse[ListOtcBlocktradesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.list_otc_blocktrades(first, after, status)
+
+    def preview_otc_blocktrade(
+        self,
+        secret_token: Union[str, None],
+    ) -> ApiResponse[PreviewOtcBlocktradeResponse]:
+        """
+                Preview OTC Blocktrade (PREDICTION_TRADE)
+
+                Inspect an open blocktrade by `secretToken` (no `orderId` needed). Taker uses this to preview the maker order before fulfilling. Returns the same shape as `Get Blocktrade Detail`, but `orderId` is `null` and `secretToken` is never returned from this endpoint.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    secret_token (Union[str, None]): One-time fulfilment token the maker shared out-of-band
+
+                Returns:
+                    ApiResponse[PreviewOtcBlocktradeResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.preview_otc_blocktrade(secret_token)
+
+    def remove_otc_blocktrades(
+        self,
+        order_ids: Union[List[str], None],
+    ) -> ApiResponse[RemoveOtcBlocktradesResponse]:
+        """
+                Remove OTC Blocktrades (PREDICTION_TRADE)
+
+                Cancel open or fulfilled-but-unsettled blocktrades. Terminal orders (already `MATCHED`/`CANCELLED`/`EXPIRED`/`FAILED`) are returned in `noop` instead of `removed`.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+
+                Args:
+                    order_ids (Union[List[str], None]): Order ids to remove (max 100). Must be the `orderId` returned by Create OTC Blocktrade
+
+                Returns:
+                    ApiResponse[RemoveOtcBlocktradesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._otcApi.remove_otc_blocktrades(order_ids)
+
     def get_position_by_token(
         self,
         wallet_address: Union[str, None],
@@ -328,13 +633,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPositionByTokenResponse]:
         """
-                Get Position by Token (USER_DATA)
+                Get Position by Token (PREDICTION_TRADE)
 
                 Get the authenticated user's position detail for a specific prediction token.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -363,13 +668,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPnLResponse]:
         """
-                Query PnL (USER_DATA)
+                Query PnL (PREDICTION_TRADE)
 
                 Query profit and loss records for the authenticated user's prediction positions. When `tokenId` is provided, returns a single record in `pnl`; otherwise returns a list in `pnlList`.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -405,13 +710,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsResponse]:
         """
-                Query Positions (USER_DATA)
+                Query Positions (PREDICTION_TRADE)
 
                 Get the authenticated user's prediction token positions with portfolio summary and tab-based filtering.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -439,13 +744,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsByFilterResponse]:
         """
-                Query Positions by Filter (USER_DATA)
+                Query Positions by Filter (PREDICTION_TRADE)
 
                 Get prediction positions filtered by wallet address and/or market topic ID. Both parameters are optional.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Optional[str] = None): User's prediction wallet address
@@ -476,13 +781,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySettledPositionHistoryResponse]:
         """
-                Query Settled Position History (USER_DATA)
+                Query Settled Position History (PREDICTION_TRADE)
 
                 Get the authenticated user's settled (resolved) prediction position history with optional filters.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -521,13 +826,13 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[BatchRedeemResponse]:
         """
-                Batch Redeem (TRADE)
+                Batch Redeem (PREDICTION_TRADE)
 
                 Redeem one or more settled prediction tokens on-chain to claim winnings. Requires SAS authorization.
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -554,13 +859,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetRedeemStatusResponse]:
         """
-                Get Redeem Status (USER_DATA)
+                Get Redeem Status (PREDICTION_TRADE)
 
                 Query the on-chain transaction status of a previously submitted redeem request.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
         Response Notes:
         - Status values:
@@ -596,7 +901,7 @@ class W3wPredictionRestAPI:
         ] = None,
     ) -> ApiResponse[BatchCancelOrdersResponse]:
         """
-                Batch Cancel Orders (TRADE)
+                Batch Cancel Orders (PREDICTION_TRADE)
 
                 Cancel one or more active prediction orders in a single request. Requires SAS authorization.
 
@@ -610,7 +915,7 @@ class W3wPredictionRestAPI:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Notes:
         - Use dot notation for nested list fields: `cancelInfoList[0].orderId`, `cancelInfoList[1].orderId`, etc.
@@ -648,13 +953,13 @@ class W3wPredictionRestAPI:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[GetQuoteResponse]:
         """
-                Get Quote (TRADE)
+                Get Quote (PREDICTION_TRADE)
 
                 Get a price quote for a prediction order. The returned `quoteId` must be used in the subsequent Place Order request.
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Response Notes:
         - `feeAmount` is a string because it is denominated in wei (18 decimals) and may exceed JavaScript's safe integer range. `feeDiscountBps` is also a string to allow fractional basis-point values in the future. `feeRateBps` and `slippageBps` are integers and will never exceed safe integer bounds.
@@ -709,13 +1014,13 @@ class W3wPredictionRestAPI:
         fund_transfer_amount: Optional[str] = None,
     ) -> ApiResponse[PlaceOrderResponse]:
         """
-                Place Order (TRADE)
+                Place Order (PREDICTION_TRADE)
 
                 Place a prediction order using a previously obtained quote. Requires SAS authorization.
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
         Notes:
         - Validation rules:
@@ -769,13 +1074,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryActiveOrdersResponse]:
         """
-                Query Active Orders (USER_DATA)
+                Query Active Orders (PREDICTION_TRADE)
 
                 Get active (open) prediction orders for the authenticated user.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -817,13 +1122,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryOrderHistoryResponse]:
         """
-                Query Order History (USER_DATA)
+                Query Order History (PREDICTION_TRADE)
 
                 Get historical prediction orders (all statuses) for the authenticated user, with optional filters.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -856,6 +1161,96 @@ class W3wPredictionRestAPI:
             recv_window,
         )
 
+    def apply_mm_deposit(
+        self,
+        from_token: Union[str, None],
+        from_token_amount: Union[str, None],
+        to_token: Union[str, None],
+        account_type: Union[ApplyMmDepositAccountTypeEnum, None],
+        chain_id: Optional[str] = None,
+    ) -> ApiResponse[ApplyMmDepositResponse]:
+        """
+                Apply MM Deposit (PREDICTION_TRADE)
+
+                Move funds from the user's bound CeDeFi MPC wallet to their CEX account (SPOT/FUNDING) via a contract escrow + credit flow. The maker wallet is resolved server-side by `userId`; the caller does not pass wallet or signature.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - "Note on `fromToken` / `toToken`: typically the same symbol (e.g. both `USDT`). When they differ, the backend may attempt a swap, but cross-symbol conversion is not guaranteed for all pairs — prefer using the same symbol."
+
+                Args:
+                    from_token (Union[str, None]): Source token symbol (e.g. `USDT`)
+                    from_token_amount (Union[str, None]): Source token amount in WEI (18 decimals). Example: `1000000000000000000` = 1 USDT
+                    to_token (Union[str, None]): Target token symbol (e.g. `USDT`)
+                    account_type (Union[ApplyMmDepositAccountTypeEnum, None]): Target CEX account type. Enum: `SPOT`, `FUNDING`
+                    chain_id (Optional[str] = None): Chain ID. Default `56` (BSC)
+
+                Returns:
+                    ApiResponse[ApplyMmDepositResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._transferApi.apply_mm_deposit(
+            from_token, from_token_amount, to_token, account_type, chain_id
+        )
+
+    def apply_mm_withdraw(
+        self,
+        coin: Union[str, None],
+        network: Union[str, None],
+        amount: Union[str, None],
+        withdraw_order_id: Optional[str] = None,
+        wallet_type: Optional[ApplyMmWithdrawWalletTypeEnum] = None,
+        name: Optional[str] = None,
+    ) -> ApiResponse[ApplyMmWithdrawResponse]:
+        """
+                Apply MM Withdraw (PREDICTION_TRADE)
+
+                Withdraw funds from the user's CEX account (SPOT/FUNDING) to their bound CeDeFi MPC wallet address. Unlike `v1/capital/withdraw/apply`, the caller does NOT pass `address`; the backend resolves the user's bound CeDeFi MPC wallet address by `userId` and reuses the existing capital withdraw flow with that address as the target.
+
+        Weight(IP): 200
+
+        Security Type: PREDICTION_TRADE
+
+        Notes:
+        - Restricted to authorized market makers. Requests from unauthorized accounts are rejected — contact BD to request access.
+        - walletType Validation:
+
+          | Value           | Behavior                       |
+          | --------------- | ------------------------------- |
+          | `null`          | Allowed — defaults to SPOT      |
+          | `0`             | Allowed — source = SPOT         |
+          | `1`             | Allowed — source = FUNDING      |
+          | Other (e.g. `99`) | Rejected — returns validation error |
+        - "Note on field naming: this endpoint uses `walletType` (INT `0`/`1`) for the source CEX account, while Apply MM Deposit uses `accountType` (STRING `SPOT`/`FUNDING`) for the target. The difference is intentional: withdraw reuses the existing `v1/capital/withdraw/apply` flow, which inherits that flow's integer `walletType` field."
+
+                Args:
+                    coin (Union[str, None]): Coin to withdraw (e.g. `USDT`)
+                    network (Union[str, None]): Network (e.g. `BEP20`)
+                    amount (Union[str, None]): Amount to withdraw (must be > 0)
+                    withdraw_order_id (Optional[str] = None): Client withdraw order id (idempotency key)
+                    wallet_type (Optional[ApplyMmWithdrawWalletTypeEnum] = None): Source CEX account type. Enum: `0` (SPOT), `1` (FUNDING). Default `0`. Must be `0` or `1`; any other value is rejected
+                    name (Optional[str] = None): Remark for the withdraw
+
+                Returns:
+                    ApiResponse[ApplyMmWithdrawResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._transferApi.apply_mm_withdraw(
+            coin, network, amount, withdraw_order_id, wallet_type, name
+        )
+
     def create_inbound_transfer(
         self,
         wallet_id: Union[str, None],
@@ -867,7 +1262,7 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateInboundTransferResponse]:
         """
-                Create Inbound Transfer (TRADE)
+                Create Inbound Transfer (PREDICTION_TRADE)
 
                 Transfer funds from the prediction wallet back to the user's CEX account (SPOT or FUNDING). Requires SAS authorization.
 
@@ -875,7 +1270,7 @@ class W3wPredictionRestAPI:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_id (Union[str, None]): Wallet ID
@@ -916,13 +1311,13 @@ class W3wPredictionRestAPI:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[CreateOutboundTransferResponse]:
         """
-                Create Outbound Transfer (TRADE)
+                Create Outbound Transfer (PREDICTION_TRADE)
 
                 Transfer funds from the user's CEX account (SPOT or FUNDING) into the prediction wallet. Requires SAS authorization.
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_id (Union[str, None]): Wallet ID
@@ -965,13 +1360,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferListResponse]:
         """
-                Query Transfer List (USER_DATA)
+                Query Transfer List (PREDICTION_TRADE)
 
                 Get the authenticated user's prediction wallet transfer history within a date range.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -1008,7 +1403,7 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryTransferStatusResponse]:
         """
-                Query Transfer Status (USER_DATA)
+                Query Transfer Status (PREDICTION_TRADE)
 
                 Query the current status of a prediction wallet transfer by transfer ID.
 
@@ -1016,7 +1411,7 @@ class W3wPredictionRestAPI:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     transfer_id (Union[str, None]): Transfer ID returned from outbound/inbound transfer
@@ -1042,13 +1437,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPortfolioResponse]:
         """
-                Get Portfolio (USER_DATA)
+                Get Portfolio (PREDICTION_TRADE)
 
                 Get the authenticated user's prediction portfolio overview including active positions count, aggregated PnL, and full position list.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -1080,13 +1475,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetQuotaStatusResponse]:
         """
-                Get Quota Status (USER_DATA)
+                Get Quota Status (PREDICTION_TRADE)
 
                 Query the current user's daily trading quota limit and remaining allowance for prediction markets.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds
@@ -1106,13 +1501,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ListPredictionWalletsResponse]:
         """
-                List Prediction Wallets (USER_DATA)
+                List Prediction Wallets (PREDICTION_TRADE)
 
                 Get all prediction wallets registered for the authenticated user.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds
@@ -1132,13 +1527,13 @@ class W3wPredictionRestAPI:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPaymentOptionBalancesResponse]:
         """
-                Query Payment Option Balances (USER_DATA)
+                Query Payment Option Balances (PREDICTION_TRADE)
 
                 Get available balances for each payment option that can be used for prediction trading.
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds

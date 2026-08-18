@@ -43,7 +43,7 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPositionByTokenResponse]:
         """
-                Get Position by Token (USER_DATA)
+                Get Position by Token (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/position/token
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#get-position-by-token
 
@@ -51,7 +51,7 @@ class PositionApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -106,7 +106,7 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPnLResponse]:
         """
-                Query PnL (USER_DATA)
+                Query PnL (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/pnl/query
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-pn-l
 
@@ -114,7 +114,7 @@ class PositionApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -170,7 +170,7 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsResponse]:
         """
-                Query Positions (USER_DATA)
+                Query Positions (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/position/list
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions
 
@@ -178,7 +178,7 @@ class PositionApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -230,7 +230,7 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPositionsByFilterResponse]:
         """
-                Query Positions by Filter (USER_DATA)
+                Query Positions by Filter (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/position/filter
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-positions-by-filter
 
@@ -238,7 +238,7 @@ class PositionApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Optional[str] = None): User's prediction wallet address
@@ -285,7 +285,7 @@ class PositionApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QuerySettledPositionHistoryResponse]:
         """
-                Query Settled Position History (USER_DATA)
+                Query Settled Position History (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/position/settled-history
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/position#query-settled-position-history
 
@@ -293,7 +293,7 @@ class PositionApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address

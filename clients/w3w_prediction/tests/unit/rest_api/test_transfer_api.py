@@ -20,10 +20,18 @@ from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_w3w_prediction.rest_api.api import TransferApi
+from binance_sdk_w3w_prediction.rest_api.models import ApplyMmDepositResponse
+from binance_sdk_w3w_prediction.rest_api.models import ApplyMmWithdrawResponse
 from binance_sdk_w3w_prediction.rest_api.models import CreateInboundTransferResponse
 from binance_sdk_w3w_prediction.rest_api.models import CreateOutboundTransferResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryTransferListResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryTransferStatusResponse
+
+
+from binance_sdk_w3w_prediction.rest_api.models import ApplyMmDepositAccountTypeEnum
+
+
+from binance_sdk_w3w_prediction.rest_api.models import ApplyMmWithdrawWalletTypeEnum
 
 
 from binance_sdk_w3w_prediction.rest_api.models import (
@@ -65,6 +73,348 @@ class TestTransferApi:
         mock_response.headers = headers
 
         self.mock_session.request.return_value = mock_response
+
+    @patch("binance_common.utils.get_signature")
+    def test_apply_mm_deposit_success(self, mock_get_signature):
+        """Test apply_mm_deposit() successfully with required parameters only."""
+
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+
+        expected_response = {
+            "transferId": "26080400000000454343",
+            "status": "PROCESSING",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.apply_mm_deposit(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/w3w/wallet/prediction/deposit/apply" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["fromToken"] == "USDT"
+        assert normalized["fromTokenAmount"] == "1000000000000000000"
+        assert normalized["toToken"] == "USDT"
+        assert normalized["accountType"] == ApplyMmDepositAccountTypeEnum["SPOT"].value
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ApplyMmDepositResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ApplyMmDepositResponse, "from_dict"):
+            expected = ApplyMmDepositResponse.from_dict(expected_response)
+        else:
+            expected = ApplyMmDepositResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_apply_mm_deposit_success_with_optional_params(self, mock_get_signature):
+        """Test apply_mm_deposit() successfully with optional parameters."""
+
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+            "chain_id": "56",
+        }
+
+        expected_response = {
+            "transferId": "26080400000000454343",
+            "status": "PROCESSING",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.apply_mm_deposit(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/w3w/wallet/prediction/deposit/apply" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ApplyMmDepositResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ApplyMmDepositResponse, "from_dict"):
+            expected = ApplyMmDepositResponse.from_dict(expected_response)
+        else:
+            expected = ApplyMmDepositResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_apply_mm_deposit_missing_required_param_from_token(self):
+        """Test that apply_mm_deposit() raises RequiredError when 'from_token' is missing."""
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+        params["from_token"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'from_token'"
+        ):
+            self.client.apply_mm_deposit(**params)
+
+    def test_apply_mm_deposit_missing_required_param_from_token_amount(self):
+        """Test that apply_mm_deposit() raises RequiredError when 'from_token_amount' is missing."""
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+        params["from_token_amount"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'from_token_amount'"
+        ):
+            self.client.apply_mm_deposit(**params)
+
+    def test_apply_mm_deposit_missing_required_param_to_token(self):
+        """Test that apply_mm_deposit() raises RequiredError when 'to_token' is missing."""
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+        params["to_token"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'to_token'"
+        ):
+            self.client.apply_mm_deposit(**params)
+
+    def test_apply_mm_deposit_missing_required_param_account_type(self):
+        """Test that apply_mm_deposit() raises RequiredError when 'account_type' is missing."""
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+        params["account_type"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'account_type'"
+        ):
+            self.client.apply_mm_deposit(**params)
+
+    def test_apply_mm_deposit_server_error(self):
+        """Test that apply_mm_deposit() raises an error when the server returns an error."""
+
+        params = {
+            "from_token": "USDT",
+            "from_token_amount": "1000000000000000000",
+            "to_token": "USDT",
+            "account_type": ApplyMmDepositAccountTypeEnum["SPOT"].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.apply_mm_deposit = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.apply_mm_deposit(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_apply_mm_withdraw_success(self, mock_get_signature):
+        """Test apply_mm_withdraw() successfully with required parameters only."""
+
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+        }
+
+        expected_response = {
+            "id": "123456789",
+            "walletId": "0ecd3be8e3674b54b1258e24f9c3706b",
+            "walletAddress": "0x2ac3a1fb164da5c4e76f67ae6dbe6be821c000c8",
+            "transferId": "26080400000000454344",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.apply_mm_withdraw(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/w3w/wallet/prediction/withdraw/apply" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["coin"] == "USDT"
+        assert normalized["network"] == "BEP20"
+        assert normalized["amount"] == "100.00"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ApplyMmWithdrawResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ApplyMmWithdrawResponse, "from_dict"):
+            expected = ApplyMmWithdrawResponse.from_dict(expected_response)
+        else:
+            expected = ApplyMmWithdrawResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_apply_mm_withdraw_success_with_optional_params(self, mock_get_signature):
+        """Test apply_mm_withdraw() successfully with optional parameters."""
+
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+            "withdraw_order_id": "wd_20260814_001",
+            "wallet_type": ApplyMmWithdrawWalletTypeEnum["WALLET_TYPE_0"].value,
+            "name": "MM withdraw",
+        }
+
+        expected_response = {
+            "id": "123456789",
+            "walletId": "0ecd3be8e3674b54b1258e24f9c3706b",
+            "walletAddress": "0x2ac3a1fb164da5c4e76f67ae6dbe6be821c000c8",
+            "transferId": "26080400000000454344",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.apply_mm_withdraw(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/w3w/wallet/prediction/withdraw/apply" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(ApplyMmWithdrawResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(ApplyMmWithdrawResponse, "from_dict"):
+            expected = ApplyMmWithdrawResponse.from_dict(expected_response)
+        else:
+            expected = ApplyMmWithdrawResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_apply_mm_withdraw_missing_required_param_coin(self):
+        """Test that apply_mm_withdraw() raises RequiredError when 'coin' is missing."""
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+        }
+        params["coin"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'coin'"):
+            self.client.apply_mm_withdraw(**params)
+
+    def test_apply_mm_withdraw_missing_required_param_network(self):
+        """Test that apply_mm_withdraw() raises RequiredError when 'network' is missing."""
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+        }
+        params["network"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'network'"):
+            self.client.apply_mm_withdraw(**params)
+
+    def test_apply_mm_withdraw_missing_required_param_amount(self):
+        """Test that apply_mm_withdraw() raises RequiredError when 'amount' is missing."""
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+        }
+        params["amount"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'amount'"):
+            self.client.apply_mm_withdraw(**params)
+
+    def test_apply_mm_withdraw_server_error(self):
+        """Test that apply_mm_withdraw() raises an error when the server returns an error."""
+
+        params = {
+            "coin": "USDT",
+            "network": "BEP20",
+            "amount": "100.00",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.apply_mm_withdraw = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.apply_mm_withdraw(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_create_inbound_transfer_success(self, mock_get_signature):

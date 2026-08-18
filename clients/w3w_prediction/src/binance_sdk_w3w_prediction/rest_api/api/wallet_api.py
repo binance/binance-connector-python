@@ -45,7 +45,7 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetPortfolioResponse]:
         """
-                Get Portfolio (USER_DATA)
+                Get Portfolio (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/pnl/portfolio
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-portfolio
 
@@ -53,7 +53,7 @@ class WalletApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -105,7 +105,7 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetQuotaStatusResponse]:
         """
-                Get Quota Status (USER_DATA)
+                Get Quota Status (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/quota/limit/status
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#get-quota-status
 
@@ -113,7 +113,7 @@ class WalletApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds
@@ -147,7 +147,7 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ListPredictionWalletsResponse]:
         """
-                List Prediction Wallets (USER_DATA)
+                List Prediction Wallets (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/wallet/list
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#list-prediction-wallets
 
@@ -155,7 +155,7 @@ class WalletApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds
@@ -189,7 +189,7 @@ class WalletApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryPaymentOptionBalancesResponse]:
         """
-                Query Payment Option Balances (USER_DATA)
+                Query Payment Option Balances (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/balance/payment-options
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/wallet#query-payment-option-balances
 
@@ -197,7 +197,7 @@ class WalletApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     recv_window (Optional[int] = None): Request validity window in milliseconds

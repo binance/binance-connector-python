@@ -41,7 +41,7 @@ class RedeemApi:
         chain_id: Optional[str] = None,
     ) -> ApiResponse[BatchRedeemResponse]:
         """
-                Batch Redeem (TRADE)
+                Batch Redeem (PREDICTION_TRADE)
                 POST /sapi/v1/w3w/wallet/prediction/batch-redeem
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#batch-redeem
 
@@ -49,7 +49,7 @@ class RedeemApi:
 
         Weight(IP): 200
 
-        Security Type: TRADE
+        Security Type: PREDICTION_TRADE
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
@@ -109,7 +109,7 @@ class RedeemApi:
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetRedeemStatusResponse]:
         """
-                Get Redeem Status (USER_DATA)
+                Get Redeem Status (PREDICTION_TRADE)
                 GET /sapi/v1/w3w/wallet/prediction/redeem/status
                 https://developers.binance.com/en/docs/catalog/web3-wallet-prediction-trading/api/rest-api/redeem#get-redeem-status
 
@@ -117,7 +117,7 @@ class RedeemApi:
 
         Weight(IP): 200
 
-        Security Type: USER_DATA
+        Security Type: PREDICTION_TRADE
 
         Response Notes:
         - Status values:
