@@ -717,7 +717,7 @@ class MarketApi:
             /tradingSession
             https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/ws-streams/market#trading-session-stream
 
-            Trading session information for the underlying assets of TradFi Perpetual contracts, covering the U.S. equity market, Korean equity market, Hong Kong equity market, and the commodity market, is updated every second. Trading session information for different underlying markets is pushed in separate messages.
+            Trading session information for the underlying assets of TradFi Perpetual contracts, covering the U.S. equity market, Korean equity market, Hong Kong equity market, China equity market, and the commodity market, is updated every second. Trading session information for different underlying markets is pushed in separate messages.
 
         **Event type:**
 
@@ -725,6 +725,7 @@ class MarketApi:
         - `CommodityUpdate`: Session types for the commodity market include "REGULAR" and "NO_TRADING".
         - `KR_EquityUpdate`: Session types for the Korean equity market include "REGULAR" and "NO_TRADING".
         - `HK_EquityUpdate`: Session types for the Hong Kong equity market include "REGULAR" and "NO_TRADING".
+        - `CN_EquityUpdate`: Session types for the China equity market include "REGULAR" and "NO_TRADING".
 
         Update Speed: 1s
 

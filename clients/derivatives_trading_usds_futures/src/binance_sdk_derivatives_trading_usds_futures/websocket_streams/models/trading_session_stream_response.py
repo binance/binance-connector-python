@@ -28,7 +28,7 @@ class TradingSessionStreamResponse(BaseModel):
 
     e: Optional[StrictStr] = Field(
         default=None,
-        description="Event type, can also be CommodityUpdate, KR_EquityUpdate or HK_EquityUpdate",
+        description="Event type, can also be CommodityUpdate, KR_EquityUpdate, HK_EquityUpdate or CN_EquityUpdate",
     )
     E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
     t: Optional[StrictInt] = Field(default=None, description="Session start time")

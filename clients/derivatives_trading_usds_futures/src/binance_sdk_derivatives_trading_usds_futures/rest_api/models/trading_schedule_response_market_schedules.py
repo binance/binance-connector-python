@@ -50,12 +50,16 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
     hk_equity: Optional[TradingScheduleResponseMarketSchedulesHKEQUITY] = Field(
         default=None, alias="HK_EQUITY"
     )
+    cn_equity: Optional[TradingScheduleResponseMarketSchedulesHKEQUITY] = Field(
+        default=None, alias="CN_EQUITY"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "EQUITY",
         "COMMODITY",
         "KR_EQUITY",
         "HK_EQUITY",
+        "CN_EQUITY",
     ]
 
     model_config = ConfigDict(
@@ -116,6 +120,9 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of hk_equity
         if self.hk_equity:
             _dict["HK_EQUITY"] = self.hk_equity.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of cn_equity
+        if self.cn_equity:
+            _dict["CN_EQUITY"] = self.cn_equity.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -160,6 +167,13 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
                         obj["HK_EQUITY"]
                     )
                     if obj.get("HK_EQUITY") is not None
+                    else None
+                ),
+                "CN_EQUITY": (
+                    TradingScheduleResponseMarketSchedulesHKEQUITY.from_dict(
+                        obj["CN_EQUITY"]
+                    )
+                    if obj.get("CN_EQUITY") is not None
                     else None
                 ),
             }
