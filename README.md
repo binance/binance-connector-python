@@ -41,6 +41,7 @@ Before using the SDK, ensure you have:
 - [binance-sdk-simple-earn](./clients/simple_earn/) - Simple Earn connector (Pypi package: [`binance-sdk-simple-earn`](https://pypi.org/project/binance-sdk-simple-earn/))
 - [binance-sdk-spot](./clients/spot/) - Spot Trading connector (Pypi package: [`binance-sdk-spot`](https://pypi.org/project/binance-sdk-spot/))
 - [binance-sdk-staking](./clients/staking/) - Staking connector (Pypi package: [`binance-sdk-staking`](https://pypi.org/project/binance-sdk-staking/))
+- [binance-sdk-stocks](./clients/stocks/) - Stocks connector (Pypi package: [`binance-sdk-stocks`](https://pypi.org/project/binance-sdk-stocks/))
 - [binance-sdk-sub-account](./clients/sub_account/) - Sub Account connector (Pypi package: [`binance-sdk-sub-account`](https://pypi.org/project/binance-sdk-sub-account/))
 - [binance-sdk-vip-loan](./clients/vip_loan/) - VIP Loan connector (Pypi package: [`binance-sdk-vip-loan`](https://pypi.org/project/binance-sdk-vip-loan/))
 - [binance-sdk-wallet](./clients/wallet/) - Wallet connector (Pypi package: [`binance-sdk-wallet`](https://pypi.org/project/binance-sdk-wallet/))
