@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-wallet"
-version = "13.1.0"
+version = "13.2.0"
 description = "Official Binance Wallet SDK - A lightweight library that provides a convenient interface to Binance's Wallet REST API"
 authors = ["Binance"]
 license = "MIT"
@@ -19,7 +19,7 @@ websockets = "^15.0.1"
 websocket-client = ">=1.6.3"
 pycryptodome = "^3.17"
 aiohttp = "^3.14.3"
-binance-common = "4.2.0"
+binance-common = "4.3.0"
 
 [tool.poetry.extras]
 dev = ["pytest"]
