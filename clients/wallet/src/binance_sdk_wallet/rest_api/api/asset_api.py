@@ -813,6 +813,7 @@ class AssetApi:
     def query_user_wallet_balance(
         self,
         quote_asset: Optional[str] = None,
+        need_balance_detail: Optional[bool] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryUserWalletBalanceResponse]:
         """
@@ -828,6 +829,8 @@ class AssetApi:
 
                 Args:
                     quote_asset (Optional[str] = None):
+                    need_balance_detail (Optional[bool] = None): Whether to return the per-asset balance detail for each wallet. When `false` or omitted, the response is
+        unchanged from current behavior.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -839,7 +842,11 @@ class AssetApi:
         """
 
         body = {}
-        payload = {"quote_asset": quote_asset, "recv_window": recv_window}
+        payload = {
+            "quote_asset": quote_asset,
+            "need_balance_detail": need_balance_detail,
+            "recv_window": recv_window,
+        }
 
         return send_request(
             self._session,

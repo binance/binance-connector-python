@@ -193,6 +193,9 @@ from .query_user_wallet_balance_response import (
 from .query_user_wallet_balance_response_inner import (
     QueryUserWalletBalanceResponseInner as QueryUserWalletBalanceResponseInner,
 )
+from .query_user_wallet_balance_response_inner_asset_balances_inner import (
+    QueryUserWalletBalanceResponseInnerAssetBalancesInner as QueryUserWalletBalanceResponseInnerAssetBalancesInner,
+)
 from .submit_deposit_questionnaire_response import (
     SubmitDepositQuestionnaireResponse as SubmitDepositQuestionnaireResponse,
 )

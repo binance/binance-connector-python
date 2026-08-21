@@ -15,36 +15,33 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_wallet.rest_api.models.query_user_wallet_balance_response_inner_asset_balances_inner import (
-    QueryUserWalletBalanceResponseInnerAssetBalancesInner,
-)
 from typing import Set
 from typing_extensions import Self
 
 
-class QueryUserWalletBalanceResponseInner(BaseModel):
+class QueryUserWalletBalanceResponseInnerAssetBalancesInner(BaseModel):
     """
-    QueryUserWalletBalanceResponseInner
+    QueryUserWalletBalanceResponseInnerAssetBalancesInner
     """  # noqa: E501
 
-    activate: Optional[StrictBool] = None
-    balance: Optional[StrictStr] = None
-    wallet_name: Optional[StrictStr] = Field(default=None, alias="walletName")
-    asset_balances: Optional[
-        List[QueryUserWalletBalanceResponseInnerAssetBalancesInner]
-    ] = Field(
-        default=None,
-        description="Per-asset balance detail for this wallet. Only present when `needBalanceDetail=true` is passed; omitted entirely otherwise.",
-        alias="assetBalances",
-    )
+    asset: Optional[StrictStr] = None
+    asset_name: Optional[StrictStr] = Field(default=None, alias="assetName")
+    free: Optional[StrictStr] = None
+    locked: Optional[StrictStr] = None
+    freeze: Optional[StrictStr] = None
+    withdrawing: Optional[StrictStr] = None
+    btc_valuation: Optional[StrictStr] = Field(default=None, alias="btcValuation")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "activate",
-        "balance",
-        "walletName",
-        "assetBalances",
+        "asset",
+        "assetName",
+        "free",
+        "locked",
+        "freeze",
+        "withdrawing",
+        "btcValuation",
     ]
 
     model_config = ConfigDict(
@@ -68,7 +65,7 @@ class QueryUserWalletBalanceResponseInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of QueryUserWalletBalanceResponseInner from a JSON string"""
+        """Create an instance of QueryUserWalletBalanceResponseInnerAssetBalancesInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,13 +90,6 @@ class QueryUserWalletBalanceResponseInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in asset_balances (list)
-        _items = []
-        if self.asset_balances:
-            for _item_asset_balances in self.asset_balances:
-                if _item_asset_balances:
-                    _items.append(_item_asset_balances.to_dict())
-            _dict["assetBalances"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -109,7 +99,7 @@ class QueryUserWalletBalanceResponseInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of QueryUserWalletBalanceResponseInner from a dict"""
+        """Create an instance of QueryUserWalletBalanceResponseInnerAssetBalancesInner from a dict"""
         if obj is None:
             return None
 
@@ -118,19 +108,13 @@ class QueryUserWalletBalanceResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "activate": obj.get("activate"),
-                "balance": obj.get("balance"),
-                "walletName": obj.get("walletName"),
-                "assetBalances": (
-                    [
-                        QueryUserWalletBalanceResponseInnerAssetBalancesInner.from_dict(
-                            _item
-                        )
-                        for _item in obj["assetBalances"]
-                    ]
-                    if obj.get("assetBalances") is not None
-                    else None
-                ),
+                "asset": obj.get("asset"),
+                "assetName": obj.get("assetName"),
+                "free": obj.get("free"),
+                "locked": obj.get("locked"),
+                "freeze": obj.get("freeze"),
+                "withdrawing": obj.get("withdrawing"),
+                "btcValuation": obj.get("btcValuation"),
             }
         )
         # store additional fields in additional_properties

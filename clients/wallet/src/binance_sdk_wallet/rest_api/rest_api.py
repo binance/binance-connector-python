@@ -853,6 +853,7 @@ class WalletRestAPI:
     def query_user_wallet_balance(
         self,
         quote_asset: Optional[str] = None,
+        need_balance_detail: Optional[bool] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[QueryUserWalletBalanceResponse]:
         """
@@ -866,6 +867,8 @@ class WalletRestAPI:
 
                 Args:
                     quote_asset (Optional[str] = None):
+                    need_balance_detail (Optional[bool] = None): Whether to return the per-asset balance detail for each wallet. When `false` or omitted, the response is
+        unchanged from current behavior.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -876,7 +879,9 @@ class WalletRestAPI:
 
         """
 
-        return self._assetApi.query_user_wallet_balance(quote_asset, recv_window)
+        return self._assetApi.query_user_wallet_balance(
+            quote_asset, need_balance_detail, recv_window
+        )
 
     def toggle_bnb_burn_on_spot_trade_and_margin_interest(
         self,
@@ -1483,6 +1488,42 @@ class WalletRestAPI:
         - Questionnaire is different for each local entity, please refer to the `Withdraw Questionnaire Contents` page.
         - If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`, please try to verify the format of the questionnaire and use URL-encoded format.
 
+        **StandardPii**
+
+        **For Natural Person**
+
+        - `piiType` (INTEGER, Mandatory): Fix to 0: Natural Person
+        - `latinNames` (List&lt;PiiName&gt;, Mandatory): In case a person have complicated names or multiple names, this parameter is a list
+        - `localNames` (List&lt;PiiName&gt;, Optional): In case a person have complicated names or multiple names, this parameter is a list
+        - `nationality` (STRING, Optional)
+        - `residenceCountry` (STRING, Mandatory)
+        - `nationalIdentifier` (STRING, Optional)
+        - `nationalIdentifierType` (STRING, Optional)
+        - `nationalIdentifierIssueCountry` (STRING, Optional)
+        - `dateOfBirth` (STRING, Optional): yyyy-mm-dd. Not required but strongly recommended. Providing DOB could greatly reduce false positive rate during risk checking process.
+        - `placeOfBirth` (STRING, Optional)
+        - `address` (STRING, Optional)
+
+        **For Legal Person**
+
+        - `piiType` (INTEGER, Mandatory): Fix to 1: Legal Person
+        - `latinName` (STRING, Mandatory): It's company name for Legal Person
+        - `localName` (STRING, Optional)
+        - `registrationCountry` (STRING, Mandatory)
+        - `nationalIdentifier` (STRING, Optional)
+        - `nationalIdentifierType` (STRING, Optional)
+        - `nationalIdentifierIssueCountry` (STRING, Optional)
+        - `registrationDate` (STRING, Optional): yyyy-mm-dd. Not required but strongly recommended.
+        - `address` (STRING, Optional)
+        - `walletAddress` (STRING, Optional)
+        - `walletTag` (STRING, Optional)
+
+        **PiiName**
+
+        - `firstName` (STRING, Mandatory): Mandatory for Natural person
+        - `middleName` (STRING, Optional)
+        - `lastName` (STRING, Optional)
+
                 Args:
                     address (Union[str, None]):
                     coin (Union[str, None]):
@@ -1775,11 +1816,47 @@ class WalletRestAPI:
         - Questionnaire is different for each local entity, please refer to `Deposit Questionnaire Content` page.
         - If getting error like `Questionnaire format not valid.` or `Questionnaire must not be blank`, please try to verify the format of the questionnaire and use URL-encoded format.
 
+        **StandardPii**
+
+        **For Natural Person**
+
+        - `piiType` (INTEGER, Mandatory): Fix to 0: Natural Person
+        - `latinNames` (List&lt;PiiName&gt;, Mandatory): In case a person have complicated names or multiple names, this parameter is a list
+        - `localNames` (List&lt;PiiName&gt;, Optional): In case a person have complicated names or multiple names, this parameter is a list
+        - `nationality` (STRING, Optional)
+        - `residenceCountry` (STRING, Mandatory)
+        - `nationalIdentifier` (STRING, Optional)
+        - `nationalIdentifierType` (STRING, Optional)
+        - `nationalIdentifierIssueCountry` (STRING, Optional)
+        - `dateOfBirth` (STRING, Optional): yyyy-mm-dd. Not required but strongly recommended. Providing DOB could greatly reduce false positive rate during risk checking process.
+        - `placeOfBirth` (STRING, Optional)
+        - `address` (STRING, Optional)
+
+        **For Legal Person**
+
+        - `piiType` (INTEGER, Mandatory): Fix to 1: Legal Person
+        - `latinName` (STRING, Mandatory): It's company name for Legal Person
+        - `localName` (STRING, Optional)
+        - `registrationCountry` (STRING, Mandatory)
+        - `nationalIdentifier` (STRING, Optional)
+        - `nationalIdentifierType` (STRING, Optional)
+        - `nationalIdentifierIssueCountry` (STRING, Optional)
+        - `registrationDate` (STRING, Optional): yyyy-mm-dd. Not required but strongly recommended.
+        - `address` (STRING, Optional)
+        - `walletAddress` (STRING, Optional)
+        - `walletTag` (STRING, Optional)
+
+        **PiiName**
+
+        - `firstName` (STRING, Mandatory): Mandatory for Natural person
+        - `middleName` (STRING, Optional)
+        - `lastName` (STRING, Optional)
+
                 Args:
                     sub_account_id (Union[str, None]): External user ID.
                     deposit_id (Union[int, None]): Wallet deposit ID.
                     questionnaire (Union[str, None]): JSON format questionnaire answers.
-                    beneficiary_pii (Union[str, None]): JSON format beneficiary Pii.
+                    beneficiary_pii (Union[str, None]): JSON format beneficiary Pii, see StandardPii section below
                     network (Optional[str] = None):
                     coin (Optional[str] = None):
                     amount (Optional[float] = None):

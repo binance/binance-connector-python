@@ -1859,7 +1859,24 @@ class TestAssetApi:
     def test_query_user_wallet_balance_success(self, mock_get_signature):
         """Test query_user_wallet_balance() successfully with required parameters only."""
 
-        expected_response = [{"activate": True, "balance": "0", "walletName": "Spot"}]
+        expected_response = [
+            {
+                "activate": True,
+                "balance": "0",
+                "walletName": "Spot",
+                "assetBalances": [
+                    {
+                        "asset": "USDT",
+                        "assetName": "TetherUS",
+                        "free": "6.238383",
+                        "locked": "0",
+                        "freeze": "0",
+                        "withdrawing": "0",
+                        "btcValuation": "6.238383",
+                    }
+                ],
+            }
+        ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
@@ -1903,9 +1920,30 @@ class TestAssetApi:
     ):
         """Test query_user_wallet_balance() successfully with optional parameters."""
 
-        params = {"quote_asset": "BTC", "recv_window": 5000}
+        params = {
+            "quote_asset": "BTC",
+            "need_balance_detail": False,
+            "recv_window": 5000,
+        }
 
-        expected_response = [{"activate": True, "balance": "0", "walletName": "Spot"}]
+        expected_response = [
+            {
+                "activate": True,
+                "balance": "0",
+                "walletName": "Spot",
+                "assetBalances": [
+                    {
+                        "asset": "USDT",
+                        "assetName": "TetherUS",
+                        "free": "6.238383",
+                        "locked": "0",
+                        "freeze": "0",
+                        "withdrawing": "0",
+                        "btcValuation": "6.238383",
+                    }
+                ],
+            }
+        ]
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
