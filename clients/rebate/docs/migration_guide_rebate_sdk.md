@@ -83,7 +83,7 @@ pip uninstall binance-connector
 Install the new Rebate-specific package:
 
 ```bash
-pip install binance-sdk-ebate
+pip install binance-sdk-rebate
 ```
 
 ### 3. Update Import Paths
