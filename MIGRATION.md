@@ -32,7 +32,7 @@ pip install binance-sdk-spot
 To install multiple connectors:
 
 ```bash
-pip install binance-sdk-spot binance-sdk-margin-trading binanc-sdk-wallet
+pip install binance-sdk-spot binance-sdk-margin-trading binance-sdk-wallet
 ```
 
 ### **Step 3: Update Imports**
