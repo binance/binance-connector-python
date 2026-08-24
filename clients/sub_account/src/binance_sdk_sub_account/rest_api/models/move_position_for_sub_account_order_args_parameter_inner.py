@@ -28,7 +28,11 @@ class MovePositionForSubAccountOrderArgsParameterInner(BaseModel):
 
     symbol: Optional[StrictStr] = None
     quantity: Optional[Union[StrictFloat, StrictInt]] = None
-    position_side: Optional[StrictStr] = Field(default=None, alias="positionSide")
+    position_side: Optional[StrictStr] = Field(
+        default=None,
+        description="Required when productType=UM. Optional and ignored when productType=OPTION (the response returns positionSide as null).",
+        alias="positionSide",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "quantity", "positionSide"]
 

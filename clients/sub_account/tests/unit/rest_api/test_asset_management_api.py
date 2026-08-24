@@ -74,6 +74,11 @@ from binance_sdk_sub_account.rest_api.models import UniversalTransferResponse
 
 
 from binance_sdk_sub_account.rest_api.models import (
+    GetMovePositionHistoryForSubAccountProductTypeEnum,
+)
+
+
+from binance_sdk_sub_account.rest_api.models import (
     MovePositionForSubAccountProductTypeEnum,
 )
 
@@ -993,6 +998,9 @@ class TestAssetManagementApi:
             "symbol": "BTCUSDT",
             "page": 1,
             "rows": 1,
+            "product_type": GetMovePositionHistoryForSubAccountProductTypeEnum[
+                "UM"
+            ].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
             "recv_window": 5000,

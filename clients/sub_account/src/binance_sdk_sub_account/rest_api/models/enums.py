@@ -11,8 +11,14 @@ Do not edit the class manually.
 from enum import Enum
 
 
+class GetMovePositionHistoryForSubAccountProductTypeEnum(Enum):
+    UM = "UM"
+    OPTION = "OPTION"
+
+
 class MovePositionForSubAccountProductTypeEnum(Enum):
     UM = "UM"
+    OPTION = "OPTION"
 
 
 class UniversalTransferFromAccountTypeEnum(Enum):

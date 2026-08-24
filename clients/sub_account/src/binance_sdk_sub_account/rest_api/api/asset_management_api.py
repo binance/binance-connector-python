@@ -44,6 +44,7 @@ from ..models import UniversalTransferResponse
 from ..models import MovePositionForSubAccountOrderArgsParameterInner
 
 
+from ..models import GetMovePositionHistoryForSubAccountProductTypeEnum
 from ..models import MovePositionForSubAccountProductTypeEnum
 from ..models import UniversalTransferFromAccountTypeEnum
 from ..models import UniversalTransferToAccountTypeEnum
@@ -304,6 +305,9 @@ class AssetManagementApi:
         symbol: Union[str, None],
         page: Union[int, None],
         rows: Union[int, None],
+        product_type: Optional[
+            GetMovePositionHistoryForSubAccountProductTypeEnum
+        ] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
         recv_window: Optional[int] = None,
@@ -320,14 +324,15 @@ class AssetManagementApi:
         Security Type: USER_DATA
 
         Notes:
-        - If `startTime` and `endTime` are both omitted, records from the last 90 days are returned by default (up to 1000 records).
+        - If `startTime` and `endTime` are both omitted, records from the last 90 days are returned by default (up to 100 records).
         - If `startTime` is sent and `endTime` is omitted, records in `[max(startTime, now-90d), now]` are returned.
         - If `startTime` is omitted and `endTime` is sent, records in `[max(now, endTime-90d), endTime]` are returned.
 
                 Args:
                     symbol (Union[str, None]):
                     page (Union[int, None]):
-                    rows (Union[int, None]):
+                    rows (Union[int, None]): Max 100.
+                    product_type (Optional[GetMovePositionHistoryForSubAccountProductTypeEnum] = None): Default UM.
                     start_time (Optional[int] = None):
                     end_time (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -358,6 +363,7 @@ class AssetManagementApi:
             "symbol": symbol,
             "page": page,
             "rows": rows,
+            "product_type": product_type,
             "start_time": start_time,
             "end_time": end_time,
             "recv_window": recv_window,
@@ -788,7 +794,7 @@ class AssetManagementApi:
                 Args:
                     from_user_email (Union[str, None]):
                     to_user_email (Union[str, None]):
-                    product_type (Union[MovePositionForSubAccountProductTypeEnum, None]):
+                    product_type (Union[MovePositionForSubAccountProductTypeEnum, None]): A single request cannot mix UM and OPTION positions.
                     order_args (Union[List[MovePositionForSubAccountOrderArgsParameterInner], None]): Max 10 positions supported. When input request parameter,orderArgs.symbol should be STRING,
         orderArgs.quantity should be BIGDECIMAL, and orderArgs.positionSide should be STRING, positionSide
         support BOTH,LONG and SHORT. Each entry should be like

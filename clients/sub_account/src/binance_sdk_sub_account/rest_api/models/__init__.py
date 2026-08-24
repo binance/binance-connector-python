@@ -281,6 +281,9 @@ from .withdrawl_assets_from_the_managed_sub_account_response import (
 
 
 from .enums import (
+    GetMovePositionHistoryForSubAccountProductTypeEnum as GetMovePositionHistoryForSubAccountProductTypeEnum,
+)
+from .enums import (
     MovePositionForSubAccountProductTypeEnum as MovePositionForSubAccountProductTypeEnum,
 )
 from .enums import (

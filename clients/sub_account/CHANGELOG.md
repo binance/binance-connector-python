@@ -1,5 +1,26 @@
 # Changelog
 
+## 8.0.0 - 2026-08-24
+
+### Changed (4)
+
+- Added parameter `productType`
+  - affected methods:
+    - `get_move_position_history_for_sub_account()` (`GET /sapi/v1/sub-account/futures/move-position`)
+- Modified parameter `productType`:
+  - enum added: `OPTION`
+  - affected methods:
+    - `move_position_for_sub_account()` (`POST /sapi/v1/sub-account/futures/move-position`)
+- Modified response for `move_position_for_sub_account()` (`POST /sapi/v1/sub-account/futures/move-position`):
+  - `movePositionOrders`.items.`positionSide`: nullable `false` → `true`
+  - `movePositionOrders`.items.`positionSide`: nullable `false` → `true`
+
+- Modified response field `movePositionOrders`:
+  - items.`positionSide`: nullable `false` → `true`
+  - items.`positionSide`: nullable `false` → `true`
+  - affected events:
+    - `movePositionForSubAccountResponse`
+
 ## 7.2.0 - 2026-08-19
 
 ### Changed (1)
