@@ -300,6 +300,11 @@ class NewUmAlgoOrderPriceMatchEnum(Enum):
     QUEUE_20 = "QUEUE_20"
 
 
+class NewUmAlgoOrderClosePositionEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
 class NewUmAlgoOrderPriceProtectEnum(Enum):
     TRUE = "true"
     FALSE = "false"

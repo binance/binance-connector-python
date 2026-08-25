@@ -574,6 +574,7 @@ from .enums import NewUmAlgoOrderPositionSideEnum as NewUmAlgoOrderPositionSideE
 from .enums import NewUmAlgoOrderTimeInForceEnum as NewUmAlgoOrderTimeInForceEnum
 from .enums import NewUmAlgoOrderWorkingTypeEnum as NewUmAlgoOrderWorkingTypeEnum
 from .enums import NewUmAlgoOrderPriceMatchEnum as NewUmAlgoOrderPriceMatchEnum
+from .enums import NewUmAlgoOrderClosePositionEnum as NewUmAlgoOrderClosePositionEnum
 from .enums import NewUmAlgoOrderPriceProtectEnum as NewUmAlgoOrderPriceProtectEnum
 from .enums import NewUmAlgoOrderReduceOnlyEnum as NewUmAlgoOrderReduceOnlyEnum
 from .enums import (

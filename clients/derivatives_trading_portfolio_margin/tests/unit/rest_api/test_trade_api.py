@@ -328,7 +328,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderTypeEnum,
 )
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderPositionSideEnum,
 )
@@ -342,6 +341,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderPriceMatchEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    NewUmAlgoOrderClosePositionEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderPriceProtectEnum,
@@ -4707,7 +4709,6 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
 
         expected_response = {
@@ -4726,6 +4727,7 @@ class TestTradeApi:
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",
             "priceMatch": "NONE",
+            "closePosition": False,
             "priceProtect": False,
             "reduceOnly": False,
             "activatePrice": "",
@@ -4757,7 +4759,6 @@ class TestTradeApi:
         assert normalized["symbol"] == "BNBUSDT"
         assert normalized["side"] == NewUmAlgoOrderSideEnum["BUY"].value
         assert normalized["type"] == NewUmAlgoOrderTypeEnum["STOP"].value
-        assert normalized["quantity"] == 0.01
 
         assert response is not None
 
@@ -4787,13 +4788,14 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
             "position_side": NewUmAlgoOrderPositionSideEnum["BOTH"].value,
             "time_in_force": NewUmAlgoOrderTimeInForceEnum["IOC"].value,
+            "quantity": 0.01,
             "price": 750.000,
             "trigger_price": 750.000,
             "working_type": NewUmAlgoOrderWorkingTypeEnum["MARK_PRICE"].value,
             "price_match": NewUmAlgoOrderPriceMatchEnum["OPPONENT"].value,
+            "close_position": NewUmAlgoOrderClosePositionEnum["TRUE"].value,
             "price_protect": NewUmAlgoOrderPriceProtectEnum["TRUE"].value,
             "reduce_only": NewUmAlgoOrderReduceOnlyEnum["TRUE"].value,
             "activate_price": 700,
@@ -4823,6 +4825,7 @@ class TestTradeApi:
             "selfTradePreventionMode": "EXPIRE_MAKER",
             "workingType": "CONTRACT_PRICE",
             "priceMatch": "NONE",
+            "closePosition": False,
             "priceProtect": False,
             "reduceOnly": False,
             "activatePrice": "",
@@ -4872,7 +4875,6 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
         params["algo_type"] = None
 
@@ -4888,7 +4890,6 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
         params["symbol"] = None
 
@@ -4902,7 +4903,6 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
         params["side"] = None
 
@@ -4916,27 +4916,10 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
         params["type"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'type'"):
-            self.client.new_um_algo_order(**params)
-
-    def test_new_um_algo_order_missing_required_param_quantity(self):
-        """Test that new_um_algo_order() raises RequiredError when 'quantity' is missing."""
-        params = {
-            "algo_type": NewUmAlgoOrderAlgoTypeEnum["CONDITIONAL"].value,
-            "symbol": "BNBUSDT",
-            "side": NewUmAlgoOrderSideEnum["BUY"].value,
-            "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
-        }
-        params["quantity"] = None
-
-        with pytest.raises(
-            RequiredError, match="Missing required parameter 'quantity'"
-        ):
             self.client.new_um_algo_order(**params)
 
     def test_new_um_algo_order_server_error(self):
@@ -4947,7 +4930,6 @@ class TestTradeApi:
             "symbol": "BNBUSDT",
             "side": NewUmAlgoOrderSideEnum["BUY"].value,
             "type": NewUmAlgoOrderTypeEnum["STOP"].value,
-            "quantity": 0.01,
         }
 
         mock_error = Exception("ResponseError")

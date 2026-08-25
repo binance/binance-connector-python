@@ -1,5 +1,25 @@
 # Changelog
 
+## 12.2.0 - 2026-08-25
+
+### Changed (4)
+
+#### REST API
+
+- Added parameter `closePosition`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified parameter `quantity`:
+  - required: `true` → `false`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+- Modified response for `new_um_algo_order()` (`POST /papi/v1/um/algo/order`):
+  - property `closePosition` added
+
+- Added response field `closePosition`
+  - affected events:
+    - `newUmAlgoOrderResponse`
+
 ## 12.1.1 - 2026-08-24
 
 ### Changed (7)

@@ -40,7 +40,6 @@ def new_um_algo_order():
             symbol="BNBUSDT",
             side=NewUmAlgoOrderSideEnum["SELL"].value,
             type=NewUmAlgoOrderTypeEnum["TAKE_PROFIT"].value,
-            quantity=0.01,
         )
 
         rate_limits = response.rate_limits

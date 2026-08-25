@@ -115,6 +115,7 @@ from ..models import NewUmAlgoOrderPositionSideEnum
 from ..models import NewUmAlgoOrderTimeInForceEnum
 from ..models import NewUmAlgoOrderWorkingTypeEnum
 from ..models import NewUmAlgoOrderPriceMatchEnum
+from ..models import NewUmAlgoOrderClosePositionEnum
 from ..models import NewUmAlgoOrderPriceProtectEnum
 from ..models import NewUmAlgoOrderReduceOnlyEnum
 from ..models import NewUmAlgoOrderNewOrderRespTypeEnum
@@ -1952,13 +1953,14 @@ class TradeApi:
         symbol: Union[str, None],
         side: Union[NewUmAlgoOrderSideEnum, None],
         type: Union[NewUmAlgoOrderTypeEnum, None],
-        quantity: Union[float, None],
         position_side: Optional[NewUmAlgoOrderPositionSideEnum] = None,
         time_in_force: Optional[NewUmAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
         price: Optional[float] = None,
         trigger_price: Optional[float] = None,
         working_type: Optional[NewUmAlgoOrderWorkingTypeEnum] = None,
         price_match: Optional[NewUmAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[NewUmAlgoOrderClosePositionEnum] = None,
         price_protect: Optional[NewUmAlgoOrderPriceProtectEnum] = None,
         reduce_only: Optional[NewUmAlgoOrderReduceOnlyEnum] = None,
         activate_price: Optional[float] = None,
@@ -1989,6 +1991,7 @@ class TradeApi:
         - `STOP`, `STOP_MARKET`: BUY: latest price >= `triggerPrice`; SELL: latest price <= `triggerPrice`.
         - `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`: BUY: latest price <= `triggerPrice`; SELL: latest price >= `triggerPrice`.
         - `TRAILING_STOP_MARKET`: BUY: lowest price after order placed <= `activatePrice`, and latest price >= lowest price * (1 + `callbackRate`); SELL: highest price after order placed >= `activatePrice`, and latest price <= highest price * (1 - `callbackRate`).
+        - `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`: follow the same rules for conditional orders; if triggered, close all current long position (if `SELL`) or current short position (if `BUY`); cannot be used with `quantity` parameter; cannot be used with `reduceOnly` parameter; in Hedge Mode, cannot be used with `BUY` orders in `LONG` position side, and cannot be used with `SELL` orders in `SHORT` position side.
         - `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
 
                 Args:
@@ -1996,15 +1999,16 @@ class TradeApi:
                     symbol (Union[str, None]):
                     side (Union[NewUmAlgoOrderSideEnum, None]):
                     type (Union[NewUmAlgoOrderTypeEnum, None]): Conditional order type
-                    quantity (Union[float, None]): Order quantity
                     position_side (Optional[NewUmAlgoOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode; `LONG` or `SHORT` for Hedge Mode
                     time_in_force (Optional[NewUmAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): Order quantity. Cannot be sent with `closePosition`=`true`(Close-All)
                     price (Optional[float] = None): Order price
                     trigger_price (Optional[float] = None): Trigger price
                     working_type (Optional[NewUmAlgoOrderWorkingTypeEnum] = None): Trigger price type. Default `CONTRACT_PRICE`
                     price_match (Optional[NewUmAlgoOrderPriceMatchEnum] = None): Can't be passed together with `price`
+                    close_position (Optional[NewUmAlgoOrderClosePositionEnum] = None): Close-All, used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
                     price_protect (Optional[NewUmAlgoOrderPriceProtectEnum] = None): Price protection. Default `false`
-                    reduce_only (Optional[NewUmAlgoOrderReduceOnlyEnum] = None): Cannot be sent in Hedge Mode
+                    reduce_only (Optional[NewUmAlgoOrderReduceOnlyEnum] = None): Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET`, default as latest price
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET`, min 0.1, max 10 (1 = 1%)
                     client_algo_id (Optional[str] = None): Unique id among open orders. Auto-generated if not sent
@@ -2038,10 +2042,6 @@ class TradeApi:
             raise RequiredError(
                 field="type", error_message="Missing required parameter 'type'"
             )
-        if quantity is None:
-            raise RequiredError(
-                field="quantity", error_message="Missing required parameter 'quantity'"
-            )
 
         body = {}
         payload = {
@@ -2049,13 +2049,14 @@ class TradeApi:
             "symbol": symbol,
             "side": side,
             "type": type,
-            "quantity": quantity,
             "position_side": position_side,
             "time_in_force": time_in_force,
+            "quantity": quantity,
             "price": price,
             "trigger_price": trigger_price,
             "working_type": working_type,
             "price_match": price_match,
+            "close_position": close_position,
             "price_protect": price_protect,
             "reduce_only": reduce_only,
             "activate_price": activate_price,
