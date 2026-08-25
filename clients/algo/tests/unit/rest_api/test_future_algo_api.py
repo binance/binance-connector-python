@@ -77,21 +77,14 @@ class TestFutureAlgoApi:
     def test_cancel_algo_order_future_algo_success(self, mock_get_signature):
         """Test cancel_algo_order_future_algo() successfully with required parameters only."""
 
-        params = {
-            "algo_id": 1,
-        }
-
         expected_response = {"algoId": 14511, "success": True, "code": 0, "msg": "OK"}
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.cancel_algo_order_future_algo(**params)
+        response = self.client.cancel_algo_order_future_algo()
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -100,7 +93,6 @@ class TestFutureAlgoApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/sapi/v1/algo/futures/order" in request_kwargs["url"]
         assert request_kwargs["method"] == "DELETE"
-        assert normalized["algoId"] == 1
 
         assert response is not None
 
@@ -131,7 +123,11 @@ class TestFutureAlgoApi:
     ):
         """Test cancel_algo_order_future_algo() successfully with optional parameters."""
 
-        params = {"algo_id": 1, "recv_window": 5000}
+        params = {
+            "algo_id": 1,
+            "client_algo_id": "65ce1630101a480b85915d7e11fd5078",
+            "recv_window": 5000,
+        }
 
         expected_response = {"algoId": 14511, "success": True, "code": 0, "msg": "OK"}
         mock_get_signature.return_value = "mocked_signature"
@@ -171,28 +167,14 @@ class TestFutureAlgoApi:
 
         assert response.data() == expected
 
-    def test_cancel_algo_order_future_algo_missing_required_param_algo_id(self):
-        """Test that cancel_algo_order_future_algo() raises RequiredError when 'algo_id' is missing."""
-        params = {
-            "algo_id": 1,
-        }
-        params["algo_id"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'algo_id'"):
-            self.client.cancel_algo_order_future_algo(**params)
-
     def test_cancel_algo_order_future_algo_server_error(self):
         """Test that cancel_algo_order_future_algo() raises an error when the server returns an error."""
-
-        params = {
-            "algo_id": 1,
-        }
 
         mock_error = Exception("ResponseError")
         self.client.cancel_algo_order_future_algo = MagicMock(side_effect=mock_error)
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.cancel_algo_order_future_algo(**params)
+            self.client.cancel_algo_order_future_algo()
 
     @patch("binance_common.utils.get_signature")
     def test_query_current_algo_open_orders_future_algo_success(

@@ -47,7 +47,8 @@ class FutureAlgoApi:
 
     def cancel_algo_order_future_algo(
         self,
-        algo_id: Union[int, None],
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderFutureAlgoResponse]:
         """
@@ -62,11 +63,13 @@ class FutureAlgoApi:
         Security Type: TRADE
 
         Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
         - You need to enable `Futures Trading Permission` for the API key that requests this endpoint.
         - Base URL: `https://api.binance.com`
 
                 Args:
-                    algo_id (Union[int, None]): eg. 14511
+                    algo_id (Optional[int] = None): eg. 14511
+                    client_algo_id (Optional[str] = None): eg. "65ce1630101a480b85915d7e11fd5078"
                     recv_window (Optional[int] = None): Request validity window in milliseconds
 
                 Returns:
@@ -77,13 +80,12 @@ class FutureAlgoApi:
 
         """
 
-        if algo_id is None:
-            raise RequiredError(
-                field="algo_id", error_message="Missing required parameter 'algo_id'"
-            )
-
         body = {}
-        payload = {"algo_id": algo_id, "recv_window": recv_window}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
 
         return send_request(
             self._session,

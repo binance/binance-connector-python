@@ -42,7 +42,8 @@ class SpotAlgoApi:
 
     def cancel_algo_order_spot_algo(
         self,
-        algo_id: Union[int, None],
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderSpotAlgoResponse]:
         """
@@ -56,8 +57,12 @@ class SpotAlgoApi:
 
         Security Type: TRADE
 
+        Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
+
                 Args:
-                    algo_id (Union[int, None]):
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
                     recv_window (Optional[int] = None): Request validity window in milliseconds
 
                 Returns:
@@ -68,13 +73,12 @@ class SpotAlgoApi:
 
         """
 
-        if algo_id is None:
-            raise RequiredError(
-                field="algo_id", error_message="Missing required parameter 'algo_id'"
-            )
-
         body = {}
-        payload = {"algo_id": algo_id, "recv_window": recv_window}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
 
         return send_request(
             self._session,

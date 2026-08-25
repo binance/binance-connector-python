@@ -125,7 +125,8 @@ class AlgoRestAPI:
 
     def cancel_algo_order_future_algo(
         self,
-        algo_id: Union[int, None],
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderFutureAlgoResponse]:
         """
@@ -138,11 +139,13 @@ class AlgoRestAPI:
         Security Type: TRADE
 
         Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
         - You need to enable `Futures Trading Permission` for the API key that requests this endpoint.
         - Base URL: `https://api.binance.com`
 
                 Args:
-                    algo_id (Union[int, None]): eg. 14511
+                    algo_id (Optional[int] = None): eg. 14511
+                    client_algo_id (Optional[str] = None): eg. "65ce1630101a480b85915d7e11fd5078"
                     recv_window (Optional[int] = None): Request validity window in milliseconds
 
                 Returns:
@@ -153,7 +156,9 @@ class AlgoRestAPI:
 
         """
 
-        return self._futureAlgoApi.cancel_algo_order_future_algo(algo_id, recv_window)
+        return self._futureAlgoApi.cancel_algo_order_future_algo(
+            algo_id, client_algo_id, recv_window
+        )
 
     def query_current_algo_open_orders_future_algo(
         self,
@@ -408,7 +413,8 @@ class AlgoRestAPI:
 
     def cancel_algo_order_spot_algo(
         self,
-        algo_id: Union[int, None],
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[CancelAlgoOrderSpotAlgoResponse]:
         """
@@ -420,8 +426,12 @@ class AlgoRestAPI:
 
         Security Type: TRADE
 
+        Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
+
                 Args:
-                    algo_id (Union[int, None]):
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
                     recv_window (Optional[int] = None): Request validity window in milliseconds
 
                 Returns:
@@ -432,7 +442,9 @@ class AlgoRestAPI:
 
         """
 
-        return self._spotAlgoApi.cancel_algo_order_spot_algo(algo_id, recv_window)
+        return self._spotAlgoApi.cancel_algo_order_spot_algo(
+            algo_id, client_algo_id, recv_window
+        )
 
     def query_current_algo_open_orders_spot_algo(
         self,
