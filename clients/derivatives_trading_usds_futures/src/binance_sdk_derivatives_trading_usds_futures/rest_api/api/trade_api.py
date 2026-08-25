@@ -179,7 +179,7 @@ class TradeApi:
 
     def all_orders(
         self,
-        symbol: Union[str, None],
+        symbol: Optional[str] = None,
         order_id: Optional[int] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
@@ -206,7 +206,7 @@ class TradeApi:
         - The query time period must be less then 7 days( default as the recent 7 days).
 
                 Args:
-                    symbol (Union[str, None]):
+                    symbol (Optional[str] = None):
                     order_id (Optional[int] = None):
                     start_time (Optional[int] = None): Start time
                     end_time (Optional[int] = None): End time
@@ -220,11 +220,6 @@ class TradeApi:
                     RequiredError: If a required parameter is missing.
 
         """
-
-        if symbol is None:
-            raise RequiredError(
-                field="symbol", error_message="Missing required parameter 'symbol'"
-            )
 
         body = {}
         payload = {

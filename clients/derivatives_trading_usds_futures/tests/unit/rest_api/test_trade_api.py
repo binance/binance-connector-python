@@ -441,10 +441,6 @@ class TestTradeApi:
     def test_all_orders_success(self, mock_get_signature):
         """Test all_orders() successfully with required parameters only."""
 
-        params = {
-            "symbol": "BTCUSDT",
-        }
-
         expected_response = [
             {
                 "avgPrice": "0.00000",
@@ -480,13 +476,10 @@ class TestTradeApi:
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
 
-        response = self.client.all_orders(**params)
+        response = self.client.all_orders()
 
         actual_call_args = self.mock_session.request.call_args
         request_kwargs = actual_call_args.kwargs
-        parsed_params = parse_qs(request_kwargs["params"])
-        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
-        normalized = normalize_query_values(parsed_params, camel_case_params)
 
         self.mock_session.request.assert_called_once()
         mock_get_signature.assert_called_once()
@@ -495,7 +488,6 @@ class TestTradeApi:
         assert "signature" in parse_qs(request_kwargs["params"])
         assert "/fapi/v1/allOrders" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
-        assert normalized["symbol"] == "BTCUSDT"
 
         assert response is not None
 
@@ -594,28 +586,14 @@ class TestTradeApi:
 
         assert response.data() == expected
 
-    def test_all_orders_missing_required_param_symbol(self):
-        """Test that all_orders() raises RequiredError when 'symbol' is missing."""
-        params = {
-            "symbol": "BTCUSDT",
-        }
-        params["symbol"] = None
-
-        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
-            self.client.all_orders(**params)
-
     def test_all_orders_server_error(self):
         """Test that all_orders() raises an error when the server returns an error."""
-
-        params = {
-            "symbol": "BTCUSDT",
-        }
 
         mock_error = Exception("ResponseError")
         self.client.all_orders = MagicMock(side_effect=mock_error)
 
         with pytest.raises(Exception, match="ResponseError"):
-            self.client.all_orders(**params)
+            self.client.all_orders()
 
     @patch("binance_common.utils.get_signature")
     def test_auto_cancel_all_open_orders_success(self, mock_get_signature):
