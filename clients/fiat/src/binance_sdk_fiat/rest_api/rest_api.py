@@ -21,8 +21,6 @@ from .models import FiatWithdrawResponse
 from .models import GetFiatDepositWithdrawHistoryResponse
 from .models import GetFiatPaymentsHistoryResponse
 from .models import GetOrderDetailResponse
-
-
 from .models import DepositApiPaymentMethodEnum
 from .models import FiatWithdrawApiPaymentMethodEnum
 from .models import FiatWithdrawRequestAccountInfo

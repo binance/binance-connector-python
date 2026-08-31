@@ -30,7 +30,5 @@ from .get_order_detail_response import GetOrderDetailResponse as GetOrderDetailR
 from .get_order_detail_response_data import (
     GetOrderDetailResponseData as GetOrderDetailResponseData,
 )
-
-
 from .enums import DepositApiPaymentMethodEnum as DepositApiPaymentMethodEnum
 from .enums import FiatWithdrawApiPaymentMethodEnum as FiatWithdrawApiPaymentMethodEnum

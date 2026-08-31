@@ -25,11 +25,7 @@ from binance_sdk_fiat.rest_api.models import FiatWithdrawResponse
 from binance_sdk_fiat.rest_api.models import GetFiatDepositWithdrawHistoryResponse
 from binance_sdk_fiat.rest_api.models import GetFiatPaymentsHistoryResponse
 from binance_sdk_fiat.rest_api.models import GetOrderDetailResponse
-
-
 from binance_sdk_fiat.rest_api.models import DepositApiPaymentMethodEnum
-
-
 from binance_sdk_fiat.rest_api.models import FiatWithdrawApiPaymentMethodEnum
 
 
