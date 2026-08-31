@@ -28,19 +28,11 @@ from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersFutureAlgo
 from binance_sdk_algo.rest_api.models import QuerySubOrdersFutureAlgoResponse
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceFutureAlgoResponse
 from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoResponse
-
-
 from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersFutureAlgoSideEnum
-
-
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceFutureAlgoSideEnum
-
-
 from binance_sdk_algo.rest_api.models import (
     TimeWeightedAveragePriceFutureAlgoPositionSideEnum,
 )
-
-
 from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoSideEnum
 
 from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoUrgencyEnum

@@ -21,8 +21,6 @@ from ..models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
 from ..models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from ..models import QuerySubOrdersSpotAlgoResponse
 from ..models import TimeWeightedAveragePriceSpotAlgoResponse
-
-
 from ..models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
 from ..models import TimeWeightedAveragePriceSpotAlgoSideEnum
 

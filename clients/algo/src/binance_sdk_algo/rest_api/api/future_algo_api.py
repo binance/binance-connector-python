@@ -22,8 +22,6 @@ from ..models import QueryHistoricalAlgoOrdersFutureAlgoResponse
 from ..models import QuerySubOrdersFutureAlgoResponse
 from ..models import TimeWeightedAveragePriceFutureAlgoResponse
 from ..models import VolumeParticipationFutureAlgoResponse
-
-
 from ..models import QueryHistoricalAlgoOrdersFutureAlgoSideEnum
 from ..models import TimeWeightedAveragePriceFutureAlgoSideEnum
 from ..models import TimeWeightedAveragePriceFutureAlgoPositionSideEnum

@@ -25,11 +25,7 @@ from binance_sdk_algo.rest_api.models import QueryCurrentAlgoOpenOrdersSpotAlgoR
 from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from binance_sdk_algo.rest_api.models import QuerySubOrdersSpotAlgoResponse
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoResponse
-
-
 from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
-
-
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoSideEnum
 
 

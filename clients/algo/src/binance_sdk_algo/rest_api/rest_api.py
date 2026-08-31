@@ -23,8 +23,6 @@ from .models import QueryHistoricalAlgoOrdersFutureAlgoResponse
 from .models import QuerySubOrdersFutureAlgoResponse
 from .models import TimeWeightedAveragePriceFutureAlgoResponse
 from .models import VolumeParticipationFutureAlgoResponse
-
-
 from .models import QueryHistoricalAlgoOrdersFutureAlgoSideEnum
 from .models import TimeWeightedAveragePriceFutureAlgoSideEnum
 from .models import TimeWeightedAveragePriceFutureAlgoPositionSideEnum
@@ -36,8 +34,6 @@ from .models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
 from .models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from .models import QuerySubOrdersSpotAlgoResponse
 from .models import TimeWeightedAveragePriceSpotAlgoResponse
-
-
 from .models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
 from .models import TimeWeightedAveragePriceSpotAlgoSideEnum
 
