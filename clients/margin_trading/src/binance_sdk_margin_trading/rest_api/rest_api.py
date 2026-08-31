@@ -1902,8 +1902,15 @@ class MarginTradingRestAPI:
 
         Notes:
         - autoRepayAtCancel is suggested to set as “FALSE” to keep liability unrepaid under high frequent new order/cancel order execution
-        - Depending on the `pendingType` or `workingType`, some optional
-        - parameters will become mandatory: | Type                                                     | Additional mandatory parameters                              | Additional information | | -------------------------------------------------------- | ------------------------------------------------------------ | ---------------------- | | `workingType` = `LIMIT`                                  | `workingTimeInForce`                                         |                        | | `pendingType` = `LIMIT`                                  | `pendingPrice`, `pendingTimeInForce`                         |                        | | `pendingType` = `STOP_LOSS` or `TAKE_PROFIT`             | `pendingStopPrice` and/or `pendingTrailingDelta`             |                        | | `pendingType` = `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` | `pendingPrice`, `pendingStopPrice` and/or `pendingTrailingDelta`, `pendingTimeInForce` |                        | | `pendingTrailingDelta` is provided | `pendingPrice` |                        |
+        - Depending on the `pendingType` or `workingType`, some optional parameters will become mandatory:
+
+        | Type | Additional mandatory parameters | Additional information |
+        | --- | --- | --- |
+        | `workingType` = `LIMIT` | `workingTimeInForce` | |
+        | `pendingType` = `LIMIT` | `pendingPrice`, `pendingTimeInForce` | |
+        | `pendingType` = `STOP_LOSS` or `TAKE_PROFIT` | `pendingStopPrice` and/or `pendingTrailingDelta` | |
+        | `pendingType` = `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` | `pendingPrice`, `pendingStopPrice` and/or `pendingTrailingDelta`, `pendingTimeInForce` | |
+        | `pendingTrailingDelta` is provided | `pendingPrice` | |
 
                 Args:
                     symbol (Union[str, None]):
