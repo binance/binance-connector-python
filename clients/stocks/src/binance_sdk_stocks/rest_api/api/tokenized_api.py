@@ -20,8 +20,6 @@ from ..models import TokenizedConvertHistoryResponse
 from ..models import TokenizedConvertStatusResponse
 from ..models import TokenizedMintResponse
 from ..models import TokenizedRedeemResponse
-
-
 from ..models import TokenizedConvertStatusConvertTypeEnum
 
 

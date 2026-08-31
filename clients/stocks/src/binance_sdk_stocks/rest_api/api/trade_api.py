@@ -23,8 +23,6 @@ from ..models import EquityOrderDetailResponse
 from ..models import EquityOrderHistoryResponse
 from ..models import EquityTradeHistoryResponse
 from ..models import PlaceEquityOrderResponse
-
-
 from ..models import EquityOrderHistoryOrderTypeEnum
 from ..models import EquityOrderHistorySideEnum
 from ..models import EquityTradeHistorySideEnum

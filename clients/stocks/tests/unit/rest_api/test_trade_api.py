@@ -27,19 +27,11 @@ from binance_sdk_stocks.rest_api.models import EquityOrderDetailResponse
 from binance_sdk_stocks.rest_api.models import EquityOrderHistoryResponse
 from binance_sdk_stocks.rest_api.models import EquityTradeHistoryResponse
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderResponse
-
-
 from binance_sdk_stocks.rest_api.models import EquityOrderHistoryOrderTypeEnum
 from binance_sdk_stocks.rest_api.models import EquityOrderHistorySideEnum
-
-
 from binance_sdk_stocks.rest_api.models import EquityTradeHistorySideEnum
-
-
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderSideEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderOrderTypeEnum
-
-
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderTimeInForceEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderTradingSessionEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderWalletTypeEnum

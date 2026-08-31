@@ -24,8 +24,6 @@ from binance_sdk_stocks.rest_api.models import TokenizedConvertHistoryResponse
 from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusResponse
 from binance_sdk_stocks.rest_api.models import TokenizedMintResponse
 from binance_sdk_stocks.rest_api.models import TokenizedRedeemResponse
-
-
 from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusConvertTypeEnum
 
 

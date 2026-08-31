@@ -19,7 +19,7 @@ from binance_common.websocket import (
 from ..models import OrderReportStreamResponse
 
 
-from typing import Union
+from typing import Optional, Union
 
 
 class UserStreamsApi:
@@ -31,6 +31,7 @@ class UserStreamsApi:
     async def order_report_stream(
         self,
         listen_key: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Order Report Stream
@@ -41,6 +42,7 @@ class UserStreamsApi:
 
         Args:
                 listen_key (Union[str, None]): User data listen key obtained from the Listen Key endpoint.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -60,6 +62,7 @@ class UserStreamsApi:
             "/<listenKey>@orderReport".replace("/", "", 1),
             {
                 "listen_key": listen_key,
+                "id": id,
             },
         )
 

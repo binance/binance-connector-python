@@ -26,7 +26,9 @@ async def quote_stream():
     try:
         connection = await client.websocket_streams.create_connection()
 
-        stream = await connection.quote_stream(symbol="AAPL")
+        stream = await connection.quote_stream(
+            symbol="AAPL",
+        )
         stream.on("message", lambda data: print(f"{data}"))
 
         await asyncio.sleep(5)

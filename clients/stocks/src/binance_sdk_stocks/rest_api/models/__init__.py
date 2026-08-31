@@ -71,8 +71,6 @@ from .tokenized_mint_response import TokenizedMintResponse as TokenizedMintRespo
 from .tokenized_redeem_response import (
     TokenizedRedeemResponse as TokenizedRedeemResponse,
 )
-
-
 from .enums import (
     TokenizedConvertStatusConvertTypeEnum as TokenizedConvertStatusConvertTypeEnum,
 )

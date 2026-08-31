@@ -24,7 +24,7 @@ from ..models import TradabilityStreamResponse
 from ..models import TradingStatusStreamResponse
 
 
-from typing import Union
+from typing import Optional, Union
 
 
 class MarketStreamsApi:
@@ -35,15 +35,17 @@ class MarketStreamsApi:
 
     async def calendar_stream(
         self,
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Calendar Stream
         /calendar
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#calendar-stream
 
-        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds.
+        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -53,7 +55,12 @@ class MarketStreamsApi:
 
         """
 
-        stream = ws_streams_placeholder("/calendar".replace("/", "", 1), {})
+        stream = ws_streams_placeholder(
+            "/calendar".replace("/", "", 1),
+            {
+                "id": id,
+            },
+        )
 
         return await RequestStream(
             self.websocket_base,
@@ -66,17 +73,19 @@ class MarketStreamsApi:
         self,
         symbol: Union[str, None],
         interval: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Kline Stream
         /<symbol>@kline_<interval>
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#kline-stream
 
-        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M.
+        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
                 interval (Union[str, None]): Kline interval — `5m` / `1h` / `1d` / `1w` / `1M`.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -100,6 +109,7 @@ class MarketStreamsApi:
             {
                 "symbol": symbol,
                 "interval": interval,
+                "id": id,
             },
         )
 
@@ -112,15 +122,17 @@ class MarketStreamsApi:
 
     async def price_stream(
         self,
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Price Stream
         /price
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#price-stream
 
-        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol.
+        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -130,7 +142,12 @@ class MarketStreamsApi:
 
         """
 
-        stream = ws_streams_placeholder("/price".replace("/", "", 1), {})
+        stream = ws_streams_placeholder(
+            "/price".replace("/", "", 1),
+            {
+                "id": id,
+            },
+        )
 
         return await RequestStream(
             self.websocket_base,
@@ -142,16 +159,18 @@ class MarketStreamsApi:
     async def quote_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Quote Stream
         /<symbol>@quote
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#quote-stream
 
-        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms.
+        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -170,6 +189,7 @@ class MarketStreamsApi:
             "/<symbol>@quote".replace("/", "", 1),
             {
                 "symbol": symbol,
+                "id": id,
             },
         )
 
@@ -183,16 +203,18 @@ class MarketStreamsApi:
     async def tradability_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Tradability Stream
         /<symbol>@tradability
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#tradability-stream
 
-        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value).
+        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value). Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -211,6 +233,7 @@ class MarketStreamsApi:
             "/<symbol>@tradability".replace("/", "", 1),
             {
                 "symbol": symbol,
+                "id": id,
             },
         )
 
@@ -224,16 +247,18 @@ class MarketStreamsApi:
     async def trading_status_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Trading Status Stream
         /<symbol>@tradingStatus
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#trading-status-stream
 
-        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed.
+        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+                id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -252,6 +277,7 @@ class MarketStreamsApi:
             "/<symbol>@tradingStatus".replace("/", "", 1),
             {
                 "symbol": symbol,
+                "id": id,
             },
         )
 

@@ -27,7 +27,7 @@ async def order_report_stream():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.order_report_stream(
-            listen_key="pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            listen_key="pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
         )
         stream.on("message", lambda data: print(f"{data}"))
 

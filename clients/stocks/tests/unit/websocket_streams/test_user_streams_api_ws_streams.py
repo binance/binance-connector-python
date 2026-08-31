@@ -40,7 +40,7 @@ class TestWebSocketStreams:
         """Test that order_report_stream() subscribes to the correct WebSocket stream."""
 
         params = {
-            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
         }
 
         expected_response = {
@@ -90,7 +90,7 @@ class TestWebSocketStreams:
         """Test order_report_stream() successfully with required parameters only."""
 
         params = {
-            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
         }
 
         expected_response = {
@@ -126,7 +126,8 @@ class TestWebSocketStreams:
         """Test order_report_stream() successfully with optional parameters."""
 
         params = {
-            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
+            "id": "e9d6b4349871b40611412680b3445fac",
         }
 
         expected_response = {
@@ -162,7 +163,7 @@ class TestWebSocketStreams:
     async def test_order_report_stream_missing_required_param_listen_key(self):
         """Test that order_report_stream() raises RequiredError when 'listen_key' is missing."""
         params = {
-            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
         }
         params["listen_key"] = None
 
@@ -176,7 +177,7 @@ class TestWebSocketStreams:
         """Test that order_report_stream() raises an error when the server returns an error."""
 
         params = {
-            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d"
+            "listen_key": "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s6af0dkfj2a97b8a91d",
         }
 
         mock_error = Exception("ResponseError")

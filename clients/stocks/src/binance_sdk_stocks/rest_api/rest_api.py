@@ -21,19 +21,13 @@ from .api.trade_api import TradeApi
 from .api.user_data_streams_api import UserDataStreamsApi
 
 from .models import SignUsEquityDisclaimerResponse
-
-
 from .models import ExchangeInfoResponse
 from .models import LatestQuoteResponse
 from .models import TokenizedAssetsResponse
-
-
 from .models import TokenizedConvertHistoryResponse
 from .models import TokenizedConvertStatusResponse
 from .models import TokenizedMintResponse
 from .models import TokenizedRedeemResponse
-
-
 from .models import TokenizedConvertStatusConvertTypeEnum
 from .models import CancelAllEquityOrdersResponse
 from .models import CancelEquityOrderResponse
@@ -42,8 +36,6 @@ from .models import EquityOrderDetailResponse
 from .models import EquityOrderHistoryResponse
 from .models import EquityTradeHistoryResponse
 from .models import PlaceEquityOrderResponse
-
-
 from .models import EquityOrderHistoryOrderTypeEnum
 from .models import EquityOrderHistorySideEnum
 from .models import EquityTradeHistorySideEnum

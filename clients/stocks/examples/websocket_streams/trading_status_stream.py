@@ -26,7 +26,9 @@ async def trading_status_stream():
     try:
         connection = await client.websocket_streams.create_connection()
 
-        stream = await connection.trading_status_stream(symbol="AAPL")
+        stream = await connection.trading_status_stream(
+            symbol="AAPL",
+        )
         stream.on("message", lambda data: print(f"{data}"))
 
         await asyncio.sleep(5)

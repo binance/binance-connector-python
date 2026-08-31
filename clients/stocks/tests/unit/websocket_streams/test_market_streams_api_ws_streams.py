@@ -82,6 +82,25 @@ class TestWebSocketStreams:
         assert response == expected_response
 
     @pytest.mark.asyncio
+    async def test_calendar_stream_success_with_optional_params(self):
+        """Test calendar_stream() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "calendar",
+            "from": "PRE_MARKET",
+            "to": "MARKET_OPEN",
+            "ts": 1710334200000,
+        }
+
+        self.ws_streams.calendar_stream = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.calendar_stream(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
     async def test_calendar_stream_server_error(self):
         """Test that calendar_stream() raises an error when the server returns an error."""
 
@@ -95,7 +114,10 @@ class TestWebSocketStreams:
     async def test_kline_stream_subscription(self):
         """Test that kline_stream() subscribes to the correct WebSocket stream."""
 
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+        }
 
         expected_response = {
             "e": "kline",
@@ -140,7 +162,10 @@ class TestWebSocketStreams:
     async def test_kline_stream_success(self):
         """Test kline_stream() successfully with required parameters only."""
 
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+        }
 
         expected_response = {
             "e": "kline",
@@ -171,7 +196,11 @@ class TestWebSocketStreams:
     async def test_kline_stream_success_with_optional_params(self):
         """Test kline_stream() successfully with optional parameters."""
 
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+            "id": "e9d6b4349871b40611412680b3445fac",
+        }
 
         expected_response = {
             "e": "kline",
@@ -202,7 +231,10 @@ class TestWebSocketStreams:
     @pytest.mark.asyncio
     async def test_kline_stream_missing_required_param_symbol(self):
         """Test that kline_stream() raises RequiredError when 'symbol' is missing."""
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+        }
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -211,7 +243,10 @@ class TestWebSocketStreams:
     @pytest.mark.asyncio
     async def test_kline_stream_missing_required_param_interval(self):
         """Test that kline_stream() raises RequiredError when 'interval' is missing."""
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+        }
         params["interval"] = None
 
         with pytest.raises(
@@ -223,7 +258,10 @@ class TestWebSocketStreams:
     async def test_kline_stream_server_error(self):
         """Test that kline_stream() raises an error when the server returns an error."""
 
-        params = {"symbol": "AAPL", "interval": "5m"}
+        params = {
+            "symbol": "AAPL",
+            "interval": "5m",
+        }
 
         mock_error = Exception("ResponseError")
         self.ws_streams.kline_stream = MagicMock(side_effect=mock_error)
@@ -294,6 +332,33 @@ class TestWebSocketStreams:
         assert response == expected_response
 
     @pytest.mark.asyncio
+    async def test_price_stream_success_with_optional_params(self):
+        """Test price_stream() successfully with optional parameters."""
+
+        params = {"id": "e9d6b4349871b40611412680b3445fac"}
+
+        expected_response = {
+            "e": "price",
+            "rates": [
+                {
+                    "s": "AAPL",
+                    "ac": "EQ_AAPL",
+                    "p": "182.5",
+                    "t": 1710320400000,
+                    "pc": "181.2000",
+                    "tc": "182.0000",
+                    "mp": "O",
+                }
+            ],
+        }
+
+        self.ws_streams.price_stream = AsyncMock(return_value=expected_response)
+
+        response = await self.ws_streams.price_stream(**params)
+        assert response is not None
+        assert response == expected_response
+
+    @pytest.mark.asyncio
     async def test_price_stream_server_error(self):
         """Test that price_stream() raises an error when the server returns an error."""
 
@@ -307,7 +372,9 @@ class TestWebSocketStreams:
     async def test_quote_stream_subscription(self):
         """Test that quote_stream() subscribes to the correct WebSocket stream."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "quote",
@@ -343,7 +410,9 @@ class TestWebSocketStreams:
     async def test_quote_stream_success(self):
         """Test quote_stream() successfully with required parameters only."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "quote",
@@ -365,7 +434,7 @@ class TestWebSocketStreams:
     async def test_quote_stream_success_with_optional_params(self):
         """Test quote_stream() successfully with optional parameters."""
 
-        params = {"symbol": "AAPL"}
+        params = {"symbol": "AAPL", "id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
             "e": "quote",
@@ -387,7 +456,9 @@ class TestWebSocketStreams:
     @pytest.mark.asyncio
     async def test_quote_stream_missing_required_param_symbol(self):
         """Test that quote_stream() raises RequiredError when 'symbol' is missing."""
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -397,7 +468,9 @@ class TestWebSocketStreams:
     async def test_quote_stream_server_error(self):
         """Test that quote_stream() raises an error when the server returns an error."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         mock_error = Exception("ResponseError")
         self.ws_streams.quote_stream = MagicMock(side_effect=mock_error)
@@ -409,7 +482,9 @@ class TestWebSocketStreams:
     async def test_tradability_stream_subscription(self):
         """Test that tradability_stream() subscribes to the correct WebSocket stream."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "tradability",
@@ -442,7 +517,9 @@ class TestWebSocketStreams:
     async def test_tradability_stream_success(self):
         """Test tradability_stream() successfully with required parameters only."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "tradability",
@@ -461,7 +538,7 @@ class TestWebSocketStreams:
     async def test_tradability_stream_success_with_optional_params(self):
         """Test tradability_stream() successfully with optional parameters."""
 
-        params = {"symbol": "AAPL"}
+        params = {"symbol": "AAPL", "id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
             "e": "tradability",
@@ -480,7 +557,9 @@ class TestWebSocketStreams:
     @pytest.mark.asyncio
     async def test_tradability_stream_missing_required_param_symbol(self):
         """Test that tradability_stream() raises RequiredError when 'symbol' is missing."""
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -490,7 +569,9 @@ class TestWebSocketStreams:
     async def test_tradability_stream_server_error(self):
         """Test that tradability_stream() raises an error when the server returns an error."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         mock_error = Exception("ResponseError")
         self.ws_streams.tradability_stream = MagicMock(side_effect=mock_error)
@@ -502,7 +583,9 @@ class TestWebSocketStreams:
     async def test_trading_status_stream_subscription(self):
         """Test that trading_status_stream() subscribes to the correct WebSocket stream."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "tradingStatus",
@@ -538,7 +621,9 @@ class TestWebSocketStreams:
     async def test_trading_status_stream_success(self):
         """Test trading_status_stream() successfully with required parameters only."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         expected_response = {
             "e": "tradingStatus",
@@ -562,7 +647,7 @@ class TestWebSocketStreams:
     async def test_trading_status_stream_success_with_optional_params(self):
         """Test trading_status_stream() successfully with optional parameters."""
 
-        params = {"symbol": "AAPL"}
+        params = {"symbol": "AAPL", "id": "e9d6b4349871b40611412680b3445fac"}
 
         expected_response = {
             "e": "tradingStatus",
@@ -586,7 +671,9 @@ class TestWebSocketStreams:
     @pytest.mark.asyncio
     async def test_trading_status_stream_missing_required_param_symbol(self):
         """Test that trading_status_stream() raises RequiredError when 'symbol' is missing."""
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -596,7 +683,9 @@ class TestWebSocketStreams:
     async def test_trading_status_stream_server_error(self):
         """Test that trading_status_stream() raises an error when the server returns an error."""
 
-        params = {"symbol": "AAPL"}
+        params = {
+            "symbol": "AAPL",
+        }
 
         mock_error = Exception("ResponseError")
         self.ws_streams.trading_status_stream = MagicMock(side_effect=mock_error)

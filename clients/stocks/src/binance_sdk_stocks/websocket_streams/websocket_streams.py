@@ -109,13 +109,15 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
     async def calendar_stream(
         self,
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Calendar Stream
 
-        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds.
+        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -125,21 +127,23 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.calendar_stream()
+        return await self._marketStreamsApi.calendar_stream(id)
 
     async def kline_stream(
         self,
         symbol: Union[str, None],
         interval: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Kline Stream
 
-        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M.
+        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
             symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
             interval (Union[str, None]): Kline interval — `5m` / `1h` / `1d` / `1w` / `1M`.
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -149,17 +153,19 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.kline_stream(symbol, interval)
+        return await self._marketStreamsApi.kline_stream(symbol, interval, id)
 
     async def price_stream(
         self,
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Price Stream
 
-        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol.
+        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -169,19 +175,21 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.price_stream()
+        return await self._marketStreamsApi.price_stream(id)
 
     async def quote_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Quote Stream
 
-        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms.
+        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
             symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -191,19 +199,21 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.quote_stream(symbol)
+        return await self._marketStreamsApi.quote_stream(symbol, id)
 
     async def tradability_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Tradability Stream
 
-        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value).
+        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value). Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
             symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -213,19 +223,21 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.tradability_stream(symbol)
+        return await self._marketStreamsApi.tradability_stream(symbol, id)
 
     async def trading_status_stream(
         self,
         symbol: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Trading Status Stream
 
-        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed.
+        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
 
         Args:
             symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -235,11 +247,12 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._marketStreamsApi.trading_status_stream(symbol)
+        return await self._marketStreamsApi.trading_status_stream(symbol, id)
 
     async def order_report_stream(
         self,
         listen_key: Union[str, None],
+        id: Optional[str] = None,
     ) -> RequestStreamHandle:
         r"""
         Order Report Stream
@@ -248,6 +261,7 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         Args:
             listen_key (Union[str, None]): User data listen key obtained from the Listen Key endpoint.
+            id (Optional[str] = None): Unique WebSocket request ID.
 
         Returns:
             RequestStreamHandle
@@ -257,4 +271,4 @@ class StocksWebSocketStreams(WebSocketStreamBase):
 
         """
 
-        return await self._userStreamsApi.order_report_stream(listen_key)
+        return await self._userStreamsApi.order_report_stream(listen_key, id)
