@@ -31,8 +31,6 @@ from binance_sdk_staking.rest_api.models import GetUnclaimedRewardsResponse
 from binance_sdk_staking.rest_api.models import RedeemSolResponse
 from binance_sdk_staking.rest_api.models import SolStakingAccountResponse
 from binance_sdk_staking.rest_api.models import SubscribeSolStakingResponse
-
-
 from binance_sdk_staking.rest_api.models import GetBoostRewardsHistoryTypeEnum
 
 

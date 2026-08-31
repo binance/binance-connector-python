@@ -28,8 +28,6 @@ from ..models import RedeemOnChainYieldsLockedProductResponse
 from ..models import SetOnChainYieldsLockedAutoSubscribeResponse
 from ..models import SetOnChainYieldsLockedProductRedeemOptionResponse
 from ..models import SubscribeOnChainYieldsLockedProductResponse
-
-
 from ..models import SetOnChainYieldsLockedProductRedeemOptionRedeemToEnum
 from ..models import SubscribeOnChainYieldsLockedProductSourceAccountEnum
 from ..models import SubscribeOnChainYieldsLockedProductRedeemToEnum

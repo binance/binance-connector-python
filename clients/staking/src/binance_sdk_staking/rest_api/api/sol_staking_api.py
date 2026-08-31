@@ -27,8 +27,6 @@ from ..models import GetUnclaimedRewardsResponse
 from ..models import RedeemSolResponse
 from ..models import SolStakingAccountResponse
 from ..models import SubscribeSolStakingResponse
-
-
 from ..models import GetBoostRewardsHistoryTypeEnum
 
 

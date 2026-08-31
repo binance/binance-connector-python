@@ -27,8 +27,6 @@ from ..models import GetWbethWrapHistoryResponse
 from ..models import RedeemEthResponse
 from ..models import SubscribeEthStakingResponse
 from ..models import WrapBethResponse
-
-
 from ..models import RedeemEthAssetEnum
 
 

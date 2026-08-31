@@ -52,13 +52,9 @@ from binance_sdk_staking.rest_api.models import (
 from binance_sdk_staking.rest_api.models import (
     SubscribeOnChainYieldsLockedProductResponse,
 )
-
-
 from binance_sdk_staking.rest_api.models import (
     SetOnChainYieldsLockedProductRedeemOptionRedeemToEnum,
 )
-
-
 from binance_sdk_staking.rest_api.models import (
     SubscribeOnChainYieldsLockedProductSourceAccountEnum,
 )

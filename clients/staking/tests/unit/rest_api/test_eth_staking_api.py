@@ -31,8 +31,6 @@ from binance_sdk_staking.rest_api.models import GetWbethWrapHistoryResponse
 from binance_sdk_staking.rest_api.models import RedeemEthResponse
 from binance_sdk_staking.rest_api.models import SubscribeEthStakingResponse
 from binance_sdk_staking.rest_api.models import WrapBethResponse
-
-
 from binance_sdk_staking.rest_api.models import RedeemEthAssetEnum
 
 
