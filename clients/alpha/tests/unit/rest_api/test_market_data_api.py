@@ -26,8 +26,6 @@ from binance_sdk_alpha.rest_api.models import GetExchangeInfoResponse
 from binance_sdk_alpha.rest_api.models import KlinesResponse
 from binance_sdk_alpha.rest_api.models import TickerResponse
 from binance_sdk_alpha.rest_api.models import TokenListResponse
-
-
 from binance_sdk_alpha.rest_api.models import FullDepthLimitEnum
 
 from binance_sdk_alpha.rest_api.models import KlinesIntervalEnum

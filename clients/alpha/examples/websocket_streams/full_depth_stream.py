@@ -30,7 +30,7 @@ async def full_depth_stream():
 
         stream = await connection.full_depth_stream(
             symbol="alpha_116usdt",
-            interval=FullDepthStreamIntervalEnum[""].value,
+            interval=FullDepthStreamIntervalEnum["INTERVAL_0ms"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

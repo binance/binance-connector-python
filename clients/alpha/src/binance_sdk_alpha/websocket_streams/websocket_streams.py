@@ -17,11 +17,20 @@ from binance_common.websocket import (
     WebSocketConnection,
     RequestStreamHandle,
 )
+
+
 from .streams.default_api import DefaultApi
 
+
 from .models import ContractKlineStreamIntervalEnum
+
+
 from .models import FullDepthStreamIntervalEnum
+
+
 from .models import KlineStreamIntervalEnum
+
+
 from .models import PartialDepthStreamLevelsEnum
 from .models import PartialDepthStreamIntervalEnum
 

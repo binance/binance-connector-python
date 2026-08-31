@@ -31,7 +31,7 @@ async def contract_kline_stream():
         stream = await connection.contract_kline_stream(
             contract_address="G7vQWurMkMMm2dU3iZpXYFTHT9Biio4F4gZCrwFpKNwG",
             chain_id="CT_501",
-            interval=ContractKlineStreamIntervalEnum[""].value,
+            interval=ContractKlineStreamIntervalEnum["INTERVAL_1s"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

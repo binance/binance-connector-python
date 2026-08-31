@@ -22,8 +22,6 @@ from ..models import GetExchangeInfoResponse
 from ..models import KlinesResponse
 from ..models import TickerResponse
 from ..models import TokenListResponse
-
-
 from ..models import FullDepthLimitEnum
 from ..models import KlinesIntervalEnum
 

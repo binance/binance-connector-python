@@ -31,8 +31,8 @@ async def partial_depth_stream():
 
         stream = await connection.partial_depth_stream(
             symbol="alpha_116usdt",
-            levels=PartialDepthStreamLevelsEnum[""].value,
-            interval=PartialDepthStreamIntervalEnum[""].value,
+            levels=PartialDepthStreamLevelsEnum["LEVELS_5"].value,
+            interval=PartialDepthStreamIntervalEnum["INTERVAL_0ms"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

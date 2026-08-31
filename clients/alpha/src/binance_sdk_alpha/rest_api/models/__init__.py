@@ -41,7 +41,5 @@ from .token_list_response import TokenListResponse as TokenListResponse
 from .token_list_response_data_inner import (
     TokenListResponseDataInner as TokenListResponseDataInner,
 )
-
-
 from .enums import FullDepthLimitEnum as FullDepthLimitEnum
 from .enums import KlinesIntervalEnum as KlinesIntervalEnum
