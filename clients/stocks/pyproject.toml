@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-sdk-stocks"
-version = "1.0.0"
+version = "1.1.0"
 description = "Official Binance Stocks Connector - A lightweight library that provides a convenient interface to Binance's Stocks REST API and WebSocket Streams."
 authors = ["Binance"]
 license = "MIT"
