@@ -35,32 +35,16 @@ from binance_sdk_spot.rest_api.models import TickerBookTickerResponse
 from binance_sdk_spot.rest_api.models import TickerPriceResponse
 from binance_sdk_spot.rest_api.models import TickerTradingDayResponse
 from binance_sdk_spot.rest_api.models import UiKlinesResponse
-
-
 from binance_sdk_spot.rest_api.models import DepthSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import KlinesIntervalEnum
-
-
 from binance_sdk_spot.rest_api.models import ReferencePriceCalculationSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import TickerWindowSizeEnum
 from binance_sdk_spot.rest_api.models import TickerTypeEnum
 from binance_sdk_spot.rest_api.models import TickerSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import Ticker24hrTypeEnum
 from binance_sdk_spot.rest_api.models import Ticker24hrSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import TickerBookTickerSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import TickerPriceSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import TickerTradingDayTypeEnum
 from binance_sdk_spot.rest_api.models import TickerTradingDaySymbolStatusEnum
 

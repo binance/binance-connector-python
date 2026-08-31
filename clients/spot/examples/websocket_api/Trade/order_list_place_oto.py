@@ -33,12 +33,12 @@ async def order_list_place_oto():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place_oto(
             symbol="BNBUSDT",
-            working_type=OrderListPlaceOtoWorkingTypeEnum[""].value,
-            working_side=OrderListPlaceOtoWorkingSideEnum[""].value,
+            working_type=OrderListPlaceOtoWorkingTypeEnum["LIMIT"].value,
+            working_side=OrderListPlaceOtoWorkingSideEnum["BUY"].value,
             working_price=1,
             working_quantity=1,
-            pending_type=OrderListPlaceOtoPendingTypeEnum[""].value,
-            pending_side=OrderListPlaceOtoPendingSideEnum[""].value,
+            pending_type=OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
+            pending_side=OrderListPlaceOtoPendingSideEnum["BUY"].value,
             pending_quantity=1,
         )
 

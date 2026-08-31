@@ -28,8 +28,8 @@ async def order_place():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_place(
             symbol="BNBUSDT",
-            side=OrderPlaceSideEnum[""].value,
-            type=OrderPlaceTypeEnum[""].value,
+            side=OrderPlaceSideEnum["BUY"].value,
+            type=OrderPlaceTypeEnum["MARKET"].value,
         )
 
         rate_limits = response.rate_limits

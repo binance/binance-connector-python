@@ -29,8 +29,8 @@ async def sor_order_test():
         connection = await client.websocket_api.create_connection()
         response = await connection.sor_order_test(
             symbol="BNBUSDT",
-            side=SorOrderTestSideEnum[""].value,
-            type=SorOrderTestTypeEnum[""].value,
+            side=SorOrderTestSideEnum["BUY"].value,
+            type=SorOrderTestTypeEnum["MARKET"].value,
             quantity=1,
         )
 

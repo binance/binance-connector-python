@@ -30,7 +30,9 @@ async def all_market_rolling_window_ticker():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.all_market_rolling_window_ticker(
-            window_size=AllMarketRollingWindowTickerWindowSizeEnum[""].value,
+            window_size=AllMarketRollingWindowTickerWindowSizeEnum[
+                "WINDOW_SIZE_1h"
+            ].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

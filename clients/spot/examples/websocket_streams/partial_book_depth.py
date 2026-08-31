@@ -30,7 +30,7 @@ async def partial_book_depth():
 
         stream = await connection.partial_book_depth(
             symbol="bnbusdt",
-            levels=PartialBookDepthLevelsEnum[""].value,
+            levels=PartialBookDepthLevelsEnum["LEVELS_5"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

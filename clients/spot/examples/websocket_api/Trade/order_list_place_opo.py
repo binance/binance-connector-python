@@ -32,12 +32,12 @@ async def order_list_place_opo():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place_opo(
             symbol="BNBUSDT",
-            working_type=OrderListPlaceOpoWorkingTypeEnum[""].value,
-            working_side=OrderListPlaceOpoWorkingSideEnum[""].value,
+            working_type=OrderListPlaceOpoWorkingTypeEnum["LIMIT"].value,
+            working_side=OrderListPlaceOpoWorkingSideEnum["BUY"].value,
             working_price=1,
             working_quantity=1,
-            pending_type=OrderListPlaceOpoPendingTypeEnum[""].value,
-            pending_side=OrderListPlaceOpoPendingSideEnum[""].value,
+            pending_type=OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
+            pending_side=OrderListPlaceOpoPendingSideEnum["BUY"].value,
         )
 
         rate_limits = response.rate_limits

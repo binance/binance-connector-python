@@ -35,29 +35,19 @@ from binance_sdk_spot.rest_api.models import OrderOcoResponse
 from binance_sdk_spot.rest_api.models import OrderTestResponse
 from binance_sdk_spot.rest_api.models import SorOrderResponse
 from binance_sdk_spot.rest_api.models import SorOrderTestResponse
-
-
 from binance_sdk_spot.rest_api.models import DeleteOrderCancelRestrictionsEnum
-
-
 from binance_sdk_spot.rest_api.models import NewOrderSideEnum
 from binance_sdk_spot.rest_api.models import NewOrderTypeEnum
 from binance_sdk_spot.rest_api.models import NewOrderTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import NewOrderNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import NewOrderSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import NewOrderPegPriceTypeEnum
 
 from binance_sdk_spot.rest_api.models import NewOrderPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceSideEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceCancelReplaceModeEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import (
     OrderCancelReplaceSelfTradePreventionModeEnum,
@@ -69,189 +59,103 @@ from binance_sdk_spot.rest_api.models import (
 from binance_sdk_spot.rest_api.models import OrderCancelReplacePegPriceTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderCancelReplacePegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOcoSideEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOcoAboveTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOcoAboveTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoAbovePegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoBelowPegOffsetTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOcoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOcoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingSideEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOpoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoWorkingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpoPendingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAboveTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOpocoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoWorkingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAboveTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAbovePegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingAbovePegOffsetTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOpocoPendingBelowPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoWorkingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingSideEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAboveTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOtocoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoWorkingPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAboveTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAbovePegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingAbovePegOffsetTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowPegPriceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtocoPendingBelowPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderOcoSideEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderOcoStopLimitTimeInForceEnum
 from binance_sdk_spot.rest_api.models import OrderOcoNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderOcoSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderTestSideEnum
 from binance_sdk_spot.rest_api.models import OrderTestTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderTestTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import OrderTestNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import OrderTestSelfTradePreventionModeEnum
 from binance_sdk_spot.rest_api.models import OrderTestPegPriceTypeEnum
 
 from binance_sdk_spot.rest_api.models import OrderTestPegOffsetTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import SorOrderSideEnum
 from binance_sdk_spot.rest_api.models import SorOrderTypeEnum
 
 from binance_sdk_spot.rest_api.models import SorOrderTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import SorOrderNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderSelfTradePreventionModeEnum
-
-
 from binance_sdk_spot.rest_api.models import SorOrderTestSideEnum
 from binance_sdk_spot.rest_api.models import SorOrderTestTypeEnum
-
-
 from binance_sdk_spot.rest_api.models import SorOrderTestTimeInForceEnum
-
-
 from binance_sdk_spot.rest_api.models import SorOrderTestNewOrderRespTypeEnum
 from binance_sdk_spot.rest_api.models import SorOrderTestSelfTradePreventionModeEnum
 

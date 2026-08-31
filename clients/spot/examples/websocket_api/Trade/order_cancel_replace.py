@@ -31,9 +31,11 @@ async def order_cancel_replace():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_cancel_replace(
             symbol="BNBUSDT",
-            cancel_replace_mode=OrderCancelReplaceCancelReplaceModeEnum[""].value,
-            side=OrderCancelReplaceSideEnum[""].value,
-            type=OrderCancelReplaceTypeEnum[""].value,
+            cancel_replace_mode=OrderCancelReplaceCancelReplaceModeEnum[
+                "STOP_ON_FAILURE"
+            ].value,
+            side=OrderCancelReplaceSideEnum["BUY"].value,
+            type=OrderCancelReplaceTypeEnum["MARKET"].value,
         )
 
         rate_limits = response.rate_limits

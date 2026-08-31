@@ -31,8 +31,6 @@ from ..models import TickerBookTickerResponse
 from ..models import TickerPriceResponse
 from ..models import TickerTradingDayResponse
 from ..models import UiKlinesResponse
-
-
 from ..models import DepthSymbolStatusEnum
 from ..models import KlinesIntervalEnum
 from ..models import ReferencePriceCalculationSymbolStatusEnum

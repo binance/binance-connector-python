@@ -30,7 +30,7 @@ async def rolling_window_ticker():
 
         stream = await connection.rolling_window_ticker(
             symbol="bnbusdt",
-            window_size=RollingWindowTickerWindowSizeEnum[""].value,
+            window_size=RollingWindowTickerWindowSizeEnum["WINDOW_SIZE_1h"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

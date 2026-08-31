@@ -33,14 +33,10 @@ from .models import MyTradesResponse
 from .models import OpenOrderListResponse
 from .models import OrderAmendmentsResponse
 from .models import RateLimitOrderResponse
-
-
 from .models import ExchangeInfoResponse
 from .models import ExecutionRulesResponse
 
 from .models import TimeResponse
-
-
 from .models import ExchangeInfoPermissionsEnum
 from .models import ExchangeInfoSymbolStatusEnum
 from .models import ExecutionRulesSymbolStatusEnum
@@ -59,8 +55,6 @@ from .models import TickerBookTickerResponse
 from .models import TickerPriceResponse
 from .models import TickerTradingDayResponse
 from .models import UiKlinesResponse
-
-
 from .models import DepthSymbolStatusEnum
 from .models import KlinesIntervalEnum
 from .models import ReferencePriceCalculationSymbolStatusEnum
@@ -89,8 +83,6 @@ from .models import OrderOcoResponse
 from .models import OrderTestResponse
 from .models import SorOrderResponse
 from .models import SorOrderTestResponse
-
-
 from .models import DeleteOrderCancelRestrictionsEnum
 from .models import NewOrderSideEnum
 from .models import NewOrderTypeEnum

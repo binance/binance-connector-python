@@ -22,11 +22,7 @@ from binance_sdk_spot.rest_api.models import ExchangeInfoResponse
 from binance_sdk_spot.rest_api.models import ExecutionRulesResponse
 
 from binance_sdk_spot.rest_api.models import TimeResponse
-
-
 from binance_sdk_spot.rest_api.models import ExchangeInfoSymbolStatusEnum
-
-
 from binance_sdk_spot.rest_api.models import ExecutionRulesSymbolStatusEnum
 
 

@@ -35,13 +35,15 @@ async def order_list_place_otoco():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place_otoco(
             symbol="BNBUSDT",
-            working_type=OrderListPlaceOtocoWorkingTypeEnum[""].value,
-            working_side=OrderListPlaceOtocoWorkingSideEnum[""].value,
+            working_type=OrderListPlaceOtocoWorkingTypeEnum["LIMIT"].value,
+            working_side=OrderListPlaceOtocoWorkingSideEnum["BUY"].value,
             working_price=1,
             working_quantity=1,
-            pending_side=OrderListPlaceOtocoPendingSideEnum[""].value,
+            pending_side=OrderListPlaceOtocoPendingSideEnum["BUY"].value,
             pending_quantity=1,
-            pending_above_type=OrderListPlaceOtocoPendingAboveTypeEnum[""].value,
+            pending_above_type=OrderListPlaceOtocoPendingAboveTypeEnum[
+                "STOP_LOSS_LIMIT"
+            ].value,
         )
 
         rate_limits = response.rate_limits

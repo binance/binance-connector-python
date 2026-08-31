@@ -30,7 +30,7 @@ async def kline():
 
         stream = await connection.kline(
             symbol="bnbusdt",
-            interval=KlineIntervalEnum[""].value,
+            interval=KlineIntervalEnum["INTERVAL_1s"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

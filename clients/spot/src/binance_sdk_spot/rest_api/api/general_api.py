@@ -19,8 +19,6 @@ from ..models import ExchangeInfoResponse
 from ..models import ExecutionRulesResponse
 
 from ..models import TimeResponse
-
-
 from ..models import ExchangeInfoPermissionsEnum
 from ..models import ExchangeInfoSymbolStatusEnum
 from ..models import ExecutionRulesSymbolStatusEnum

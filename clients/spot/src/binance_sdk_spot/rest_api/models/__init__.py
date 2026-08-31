@@ -308,8 +308,6 @@ from .ticker_trading_day_response2_inner import (
 from .time_response import TimeResponse as TimeResponse
 from .trailing_delta_filter import TrailingDeltaFilter as TrailingDeltaFilter
 from .ui_klines_response import UiKlinesResponse as UiKlinesResponse
-
-
 from .enums import ExchangeInfoPermissionsEnum as ExchangeInfoPermissionsEnum
 from .enums import ExchangeInfoSymbolStatusEnum as ExchangeInfoSymbolStatusEnum
 from .enums import ExecutionRulesSymbolStatusEnum as ExecutionRulesSymbolStatusEnum

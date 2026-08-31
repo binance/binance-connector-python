@@ -28,7 +28,7 @@ async def order_list_place():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place(
             symbol="BNBUSDT",
-            side=OrderListPlaceSideEnum[""].value,
+            side=OrderListPlaceSideEnum["BUY"].value,
             price=1,
             quantity=1,
         )

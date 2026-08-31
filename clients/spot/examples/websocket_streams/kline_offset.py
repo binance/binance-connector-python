@@ -30,7 +30,7 @@ async def kline_offset():
 
         stream = await connection.kline_offset(
             symbol="bnbusdt",
-            interval=KlineOffsetIntervalEnum[""].value,
+            interval=KlineOffsetIntervalEnum["INTERVAL_1s"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

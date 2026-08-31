@@ -30,10 +30,10 @@ async def order_list_place_oco():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_list_place_oco(
             symbol="BNBUSDT",
-            side=OrderListPlaceOcoSideEnum[""].value,
+            side=OrderListPlaceOcoSideEnum["BUY"].value,
             quantity=1,
-            above_type=OrderListPlaceOcoAboveTypeEnum[""].value,
-            below_type=OrderListPlaceOcoBelowTypeEnum[""].value,
+            above_type=OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
+            below_type=OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
         )
 
         rate_limits = response.rate_limits

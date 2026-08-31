@@ -27,7 +27,7 @@ async def ui_klines():
         connection = await client.websocket_api.create_connection()
         response = await connection.ui_klines(
             symbol="BNBUSDT",
-            interval=UiKlinesIntervalEnum[""].value,
+            interval=UiKlinesIntervalEnum["INTERVAL_1s"].value,
         )
 
         rate_limits = response.rate_limits

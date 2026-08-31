@@ -31,8 +31,6 @@ from ..models import OrderOcoResponse
 from ..models import OrderTestResponse
 from ..models import SorOrderResponse
 from ..models import SorOrderTestResponse
-
-
 from ..models import DeleteOrderCancelRestrictionsEnum
 from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum

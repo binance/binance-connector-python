@@ -28,8 +28,8 @@ async def order_test():
         connection = await client.websocket_api.create_connection()
         response = await connection.order_test(
             symbol="BNBUSDT",
-            side=OrderTestSideEnum[""].value,
-            type=OrderTestTypeEnum[""].value,
+            side=OrderTestSideEnum["BUY"].value,
+            type=OrderTestTypeEnum["MARKET"].value,
         )
 
         rate_limits = response.rate_limits
