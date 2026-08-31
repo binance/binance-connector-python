@@ -18,8 +18,6 @@ from binance_common.utils import send_request
 
 from ..models import GetCrossMarginTransferHistoryResponse
 from ..models import QueryMaxTransferOutAmountResponse
-
-
 from ..models import GetCrossMarginTransferHistoryTypeEnum
 
 

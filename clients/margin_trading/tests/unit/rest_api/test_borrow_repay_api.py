@@ -32,20 +32,14 @@ from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginInterestRateHistoryResponse,
 )
 from binance_sdk_margin_trading.rest_api.models import QueryMaxBorrowResponse
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     GetFutureHourlyInterestRateIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountBorrowRepayIsIsolatedEnum,
 )
 
 from binance_sdk_margin_trading.rest_api.models import MarginAccountBorrowRepayTypeEnum
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryBorrowRepayRecordsInMarginAccountTypeEnum,
 )

@@ -45,8 +45,6 @@ from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAvailableInventoryResponse,
 )
 from binance_sdk_margin_trading.rest_api.models import QueryMarginPriceindexResponse
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAvailableInventoryTypeEnum,
 )

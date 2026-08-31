@@ -24,8 +24,6 @@ from binance_sdk_margin_trading.rest_api.models import (
     GetCrossMarginTransferHistoryResponse,
 )
 from binance_sdk_margin_trading.rest_api.models import QueryMaxTransferOutAmountResponse
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     GetCrossMarginTransferHistoryTypeEnum,
 )

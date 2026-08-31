@@ -47,8 +47,6 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     QueryIsolatedMarginFeeDataResponse,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryCrossIsolatedMarginCapitalFlowTypeEnum,
 )
@@ -782,7 +780,6 @@ class TestAccountApi:
             "totalLiabilityOfBtc": "0.58633215",
             "totalNetAssetOfBtc": "6.24095242",
             "TotalCollateralValueInUSDT": "5.82728457",
-            "totalOpenOrderLossInUSDT": "582.728457",
             "tradeEnabled": True,
             "transferInEnabled": True,
             "transferOutEnabled": True,
@@ -856,7 +853,6 @@ class TestAccountApi:
             "totalLiabilityOfBtc": "0.58633215",
             "totalNetAssetOfBtc": "6.24095242",
             "TotalCollateralValueInUSDT": "5.82728457",
-            "totalOpenOrderLossInUSDT": "582.728457",
             "tradeEnabled": True,
             "transferInEnabled": True,
             "transferOutEnabled": True,

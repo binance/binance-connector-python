@@ -15,8 +15,6 @@ from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
-
-
 from ..models import StartUserDataStreamResponse
 
 

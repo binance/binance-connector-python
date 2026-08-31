@@ -27,8 +27,6 @@ from ..models import QueryCrossMarginFeeDataResponse
 from ..models import QueryEnabledIsolatedMarginAccountLimitResponse
 from ..models import QueryIsolatedMarginAccountInfoResponse
 from ..models import QueryIsolatedMarginFeeDataResponse
-
-
 from ..models import QueryCrossIsolatedMarginCapitalFlowTypeEnum
 
 

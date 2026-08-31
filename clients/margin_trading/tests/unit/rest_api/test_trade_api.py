@@ -21,8 +21,6 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 
 from binance_sdk_margin_trading.rest_api.api import TradeApi
 from binance_sdk_margin_trading.rest_api.models import CreateSpecialKeyResponse
-
-
 from binance_sdk_margin_trading.rest_api.models import GetForceLiquidationRecordResponse
 from binance_sdk_margin_trading.rest_api.models import (
     GetSmallLiabilityExchangeCoinListResponse,
@@ -66,34 +64,20 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import QueryPreventedMatchesResponse
 from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyResponse
 from binance_sdk_margin_trading.rest_api.models import QuerySpecialKeyListResponse
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     CreateSpecialKeyPermissionModeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountCancelAllOpenOrdersOnASymbolIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountCancelOcoIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountCancelOrderIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOcoSideEnum
-
-
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOcoIsIsolatedEnum
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOcoStopLimitTimeInForceEnum,
 )
@@ -106,15 +90,11 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOcoSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderTypeEnum
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOrderIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOrderNewOrderRespTypeEnum,
 )
@@ -127,16 +107,12 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoWorkingTypeEnum,
 )
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoWorkingSideEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoPendingTypeEnum,
 )
@@ -155,13 +131,9 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoWorkingTimeInForceEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtoPendingTimeInForceEnum,
 )
@@ -172,8 +144,6 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoWorkingSideEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoPendingSideEnum,
 )
@@ -187,75 +157,49 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoSideEffectTypeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoNewOrderRespTypeEnum,
 )
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoWorkingTimeInForceEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoPendingAboveTimeInForceEnum,
 )
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoPendingBelowTypeEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     MarginAccountNewOtocoPendingBelowTimeInForceEnum,
 )
 from binance_sdk_margin_trading.rest_api.models import MarginManualLiquidationTypeEnum
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryCurrentMarginOrderCountUsageIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsAllOcoIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsAllOrdersIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsOcoIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsOpenOcoIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsOpenOrdersIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsOrderIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsTradeListIsIsolatedEnum,
 )
-
-
 from binance_sdk_margin_trading.rest_api.models import (
     QueryPreventedMatchesIsIsolatedEnum,
 )

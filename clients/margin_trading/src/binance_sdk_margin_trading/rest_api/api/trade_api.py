@@ -17,8 +17,6 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import CreateSpecialKeyResponse
-
-
 from ..models import GetForceLiquidationRecordResponse
 from ..models import GetSmallLiabilityExchangeCoinListResponse
 from ..models import GetSmallLiabilityExchangeHistoryResponse
@@ -44,8 +42,6 @@ from ..models import QueryMarginAccountsTradeListResponse
 from ..models import QueryPreventedMatchesResponse
 from ..models import QuerySpecialKeyResponse
 from ..models import QuerySpecialKeyListResponse
-
-
 from ..models import CreateSpecialKeyPermissionModeEnum
 from ..models import MarginAccountCancelAllOpenOrdersOnASymbolIsIsolatedEnum
 from ..models import MarginAccountCancelOcoIsIsolatedEnum

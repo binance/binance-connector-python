@@ -20,8 +20,6 @@ from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_margin_trading.rest_api.api import UserDataStreamApi
-
-
 from binance_sdk_margin_trading.rest_api.models import StartUserDataStreamResponse
 
 

@@ -58,11 +58,6 @@ class QueryCrossMarginAccountDetailsResponse(BaseModel):
         description="Total Collateral Value In USDT.",
         alias="TotalCollateralValueInUSDT",
     )
-    total_open_order_loss_in_usdt: Optional[StrictStr] = Field(
-        default=None,
-        description="total Open Order Loss In USDT.",
-        alias="totalOpenOrderLossInUSDT",
-    )
     trade_enabled: Optional[StrictBool] = Field(
         default=None, description="trade Enabled.", alias="tradeEnabled"
     )
@@ -90,7 +85,6 @@ class QueryCrossMarginAccountDetailsResponse(BaseModel):
         "totalLiabilityOfBtc",
         "totalNetAssetOfBtc",
         "TotalCollateralValueInUSDT",
-        "totalOpenOrderLossInUSDT",
         "tradeEnabled",
         "transferInEnabled",
         "transferOutEnabled",
@@ -177,7 +171,6 @@ class QueryCrossMarginAccountDetailsResponse(BaseModel):
                 "totalLiabilityOfBtc": obj.get("totalLiabilityOfBtc"),
                 "totalNetAssetOfBtc": obj.get("totalNetAssetOfBtc"),
                 "TotalCollateralValueInUSDT": obj.get("TotalCollateralValueInUSDT"),
-                "totalOpenOrderLossInUSDT": obj.get("totalOpenOrderLossInUSDT"),
                 "tradeEnabled": obj.get("tradeEnabled"),
                 "transferInEnabled": obj.get("transferInEnabled"),
                 "transferOutEnabled": obj.get("transferOutEnabled"),

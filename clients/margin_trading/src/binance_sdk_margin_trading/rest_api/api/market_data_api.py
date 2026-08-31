@@ -29,8 +29,6 @@ from ..models import QueryIsolatedMarginTierDataResponse
 from ..models import QueryLiabilityCoinLeverageBracketInCrossMarginProModeResponse
 from ..models import QueryMarginAvailableInventoryResponse
 from ..models import QueryMarginPriceindexResponse
-
-
 from ..models import QueryMarginAvailableInventoryTypeEnum
 
 
