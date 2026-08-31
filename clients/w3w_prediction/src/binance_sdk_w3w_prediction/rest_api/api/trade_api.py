@@ -21,11 +21,7 @@ from ..models import GetQuoteResponse
 from ..models import PlaceOrderResponse
 from ..models import QueryActiveOrdersResponse
 from ..models import QueryOrderHistoryResponse
-
-
 from ..models import BatchCancelOrdersCancelInfoListParameterInner
-
-
 from ..models import GetQuoteSideEnum
 from ..models import GetQuoteOrderTypeEnum
 from ..models import GetQuoteFundingSourceEnum

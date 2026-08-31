@@ -22,8 +22,6 @@ from ..models import ListPredictionMarketsResponse
 from ..models import MarketSearchResponse
 from ..models import QueryLastTradePriceResponse
 from ..models import QueryOrderBookResponse
-
-
 from ..models import ListPredictionMarketsSortByEnum
 from ..models import ListPredictionMarketsOrderByEnum
 

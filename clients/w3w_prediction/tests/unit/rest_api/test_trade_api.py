@@ -25,31 +25,17 @@ from binance_sdk_w3w_prediction.rest_api.models import GetQuoteResponse
 from binance_sdk_w3w_prediction.rest_api.models import PlaceOrderResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryActiveOrdersResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryOrderHistoryResponse
-
-
 from binance_sdk_w3w_prediction.rest_api.models import (
     BatchCancelOrdersCancelInfoListParameterInner,
 )
-
-
 from binance_sdk_w3w_prediction.rest_api.models import GetQuoteSideEnum
 
 from binance_sdk_w3w_prediction.rest_api.models import GetQuoteOrderTypeEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import GetQuoteFundingSourceEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import PlaceOrderAccountTypeEnum
 from binance_sdk_w3w_prediction.rest_api.models import PlaceOrderOrderTypeEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import PlaceOrderFundingSourceEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import QueryActiveOrdersTradeSideEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import QueryOrderHistoryOrderTypeEnum
 
 

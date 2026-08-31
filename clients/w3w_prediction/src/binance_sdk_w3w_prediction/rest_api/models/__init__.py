@@ -189,8 +189,6 @@ from .query_transfer_status_response import (
 from .remove_otc_blocktrades_response import (
     RemoveOtcBlocktradesResponse as RemoveOtcBlocktradesResponse,
 )
-
-
 from .enums import ListPredictionMarketsSortByEnum as ListPredictionMarketsSortByEnum
 from .enums import ListPredictionMarketsOrderByEnum as ListPredictionMarketsOrderByEnum
 from .enums import CreateOtcBlocktradeSideEnum as CreateOtcBlocktradeSideEnum

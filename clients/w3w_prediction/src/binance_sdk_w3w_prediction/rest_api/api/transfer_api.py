@@ -22,8 +22,6 @@ from ..models import CreateInboundTransferResponse
 from ..models import CreateOutboundTransferResponse
 from ..models import QueryTransferListResponse
 from ..models import QueryTransferStatusResponse
-
-
 from ..models import ApplyMmDepositAccountTypeEnum
 from ..models import ApplyMmWithdrawWalletTypeEnum
 from ..models import CreateInboundTransferAccountTypeEnum

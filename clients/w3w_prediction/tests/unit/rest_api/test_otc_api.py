@@ -28,16 +28,10 @@ from binance_sdk_w3w_prediction.rest_api.models import GetOtcReservedBalancesRes
 from binance_sdk_w3w_prediction.rest_api.models import ListOtcBlocktradesResponse
 from binance_sdk_w3w_prediction.rest_api.models import PreviewOtcBlocktradeResponse
 from binance_sdk_w3w_prediction.rest_api.models import RemoveOtcBlocktradesResponse
-
-
 from binance_sdk_w3w_prediction.rest_api.models import CreateOtcBlocktradeSideEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import (
     GetOtcReservedBalancesAssetsParameterInner,
 )
-
-
 from binance_sdk_w3w_prediction.rest_api.models import ListOtcBlocktradesStatusEnum
 
 

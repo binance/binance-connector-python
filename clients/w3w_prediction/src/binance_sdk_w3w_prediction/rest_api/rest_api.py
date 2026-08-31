@@ -28,8 +28,6 @@ from .models import ListPredictionMarketsResponse
 from .models import MarketSearchResponse
 from .models import QueryLastTradePriceResponse
 from .models import QueryOrderBookResponse
-
-
 from .models import ListPredictionMarketsSortByEnum
 from .models import ListPredictionMarketsOrderByEnum
 from .models import CreateOtcBlocktradeResponse
@@ -40,11 +38,7 @@ from .models import GetOtcReservedBalancesResponse
 from .models import ListOtcBlocktradesResponse
 from .models import PreviewOtcBlocktradeResponse
 from .models import RemoveOtcBlocktradesResponse
-
-
 from .models import GetOtcReservedBalancesAssetsParameterInner
-
-
 from .models import CreateOtcBlocktradeSideEnum
 from .models import ListOtcBlocktradesStatusEnum
 from .models import GetPositionByTokenResponse
@@ -52,22 +46,14 @@ from .models import QueryPnLResponse
 from .models import QueryPositionsResponse
 from .models import QueryPositionsByFilterResponse
 from .models import QuerySettledPositionHistoryResponse
-
-
 from .models import BatchRedeemResponse
 from .models import GetRedeemStatusResponse
-
-
 from .models import BatchCancelOrdersResponse
 from .models import GetQuoteResponse
 from .models import PlaceOrderResponse
 from .models import QueryActiveOrdersResponse
 from .models import QueryOrderHistoryResponse
-
-
 from .models import BatchCancelOrdersCancelInfoListParameterInner
-
-
 from .models import GetQuoteSideEnum
 from .models import GetQuoteOrderTypeEnum
 from .models import GetQuoteFundingSourceEnum
@@ -82,8 +68,6 @@ from .models import CreateInboundTransferResponse
 from .models import CreateOutboundTransferResponse
 from .models import QueryTransferListResponse
 from .models import QueryTransferStatusResponse
-
-
 from .models import ApplyMmDepositAccountTypeEnum
 from .models import ApplyMmWithdrawWalletTypeEnum
 from .models import CreateInboundTransferAccountTypeEnum

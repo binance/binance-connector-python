@@ -26,27 +26,17 @@ from binance_sdk_w3w_prediction.rest_api.models import CreateInboundTransferResp
 from binance_sdk_w3w_prediction.rest_api.models import CreateOutboundTransferResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryTransferListResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryTransferStatusResponse
-
-
 from binance_sdk_w3w_prediction.rest_api.models import ApplyMmDepositAccountTypeEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import ApplyMmWithdrawWalletTypeEnum
-
-
 from binance_sdk_w3w_prediction.rest_api.models import (
     CreateInboundTransferAccountTypeEnum,
 )
-
-
 from binance_sdk_w3w_prediction.rest_api.models import (
     CreateOutboundTransferAccountTypeEnum,
 )
 from binance_sdk_w3w_prediction.rest_api.models import (
     CreateOutboundTransferSourceBizEnum,
 )
-
-
 from binance_sdk_w3w_prediction.rest_api.models import QueryTransferListDirectionEnum
 
 

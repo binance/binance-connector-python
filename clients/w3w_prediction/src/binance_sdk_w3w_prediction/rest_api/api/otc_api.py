@@ -24,11 +24,7 @@ from ..models import GetOtcReservedBalancesResponse
 from ..models import ListOtcBlocktradesResponse
 from ..models import PreviewOtcBlocktradeResponse
 from ..models import RemoveOtcBlocktradesResponse
-
-
 from ..models import GetOtcReservedBalancesAssetsParameterInner
-
-
 from ..models import CreateOtcBlocktradeSideEnum
 from ..models import ListOtcBlocktradesStatusEnum
 

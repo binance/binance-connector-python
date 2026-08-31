@@ -26,8 +26,6 @@ from binance_sdk_w3w_prediction.rest_api.models import ListPredictionMarketsResp
 from binance_sdk_w3w_prediction.rest_api.models import MarketSearchResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryLastTradePriceResponse
 from binance_sdk_w3w_prediction.rest_api.models import QueryOrderBookResponse
-
-
 from binance_sdk_w3w_prediction.rest_api.models import ListPredictionMarketsSortByEnum
 from binance_sdk_w3w_prediction.rest_api.models import ListPredictionMarketsOrderByEnum
 
