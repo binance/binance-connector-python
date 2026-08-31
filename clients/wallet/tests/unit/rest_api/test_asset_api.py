@@ -44,32 +44,20 @@ from binance_sdk_wallet.rest_api.models import (
 from binance_sdk_wallet.rest_api.models import TradeFeeResponse
 from binance_sdk_wallet.rest_api.models import UserAssetResponse
 from binance_sdk_wallet.rest_api.models import UserUniversalTransferResponse
-
-
 from binance_sdk_wallet.rest_api.models import DustTransferAccountTypeEnum
 
 from binance_sdk_wallet.rest_api.models import DustlogAccountTypeEnum
-
-
 from binance_sdk_wallet.rest_api.models import (
     GetAssetsThatCanBeConvertedIntoBnbAccountTypeEnum,
 )
-
-
 from binance_sdk_wallet.rest_api.models import QueryUserDelegationHistoryTypeEnum
-
-
 from binance_sdk_wallet.rest_api.models import (
     QueryUserUniversalTransferHistoryFromSymbolEnum,
 )
 from binance_sdk_wallet.rest_api.models import (
     QueryUserUniversalTransferHistoryToSymbolEnum,
 )
-
-
 from binance_sdk_wallet.rest_api.models import UserUniversalTransferTypeEnum
-
-
 from binance_sdk_wallet.rest_api.models import UserUniversalTransferFromSymbolEnum
 from binance_sdk_wallet.rest_api.models import UserUniversalTransferToSymbolEnum
 

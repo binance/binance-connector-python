@@ -24,11 +24,7 @@ from binance_sdk_wallet.rest_api.models import AccountApiTradingStatusResponse
 from binance_sdk_wallet.rest_api.models import AccountInfoResponse
 from binance_sdk_wallet.rest_api.models import AccountStatusResponse
 from binance_sdk_wallet.rest_api.models import DailyAccountSnapshotResponse
-
-
 from binance_sdk_wallet.rest_api.models import GetApiKeyPermissionResponse
-
-
 from binance_sdk_wallet.rest_api.models import DailyAccountSnapshotTypeEnum
 
 

@@ -34,8 +34,6 @@ from ..models import ToggleBnbBurnOnSpotTradeAndMarginInterestResponse
 from ..models import TradeFeeResponse
 from ..models import UserAssetResponse
 from ..models import UserUniversalTransferResponse
-
-
 from ..models import DustTransferAccountTypeEnum
 from ..models import DustlogAccountTypeEnum
 from ..models import GetAssetsThatCanBeConvertedIntoBnbAccountTypeEnum

@@ -25,8 +25,6 @@ from ..models import FetchWithdrawQuotaResponse
 from ..models import OneClickArrivalDepositApplyResponse
 from ..models import WithdrawResponse
 from ..models import WithdrawHistoryResponse
-
-
 from ..models import DepositHistoryStatusEnum
 
 

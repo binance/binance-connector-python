@@ -20,11 +20,7 @@ from ..models import AccountApiTradingStatusResponse
 from ..models import AccountInfoResponse
 from ..models import AccountStatusResponse
 from ..models import DailyAccountSnapshotResponse
-
-
 from ..models import GetApiKeyPermissionResponse
-
-
 from ..models import DailyAccountSnapshotTypeEnum
 
 

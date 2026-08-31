@@ -31,8 +31,6 @@ from binance_sdk_wallet.rest_api.models import FetchWithdrawQuotaResponse
 from binance_sdk_wallet.rest_api.models import OneClickArrivalDepositApplyResponse
 from binance_sdk_wallet.rest_api.models import WithdrawResponse
 from binance_sdk_wallet.rest_api.models import WithdrawHistoryResponse
-
-
 from binance_sdk_wallet.rest_api.models import DepositHistoryStatusEnum
 
 
