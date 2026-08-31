@@ -43,8 +43,6 @@ from .query_order_quantity_precision_per_asset_response_inner import (
 from .send_quote_request_response import (
     SendQuoteRequestResponse as SendQuoteRequestResponse,
 )
-
-
 from .enums import PlaceLimitOrderSideEnum as PlaceLimitOrderSideEnum
 from .enums import PlaceLimitOrderExpiredTypeEnum as PlaceLimitOrderExpiredTypeEnum
 from .enums import PlaceLimitOrderWalletTypeEnum as PlaceLimitOrderWalletTypeEnum

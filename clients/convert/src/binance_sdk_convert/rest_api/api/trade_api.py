@@ -23,8 +23,6 @@ from ..models import OrderStatusResponse
 from ..models import PlaceLimitOrderResponse
 from ..models import QueryLimitOpenOrdersResponse
 from ..models import SendQuoteRequestResponse
-
-
 from ..models import PlaceLimitOrderSideEnum
 from ..models import PlaceLimitOrderExpiredTypeEnum
 from ..models import PlaceLimitOrderWalletTypeEnum

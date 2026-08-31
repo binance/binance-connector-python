@@ -19,8 +19,6 @@ from .api.trade_api import TradeApi
 
 from .models import ListAllConvertPairsResponse
 from .models import QueryOrderQuantityPrecisionPerAssetResponse
-
-
 from .models import AcceptQuoteResponse
 from .models import CancelLimitOrderResponse
 from .models import GetConvertTradeHistoryResponse
@@ -28,8 +26,6 @@ from .models import OrderStatusResponse
 from .models import PlaceLimitOrderResponse
 from .models import QueryLimitOpenOrdersResponse
 from .models import SendQuoteRequestResponse
-
-
 from .models import PlaceLimitOrderSideEnum
 from .models import PlaceLimitOrderExpiredTypeEnum
 from .models import PlaceLimitOrderWalletTypeEnum

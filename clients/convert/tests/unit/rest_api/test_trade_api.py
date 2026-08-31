@@ -27,15 +27,9 @@ from binance_sdk_convert.rest_api.models import OrderStatusResponse
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderResponse
 from binance_sdk_convert.rest_api.models import QueryLimitOpenOrdersResponse
 from binance_sdk_convert.rest_api.models import SendQuoteRequestResponse
-
-
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderSideEnum
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderExpiredTypeEnum
-
-
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderWalletTypeEnum
-
-
 from binance_sdk_convert.rest_api.models import SendQuoteRequestWalletTypeEnum
 from binance_sdk_convert.rest_api.models import SendQuoteRequestValidTimeEnum
 
