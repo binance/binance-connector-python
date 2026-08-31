@@ -62,6 +62,7 @@ class TradeApi:
         - Only master account applications are supported.
         - `loanAccountId` and `collateralAccountId` must be under the same master account.
         - `loanTerm` is mandatory if the user chooses a fixed rate (`isFlexibleRate = FALSE`).
+        - Rate limit: 1 request per 2 seconds per account.
 
                 Args:
                     loan_account_id (Union[int, None]):
@@ -253,6 +254,9 @@ class TradeApi:
         Weight(UID): 6000
 
         Security Type: TRADE
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     order_id (Union[int, None]):

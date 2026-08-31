@@ -52,6 +52,9 @@ class MarketDataApi:
 
         Security Type: USER_DATA
 
+        Notes:
+        - Rate limit: 5 requests per second per account.
+
                 Args:
                     loan_coin (Union[str, None]): Max 10 assets, Multiple split by ","
                     recv_window (Optional[int] = None):
@@ -102,6 +105,9 @@ class MarketDataApi:
 
         Security Type: USER_DATA
 
+        Notes:
+        - Rate limit: 1 request per second per account.
+
                 Args:
                     collateral_coin (Optional[str] = None):
                     recv_window (Optional[int] = None):
@@ -146,6 +152,9 @@ class MarketDataApi:
         Weight(IP): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):

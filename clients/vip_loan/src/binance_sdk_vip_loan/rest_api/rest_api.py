@@ -23,14 +23,10 @@ from .models import GetCollateralAssetDataResponse
 from .models import GetLoanableAssetsDataResponse
 from .models import GetVIPLoanInterestRateHistoryResponse
 from .models import QueryVIPLoanFixedRateMarketResponse
-
-
 from .models import VipLoanBorrowResponse
 from .models import VipLoanFixedRateBorrowResponse
 from .models import VipLoanRenewResponse
 from .models import VipLoanRepayResponse
-
-
 from .models import CheckVIPLoanCollateralAccountResponse
 from .models import GetVIPLoanAccruedInterestResponse
 from .models import GetVIPLoanOngoingOrdersResponse
@@ -136,6 +132,9 @@ class VipLoanRestAPI:
 
         Security Type: USER_DATA
 
+        Notes:
+        - Rate limit: 5 requests per second per account.
+
                 Args:
                     loan_coin (Union[str, None]): Max 10 assets, Multiple split by ","
                     recv_window (Optional[int] = None):
@@ -163,6 +162,9 @@ class VipLoanRestAPI:
         Weight(IP): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     collateral_coin (Optional[str] = None):
@@ -194,6 +196,9 @@ class VipLoanRestAPI:
         Weight(IP): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):
@@ -316,6 +321,7 @@ class VipLoanRestAPI:
         - Only master account applications are supported.
         - `loanAccountId` and `collateralAccountId` must be under the same master account.
         - `loanTerm` is mandatory if the user chooses a fixed rate (`isFlexibleRate = FALSE`).
+        - Rate limit: 1 request per 2 seconds per account.
 
                 Args:
                     loan_account_id (Union[int, None]):
@@ -413,6 +419,9 @@ class VipLoanRestAPI:
         Weight(UID): 6000
 
         Security Type: TRADE
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     order_id (Union[int, None]):
@@ -517,6 +526,7 @@ class VipLoanRestAPI:
         Notes:
         - If `startTime` and `endTime` are not sent, recent 90-day data is returned.
         - The maximum interval between `startTime` and `endTime` is 90 days.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     order_id (Optional[int] = None):
@@ -557,6 +567,9 @@ class VipLoanRestAPI:
         Weight(IP): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     order_id (Optional[int] = None):
@@ -643,6 +656,9 @@ class VipLoanRestAPI:
         Weight(UID): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 5 requests per second per account.
 
                 Args:
                     current (Optional[int] = None): Current page number, starting from 1.
