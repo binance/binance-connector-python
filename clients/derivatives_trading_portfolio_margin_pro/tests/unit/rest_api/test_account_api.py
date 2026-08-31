@@ -80,8 +80,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     TransferLdusdtRwusdForPortfolioMarginResponse,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     BnbTransferTransferSideEnum,
 )
@@ -89,8 +87,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     ChangeAutoRepayFuturesStatusAutoRepayEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
@@ -98,13 +94,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginProBankruptcyLoanRepayVarFromEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     RepayFuturesNegativeBalanceVarFromEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     SwitchDeltaModeDeltaEnabledEnum,
 )

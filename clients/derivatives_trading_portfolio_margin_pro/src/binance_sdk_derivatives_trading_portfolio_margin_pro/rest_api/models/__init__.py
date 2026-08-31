@@ -105,8 +105,6 @@ from .switch_delta_mode_response import (
 from .transfer_ldusdt_rwusd_for_portfolio_margin_response import (
     TransferLdusdtRwusdForPortfolioMarginResponse as TransferLdusdtRwusdForPortfolioMarginResponse,
 )
-
-
 from .enums import BnbTransferTransferSideEnum as BnbTransferTransferSideEnum
 from .enums import (
     ChangeAutoRepayFuturesStatusAutoRepayEnum as ChangeAutoRepayFuturesStatusAutoRepayEnum,

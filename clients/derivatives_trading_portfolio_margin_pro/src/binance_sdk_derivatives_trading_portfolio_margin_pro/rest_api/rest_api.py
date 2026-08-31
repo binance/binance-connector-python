@@ -37,8 +37,6 @@ from .models import RepayFuturesNegativeBalanceResponse
 from .models import SetMarginCallLevelResponse
 from .models import SwitchDeltaModeResponse
 from .models import TransferLdusdtRwusdForPortfolioMarginResponse
-
-
 from .models import BnbTransferTransferSideEnum
 from .models import ChangeAutoRepayFuturesStatusAutoRepayEnum
 from .models import GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum
@@ -660,7 +658,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
                 Set Margin Call Level (USER_DATA)
 
-                Set the margin call level for a Portfolio Margin account. When the account's uniMMR drops to the specified level, a notification will be sent via email and SMS.
+                Set the margin call level for a Portfolio Margin account. When the account's uniMMR drops to the specified level, a notification will be sent via email and push/inbox.
 
         Weight(IP): 1500
 
