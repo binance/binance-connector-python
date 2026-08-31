@@ -20,8 +20,6 @@ from ..models import ChangeAutoCompoundStatusResponse
 from ..models import CheckDualInvestmentAccountsResponse
 from ..models import GetDualInvestmentPositionsResponse
 from ..models import SubscribeDualInvestmentProductsResponse
-
-
 from ..models import ChangeAutoCompoundStatusAutoCompoundPlanEnum
 from ..models import GetDualInvestmentPositionsStatusEnum
 from ..models import SubscribeDualInvestmentProductsAutoCompoundPlanEnum

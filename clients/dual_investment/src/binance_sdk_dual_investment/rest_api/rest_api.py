@@ -18,15 +18,11 @@ from .api.market_data_api import MarketDataApi
 from .api.trade_api import TradeApi
 
 from .models import GetDualInvestmentProductListResponse
-
-
 from .models import GetDualInvestmentProductListOptionTypeEnum
 from .models import ChangeAutoCompoundStatusResponse
 from .models import CheckDualInvestmentAccountsResponse
 from .models import GetDualInvestmentPositionsResponse
 from .models import SubscribeDualInvestmentProductsResponse
-
-
 from .models import ChangeAutoCompoundStatusAutoCompoundPlanEnum
 from .models import GetDualInvestmentPositionsStatusEnum
 from .models import SubscribeDualInvestmentProductsAutoCompoundPlanEnum

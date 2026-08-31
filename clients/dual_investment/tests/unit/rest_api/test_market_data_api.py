@@ -23,8 +23,6 @@ from binance_sdk_dual_investment.rest_api.api import MarketDataApi
 from binance_sdk_dual_investment.rest_api.models import (
     GetDualInvestmentProductListResponse,
 )
-
-
 from binance_sdk_dual_investment.rest_api.models import (
     GetDualInvestmentProductListOptionTypeEnum,
 )

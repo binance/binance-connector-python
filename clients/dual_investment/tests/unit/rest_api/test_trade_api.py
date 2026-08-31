@@ -30,18 +30,12 @@ from binance_sdk_dual_investment.rest_api.models import (
 from binance_sdk_dual_investment.rest_api.models import (
     SubscribeDualInvestmentProductsResponse,
 )
-
-
 from binance_sdk_dual_investment.rest_api.models import (
     ChangeAutoCompoundStatusAutoCompoundPlanEnum,
 )
-
-
 from binance_sdk_dual_investment.rest_api.models import (
     GetDualInvestmentPositionsStatusEnum,
 )
-
-
 from binance_sdk_dual_investment.rest_api.models import (
     SubscribeDualInvestmentProductsAutoCompoundPlanEnum,
 )
