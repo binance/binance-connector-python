@@ -14,6 +14,4 @@ from .get_c2_c_trade_history_response import (
 from .get_c2_c_trade_history_response_data_inner import (
     GetC2CTradeHistoryResponseDataInner as GetC2CTradeHistoryResponseDataInner,
 )
-
-
 from .enums import GetC2CTradeHistoryTradeTypeEnum as GetC2CTradeHistoryTradeTypeEnum

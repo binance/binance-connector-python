@@ -19,8 +19,6 @@ from binance_common.utils import is_one_of_model
 
 from binance_sdk_c2c.rest_api.api import DefaultApi
 from binance_sdk_c2c.rest_api.models import GetC2CTradeHistoryResponse
-
-
 from binance_sdk_c2c.rest_api.models import GetC2CTradeHistoryTradeTypeEnum
 
 

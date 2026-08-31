@@ -17,8 +17,6 @@ from binance_common.utils import send_request
 from .api.default_api import DefaultApi
 
 from .models import GetC2CTradeHistoryResponse
-
-
 from .models import GetC2CTradeHistoryTradeTypeEnum
 
 

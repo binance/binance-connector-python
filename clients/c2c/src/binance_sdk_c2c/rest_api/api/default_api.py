@@ -16,8 +16,6 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import GetC2CTradeHistoryResponse
-
-
 from ..models import GetC2CTradeHistoryTradeTypeEnum
 
 
