@@ -32,8 +32,6 @@ from .models import GetIncomeHistoryResponse
 from .models import NotionalBracketForPairResponse
 from .models import NotionalBracketForSymbolResponse
 from .models import UserCommissionRateResponse
-
-
 from .models import GetIncomeHistoryIncomeTypeEnum
 from .models import BasisResponse
 from .models import CheckServerTimeResponse
@@ -61,8 +59,6 @@ from .models import TakerBuySellVolumeResponse
 from .models import Ticker24hrPriceChangeStatisticsResponse
 from .models import TopTraderLongShortRatioAccountsResponse
 from .models import TopTraderLongShortRatioPositionsResponse
-
-
 from .models import BasisContractTypeEnum
 from .models import BasisPeriodEnum
 from .models import ContinuousContractKlineCandlestickDataContractTypeEnum
@@ -103,14 +99,8 @@ from .models import PositionInformationResponse
 from .models import QueryCurrentOpenOrderResponse
 from .models import QueryOrderResponse
 from .models import UsersForceOrdersResponse
-
-
 from .models import ModifyMultipleOrdersBatchOrdersParameterInner
-
-
 from .models import PlaceMultipleOrdersBatchOrdersParameterInner
-
-
 from .models import ChangeMarginTypeMarginTypeEnum
 from .models import ModifyIsolatedPositionMarginPositionSideEnum
 from .models import ModifyOrderSideEnum
@@ -722,7 +712,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         Weight(IP): 20
 
         Notes:
-        - support querying futures trade histories that are not older than 24 hours
+        - only trade histories within the past 48 hours (counted from now) can be queried
         - If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 1 hour.
         - If `fromId`, `startTime`, and `endTime` are not sent, the most recent aggregate trades will be returned.
         - Only market trades will be aggregated and returned, which means the insurance fund trades and ADL trades won't be aggregated.
@@ -1608,6 +1598,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         - The parameter `fromId` cannot be sent with `startTime` or `endTime`
         - If startTime and endTime are both not sent, then the last 7 days' data will be returned.
         - The time between startTime and endTime cannot be longer than 7 days.
+        - Only support querying trade in the past 3 months
 
                 Args:
                     symbol (Optional[str] = None): Symbol

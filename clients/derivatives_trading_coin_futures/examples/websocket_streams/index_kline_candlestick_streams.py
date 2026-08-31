@@ -34,7 +34,7 @@ async def index_kline_candlestick_streams():
 
         stream = await connection.index_kline_candlestick_streams(
             pair="btcusdt",
-            interval=IndexKlineCandlestickStreamsIntervalEnum[""].value,
+            interval=IndexKlineCandlestickStreamsIntervalEnum["INTERVAL_1m"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

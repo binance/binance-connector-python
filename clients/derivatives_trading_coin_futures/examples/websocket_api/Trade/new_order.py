@@ -38,8 +38,8 @@ async def new_order():
         connection = await client.websocket_api.create_connection()
         response = await connection.new_order(
             symbol="BTCUSD_PERP",
-            side=NewOrderSideEnum[""].value,
-            type=NewOrderTypeEnum[""].value,
+            side=NewOrderSideEnum["BUY"].value,
+            type=NewOrderTypeEnum["LIMIT"].value,
         )
 
         rate_limits = response.rate_limits

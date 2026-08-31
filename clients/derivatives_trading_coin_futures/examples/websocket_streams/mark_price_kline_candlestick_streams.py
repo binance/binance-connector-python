@@ -34,7 +34,7 @@ async def mark_price_kline_candlestick_streams():
 
         stream = await connection.mark_price_kline_candlestick_streams(
             symbol="btcusdt",
-            interval=MarkPriceKlineCandlestickStreamsIntervalEnum[""].value,
+            interval=MarkPriceKlineCandlestickStreamsIntervalEnum["INTERVAL_1m"].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

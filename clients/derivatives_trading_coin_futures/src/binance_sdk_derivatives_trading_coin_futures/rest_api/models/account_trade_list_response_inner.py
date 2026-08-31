@@ -42,10 +42,14 @@ class AccountTradeListResponseInner(BaseModel):
         default=None, description="Margin asset.", alias="marginAsset"
     )
     base_qty: Optional[StrictStr] = Field(
-        default=None, description="Base asset quantity.", alias="baseQty"
+        default=None,
+        description='Base asset quantity. Populated for COIN-M symbols; returns "0" for USDⓈ-M symbols.',
+        alias="baseQty",
     )
     quote_qty: Optional[StrictStr] = Field(
-        default=None, description="Quote asset quantity.", alias="quoteQty"
+        default=None,
+        description='Quote asset quantity. Populated for USDⓈ-M symbols; returns "0" for COIN-M symbols.',
+        alias="quoteQty",
     )
     commission: Optional[StrictStr] = Field(
         default=None, description="Transaction Fee (in Crypto)"

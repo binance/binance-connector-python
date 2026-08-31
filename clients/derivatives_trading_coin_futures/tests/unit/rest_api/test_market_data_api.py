@@ -94,74 +94,52 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsResponse,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     BasisContractTypeEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import BasisPeriodEnum
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ContinuousContractKlineCandlestickDataContractTypeEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ContinuousContractKlineCandlestickDataIntervalEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     IndexPriceKlineCandlestickDataIntervalEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     KlineCandlestickDataIntervalEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     LongShortRatioPeriodEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     LongShortRatioContractTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     MarkPriceKlineCandlestickDataIntervalEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsPeriodEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsContractTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     PremiumIndexKlineDataIntervalEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumeContractTypeEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TakerBuySellVolumePeriodEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioAccountsPeriodEnum,
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioAccountsContractTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     TopTraderLongShortRatioPositionsPeriodEnum,
 )

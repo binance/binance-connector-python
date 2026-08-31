@@ -59,8 +59,6 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     UserCommissionRateResponse,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     GetIncomeHistoryIncomeTypeEnum,
 )

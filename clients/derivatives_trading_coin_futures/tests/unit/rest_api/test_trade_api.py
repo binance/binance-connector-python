@@ -86,33 +86,21 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     UsersForceOrdersResponse,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ChangeMarginTypeMarginTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ModifyIsolatedPositionMarginPositionSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ModifyMultipleOrdersBatchOrdersParameterInner,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ModifyOrderSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     ModifyOrderPriceMatchEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NewOrderSideEnum,
 )
@@ -125,8 +113,6 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NewOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NewOrderTimeInForceEnum,
 )
@@ -145,13 +131,9 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     PlaceMultipleOrdersBatchOrdersParameterInner,
 )
-
-
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     UsersForceOrdersAutoCloseTypeEnum,
 )
@@ -197,7 +179,7 @@ class TestTradeApi:
                 "realizedPnl": "0",
                 "marginAsset": "BTC",
                 "baseQty": "0.01136364",
-                "quoteQty": "100",
+                "quoteQty": "0",
                 "commission": "0.00000454",
                 "commissionAsset": "BTC",
                 "time": 1590743483586,
@@ -268,7 +250,7 @@ class TestTradeApi:
                 "realizedPnl": "0",
                 "marginAsset": "BTC",
                 "baseQty": "0.01136364",
-                "quoteQty": "100",
+                "quoteQty": "0",
                 "commission": "0.00000454",
                 "commissionAsset": "BTC",
                 "time": 1590743483586,

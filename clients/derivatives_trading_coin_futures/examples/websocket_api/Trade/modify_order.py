@@ -36,7 +36,7 @@ async def modify_order():
         connection = await client.websocket_api.create_connection()
         response = await connection.modify_order(
             symbol="BTCUSD_PERP",
-            side=ModifyOrderSideEnum[""].value,
+            side=ModifyOrderSideEnum["BUY"].value,
             quantity=1.0,
             price=1.0,
         )

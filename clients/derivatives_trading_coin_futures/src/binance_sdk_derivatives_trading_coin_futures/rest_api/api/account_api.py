@@ -29,8 +29,6 @@ from ..models import GetIncomeHistoryResponse
 from ..models import NotionalBracketForPairResponse
 from ..models import NotionalBracketForSymbolResponse
 from ..models import UserCommissionRateResponse
-
-
 from ..models import GetIncomeHistoryIncomeTypeEnum
 
 
