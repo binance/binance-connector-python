@@ -209,13 +209,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     UmPositionAdlQuantileEstimationResponse,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoStopLimitTimeInForceEnum,
 )
@@ -225,28 +221,18 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     MarginAccountNewOcoSideEffectTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyCmOrderSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyCmOrderPriceMatchEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyUmOrderSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ModifyUmOrderPriceMatchEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderSideEnum,
 )
@@ -259,16 +245,12 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderTimeInForceEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderWorkingTypeEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmConditionalOrderPriceProtectEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderSideEnum,
 )
@@ -293,16 +275,12 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewCmOrderNewOrderRespTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSideEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderNewOrderRespTypeEnum,
 )
@@ -316,8 +294,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewMarginOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderAlgoTypeEnum,
 )
@@ -334,8 +310,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderTimeInForceEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderWorkingTypeEnum,
 )
@@ -351,16 +325,12 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderNewOrderRespTypeEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmAlgoOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderSideEnum,
 )
@@ -384,16 +354,12 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderPriceProtectEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderPriceMatchEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmConditionalOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderSideEnum,
 )
@@ -410,8 +376,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderNewOrderRespTypeEnum,
 )
@@ -421,18 +385,12 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     NewUmOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersCmForceOrdersAutoCloseTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryUsersUmForceOrdersAutoCloseTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ToggleBnbBurnOnUmFuturesTradeFeeBurnEnum,
 )

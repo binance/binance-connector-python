@@ -13,8 +13,6 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
-
-
 from ..models import StartUserDataStreamResponse
 
 

@@ -79,8 +79,6 @@ from ..models import QueryUsersUmForceOrdersResponse
 from ..models import ToggleBnbBurnOnUmFuturesTradeResponse
 from ..models import UmAccountTradeListResponse
 from ..models import UmPositionAdlQuantileEstimationResponse
-
-
 from ..models import MarginAccountNewOcoSideEnum
 from ..models import MarginAccountNewOcoStopLimitTimeInForceEnum
 from ..models import MarginAccountNewOcoNewOrderRespTypeEnum
@@ -4023,6 +4021,8 @@ class TradeApi:
                 https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/trade#query-users-margin-force-orders
 
                 Query user's margin force orders
+
+        > **Note:** Portfolio Margin accounts liquidated through the [Risk-Based Liquidation Adjustment](https://www.binance.com/en/support/faq/detail/662268636eb44b71af55c6c6a597d481) flow will not have any order or trade records returned by this endpoint. Query the capital flow endpoint instead: [Query Cross Isolated Margin Capital Flow](https://developers.binance.com/en/docs/catalog/core-trading-margin-trading/api/rest-api/account#query-cross-isolated-margin-capital-flow).
 
         Weight(IP): 1
 

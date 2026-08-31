@@ -58,8 +58,6 @@ from ..models import RepayFuturesNegativeBalanceResponse
 from ..models import UmFuturesAccountConfigurationResponse
 from ..models import UmFuturesSymbolConfigurationResponse
 from ..models import UmNotionalAndLeverageBracketsResponse
-
-
 from ..models import BnbTransferTransferSideEnum
 from ..models import ChangeAutoRepayFuturesStatusAutoRepayEnum
 from ..models import ChangeCmPositionModeDualSidePositionEnum

@@ -146,8 +146,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     UmNotionalAndLeverageBracketsResponse,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     BnbTransferTransferSideEnum,
 )
@@ -155,38 +153,24 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ChangeAutoRepayFuturesStatusAutoRepayEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ChangeCmPositionModeDualSidePositionEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ChangeUmPositionModeDualSidePositionEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetCmIncomeHistoryIncomeTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetMarginBorrowLoanInterestHistoryArchivedEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetUmIncomeHistoryIncomeTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginLoanRecordArchivedEnum,
 )
-
-
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     QueryMarginRepayRecordArchivedEnum,
 )
