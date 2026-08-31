@@ -24,8 +24,6 @@ from ..models import GetRwusdRewardsHistoryResponse
 from ..models import GetRwusdSubscriptionHistoryResponse
 from ..models import RedeemRwusdResponse
 from ..models import SubscribeRwusdResponse
-
-
 from ..models import GetRwusdSubscriptionHistoryAssetEnum
 from ..models import RedeemRwusdTypeEnum
 from ..models import SubscribeRwusdAssetEnum

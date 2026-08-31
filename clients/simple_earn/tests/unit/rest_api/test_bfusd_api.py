@@ -28,11 +28,7 @@ from binance_sdk_simple_earn.rest_api.models import GetBfusdRewardsHistoryRespon
 from binance_sdk_simple_earn.rest_api.models import GetBfusdSubscriptionHistoryResponse
 from binance_sdk_simple_earn.rest_api.models import RedeemBfusdResponse
 from binance_sdk_simple_earn.rest_api.models import SubscribeBfusdResponse
-
-
 from binance_sdk_simple_earn.rest_api.models import GetBfusdSubscriptionHistoryAssetEnum
-
-
 from binance_sdk_simple_earn.rest_api.models import RedeemBfusdTypeEnum
 
 

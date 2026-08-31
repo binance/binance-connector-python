@@ -24,8 +24,6 @@ from ..models import GetBfusdRewardsHistoryResponse
 from ..models import GetBfusdSubscriptionHistoryResponse
 from ..models import RedeemBfusdResponse
 from ..models import SubscribeBfusdResponse
-
-
 from ..models import GetBfusdSubscriptionHistoryAssetEnum
 from ..models import RedeemBfusdTypeEnum
 

@@ -52,27 +52,15 @@ from binance_sdk_simple_earn.rest_api.models import SetLockedProductRedeemOption
 from binance_sdk_simple_earn.rest_api.models import SimpleAccountResponse
 from binance_sdk_simple_earn.rest_api.models import SubscribeFlexibleProductResponse
 from binance_sdk_simple_earn.rest_api.models import SubscribeLockedProductResponse
-
-
 from binance_sdk_simple_earn.rest_api.models import GetFlexibleRewardsHistoryTypeEnum
-
-
 from binance_sdk_simple_earn.rest_api.models import GetRateHistoryAprPeriodEnum
-
-
 from binance_sdk_simple_earn.rest_api.models import RedeemFlexibleProductDestAccountEnum
-
-
 from binance_sdk_simple_earn.rest_api.models import (
     SetLockedProductRedeemOptionRedeemToEnum,
 )
-
-
 from binance_sdk_simple_earn.rest_api.models import (
     SubscribeFlexibleProductSourceAccountEnum,
 )
-
-
 from binance_sdk_simple_earn.rest_api.models import (
     SubscribeLockedProductSourceAccountEnum,
 )

@@ -40,8 +40,6 @@ from ..models import SetLockedProductRedeemOptionResponse
 from ..models import SimpleAccountResponse
 from ..models import SubscribeFlexibleProductResponse
 from ..models import SubscribeLockedProductResponse
-
-
 from ..models import GetFlexibleRewardsHistoryTypeEnum
 from ..models import GetRateHistoryAprPeriodEnum
 from ..models import RedeemFlexibleProductDestAccountEnum

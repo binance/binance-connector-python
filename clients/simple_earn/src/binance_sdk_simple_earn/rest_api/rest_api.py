@@ -27,8 +27,6 @@ from .models import GetBfusdRewardsHistoryResponse
 from .models import GetBfusdSubscriptionHistoryResponse
 from .models import RedeemBfusdResponse
 from .models import SubscribeBfusdResponse
-
-
 from .models import GetBfusdSubscriptionHistoryAssetEnum
 from .models import RedeemBfusdTypeEnum
 from .models import GetCollateralRecordResponse
@@ -55,8 +53,6 @@ from .models import SetLockedProductRedeemOptionResponse
 from .models import SimpleAccountResponse
 from .models import SubscribeFlexibleProductResponse
 from .models import SubscribeLockedProductResponse
-
-
 from .models import GetFlexibleRewardsHistoryTypeEnum
 from .models import GetRateHistoryAprPeriodEnum
 from .models import RedeemFlexibleProductDestAccountEnum
@@ -72,8 +68,6 @@ from .models import GetRwusdRewardsHistoryResponse
 from .models import GetRwusdSubscriptionHistoryResponse
 from .models import RedeemRwusdResponse
 from .models import SubscribeRwusdResponse
-
-
 from .models import GetRwusdSubscriptionHistoryAssetEnum
 from .models import RedeemRwusdTypeEnum
 from .models import SubscribeRwusdAssetEnum
