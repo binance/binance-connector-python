@@ -39,11 +39,7 @@ from ..models import SubAccountTransferHistoryResponse
 from ..models import TransferToMasterResponse
 from ..models import TransferToSubAccountOfSameMasterResponse
 from ..models import UniversalTransferResponse
-
-
 from ..models import MovePositionForSubAccountOrderArgsParameterInner
-
-
 from ..models import GetMovePositionHistoryForSubAccountProductTypeEnum
 from ..models import MovePositionForSubAccountProductTypeEnum
 from ..models import UniversalTransferFromAccountTypeEnum

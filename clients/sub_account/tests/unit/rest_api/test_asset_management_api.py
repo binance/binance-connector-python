@@ -71,13 +71,9 @@ from binance_sdk_sub_account.rest_api.models import (
     TransferToSubAccountOfSameMasterResponse,
 )
 from binance_sdk_sub_account.rest_api.models import UniversalTransferResponse
-
-
 from binance_sdk_sub_account.rest_api.models import (
     GetMovePositionHistoryForSubAccountProductTypeEnum,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import (
     MovePositionForSubAccountProductTypeEnum,
 )
@@ -85,8 +81,6 @@ from binance_sdk_sub_account.rest_api.models import (
 from binance_sdk_sub_account.rest_api.models import (
     MovePositionForSubAccountOrderArgsParameterInner,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import UniversalTransferFromAccountTypeEnum
 from binance_sdk_sub_account.rest_api.models import UniversalTransferToAccountTypeEnum
 

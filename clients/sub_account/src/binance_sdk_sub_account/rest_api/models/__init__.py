@@ -278,8 +278,6 @@ from .universal_transfer_response import (
 from .withdrawl_assets_from_the_managed_sub_account_response import (
     WithdrawlAssetsFromTheManagedSubAccountResponse as WithdrawlAssetsFromTheManagedSubAccountResponse,
 )
-
-
 from .enums import (
     GetMovePositionHistoryForSubAccountProductTypeEnum as GetMovePositionHistoryForSubAccountProductTypeEnum,
 )

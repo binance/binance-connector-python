@@ -27,8 +27,6 @@ from ..models import QueryManagedSubAccountTransferLogMasterAccountInvestorRespo
 from ..models import QueryManagedSubAccountTransferLogMasterAccountTradingResponse
 from ..models import QueryManagedSubAccountTransferLogSubAccountTradingResponse
 from ..models import WithdrawlAssetsFromTheManagedSubAccountResponse
-
-
 from ..models import QueryManagedSubAccountSnapshotTypeEnum
 from ..models import (
     QueryManagedSubAccountTransferLogMasterAccountInvestorTransferFunctionAccountTypeEnum,

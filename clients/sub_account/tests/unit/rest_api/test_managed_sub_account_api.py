@@ -51,23 +51,15 @@ from binance_sdk_sub_account.rest_api.models import (
 from binance_sdk_sub_account.rest_api.models import (
     WithdrawlAssetsFromTheManagedSubAccountResponse,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountSnapshotTypeEnum,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogMasterAccountInvestorTransferFunctionAccountTypeEnum,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogMasterAccountTradingTransferFunctionAccountTypeEnum,
 )
-
-
 from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountTransferLogSubAccountTradingTransferFunctionAccountTypeEnum,
 )
