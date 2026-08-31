@@ -23,8 +23,6 @@ from binance_sdk_crypto_loan.rest_api.models import GetCryptoLoansIncomeHistoryR
 from binance_sdk_crypto_loan.rest_api.models import GetLoanBorrowHistoryResponse
 from binance_sdk_crypto_loan.rest_api.models import GetLoanLtvAdjustmentHistoryResponse
 from binance_sdk_crypto_loan.rest_api.models import GetLoanRepaymentHistoryResponse
-
-
 from binance_sdk_crypto_loan.rest_api.models import GetCryptoLoansIncomeHistoryTypeEnum
 
 

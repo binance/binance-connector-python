@@ -28,8 +28,6 @@ from ..models import GetFlexibleLoanLiquidationHistoryResponse
 from ..models import GetFlexibleLoanLtvAdjustmentHistoryResponse
 from ..models import GetFlexibleLoanOngoingOrdersResponse
 from ..models import GetFlexibleLoanRepaymentHistoryResponse
-
-
 from ..models import FlexibleLoanAdjustLtvDirectionEnum
 from ..models import FlexibleLoanRepayRepaymentTypeEnum
 
@@ -63,6 +61,9 @@ class FlexibleRateApi:
         Weight(IP): 6000
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_coin (Union[str, None]):
@@ -129,6 +130,7 @@ class FlexibleRateApi:
 
         Notes:
         - API key needs Spot & Margin Trading permission for this endpoint.
+        - Rate limit: 1 request per second per loan position (account + loan coin + collateral coin combination).
 
                 Args:
                     loan_coin (Union[str, None]):
@@ -210,6 +212,7 @@ class FlexibleRateApi:
         Notes:
         - This endpoint is available for both master and sub-accounts.
         - You can customize LTV by entering `loanAmount` and `collateralAmount`.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_coin (Union[str, None]):
@@ -282,6 +285,7 @@ class FlexibleRateApi:
 
         Notes:
         - `repayAmount` is mandatory even when `fullRepayment = FALSE`.
+        - Rate limit: 1 request per second per loan position (account + loan coin + collateral coin combination).
 
                 Args:
                     loan_coin (Union[str, None]):
@@ -357,6 +361,9 @@ class FlexibleRateApi:
 
         Security Type: USER_DATA
 
+        Notes:
+        - Rate limit: 1 request per second per account.
+
                 Args:
                     loan_coin (Optional[str] = None):
                     recv_window (Optional[int] = None): Request validity window in milliseconds
@@ -409,6 +416,7 @@ class FlexibleRateApi:
         Notes:
         - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
         - The max interval between `startTime` and `endTime` is 180 days.
+        - Rate limit: 5 requests per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):
@@ -467,6 +475,9 @@ class FlexibleRateApi:
         Weight(IP): 400
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     collateral_coin (Optional[str] = None):
@@ -591,6 +602,9 @@ class FlexibleRateApi:
 
         Security Type: USER_DATA
 
+        Notes:
+        - Rate limit: 1 request per second per account.
+
                 Args:
                     loan_coin (Optional[str] = None):
                     collateral_coin (Optional[str] = None):
@@ -656,6 +670,7 @@ class FlexibleRateApi:
         Notes:
         - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
         - The max interval between `startTime` and `endTime` is 180 days.
+        - Rate limit: 5 requests per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):
@@ -716,6 +731,9 @@ class FlexibleRateApi:
         Weight(IP): 300
 
         Security Type: USER_DATA
+
+        Notes:
+        - Rate limit: 10 requests per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):
@@ -778,6 +796,7 @@ class FlexibleRateApi:
         Notes:
         - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
         - The max interval between `startTime` and `endTime` is 180 days.
+        - Rate limit: 5 requests per second per account.
 
                 Args:
                     loan_coin (Optional[str] = None):

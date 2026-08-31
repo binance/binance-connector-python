@@ -42,11 +42,7 @@ from binance_sdk_crypto_loan.rest_api.models import GetFlexibleLoanOngoingOrders
 from binance_sdk_crypto_loan.rest_api.models import (
     GetFlexibleLoanRepaymentHistoryResponse,
 )
-
-
 from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanAdjustLtvDirectionEnum
-
-
 from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanRepayRepaymentTypeEnum
 
 

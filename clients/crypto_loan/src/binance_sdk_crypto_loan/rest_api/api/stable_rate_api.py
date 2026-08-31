@@ -19,8 +19,6 @@ from ..models import GetCryptoLoansIncomeHistoryResponse
 from ..models import GetLoanBorrowHistoryResponse
 from ..models import GetLoanLtvAdjustmentHistoryResponse
 from ..models import GetLoanRepaymentHistoryResponse
-
-
 from ..models import GetCryptoLoansIncomeHistoryTypeEnum
 
 
