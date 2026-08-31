@@ -24,11 +24,11 @@ binance-common = "4.3.0"
 dev = ["pytest"]
 
 [tool.poetry.group.dev.dependencies]
-tox = "^4.27.0"
+tox = "^4.53.0"
 pytest-asyncio = "^1.0.0"
-black = "^25.1.0"
+black = "^26.3.1"
 ruff = "^0.12.0"
-pytest = ">=8.4.1"
+pytest = ">=9.0.3"
 
 [tool.ruff]
 exclude = [".git", ".tox", "build", "dist"]
