@@ -38,9 +38,11 @@ async def continuous_contract_kline_candlestick_streams():
         stream = await connection.continuous_contract_kline_candlestick_streams(
             pair="btcusdt",
             contract_type=ContinuousContractKlineCandlestickStreamsContractTypeEnum[
-                ""
+                "next_quarter"
             ].value,
-            interval=ContinuousContractKlineCandlestickStreamsIntervalEnum[""].value,
+            interval=ContinuousContractKlineCandlestickStreamsIntervalEnum[
+                "INTERVAL_1s"
+            ].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

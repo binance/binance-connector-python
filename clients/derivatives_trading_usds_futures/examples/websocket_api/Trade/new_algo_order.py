@@ -40,10 +40,10 @@ async def new_algo_order():
     try:
         connection = await client.websocket_api.create_connection()
         response = await connection.new_algo_order(
-            algo_type=NewAlgoOrderAlgoTypeEnum[""].value,
+            algo_type=NewAlgoOrderAlgoTypeEnum["CONDITIONAL"].value,
             symbol="BTCUSDT",
-            side=NewAlgoOrderSideEnum[""].value,
-            type=NewAlgoOrderTypeEnum[""].value,
+            side=NewAlgoOrderSideEnum["BUY"].value,
+            type=NewAlgoOrderTypeEnum["STOP_MARKET"].value,
         )
 
         rate_limits = response.rate_limits

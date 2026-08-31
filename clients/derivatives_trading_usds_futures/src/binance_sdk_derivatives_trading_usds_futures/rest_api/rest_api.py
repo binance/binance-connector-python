@@ -42,15 +42,11 @@ from .models import QueryUserRateLimitResponse
 from .models import SymbolConfigurationResponse
 from .models import ToggleBnbBurnOnFuturesTradeResponse
 from .models import UserCommissionRateResponse
-
-
 from .models import GetIncomeHistoryIncomeTypeEnum
 from .models import AcceptTheOfferedQuoteResponse
 from .models import ListAllConvertPairsResponse
 from .models import OrderStatusResponse
 from .models import SendQuoteRequestResponse
-
-
 from .models import AdlRiskResponse
 from .models import AssetIndexResponse
 from .models import BasisResponse
@@ -85,8 +81,6 @@ from .models import Ticker24hrPriceChangeStatisticsResponse
 from .models import TopTraderLongShortRatioAccountsResponse
 from .models import TopTraderLongShortRatioPositionsResponse
 from .models import TradingScheduleResponse
-
-
 from .models import BasisContractTypeEnum
 from .models import BasisPeriodEnum
 from .models import ContinuousContractKlineCandlestickDataContractTypeEnum
@@ -101,8 +95,6 @@ from .models import TakerBuySellVolumePeriodEnum
 from .models import TopTraderLongShortRatioAccountsPeriodEnum
 from .models import TopTraderLongShortRatioPositionsPeriodEnum
 from .models import ClassicPortfolioMarginAccountInformationResponse
-
-
 from .models import AccountTradeListResponse
 from .models import AllOrdersResponse
 from .models import AutoCancelAllOpenOrdersResponse
@@ -135,14 +127,8 @@ from .models import QueryCurrentOpenOrderResponse
 from .models import QueryOrderResponse
 from .models import TestOrderResponse
 from .models import UsersForceOrdersResponse
-
-
 from .models import ModifyMultipleOrdersBatchOrdersParameterInner
-
-
 from .models import PlaceMultipleOrdersBatchOrdersParameterInner
-
-
 from .models import ChangeMarginTypeMarginTypeEnum
 from .models import ModifyOrderSideEnum
 from .models import ModifyOrderPriceMatchEnum
@@ -2229,7 +2215,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         - If `startTime` and `endTime` are both not sent, then the last 7 days' data will be returned.
         - The time between `startTime` and `endTime` cannot be longer than 7 days.
         - The parameter `fromId` cannot be sent with `startTime` or `endTime`.
-        - Only support querying trade in the past 6 months
+        - Only support querying trade in the past 3 months
 
                 Args:
                     symbol (Union[str, None]):

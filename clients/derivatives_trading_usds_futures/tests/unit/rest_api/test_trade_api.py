@@ -116,28 +116,18 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     UsersForceOrdersResponse,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ChangeMarginTypeMarginTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyMultipleOrdersBatchOrdersParameterInner,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyOrderSideEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyOrderPriceMatchEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderAlgoTypeEnum,
 )
@@ -152,8 +142,6 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderTimeInForceEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderWorkingTypeEnum,
 )
@@ -169,16 +157,12 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderNewOrderRespTypeEnum,
 )
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderSideEnum,
 )
@@ -192,8 +176,6 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
@@ -203,13 +185,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     PlaceMultipleOrdersBatchOrdersParameterInner,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderSideEnum,
 )
@@ -222,13 +200,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderReduceOnlyEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderClosePositionEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderTimeInForceEnum,
 )
@@ -247,8 +221,6 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     TestOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     UsersForceOrdersAutoCloseTypeEnum,
 )
@@ -297,7 +269,7 @@ class TestTradeApi:
                 "price": "7819.01",
                 "qty": "0.002",
                 "quoteQty": "15.63802",
-                "baseQty": "0.002",
+                "baseQty": "0",
                 "marginAsset": "USDT",
                 "realizedPnl": "-0.91539999",
                 "side": "SELL",
@@ -371,7 +343,7 @@ class TestTradeApi:
                 "price": "7819.01",
                 "qty": "0.002",
                 "quoteQty": "15.63802",
-                "baseQty": "0.002",
+                "baseQty": "0",
                 "marginAsset": "USDT",
                 "realizedPnl": "-0.91539999",
                 "side": "SELL",

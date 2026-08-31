@@ -37,8 +37,6 @@ from ..models import QueryUserRateLimitResponse
 from ..models import SymbolConfigurationResponse
 from ..models import ToggleBnbBurnOnFuturesTradeResponse
 from ..models import UserCommissionRateResponse
-
-
 from ..models import GetIncomeHistoryIncomeTypeEnum
 
 

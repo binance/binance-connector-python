@@ -39,10 +39,14 @@ class AccountTradeListResponseInner(BaseModel):
     price: Optional[StrictStr] = Field(default=None, description="Price.")
     qty: Optional[StrictStr] = Field(default=None, description="Qty.")
     quote_qty: Optional[StrictStr] = Field(
-        default=None, description="Quote Qty.", alias="quoteQty"
+        default=None,
+        description='Quote asset quantity. Populated for USDⓈ-M symbols; returns "0" for COIN-M symbols.',
+        alias="quoteQty",
     )
     base_qty: Optional[StrictStr] = Field(
-        default=None, description="Base Qty.", alias="baseQty"
+        default=None,
+        description='Base asset quantity. Populated for COIN-M symbols; returns "0" for USDⓈ-M symbols.',
+        alias="baseQty",
     )
     margin_asset: Optional[StrictStr] = Field(
         default=None, description="Margin Asset.", alias="marginAsset"

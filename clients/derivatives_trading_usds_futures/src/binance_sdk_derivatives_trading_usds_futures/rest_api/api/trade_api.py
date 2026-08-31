@@ -48,14 +48,8 @@ from ..models import QueryCurrentOpenOrderResponse
 from ..models import QueryOrderResponse
 from ..models import TestOrderResponse
 from ..models import UsersForceOrdersResponse
-
-
 from ..models import ModifyMultipleOrdersBatchOrdersParameterInner
-
-
 from ..models import PlaceMultipleOrdersBatchOrdersParameterInner
-
-
 from ..models import ChangeMarginTypeMarginTypeEnum
 from ..models import ModifyOrderSideEnum
 from ..models import ModifyOrderPriceMatchEnum
@@ -129,7 +123,7 @@ class TradeApi:
         - If `startTime` and `endTime` are both not sent, then the last 7 days' data will be returned.
         - The time between `startTime` and `endTime` cannot be longer than 7 days.
         - The parameter `fromId` cannot be sent with `startTime` or `endTime`.
-        - Only support querying trade in the past 6 months
+        - Only support querying trade in the past 3 months
 
                 Args:
                     symbol (Union[str, None]):

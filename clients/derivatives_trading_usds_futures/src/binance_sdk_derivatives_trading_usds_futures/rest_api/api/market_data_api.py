@@ -50,8 +50,6 @@ from ..models import Ticker24hrPriceChangeStatisticsResponse
 from ..models import TopTraderLongShortRatioAccountsResponse
 from ..models import TopTraderLongShortRatioPositionsResponse
 from ..models import TradingScheduleResponse
-
-
 from ..models import BasisContractTypeEnum
 from ..models import BasisPeriodEnum
 from ..models import ContinuousContractKlineCandlestickDataContractTypeEnum
