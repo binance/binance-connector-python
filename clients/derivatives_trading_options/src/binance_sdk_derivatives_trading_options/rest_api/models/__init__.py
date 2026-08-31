@@ -208,8 +208,6 @@ from .user_exercise_record_response import (
 from .user_exercise_record_response_inner import (
     UserExerciseRecordResponseInner as UserExerciseRecordResponseInner,
 )
-
-
 from .enums import AccountFundingFlowCurrencyEnum as AccountFundingFlowCurrencyEnum
 from .enums import KlineCandlestickDataIntervalEnum as KlineCandlestickDataIntervalEnum
 from .enums import NewBlockTradeOrderLiquidityEnum as NewBlockTradeOrderLiquidityEnum

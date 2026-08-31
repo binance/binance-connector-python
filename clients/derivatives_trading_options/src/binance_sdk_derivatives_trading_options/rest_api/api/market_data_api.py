@@ -28,8 +28,6 @@ from ..models import RecentBlockTradesListResponse
 from ..models import RecentTradesListResponse
 
 from ..models import Ticker24hrPriceChangeStatisticsResponse
-
-
 from ..models import KlineCandlestickDataIntervalEnum
 
 

@@ -68,8 +68,8 @@ class TestWebSocketStreams:
             "U": 465,
             "u": 465,
             "pu": 464,
-            "b": [["1100.000"]],
-            "a": [["1300.000"]],
+            "b": [["1100.000", "0.6000"]],
+            "a": [["1300.000", "0.6000"]],
         }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@depth@<updateSpeed>".replace("/", "", 1),
@@ -110,8 +110,8 @@ class TestWebSocketStreams:
             "U": 465,
             "u": 465,
             "pu": 464,
-            "b": [["1100.000"]],
-            "a": [["1300.000"]],
+            "b": [["1100.000", "0.6000"]],
+            "a": [["1300.000", "0.6000"]],
         }
         self.ws_streams.diff_book_depth_streams = AsyncMock(
             return_value=expected_response
@@ -141,8 +141,8 @@ class TestWebSocketStreams:
             "U": 465,
             "u": 465,
             "pu": 464,
-            "b": [["1100.000"]],
-            "a": [["1300.000"]],
+            "b": [["1100.000", "0.6000"]],
+            "a": [["1300.000", "0.6000"]],
         }
 
         self.ws_streams.diff_book_depth_streams = AsyncMock(

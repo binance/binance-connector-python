@@ -35,8 +35,10 @@ async def partial_book_depth_streams():
 
         stream = await connection.partial_book_depth_streams(
             symbol="btcusdt",
-            level=PartialBookDepthStreamsLevelEnum[""].value,
-            update_speed=PartialBookDepthStreamsUpdateSpeedEnum[""].value,
+            level=PartialBookDepthStreamsLevelEnum["LEVEL_5"].value,
+            update_speed=PartialBookDepthStreamsUpdateSpeedEnum[
+                "UPDATE_SPEED_100ms"
+            ].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

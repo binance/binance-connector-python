@@ -48,8 +48,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     Ticker24hrPriceChangeStatisticsResponse,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     KlineCandlestickDataIntervalEnum,
 )

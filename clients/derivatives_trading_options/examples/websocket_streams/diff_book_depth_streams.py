@@ -32,7 +32,9 @@ async def diff_book_depth_streams():
 
         stream = await connection.diff_book_depth_streams(
             symbol="btcusdt",
-            update_speed=DiffBookDepthStreamsUpdateSpeedEnum[""].value,
+            update_speed=DiffBookDepthStreamsUpdateSpeedEnum[
+                "UPDATE_SPEED_100ms"
+            ].value,
         )
         stream.on("message", lambda data: print(f"{data}"))
 

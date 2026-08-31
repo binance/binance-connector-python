@@ -18,8 +18,6 @@ from binance_common.utils import send_request
 
 from ..models import AccountFundingFlowResponse
 from ..models import OptionMarginAccountInformationResponse
-
-
 from ..models import AccountFundingFlowCurrencyEnum
 
 

@@ -23,8 +23,6 @@ from .api.user_data_streams_api import UserDataStreamsApi
 
 from .models import AccountFundingFlowResponse
 from .models import OptionMarginAccountInformationResponse
-
-
 from .models import AccountFundingFlowCurrencyEnum
 from .models import CheckServerTimeResponse
 from .models import ExchangeInformationResponse
@@ -38,8 +36,6 @@ from .models import RecentBlockTradesListResponse
 from .models import RecentTradesListResponse
 
 from .models import Ticker24hrPriceChangeStatisticsResponse
-
-
 from .models import KlineCandlestickDataIntervalEnum
 from .models import AcceptBlockTradeOrderResponse
 from .models import AccountBlockTradeListResponse
@@ -48,11 +44,7 @@ from .models import ExtendBlockTradeOrderResponse
 from .models import NewBlockTradeOrderResponse
 from .models import QueryBlockTradeDetailsResponse
 from .models import QueryBlockTradeOrderResponse
-
-
 from .models import NewBlockTradeOrderLegsParameterInner
-
-
 from .models import NewBlockTradeOrderLiquidityEnum
 from .models import AutoCancelAllOpenOrdersResponse
 from .models import GetAutoCancelAllOpenOrdersResponse
@@ -60,8 +52,6 @@ from .models import GetMarketMakerProtectionConfigResponse
 from .models import ResetMarketMakerProtectionConfigResponse
 from .models import SetAutoCancelAllOpenOrdersResponse
 from .models import SetMarketMakerProtectionConfigResponse
-
-
 from .models import AccountTradeListResponse
 from .models import CancelAllOptionOrdersByUnderlyingResponse
 from .models import CancelAllOptionOrdersOnSpecificSymbolResponse
@@ -76,18 +66,12 @@ from .models import QuerySingleOrderResponse
 from .models import TradfiOptionsContractResponse
 from .models import UserCommissionResponse
 from .models import UserExerciseRecordResponse
-
-
 from .models import PlaceMultipleOrdersOrdersParameterInner
-
-
 from .models import NewOrderSideEnum
 from .models import NewOrderTypeEnum
 from .models import NewOrderTimeInForceEnum
 from .models import NewOrderNewOrderRespTypeEnum
 from .models import NewOrderSelfTradePreventionModeEnum
-
-
 from .models import StartUserDataStreamResponse
 
 

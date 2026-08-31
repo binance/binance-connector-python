@@ -26,8 +26,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     OptionMarginAccountInformationResponse,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     AccountFundingFlowCurrencyEnum,
 )

@@ -30,11 +30,7 @@ from ..models import QuerySingleOrderResponse
 from ..models import TradfiOptionsContractResponse
 from ..models import UserCommissionResponse
 from ..models import UserExerciseRecordResponse
-
-
 from ..models import PlaceMultipleOrdersOrdersParameterInner
-
-
 from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
 from ..models import NewOrderTimeInForceEnum

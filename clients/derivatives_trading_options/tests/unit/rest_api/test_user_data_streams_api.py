@@ -18,8 +18,6 @@ from binance_common.configuration import ConfigurationRestAPI
 from binance_common.utils import is_one_of_model
 
 from binance_sdk_derivatives_trading_options.rest_api.api import UserDataStreamsApi
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     StartUserDataStreamResponse,
 )

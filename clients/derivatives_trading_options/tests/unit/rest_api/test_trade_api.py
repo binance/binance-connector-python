@@ -60,27 +60,17 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     UserExerciseRecordResponse,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderSideEnum
 from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderTypeEnum
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewOrderTimeInForceEnum,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewOrderNewOrderRespTypeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     NewOrderSelfTradePreventionModeEnum,
 )
-
-
 from binance_sdk_derivatives_trading_options.rest_api.models import (
     PlaceMultipleOrdersOrdersParameterInner,
 )

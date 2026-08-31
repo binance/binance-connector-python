@@ -23,11 +23,7 @@ from ..models import ExtendBlockTradeOrderResponse
 from ..models import NewBlockTradeOrderResponse
 from ..models import QueryBlockTradeDetailsResponse
 from ..models import QueryBlockTradeOrderResponse
-
-
 from ..models import NewBlockTradeOrderLegsParameterInner
-
-
 from ..models import NewBlockTradeOrderLiquidityEnum
 
 
