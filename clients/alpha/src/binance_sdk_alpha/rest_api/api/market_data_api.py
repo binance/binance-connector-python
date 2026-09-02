@@ -74,7 +74,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -89,7 +89,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/alpha-trade/agg-trades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AggregatedTradesResponse,
         )
@@ -123,7 +123,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -132,7 +132,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/alpha-trade/fullDepth",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FullDepthResponse,
         )
@@ -157,7 +157,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -166,7 +166,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/alpha-trade/get-exchange-info",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetExchangeInfoResponse,
         )
@@ -210,7 +210,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -225,7 +225,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/alpha-trade/klines",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=KlinesResponse,
         )
@@ -257,7 +257,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -266,7 +266,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/alpha-trade/ticker",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TickerResponse,
         )
@@ -291,7 +291,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -300,7 +300,7 @@ class MarketDataApi:
             method="GET",
             path="/bapi/defi/v1/public/wallet-direct/buw/wallet/cex/alpha/all/token/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenListResponse,
         )
