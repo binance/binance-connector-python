@@ -77,7 +77,7 @@ class WalletApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "token_id": token_id,
@@ -93,7 +93,7 @@ class WalletApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/pnl/portfolio",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioResponse,
             is_signed=True,
@@ -126,7 +126,7 @@ class WalletApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -135,7 +135,7 @@ class WalletApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/quota/limit/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetQuotaStatusResponse,
             is_signed=True,
@@ -168,7 +168,7 @@ class WalletApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -177,7 +177,7 @@ class WalletApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/wallet/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ListPredictionWalletsResponse,
             is_signed=True,
@@ -210,7 +210,7 @@ class WalletApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -219,7 +219,7 @@ class WalletApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/balance/payment-options",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPaymentOptionBalancesResponse,
             is_signed=True,

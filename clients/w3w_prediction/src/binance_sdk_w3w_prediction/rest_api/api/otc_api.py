@@ -129,7 +129,7 @@ class OtcApi:
                 error_message="Missing required parameter 'expiration'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "market_id": market_id,
             "token_id": token_id,
@@ -146,7 +146,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/create",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateOtcBlocktradeResponse,
             is_signed=True,
@@ -194,7 +194,7 @@ class OtcApi:
                 error_message="Missing required parameter 'secret_token'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "secret_token": secret_token}
 
         return send_request(
@@ -203,7 +203,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/fulfil",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FulfilOtcBlocktradeResponse,
             is_signed=True,
@@ -244,7 +244,7 @@ class OtcApi:
                 field="order_id", error_message="Missing required parameter 'order_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id}
 
         return send_request(
@@ -253,7 +253,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/detail",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOtcBlocktradeDetailResponse,
             is_signed=True,
@@ -295,7 +295,7 @@ class OtcApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "first": first,
             "after": after,
@@ -309,7 +309,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/events",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOtcBlocktradeEventsResponse,
             is_signed=True,
@@ -356,7 +356,7 @@ class OtcApi:
                 field="assets", error_message="Missing required parameter 'assets'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"assets": assets}
 
         return send_request(
@@ -365,7 +365,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/reserved-balances",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOtcReservedBalancesResponse,
             is_signed=True,
@@ -405,7 +405,7 @@ class OtcApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"first": first, "after": after, "status": status}
 
         return send_request(
@@ -414,7 +414,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ListOtcBlocktradesResponse,
             is_signed=True,
@@ -456,7 +456,7 @@ class OtcApi:
                 error_message="Missing required parameter 'secret_token'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"secret_token": secret_token}
 
         return send_request(
@@ -465,7 +465,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/preview",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PreviewOtcBlocktradeResponse,
             is_signed=True,
@@ -507,7 +507,7 @@ class OtcApi:
                 error_message="Missing required parameter 'order_ids'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_ids": order_ids}
 
         return send_request(
@@ -516,7 +516,7 @@ class OtcApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/otc/blocktrade/remove",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RemoveOtcBlocktradesResponse,
             is_signed=True,

@@ -76,7 +76,7 @@ class PositionApi:
                 field="token_id", error_message="Missing required parameter 'token_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "token_id": token_id,
@@ -89,7 +89,7 @@ class PositionApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/position/token",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPositionByTokenResponse,
             is_signed=True,
@@ -138,7 +138,7 @@ class PositionApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "token_id": token_id,
@@ -154,7 +154,7 @@ class PositionApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/pnl/query",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPnLResponse,
             is_signed=True,
@@ -201,7 +201,7 @@ class PositionApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "tab": tab,
@@ -216,7 +216,7 @@ class PositionApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/position/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPositionsResponse,
             is_signed=True,
@@ -253,7 +253,7 @@ class PositionApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "market_topic_id": market_topic_id,
@@ -266,7 +266,7 @@ class PositionApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/position/filter",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPositionsByFilterResponse,
             is_signed=True,
@@ -319,7 +319,7 @@ class PositionApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "l1_category": l1_category,
@@ -337,7 +337,7 @@ class PositionApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/position/settled-history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySettledPositionHistoryResponse,
             is_signed=True,

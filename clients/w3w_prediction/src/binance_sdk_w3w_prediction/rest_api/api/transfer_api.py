@@ -101,7 +101,7 @@ class TransferApi:
                 error_message="Missing required parameter 'account_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "from_token": from_token,
             "from_token_amount": from_token_amount,
@@ -116,7 +116,7 @@ class TransferApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/deposit/apply",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ApplyMmDepositResponse,
             is_signed=True,
@@ -184,7 +184,7 @@ class TransferApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "coin": coin,
             "network": network,
@@ -200,7 +200,7 @@ class TransferApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/withdraw/apply",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ApplyMmWithdrawResponse,
             is_signed=True,
@@ -268,7 +268,7 @@ class TransferApi:
                 error_message="Missing required parameter 'account_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_id": wallet_id,
             "wallet_address": wallet_address,
@@ -285,7 +285,7 @@ class TransferApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/transfer/inbound",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateInboundTransferResponse,
             is_signed=True,
@@ -358,7 +358,7 @@ class TransferApi:
                 error_message="Missing required parameter 'source_biz'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_id": wallet_id,
             "wallet_address": wallet_address,
@@ -376,7 +376,7 @@ class TransferApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/transfer/outbound",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateOutboundTransferResponse,
             is_signed=True,
@@ -438,7 +438,7 @@ class TransferApi:
                 field="end_date", error_message="Missing required parameter 'end_date'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "start_date": start_date,
@@ -456,7 +456,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/transfer/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryTransferListResponse,
             is_signed=True,
@@ -499,7 +499,7 @@ class TransferApi:
                 error_message="Missing required parameter 'transfer_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"transfer_id": transfer_id, "recv_window": recv_window}
 
         return send_request(
@@ -508,7 +508,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/transfer/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryTransferStatusResponse,
             is_signed=True,

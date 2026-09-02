@@ -100,7 +100,7 @@ class TradeApi:
                 error_message="Missing required parameter 'wallet_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "wallet_id": wallet_id,
@@ -113,7 +113,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/trade/batch-cancel",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=BatchCancelOrdersResponse,
             is_signed=True,
@@ -199,7 +199,7 @@ class TradeApi:
                 error_message="Missing required parameter 'slippage_bps'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "token_id": token_id,
@@ -220,7 +220,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/trade/get-quote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetQuoteResponse,
             is_signed=True,
@@ -314,7 +314,7 @@ class TradeApi:
                 error_message="Missing required parameter 'slippage_bps'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "wallet_id": wallet_id,
@@ -334,7 +334,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/trade/place-order-bundle",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceOrderResponse,
             is_signed=True,
@@ -385,7 +385,7 @@ class TradeApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "trade_side": trade_side,
@@ -402,7 +402,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/order/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryActiveOrdersResponse,
             is_signed=True,
@@ -457,7 +457,7 @@ class TradeApi:
                 error_message="Missing required parameter 'wallet_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "l1_category": l1_category,
@@ -476,7 +476,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/order/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOrderHistoryResponse,
             is_signed=True,

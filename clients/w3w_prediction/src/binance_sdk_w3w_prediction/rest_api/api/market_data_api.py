@@ -69,7 +69,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'market_topic_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"market_topic_id": market_topic_id}
 
         return send_request(
@@ -78,7 +78,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/market/detail",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarketDetailResponse,
             is_signed=True,
@@ -107,7 +107,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -116,7 +116,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/category/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ListPredictionCategoriesResponse,
             is_signed=True,
@@ -157,7 +157,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "l1_category": l1_category,
             "l2_category": l2_category,
@@ -173,7 +173,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/market/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ListPredictionMarketsResponse,
             is_signed=True,
@@ -211,7 +211,7 @@ class MarketDataApi:
                 field="query", error_message="Missing required parameter 'query'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"query": query, "top_k": top_k}
 
         return send_request(
@@ -220,7 +220,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/market/search",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=MarketSearchResponse,
             is_signed=True,
@@ -257,7 +257,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'market_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"market_id": market_id}
 
         return send_request(
@@ -266,7 +266,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/order-book/last-trade-price",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryLastTradePriceResponse,
             is_signed=True,
@@ -315,7 +315,7 @@ class MarketDataApi:
                 field="token_id", error_message="Missing required parameter 'token_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"vendor": vendor, "market_id": market_id, "token_id": token_id}
 
         return send_request(
@@ -324,7 +324,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/order-book",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOrderBookResponse,
             is_signed=True,

@@ -81,7 +81,7 @@ class RedeemApi:
                 error_message="Missing required parameter 'token_ids'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "wallet_id": wallet_id,
@@ -95,7 +95,7 @@ class RedeemApi:
             method="POST",
             path="/sapi/v1/w3w/wallet/prediction/batch-redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=BatchRedeemResponse,
             is_signed=True,
@@ -152,7 +152,7 @@ class RedeemApi:
                 field="tx_hash", error_message="Missing required parameter 'tx_hash'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "wallet_address": wallet_address,
             "tx_hash": tx_hash,
@@ -165,7 +165,7 @@ class RedeemApi:
             method="GET",
             path="/sapi/v1/w3w/wallet/prediction/redeem/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRedeemStatusResponse,
             is_signed=True,
