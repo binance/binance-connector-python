@@ -75,7 +75,7 @@ class StableRateApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "type": type,
@@ -91,7 +91,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/income",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCryptoLoansIncomeHistoryResponse,
             is_signed=True,
@@ -142,7 +142,7 @@ class StableRateApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -160,7 +160,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/borrow/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanBorrowHistoryResponse,
             is_signed=True,
@@ -211,7 +211,7 @@ class StableRateApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -229,7 +229,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/ltv/adjustment/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanLtvAdjustmentHistoryResponse,
             is_signed=True,
@@ -280,7 +280,7 @@ class StableRateApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "order_id": order_id,
             "loan_coin": loan_coin,
@@ -298,7 +298,7 @@ class StableRateApi:
             method="GET",
             path="/sapi/v1/loan/repay/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanRepaymentHistoryResponse,
             is_signed=True,
