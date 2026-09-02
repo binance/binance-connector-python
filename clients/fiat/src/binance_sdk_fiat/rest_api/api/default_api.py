@@ -95,7 +95,7 @@ class DefaultApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "currency": currency,
             "api_payment_method": api_payment_method,
@@ -110,7 +110,7 @@ class DefaultApi:
             method="POST",
             path="/sapi/v1/fiat/deposit",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DepositResponse,
             is_signed=True,
@@ -178,7 +178,7 @@ class DefaultApi:
                 error_message="Missing required parameter 'account_info'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "currency": currency,
             "api_payment_method": api_payment_method,
@@ -194,7 +194,7 @@ class DefaultApi:
             method="POST",
             path="/sapi/v2/fiat/withdraw",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FiatWithdrawResponse,
             is_signed=True,
@@ -246,7 +246,7 @@ class DefaultApi:
                 error_message="Missing required parameter 'transaction_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "transaction_type": transaction_type,
             "begin_time": begin_time,
@@ -262,7 +262,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/fiat/orders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetFiatDepositWithdrawHistoryResponse,
             is_signed=True,
@@ -316,7 +316,7 @@ class DefaultApi:
                 error_message="Missing required parameter 'transaction_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "transaction_type": transaction_type,
             "begin_time": begin_time,
@@ -332,7 +332,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/fiat/payments",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetFiatPaymentsHistoryResponse,
             is_signed=True,
@@ -375,7 +375,7 @@ class DefaultApi:
                 field="order_no", error_message="Missing required parameter 'order_no'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_no": order_no, "recv_window": recv_window}
 
         return send_request(
@@ -384,7 +384,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/fiat/get-order-detail",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOrderDetailResponse,
             is_signed=True,

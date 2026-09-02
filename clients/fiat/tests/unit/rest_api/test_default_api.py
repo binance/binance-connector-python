@@ -119,7 +119,7 @@ class TestDefaultApi:
             "api_payment_method": DepositApiPaymentMethodEnum["pix"].value,
             "amount": "amount_example",
             "recv_window": 5000,
-            "ext": None,
+            "ext": {},
         }
 
         expected_response = {
@@ -294,7 +294,7 @@ class TestDefaultApi:
             "amount": 56,
             "account_info": (),
             "recv_window": 5000,
-            "ext": None,
+            "ext": {},
         }
 
         expected_response = {
