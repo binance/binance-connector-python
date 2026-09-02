@@ -1,5 +1,13 @@
 # Changelog
 
+## 17.3.0 - 2026-09-02
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.4.0`
+- Fixed `oneOf` response deserialization failing when a payload matches more than one schema.
+- Updated code generation templates.
+
 ## 17.2.1 - 2026-08-25
 
 ### Changed (1)

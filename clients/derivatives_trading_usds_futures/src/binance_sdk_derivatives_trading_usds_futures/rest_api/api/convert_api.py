@@ -68,7 +68,7 @@ class ConvertApi:
                 field="quote_id", error_message="Missing required parameter 'quote_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"quote_id": quote_id, "recv_window": recv_window}
 
         return send_request(
@@ -77,7 +77,7 @@ class ConvertApi:
             method="POST",
             path="/fapi/v1/convert/acceptQuote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AcceptTheOfferedQuoteResponse,
             is_signed=True,
@@ -115,7 +115,7 @@ class ConvertApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"from_asset": from_asset, "to_asset": to_asset}
 
         return send_request(
@@ -124,7 +124,7 @@ class ConvertApi:
             method="GET",
             path="/fapi/v1/convert/exchangeInfo",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ListAllConvertPairsResponse,
         )
@@ -157,7 +157,7 @@ class ConvertApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "quote_id": quote_id}
 
         return send_request(
@@ -166,7 +166,7 @@ class ConvertApi:
             method="GET",
             path="/fapi/v1/convert/orderStatus",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderStatusResponse,
             is_signed=True,
@@ -224,7 +224,7 @@ class ConvertApi:
                 field="to_asset", error_message="Missing required parameter 'to_asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "from_asset": from_asset,
             "to_asset": to_asset,
@@ -240,7 +240,7 @@ class ConvertApi:
             method="POST",
             path="/fapi/v1/convert/getQuote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SendQuoteRequestResponse,
             is_signed=True,

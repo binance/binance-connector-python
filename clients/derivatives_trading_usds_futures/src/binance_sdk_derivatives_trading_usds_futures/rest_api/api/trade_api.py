@@ -147,7 +147,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -164,7 +164,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/userTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountTradeListResponse,
             is_signed=True,
@@ -215,7 +215,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -231,7 +231,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/allOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AllOrdersResponse,
             is_signed=True,
@@ -292,7 +292,7 @@ class TradeApi:
                 error_message="Missing required parameter 'countdown_time'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "countdown_time": countdown_time,
@@ -305,7 +305,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/countdownCancelAll",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -345,7 +345,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_id": algo_id,
             "client_algo_id": client_algo_id,
@@ -358,7 +358,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/algoOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAlgoOrderResponse,
             is_signed=True,
@@ -398,7 +398,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -407,7 +407,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/algoOpenOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllAlgoOpenOrdersResponse,
             is_signed=True,
@@ -447,7 +447,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -456,7 +456,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/allOpenOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOpenOrdersResponse,
             is_signed=True,
@@ -503,7 +503,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id_list": order_id_list,
@@ -517,7 +517,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/batchOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMultipleOrdersResponse,
             is_signed=True,
@@ -564,7 +564,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -578,7 +578,7 @@ class TradeApi:
             method="DELETE",
             path="/fapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelOrderResponse,
             is_signed=True,
@@ -624,7 +624,7 @@ class TradeApi:
                 field="leverage", error_message="Missing required parameter 'leverage'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "leverage": leverage, "recv_window": recv_window}
 
         return send_request(
@@ -633,7 +633,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/leverage",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeInitialLeverageResponse,
             is_signed=True,
@@ -680,7 +680,7 @@ class TradeApi:
                 error_message="Missing required parameter 'margin_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "margin_type": margin_type,
@@ -693,7 +693,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/marginType",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeMarginTypeResponse,
             is_signed=True,
@@ -734,7 +734,7 @@ class TradeApi:
                 error_message="Missing required parameter 'multi_assets_margin'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "multi_assets_margin": multi_assets_margin,
             "recv_window": recv_window,
@@ -746,7 +746,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/multiAssetsMargin",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeMultiAssetsModeResponse,
             is_signed=True,
@@ -791,7 +791,7 @@ class TradeApi:
                 error_message="Missing required parameter 'dual_side_position'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"dual_side_position": dual_side_position, "recv_window": recv_window}
 
         return send_request(
@@ -800,7 +800,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/positionSide/dual",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangePositionModeResponse,
             is_signed=True,
@@ -844,7 +844,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_type": algo_type,
             "symbol": symbol,
@@ -858,7 +858,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/openAlgoOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CurrentAllAlgoOpenOrdersResponse,
             is_signed=True,
@@ -898,7 +898,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -907,7 +907,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/openOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CurrentAllOpenOrdersResponse,
             is_signed=True,
@@ -940,7 +940,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -949,7 +949,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/stock/contract",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FuturesTradfiPerpsContractResponse,
             is_signed=True,
@@ -1005,7 +1005,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -1022,7 +1022,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/orderAmendment",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOrderModifyHistoryResponse,
             is_signed=True,
@@ -1074,7 +1074,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "type": type,
@@ -1090,7 +1090,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/positionMargin/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPositionMarginChangeHistoryResponse,
             is_signed=True,
@@ -1147,7 +1147,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "amount": amount,
@@ -1162,7 +1162,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/positionMargin",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyIsolatedPositionMarginResponse,
             is_signed=True,
@@ -1211,7 +1211,7 @@ class TradeApi:
                 error_message="Missing required parameter 'batch_orders'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"batch_orders": batch_orders, "recv_window": recv_window}
 
         return send_request(
@@ -1220,7 +1220,7 @@ class TradeApi:
             method="PUT",
             path="/fapi/v1/batchOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyMultipleOrdersResponse,
             is_signed=True,
@@ -1297,7 +1297,7 @@ class TradeApi:
                 field="price", error_message="Missing required parameter 'price'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1316,7 +1316,7 @@ class TradeApi:
             method="PUT",
             path="/fapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ModifyOrderResponse,
             is_signed=True,
@@ -1438,7 +1438,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_type": algo_type,
             "symbol": symbol,
@@ -1469,7 +1469,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/algoOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=NewAlgoOrderResponse,
             is_signed=True,
@@ -1559,7 +1559,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1583,7 +1583,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
             is_signed=True,
@@ -1631,7 +1631,7 @@ class TradeApi:
                 error_message="Missing required parameter 'batch_orders'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"batch_orders": batch_orders, "recv_window": recv_window}
 
         return send_request(
@@ -1640,7 +1640,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/batchOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceMultipleOrdersResponse,
             is_signed=True,
@@ -1682,7 +1682,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1691,7 +1691,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/adlQuantile",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PositionAdlQuantileEstimationResponse,
             is_signed=True,
@@ -1729,7 +1729,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1738,7 +1738,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v2/positionRisk",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PositionInformationV2Response,
             is_signed=True,
@@ -1777,7 +1777,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -1786,7 +1786,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v3/positionRisk",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PositionInformationV3Response,
             is_signed=True,
@@ -1831,7 +1831,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_id": algo_id,
             "client_algo_id": client_algo_id,
@@ -1844,7 +1844,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/algoOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAlgoOrderResponse,
             is_signed=True,
@@ -1900,7 +1900,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "algo_id": algo_id,
@@ -1916,7 +1916,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/allAlgoOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryAllAlgoOrdersResponse,
             is_signed=True,
@@ -1964,7 +1964,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -1978,7 +1978,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/openOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentOpenOrderResponse,
             is_signed=True,
@@ -2030,7 +2030,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -2044,7 +2044,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOrderResponse,
             is_signed=True,
@@ -2169,7 +2169,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -2199,7 +2199,7 @@ class TradeApi:
             method="POST",
             path="/fapi/v1/order/test",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TestOrderResponse,
             is_signed=True,
@@ -2246,7 +2246,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "auto_close_type": auto_close_type,
@@ -2262,7 +2262,7 @@ class TradeApi:
             method="GET",
             path="/fapi/v1/forceOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UsersForceOrdersResponse,
             is_signed=True,

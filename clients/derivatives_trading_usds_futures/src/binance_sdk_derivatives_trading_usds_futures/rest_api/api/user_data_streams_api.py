@@ -54,7 +54,7 @@ class UserDataStreamsApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -63,7 +63,7 @@ class UserDataStreamsApi:
             method="DELETE",
             path="/fapi/v1/listenKey",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -93,7 +93,7 @@ class UserDataStreamsApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -102,7 +102,7 @@ class UserDataStreamsApi:
             method="PUT",
             path="/fapi/v1/listenKey",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=KeepaliveUserDataStreamResponse,
         )
@@ -134,7 +134,7 @@ class UserDataStreamsApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -143,7 +143,7 @@ class UserDataStreamsApi:
             method="POST",
             path="/fapi/v1/listenKey",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
         )

@@ -68,7 +68,7 @@ class PortfolioMarginEndpointsApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -77,7 +77,7 @@ class PortfolioMarginEndpointsApi:
             method="GET",
             path="/fapi/v1/pmAccountInfo",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ClassicPortfolioMarginAccountInformationResponse,
             is_signed=True,
