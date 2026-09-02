@@ -78,7 +78,7 @@ class FutureAlgoApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_id": algo_id,
             "client_algo_id": client_algo_id,
@@ -91,7 +91,7 @@ class FutureAlgoApi:
             method="DELETE",
             path="/sapi/v1/algo/futures/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAlgoOrderFutureAlgoResponse,
             is_signed=True,
@@ -128,7 +128,7 @@ class FutureAlgoApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -137,7 +137,7 @@ class FutureAlgoApi:
             method="GET",
             path="/sapi/v1/algo/futures/openOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentAlgoOpenOrdersFutureAlgoResponse,
             is_signed=True,
@@ -186,7 +186,7 @@ class FutureAlgoApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -203,7 +203,7 @@ class FutureAlgoApi:
             method="GET",
             path="/sapi/v1/algo/futures/historicalOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryHistoricalAlgoOrdersFutureAlgoResponse,
             is_signed=True,
@@ -251,7 +251,7 @@ class FutureAlgoApi:
                 field="algo_id", error_message="Missing required parameter 'algo_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "algo_id": algo_id,
             "page": page,
@@ -265,7 +265,7 @@ class FutureAlgoApi:
             method="GET",
             path="/sapi/v1/algo/futures/subOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubOrdersFutureAlgoResponse,
             is_signed=True,
@@ -350,7 +350,7 @@ class FutureAlgoApi:
                 field="duration", error_message="Missing required parameter 'duration'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -369,7 +369,7 @@ class FutureAlgoApi:
             method="POST",
             path="/sapi/v1/algo/futures/newOrderTwap",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TimeWeightedAveragePriceFutureAlgoResponse,
             is_signed=True,
@@ -449,7 +449,7 @@ class FutureAlgoApi:
                 field="urgency", error_message="Missing required parameter 'urgency'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -468,7 +468,7 @@ class FutureAlgoApi:
             method="POST",
             path="/sapi/v1/algo/futures/newOrderVp",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VolumeParticipationFutureAlgoResponse,
             is_signed=True,
