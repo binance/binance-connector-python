@@ -79,7 +79,7 @@ class DefaultApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -93,7 +93,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/pay/transactions",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPayTradeHistoryResponse,
             is_signed=True,
