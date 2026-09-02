@@ -102,7 +102,7 @@ class AccountApi:
                 error_message="Missing required parameter 'transfer_side'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "amount": amount,
             "transfer_side": transfer_side,
@@ -115,7 +115,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/bnb-transfer",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=BnbTransferResponse,
             is_signed=True,
@@ -156,7 +156,7 @@ class AccountApi:
                 error_message="Missing required parameter 'auto_repay'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"auto_repay": auto_repay, "recv_window": recv_window}
 
         return send_request(
@@ -165,7 +165,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay-futures-switch",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoRepayFuturesStatusResponse,
             is_signed=True,
@@ -198,7 +198,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -207,7 +207,7 @@ class AccountApi:
             method="DELETE",
             path="/sapi/v1/portfolio/margin-call-level",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteMarginCallLevelResponse,
             is_signed=True,
@@ -244,7 +244,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -253,7 +253,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/auto-collection",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FundAutoCollectionResponse,
             is_signed=True,
@@ -296,7 +296,7 @@ class AccountApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -305,7 +305,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/asset-collection",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FundCollectionByAssetResponse,
             is_signed=True,
@@ -338,7 +338,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -347,7 +347,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/repay-futures-switch",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAutoRepayFuturesStatusResponse,
             is_signed=True,
@@ -380,7 +380,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -389,7 +389,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/delta-mode",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetDeltaModeStatusResponse,
             is_signed=True,
@@ -422,7 +422,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -431,7 +431,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/margin-call-level",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarginCallLevelResponse,
             is_signed=True,
@@ -466,7 +466,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -475,7 +475,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/balance",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProAccountBalanceResponse,
             is_signed=True,
@@ -508,7 +508,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -517,7 +517,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProAccountInfoResponse,
             is_signed=True,
@@ -550,7 +550,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -559,7 +559,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v2/portfolio/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginProSpanAccountInfoResponse,
             is_signed=True,
@@ -608,7 +608,7 @@ class AccountApi:
                 error_message="Missing required parameter 'transfer_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "transfer_type": transfer_type,
@@ -621,7 +621,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/earn-asset-balance",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetTransferableEarnAssetBalanceForPortfolioMarginResponse,
             is_signed=True,
@@ -659,7 +659,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"var_from": var_from, "recv_window": recv_window}
 
         return send_request(
@@ -668,7 +668,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PortfolioMarginProBankruptcyLoanRepayResponse,
             is_signed=True,
@@ -704,7 +704,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -713,7 +713,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/pmLoan",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProBankruptcyLoanAmountResponse,
             is_signed=True,
@@ -760,7 +760,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -775,7 +775,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/pmloan-history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProBankruptcyLoanRepayHistoryResponse,
             is_signed=True,
@@ -816,7 +816,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -831,7 +831,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/portfolio/interest-history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginProNegativeBalanceInterestHistoryResponse,
             is_signed=True,
@@ -866,7 +866,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"var_from": var_from, "recv_window": recv_window}
 
         return send_request(
@@ -875,7 +875,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/repay-futures-negative-balance",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RepayFuturesNegativeBalanceResponse,
             is_signed=True,
@@ -916,7 +916,7 @@ class AccountApi:
                 error_message="Missing required parameter 'margin_call_level'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"margin_call_level": margin_call_level, "recv_window": recv_window}
 
         return send_request(
@@ -925,7 +925,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/margin-call-level",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SetMarginCallLevelResponse,
             is_signed=True,
@@ -966,7 +966,7 @@ class AccountApi:
                 error_message="Missing required parameter 'delta_enabled'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"delta_enabled": delta_enabled, "recv_window": recv_window}
 
         return send_request(
@@ -975,7 +975,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/delta-mode",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SwitchDeltaModeResponse,
             is_signed=True,
@@ -1030,7 +1030,7 @@ class AccountApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "transfer_type": transfer_type,
@@ -1044,7 +1044,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/portfolio/earn-asset-transfer",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TransferLdusdtRwusdForPortfolioMarginResponse,
             is_signed=True,

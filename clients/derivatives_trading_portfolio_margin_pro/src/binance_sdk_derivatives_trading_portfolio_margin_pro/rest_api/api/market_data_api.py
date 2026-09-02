@@ -58,7 +58,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -67,7 +67,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/portfolio/margin-asset-leverage",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetPortfolioMarginAssetLeverageResponse,
             is_signed=True,
@@ -98,7 +98,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -107,7 +107,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/portfolio/collateralRate",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PortfolioMarginCollateralRateResponse,
         )
@@ -138,7 +138,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -147,7 +147,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v2/portfolio/collateralRate",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PortfolioMarginProTieredCollateralRateResponse,
             is_signed=True,
@@ -181,7 +181,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset}
 
         return send_request(
@@ -190,7 +190,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/portfolio/asset-index-price",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryPortfolioMarginAssetIndexPriceResponse,
         )
