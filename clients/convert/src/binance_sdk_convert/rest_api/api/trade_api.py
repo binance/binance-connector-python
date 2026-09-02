@@ -76,7 +76,7 @@ class TradeApi:
                 field="quote_id", error_message="Missing required parameter 'quote_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"quote_id": quote_id, "recv_window": recv_window}
 
         return send_request(
@@ -85,7 +85,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/convert/acceptQuote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AcceptQuoteResponse,
             is_signed=True,
@@ -125,7 +125,7 @@ class TradeApi:
                 field="order_id", error_message="Missing required parameter 'order_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "recv_window": recv_window}
 
         return send_request(
@@ -134,7 +134,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/convert/limit/cancelOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelLimitOrderResponse,
             is_signed=True,
@@ -186,7 +186,7 @@ class TradeApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -200,7 +200,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/convert/tradeFlow",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetConvertTradeHistoryResponse,
             is_signed=True,
@@ -235,7 +235,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "quote_id": quote_id}
 
         return send_request(
@@ -244,7 +244,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/convert/orderStatus",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderStatusResponse,
             is_signed=True,
@@ -325,7 +325,7 @@ class TradeApi:
                 error_message="Missing required parameter 'expired_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "base_asset": base_asset,
             "quote_asset": quote_asset,
@@ -344,7 +344,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/convert/limit/placeOrder",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceLimitOrderResponse,
             is_signed=True,
@@ -377,7 +377,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -386,7 +386,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/convert/limit/queryOpenOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryLimitOpenOrdersResponse,
             is_signed=True,
@@ -446,7 +446,7 @@ class TradeApi:
                 field="to_asset", error_message="Missing required parameter 'to_asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "from_asset": from_asset,
             "to_asset": to_asset,
@@ -463,7 +463,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/convert/getQuote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SendQuoteRequestResponse,
             is_signed=True,
