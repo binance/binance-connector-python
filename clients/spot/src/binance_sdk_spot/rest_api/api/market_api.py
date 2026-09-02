@@ -103,7 +103,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -118,7 +118,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/aggTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AggTradesResponse,
         )
@@ -157,7 +157,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -166,7 +166,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/avgPrice",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AvgPriceResponse,
         )
@@ -217,7 +217,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit, "symbol_status": symbol_status}
 
         return send_request(
@@ -226,7 +226,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/depth",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DepthResponse,
         )
@@ -267,7 +267,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -276,7 +276,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/trades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetTradesResponse,
         )
@@ -323,7 +323,7 @@ class MarketApi:
                 field="from_id", error_message="Missing required parameter 'from_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "from_id": from_id, "limit": limit}
 
         return send_request(
@@ -332,7 +332,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/historicalBlockTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=HistoricalBlockTradesResponse,
         )
@@ -375,7 +375,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit, "from_id": from_id}
 
         return send_request(
@@ -384,7 +384,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/historicalTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=HistoricalTradesResponse,
         )
@@ -459,7 +459,7 @@ class MarketApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -475,7 +475,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/klines",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=KlinesResponse,
         )
@@ -514,7 +514,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -523,7 +523,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/referencePrice",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ReferencePriceResponse,
         )
@@ -564,7 +564,7 @@ class MarketApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "symbol_status": symbol_status}
 
         return send_request(
@@ -573,7 +573,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/referencePrice/calculation",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ReferencePriceCalculationResponse,
         )
@@ -632,7 +632,7 @@ class MarketApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "symbols": symbols,
@@ -647,7 +647,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/ticker",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TickerResponse,
         )
@@ -727,7 +727,7 @@ class MarketApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "symbols": symbols,
@@ -741,7 +741,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/ticker/24hr",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=Ticker24hrResponse,
         )
@@ -788,7 +788,7 @@ class MarketApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "symbols": symbols, "symbol_status": symbol_status}
 
         return send_request(
@@ -797,7 +797,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/ticker/bookTicker",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TickerBookTickerResponse,
         )
@@ -844,7 +844,7 @@ class MarketApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "symbols": symbols, "symbol_status": symbol_status}
 
         return send_request(
@@ -853,7 +853,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/ticker/price",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TickerPriceResponse,
         )
@@ -904,7 +904,7 @@ class MarketApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "symbols": symbols,
@@ -919,7 +919,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/ticker/tradingDay",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TickerTradingDayResponse,
         )
@@ -984,7 +984,7 @@ class MarketApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -1000,7 +1000,7 @@ class MarketApi:
             method="GET",
             path="/api/v3/uiKlines",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UiKlinesResponse,
         )

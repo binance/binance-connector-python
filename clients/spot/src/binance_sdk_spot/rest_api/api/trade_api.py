@@ -189,7 +189,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -198,7 +198,7 @@ class TradeApi:
             method="DELETE",
             path="/api/v3/openOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteOpenOrdersResponse,
             is_signed=True,
@@ -253,7 +253,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -269,7 +269,7 @@ class TradeApi:
             method="DELETE",
             path="/api/v3/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteOrderResponse,
             is_signed=True,
@@ -322,7 +322,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_list_id": order_list_id,
@@ -337,7 +337,7 @@ class TradeApi:
             method="DELETE",
             path="/api/v3/orderList",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteOrderListResponse,
             is_signed=True,
@@ -456,7 +456,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -485,7 +485,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
             is_signed=True,
@@ -546,7 +546,7 @@ class TradeApi:
                 field="new_qty", error_message="Missing required parameter 'new_qty'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "new_qty": new_qty,
@@ -562,7 +562,7 @@ class TradeApi:
             method="PUT",
             path="/api/v3/order/amend/keepPriority",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderAmendKeepPriorityResponse,
             is_signed=True,
@@ -847,7 +847,7 @@ class TradeApi:
                 error_message="Missing required parameter 'cancel_replace_mode'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -882,7 +882,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/order/cancelReplace",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderCancelReplaceResponse,
             is_signed=True,
@@ -1017,7 +1017,7 @@ class TradeApi:
                 error_message="Missing required parameter 'below_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -1058,7 +1058,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/orderList/oco",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderListOcoResponse,
             is_signed=True,
@@ -1193,7 +1193,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_side'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1233,7 +1233,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/orderList/opo",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderListOpoResponse,
             is_signed=True,
@@ -1404,7 +1404,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_above_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1456,7 +1456,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/orderList/opoco",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderListOpocoResponse,
             is_signed=True,
@@ -1614,7 +1614,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_quantity'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1655,7 +1655,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/orderList/oto",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderListOtoResponse,
             is_signed=True,
@@ -1854,7 +1854,7 @@ class TradeApi:
                 error_message="Missing required parameter 'pending_above_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "working_type": working_type,
@@ -1907,7 +1907,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/orderList/otoco",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderListOtocoResponse,
             is_signed=True,
@@ -2015,7 +2015,7 @@ class TradeApi:
                 error_message="Missing required parameter 'stop_price'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -2045,7 +2045,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/order/oco",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderOcoResponse,
             is_signed=True,
@@ -2140,7 +2140,7 @@ class TradeApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -2170,7 +2170,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/order/test",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderTestResponse,
             is_signed=True,
@@ -2257,7 +2257,7 @@ class TradeApi:
                 field="quantity", error_message="Missing required parameter 'quantity'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -2280,7 +2280,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/sor/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SorOrderResponse,
             is_signed=True,
@@ -2365,7 +2365,7 @@ class TradeApi:
                 field="quantity", error_message="Missing required parameter 'quantity'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -2389,7 +2389,7 @@ class TradeApi:
             method="POST",
             path="/api/v3/sor/order/test",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SorOrderTestResponse,
             is_signed=True,

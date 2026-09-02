@@ -93,31 +93,26 @@ class MyFiltersResponseAssetFiltersInner(BaseModel):
 
         instance = cls.model_construct()
         error_messages = []
-        match = 0
+        matched = []
         is_list = isinstance(parsed, list)
 
         for subcls in ["MaxAssetFilter"]:
             if is_list == subcls.is_array():
                 try:
-                    instance.actual_instance = subcls.from_dict(parsed)
-                    match += 1
+                    matched.append(subcls.from_dict(parsed))
                 except (ValidationError, ValueError) as e:
                     error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into MyFiltersResponseAssetFiltersInner with oneOf schemas: MaxAssetFilter. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
+        if not matched:
             # no match
             raise ValueError(
                 "No match found when deserializing the JSON string into MyFiltersResponseAssetFiltersInner with oneOf schemas: MaxAssetFilter. Details: "
                 + ", ".join(error_messages)
             )
-        else:
-            return instance
+
+        instance.actual_instance = matched[0]
+
+        return instance
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

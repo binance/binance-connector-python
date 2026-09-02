@@ -79,39 +79,33 @@ class TickerTradingDayResponse(BaseModel):
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
-        match = 0
+        matched = []
 
         is_list = isinstance(parsed, list)
 
         # deserialize data into TickerTradingDayResponse1
         if is_list == TickerTradingDayResponse1.is_array():
             try:
-                instance.actual_instance = TickerTradingDayResponse1.from_dict(parsed)
-                match += 1
+                matched.append(TickerTradingDayResponse1.from_dict(parsed))
             except (ValidationError, ValueError) as e:
                 error_messages.append(str(e))
         # deserialize data into TickerTradingDayResponse2
         if is_list == TickerTradingDayResponse2.is_array():
             try:
-                instance.actual_instance = TickerTradingDayResponse2.from_dict(parsed)
-                match += 1
+                matched.append(TickerTradingDayResponse2.from_dict(parsed))
             except (ValidationError, ValueError) as e:
                 error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into TickerTradingDayResponse with oneOf schemas: TickerTradingDayResponse1, TickerTradingDayResponse2. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
+        if not matched:
             # no match
             raise ValueError(
                 "No match found when deserializing the JSON string into TickerTradingDayResponse with oneOf schemas: TickerTradingDayResponse1, TickerTradingDayResponse2. Details: "
                 + ", ".join(error_messages)
             )
-        else:
-            return instance
+
+        instance.actual_instance = matched[0]
+
+        return instance
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

@@ -69,39 +69,33 @@ class Ticker24hrResponse(BaseModel):
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
-        match = 0
+        matched = []
 
         is_list = isinstance(parsed, list)
 
         # deserialize data into Ticker24hrResponse1
         if is_list == Ticker24hrResponse1.is_array():
             try:
-                instance.actual_instance = Ticker24hrResponse1.from_dict(parsed)
-                match += 1
+                matched.append(Ticker24hrResponse1.from_dict(parsed))
             except (ValidationError, ValueError) as e:
                 error_messages.append(str(e))
         # deserialize data into Ticker24hrResponse2
         if is_list == Ticker24hrResponse2.is_array():
             try:
-                instance.actual_instance = Ticker24hrResponse2.from_dict(parsed)
-                match += 1
+                matched.append(Ticker24hrResponse2.from_dict(parsed))
             except (ValidationError, ValueError) as e:
                 error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into Ticker24hrResponse with oneOf schemas: Ticker24hrResponse1, Ticker24hrResponse2. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
+        if not matched:
             # no match
             raise ValueError(
                 "No match found when deserializing the JSON string into Ticker24hrResponse with oneOf schemas: Ticker24hrResponse1, Ticker24hrResponse2. Details: "
                 + ", ".join(error_messages)
             )
-        else:
-            return instance
+
+        instance.actual_instance = matched[0]
+
+        return instance
 
     def to_json(self) -> str:
         """Returns the JSON representation of the actual instance"""

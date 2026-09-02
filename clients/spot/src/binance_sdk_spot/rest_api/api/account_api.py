@@ -79,7 +79,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -88,7 +88,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/account/commission",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountCommissionResponse,
             is_signed=True,
@@ -135,7 +135,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "from_id": from_id,
             "start_time": start_time,
@@ -150,7 +150,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/allOrderList",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AllOrderListResponse,
             is_signed=True,
@@ -206,7 +206,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -222,7 +222,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/allOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AllOrdersResponse,
             is_signed=True,
@@ -260,7 +260,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"omit_zero_balances": omit_zero_balances, "recv_window": recv_window}
 
         return send_request(
@@ -269,7 +269,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAccountResponse,
             is_signed=True,
@@ -309,7 +309,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -318,7 +318,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/openOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOpenOrdersResponse,
             is_signed=True,
@@ -369,7 +369,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -383,7 +383,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOrderResponse,
             is_signed=True,
@@ -423,7 +423,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "order_list_id": order_list_id,
             "orig_client_order_id": orig_client_order_id,
@@ -436,7 +436,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/orderList",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOrderListResponse,
             is_signed=True,
@@ -503,7 +503,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -520,7 +520,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/myAllocations",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=MyAllocationsResponse,
             is_signed=True,
@@ -563,7 +563,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -572,7 +572,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/myFilters",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=MyFiltersResponse,
             is_signed=True,
@@ -633,7 +633,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "prevented_match_id": prevented_match_id,
@@ -649,7 +649,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/myPreventedMatches",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=MyPreventedMatchesResponse,
             is_signed=True,
@@ -717,7 +717,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -734,7 +734,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/myTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=MyTradesResponse,
             is_signed=True,
@@ -770,7 +770,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -779,7 +779,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/openOrderList",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OpenOrderListResponse,
             is_signed=True,
@@ -832,7 +832,7 @@ class AccountApi:
                 field="order_id", error_message="Missing required parameter 'order_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -847,7 +847,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/order/amendments",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderAmendmentsResponse,
             is_signed=True,
@@ -883,7 +883,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -892,7 +892,7 @@ class AccountApi:
             method="GET",
             path="/api/v3/rateLimit/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RateLimitOrderResponse,
             is_signed=True,
