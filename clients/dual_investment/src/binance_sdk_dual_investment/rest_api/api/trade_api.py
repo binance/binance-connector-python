@@ -82,7 +82,7 @@ class TradeApi:
                 error_message="Missing required parameter 'auto_compound_plan'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "auto_compound_plan": auto_compound_plan,
@@ -95,7 +95,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/dci/product/auto_compound/edit-status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ChangeAutoCompoundStatusResponse,
             is_signed=True,
@@ -128,7 +128,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -137,7 +137,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/dci/product/accounts",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CheckDualInvestmentAccountsResponse,
             is_signed=True,
@@ -179,7 +179,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "status": status,
             "page_size": page_size,
@@ -193,7 +193,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/dci/product/positions",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetDualInvestmentPositionsResponse,
             is_signed=True,
@@ -260,7 +260,7 @@ class TradeApi:
                 error_message="Missing required parameter 'auto_compound_plan'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "id": id,
             "order_id": order_id,
@@ -275,7 +275,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/dci/product/subscribe",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeDualInvestmentProductsResponse,
             is_signed=True,

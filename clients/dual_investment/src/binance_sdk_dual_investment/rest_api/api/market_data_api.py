@@ -87,7 +87,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'invest_coin'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "option_type": option_type,
             "exercised_coin": exercised_coin,
@@ -103,7 +103,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/dci/product/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetDualInvestmentProductListResponse,
         )
