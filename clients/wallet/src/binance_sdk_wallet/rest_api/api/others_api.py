@@ -58,7 +58,7 @@ class OthersApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -67,7 +67,7 @@ class OthersApi:
             method="GET",
             path="/sapi/v1/spot/delist-schedule",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSymbolsDelistScheduleForSpotResponse,
         )
@@ -96,7 +96,7 @@ class OthersApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -105,7 +105,7 @@ class OthersApi:
             method="GET",
             path="/sapi/v1/system/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SystemStatusResponse,
         )

@@ -89,7 +89,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "recv_window": recv_window}
 
         return send_request(
@@ -98,7 +98,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/assetDetail",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AssetDetailResponse,
             is_signed=True,
@@ -142,7 +142,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -157,7 +157,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/assetDividend",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AssetDividendRecordResponse,
             is_signed=True,
@@ -205,7 +205,7 @@ class AssetApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "account_type": account_type,
@@ -221,7 +221,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust-convert/convert",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DustConvertResponse,
             is_signed=True,
@@ -264,7 +264,7 @@ class AssetApi:
                 error_message="Missing required parameter 'target_asset'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "target_asset": target_asset,
             "account_type": account_type,
@@ -277,7 +277,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust-convert/query-convertible-assets",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DustConvertibleAssetsResponse,
             is_signed=True,
@@ -322,7 +322,7 @@ class AssetApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "account_type": account_type,
@@ -335,7 +335,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DustTransferResponse,
             is_signed=True,
@@ -378,7 +378,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "account_type": account_type,
             "start_time": start_time,
@@ -392,7 +392,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/dribblet",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DustlogResponse,
             is_signed=True,
@@ -432,7 +432,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "need_btc_valuation": need_btc_valuation,
@@ -445,7 +445,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/get-funding-asset",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FundingWalletResponse,
             is_signed=True,
@@ -482,7 +482,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"account_type": account_type, "recv_window": recv_window}
 
         return send_request(
@@ -491,7 +491,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/dust-btc",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAssetsThatCanBeConvertedIntoBnbResponse,
             is_signed=True,
@@ -550,7 +550,7 @@ class AssetApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -567,7 +567,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/ledger-transfer/cloud-mining/queryByPage",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCloudMiningPaymentAndRefundHistoryResponse,
             is_signed=True,
@@ -599,7 +599,7 @@ class AssetApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -608,7 +608,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/spot/open-symbol-list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOpenSymbolListResponse,
         )
@@ -639,7 +639,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"tag": tag}
 
         return send_request(
@@ -648,7 +648,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/spot/asset/tags",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSpotAssetTagsResponse,
         )
@@ -707,7 +707,7 @@ class AssetApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "start_time": start_time,
@@ -725,7 +725,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/custody/transfer-history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserDelegationHistoryResponse,
             is_signed=True,
@@ -783,7 +783,7 @@ class AssetApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "type": type,
             "start_time": start_time,
@@ -801,7 +801,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/transfer",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserUniversalTransferHistoryResponse,
             is_signed=True,
@@ -839,7 +839,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "quote_asset": quote_asset,
             "need_balance_detail": need_balance_detail,
@@ -852,7 +852,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/wallet/balance",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryUserWalletBalanceResponse,
             is_signed=True,
@@ -892,7 +892,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "spot_bnb_burn": spot_bnb_burn,
             "interest_bnb_burn": interest_bnb_burn,
@@ -905,7 +905,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/bnbBurn",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ToggleBnbBurnOnSpotTradeAndMarginInterestResponse,
             is_signed=True,
@@ -940,7 +940,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -949,7 +949,7 @@ class AssetApi:
             method="GET",
             path="/sapi/v1/asset/tradeFee",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TradeFeeResponse,
             is_signed=True,
@@ -990,7 +990,7 @@ class AssetApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "need_btc_valuation": need_btc_valuation,
@@ -1003,7 +1003,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v3/asset/getUserAsset",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UserAssetResponse,
             is_signed=True,
@@ -1096,7 +1096,7 @@ class AssetApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "type": type,
             "asset": asset,
@@ -1112,7 +1112,7 @@ class AssetApi:
             method="POST",
             path="/sapi/v1/asset/transfer",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UserUniversalTransferResponse,
             is_signed=True,

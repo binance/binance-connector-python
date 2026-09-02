@@ -163,7 +163,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'originator_pii'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "address": address,
             "coin": coin,
@@ -184,7 +184,7 @@ class TravelRuleApi:
             method="POST",
             path="/sapi/v1/localentity/broker/withdraw/apply",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=BrokerWithdrawResponse,
             is_signed=True,
@@ -218,7 +218,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -227,7 +227,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/questionnaire-requirements",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CheckQuestionnaireRequirementsResponse,
             is_signed=True,
@@ -285,7 +285,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -306,7 +306,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/deposit/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DepositHistoryTravelRuleResponse,
             is_signed=True,
@@ -360,7 +360,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "deposit_id": deposit_id,
             "tx_id": tx_id,
@@ -379,7 +379,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v2/localentity/deposit/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DepositHistoryV2Response,
             is_signed=True,
@@ -413,7 +413,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -422,7 +422,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/addressVerify/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=FetchAddressVerificationListResponse,
             is_signed=True,
@@ -455,7 +455,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -464,7 +464,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/country/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCountryListResponse,
             is_signed=True,
@@ -505,7 +505,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'country_code'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"country_code": country_code, "recv_window": recv_window}
 
         return send_request(
@@ -514,7 +514,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/region/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRegionListResponse,
             is_signed=True,
@@ -626,7 +626,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'beneficiary_pii'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "sub_account_id": sub_account_id,
             "deposit_id": deposit_id,
@@ -645,7 +645,7 @@ class TravelRuleApi:
             method="PUT",
             path="/sapi/v1/localentity/broker/deposit/provide-info",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireResponse,
             is_signed=True,
@@ -696,7 +696,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'questionnaire'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"tran_id": tran_id, "questionnaire": questionnaire}
 
         return send_request(
@@ -705,7 +705,7 @@ class TravelRuleApi:
             method="PUT",
             path="/sapi/v1/localentity/deposit/provide-info",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireTravelRuleResponse,
             is_signed=True,
@@ -757,7 +757,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'questionnaire'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"deposit_id": deposit_id, "questionnaire": questionnaire}
 
         return send_request(
@@ -766,7 +766,7 @@ class TravelRuleApi:
             method="PUT",
             path="/sapi/v2/localentity/deposit/provide-info",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubmitDepositQuestionnaireV2Response,
             is_signed=True,
@@ -799,7 +799,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -808,7 +808,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/vasp",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VaspListResponse,
             is_signed=True,
@@ -867,7 +867,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -888,7 +888,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v1/localentity/withdraw/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawHistoryV1Response,
             is_signed=True,
@@ -953,7 +953,7 @@ class TravelRuleApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "tr_id": tr_id,
             "tx_id": tx_id,
@@ -974,7 +974,7 @@ class TravelRuleApi:
             method="GET",
             path="/sapi/v2/localentity/withdraw/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawHistoryV2Response,
             is_signed=True,
@@ -1053,7 +1053,7 @@ class TravelRuleApi:
                 error_message="Missing required parameter 'questionnaire'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "coin": coin,
             "address": address,
@@ -1074,7 +1074,7 @@ class TravelRuleApi:
             method="POST",
             path="/sapi/v1/localentity/withdraw/apply",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=WithdrawTravelRuleResponse,
             is_signed=True,

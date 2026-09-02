@@ -63,7 +63,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -72,7 +72,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/account/apiTradingStatus",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountApiTradingStatusResponse,
             is_signed=True,
@@ -105,7 +105,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -114,7 +114,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/account/info",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountInfoResponse,
             is_signed=True,
@@ -147,7 +147,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -156,7 +156,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/account/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountStatusResponse,
             is_signed=True,
@@ -207,7 +207,7 @@ class AccountApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "type": type,
             "start_time": start_time,
@@ -222,7 +222,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/accountSnapshot",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DailyAccountSnapshotResponse,
             is_signed=True,
@@ -258,7 +258,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -267,7 +267,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/account/disableFastWithdrawSwitch",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -303,7 +303,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -312,7 +312,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/account/enableFastWithdrawSwitch",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             is_signed=True,
             signer=self._signer,
@@ -344,7 +344,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -353,7 +353,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/account/apiRestrictions",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetApiKeyPermissionResponse,
             is_signed=True,
