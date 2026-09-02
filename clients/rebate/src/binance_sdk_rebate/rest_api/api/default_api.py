@@ -69,7 +69,7 @@ class DefaultApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -83,7 +83,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/rebate/taxQuery",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSpotRebateHistoryRecordsResponse,
             is_signed=True,
