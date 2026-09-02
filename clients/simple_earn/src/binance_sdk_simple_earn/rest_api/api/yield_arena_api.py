@@ -60,7 +60,7 @@ class YieldArenaApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -69,7 +69,7 @@ class YieldArenaApi:
             method="GET",
             path="/sapi/v1/earn/arena/activities",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetYieldArenaActivitiesResponse,
             is_signed=True,

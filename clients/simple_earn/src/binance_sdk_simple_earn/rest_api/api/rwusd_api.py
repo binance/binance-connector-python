@@ -68,7 +68,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -77,7 +77,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdAccountResponse,
             is_signed=True,
@@ -110,7 +110,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -119,7 +119,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/quota",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdQuotaDetailsResponse,
             is_signed=True,
@@ -170,7 +170,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -185,7 +185,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/history/rateHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdRateHistoryResponse,
             is_signed=True,
@@ -236,7 +236,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -251,7 +251,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/history/redemptionHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdRedemptionHistoryResponse,
             is_signed=True,
@@ -302,7 +302,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -317,7 +317,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/history/rewardsHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdRewardsHistoryResponse,
             is_signed=True,
@@ -370,7 +370,7 @@ class RwusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -386,7 +386,7 @@ class RwusdApi:
             method="GET",
             path="/sapi/v1/rwusd/history/subscriptionHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetRwusdSubscriptionHistoryResponse,
             is_signed=True,
@@ -436,7 +436,7 @@ class RwusdApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"amount": amount, "type": type, "recv_window": recv_window}
 
         return send_request(
@@ -445,7 +445,7 @@ class RwusdApi:
             method="POST",
             path="/sapi/v1/rwusd/redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemRwusdResponse,
             is_signed=True,
@@ -495,7 +495,7 @@ class RwusdApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -504,7 +504,7 @@ class RwusdApi:
             method="POST",
             path="/sapi/v1/rwusd/subscribe",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeRwusdResponse,
             is_signed=True,

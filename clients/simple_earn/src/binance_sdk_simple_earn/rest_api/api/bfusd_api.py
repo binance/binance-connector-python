@@ -67,7 +67,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -76,7 +76,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdAccountResponse,
             is_signed=True,
@@ -109,7 +109,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -118,7 +118,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/quota",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdQuotaDetailsResponse,
             is_signed=True,
@@ -169,7 +169,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -184,7 +184,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/history/rateHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdRateHistoryResponse,
             is_signed=True,
@@ -235,7 +235,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -250,7 +250,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/history/redemptionHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdRedemptionHistoryResponse,
             is_signed=True,
@@ -301,7 +301,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -316,7 +316,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/history/rewardsHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdRewardsHistoryResponse,
             is_signed=True,
@@ -369,7 +369,7 @@ class BfusdApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "start_time": start_time,
@@ -385,7 +385,7 @@ class BfusdApi:
             method="GET",
             path="/sapi/v1/bfusd/history/subscriptionHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBfusdSubscriptionHistoryResponse,
             is_signed=True,
@@ -435,7 +435,7 @@ class BfusdApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"amount": amount, "type": type, "recv_window": recv_window}
 
         return send_request(
@@ -444,7 +444,7 @@ class BfusdApi:
             method="POST",
             path="/sapi/v1/bfusd/redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemBfusdResponse,
             is_signed=True,
@@ -494,7 +494,7 @@ class BfusdApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -503,7 +503,7 @@ class BfusdApi:
             method="POST",
             path="/sapi/v1/bfusd/subscribe",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeBfusdResponse,
             is_signed=True,
