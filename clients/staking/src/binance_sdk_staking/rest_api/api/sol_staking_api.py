@@ -72,7 +72,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -81,7 +81,7 @@ class SolStakingApi:
             method="POST",
             path="/sapi/v1/sol-staking/sol/claim",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ClaimBoostRewardsResponse,
             is_signed=True,
@@ -131,7 +131,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -146,7 +146,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/rateHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBnsolRateHistoryResponse,
             is_signed=True,
@@ -196,7 +196,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -211,7 +211,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/bnsolRewardsHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBnsolRewardsHistoryResponse,
             is_signed=True,
@@ -268,7 +268,7 @@ class SolStakingApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "type": type,
             "start_time": start_time,
@@ -284,7 +284,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/boostRewardsHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBoostRewardsHistoryResponse,
             is_signed=True,
@@ -336,7 +336,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "redeem_id": redeem_id,
             "start_time": start_time,
@@ -352,7 +352,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/redemptionHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSolRedemptionHistoryResponse,
             is_signed=True,
@@ -404,7 +404,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "purchase_id": purchase_id,
             "start_time": start_time,
@@ -420,7 +420,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/stakingHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSolStakingHistoryResponse,
             is_signed=True,
@@ -453,7 +453,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -462,7 +462,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/quota",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSolStakingQuotaDetailsResponse,
             is_signed=True,
@@ -504,7 +504,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -513,7 +513,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/sol/history/unclaimedRewards",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetUnclaimedRewardsResponse,
             is_signed=True,
@@ -556,7 +556,7 @@ class SolStakingApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -565,7 +565,7 @@ class SolStakingApi:
             method="POST",
             path="/sapi/v1/sol-staking/sol/redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemSolResponse,
             is_signed=True,
@@ -598,7 +598,7 @@ class SolStakingApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -607,7 +607,7 @@ class SolStakingApi:
             method="GET",
             path="/sapi/v1/sol-staking/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SolStakingAccountResponse,
             is_signed=True,
@@ -650,7 +650,7 @@ class SolStakingApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -659,7 +659,7 @@ class SolStakingApi:
             method="POST",
             path="/sapi/v1/sol-staking/sol/stake",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeSolStakingResponse,
             is_signed=True,

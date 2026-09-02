@@ -80,7 +80,7 @@ class OnChainYieldsApi:
                 error_message="Missing required parameter 'project_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"project_id": project_id, "recv_window": recv_window}
 
         return send_request(
@@ -89,7 +89,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/personalLeftQuota",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedPersonalLeftQuotaResponse,
             is_signed=True,
@@ -131,7 +131,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "current": current,
@@ -145,7 +145,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedProductListResponse,
             is_signed=True,
@@ -188,7 +188,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "position_id": position_id,
@@ -204,7 +204,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/position",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedProductPositionResponse,
             is_signed=True,
@@ -260,7 +260,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "redeem_id": redeem_id,
@@ -278,7 +278,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/history/redemptionRecord",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedRedemptionRecordResponse,
             is_signed=True,
@@ -332,7 +332,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "asset": asset,
@@ -349,7 +349,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/history/rewardsRecord",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedRewardsHistoryResponse,
             is_signed=True,
@@ -398,7 +398,7 @@ class OnChainYieldsApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "project_id": project_id,
             "amount": amount,
@@ -412,7 +412,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/subscriptionPreview",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedSubscriptionPreviewResponse,
             is_signed=True,
@@ -468,7 +468,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "purchase_id": purchase_id,
             "client_id": client_id,
@@ -486,7 +486,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/locked/history/subscriptionRecord",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetOnChainYieldsLockedSubscriptionRecordResponse,
             is_signed=True,
@@ -519,7 +519,7 @@ class OnChainYieldsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -528,7 +528,7 @@ class OnChainYieldsApi:
             method="GET",
             path="/sapi/v1/onchain-yields/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OnChainYieldsAccountResponse,
             is_signed=True,
@@ -574,7 +574,7 @@ class OnChainYieldsApi:
                 error_message="Missing required parameter 'position_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "channel_id": channel_id,
@@ -587,7 +587,7 @@ class OnChainYieldsApi:
             method="POST",
             path="/sapi/v1/onchain-yields/locked/redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RedeemOnChainYieldsLockedProductResponse,
             is_signed=True,
@@ -635,7 +635,7 @@ class OnChainYieldsApi:
                 error_message="Missing required parameter 'auto_subscribe'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "auto_subscribe": auto_subscribe,
@@ -648,7 +648,7 @@ class OnChainYieldsApi:
             method="POST",
             path="/sapi/v1/onchain-yields/locked/setAutoSubscribe",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SetOnChainYieldsLockedAutoSubscribeResponse,
             is_signed=True,
@@ -696,7 +696,7 @@ class OnChainYieldsApi:
                 error_message="Missing required parameter 'redeem_to'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "position_id": position_id,
             "redeem_to": redeem_to,
@@ -709,7 +709,7 @@ class OnChainYieldsApi:
             method="POST",
             path="/sapi/v1/onchain-yields/locked/setRedeemOption",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SetOnChainYieldsLockedProductRedeemOptionResponse,
             is_signed=True,
@@ -771,7 +771,7 @@ class OnChainYieldsApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "project_id": project_id,
             "amount": amount,
@@ -789,7 +789,7 @@ class OnChainYieldsApi:
             method="POST",
             path="/sapi/v1/onchain-yields/locked/subscribe",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SubscribeOnChainYieldsLockedProductResponse,
             is_signed=True,
