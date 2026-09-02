@@ -92,7 +92,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "from_id": from_id,
@@ -108,7 +108,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/userTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountTradeListResponse,
             is_signed=True,
@@ -149,7 +149,7 @@ class TradeApi:
                 error_message="Missing required parameter 'underlying'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -158,7 +158,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/allOpenOrdersByUnderlying",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOptionOrdersByUnderlyingResponse,
             is_signed=True,
@@ -198,7 +198,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -207,7 +207,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/allOpenOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllOptionOrdersOnSpecificSymbolResponse,
             is_signed=True,
@@ -254,7 +254,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_ids": order_ids,
@@ -268,7 +268,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/batchOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelMultipleOptionOrdersResponse,
             is_signed=True,
@@ -315,7 +315,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -329,7 +329,7 @@ class TradeApi:
             method="DELETE",
             path="/eapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelOptionOrderResponse,
             is_signed=True,
@@ -412,7 +412,7 @@ class TradeApi:
                 field="quantity", error_message="Missing required parameter 'quantity'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -435,7 +435,7 @@ class TradeApi:
             method="POST",
             path="/eapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=NewOrderResponse,
             is_signed=True,
@@ -470,7 +470,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -479,7 +479,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/position",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OptionPositionInformationResponse,
             is_signed=True,
@@ -529,7 +529,7 @@ class TradeApi:
                 field="orders", error_message="Missing required parameter 'orders'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"orders": orders, "recv_window": recv_window}
 
         return send_request(
@@ -538,7 +538,7 @@ class TradeApi:
             method="POST",
             path="/eapi/v1/batchOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceMultipleOrdersResponse,
             is_signed=True,
@@ -579,7 +579,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -594,7 +594,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/openOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCurrentOpenOptionOrdersResponse,
             is_signed=True,
@@ -642,7 +642,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -658,7 +658,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/historyOrders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryOptionOrderHistoryResponse,
             is_signed=True,
@@ -710,7 +710,7 @@ class TradeApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "order_id": order_id,
@@ -724,7 +724,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/order",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySingleOrderResponse,
             is_signed=True,
@@ -757,7 +757,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -766,7 +766,7 @@ class TradeApi:
             method="POST",
             path="/eapi/v1/stock/contract",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TradfiOptionsContractResponse,
             is_signed=True,
@@ -799,7 +799,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -808,7 +808,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/commission",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UserCommissionResponse,
             is_signed=True,
@@ -849,7 +849,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "start_time": start_time,
@@ -864,7 +864,7 @@ class TradeApi:
             method="GET",
             path="/eapi/v1/exerciseRecord",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=UserExerciseRecordResponse,
             is_signed=True,

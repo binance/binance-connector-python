@@ -78,7 +78,7 @@ class AccountApi:
                 field="currency", error_message="Missing required parameter 'currency'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "currency": currency,
             "record_id": record_id,
@@ -94,7 +94,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/bill",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AccountFundingFlowResponse,
             is_signed=True,
@@ -127,7 +127,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -136,7 +136,7 @@ class AccountApi:
             method="GET",
             path="/eapi/v1/marginAccount",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OptionMarginAccountInformationResponse,
             is_signed=True,

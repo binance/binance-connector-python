@@ -74,7 +74,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'underlyings'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlyings": underlyings, "recv_window": recv_window}
 
         return send_request(
@@ -83,7 +83,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/countdownCancelAllHeartBeat",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -121,7 +121,7 @@ class MarketMakerEndpointsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -130,7 +130,7 @@ class MarketMakerEndpointsApi:
             method="GET",
             path="/eapi/v1/countdownCancelAll",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -171,7 +171,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'underlying'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -180,7 +180,7 @@ class MarketMakerEndpointsApi:
             method="GET",
             path="/eapi/v1/mmp",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarketMakerProtectionConfigResponse,
             is_signed=True,
@@ -221,7 +221,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'underlying'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlying": underlying, "recv_window": recv_window}
 
         return send_request(
@@ -230,7 +230,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/mmpReset",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ResetMarketMakerProtectionConfigResponse,
             is_signed=True,
@@ -283,7 +283,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'countdown_time'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "underlying": underlying,
             "countdown_time": countdown_time,
@@ -296,7 +296,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/countdownCancelAll",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SetAutoCancelAllOpenOrdersResponse,
             is_signed=True,
@@ -365,7 +365,7 @@ class MarketMakerEndpointsApi:
                 error_message="Missing required parameter 'delta_limit'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "underlying": underlying,
             "window_time_in_milliseconds": window_time_in_milliseconds,
@@ -381,7 +381,7 @@ class MarketMakerEndpointsApi:
             method="POST",
             path="/eapi/v1/mmpSet",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=SetMarketMakerProtectionConfigResponse,
             is_signed=True,

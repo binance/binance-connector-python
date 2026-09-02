@@ -66,7 +66,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -75,7 +75,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/time",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CheckServerTimeResponse,
         )
@@ -102,7 +102,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -111,7 +111,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/exchangeInfo",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInformationResponse,
         )
@@ -149,7 +149,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "underlying": underlying,
             "start_time": start_time,
@@ -163,7 +163,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/exerciseHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=HistoricalExerciseRecordsResponse,
         )
@@ -198,7 +198,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'underlying'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlying": underlying}
 
         return send_request(
@@ -207,7 +207,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/index",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=IndexPriceResponse,
         )
@@ -256,7 +256,7 @@ class MarketDataApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "interval": interval,
@@ -271,7 +271,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/klines",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=KlineCandlestickDataResponse,
         )
@@ -313,7 +313,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'expiration'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"underlying_asset": underlying_asset, "expiration": expiration}
 
         return send_request(
@@ -322,7 +322,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/openInterest",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OpenInterestResponse,
         )
@@ -351,7 +351,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -360,7 +360,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/mark",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OptionMarkPriceResponse,
         )
@@ -401,7 +401,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -410,7 +410,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/depth",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=OrderBookResponse,
         )
@@ -441,7 +441,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -450,7 +450,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/blockTrades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RecentBlockTradesListResponse,
         )
@@ -486,7 +486,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "limit": limit}
 
         return send_request(
@@ -495,7 +495,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/trades",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=RecentTradesListResponse,
         )
@@ -522,7 +522,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -531,7 +531,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/ping",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -559,7 +559,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -568,7 +568,7 @@ class MarketDataApi:
             method="GET",
             path="/eapi/v1/ticker",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=Ticker24hrPriceChangeStatisticsResponse,
         )
