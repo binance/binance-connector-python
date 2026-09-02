@@ -73,7 +73,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'loan_coin'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"loan_coin": loan_coin, "recv_window": recv_window}
 
         return send_request(
@@ -82,7 +82,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/request/interestRate",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBorrowInterestRateResponse,
             is_signed=True,
@@ -120,7 +120,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"collateral_coin": collateral_coin, "recv_window": recv_window}
 
         return send_request(
@@ -129,7 +129,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/collateral/data",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCollateralAssetDataResponse,
             is_signed=True,
@@ -169,7 +169,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "loan_coin": loan_coin,
             "vip_level": vip_level,
@@ -182,7 +182,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/loanable/data",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetLoanableAssetsDataResponse,
             is_signed=True,
@@ -240,7 +240,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'recv_window'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "coin": coin,
             "recv_window": recv_window,
@@ -256,7 +256,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/interestRateHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetVIPLoanInterestRateHistoryResponse,
             is_signed=True,
@@ -303,7 +303,7 @@ class MarketDataApi:
                 error_message="Missing required parameter 'loan_coin'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "loan_coin": loan_coin,
             "duration": duration,
@@ -318,7 +318,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/loan/vip/fixed/market",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryVIPLoanFixedRateMarketResponse,
             is_signed=True,

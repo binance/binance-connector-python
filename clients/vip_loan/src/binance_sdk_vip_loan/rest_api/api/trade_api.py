@@ -113,7 +113,7 @@ class TradeApi:
                 error_message="Missing required parameter 'is_flexible_rate'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "loan_account_id": loan_account_id,
             "loan_coin": loan_coin,
@@ -131,7 +131,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/loan/vip/borrow",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VipLoanBorrowResponse,
             is_signed=True,
@@ -213,7 +213,7 @@ class TradeApi:
                 error_message="Missing required parameter 'collateral_account_id'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "supply_request": supply_request,
             "borrow_coin": borrow_coin,
@@ -231,7 +231,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/loan/vip/fixed/borrow",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VipLoanFixedRateBorrowResponse,
             is_signed=True,
@@ -281,7 +281,7 @@ class TradeApi:
                 error_message="Missing required parameter 'loan_term'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "order_id": order_id,
             "loan_term": loan_term,
@@ -294,7 +294,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/loan/vip/renew",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VipLoanRenewResponse,
             is_signed=True,
@@ -340,7 +340,7 @@ class TradeApi:
                 field="amount", error_message="Missing required parameter 'amount'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "amount": amount, "recv_window": recv_window}
 
         return send_request(
@@ -349,7 +349,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/loan/vip/repay",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=VipLoanRepayResponse,
             is_signed=True,
