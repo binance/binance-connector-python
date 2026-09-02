@@ -60,7 +60,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -69,7 +69,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/equity/market/exchangeInfo",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ExchangeInfoResponse,
         )
@@ -105,7 +105,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -114,7 +114,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/equity/market/quote",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=LatestQuoteResponse,
         )
@@ -143,7 +143,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -152,7 +152,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/equity/market/tokenized-assets",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenizedAssetsResponse,
         )

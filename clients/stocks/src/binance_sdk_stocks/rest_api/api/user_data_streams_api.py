@@ -57,7 +57,7 @@ class UserDataStreamsApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -66,7 +66,7 @@ class UserDataStreamsApi:
             method="POST",
             path="/sapi/v1/equity/listenKey",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateRenewListenKeyResponse,
         )

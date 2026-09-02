@@ -70,7 +70,7 @@ class TokenizedApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -85,7 +85,7 @@ class TokenizedApi:
             method="GET",
             path="/sapi/v1/equity/tokenized/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenizedConvertHistoryResponse,
             is_signed=True,
@@ -133,7 +133,7 @@ class TokenizedApi:
                 error_message="Missing required parameter 'convert_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "issuer_request_id": issuer_request_id,
             "convert_type": convert_type,
@@ -146,7 +146,7 @@ class TokenizedApi:
             method="GET",
             path="/sapi/v1/equity/tokenized/convert-status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenizedConvertStatusResponse,
             is_signed=True,
@@ -196,7 +196,7 @@ class TokenizedApi:
                 error_message="Missing required parameter 'underlying_asset_amount'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "underlying_asset": underlying_asset,
             "underlying_asset_amount": underlying_asset_amount,
@@ -210,7 +210,7 @@ class TokenizedApi:
             method="POST",
             path="/sapi/v1/equity/tokenized/mint",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenizedMintResponse,
             is_signed=True,
@@ -260,7 +260,7 @@ class TokenizedApi:
                 error_message="Missing required parameter 'tokenized_asset_amount'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "tokenized_asset": tokenized_asset,
             "tokenized_asset_amount": tokenized_asset_amount,
@@ -274,7 +274,7 @@ class TokenizedApi:
             method="POST",
             path="/sapi/v1/equity/tokenized/redeem",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TokenizedRedeemResponse,
             is_signed=True,

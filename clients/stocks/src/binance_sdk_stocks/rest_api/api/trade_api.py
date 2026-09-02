@@ -72,7 +72,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -81,7 +81,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/equity/order/cancel-all",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelAllEquityOrdersResponse,
             is_signed=True,
@@ -121,7 +121,7 @@ class TradeApi:
                 field="order_id", error_message="Missing required parameter 'order_id'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"order_id": order_id, "recv_window": recv_window}
 
         return send_request(
@@ -130,7 +130,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/equity/order/cancel",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CancelEquityOrderResponse,
             is_signed=True,
@@ -163,7 +163,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -172,7 +172,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/equity/order/open-orders",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CurrentOpenOrdersResponse,
             is_signed=True,
@@ -209,7 +209,7 @@ class TradeApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "order_id": order_id,
             "client_order_id": client_order_id,
@@ -222,7 +222,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/equity/order/detail",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EquityOrderDetailResponse,
             is_signed=True,
@@ -281,7 +281,7 @@ class TradeApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -300,7 +300,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/equity/order/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EquityOrderHistoryResponse,
             is_signed=True,
@@ -357,7 +357,7 @@ class TradeApi:
                 field="end_time", error_message="Missing required parameter 'end_time'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "start_time": start_time,
             "end_time": end_time,
@@ -375,7 +375,7 @@ class TradeApi:
             method="GET",
             path="/sapi/v1/equity/trade/history",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EquityTradeHistoryResponse,
             is_signed=True,
@@ -454,7 +454,7 @@ class TradeApi:
                 error_message="Missing required parameter 'order_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "symbol": symbol,
             "side": side,
@@ -477,7 +477,7 @@ class TradeApi:
             method="POST",
             path="/sapi/v1/equity/order/place",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PlaceEquityOrderResponse,
             is_signed=True,
