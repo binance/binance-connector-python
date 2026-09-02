@@ -77,7 +77,7 @@ class AccountManagementApi:
                 error_message="Missing required parameter 'sub_account_string'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"sub_account_string": sub_account_string, "recv_window": recv_window}
 
         return send_request(
@@ -86,7 +86,7 @@ class AccountManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/virtualSubAccount",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateAVirtualSubAccountResponse,
             is_signed=True,
@@ -126,7 +126,7 @@ class AccountManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -135,7 +135,7 @@ class AccountManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/futures/enable",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EnableFuturesForSubAccountResponse,
             is_signed=True,
@@ -175,7 +175,7 @@ class AccountManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -184,7 +184,7 @@ class AccountManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/eoptions/enable",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EnableOptionsForSubAccountResponse,
             is_signed=True,
@@ -224,7 +224,7 @@ class AccountManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -233,7 +233,7 @@ class AccountManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/futures/positionRisk",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesPositionRiskOfSubAccountResponse,
             is_signed=True,
@@ -280,7 +280,7 @@ class AccountManagementApi:
                 error_message="Missing required parameter 'futures_type'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "futures_type": futures_type,
@@ -293,7 +293,7 @@ class AccountManagementApi:
             method="GET",
             path="/sapi/v2/sub-account/futures/positionRisk",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetFuturesPositionRiskOfSubAccountV2Response,
             is_signed=True,
@@ -331,7 +331,7 @@ class AccountManagementApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -340,7 +340,7 @@ class AccountManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/status",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSubAccountsStatusOnMarginOrFuturesResponse,
             is_signed=True,
@@ -381,7 +381,7 @@ class AccountManagementApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "is_freeze": is_freeze,
@@ -396,7 +396,7 @@ class AccountManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/list",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountListResponse,
             is_signed=True,
@@ -431,7 +431,7 @@ class AccountManagementApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"email": email, "recv_window": recv_window}
 
         return send_request(
@@ -440,7 +440,7 @@ class AccountManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/transaction-statistics",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountTransactionStatisticsResponse,
             is_signed=True,

@@ -89,7 +89,7 @@ class ApiManagementApi:
                 field="status", error_message="Missing required parameter 'status'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -104,7 +104,7 @@ class ApiManagementApi:
             method="POST",
             path="/sapi/v2/sub-account/subAccountApi/ipRestriction",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AddIpRestrictionForSubAccountApiKeyResponse,
             is_signed=True,
@@ -178,7 +178,7 @@ class ApiManagementApi:
                 field="status", error_message="Missing required parameter 'status'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "api_name": api_name,
@@ -200,7 +200,7 @@ class ApiManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/subAccountApi",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateSubAccountApiKeyResponse,
             is_signed=True,
@@ -257,7 +257,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'ip_address'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -271,7 +271,7 @@ class ApiManagementApi:
             method="DELETE",
             path="/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DeleteIpListForASubAccountApiKeyResponse,
             is_signed=True,
@@ -322,7 +322,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'sub_account_api_key'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -335,7 +335,7 @@ class ApiManagementApi:
             method="DELETE",
             path="/sapi/v1/sub-account/subAccountApi",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=object,
             is_signed=True,
@@ -382,7 +382,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'sub_account_api_key'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -395,7 +395,7 @@ class ApiManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/subAccountApi/ipRestriction",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetIpRestrictionForASubAccountApiKeyResponse,
             is_signed=True,
@@ -457,7 +457,7 @@ class ApiManagementApi:
                 error_message="Missing required parameter 'sub_account_api_key'",
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -475,7 +475,7 @@ class ApiManagementApi:
             method="POST",
             path="/sapi/v1/sub-account/subAccountApiPermission",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=ModifySubAccountApiKeyPermissionResponse,
             is_signed=True,
@@ -521,7 +521,7 @@ class ApiManagementApi:
                 field="email", error_message="Missing required parameter 'email'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "email": email,
             "sub_account_api_key": sub_account_api_key,
@@ -536,7 +536,7 @@ class ApiManagementApi:
             method="GET",
             path="/sapi/v1/sub-account/subAccountApi",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QuerySubAccountApiKeyResponse,
             is_signed=True,
