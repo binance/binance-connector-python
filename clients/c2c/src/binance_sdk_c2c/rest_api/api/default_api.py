@@ -71,7 +71,7 @@ class DefaultApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "trade_type": trade_type,
             "start_timestamp": start_timestamp,
@@ -86,7 +86,7 @@ class DefaultApi:
             method="GET",
             path="/sapi/v1/c2c/orderMatch/listUserOrderHistory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetC2CTradeHistoryResponse,
         )
