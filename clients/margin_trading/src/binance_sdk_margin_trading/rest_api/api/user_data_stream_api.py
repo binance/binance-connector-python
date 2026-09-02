@@ -55,7 +55,7 @@ class UserDataStreamApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -64,7 +64,7 @@ class UserDataStreamApi:
             method="DELETE",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -100,7 +100,7 @@ class UserDataStreamApi:
                 error_message="Missing required parameter 'listen_key'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"listen_key": listen_key}
 
         return send_request(
@@ -109,7 +109,7 @@ class UserDataStreamApi:
             method="PUT",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
         )
 
@@ -137,7 +137,7 @@ class UserDataStreamApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -146,7 +146,7 @@ class UserDataStreamApi:
             method="POST",
             path="/sapi/v1/margin/listen-key",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
         )

@@ -78,7 +78,7 @@ class AccountApi:
                 error_message="Missing required parameter 'max_leverage'",
             )
 
-        body = {}
+        request_body = {}
         payload = {"max_leverage": max_leverage}
 
         return send_request(
@@ -87,7 +87,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/margin/max-leverage",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AdjustCrossMarginMaxLeverageResponse,
             is_signed=True,
@@ -127,7 +127,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -136,7 +136,7 @@ class AccountApi:
             method="DELETE",
             path="/sapi/v1/margin/isolated/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=DisableIsolatedMarginAccountResponse,
             is_signed=True,
@@ -176,7 +176,7 @@ class AccountApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -185,7 +185,7 @@ class AccountApi:
             method="POST",
             path="/sapi/v1/margin/isolated/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=EnableIsolatedMarginAccountResponse,
             is_signed=True,
@@ -218,7 +218,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -227,7 +227,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/bnbBurn",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetBnbBurnStatusResponse,
             is_signed=True,
@@ -260,7 +260,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -269,7 +269,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/tradeCoeff",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetSummaryOfMarginAccountResponse,
             is_signed=True,
@@ -326,7 +326,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "symbol": symbol,
@@ -344,7 +344,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/capital-flow",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCrossIsolatedMarginCapitalFlowResponse,
             is_signed=True,
@@ -377,7 +377,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -386,7 +386,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCrossMarginAccountDetailsResponse,
             is_signed=True,
@@ -423,7 +423,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"vip_level": vip_level, "coin": coin, "recv_window": recv_window}
 
         return send_request(
@@ -432,7 +432,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/crossMarginData",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryCrossMarginFeeDataResponse,
             is_signed=True,
@@ -465,7 +465,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -474,7 +474,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/isolated/accountLimit",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryEnabledIsolatedMarginAccountLimitResponse,
             is_signed=True,
@@ -515,7 +515,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbols": symbols, "recv_window": recv_window}
 
         return send_request(
@@ -524,7 +524,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/isolated/account",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryIsolatedMarginAccountInfoResponse,
             is_signed=True,
@@ -561,7 +561,7 @@ class AccountApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"vip_level": vip_level, "symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -570,7 +570,7 @@ class AccountApi:
             method="GET",
             path="/sapi/v1/margin/isolatedMarginData",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryIsolatedMarginFeeDataResponse,
             is_signed=True,

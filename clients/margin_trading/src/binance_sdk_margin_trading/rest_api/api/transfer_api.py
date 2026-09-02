@@ -79,7 +79,7 @@ class TransferApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "type": type,
@@ -97,7 +97,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/margin/transfer",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCrossMarginTransferHistoryResponse,
             is_signed=True,
@@ -142,7 +142,7 @@ class TransferApi:
                 field="asset", error_message="Missing required parameter 'asset'"
             )
 
-        body = {}
+        request_body = {}
         payload = {
             "asset": asset,
             "isolated_symbol": isolated_symbol,
@@ -155,7 +155,7 @@ class TransferApi:
             method="GET",
             path="/sapi/v1/margin/maxTransferable",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMaxTransferOutAmountResponse,
             is_signed=True,

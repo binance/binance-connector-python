@@ -69,7 +69,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -78,7 +78,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/crossMarginCollateralRatio",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CrossMarginCollateralRatioResponse,
         )
@@ -109,7 +109,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -118,7 +118,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/allPairs",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAllCrossMarginPairsResponse,
         )
@@ -151,7 +151,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "recv_window": recv_window}
 
         return send_request(
@@ -160,7 +160,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/isolated/allPairs",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAllIsolatedMarginSymbolResponse,
         )
@@ -191,7 +191,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"asset": asset}
 
         return send_request(
@@ -200,7 +200,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/allAssets",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetAllMarginAssetsResponse,
         )
@@ -231,7 +231,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -240,7 +240,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/delist-schedule",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetDelistScheduleResponse,
         )
@@ -285,7 +285,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -294,7 +294,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/limit-price-pairs",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetLimitPricePairsResponse,
         )
@@ -325,7 +325,7 @@ class MarketDataApi:
 
         """
 
-        body = {}
+        request_body = {}
         payload = {"recv_window": recv_window}
 
         return send_request(
@@ -334,7 +334,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/list-schedule",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetListScheduleResponse,
         )
@@ -363,7 +363,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -372,7 +372,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/risk-based-liquidation-ratio",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarginAssetRiskBasedLiquidationRatioResponse,
         )
@@ -401,7 +401,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -410,7 +410,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/restricted-asset",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetMarginRestrictedAssetsResponse,
         )
@@ -450,7 +450,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol, "tier": tier, "recv_window": recv_window}
 
         return send_request(
@@ -459,7 +459,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/isolatedMarginTier",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryIsolatedMarginTierDataResponse,
             is_signed=True,
@@ -490,7 +490,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -499,7 +499,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/leverageBracket",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryLiabilityCoinLeverageBracketInCrossMarginProModeResponse,
         )
@@ -535,7 +535,7 @@ class MarketDataApi:
                 field="type", error_message="Missing required parameter 'type'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"type": type}
 
         return send_request(
@@ -544,7 +544,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/available-inventory",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginAvailableInventoryResponse,
             is_signed=True,
@@ -582,7 +582,7 @@ class MarketDataApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        body = {}
+        request_body = {}
         payload = {"symbol": symbol}
 
         return send_request(
@@ -591,7 +591,7 @@ class MarketDataApi:
             method="GET",
             path="/sapi/v1/margin/priceIndex",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=QueryMarginPriceindexResponse,
         )
