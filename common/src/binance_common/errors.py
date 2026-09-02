@@ -54,29 +54,49 @@ class ForbiddenError(Error):
 
 
 class TooManyRequestsError(Error):
-    """Represents an error when the client is doing too many requests."""
+    """Represents an error when the client is doing too many requests.
+
+    Attributes:
+        retry_after (Optional[int]): Seconds to wait before retrying, taken from
+            the `Retry-After` response header. `None` when the header is absent
+            or not a number of seconds.
+    """
 
     def __init__(
-        self, error_message: Optional[str] = None, status_code: Optional[int] = None
+        self,
+        error_message: Optional[str] = None,
+        status_code: Optional[int] = None,
+        retry_after: Optional[int] = None,
     ):
         self.error_message = (
             error_message or "Too many requests. You are being rate-limited."
         )
         self.status_code = status_code
+        self.retry_after = retry_after
         super().__init__(self.status_code, self.error_message)
 
 
 class RateLimitBanError(Error):
     """Represents an error when the client's IP has been banned for exceeding rate
-    limits."""
+    limits.
+
+    Attributes:
+        retry_after (Optional[int]): Seconds the ban still has to run, taken from
+            the `Retry-After` response header. `None` when the header is absent
+            or not a number of seconds.
+    """
 
     def __init__(
-        self, error_message: Optional[str] = None, status_code: Optional[int] = None
+        self,
+        error_message: Optional[str] = None,
+        status_code: Optional[int] = None,
+        retry_after: Optional[int] = None,
     ):
         self.error_message = (
             error_message or "The IP address has been banned for exceeding rate limits."
         )
         self.status_code = status_code
+        self.retry_after = retry_after
         super().__init__(self.status_code, self.error_message)
 
 

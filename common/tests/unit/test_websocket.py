@@ -7,6 +7,8 @@ import pytest
 import time
 
 from collections import defaultdict
+from pydantic import BaseModel, ConfigDict
+from typing import Optional, Set, Union
 from unittest.mock import AsyncMock, call, MagicMock, patch
 from types import SimpleNamespace
 
@@ -30,6 +32,36 @@ from binance_common.websocket import (
     WebSocketConnection,
 )
 from binance_common.models import WebsocketApiResponse, WebsocketApiRateLimit
+
+
+class OrderTradeUpdate(BaseModel):
+    """Futures `ORDER_TRADE_UPDATE` event."""
+
+    e: Optional[str] = None
+    E: Optional[int] = None
+    i: Optional[int] = None
+
+
+class ListenKeyExpired(BaseModel):
+    """Futures `listenKeyExpired` event."""
+
+    e: Optional[str] = None
+    E: Optional[int] = None
+    listenKey: Optional[str] = None
+
+
+class UserDataStreamEventsResponse(BaseModel):
+    """Mirrors the generated oneOf wrapper for user data stream events."""
+
+    oneof_schema_1_validator: "Optional[OrderTradeUpdate]" = None
+    oneof_schema_2_validator: "Optional[ListenKeyExpired]" = None
+    actual_instance: "Optional[Union[OrderTradeUpdate, ListenKeyExpired, dict]]" = None
+    one_of_schemas: "Set[str]" = {"OrderTradeUpdate", "ListenKeyExpired"}
+
+    model_config = ConfigDict(
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
 # ========== Fixtures ==========
@@ -447,6 +479,75 @@ class TestWebSocketCommon:
         await ws_common.receive_loop(conn)
 
         callback.assert_called_once_with(msg_data)
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_stream_parses_one_of_response_model(self):
+        ws_mock = AsyncMock()
+        callback = MagicMock()
+        event = {"e": "ORDER_TRADE_UPDATE", "E": 1568879465650, "i": 8886774}
+        msg = MagicMock()
+        msg.type = aiohttp.WSMsgType.TEXT
+        msg.data = json.dumps({"stream": "listen-key", "data": event})
+        ws_mock.__aiter__.return_value = [msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        conn.stream_callback_map["listen-key"] = [callback]
+        conn.response_types["listen-key"] = UserDataStreamEventsResponse
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        callback.assert_called_once()
+        parsed = callback.call_args[0][0]
+        assert isinstance(parsed, UserDataStreamEventsResponse)
+        assert isinstance(parsed.actual_instance, OrderTradeUpdate)
+        assert parsed.actual_instance.i == 8886774
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_stream_parses_one_of_response_model_list(self):
+        ws_mock = AsyncMock()
+        callback = MagicMock()
+        events = [
+            {"e": "ORDER_TRADE_UPDATE", "E": 1, "i": 1},
+            {"e": "listenKeyExpired", "E": 2, "listenKey": "abc"},
+        ]
+        msg = MagicMock()
+        msg.type = aiohttp.WSMsgType.TEXT
+        msg.data = json.dumps({"stream": "listen-key", "data": events})
+        ws_mock.__aiter__.return_value = [msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        conn.stream_callback_map["listen-key"] = [callback]
+        conn.response_types["listen-key"] = UserDataStreamEventsResponse
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        parsed = callback.call_args[0][0]
+        assert [type(item.actual_instance) for item in parsed] == [
+            OrderTradeUpdate,
+            ListenKeyExpired,
+        ]
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_stream_unknown_one_of_event_keeps_raw_payload(self):
+        ws_mock = AsyncMock()
+        callback = MagicMock()
+        event = {"e": "SOME_FUTURE_EVENT", "foo": "bar"}
+        msg = MagicMock()
+        msg.type = aiohttp.WSMsgType.TEXT
+        msg.data = json.dumps({"stream": "listen-key", "data": event})
+        ws_mock.__aiter__.return_value = [msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        conn.stream_callback_map["listen-key"] = [callback]
+        conn.response_types["listen-key"] = UserDataStreamEventsResponse
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        callback.assert_called_once()
+        assert callback.call_args[0][0].actual_instance == event
 
     @pytest.mark.asyncio
     async def test_receive_loop_subscription_id_calls_callbacks(self):
@@ -2719,6 +2820,108 @@ class TestWebSocketAPIBase:
 
             data = result._data_function()
             assert data == {"validated": {"result": {"foo": "bar"}, "rateLimits": []}}
+
+    @pytest.mark.asyncio
+    async def test_send_message_prefers_from_dict(self, ws_api, mock_connection):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        class DummyResponseModel:
+            @classmethod
+            def from_dict(cls, data):
+                return {"from_dict": data}
+
+            @classmethod
+            def model_validate(cls, data):
+                raise AssertionError("model_validate is only the fallback")
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "exchangeInfo"}
+        ws_response = {"result": {"timezone": "UTC"}, "rateLimits": []}
+
+        with patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result(ws_response)
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(
+                payload, response_model=DummyResponseModel
+            )
+
+            assert result._data_function() == {"from_dict": ws_response}
+
+    @pytest.mark.asyncio
+    async def test_send_message_falls_back_to_model_validate(
+        self, ws_api, mock_connection
+    ):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        class DummyResponseModel:
+            @classmethod
+            def from_dict(cls, data):
+                raise AttributeError("type object 'int' has no attribute 'is_array'")
+
+            @classmethod
+            def model_validate(cls, data):
+                return {"validated": data}
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "klines"}
+        ws_response = {"result": [[1, "2"]], "rateLimits": []}
+
+        with patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result(ws_response)
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(
+                payload, response_model=DummyResponseModel
+            )
+
+            assert result._data_function() == {"validated": ws_response}
+
+    @pytest.mark.asyncio
+    async def test_send_message_one_of_model_error_is_not_swallowed(
+        self, ws_api, mock_connection
+    ):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+
+        class DummyOneOfModel:
+            @classmethod
+            def is_oneof_model(cls):
+                return True
+
+            @classmethod
+            def from_dict(cls, data):
+                raise ValueError("Multiple matches found when deserializing")
+
+            @classmethod
+            def model_validate(cls, data):
+                return {"actual_instance": None}
+
+        payload = {"params": {"symbol": "BTCUSDT"}, "method": "ticker"}
+
+        with patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+
+            mock_future = asyncio.Future()
+            mock_future.set_result({"result": {}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            result = await ws_api.send_message(payload, response_model=DummyOneOfModel)
+
+            with pytest.raises(ValueError, match="Multiple matches found"):
+                result._data_function()
 
     @pytest.mark.asyncio
     async def test_send_message_no_response_model_returns_raw(

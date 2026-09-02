@@ -334,7 +334,18 @@ class WebSocketCommon:
                                         if response_model.__pydantic_fields__.get(
                                             "one_of_schemas"
                                         ):
-                                            parsed = payload
+                                            parsed = (
+                                                [
+                                                    parse_user_event(
+                                                        item, response_model
+                                                    )
+                                                    for item in payload
+                                                ]
+                                                if isinstance(payload, list)
+                                                else parse_user_event(
+                                                    payload, response_model
+                                                )
+                                            )
                                         elif isinstance(payload, list):
                                             parsed = [
                                                 response_model.model_validate_json(
@@ -1458,11 +1469,14 @@ class WebSocketAPIBase(WebSocketCommon):
                     connection.is_session_log_on = True
                     connection.session_logon_request = payload
 
-                is_oneof = self.is_one_of_model(response_model)
-                if is_oneof or hasattr(response_model, "from_dict"):
-
+                if response_model and hasattr(response_model, "from_dict"):
                     def data_function():
-                        return response_model.from_dict(ws_response)
+                        try:
+                            return response_model.from_dict(ws_response)
+                        except Exception:
+                            if self.is_one_of_model(response_model):
+                                raise
+                            return response_model.model_validate(ws_response)
 
                 elif response_model:
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.4.0 - 2026-09-02
+
+### Added (1)
+
+- Added `retry_after` to `TooManyRequestsError` and `RateLimitBanError`.
+
+### Changed (3)
+
+- Fixed user data stream events not being matched to their schema when the event name is `SCREAMING_SNAKE_CASE`, such as `ORDER_TRADE_UPDATE`.
+- Fixed user data events received on a combined stream being passed to the callback as a raw payload.
+- Fixed `klines` and `uiKlines` failing on the WebSocket API with `type object 'int' has no attribute 'is_array'`.
+
 ## 4.3.0 - 2026-08-18
 
 ### Added (1)

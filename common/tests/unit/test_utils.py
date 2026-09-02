@@ -4,7 +4,7 @@ import unittest
 import hmac
 import hashlib
 import json
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 import requests
 
 from base64 import b64decode, b64encode
@@ -15,7 +15,7 @@ from Crypto.Signature import pkcs1_15, eddsa
 from datetime import datetime
 from enum import Enum
 from types import SimpleNamespace
-from typing import ClassVar, List, Optional, Union
+from typing import ClassVar, List, Optional, Set, Union
 from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
@@ -43,6 +43,7 @@ from binance_common.utils import (
     hmac_hashing,
     is_one_of_model,
     make_serializable,
+    normalize_event_name,
     normalize_query_values,
     parse_proxies,
     parse_user_event,
@@ -1108,6 +1109,35 @@ class TestSendRequest(unittest.TestCase):
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    def test_rate_limit_errors_expose_retry_after(
+        self, mock_clean_none, mock_encoded_string
+    ):
+        cases = {418: RateLimitBanError, 429: TooManyRequestsError}
+
+        for status, exception in cases.items():
+            for header, expected in (
+                ({"Retry-After": "30"}, 30),
+                ({"retry-after": "30"}, 30),
+                ({}, None),
+                ({"Retry-After": "Wed, 21 Oct 2015 07:28:00 GMT"}, None),
+            ):
+                with self.subTest(status=status, header=header):
+                    mock_response = Mock(
+                        status_code=status,
+                        headers={"Content-Type": "application/json", **header},
+                    )
+                    mock_response.json.return_value = {"msg": "Too many requests"}
+                    self.session.request.return_value = mock_response
+
+                    with self.assertRaises(exception) as context:
+                        send_request(
+                            self.session, self.configuration, self.method, self.path, {}
+                        )
+
+                    self.assertEqual(context.exception.retry_after, expected)
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_server_errors(self, mock_clean_none, mock_encoded_string):
         """Test 500-599 server errors raising ServerError."""
         for status in [500, 502, 503, 504]:
@@ -1938,6 +1968,51 @@ class UserResponse(BaseModel):
     actual_instance: Union[EventA, EventB, dict]
 
 
+class OrderTradeUpdate(BaseModel):
+    """Futures `ORDER_TRADE_UPDATE` event."""
+
+    e: Optional[str] = None
+    E: Optional[int] = None
+    i: Optional[int] = None
+
+
+class ListenKeyExpired(BaseModel):
+    """Futures `listenKeyExpired` event."""
+
+    e: Optional[str] = None
+    E: Optional[int] = None
+    listenKey: Optional[str] = None
+
+
+class ExecutionReport(BaseModel):
+    """Spot `executionReport` event."""
+
+    e: Optional[str] = None
+    E: Optional[int] = None
+    s: Optional[str] = None
+
+
+class UserDataStreamEventsResponse(BaseModel):
+    """Mirrors the generated oneOf wrapper for user data stream events."""
+
+    oneof_schema_1_validator: "Optional[OrderTradeUpdate]" = None
+    oneof_schema_2_validator: "Optional[ListenKeyExpired]" = None
+    oneof_schema_3_validator: "Optional[ExecutionReport]" = None
+    actual_instance: (
+        "Optional[Union[OrderTradeUpdate, ListenKeyExpired, ExecutionReport, dict]]"
+    ) = None
+    one_of_schemas: "Set[str]" = {
+        "OrderTradeUpdate",
+        "ListenKeyExpired",
+        "ExecutionReport",
+    }
+
+    model_config = ConfigDict(
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
+
 class TestGetValidatorFieldMap(unittest.TestCase):
 
     def test_field_map(self):
@@ -1946,6 +2021,15 @@ class TestGetValidatorFieldMap(unittest.TestCase):
         self.assertIn(EventB, field_map)
         self.assertEqual(field_map[EventA], "oneof_schema_eventa_validator")
         self.assertEqual(field_map[EventB], "oneof_schema_eventb_validator")
+
+
+class TestNormalizeEventName(unittest.TestCase):
+
+    def test_strips_separators_and_case(self):
+        self.assertEqual(normalize_event_name("ORDER_TRADE_UPDATE"), "ordertradeupdate")
+        self.assertEqual(normalize_event_name("OrderTradeUpdate"), "ordertradeupdate")
+        self.assertEqual(normalize_event_name("listenKeyExpired"), "listenkeyexpired")
+        self.assertEqual(normalize_event_name("Listenkeyexpired"), "listenkeyexpired")
 
 
 class TestResolveModelFromEvent(unittest.TestCase):
@@ -1962,6 +2046,23 @@ class TestResolveModelFromEvent(unittest.TestCase):
         model_cls = resolve_model_from_event(UserResponse, "")
         self.assertIsNone(model_cls)
 
+    def test_screaming_snake_case_event(self):
+        model_cls = resolve_model_from_event(
+            UserDataStreamEventsResponse, "ORDER_TRADE_UPDATE"
+        )
+        self.assertIs(model_cls, OrderTradeUpdate)
+
+    def test_camel_case_event(self):
+        model_cls = resolve_model_from_event(
+            UserDataStreamEventsResponse, "listenKeyExpired"
+        )
+        self.assertIs(model_cls, ListenKeyExpired)
+
+        model_cls = resolve_model_from_event(
+            UserDataStreamEventsResponse, "executionReport"
+        )
+        self.assertIs(model_cls, ExecutionReport)
+
 
 class TestParseUserEvent(unittest.TestCase):
 
@@ -1976,6 +2077,42 @@ class TestParseUserEvent(unittest.TestCase):
         instance = parse_user_event(payload, UserResponse)
         self.assertIsInstance(instance, UserResponse)
         self.assertEqual(instance.actual_instance["x"], "wrong_type")
+
+    def test_screaming_snake_case_event_populates_actual_instance(self):
+        payload = {"e": "ORDER_TRADE_UPDATE", "E": 1568879465650, "i": 8886774}
+        instance = parse_user_event(payload, UserDataStreamEventsResponse)
+
+        self.assertIsInstance(instance.actual_instance, OrderTradeUpdate)
+        self.assertEqual(instance.actual_instance.i, 8886774)
+
+    def test_screaming_snake_case_event_populates_validator_field(self):
+        payload = {"e": "ORDER_TRADE_UPDATE", "E": 1568879465650, "i": 8886774}
+        instance = parse_user_event(payload, UserDataStreamEventsResponse)
+
+        self.assertIsInstance(instance.oneof_schema_1_validator, OrderTradeUpdate)
+        self.assertIsNone(instance.oneof_schema_2_validator)
+        self.assertIsNone(instance.oneof_schema_3_validator)
+
+    def test_camel_case_event_populates_actual_instance(self):
+        payload = {"e": "listenKeyExpired", "E": 1736996475556, "listenKey": "abc"}
+        instance = parse_user_event(payload, UserDataStreamEventsResponse)
+
+        self.assertIsInstance(instance.actual_instance, ListenKeyExpired)
+        self.assertEqual(instance.actual_instance.listenKey, "abc")
+
+    def test_unknown_event_falls_back_to_raw_payload(self):
+        payload = {"e": "SOME_FUTURE_EVENT", "foo": "bar"}
+        instance = parse_user_event(payload, UserDataStreamEventsResponse)
+
+        self.assertIsInstance(instance, UserDataStreamEventsResponse)
+        self.assertEqual(instance.actual_instance["foo"], "bar")
+
+    def test_missing_event_name_falls_back_to_raw_payload(self):
+        payload = {"foo": "bar"}
+        instance = parse_user_event(payload, UserDataStreamEventsResponse)
+
+        self.assertIsInstance(instance, UserDataStreamEventsResponse)
+        self.assertEqual(instance.actual_instance["foo"], "bar")
 
 
 class TestRedactSensitiveInfo(unittest.TestCase):

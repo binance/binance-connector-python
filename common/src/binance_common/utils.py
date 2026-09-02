@@ -487,11 +487,15 @@ def send_request(
                     )
                 elif status == 418:
                     raise RateLimitBanError(
-                        error_message=data.get("msg"), status_code=data.get("code")
+                        error_message=data.get("msg"),
+                        status_code=data.get("code"),
+                        retry_after=parse_retry_after(response.headers),
                     )
                 elif status == 429:
                     raise TooManyRequestsError(
-                        error_message=data.get("msg"), status_code=data.get("code")
+                        error_message=data.get("msg"),
+                        status_code=data.get("code"),
+                        retry_after=parse_retry_after(response.headers),
                     )
                 elif 500 <= status < 600:
                     raise ServerError(
@@ -609,13 +613,31 @@ def parse_rate_limit_headers(headers: Dict[str, str]) -> List[RateLimit]:
                     )
                 )
 
-    retry_after = headers.get("retry-after")
-    if retry_after:
-        retry_after_seconds = int(retry_after)
+    retry_after_seconds = parse_retry_after(headers)
+    if retry_after_seconds is not None:
         for limit in rate_limits:
             limit.retryAfter = retry_after_seconds
 
     return rate_limits
+
+
+def parse_retry_after(headers: Dict[str, str]) -> Optional[int]:
+    """Read the `Retry-After` response header as a number of seconds.
+
+    Args:
+        headers (Dict[str, str]): The response headers.
+
+    Returns:
+        Optional[int]: The number of seconds to wait, or `None` when the header
+            is absent or is not expressed in seconds.
+    """
+
+    retry_after = headers.get("Retry-After", headers.get("retry-after"))
+
+    try:
+        return int(retry_after)
+    except (TypeError, ValueError):
+        return None
 
 
 def parse_proxies(
@@ -839,6 +861,19 @@ def get_validator_field_map(response_model_cls: Type[BaseModel]) -> dict[str, st
     return field_map
 
 
+def normalize_event_name(name: str) -> str:
+    """Normalize an event name or schema class name for comparison.
+
+    Args:
+        name (str): The event name or schema class name.
+
+    Returns:
+        str: The normalized name.
+    """
+
+    return name.replace("_", "").replace("-", "").lower()
+
+
 def resolve_model_from_event(
     response_model_cls: Type[BaseModel], event_name: str
 ) -> Type[BaseModel]:
@@ -860,9 +895,9 @@ def resolve_model_from_event(
         return None
 
     one_of_schemas = list(one_of_schemas_field.default)
-    event_to_class_map = {name[0].lower() + name[1:]: name for name in one_of_schemas}
+    event_to_class_map = {normalize_event_name(name): name for name in one_of_schemas}
 
-    class_name = event_to_class_map.get(event_name)
+    class_name = event_to_class_map.get(normalize_event_name(event_name))
     if not class_name:
         return None
 
@@ -885,7 +920,10 @@ def parse_user_event(payload: dict, response_model_cls: Type[BaseModel]) -> Base
     model_cls = resolve_model_from_event(response_model_cls, event_name)
 
     if not model_cls:
-        return response_model_cls(actual_instance=payload)
+        logging.warning(
+            f"Unknown user data event `{event_name}`, returning raw payload"
+        )
+        return _wrap_raw_payload(payload, response_model_cls)
 
     try:
         instance = model_cls.model_validate(payload)
@@ -897,7 +935,21 @@ def parse_user_event(payload: dict, response_model_cls: Type[BaseModel]) -> Base
 
     except Exception as e:
         logging.warning(f"Failed to parse {event_name}: {e}")
-        return response_model_cls(actual_instance=payload)
+        return _wrap_raw_payload(payload, response_model_cls)
+
+
+def _wrap_raw_payload(payload: dict, response_model_cls: Type[BaseModel]) -> BaseModel:
+    """Wrap an unparsed payload in the response model without validating it.
+
+    Args:
+        payload (dict): The raw payload dictionary.
+        response_model_cls (Type[BaseModel]): The response model class.
+
+    Returns:
+        BaseModel: The response model instance holding the raw payload.
+    """
+
+    return response_model_cls.model_construct(actual_instance=payload)
 
 
 def redact_sensitive_info(config: dict) -> dict:
