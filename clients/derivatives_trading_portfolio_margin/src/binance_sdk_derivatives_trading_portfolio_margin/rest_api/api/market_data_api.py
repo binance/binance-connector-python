@@ -50,7 +50,7 @@ class MarketDataApi:
 
         """
 
-        body = None
+        request_body = None
         payload = None
 
         return send_request(
@@ -59,6 +59,6 @@ class MarketDataApi:
             method="GET",
             path="/papi/v1/ping",
             payload=payload,
-            body=body,
+            body=request_body,
             time_unit=self._configuration.time_unit,
         )
