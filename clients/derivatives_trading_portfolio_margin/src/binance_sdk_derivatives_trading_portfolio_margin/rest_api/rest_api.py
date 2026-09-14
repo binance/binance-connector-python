@@ -73,7 +73,6 @@ from .models import QueryMarginRepayRecordArchivedEnum
 from .models import CancelAllCmOpenConditionalOrdersResponse
 from .models import CancelAllCmOpenOrdersResponse
 from .models import CancelAllUmAlgoOpenOrdersResponse
-from .models import CancelAllUmOpenConditionalOrdersResponse
 from .models import CancelAllUmOpenOrdersResponse
 from .models import CancelCmConditionalOrderResponse
 from .models import CancelCmOrderResponse
@@ -81,7 +80,6 @@ from .models import CancelMarginAccountAllOpenOrdersOnASymbolResponse
 from .models import CancelMarginAccountOcoOrdersResponse
 from .models import CancelMarginAccountOrderResponse
 from .models import CancelUmAlgoOrderResponse
-from .models import CancelUmConditionalOrderResponse
 from .models import CancelUmOrderResponse
 from .models import CmAccountTradeListResponse
 from .models import CmPositionAdlQuantileEstimationResponse
@@ -98,17 +96,14 @@ from .models import NewCmConditionalOrderResponse
 from .models import NewCmOrderResponse
 from .models import NewMarginOrderResponse
 from .models import NewUmAlgoOrderResponse
-from .models import NewUmConditionalOrderResponse
 from .models import NewUmOrderResponse
 from .models import QueryAllCmConditionalOrdersResponse
 from .models import QueryAllCmOrdersResponse
 from .models import QueryAllCurrentCmOpenConditionalOrdersResponse
 from .models import QueryAllCurrentCmOpenOrdersResponse
 from .models import QueryAllCurrentUmOpenAlgoOrdersResponse
-from .models import QueryAllCurrentUmOpenConditionalOrdersResponse
 from .models import QueryAllCurrentUmOpenOrdersResponse
 from .models import QueryAllMarginAccountOrdersResponse
-from .models import QueryAllUmConditionalOrdersResponse
 from .models import QueryAllUmOrdersResponse
 from .models import QueryCmConditionalOrderHistoryResponse
 from .models import QueryCmModifyOrderHistoryResponse
@@ -117,14 +112,12 @@ from .models import QueryCurrentCmOpenConditionalOrderResponse
 from .models import QueryCurrentCmOpenOrderResponse
 from .models import QueryCurrentMarginOpenOrderResponse
 from .models import QueryCurrentUmOpenAlgoOrderResponse
-from .models import QueryCurrentUmOpenConditionalOrderResponse
 from .models import QueryCurrentUmOpenOrderResponse
 from .models import QueryMarginAccountOrderResponse
 from .models import QueryMarginAccountsAllOcoResponse
 from .models import QueryMarginAccountsOcoResponse
 from .models import QueryMarginAccountsOpenOcoResponse
 from .models import QueryUmAlgoOrderHistoryResponse
-from .models import QueryUmConditionalOrderHistoryResponse
 from .models import QueryUmModifyOrderHistoryResponse
 from .models import QueryUmOrderResponse
 from .models import QueryUsersCmForceOrdersResponse
@@ -172,15 +165,6 @@ from .models import NewUmAlgoOrderPriceProtectEnum
 from .models import NewUmAlgoOrderReduceOnlyEnum
 from .models import NewUmAlgoOrderNewOrderRespTypeEnum
 from .models import NewUmAlgoOrderSelfTradePreventionModeEnum
-from .models import NewUmConditionalOrderSideEnum
-from .models import NewUmConditionalOrderStrategyTypeEnum
-from .models import NewUmConditionalOrderPositionSideEnum
-from .models import NewUmConditionalOrderTimeInForceEnum
-from .models import NewUmConditionalOrderReduceOnlyEnum
-from .models import NewUmConditionalOrderWorkingTypeEnum
-from .models import NewUmConditionalOrderPriceProtectEnum
-from .models import NewUmConditionalOrderPriceMatchEnum
-from .models import NewUmConditionalOrderSelfTradePreventionModeEnum
 from .models import NewUmOrderSideEnum
 from .models import NewUmOrderTypeEnum
 from .models import NewUmOrderPositionSideEnum
@@ -1749,36 +1733,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
         return self._tradeApi.cancel_all_um_algo_open_orders(symbol, recv_window)
 
-    def cancel_all_um_open_conditional_orders(
-        self,
-        symbol: Union[str, None],
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[CancelAllUmOpenConditionalOrdersResponse]:
-        """
-                Cancel All UM Open Conditional Orders - Deprecated (TRADE)
-
-                Cancel All UM Open Conditional Orders
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `DELETE /papi/v1/um/algo/allOpenOrders` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight(IP): 1
-
-        Security Type: TRADE
-
-                Args:
-                    symbol (Union[str, None]): Symbol
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[CancelAllUmOpenConditionalOrdersResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.cancel_all_um_open_conditional_orders(symbol, recv_window)
-
     def cancel_all_um_open_orders(
         self,
         symbol: Union[str, None],
@@ -2025,45 +1979,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
         """
 
         return self._tradeApi.cancel_um_algo_order(algo_id, client_algo_id, recv_window)
-
-    def cancel_um_conditional_order(
-        self,
-        symbol: Union[str, None],
-        strategy_id: Optional[int] = None,
-        new_client_strategy_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[CancelUmConditionalOrderResponse]:
-        """
-                Cancel UM Conditional Order - Deprecated (TRADE)
-
-                Cancel UM Conditional Order
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `DELETE /papi/v1/um/algo/order` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight(IP): 1
-
-        Security Type: TRADE
-
-        Notes:
-        - Either `strategyId` or `newClientStrategyId` must be sent.
-
-                Args:
-                    symbol (Union[str, None]): Symbol
-                    strategy_id (Optional[int] = None):
-                    new_client_strategy_id (Optional[str] = None):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[CancelUmConditionalOrderResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.cancel_um_conditional_order(
-            symbol, strategy_id, new_client_strategy_id, recv_window
-        )
 
     def cancel_um_order(
         self,
@@ -2908,104 +2823,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
             recv_window,
         )
 
-    def new_um_conditional_order(
-        self,
-        symbol: Union[str, None],
-        side: Union[NewUmConditionalOrderSideEnum, None],
-        strategy_type: Union[NewUmConditionalOrderStrategyTypeEnum, None],
-        position_side: Optional[NewUmConditionalOrderPositionSideEnum] = None,
-        time_in_force: Optional[NewUmConditionalOrderTimeInForceEnum] = None,
-        quantity: Optional[float] = None,
-        reduce_only: Optional[NewUmConditionalOrderReduceOnlyEnum] = None,
-        price: Optional[float] = None,
-        working_type: Optional[NewUmConditionalOrderWorkingTypeEnum] = None,
-        price_protect: Optional[NewUmConditionalOrderPriceProtectEnum] = None,
-        new_client_strategy_id: Optional[str] = None,
-        stop_price: Optional[float] = None,
-        activation_price: Optional[float] = None,
-        callback_rate: Optional[float] = None,
-        price_match: Optional[NewUmConditionalOrderPriceMatchEnum] = None,
-        self_trade_prevention_mode: Optional[
-            NewUmConditionalOrderSelfTradePreventionModeEnum
-        ] = None,
-        good_till_date: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[NewUmConditionalOrderResponse]:
-        """
-                New UM Conditional Order - Deprecated (TRADE)
-
-                Place new UM conditional order
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `POST /papi/v1/um/algo/order` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight(IP): 1
-
-        Security Type: TRADE
-
-        Notes:
-        - Additional mandatory parameters based on type:
-          - Order with type `STOP/TAKE_PROFIT`, parameter `timeInForce` can be sent ( default `GTC`).
-          - Condition orders will be triggered when:
-          - `STOP`, `STOP_MARKET`:
-          - BUY: "MARK_PRICE" >= `stopPrice`
-          - SELL: "MARK_PRICE" = `stopPrice`
-          - `TRAILING_STOP_MARKET`:
-          - BUY: the lowest mark price after order placed ``= the lowest mark price
-          - (1 + `callbackRate`)
-          - SELL: the highest mark price after order placed >= `activationPrice`, and the latest mark price = `stopPrice`
-          - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") = `stopPrice`
-          - `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC` or `GTD`.
-          - In extreme market conditions, timeInForce `GTD` order auto cancel time might be delayed comparing to `goodTillDate`
-
-                Args:
-                    symbol (Union[str, None]): Symbol
-                    side (Union[NewUmConditionalOrderSideEnum, None]):
-                    strategy_type (Union[NewUmConditionalOrderStrategyTypeEnum, None]):
-                    position_side (Optional[NewUmConditionalOrderPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewUmConditionalOrderTimeInForceEnum] = None):
-                    quantity (Optional[float] = None):
-                    reduce_only (Optional[NewUmConditionalOrderReduceOnlyEnum] = None): "true" or "false". Cannot be sent in Hedge Mode ; cannot be sent with `closePosition`=`true`
-                    price (Optional[float] = None):
-                    working_type (Optional[NewUmConditionalOrderWorkingTypeEnum] = None): stopPrice triggered by: "MARK_PRICE", "CONTRACT_PRICE". Default "CONTRACT_PRICE"
-                    price_protect (Optional[NewUmConditionalOrderPriceProtectEnum] = None): "true" or "false". Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders
-                    new_client_strategy_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,32}$`
-                    stop_price (Optional[float] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.
-                    activation_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders.
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders.
-                    price_match (Optional[NewUmConditionalOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewUmConditionalOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
-                    good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[NewUmConditionalOrderResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.new_um_conditional_order(
-            symbol,
-            side,
-            strategy_type,
-            position_side,
-            time_in_force,
-            quantity,
-            reduce_only,
-            price,
-            working_type,
-            price_protect,
-            new_client_strategy_id,
-            stop_price,
-            activation_price,
-            callback_rate,
-            price_match,
-            self_trade_prevention_mode,
-            good_till_date,
-            recv_window,
-        )
-
     def new_um_order(
         self,
         symbol: Union[str, None],
@@ -3283,42 +3100,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
             algo_type, symbol, algo_id, recv_window
         )
 
-    def query_all_current_um_open_conditional_orders(
-        self,
-        symbol: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[QueryAllCurrentUmOpenConditionalOrdersResponse]:
-        """
-                Query All Current UM Open Conditional Orders - Deprecated (USER_DATA)
-
-                Get all open conditional orders on a symbol.
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `GET /papi/v1/um/algo/openAlgoOrders` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight: - 1 for a single `symbol`
-        - 40 when `symbol` is omitted
-
-        Security Type: USER_DATA
-
-        Notes:
-        - If `symbol` is not provided, conditional open orders for all symbols are returned.
-
-                Args:
-                    symbol (Optional[str] = None):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[QueryAllCurrentUmOpenConditionalOrdersResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.query_all_current_um_open_conditional_orders(
-            symbol, recv_window
-        )
-
     def query_all_current_um_open_orders(
         self,
         symbol: Optional[str] = None,
@@ -3391,53 +3172,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
         return self._tradeApi.query_all_margin_account_orders(
             symbol, order_id, start_time, end_time, limit, recv_window
-        )
-
-    def query_all_um_conditional_orders(
-        self,
-        symbol: Optional[str] = None,
-        strategy_id: Optional[int] = None,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
-        limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[QueryAllUmConditionalOrdersResponse]:
-        """
-                Query All UM Conditional Orders - Deprecated (USER_DATA)
-
-                Query All UM Conditional Orders
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `GET /papi/v1/um/algo/allAlgoOrders` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight: - 1 for a single `symbol`
-        - 40 when `symbol` is omitted
-
-        Security Type: USER_DATA
-
-        Notes:
-        - These orders will not be found:
-          - order strategyStatus is `CANCELED` or `EXPIRED`, **AND**
-          - order has NO filled trade, **AND**
-          - created time + 7 days  * The query time period must be less than 7 days( default as the recent 7 days).
-
-                Args:
-                    symbol (Optional[str] = None):
-                    strategy_id (Optional[int] = None):
-                    start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
-                    end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
-                    limit (Optional[int] = None): Number of results returned.
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[QueryAllUmConditionalOrdersResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.query_all_um_conditional_orders(
-            symbol, strategy_id, start_time, end_time, limit, recv_window
         )
 
     def query_all_um_orders(
@@ -3757,46 +3491,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
             algo_id, client_algo_id, recv_window
         )
 
-    def query_current_um_open_conditional_order(
-        self,
-        symbol: Union[str, None],
-        strategy_id: Optional[int] = None,
-        new_client_strategy_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[QueryCurrentUmOpenConditionalOrderResponse]:
-        """
-                Query Current UM Open Conditional Order - Deprecated (USER_DATA)
-
-                Query Current UM Open Conditional Order
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `GET /papi/v1/um/algo/algoOrder` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight(IP): 1
-
-        Security Type: USER_DATA
-
-        Notes:
-        - Either `strategyId` or `newClientStrategyId` must be sent.
-        - If the queried order has been `CANCELED`, `TRIGGERED` or `EXPIRED`, the error message "Order does not exist" will be returned.
-
-                Args:
-                    symbol (Union[str, None]): Symbol
-                    strategy_id (Optional[int] = None):
-                    new_client_strategy_id (Optional[str] = None):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[QueryCurrentUmOpenConditionalOrderResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.query_current_um_open_conditional_order(
-            symbol, strategy_id, new_client_strategy_id, recv_window
-        )
-
     def query_current_um_open_order(
         self,
         symbol: Union[str, None],
@@ -4007,50 +3701,6 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
         return self._tradeApi.query_um_algo_order_history(
             symbol, algo_id, start_time, end_time, limit, recv_window
-        )
-
-    def query_um_conditional_order_history(
-        self,
-        symbol: Union[str, None],
-        strategy_id: Optional[int] = None,
-        new_client_strategy_id: Optional[str] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[QueryUmConditionalOrderHistoryResponse]:
-        """
-                Query UM Conditional Order History - Deprecated (USER_DATA)
-
-                Query UM Conditional Order History
-
-        > **Deprecated:** This endpoint has returned HTTP 404 since 2026-04-28 and is no longer available. Use `GET /papi/v1/um/algo/allAlgoOrders` instead. Field changes: `strategyId` -> `algoId`, `newClientStrategyId` -> `clientAlgoId`, `strategyStatus` -> `algoStatus`, `stopPrice` -> `triggerPrice`, `activationPrice` -> `activatePrice` (TRAILING_STOP_MARKET orders). `algoType` is a new fixed-value field (`CONDITIONAL`), not a rename of `strategyType` -- the order type now lives in `type` (request) / `orderType` (response).
-
-        Weight(IP): 1
-
-        Security Type: USER_DATA
-
-        Notes:
-        - Either `strategyId` or `newClientStrategyId` must be sent.
-        - `NEW` orders will not be found.
-        - These orders will not be found:
-          - order status is `CANCELED` or `EXPIRED`, **AND**
-          - order has NO filled trade, **AND**
-          - created time + 7 days < current time
-
-                Args:
-                    symbol (Union[str, None]): Symbol
-                    strategy_id (Optional[int] = None):
-                    new_client_strategy_id (Optional[str] = None):
-                    recv_window (Optional[int] = None):
-
-                Returns:
-                    ApiResponse[QueryUmConditionalOrderHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._tradeApi.query_um_conditional_order_history(
-            symbol, strategy_id, new_client_strategy_id, recv_window
         )
 
     def query_um_modify_order_history(

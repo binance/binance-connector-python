@@ -327,66 +327,6 @@ class NewUmAlgoOrderSelfTradePreventionModeEnum(Enum):
     EXPIRE_BOTH = "EXPIRE_BOTH"
 
 
-class NewUmConditionalOrderSideEnum(Enum):
-    BUY = "BUY"
-    SELL = "SELL"
-
-
-class NewUmConditionalOrderStrategyTypeEnum(Enum):
-    STOP = "STOP"
-    STOP_MARKET = "STOP_MARKET"
-    TAKE_PROFIT = "TAKE_PROFIT"
-    TAKE_PROFIT_MARKET = "TAKE_PROFIT_MARKET"
-    TRAILING_STOP_MARKET = "TRAILING_STOP_MARKET"
-
-
-class NewUmConditionalOrderPositionSideEnum(Enum):
-    BOTH = "BOTH"
-    LONG = "LONG"
-    SHORT = "SHORT"
-
-
-class NewUmConditionalOrderTimeInForceEnum(Enum):
-    GTC = "GTC"
-    IOC = "IOC"
-    FOK = "FOK"
-    GTX = "GTX"
-    GTD = "GTD"
-
-
-class NewUmConditionalOrderReduceOnlyEnum(Enum):
-    TRUE = "true"
-    FALSE = "false"
-
-
-class NewUmConditionalOrderWorkingTypeEnum(Enum):
-    MARK_PRICE = "MARK_PRICE"
-    CONTRACT_PRICE = "CONTRACT_PRICE"
-
-
-class NewUmConditionalOrderPriceProtectEnum(Enum):
-    TRUE = "true"
-    FALSE = "false"
-
-
-class NewUmConditionalOrderPriceMatchEnum(Enum):
-    OPPONENT = "OPPONENT"
-    OPPONENT_5 = "OPPONENT_5"
-    OPPONENT_10 = "OPPONENT_10"
-    OPPONENT_20 = "OPPONENT_20"
-    QUEUE = "QUEUE"
-    QUEUE_5 = "QUEUE_5"
-    QUEUE_10 = "QUEUE_10"
-    QUEUE_20 = "QUEUE_20"
-
-
-class NewUmConditionalOrderSelfTradePreventionModeEnum(Enum):
-    NONE = "NONE"
-    EXPIRE_TAKER = "EXPIRE_TAKER"
-    EXPIRE_BOTH = "EXPIRE_BOTH"
-    EXPIRE_MAKER = "EXPIRE_MAKER"
-
-
 class NewUmOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"

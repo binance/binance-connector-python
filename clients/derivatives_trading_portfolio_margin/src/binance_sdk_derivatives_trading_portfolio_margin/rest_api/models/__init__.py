@@ -31,9 +31,6 @@ from .cancel_all_cm_open_orders_response import (
 from .cancel_all_um_algo_open_orders_response import (
     CancelAllUmAlgoOpenOrdersResponse as CancelAllUmAlgoOpenOrdersResponse,
 )
-from .cancel_all_um_open_conditional_orders_response import (
-    CancelAllUmOpenConditionalOrdersResponse as CancelAllUmOpenConditionalOrdersResponse,
-)
 from .cancel_all_um_open_orders_response import (
     CancelAllUmOpenOrdersResponse as CancelAllUmOpenOrdersResponse,
 )
@@ -67,9 +64,6 @@ from .cancel_margin_account_order_response import (
 )
 from .cancel_um_algo_order_response import (
     CancelUmAlgoOrderResponse as CancelUmAlgoOrderResponse,
-)
-from .cancel_um_conditional_order_response import (
-    CancelUmConditionalOrderResponse as CancelUmConditionalOrderResponse,
 )
 from .cancel_um_order_response import CancelUmOrderResponse as CancelUmOrderResponse
 from .change_auto_repay_futures_status_response import (
@@ -236,9 +230,6 @@ from .new_margin_order_response_fills_inner import (
     NewMarginOrderResponseFillsInner as NewMarginOrderResponseFillsInner,
 )
 from .new_um_algo_order_response import NewUmAlgoOrderResponse as NewUmAlgoOrderResponse
-from .new_um_conditional_order_response import (
-    NewUmConditionalOrderResponse as NewUmConditionalOrderResponse,
-)
 from .new_um_order_response import NewUmOrderResponse as NewUmOrderResponse
 from .portfolio_margin_um_trading_quantitative_rules_indicators_response import (
     PortfolioMarginUmTradingQuantitativeRulesIndicatorsResponse as PortfolioMarginUmTradingQuantitativeRulesIndicatorsResponse,
@@ -279,12 +270,6 @@ from .query_all_current_um_open_algo_orders_response import (
 from .query_all_current_um_open_algo_orders_response_inner import (
     QueryAllCurrentUmOpenAlgoOrdersResponseInner as QueryAllCurrentUmOpenAlgoOrdersResponseInner,
 )
-from .query_all_current_um_open_conditional_orders_response import (
-    QueryAllCurrentUmOpenConditionalOrdersResponse as QueryAllCurrentUmOpenConditionalOrdersResponse,
-)
-from .query_all_current_um_open_conditional_orders_response_inner import (
-    QueryAllCurrentUmOpenConditionalOrdersResponseInner as QueryAllCurrentUmOpenConditionalOrdersResponseInner,
-)
 from .query_all_current_um_open_orders_response import (
     QueryAllCurrentUmOpenOrdersResponse as QueryAllCurrentUmOpenOrdersResponse,
 )
@@ -296,12 +281,6 @@ from .query_all_margin_account_orders_response import (
 )
 from .query_all_margin_account_orders_response_inner import (
     QueryAllMarginAccountOrdersResponseInner as QueryAllMarginAccountOrdersResponseInner,
-)
-from .query_all_um_conditional_orders_response import (
-    QueryAllUmConditionalOrdersResponse as QueryAllUmConditionalOrdersResponse,
-)
-from .query_all_um_conditional_orders_response_inner import (
-    QueryAllUmConditionalOrdersResponseInner as QueryAllUmConditionalOrdersResponseInner,
 )
 from .query_all_um_orders_response import (
     QueryAllUmOrdersResponse as QueryAllUmOrdersResponse,
@@ -345,9 +324,6 @@ from .query_current_margin_open_order_response_inner import (
 )
 from .query_current_um_open_algo_order_response import (
     QueryCurrentUmOpenAlgoOrderResponse as QueryCurrentUmOpenAlgoOrderResponse,
-)
-from .query_current_um_open_conditional_order_response import (
-    QueryCurrentUmOpenConditionalOrderResponse as QueryCurrentUmOpenConditionalOrderResponse,
 )
 from .query_current_um_open_order_response import (
     QueryCurrentUmOpenOrderResponse as QueryCurrentUmOpenOrderResponse,
@@ -405,9 +381,6 @@ from .query_um_algo_order_history_response import (
 )
 from .query_um_algo_order_history_response_inner import (
     QueryUmAlgoOrderHistoryResponseInner as QueryUmAlgoOrderHistoryResponseInner,
-)
-from .query_um_conditional_order_history_response import (
-    QueryUmConditionalOrderHistoryResponse as QueryUmConditionalOrderHistoryResponse,
 )
 from .query_um_modify_order_history_response import (
     QueryUmModifyOrderHistoryResponse as QueryUmModifyOrderHistoryResponse,
@@ -580,31 +553,6 @@ from .enums import (
 )
 from .enums import (
     NewUmAlgoOrderSelfTradePreventionModeEnum as NewUmAlgoOrderSelfTradePreventionModeEnum,
-)
-from .enums import NewUmConditionalOrderSideEnum as NewUmConditionalOrderSideEnum
-from .enums import (
-    NewUmConditionalOrderStrategyTypeEnum as NewUmConditionalOrderStrategyTypeEnum,
-)
-from .enums import (
-    NewUmConditionalOrderPositionSideEnum as NewUmConditionalOrderPositionSideEnum,
-)
-from .enums import (
-    NewUmConditionalOrderTimeInForceEnum as NewUmConditionalOrderTimeInForceEnum,
-)
-from .enums import (
-    NewUmConditionalOrderReduceOnlyEnum as NewUmConditionalOrderReduceOnlyEnum,
-)
-from .enums import (
-    NewUmConditionalOrderWorkingTypeEnum as NewUmConditionalOrderWorkingTypeEnum,
-)
-from .enums import (
-    NewUmConditionalOrderPriceProtectEnum as NewUmConditionalOrderPriceProtectEnum,
-)
-from .enums import (
-    NewUmConditionalOrderPriceMatchEnum as NewUmConditionalOrderPriceMatchEnum,
-)
-from .enums import (
-    NewUmConditionalOrderSelfTradePreventionModeEnum as NewUmConditionalOrderSelfTradePreventionModeEnum,
 )
 from .enums import NewUmOrderSideEnum as NewUmOrderSideEnum
 from .enums import NewUmOrderTypeEnum as NewUmOrderTypeEnum
