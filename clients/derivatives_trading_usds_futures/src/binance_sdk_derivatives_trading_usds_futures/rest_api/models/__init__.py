@@ -536,6 +536,7 @@ from .enums import (
 from .enums import ChangeMarginTypeMarginTypeEnum as ChangeMarginTypeMarginTypeEnum
 from .enums import ModifyOrderSideEnum as ModifyOrderSideEnum
 from .enums import ModifyOrderPriceMatchEnum as ModifyOrderPriceMatchEnum
+from .enums import ModifyOrderReduceOnlyEnum as ModifyOrderReduceOnlyEnum
 from .enums import NewAlgoOrderAlgoTypeEnum as NewAlgoOrderAlgoTypeEnum
 from .enums import NewAlgoOrderSideEnum as NewAlgoOrderSideEnum
 from .enums import NewAlgoOrderTypeEnum as NewAlgoOrderTypeEnum

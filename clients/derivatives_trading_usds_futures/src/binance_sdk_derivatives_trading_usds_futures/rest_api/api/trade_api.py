@@ -53,6 +53,7 @@ from ..models import PlaceMultipleOrdersBatchOrdersParameterInner
 from ..models import ChangeMarginTypeMarginTypeEnum
 from ..models import ModifyOrderSideEnum
 from ..models import ModifyOrderPriceMatchEnum
+from ..models import ModifyOrderReduceOnlyEnum
 from ..models import NewAlgoOrderAlgoTypeEnum
 from ..models import NewAlgoOrderSideEnum
 from ..models import NewAlgoOrderTypeEnum
@@ -1237,6 +1238,7 @@ class TradeApi:
         orig_client_order_id: Optional[str] = None,
         price_match: Optional[ModifyOrderPriceMatchEnum] = None,
         modify_id: Optional[int] = None,
+        reduce_only: Optional[ModifyOrderReduceOnlyEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifyOrderResponse]:
         """
@@ -1260,6 +1262,11 @@ class TradeApi:
           - when the order is in partially filled status and the new `quantity` <= `executedQty`
           - When the order is `GTX` and the new price will cause it to be executed immediately
         - One order can only be modfied for less than 10000 times
+        - `reduceOnly` behavior:
+          - `false` or omitted: behave as today — `min_notional` is enforced on the modified order.
+          - `true` and the original order's `reduceOnly` attribute is also `true` (consistent): the `min_notional` check is skipped on the modified order, matching placement semantics.
+          - `true` but the original order's `reduceOnly` attribute is `false` (inconsistent): the modify request is rejected with error code `-5047`, "The original order is not a reduce-only order".
+          - `reduceOnly` is used purely for validation — passing `true` does not change the original order's `reduceOnly` attribute; that flag remains whatever it was set to at placement time.
 
                 Args:
                     symbol (Union[str, None]):
@@ -1270,6 +1277,7 @@ class TradeApi:
                     orig_client_order_id (Optional[str] = None):
                     price_match (Optional[ModifyOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
                     modify_id (Optional[int] = None): User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.
+                    reduce_only (Optional[ModifyOrderReduceOnlyEnum] = None): See notes below for behavior.
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -1307,6 +1315,7 @@ class TradeApi:
             "orig_client_order_id": orig_client_order_id,
             "price_match": price_match,
             "modify_id": modify_id,
+            "reduce_only": reduce_only,
             "recv_window": recv_window,
         }
 
@@ -1408,7 +1417,7 @@ class TradeApi:
                     callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders
                     client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     new_order_resp_type (Optional[NewAlgoOrderNewOrderRespTypeEnum] = None):
-                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers / `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`: expire taker order when STP triggers / `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 
@@ -1534,7 +1543,7 @@ class TradeApi:
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None):
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `EXPIRE_MAKER`
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers; default `EXPIRE_MAKER`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 
@@ -2144,7 +2153,7 @@ class TradeApi:
                     price_protect (Optional[TestOrderPriceProtectEnum] = None):
                     new_order_resp_type (Optional[TestOrderNewOrderRespTypeEnum] = None):
                     price_match (Optional[TestOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `NONE`:No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers; default `NONE`
+                    self_trade_prevention_mode (Optional[TestOrderSelfTradePreventionModeEnum] = None): `NONE`: No STP / `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers; default `NONE`
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000
                     recv_window (Optional[int] = None):
 

@@ -148,6 +148,7 @@ from .symbol_price_ticker_response2_result_inner import (
 
 from .enums import ModifyOrderSideEnum as ModifyOrderSideEnum
 from .enums import ModifyOrderPriceMatchEnum as ModifyOrderPriceMatchEnum
+from .enums import ModifyOrderReduceOnlyEnum as ModifyOrderReduceOnlyEnum
 from .enums import NewAlgoOrderAlgoTypeEnum as NewAlgoOrderAlgoTypeEnum
 from .enums import NewAlgoOrderSideEnum as NewAlgoOrderSideEnum
 from .enums import NewAlgoOrderTypeEnum as NewAlgoOrderTypeEnum

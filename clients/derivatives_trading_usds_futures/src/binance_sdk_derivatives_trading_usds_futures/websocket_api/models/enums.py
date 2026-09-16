@@ -27,6 +27,11 @@ class ModifyOrderPriceMatchEnum(Enum):
     QUEUE_20 = "QUEUE_20"
 
 
+class ModifyOrderReduceOnlyEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
 class NewAlgoOrderAlgoTypeEnum(Enum):
     CONDITIONAL = "CONDITIONAL"
 

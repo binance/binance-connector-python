@@ -128,6 +128,11 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     ModifyOrderPriceMatchEnum,
 )
+
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
+    ModifyOrderReduceOnlyEnum,
+)
+
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models import (
     NewAlgoOrderAlgoTypeEnum,
 )
@@ -3106,6 +3111,7 @@ class TestTradeApi:
             "orig_client_order_id": "LJ9R4QZDihCaS8UAOOLpgW",
             "price_match": ModifyOrderPriceMatchEnum["OPPONENT"].value,
             "modify_id": 1,
+            "reduce_only": ModifyOrderReduceOnlyEnum["TRUE"].value,
             "recv_window": 5000,
         }
 
