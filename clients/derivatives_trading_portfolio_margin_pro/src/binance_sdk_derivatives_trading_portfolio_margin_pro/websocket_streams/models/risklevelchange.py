@@ -30,7 +30,7 @@ class Risklevelchange(BaseModel):
     u: Optional[StrictStr] = Field(default=None, description="uniMMR level")
     s: Optional[StrictStr] = Field(
         default=None,
-        description="Risk level: MARGIN_CALL, REDUCE_ONLY, FORCE_LIQUIDATION",
+        description="Risk level: NORMAL, MARGIN_CALL, REDUCE_ONLY, FORCE_LIQUIDATION",
     )
     eq: Optional[StrictStr] = Field(
         default=None, description="Account equity in USD value"
