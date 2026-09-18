@@ -15,8 +15,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Set
 from typing_extensions import Self
 
@@ -26,23 +26,39 @@ class GetOnChainYieldsLockedProductPositionResponseRowsInner(BaseModel):
     GetOnChainYieldsLockedProductPositionResponseRowsInner
     """  # noqa: E501
 
-    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    position_id: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="positionId"
+    )
     project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
-    purchase_time: Optional[StrictStr] = Field(default=None, alias="purchaseTime")
-    duration: Optional[StrictStr] = None
-    accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
+    purchase_time: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="purchaseTime"
+    )
+    duration: Optional[Union[StrictInt, StrictStr]] = None
+    accrual_days: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="accrualDays"
+    )
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
     apy: Optional[StrictStr] = Field(default=None, alias="APY")
     reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
     next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
-    next_pay_date: Optional[StrictStr] = Field(default=None, alias="nextPayDate")
-    pay_period: Optional[StrictStr] = Field(default=None, alias="payPeriod")
-    rewards_pay_date: Optional[StrictStr] = Field(default=None, alias="rewardsPayDate")
-    rewards_end_date: Optional[StrictStr] = Field(default=None, alias="rewardsEndDate")
-    deliver_date: Optional[StrictStr] = Field(default=None, alias="deliverDate")
-    next_subscription_date: Optional[StrictStr] = Field(
+    next_pay_date: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="nextPayDate"
+    )
+    pay_period: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="payPeriod"
+    )
+    rewards_pay_date: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="rewardsPayDate"
+    )
+    rewards_end_date: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="rewardsEndDate"
+    )
+    deliver_date: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="deliverDate"
+    )
+    next_subscription_date: Optional[Union[StrictInt, StrictStr]] = Field(
         default=None, alias="nextSubscriptionDate"
     )
     redeeming_amt: Optional[StrictStr] = Field(default=None, alias="redeemingAmt")
