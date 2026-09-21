@@ -1,5 +1,19 @@
 # Changelog
 
+## 17.4.1 - 2026-09-21
+
+### Changed (2)
+
+#### REST API
+
+- Modified response for `trading_schedule()` (`GET /fapi/v1/tradingSchedule`):
+  - `marketSchedules`: property `FX` added
+
+- Modified response field `marketSchedules`:
+  - property `FX` added
+  - affected events:
+    - `tradingScheduleResponse`
+
 ## 17.4.0 - 2026-09-16
 
 ### Changed (2)

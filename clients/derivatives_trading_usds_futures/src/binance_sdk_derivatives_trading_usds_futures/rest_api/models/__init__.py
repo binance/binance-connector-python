@@ -484,6 +484,12 @@ from .trading_schedule_response_market_schedules_equity import (
 from .trading_schedule_response_market_schedules_equity_sessions_inner import (
     TradingScheduleResponseMarketSchedulesEQUITYSessionsInner as TradingScheduleResponseMarketSchedulesEQUITYSessionsInner,
 )
+from .trading_schedule_response_market_schedules_fx import (
+    TradingScheduleResponseMarketSchedulesFX as TradingScheduleResponseMarketSchedulesFX,
+)
+from .trading_schedule_response_market_schedules_fx_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesFXSessionsInner as TradingScheduleResponseMarketSchedulesFXSessionsInner,
+)
 from .trading_schedule_response_market_schedules_hkequity import (
     TradingScheduleResponseMarketSchedulesHKEQUITY as TradingScheduleResponseMarketSchedulesHKEQUITY,
 )

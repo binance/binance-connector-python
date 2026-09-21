@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Futures (USDⓈ-M) WebSocket Market Streams
+Futures (USDⓈ-M) REST API
 
 Access market data, manage accounts, and trade USDⓈ-M perpetual futures.
 The version of the OpenAPI document: 1.0.0
@@ -15,29 +15,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_fx_sessions_inner import (
+    TradingScheduleResponseMarketSchedulesFXSessionsInner,
+)
 from typing import Set
 from typing_extensions import Self
 
 
-class TradingSessionStreamResponse(BaseModel):
+class TradingScheduleResponseMarketSchedulesFX(BaseModel):
     """
-    TradingSessionStreamResponse
+    TradingScheduleResponseMarketSchedulesFX
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(
-        default=None,
-        description="Event type, can also be CommodityUpdate, KR_EquityUpdate, HK_EquityUpdate, CN_EquityUpdate or FXUpdate",
+    sessions: Optional[List[TradingScheduleResponseMarketSchedulesFXSessionsInner]] = (
+        None
     )
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    t: Optional[StrictInt] = Field(default=None, description="Session start time")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Session end time", alias="T"
-    )
-    S: Optional[StrictStr] = Field(default=None, description="Session type", alias="S")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "t", "T", "S"]
+    __properties: ClassVar[List[str]] = ["sessions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,8 +51,12 @@ class TradingSessionStreamResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
+    def is_array(cls) -> bool:
+        return False
+
+    @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TradingSessionStreamResponse from a JSON string"""
+        """Create an instance of TradingScheduleResponseMarketSchedulesFX from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,6 +81,13 @@ class TradingSessionStreamResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in sessions (list)
+        _items = []
+        if self.sessions:
+            for _item_sessions in self.sessions:
+                if _item_sessions:
+                    _items.append(_item_sessions.to_dict())
+            _dict["sessions"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -90,7 +97,7 @@ class TradingSessionStreamResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TradingSessionStreamResponse from a dict"""
+        """Create an instance of TradingScheduleResponseMarketSchedulesFX from a dict"""
         if obj is None:
             return None
 
@@ -99,11 +106,16 @@ class TradingSessionStreamResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "e": obj.get("e"),
-                "E": obj.get("E"),
-                "t": obj.get("t"),
-                "T": obj.get("T"),
-                "S": obj.get("S"),
+                "sessions": (
+                    [
+                        TradingScheduleResponseMarketSchedulesFXSessionsInner.from_dict(
+                            _item
+                        )
+                        for _item in obj["sessions"]
+                    ]
+                    if obj.get("sessions") is not None
+                    else None
+                )
             }
         )
         # store additional fields in additional_properties

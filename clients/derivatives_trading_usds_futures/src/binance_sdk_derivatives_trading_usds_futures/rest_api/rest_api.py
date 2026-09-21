@@ -2137,7 +2137,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Trading Schedule
 
-                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market, Hong Kong equity market, China equity market, and the commodity market.
+                Trading session schedules for the underlying assets of TradFi Perps are provided for a one-week period forward and one-week period backward starting from the day prior to the query time, covering the U.S. equity market, Korean equity market, Hong Kong equity market, China equity market, the commodity market, and the FX market.
 
         Session types per market:
         - U.S. equity market: "PRE_MARKET", "REGULAR", "AFTER_MARKET", "OVERNIGHT", "NO_TRADING".
@@ -2145,6 +2145,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         - Korean equity market: "REGULAR", "NO_TRADING".
         - Hong Kong equity market: "REGULAR", "NO_TRADING".
         - China equity market: "REGULAR", "NO_TRADING".
+        - FX market: "REGULAR", "NO_TRADING".
 
         Weight(IP): 5
 

@@ -23,6 +23,9 @@ from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedu
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_equity import (
     TradingScheduleResponseMarketSchedulesEQUITY,
 )
+from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_fx import (
+    TradingScheduleResponseMarketSchedulesFX,
+)
 from binance_sdk_derivatives_trading_usds_futures.rest_api.models.trading_schedule_response_market_schedules_hkequity import (
     TradingScheduleResponseMarketSchedulesHKEQUITY,
 )
@@ -53,6 +56,9 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
     cn_equity: Optional[TradingScheduleResponseMarketSchedulesHKEQUITY] = Field(
         default=None, alias="CN_EQUITY"
     )
+    FX: Optional[TradingScheduleResponseMarketSchedulesFX] = Field(
+        default=None, alias="FX"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "EQUITY",
@@ -60,6 +66,7 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
         "KR_EQUITY",
         "HK_EQUITY",
         "CN_EQUITY",
+        "FX",
     ]
 
     model_config = ConfigDict(
@@ -123,6 +130,9 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of cn_equity
         if self.cn_equity:
             _dict["CN_EQUITY"] = self.cn_equity.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of FX
+        if self.FX:
+            _dict["FX"] = self.FX.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -174,6 +184,11 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
                         obj["CN_EQUITY"]
                     )
                     if obj.get("CN_EQUITY") is not None
+                    else None
+                ),
+                "FX": (
+                    TradingScheduleResponseMarketSchedulesFX.from_dict(obj["FX"])
+                    if obj.get("FX") is not None
                     else None
                 ),
             }

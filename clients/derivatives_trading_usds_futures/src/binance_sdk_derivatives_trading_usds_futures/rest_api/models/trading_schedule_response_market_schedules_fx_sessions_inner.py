@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Futures (USDⓈ-M) WebSocket Market Streams
+Futures (USDⓈ-M) REST API
 
 Access market data, manage accounts, and trade USDⓈ-M perpetual futures.
 The version of the OpenAPI document: 1.0.0
@@ -21,23 +21,16 @@ from typing import Set
 from typing_extensions import Self
 
 
-class TradingSessionStreamResponse(BaseModel):
+class TradingScheduleResponseMarketSchedulesFXSessionsInner(BaseModel):
     """
-    TradingSessionStreamResponse
+    TradingScheduleResponseMarketSchedulesFXSessionsInner
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(
-        default=None,
-        description="Event type, can also be CommodityUpdate, KR_EquityUpdate, HK_EquityUpdate, CN_EquityUpdate or FXUpdate",
-    )
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    t: Optional[StrictInt] = Field(default=None, description="Session start time")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Session end time", alias="T"
-    )
-    S: Optional[StrictStr] = Field(default=None, description="Session type", alias="S")
+    start_time: Optional[StrictInt] = Field(default=None, alias="startTime")
+    end_time: Optional[StrictInt] = Field(default=None, alias="endTime")
+    type: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["e", "E", "t", "T", "S"]
+    __properties: ClassVar[List[str]] = ["startTime", "endTime", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,8 +48,12 @@ class TradingSessionStreamResponse(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
+    def is_array(cls) -> bool:
+        return False
+
+    @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TradingSessionStreamResponse from a JSON string"""
+        """Create an instance of TradingScheduleResponseMarketSchedulesFXSessionsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,7 +87,7 @@ class TradingSessionStreamResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TradingSessionStreamResponse from a dict"""
+        """Create an instance of TradingScheduleResponseMarketSchedulesFXSessionsInner from a dict"""
         if obj is None:
             return None
 
@@ -99,11 +96,9 @@ class TradingSessionStreamResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "e": obj.get("e"),
-                "E": obj.get("E"),
-                "t": obj.get("t"),
-                "T": obj.get("T"),
-                "S": obj.get("S"),
+                "startTime": obj.get("startTime"),
+                "endTime": obj.get("endTime"),
+                "type": obj.get("type"),
             }
         )
         # store additional fields in additional_properties
