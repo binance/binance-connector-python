@@ -1,5 +1,12 @@
 # Changelog
 
+## 17.5.0 - 2026-09-23
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.5.0`
+- Fixed user data stream event deserialization returning no match, or the wrong event, when several event schemas fit the payload: the event is now read from its `e` field.
+
 ## 17.4.1 - 2026-09-21
 
 ### Changed (2)
