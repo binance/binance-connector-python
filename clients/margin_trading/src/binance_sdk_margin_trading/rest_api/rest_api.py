@@ -389,8 +389,21 @@ class MarginTradingRestAPI:
 
         - The time between startTime and endTime cannot be longer than 7 days.
 
-        - If fromId is set, the data with id > fromId will be returned.
-        Otherwise the latest data will be returned
+        - If both startTime and endTime are omitted, the most recent 7 days are
+        queried (endTime defaults to the current time, and startTime to the
+        current time minus 7 days).
+
+        - If startTime is provided without endTime, endTime defaults to
+        startTime plus 7 days.
+
+        - If endTime is provided without startTime, startTime defaults to
+        endTime minus 7 days.
+
+        - If fromId is set, the data with id > fromId within the queried time
+        range will be returned. Otherwise the latest data within that range will
+        be returned. fromId does not extend the time range; to retrieve older
+        records, move startTime and endTime backwards in windows of up to 7
+        days.
 
         - To query isolated data, Symbol needs to be entered.
 

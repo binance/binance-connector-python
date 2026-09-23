@@ -39,6 +39,7 @@ from binance_sdk_margin_trading.websocket_streams.models.outbound_account_positi
 from binance_sdk_margin_trading.websocket_streams.models.user_liability_change import (
     UserLiabilityChange,
 )
+from pydantic import model_validator
 from typing import Union, Set, Dict
 from typing_extensions import Self
 
@@ -51,6 +52,39 @@ TRADEDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "OutboundAccountPosition",
     "UserLiabilityChange",
 ]
+
+# The `oneof_schema_N_validator` field each event schema is declared under, set
+# alongside `actual_instance` so that a routed event is reachable under both names.
+TRADEDATASTREAMEVENTSRESPONSE_VALIDATOR_FIELD_MAP = {
+    MarginLevelStatusChange: "oneof_schema_1_validator",
+    UserLiabilityChange: "oneof_schema_2_validator",
+    BalanceUpdate: "oneof_schema_3_validator",
+    ExecutionReport: "oneof_schema_4_validator",
+    ListStatus: "oneof_schema_5_validator",
+    ListenKeyExpired: "oneof_schema_6_validator",
+    OutboundAccountPosition: "oneof_schema_7_validator",
+}
+
+# The event schemas, keyed by the event name the `e` field of the payload carries.
+TRADEDATASTREAMEVENTSRESPONSE_EVENT_SCHEMA_MAP = {
+    "MARGIN_LEVEL_STATUS_CHANGE": MarginLevelStatusChange,
+    "USER_LIABILITY_CHANGE": UserLiabilityChange,
+    "balanceUpdate": BalanceUpdate,
+    "executionReport": ExecutionReport,
+    "listStatus": ListStatus,
+    "listenKeyExpired": ListenKeyExpired,
+    "outboundAccountPosition": OutboundAccountPosition,
+}
+
+# The same schemas, with their validator field, keyed by event name without
+# separators or case, which is how an incoming event is looked up.
+TRADEDATASTREAMEVENTSRESPONSE_EVENT_TYPE_MAP = {
+    event_name.replace("_", "").replace("-", "").lower(): (schema, validator_field)
+    for event_name, schema in TRADEDATASTREAMEVENTSRESPONSE_EVENT_SCHEMA_MAP.items()
+    if (
+        validator_field := TRADEDATASTREAMEVENTSRESPONSE_VALIDATOR_FIELD_MAP.get(schema)
+    )
+}
 
 
 class TradeDataStreamEventsResponse(BaseModel):
@@ -113,6 +147,37 @@ class TradeDataStreamEventsResponse(BaseModel):
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
+
+    @classmethod
+    def resolve_event_schema(cls, event_name: Any) -> Optional[Any]:
+        """Returns the `(schema, validator field)` pair `event_name` belongs to.
+
+        The event name is the only thing telling user data events apart: their
+        schemas declare every field as optional, so most of them validate any
+        event. Names are compared without separators or case, to accept both
+        `executionReport` and `ORDER_TRADE_UPDATE`.
+        """
+        if not isinstance(event_name, str):
+            return None
+
+        key = event_name.replace("_", "").replace("-", "").lower()
+        return TRADEDATASTREAMEVENTSRESPONSE_EVENT_TYPE_MAP.get(key)
+
+    @model_validator(mode="before")
+    @classmethod
+    def route_user_data_event(cls, data: Any) -> Any:
+        """Deserializes a raw user data event into the schema its `e` field names."""
+        if not isinstance(data, dict) or "actual_instance" in data:
+            return data
+
+        resolved = cls.resolve_event_schema(data.get("e"))
+        if resolved is None:
+            return data
+
+        schema, validator_field = resolved
+
+        instance = schema.from_dict(data)
+        return {"actual_instance": instance, validator_field: instance}
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
@@ -188,6 +253,14 @@ class TradeDataStreamEventsResponse(BaseModel):
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
+        try:
+            parsed = json.loads(json_str)
+        except (TypeError, ValueError):
+            parsed = None
+
+        if isinstance(parsed, dict) and cls.resolve_event_schema(parsed.get("e")):
+            return cls.model_validate(parsed)
+
         instance = cls.model_construct()
         error_messages = []
         match = 0
