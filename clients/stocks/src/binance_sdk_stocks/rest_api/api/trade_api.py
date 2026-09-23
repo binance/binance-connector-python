@@ -403,13 +403,28 @@ class TradeApi:
                 POST /sapi/v1/equity/order/place
                 https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/rest-api/trade#place-equity-order
 
-                Place a new equity order. Supports all combinations of `LIMIT` / `MARKET` × `BUY` / `SELL`. For `LIMIT BUY` orders the commission fee is automatically computed and reserved by the server at placement time — callers submit `price` and `quantity` only, no `fee` field is required.
+                Place a new equity order. Supports all combinations of `LIMIT` /
+        `MARKET` × `BUY` / `SELL`. For `LIMIT BUY` orders the commission fee is
+        automatically computed and reserved by the server at placement time —
+        callers submit `price` and `quantity` only, no `fee` field is required.
+
 
         **Field combination matrix**
 
-        | Side | OrderType | Required | Forbidden | | ---- | --------- | -------- | --------- | | BUY | LIMIT | `price`, `quantity`, `tradingSession` | `notional` | | BUY | MARKET | `notional` | `price`, `quantity`, `tradingSession` | | SELL | LIMIT | `price`, `quantity`, `tradingSession` | `notional` | | SELL | MARKET | `quantity` | `price`, `notional`, `tradingSession` |
 
-        **Fractional shares**: when `quantity` has a decimal component, or an order is placed by `notional`, it is treated as a fractional-share order. A fractional-share `GTC` order must be paired with `tradingSession = EXTENDED` or `24H`.
+        | Side | OrderType | Required | Forbidden |
+        | ---- | --------- | -------- | --------- |
+        | BUY | LIMIT | `price`, `quantity`, `tradingSession` | `notional` |
+        | BUY | MARKET | `notional` | `price`, `quantity`, `tradingSession` |
+        | SELL | LIMIT | `price`, `quantity`, `tradingSession` | `notional` |
+        | SELL | MARKET | `quantity` | `price`, `notional`, `tradingSession` |
+
+
+        **Fractional shares**: when `quantity` has a decimal component, or an
+        order is placed by `notional`, it is treated as a fractional-share
+        order. A fractional-share `GTC` order must be paired with
+        `tradingSession = EXTENDED` or `24H`.
+
 
         Rate limit: 200 requests / min (UID).
 
@@ -418,7 +433,7 @@ class TradeApi:
         Security Type: TRADE
 
                 Args:
-                    symbol (Union[str, None]): US stock ticker, e.g. `AAPL`, `TSLA`. Must be a symbol with tokenization enabled — check via `/market/tokenized-assets`.
+                    symbol (Union[str, None]): US stock ticker, e.g. `AAPL`, `TSLA`. Must be a tradable US-equity symbol — verify via `/sapi/v1/equity/market/exchangeInfo`. Tokenization enablement (verifiable via `/sapi/v1/equity/market/tokenized-assets`) is *not* required; non-tokenized symbols are accepted and settle as traditional underlying-equity trades. The `tokenize` parameter only takes effect on tokenization-enabled symbols and is silently ignored otherwise.
                     side (Union[PlaceEquityOrderSideEnum, None]): `BUY` / `SELL`.
                     order_type (Union[PlaceEquityOrderOrderTypeEnum, None]): `MARKET` / `LIMIT`.
                     quote_asset (Optional[str] = None): Quote asset. Defaults to `USDC`; must be within the server's allowed set.
@@ -429,7 +444,7 @@ class TradeApi:
                     trading_session (Optional[PlaceEquityOrderTradingSessionEnum] = None): `RTH` / `EXTENDED` / `24H`. **Required** for `LIMIT`; **forbidden** for `MARKET`.
                     wallet_type (Optional[PlaceEquityOrderWalletTypeEnum] = None): Payment wallet for `BUY` orders: `CARD` (default) / `MAIN`. `SELL` orders always settle to `CARD`.
                     client_order_id (Optional[str] = None): Client-supplied order id. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
-                    tokenize (Optional[bool] = None): Whether to tokenize the purchased stock asset upon settlement. Default `true`. Set to `false` to receive the underlying equity directly instead of a tokenized asset.
+                    tokenize (Optional[bool] = None): Whether to tokenize the purchased stock asset upon settlement. Default `true`. Only takes effect when the symbol is tokenization-enabled (check via `/market/tokenized-assets`); silently ignored for non-tokenized symbols, which always settle as traditional underlying-equity trades.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
