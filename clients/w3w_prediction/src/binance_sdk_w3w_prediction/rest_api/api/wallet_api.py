@@ -51,7 +51,7 @@ class WalletApi:
 
                 Get the authenticated user's prediction portfolio overview including active positions count, aggregated PnL, and full position list.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -111,7 +111,7 @@ class WalletApi:
 
                 Query the current user's daily trading quota limit and remaining allowance for prediction markets.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -153,7 +153,7 @@ class WalletApi:
 
                 Get all prediction wallets registered for the authenticated user.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -195,7 +195,7 @@ class WalletApi:
 
                 Get available balances for each payment option that can be used for prediction trading.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 

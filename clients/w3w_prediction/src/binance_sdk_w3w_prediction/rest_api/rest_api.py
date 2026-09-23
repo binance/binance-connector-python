@@ -175,7 +175,7 @@ class W3wPredictionRestAPI:
 
                 Get full details for a specific prediction market topic, including variant data and timeline.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     market_topic_id (Union[int, None]): Market topic ID. Must be > 0
@@ -198,7 +198,7 @@ class W3wPredictionRestAPI:
 
                 Get all available prediction market categories (L1 and L2).
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
 
@@ -226,7 +226,7 @@ class W3wPredictionRestAPI:
 
                 Get a paginated list of prediction market topics, with optional category and sort filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     l1_category (Optional[str] = None): Level-1 category filter
@@ -258,7 +258,7 @@ class W3wPredictionRestAPI:
 
                 Semantic search for prediction market topics by keyword.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     query (Union[str, None]): Search keyword. Not blank
@@ -283,7 +283,7 @@ class W3wPredictionRestAPI:
 
                 Get the most recent trade price for a prediction market.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     market_id (Union[int, None]): Market ID. Must be > 0
@@ -309,7 +309,7 @@ class W3wPredictionRestAPI:
 
                 Get the current order book (bids and asks) for a specific prediction market outcome token.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     vendor (Union[str, None]): Vendor identifier (e.g. `predict_fun`)
@@ -621,7 +621,7 @@ class W3wPredictionRestAPI:
 
                 Get the authenticated user's position detail for a specific prediction token.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -656,7 +656,7 @@ class W3wPredictionRestAPI:
 
                 Query profit and loss records for the authenticated user's prediction positions. When `tokenId` is provided, returns a single record in `pnl`; otherwise returns a list in `pnlList`.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -698,7 +698,7 @@ class W3wPredictionRestAPI:
 
                 Get the authenticated user's prediction token positions with portfolio summary and tab-based filtering.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -732,7 +732,7 @@ class W3wPredictionRestAPI:
 
                 Get prediction positions filtered by wallet address and/or market topic ID. Both parameters are optional.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -769,7 +769,7 @@ class W3wPredictionRestAPI:
 
                 Get the authenticated user's settled (resolved) prediction position history with optional filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -814,7 +814,7 @@ class W3wPredictionRestAPI:
 
                 Redeem one or more settled prediction tokens on-chain to claim winnings. Requires SAS authorization.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -847,7 +847,7 @@ class W3wPredictionRestAPI:
 
                 Query the on-chain transaction status of a previously submitted redeem request.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -897,7 +897,7 @@ class W3wPredictionRestAPI:
         - **Java:** use `HttpURLConnection` and write the raw body bytes directly.
         - **Go:** use `strings.NewReader` with a hand-built body instead of `url.Values.Encode()`.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -941,7 +941,7 @@ class W3wPredictionRestAPI:
 
                 Get a price quote for a prediction order. The returned `quoteId` must be used in the subsequent Place Order request.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1002,7 +1002,7 @@ class W3wPredictionRestAPI:
 
                 Place a prediction order using a previously obtained quote. Requires SAS authorization.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1015,15 +1015,15 @@ class W3wPredictionRestAPI:
           | `LIMIT`   | Must be `GTC` | Required, must be > 0 |
 
                 Args:
-                    wallet_address (Union[str, None]): User's prediction wallet address
+                    wallet_address (Union[str, None]): User's prediction wallet address. Must be a valid address owned by the calling UID — a well-formed address not owned by the UID and a malformed (non-address) value both return the same generic `-3026`. An empty string instead returns `-1102` naming the field.
                     wallet_id (Union[str, None]): Wallet ID
                     quote_id (Union[str, None]): Quote ID obtained from `Get Quote`
                     time_in_force (Union[str, None]): Must match `orderType`: `FOK` for `MARKET`, `GTC` for `LIMIT`
-                    account_type (Union[PlaceOrderAccountTypeEnum, None]): Payment account type. Enum: `SPOT`, `FUNDING`
-                    order_type (Union[PlaceOrderOrderTypeEnum, None]): Order type. Enum: `MARKET`, `LIMIT`
+                    account_type (Union[PlaceOrderAccountTypeEnum, None]): Payment account type. Enum: `SPOT`, `FUNDING`. This only determines the settlement/reference account — it does not control which balance is debited. See `fundingSource` below for that.
+                    order_type (Union[PlaceOrderOrderTypeEnum, None]): Order type. Enum: `MARKET`, `LIMIT` only. Do not combine with `timeInForce` (e.g. `LIMIT_GTC` is not a valid value) — set `timeInForce` separately per the Validation Rules table below.
                     slippage_bps (Union[int, None]): Slippage tolerance in basis points. Range 1–10000
-                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`. Must be > 0
-                    funding_source (Optional[PlaceOrderFundingSourceEnum] = None): Funding source. Enum: `MPC`, `CEX`. Default `MPC`
+                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`, must be > 0. Omitting it when `orderType=LIMIT` returns a generic `-3026` (no field name in the message).
+                    funding_source (Optional[PlaceOrderFundingSourceEnum] = None): Funding source. Enum: `MPC`, `CEX`. Default `MPC`. This determines which balance is actually debited, independent of `accountType`.
                     fund_transfer_amount (Optional[str] = None): Auto-transfer amount before order (wei). Must be > 0 if provided
 
                 Returns:
@@ -1062,7 +1062,7 @@ class W3wPredictionRestAPI:
 
                 Get active (open) prediction orders for the authenticated user.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1110,7 +1110,7 @@ class W3wPredictionRestAPI:
 
                 Get historical prediction orders (all statuses) for the authenticated user, with optional filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1158,7 +1158,7 @@ class W3wPredictionRestAPI:
 
                 Move funds from the user's bound CeDeFi MPC wallet to their CEX account (SPOT/FUNDING) via a contract escrow + credit flow. The maker wallet is resolved server-side by `userId`; the caller does not pass wallet or signature.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1199,7 +1199,7 @@ class W3wPredictionRestAPI:
 
                 Withdraw funds from the user's CEX account (SPOT/FUNDING) to their bound CeDeFi MPC wallet address. Unlike `v1/capital/withdraw/apply`, the caller does NOT pass `address`; the backend resolves the user's bound CeDeFi MPC wallet address by `userId` and reuses the existing capital withdraw flow with that address as the target.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1252,7 +1252,7 @@ class W3wPredictionRestAPI:
 
         ⚠️ **SAS Authorization Required:** This endpoint enforces SAS (Self-Authorization Service) authorization. If SAS is not enabled for the wallet, the request will be rejected with `-31003 SAS authorization required`. Enable SAS for your wallet before calling this endpoint.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1299,7 +1299,7 @@ class W3wPredictionRestAPI:
 
                 Transfer funds from the user's CEX account (SPOT or FUNDING) into the prediction wallet. Requires SAS authorization.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1348,7 +1348,7 @@ class W3wPredictionRestAPI:
 
                 Get the authenticated user's prediction wallet transfer history within a date range.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1393,7 +1393,7 @@ class W3wPredictionRestAPI:
 
         **`status` values:** Terminal states are `COMPLETED` and `FAILED`. Intermediate states are `PROCESSING` and `PENDING`. **Do not** poll for `SUCCESS` — it is not a valid terminal state.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1425,7 +1425,7 @@ class W3wPredictionRestAPI:
 
                 Get the authenticated user's prediction portfolio overview including active positions count, aggregated PnL, and full position list.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1463,7 +1463,7 @@ class W3wPredictionRestAPI:
 
                 Query the current user's daily trading quota limit and remaining allowance for prediction markets.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1489,7 +1489,7 @@ class W3wPredictionRestAPI:
 
                 Get all prediction wallets registered for the authenticated user.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -1515,7 +1515,7 @@ class W3wPredictionRestAPI:
 
                 Get available balances for each payment option that can be used for prediction trading.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 

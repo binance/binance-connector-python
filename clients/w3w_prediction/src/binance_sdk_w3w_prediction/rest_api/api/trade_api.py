@@ -68,7 +68,7 @@ class TradeApi:
         - **Java:** use `HttpURLConnection` and write the raw body bytes directly.
         - **Go:** use `strings.NewReader` with a hand-built body instead of `url.Values.Encode()`.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -141,7 +141,7 @@ class TradeApi:
 
                 Get a price quote for a prediction order. The returned `quoteId` must be used in the subsequent Place Order request.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -247,7 +247,7 @@ class TradeApi:
 
                 Place a prediction order using a previously obtained quote. Requires SAS authorization.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -260,15 +260,15 @@ class TradeApi:
           | `LIMIT`   | Must be `GTC` | Required, must be > 0 |
 
                 Args:
-                    wallet_address (Union[str, None]): User's prediction wallet address
+                    wallet_address (Union[str, None]): User's prediction wallet address. Must be a valid address owned by the calling UID — a well-formed address not owned by the UID and a malformed (non-address) value both return the same generic `-3026`. An empty string instead returns `-1102` naming the field.
                     wallet_id (Union[str, None]): Wallet ID
                     quote_id (Union[str, None]): Quote ID obtained from `Get Quote`
                     time_in_force (Union[str, None]): Must match `orderType`: `FOK` for `MARKET`, `GTC` for `LIMIT`
-                    account_type (Union[PlaceOrderAccountTypeEnum, None]): Payment account type. Enum: `SPOT`, `FUNDING`
-                    order_type (Union[PlaceOrderOrderTypeEnum, None]): Order type. Enum: `MARKET`, `LIMIT`
+                    account_type (Union[PlaceOrderAccountTypeEnum, None]): Payment account type. Enum: `SPOT`, `FUNDING`. This only determines the settlement/reference account — it does not control which balance is debited. See `fundingSource` below for that.
+                    order_type (Union[PlaceOrderOrderTypeEnum, None]): Order type. Enum: `MARKET`, `LIMIT` only. Do not combine with `timeInForce` (e.g. `LIMIT_GTC` is not a valid value) — set `timeInForce` separately per the Validation Rules table below.
                     slippage_bps (Union[int, None]): Slippage tolerance in basis points. Range 1–10000
-                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`. Must be > 0
-                    funding_source (Optional[PlaceOrderFundingSourceEnum] = None): Funding source. Enum: `MPC`, `CEX`. Default `MPC`
+                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`, must be > 0. Omitting it when `orderType=LIMIT` returns a generic `-3026` (no field name in the message).
+                    funding_source (Optional[PlaceOrderFundingSourceEnum] = None): Funding source. Enum: `MPC`, `CEX`. Default `MPC`. This determines which balance is actually debited, independent of `accountType`.
                     fund_transfer_amount (Optional[str] = None): Auto-transfer amount before order (wei). Must be > 0 if provided
 
                 Returns:
@@ -358,7 +358,7 @@ class TradeApi:
 
                 Get active (open) prediction orders for the authenticated user.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -428,7 +428,7 @@ class TradeApi:
 
                 Get historical prediction orders (all statuses) for the authenticated user, with optional filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 

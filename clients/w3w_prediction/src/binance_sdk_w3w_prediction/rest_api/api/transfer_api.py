@@ -58,7 +58,7 @@ class TransferApi:
 
                 Move funds from the user's bound CeDeFi MPC wallet to their CEX account (SPOT/FUNDING) via a contract escrow + credit flow. The maker wallet is resolved server-side by `userId`; the caller does not pass wallet or signature.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -139,7 +139,7 @@ class TransferApi:
 
                 Withdraw funds from the user's CEX account (SPOT/FUNDING) to their bound CeDeFi MPC wallet address. Unlike `v1/capital/withdraw/apply`, the caller does NOT pass `address`; the backend resolves the user's bound CeDeFi MPC wallet address by `userId` and reuses the existing capital withdraw flow with that address as the target.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -226,7 +226,7 @@ class TransferApi:
 
         ⚠️ **SAS Authorization Required:** This endpoint enforces SAS (Self-Authorization Service) authorization. If SAS is not enabled for the wallet, the request will be rejected with `-31003 SAS authorization required`. Enable SAS for your wallet before calling this endpoint.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -310,7 +310,7 @@ class TransferApi:
 
                 Transfer funds from the user's CEX account (SPOT or FUNDING) into the prediction wallet. Requires SAS authorization.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -401,7 +401,7 @@ class TransferApi:
 
                 Get the authenticated user's prediction wallet transfer history within a date range.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -477,7 +477,7 @@ class TransferApi:
 
         **`status` values:** Terminal states are `COMPLETED` and `FAILED`. Intermediate states are `PROCESSING` and `PENDING`. **Do not** poll for `SUCCESS` — it is not a valid terminal state.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 

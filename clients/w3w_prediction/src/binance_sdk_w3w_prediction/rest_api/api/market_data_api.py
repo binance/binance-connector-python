@@ -50,7 +50,7 @@ class MarketDataApi:
 
                 Get full details for a specific prediction market topic, including variant data and timeline.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     market_topic_id (Union[int, None]): Market topic ID. Must be > 0
@@ -95,7 +95,7 @@ class MarketDataApi:
 
                 Get all available prediction market categories (L1 and L2).
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
 
@@ -139,7 +139,7 @@ class MarketDataApi:
 
                 Get a paginated list of prediction market topics, with optional category and sort filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     l1_category (Optional[str] = None): Level-1 category filter
@@ -192,7 +192,7 @@ class MarketDataApi:
 
                 Semantic search for prediction market topics by keyword.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     query (Union[str, None]): Search keyword. Not blank
@@ -238,7 +238,7 @@ class MarketDataApi:
 
                 Get the most recent trade price for a prediction market.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     market_id (Union[int, None]): Market ID. Must be > 0
@@ -286,7 +286,7 @@ class MarketDataApi:
 
                 Get the current order book (bids and asks) for a specific prediction market outcome token.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
                 Args:
                     vendor (Union[str, None]): Vendor identifier (e.g. `predict_fun`)

@@ -49,7 +49,7 @@ class PositionApi:
 
                 Get the authenticated user's position detail for a specific prediction token.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -112,7 +112,7 @@ class PositionApi:
 
                 Query profit and loss records for the authenticated user's prediction positions. When `tokenId` is provided, returns a single record in `pnl`; otherwise returns a list in `pnlList`.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -176,7 +176,7 @@ class PositionApi:
 
                 Get the authenticated user's prediction token positions with portfolio summary and tab-based filtering.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -236,7 +236,7 @@ class PositionApi:
 
                 Get prediction positions filtered by wallet address and/or market topic ID. Both parameters are optional.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
@@ -291,7 +291,7 @@ class PositionApi:
 
                 Get the authenticated user's settled (resolved) prediction position history with optional filters.
 
-        Weight(IP): 200
+        Weight(IP): 1
 
         Security Type: PREDICTION_TRADE
 
