@@ -58,7 +58,7 @@ class PlaceMultipleOrdersOrdersParameterInner(BaseModel):
     )
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default="EXPIRE_MAKER",
-        description="EXPIRE_TAKER:expire taker order when STP triggers/ EXPIRE_MAKER:expire maker order when STP triggers/ EXPIRE_BOTH:expire both orders when STP triggers; Default EXPIRE_MAKER",
+        description="EXPIRE_TAKER: expire taker order when STP triggers/ EXPIRE_MAKER: expire maker order when STP triggers/ EXPIRE_BOTH: expire both orders when STP triggers; Default EXPIRE_MAKER",
         alias="selfTradePreventionMode",
     )
     additional_properties: Dict[str, Any] = {}
