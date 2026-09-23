@@ -1,10 +1,23 @@
+import copy
+import pickle
 import re
+import ssl
 import time
 import unittest
+import warnings
 import hmac
 import hashlib
 import json
-from pydantic import BaseModel, ConfigDict
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    ValidationError,
+)
 import requests
 
 from base64 import b64decode, b64encode
@@ -15,12 +28,16 @@ from Crypto.Signature import pkcs1_15, eddsa
 from datetime import datetime
 from enum import Enum
 from types import SimpleNamespace
-from typing import ClassVar, List, Optional, Set, Union
+from typing import Annotated, ClassVar, List, Optional, Set, Union
 from unittest.mock import Mock, patch
 from urllib.parse import urlencode
 
 from binance_common.constants import TimeUnit
-from binance_common.configuration import ConfigurationRestAPI
+from binance_common.configuration import (
+    ConfigurationRestAPI,
+    ConfigurationWebSocketAPI,
+    ConfigurationWebSocketStreams,
+)
 from binance_common.errors import (
     BadRequestError,
     UnauthorizedError,
@@ -49,9 +66,13 @@ from binance_common.utils import (
     parse_user_event,
     parse_rate_limit_headers,
     parse_ws_rate_limit_headers,
+    redact_configuration,
     redact_sensitive_info,
+    relax_model_strictness,
+    resolve_https_agent,
     resolve_model_from_event,
     send_request,
+    strip_strict_types,
     should_retry_request,
     transform_query,
     validate_time_unit,
@@ -434,10 +455,7 @@ class TestGetIso8601(unittest.TestCase):
 
     def test_get_iso_8601_format(self):
         timestamp = get_iso_8601()
-        self.assertRegex(
-            timestamp,
-            r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$"
-        )
+        self.assertRegex(timestamp, r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$")
 
     def test_get_iso_8601_parseable(self):
         timestamp = get_iso_8601()
@@ -865,9 +883,7 @@ class TestWeb3Signature(unittest.TestCase):
             body={"foo": "bar"},
         )
 
-        expected_pre_hash = (
-            '2026-06-03T10:20:30.123ZGET/build/test/path{"foo":"bar"}'
-        )
+        expected_pre_hash = '2026-06-03T10:20:30.123ZGET/build/test/path{"foo":"bar"}'
         expected_signature = b64encode(
             hmac.new(
                 config.api_secret.encode("utf-8"),
@@ -877,6 +893,7 @@ class TestWeb3Signature(unittest.TestCase):
         ).decode("utf-8")
 
         self.assertEqual(result, expected_signature)
+
 
 class TestShouldRetryRequest(unittest.TestCase):
     def test_retry_on_retriable_status_code(self):
@@ -1275,137 +1292,44 @@ class TestSendRequest(unittest.TestCase):
         }
         self.assertEqual(kwargs["params"], expected_signature_payload)
 
-    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
-    @patch("binance_common.utils.web3_signature", return_value="web3_signed_signature")
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
-    @patch("binance_common.utils.encoded_string", return_value="param=value")
-    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
-    def test_web3_signed_request_adds_web3_headers(
+    @patch("binance_common.utils.get_timestamp", return_value=1234567890)
+    @patch("binance_common.utils.get_signature", return_value="signed_signature")
+    def test_signed_request_keeps_user_provided_timestamp(
         self,
-        mock_parse_rate_limits,
-        mock_encoded_string,
+        mock_get_signature,
+        mock_get_timestamp,
         mock_clean_none,
-        mock_web3_signature,
-        mock_get_iso_8601,
+        mock_encoded_string,
     ):
+        """A timestamp passed in the payload is signed as-is instead of being overwritten."""
         mock_response = Mock(status_code=200)
         mock_response.json.return_value = {"success": True}
         mock_response.text = json.dumps({"success": True})
         mock_response.headers = {}
-
         self.session.request.return_value = mock_response
 
-        response = send_request(
+        send_request(
             self.session,
             self.configuration,
-            "POST",
+            self.method,
             self.path,
-            payload={"param": "value"},
-            body={"field": "data"},
+            payload={"param": "value", "timestamp": 1111111111},
             is_signed=True,
-            web3_headers={"recv_window": "20000", "nonce": "abc123"},
         )
 
-        self.assertEqual(response.data(), {"success": True})
-        self.session.request.assert_called_once()
-
+        mock_get_timestamp.assert_not_called()
         _, kwargs = self.session.request.call_args
-        headers = kwargs["headers"]
 
-        self.assertEqual(kwargs["params"], "param=value")
-        self.assertEqual(kwargs["data"], "param=value")
-        self.assertEqual(headers["X-OC-APIKEY"], self.configuration.api_key)
-        self.assertEqual(headers["X-OC-TIMESTAMP"], "2026-06-03T10:20:30.123Z")
-        self.assertEqual(headers["X-OC-SIGN"], "web3_signed_signature")
-        self.assertEqual(headers["X-OC-RECV-WINDOW"], "20000")
-        self.assertEqual(headers["X-OC-NONCE"], "abc123")
-
-        mock_web3_signature.assert_called_once_with(
-            self.configuration,
-            "POST",
-            self.path,
-            "param=value",
-            "2026-06-03T10:20:30.123Z",
-            {"field": "data"},
-            None,
+        self.assertEqual(
+            kwargs["params"],
+            {
+                "param": "value",
+                "timestamp": 1111111111,
+                "signature": "signed_signature",
+            },
         )
-
-    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
-    @patch("binance_common.utils.web3_signature", return_value="web3_signed_signature")
-    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
-    @patch("binance_common.utils.encoded_string", return_value="param=value")
-    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
-    def test_web3_signed_request_uses_default_recv_window_and_nonce(
-        self,
-        mock_parse_rate_limits,
-        mock_encoded_string,
-        mock_clean_none,
-        mock_web3_signature,
-        mock_get_iso_8601,
-    ):
-        mock_response = Mock(status_code=200)
-        mock_response.json.return_value = {"success": True}
-        mock_response.text = json.dumps({"success": True})
-        mock_response.headers = {}
-
-        self.session.request.return_value = mock_response
-
-        response = send_request(
-            self.session,
-            self.configuration,
-            "GET",
-            self.path,
-            payload={"param": "value"},
-            is_signed=True,
-            web3_headers={},
-        )
-
-        self.assertEqual(response.data(), {"success": True})
-
-        _, kwargs = self.session.request.call_args
-        headers = kwargs["headers"]
-
-        self.assertEqual(headers["X-OC-RECV-WINDOW"], "15000")
-        self.assertEqual(headers["X-OC-NONCE"], "")
-        self.assertEqual(headers["X-OC-SIGN"], "web3_signed_signature")
-
-    @patch("binance_common.utils.get_iso_8601", return_value="2026-06-03T10:20:30.123Z")
-    @patch("binance_common.utils.web3_signature")
-    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
-    @patch("binance_common.utils.encoded_string", return_value="param=value")
-    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
-    def test_web3_unsigned_request_does_not_sign(
-        self,
-        mock_parse_rate_limits,
-        mock_encoded_string,
-        mock_clean_none,
-        mock_web3_signature,
-        mock_get_iso_8601,
-    ):
-        mock_response = Mock(status_code=200)
-        mock_response.json.return_value = {"success": True}
-        mock_response.text = json.dumps({"success": True})
-        mock_response.headers = {}
-
-        self.session.request.return_value = mock_response
-
-        response = send_request(
-            self.session,
-            self.configuration,
-            "GET",
-            self.path,
-            payload={"param": "value"},
-            is_signed=False,
-            web3_headers={},
-        )
-
-        self.assertEqual(response.data(), {"success": True})
-
-        _, kwargs = self.session.request.call_args
-        headers = kwargs["headers"]
-
-        self.assertEqual(headers["X-OC-SIGN"], "")
-        mock_web3_signature.assert_not_called()
 
 
 class TestParseRateLimitHeaders(unittest.TestCase):
@@ -1920,6 +1844,19 @@ class TestWsApiPayload(unittest.TestCase):
             {"nested": "data"}, separators=(",", ":")
         )
 
+    def test_payload_keeps_user_provided_timestamp_when_auth_is_skipped(self):
+        """A timestamp passed in the params is not overwritten."""
+        websocket_options = WebsocketApiOptions(
+            api_key=True, skip_auth=True, is_signed=True, signer=None
+        )
+        payload = {"params": {"some_param": "value", "timestamp": 1111111111}}
+
+        with patch("binance_common.utils.get_timestamp") as mock_get_timestamp:
+            result = ws_api_payload(self.dummy_config, payload, websocket_options)
+
+            mock_get_timestamp.assert_not_called()
+            assert result["params"]["timestamp"] == 1111111111
+
 
 class TestWebsocketApiSignature(unittest.TestCase):
     def test_websocket_api_signature(self):
@@ -1949,6 +1886,25 @@ class TestWebsocketApiSignature(unittest.TestCase):
             assert called_config == dummy_config
             assert "apiKey=test-api-key" in called_params
             assert "timestamp=1234567890" in called_params
+
+    def test_websocket_api_signature_keeps_user_provided_timestamp(self):
+        """A timestamp already in the payload is signed as-is."""
+        dummy_config = SimpleNamespace(
+            api_key="test-api-key", api_secret="test-api-secret"
+        )
+        payload = {"foo": "bar", "timestamp": 1111111111}
+
+        with patch("binance_common.utils.get_timestamp") as mock_get_timestamp, patch(
+            "binance_common.utils.get_signature", return_value="mocked-signature"
+        ) as mock_get_signature:
+
+            result = websocket_api_signature(dummy_config, payload)
+
+            mock_get_timestamp.assert_not_called()
+            assert result["timestamp"] == 1111111111
+
+            _, called_params, _ = mock_get_signature.call_args[0]
+            assert "timestamp=1111111111" in called_params
 
 
 class EventA(BaseModel):
@@ -2173,6 +2129,478 @@ class TestRedactSensitiveInfo(unittest.TestCase):
         expected = config.copy()
         result = redact_sensitive_info(config)
         self.assertEqual(result, expected)
+
+
+class TestRedactConfiguration(unittest.TestCase):
+    SECRETS = {
+        "api_secret": "super-secret",
+        "private_key": "a-private-key",
+        "private_key_passphrase": "letmein",
+    }
+
+    def test_redacts_every_rest_credential(self):
+        config = ConfigurationRestAPI(api_key="my-api-key", **self.SECRETS)
+
+        redacted = redact_configuration(config)
+
+        self.assertEqual(redacted["api_key"], "[REDACTED]")
+        for field in self.SECRETS:
+            self.assertEqual(redacted[field], "[REDACTED]")
+        self.assertNotIn("super-secret", str(redacted))
+
+    def test_redacts_the_api_key_mirrored_into_the_headers(self):
+        config = ConfigurationRestAPI(api_key="my-api-key")
+
+        redacted = redact_configuration(config)
+
+        self.assertEqual(redacted["base_headers"]["X-MBX-APIKEY"], "[REDACTED]")
+        self.assertEqual(redacted["base_headers"]["Accept"], "application/json")
+
+    def test_redacts_the_proxy_password_only(self):
+        config = ConfigurationRestAPI(
+            proxy={
+                "protocol": "http",
+                "host": "proxyserver.com",
+                "port": 8080,
+                "auth": {"username": "user", "password": "proxy-password"},
+            }
+        )
+
+        redacted = redact_configuration(config)
+
+        self.assertEqual(redacted["proxy"]["auth"]["password"], "[REDACTED]")
+        self.assertEqual(redacted["proxy"]["auth"]["username"], "user")
+        self.assertEqual(redacted["proxy"]["host"], "proxyserver.com")
+
+    def test_keeps_a_proxy_without_auth_intact(self):
+        proxy = {"protocol": "http", "host": "proxyserver.com", "port": 8080}
+        config = ConfigurationRestAPI(proxy=proxy)
+
+        self.assertEqual(redact_configuration(config)["proxy"], proxy)
+
+    def test_keeps_non_sensitive_fields_readable(self):
+        config = ConfigurationRestAPI(base_path="https://api.binance.com", retries=5)
+
+        redacted = redact_configuration(config)
+
+        self.assertEqual(redacted["base_path"], "https://api.binance.com")
+        self.assertEqual(redacted["retries"], 5)
+
+    def test_tells_an_unset_credential_apart_from_a_redacted_one(self):
+        redacted = redact_configuration(ConfigurationRestAPI(api_key="my-api-key"))
+
+        self.assertIsNone(redacted["api_secret"])
+        self.assertIsNone(redacted["private_key"])
+        self.assertEqual(redacted["api_key"], "[REDACTED]")
+
+    def test_does_not_mutate_the_configuration(self):
+        config = ConfigurationRestAPI(api_key="my-api-key", **self.SECRETS)
+
+        redact_configuration(config)
+
+        self.assertEqual(config.api_secret, "super-secret")
+        self.assertEqual(config.base_headers["X-MBX-APIKEY"], "my-api-key")
+
+    def test_survives_a_configuration_holding_an_ssl_context(self):
+        """An `ssl.SSLContext` cannot be deep-copied, so it must be passed through."""
+        context = ssl.create_default_context()
+        config = ConfigurationRestAPI(api_key="my-api-key", https_agent=context)
+
+        self.assertIs(redact_configuration(config)["https_agent"], context)
+
+    def test_redacts_the_websocket_credentials(self):
+        config = ConfigurationWebSocketAPI(api_key="my-api-key", **self.SECRETS)
+
+        redacted = redact_configuration(config)
+
+        self.assertEqual(redacted["api_secret"], "[REDACTED]")
+        self.assertEqual(redacted["stream_url"], None)
+
+    def test_redacts_a_ws_token_added_by_a_subclass(self):
+        config = ConfigurationWebSocketStreams()
+        config.ws_token = "a-token"
+
+        self.assertEqual(redact_configuration(config)["ws_token"], "[REDACTED]")
+
+    def test_accepts_a_plain_dict_too(self):
+        redacted = redact_configuration({"api_secret": "s", "retries": 3})
+
+        self.assertEqual(redacted, {"api_secret": "[REDACTED]", "retries": 3})
+
+
+class TestRedactedRepr(unittest.TestCase):
+    SECRETS = {
+        "api_secret": "super-secret",
+        "private_key": "a-private-key",
+        "private_key_passphrase": "letmein",
+    }
+
+    def test_printing_a_rest_configuration_leaks_nothing(self):
+        config = ConfigurationRestAPI(api_key="my-api-key", **self.SECRETS)
+
+        rendered = repr(config)
+
+        self.assertNotIn("my-api-key", rendered)
+        for secret in self.SECRETS.values():
+            self.assertNotIn(secret, rendered)
+        self.assertIn("api_secret='[REDACTED]'", rendered)
+
+    def test_names_the_configuration_class(self):
+        self.assertTrue(
+            repr(ConfigurationRestAPI()).startswith("ConfigurationRestAPI(")
+        )
+
+    def test_str_is_redacted_too(self):
+        config = ConfigurationWebSocketAPI(api_key="my-api-key", **self.SECRETS)
+
+        self.assertNotIn("super-secret", str(config))
+        self.assertEqual(str(config), repr(config))
+
+    def test_keeps_non_sensitive_fields_readable(self):
+        config = ConfigurationRestAPI(base_path="https://api.binance.com", retries=5)
+
+        rendered = repr(config)
+
+        self.assertIn("base_path='https://api.binance.com'", rendered)
+        self.assertIn("retries=5", rendered)
+
+    def test_redacts_the_streams_configuration(self):
+        config = ConfigurationWebSocketStreams(
+            proxy={
+                "protocol": "http",
+                "host": "proxyserver.com",
+                "port": 8080,
+                "auth": {"username": "user", "password": "proxy-password"},
+            }
+        )
+
+        rendered = repr(config)
+
+        self.assertNotIn("proxy-password", rendered)
+        self.assertIn("proxyserver.com", rendered)
+
+    def test_renders_a_configuration_holding_an_ssl_context(self):
+        config = ConfigurationRestAPI(https_agent=ssl.create_default_context())
+
+        self.assertIn("https_agent=", repr(config))
+
+
+class TestRedactedAttributes(unittest.TestCase):
+    """`vars()` and `__dict__` read the attributes instead of formatting the object."""
+
+    SECRETS = {
+        "api_secret": "super-secret",
+        "private_key": "a-private-key",
+        "private_key_passphrase": "letmein",
+    }
+
+    def setUp(self):
+        self.config = ConfigurationRestAPI(api_key="my-api-key", **self.SECRETS)
+
+    def test_vars_is_redacted(self):
+        attributes = vars(self.config)
+
+        self.assertEqual(attributes["api_key"], "[REDACTED]")
+        self.assertEqual(attributes["api_secret"], "[REDACTED]")
+        self.assertEqual(attributes["base_headers"]["X-MBX-APIKEY"], "[REDACTED]")
+        self.assertEqual(attributes["base_path"], None)
+
+    def test_dunder_dict_is_redacted(self):
+        self.assertEqual(self.config.__dict__, vars(self.config))
+
+    def test_serializing_vars_leaks_nothing(self):
+        dumped = json.dumps(vars(self.config))
+
+        self.assertIn("timeout", dumped)
+        self.assertNotIn("my-api-key", dumped)
+        for secret in self.SECRETS.values():
+            self.assertNotIn(secret, dumped)
+
+    def test_reading_an_attribute_still_returns_the_real_credential(self):
+        self.assertEqual(self.config.api_key, "my-api-key")
+        self.assertEqual(self.config.api_secret, "super-secret")
+        self.assertEqual(self.config.base_headers["X-MBX-APIKEY"], "my-api-key")
+
+    def test_writing_an_attribute_still_works(self):
+        self.config.timeout = 42
+        self.config.api_key = "another-key"
+
+        self.assertEqual(self.config.timeout, 42)
+        self.assertEqual(self.config.api_key, "another-key")
+        self.assertEqual(vars(self.config)["timeout"], 42)
+
+    def test_copying_a_configuration_keeps_its_credentials(self):
+        self.assertEqual(copy.copy(self.config).api_key, "my-api-key")
+        self.assertEqual(copy.deepcopy(self.config).api_secret, "super-secret")
+        self.assertEqual(pickle.loads(pickle.dumps(self.config)).api_key, "my-api-key")
+
+    def test_the_redacted_dict_is_a_copy(self):
+        vars(self.config)["api_key"] = "written-through"
+
+        self.assertEqual(self.config.api_key, "my-api-key")
+
+
+class TestResolveHttpsAgent(unittest.TestCase):
+    def test_none_resolves_to_the_verified_default(self):
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            self.assertIs(resolve_https_agent(None), True)
+
+        self.assertEqual(captured, [])
+
+    def test_true_is_passed_through_without_warning(self):
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            self.assertIs(resolve_https_agent(True), True)
+
+        self.assertEqual(captured, [])
+
+    def test_an_ssl_context_is_passed_through_without_warning(self):
+        context = ssl.create_default_context()
+
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            self.assertIs(resolve_https_agent(context), context)
+
+        self.assertEqual(captured, [])
+
+    def test_false_warns_but_is_honoured(self):
+        with self.assertWarns(UserWarning) as captured:
+            resolved = resolve_https_agent(False)
+
+        self.assertIs(resolved, False)
+        self.assertIn("disables TLS certificate verification", str(captured.warning))
+
+
+class TestStripStrictTypes(unittest.TestCase):
+    def test_strips_strict_from_scalars(self):
+        self.assertIs(strip_strict_types(StrictStr), str)
+        self.assertIs(strip_strict_types(StrictInt), int)
+
+    def test_strips_strict_inside_containers(self):
+        self.assertEqual(strip_strict_types(Optional[StrictStr]), Optional[str])
+        self.assertEqual(strip_strict_types(List[StrictInt]), list[int])
+        self.assertEqual(
+            strip_strict_types(Optional[List[StrictStr]]), Optional[list[str]]
+        )
+
+    def test_keeps_other_metadata_and_plain_annotations(self):
+        self.assertEqual(
+            strip_strict_types(Annotated[StrictStr, "note"]), Annotated[str, "note"]
+        )
+        self.assertIs(strip_strict_types(str), str)
+        self.assertEqual(strip_strict_types(Optional[str]), Optional[str])
+
+    def test_keeps_strict_on_every_other_scalar(self):
+        self.assertIs(strip_strict_types(StrictBool), StrictBool)
+        self.assertIs(strip_strict_types(StrictFloat), StrictFloat)
+        self.assertEqual(
+            strip_strict_types(Optional[StrictFloat]), Optional[StrictFloat]
+        )
+        self.assertEqual(strip_strict_types(List[StrictBool]), list[StrictBool])
+
+
+class RelaxRowModel(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, validate_assignment=True)
+
+    duration: Optional[StrictStr] = None
+    accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
+
+
+class RelaxResponseModel(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, validate_assignment=True)
+
+    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    purchase_id: Optional[StrictInt] = Field(default=None, alias="purchaseId")
+    rows: Optional[List[RelaxRowModel]] = None
+
+    @classmethod
+    def from_dict(cls, obj):
+        return cls.model_validate(obj)
+
+
+class OtherScalarsModel(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, validate_assignment=True)
+
+    locked: Optional[StrictBool] = None
+    apr: Optional[StrictFloat] = None
+    # A bare field, whose `Strict()` pydantic keeps on the field rather than in the annotation.
+    enabled: StrictBool = False
+
+
+class FloatIntoStringModel(BaseModel):
+    """A dedicated model, because relaxing one patches it in place for the whole process."""
+
+    model_config = ConfigDict(populate_by_name=True, validate_assignment=True)
+
+    apr: Optional[StrictStr] = None
+    quantity: Optional[StrictStr] = None
+
+
+class TestRelaxModelStrictness(unittest.TestCase):
+    def test_relaxes_nested_models_and_coerces_to_declared_types(self):
+        payload = {
+            "positionId": 12345,
+            "purchaseId": 40607,
+            "rows": [{"duration": 60, "accrualDays": 4}],
+        }
+
+        with self.assertRaises(ValidationError):
+            RelaxResponseModel.model_validate(payload)
+
+        relax_model_strictness(RelaxResponseModel)
+        parsed = RelaxResponseModel.model_validate(payload)
+
+        self.assertEqual(parsed.position_id, "12345")
+        self.assertEqual(parsed.purchase_id, 40607)
+        self.assertEqual(parsed.rows[0].duration, "60")
+        self.assertEqual(parsed.rows[0].accrual_days, "4")
+
+    def test_still_accepts_the_declared_types(self):
+        relax_model_strictness(RelaxResponseModel)
+        parsed = RelaxResponseModel.model_validate(
+            {"positionId": "12345", "rows": [{"duration": "60"}]}
+        )
+
+        self.assertEqual(parsed.position_id, "12345")
+        self.assertEqual(parsed.rows[0].duration, "60")
+
+    def test_ignores_non_models(self):
+        relax_model_strictness(None)
+        relax_model_strictness(dict)
+
+    def test_a_number_sent_for_a_string_is_coerced_whatever_its_json_type(self):
+        relax_model_strictness(FloatIntoStringModel)
+        parsed = FloatIntoStringModel.model_validate({"apr": 12.5, "quantity": 3})
+
+        self.assertEqual(parsed.apr, "12.5")
+        self.assertEqual(parsed.quantity, "3")
+
+    def test_every_other_scalar_stays_strict(self):
+        relax_model_strictness(OtherScalarsModel)
+
+        with self.assertRaises(ValidationError):
+            OtherScalarsModel.model_validate({"locked": 1})
+
+        with self.assertRaises(ValidationError):
+            OtherScalarsModel.model_validate({"apr": "1.5"})
+
+        with self.assertRaises(ValidationError):
+            OtherScalarsModel.model_validate({"enabled": 1})
+
+        parsed = OtherScalarsModel.model_validate(
+            {"locked": True, "apr": 1.5, "enabled": True}
+        )
+
+        self.assertIs(parsed.locked, True)
+        self.assertEqual(parsed.apr, 1.5)
+        self.assertIs(parsed.enabled, True)
+
+
+class StrictOnlyResponse(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+
+    @classmethod
+    def from_dict(cls, obj):
+        return cls.model_validate(obj)
+
+
+class NestedStrictResponse(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    position_id: Optional[StrictInt] = Field(default=None, alias="positionId")
+    nested: Optional[RelaxRowModel] = None
+
+    @classmethod
+    def from_dict(cls, obj):
+        return cls.model_validate(obj)
+
+
+class UnparsableResponse(BaseModel):
+    position_id: Optional[StrictStr] = None
+    nested: Optional[RelaxRowModel] = None
+
+    @classmethod
+    def from_dict(cls, obj):
+        return cls.model_validate(obj)
+
+
+class TestSendRequestResponseValidation(unittest.TestCase):
+    def setUp(self):
+        self.session = Mock(spec=requests.Session)
+        self.configuration = ConfigurationRestAPI(base_path="https://api.test.com")
+
+    def _respond(self, payload):
+        mock_response = Mock(status_code=200, headers={})
+        mock_response.json.return_value = payload
+        mock_response.text = json.dumps(payload)
+        self.session.request.return_value = mock_response
+
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_numeric_scalar_is_parsed_into_the_model(self, mock_parse_rate_limits):
+        self._respond({"positionId": 12345})
+
+        with self.assertLogs(level="WARNING") as logs:
+            response = send_request(
+                self.session,
+                self.configuration,
+                "GET",
+                "/test",
+                response_model=StrictOnlyResponse,
+            )
+
+        data = response.data()
+        self.assertIsInstance(data, StrictOnlyResponse)
+        self.assertEqual(data.position_id, "12345")
+        self.assertIn("strict typing removed", logs.output[0])
+
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_nested_numeric_scalars_are_parsed_into_the_model(
+        self, mock_parse_rate_limits
+    ):
+        self._respond({"positionId": 1, "nested": {"duration": 60, "accrualDays": 4}})
+
+        response = send_request(
+            self.session,
+            self.configuration,
+            "GET",
+            "/test",
+            response_model=NestedStrictResponse,
+        )
+
+        data = response.data()
+        self.assertIsInstance(data, NestedStrictResponse)
+        self.assertEqual(data.nested.duration, "60")
+        self.assertEqual(data.nested.accrual_days, "4")
+
+    def test_there_is_no_configuration_toggle_to_opt_out(self):
+        self.assertFalse(hasattr(self.configuration, "relax_response_validation"))
+
+        with self.assertRaises(TypeError):
+            ConfigurationRestAPI(
+                base_path="https://api.test.com", relax_response_validation=False
+            )
+
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_unparsable_payload_still_falls_back_to_the_raw_payload(
+        self, mock_parse_rate_limits
+    ):
+        payload = {"positionId": "1", "nested": ["not", "an", "object"]}
+        self._respond(payload)
+
+        with self.assertLogs(level="WARNING") as logs:
+            response = send_request(
+                self.session,
+                self.configuration,
+                "GET",
+                "/test",
+                response_model=UnparsableResponse,
+            )
+
+        self.assertEqual(response.data(), payload)
+        self.assertIn("Returning the raw payload", logs.output[0])
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ import requests.adapters
 import ssl
 import time
 import uuid
+import warnings
 
 from base64 import b64encode
 from collections import OrderedDict
@@ -17,12 +18,25 @@ from Crypto.Hash import SHA256
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 from datetime import datetime, timezone
 from enum import Enum
-from pydantic import BaseModel
-from typing import Dict, List, Optional, Type, TypeVar, Union, get_args
+from types import UnionType
+from pydantic import BaseModel, Strict
+from typing import (
+    TYPE_CHECKING,
+    Annotated,
+    Any,
+    Dict,
+    Iterator,
+    List,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    get_args,
+    get_origin,
+)
 from urllib.parse import urlencode
 from urllib3.util.ssl_ import create_urllib3_context
 
-from binance_common.configuration import ConfigurationRestAPI, ConfigurationWebSocketAPI
 from binance_common.constants import TimeUnit
 from binance_common.errors import (
     BadRequestError,
@@ -43,8 +57,21 @@ from binance_common.models import (
 )
 from binance_common.signature import Signers
 
+if TYPE_CHECKING:
+    # Imported for annotations only: `configuration` imports `RedactedRepr` from
+    # here, so importing it back at runtime would be a circular import.
+    from binance_common.configuration import (
+        ConfigurationRestAPI,
+        ConfigurationWebSocketAPI,
+    )
 
 T = TypeVar("T", bound=BaseModel)
+
+_relaxed_models: set = set()
+
+# The only scalars whose strict typing is relaxed. Membership is an equality check, which
+# for types means identity, so `bool` is excluded even though it subclasses `int`.
+_RELAXED_SCALARS = (str, int)
 
 
 class CustomHTTPSAdapter(requests.adapters.HTTPAdapter):
@@ -122,7 +149,10 @@ def get_timestamp() -> int:
 def get_iso_8601() -> str:
     """Returns the current timestamp in ISO 8601 format"""
 
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + f"{datetime.now(timezone.utc).microsecond // 1000:03d}Z"
+    return (
+        datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.")
+        + f"{datetime.now(timezone.utc).microsecond // 1000:03d}Z"
+    )
 
 
 def snake_to_camel(snake_str: str) -> str:
@@ -248,7 +278,7 @@ def validate_time_unit(time_unit: Optional[str]) -> Optional[str]:
 
 
 def get_signature(
-    configuration: Union[ConfigurationWebSocketAPI, ConfigurationRestAPI],
+    configuration: Union["ConfigurationWebSocketAPI", "ConfigurationRestAPI"],
     payload: dict,
     signer: Optional[Signers] = None,
 ) -> str:
@@ -271,7 +301,7 @@ def get_signature(
 
 
 def web3_signature(
-    config: ConfigurationRestAPI,
+    config: "ConfigurationRestAPI",
     method: str,
     path: str,
     encoded_payload: str,
@@ -294,8 +324,8 @@ def web3_signature(
     cleaned_body = clean_none_value(body) if body else None
     body_str = json.dumps(cleaned_body, separators=(",", ":")) if cleaned_body else ""
     pre_hash = (
-        f"{timestamp}{method}/build{path}?{encoded_payload}{body_str}" 
-        if encoded_payload 
+        f"{timestamp}{method}/build{path}?{encoded_payload}{body_str}"
+        if encoded_payload
         else f"{timestamp}{method}/build{path}{encoded_payload}{body_str}"
     )
 
@@ -338,9 +368,99 @@ def should_retry_request(
     return status in retriable_status_codes
 
 
+def strip_strict_types(annotation: Any) -> Any:
+    """Rebuilds a type annotation with the ``Strict()`` marker removed from ``str`` and ``int``.
+
+    Args:
+        annotation (Any): The annotation to rewrite.
+
+    Returns:
+        Any: The annotation without strict ``str``/``int`` markers, or the annotation itself when
+        it holds none.
+    """
+
+    args = get_args(annotation)
+
+    if not args:
+        return annotation
+
+    origin = get_origin(annotation)
+
+    if origin is Annotated:
+        base = strip_strict_types(args[0])
+        metadata = [
+            item
+            for item in args[1:]
+            if not (base in _RELAXED_SCALARS and isinstance(item, Strict))
+        ]
+        return Annotated[tuple([base, *metadata])] if metadata else base
+
+    relaxed_args = tuple(strip_strict_types(arg) for arg in args)
+
+    if origin is Union or origin is UnionType:
+        return Union[relaxed_args]
+
+    try:
+        return origin[relaxed_args]
+    except TypeError:  # an origin that cannot be rebuilt is left as it is
+        return annotation
+
+
+def iter_nested_models(annotation: Any) -> Iterator[Type[BaseModel]]:
+    """Yields every pydantic model reachable from an annotation.
+
+    Args:
+        annotation (Any): The annotation to walk.
+
+    Yields:
+        Type[BaseModel]: Each model found in the annotation, at any nesting depth.
+    """
+
+    pending = [annotation]
+
+    while pending:
+        current = pending.pop()
+
+        if isinstance(current, type) and issubclass(current, BaseModel):
+            yield current
+
+        pending.extend(get_args(current))
+
+
+def relax_model_strictness(model_cls: Type[BaseModel]) -> None:
+    """Removes strict ``str``/``int`` typing from a model and every model nested in it, in place.
+
+    Args:
+        model_cls (Type[BaseModel]): The model to relax.
+    """
+
+    if not (isinstance(model_cls, type) and issubclass(model_cls, BaseModel)):
+        return
+
+    if model_cls in _relaxed_models:
+        return
+
+    _relaxed_models.add(model_cls)
+
+    model_cls.model_config = {**model_cls.model_config, "coerce_numbers_to_str": True}
+
+    for field in model_cls.model_fields.values():
+        field.annotation = strip_strict_types(field.annotation)
+
+        if field.annotation in _RELAXED_SCALARS:
+            field.metadata = [
+                item for item in field.metadata if not isinstance(item, Strict)
+            ]
+
+        for nested in iter_nested_models(field.annotation):
+            relax_model_strictness(nested)
+
+    model_cls.model_rebuild(force=True)
+
+
 def send_request(
     session: requests.Session,
-    configuration: ConfigurationRestAPI,
+    configuration: "ConfigurationRestAPI",
     method: str,
     path: str,
     payload: Optional[dict] = None,
@@ -349,7 +469,6 @@ def send_request(
     response_model: Optional[Type[T]] = None,
     is_signed: bool = False,
     signer: Optional[Signers] = None,
-    web3_headers: Optional[dict] = None,
 ) -> ApiResponse[T]:
     """Sends an HTTP request with the specified configuration, method, path, and
     optional payload and time unit.
@@ -366,7 +485,6 @@ def send_request(
     - `response_model`: The response model to use for deserializing the response (optional).
     - `is_signed`: A boolean indicating whether the request should be signed (optional).
     - `signer`: The signer to use for signing the request (optional).
-    - `web3_headers`: Specific headers for web3 requests
 
     The function returns the JSON response from the server, or raises an appropriate exception if an error occurs.
     """
@@ -404,47 +522,18 @@ def send_request(
         headers["Connection"] = "close"
 
     attempt = 0
-    is_web3_request = web3_headers is not None
 
-    if is_signed and not is_web3_request:
+    if is_signed:
         cleaned_payload = clean_none_value(payload)
         if body:
             cleaned_payload.update(clean_none_value(body))
-        cleaned_payload["timestamp"] = get_timestamp()
+        if "timestamp" not in cleaned_payload:
+            cleaned_payload["timestamp"] = get_timestamp()
         query_string = encoded_string(cleaned_payload)
         cleaned_payload["signature"] = get_signature(
             configuration, query_string, signer
         )
         payload = cleaned_payload
-    elif is_web3_request:
-        timestamp = get_iso_8601()
-        query_string = encoded_string(clean_none_value(payload))
-
-        signature = (
-            web3_signature(
-                configuration,
-                method,
-                path,
-                query_string,
-                timestamp,
-                body,
-                signer,
-            )
-            if is_signed
-            else ""
-        )
-
-        web3_headers = web3_headers or {}
-
-        headers.update(
-            {
-                "X-OC-APIKEY": configuration.api_key,
-                "X-OC-TIMESTAMP": timestamp,
-                "X-OC-SIGN": signature,
-                "X-OC-RECV-WINDOW": web3_headers.get("recv_window") or "15000",
-                "X-OC-NONCE": web3_headers.get("nonce") or "",
-            }
-        )
 
     while attempt <= retries:
         try:
@@ -513,20 +602,51 @@ def send_request(
             )
 
             if (is_list and not is_flat_list) or not response_model:
+
                 def data_function():
                     return parsed
+
             elif is_oneof or is_list or hasattr(response_model, "from_dict"):
+
                 def data_function():
                     return response_model.from_dict(parsed)
+
             else:
+
                 def data_function():
                     return response_model.model_validate(parsed)
+
             try:
                 data_function()
                 final_data_function = data_function
-            except Exception:
-                def final_data_function():
-                    return parsed
+            except Exception as e:
+                model_name = getattr(response_model, "__name__", str(response_model))
+                relaxed = False
+
+                if response_model is not None:
+                    relax_model_strictness(response_model)
+
+                    try:
+                        data_function()
+                        relaxed = True
+                    except Exception:
+                        relaxed = False
+
+                if relaxed:
+                    logging.warning(
+                        f"{path} response did not match the declared types of "
+                        f"{model_name} ({e}). Parsed it with strict typing removed; "
+                        "the values follow the types declared by the model."
+                    )
+                    final_data_function = data_function
+                else:
+                    logging.warning(
+                        f"Failed to parse the {path} response into {model_name} ({e}). "
+                        "Returning the raw payload instead of a model."
+                    )
+
+                    def final_data_function():
+                        return parsed
 
             return ApiResponse[T](
                 data_function=final_data_function,
@@ -801,7 +921,8 @@ def ws_api_payload(config, payload: Dict, websocket_options: WebsocketApiOptions
 
     if websocket_options.is_signed:
         if websocket_options.skip_auth is True:
-            payload["params"]["timestamp"] = get_timestamp()
+            if "timestamp" not in payload["params"]:
+                payload["params"]["timestamp"] = get_timestamp()
         else:
             payload["params"] = websocket_api_signature(
                 config, payload["params"], websocket_options.signer
@@ -825,7 +946,8 @@ def websocket_api_signature(
     if payload is None:
         payload = {}
     payload["apiKey"] = config.api_key
-    payload["timestamp"] = get_timestamp()
+    if "timestamp" not in payload:
+        payload["timestamp"] = get_timestamp()
     parameters = OrderedDict(sorted(payload.items()))
     parameters["signature"] = get_signature(config, urlencode(parameters), signer)
     return parameters
@@ -976,3 +1098,131 @@ def redact_sensitive_info(config: dict) -> dict:
                 redacted_config[i] = redact_sensitive_info(item)
 
     return redacted_config
+
+
+class _ConfigurationAttributes:
+    """Holds the attributes of a configuration.
+
+    It exists only so that `RedactedRepr` can shadow `__dict__` with a redacted view: the
+    accessor this class owns still reaches the attributes as they are really stored.
+    """
+
+
+_instance_attributes = _ConfigurationAttributes.__dict__["__dict__"]
+
+
+def _real_attributes(configuration: Any) -> dict:
+    """Returns the attributes of a configuration as they are stored, unredacted.
+
+    Args:
+        configuration (Any): A REST or WebSocket configuration object, or a plain dict.
+
+    Returns:
+        dict: The attributes, read past the redacted `__dict__` of `RedactedRepr`.
+    """
+
+    if isinstance(configuration, _ConfigurationAttributes):
+        return _instance_attributes.__get__(configuration)
+
+    return vars(configuration) if hasattr(configuration, "__dict__") else configuration
+
+
+def redact_configuration(configuration: Any) -> dict:
+    """Builds a loggable view of a configuration, with its credentials redacted.
+
+    Args:
+        configuration (Any): A REST or WebSocket configuration object.
+
+    Returns:
+        dict: The configuration fields, with every credential replaced by
+            `[REDACTED]`. A credential left unset stays `None`, so an absent
+            secret is still told apart from a redacted one.
+    """
+
+    SENSITIVE_FIELDS = [
+        "api_key",
+        "api_secret",
+        "private_key",
+        "private_key_passphrase",
+        "ws_token",
+    ]
+    SENSITIVE_HEADERS = ["x-mbx-apikey", "x-oc-apikey"]
+
+    fields = _real_attributes(configuration)
+
+    redacted_config = {}
+
+    for key, value in fields.items():
+        if value is None:
+            redacted_config[key] = None
+        elif key in SENSITIVE_FIELDS:
+            redacted_config[key] = "[REDACTED]"
+        elif key == "base_headers" and isinstance(value, dict):
+            redacted_config[key] = {
+                header: (
+                    "[REDACTED]"
+                    if header.lower() in SENSITIVE_HEADERS and header_value
+                    else header_value
+                )
+                for header, header_value in value.items()
+            }
+        elif key == "proxy" and isinstance(value, dict):
+            auth = value.get("auth")
+            redacted_config[key] = (
+                {**value, "auth": {**auth, "password": "[REDACTED]"}}
+                if isinstance(auth, dict) and auth.get("password")
+                else value
+            )
+        else:
+            redacted_config[key] = value
+
+    return redacted_config
+
+
+class RedactedRepr(_ConfigurationAttributes):
+    """Renders a configuration with its credentials redacted.
+    """
+
+    @property
+    def __dict__(self) -> dict:
+        return redact_configuration(self)
+
+    def __getstate__(self) -> dict:
+        return dict(_instance_attributes.__get__(self))
+
+    def __setstate__(self, state: dict) -> None:
+        _instance_attributes.__get__(self).update(state)
+
+    def __repr__(self) -> str:
+        fields = ", ".join(
+            f"{name}={value!r}" for name, value in redact_configuration(self).items()
+        )
+        return f"{type(self).__name__}({fields})"
+
+
+def resolve_https_agent(https_agent: Any) -> Any:
+    """Resolves a configured `https_agent` into the `ssl` argument for `aiohttp`.
+
+    Args:
+        https_agent (Any): The `https_agent` set on the configuration.
+
+    Returns:
+        Any: The value to pass as the `ssl` argument of `ws_connect`.
+
+    Warns:
+        UserWarning: If `https_agent` is `False`, which disables TLS certificate
+            verification.
+    """
+
+    if https_agent is False:
+        warnings.warn(
+            "https_agent=False disables TLS certificate verification for this "
+            "WebSocket connection, which leaves it open to man-in-the-middle "
+            "attacks. Pass an `ssl.SSLContext`, or leave `https_agent` unset to "
+            "use the default verified context.",
+            UserWarning,
+            stacklevel=2,
+        )
+        return False
+
+    return True if https_agent is None else https_agent

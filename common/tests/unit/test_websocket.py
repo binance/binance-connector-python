@@ -4,6 +4,7 @@ import json
 import logging
 import pytest_asyncio
 import pytest
+import ssl
 import time
 
 from collections import defaultdict
@@ -398,6 +399,78 @@ class TestWebSocketCommon:
 
         _, kwargs = mock_ws_connect.call_args
         assert kwargs["autoping"] is False
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_verifies_certificates_by_default(
+        self, mock_ws_connect, mock_websocket, config
+    ):
+        """An unset `https_agent` must reach `aiohttp` as a verified context."""
+        mock_ws_connect.return_value = mock_websocket
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["ssl"] is True
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_passes_an_ssl_context_through(
+        self, mock_ws_connect, mock_websocket, config
+    ):
+        mock_ws_connect.return_value = mock_websocket
+        context = ssl.create_default_context()
+        config.https_agent = context
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["ssl"] is context
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_warns_when_certificate_verification_is_disabled(
+        self, mock_ws_connect, mock_websocket, config
+    ):
+        mock_ws_connect.return_value = mock_websocket
+        config.https_agent = False
+
+        ws_common = WebSocketCommon(config)
+        with pytest.warns(UserWarning, match="disables TLS certificate verification"):
+            await ws_common.connect("wss://test.com/ws", config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["ssl"] is False
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_connect_streams_verifies_certificates_by_default(
+        self, mock_ws_connect, mock_websocket
+    ):
+        mock_ws_connect.return_value = mock_websocket
+
+        streams_config = ConfigurationWebSocketStreams(stream_url="wss://test.com/ws")
+        streams_config.mode = "single"
+
+        ws_common = WebSocketCommon(streams_config)
+        await ws_common.connect("wss://test.com/ws", streams_config)
+
+        _, kwargs = mock_ws_connect.call_args
+        assert kwargs["ssl"] is True
 
     @pytest.mark.asyncio
     @patch(

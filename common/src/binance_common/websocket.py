@@ -33,6 +33,7 @@ from binance_common.utils import (
     parse_user_event,
     parse_ws_rate_limit_headers,
     redact_sensitive_info,
+    resolve_https_agent,
     ws_api_payload,
 )
 
@@ -216,6 +217,7 @@ class WebSocketCommon:
             if configuration.proxy is not None
             else None
         )
+        ssl_option = resolve_https_agent(configuration.https_agent)
 
         if configuration.time_unit:
             url = f"{url}?timeUnit={configuration.time_unit.value}"
@@ -231,7 +233,7 @@ class WebSocketCommon:
                 headers={"User-Agent": user_agent},
                 max_msg_size=20 * 1024 * 1024,
                 proxy=proxy,
-                ssl=configuration.https_agent,
+                ssl=ssl_option,
                 timeout=configuration.timeout / 1000,
                 autoping=False,
             )
@@ -250,7 +252,7 @@ class WebSocketCommon:
                 headers={"User-Agent": user_agent},
                 max_msg_size=20 * 1024 * 1024,
                 proxy=proxy,
-                ssl=configuration.https_agent,
+                ssl=ssl_option,
                 autoping=False,
             )
             id = ws_id if ws_id else get_uuid()

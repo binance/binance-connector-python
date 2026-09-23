@@ -10,9 +10,10 @@ from binance_common.constants import (
     WebsocketMode,
 )
 from binance_common.headers import parse_custom_headers
+from binance_common.utils import RedactedRepr
 
 
-class ConfigurationRestAPI:
+class ConfigurationRestAPI(RedactedRepr):
     """
     Configuration for the Binance REST API client.
 
@@ -86,7 +87,7 @@ class ConfigurationRestAPI:
         }
 
 
-class ConfigurationWebSocketAPI:
+class ConfigurationWebSocketAPI(RedactedRepr):
     """
     Configuration for the Binance Websocket API client.
 
@@ -173,7 +174,7 @@ class ConfigurationWebSocketAPI:
         self.return_rate_limits = return_rate_limits
 
 
-class ConfigurationWebSocketStreams:
+class ConfigurationWebSocketStreams(RedactedRepr):
     """
     Configuration for the Binance Websocket Stream client.
 

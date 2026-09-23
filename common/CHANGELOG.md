@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.5.0 - 2026-09-23
+
+### Added (1)
+
+- Added credential redaction to `repr()`, `str()`, `vars()` and `__dict__` of `ConfigurationRestAPI`, `ConfigurationWebSocketAPI` and `ConfigurationWebSocketStreams`, so logging a configuration no longer exposes API keys, secrets or private keys. Reading an attribute is unchanged: `configuration.api_key` still returns the real key.
+
+### Changed (3)
+
+- A `timestamp` already set on the request parameters is now kept instead of being overwritten, on both the REST API and the WebSocket API.
+- WebSocket connections now resolve `https_agent` before connecting: leaving it unset uses the default verified TLS context, and `https_agent=False` warns that certificate verification is disabled.
+- Fixed a response being returned as a raw payload when the endpoint sends a number where the model declares a `StrictStr`, or a string where it declares a `StrictInt`: `relax_model_strictness()` relaxes those two scalars so the response is parsed into the model.
+
+### Removed (1)
+
+- Removed the `Web3 Wallet` base url and the `web3_headers` parameter of `send_request()`.
+
 ## 4.4.0 - 2026-09-02
 
 ### Added (1)
