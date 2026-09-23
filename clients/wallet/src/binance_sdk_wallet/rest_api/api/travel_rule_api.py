@@ -270,7 +270,7 @@ class TravelRuleApi:
                     tran_id (Optional[str] = None): Comma(,) separated list of wallet tran Ids.
                     network (Optional[str] = None):
                     coin (Optional[str] = None):
-                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    travel_rule_status (Optional[int] = None): 0: Completed,1: Pending,2: Failed
                     pending_questionnaire (Optional[bool] = None): true: Only return records that pending deposit questionnaire. false/not provided: return all records.
                     start_time (Optional[int] = None): Default: 90 days from current timestamp
                     end_time (Optional[int] = None): Default: present timestamp
@@ -852,7 +852,7 @@ class TravelRuleApi:
         query.
                     network (Optional[str] = None):
                     coin (Optional[str] = None):
-                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    travel_rule_status (Optional[int] = None): 0: Completed,1: Pending,2: Failed
                     offset (Optional[int] = None):
                     limit (Optional[int] = None):
                     start_time (Optional[int] = None): Default: 90 days from current timestamp
@@ -938,7 +938,7 @@ class TravelRuleApi:
         query.
                     network (Optional[str] = None):
                     coin (Optional[str] = None):
-                    travel_rule_status (Optional[int] = None): 0:Completed,1:Pending,2:Failed
+                    travel_rule_status (Optional[int] = None): 0: Completed,1: Pending,2: Failed
                     offset (Optional[int] = None):
                     limit (Optional[int] = None):
                     start_time (Optional[int] = None): Default: 90 days from current timestamp

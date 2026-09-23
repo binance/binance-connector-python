@@ -528,7 +528,7 @@ class CapitalApi:
                     coin (Optional[str] = None):
                     withdraw_order_id (Optional[str] = None): client side id for withdrawal, if provided in POST `/sapi/v1/capital/withdraw/apply`, can be used here for
         query.
-                    status (Optional[int] = None): 0(0:Email Sent, 2:Awaiting Approval 3:Rejected 4:Processing 6:Completed)
+                    status (Optional[int] = None): 0(0: Email Sent, 2: Awaiting Approval 3: Rejected 4: Processing 6: Completed)
                     offset (Optional[int] = None): Default: 0
                     limit (Optional[int] = None):
                     id_list (Optional[str] = None): id list returned in the response of POST `/sapi/v1/capital/withdraw/apply`, separated by `,`
