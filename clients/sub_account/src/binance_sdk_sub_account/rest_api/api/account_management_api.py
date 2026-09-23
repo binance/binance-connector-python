@@ -259,7 +259,7 @@ class AccountManagementApi:
 
                 Args:
                     email (Union[str, None]):
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     recv_window (Optional[int] = None):
 
                 Returns:

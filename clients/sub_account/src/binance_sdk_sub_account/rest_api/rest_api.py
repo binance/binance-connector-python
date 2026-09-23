@@ -315,7 +315,7 @@ class SubAccountRestAPI:
 
                 Args:
                     email (Union[str, None]):
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -756,7 +756,7 @@ class SubAccountRestAPI:
                     amount (Union[float, None]): The amount to be transferred
                     type (Union[int, None]): 1: transfer from subaccount's spot account to its USDT-margined futures account 2: transfer from
         subaccount's USDT-margined futures account to its spot account 3: transfer from subaccount's spot
-        account to its COIN-margined futures account 4:transfer from subaccount's COIN-margined futures
+        account to its COIN-margined futures account 4: transfer from subaccount's COIN-margined futures
         account to its spot account
                     recv_window (Optional[int] = None):
 
@@ -819,7 +819,7 @@ class SubAccountRestAPI:
 
                 Args:
                     email (Union[str, None]):
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -1054,7 +1054,7 @@ class SubAccountRestAPI:
         Security Type: USER_DATA
 
                 Args:
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     page (Optional[int] = None):
                     limit (Optional[int] = None):
                     recv_window (Optional[int] = None):
@@ -1273,7 +1273,7 @@ class SubAccountRestAPI:
 
                 Args:
                     email (Union[str, None]):
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     start_time (Optional[int] = None): Cannot be earlier than 1 month ago
                     end_time (Optional[int] = None):
                     page (Optional[int] = None):
@@ -1452,7 +1452,7 @@ class SubAccountRestAPI:
                 Args:
                     from_email (Union[str, None]): Sender email
                     to_email (Union[str, None]): Recipient email
-                    futures_type (Union[int, None]): 1:USDT-margined Futures，2: Coin-margined Futures
+                    futures_type (Union[int, None]): 1: USDT-margined Futures，2: Coin-margined Futures
                     asset (Union[str, None]):
                     amount (Union[float, None]):
                     recv_window (Optional[int] = None):
