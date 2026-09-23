@@ -412,7 +412,7 @@ class DerivativesTradingCoinFuturesWebSocketAPI(WebSocketAPIBase):
                     price_protect (Optional[NewOrderPriceProtectEnum] = None): Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.'
                     new_order_resp_type (Optional[NewOrderNewOrderRespTypeEnum] = None):
                     price_match (Optional[NewOrderPriceMatchEnum] = None): only available for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`: No STP / `EXPIRE_TAKER`:expire taker order when STP triggers/ `EXPIRE_MAKER`:expire taker order when STP triggers/ `EXPIRE_BOTH`:expire both orders when STP triggers
+                    self_trade_prevention_mode (Optional[NewOrderSelfTradePreventionModeEnum] = None): `NONE`: No STP / `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers
                     recv_window (Optional[int] = None):
 
                 Returns:
