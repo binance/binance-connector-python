@@ -436,7 +436,7 @@ class SpotWebSocketStreams(WebSocketStreamBase):
         update_speed: Optional[PartialBookDepthUpdateSpeedEnum] = None,
     ) -> RequestStreamHandle:
         r"""
-                WebSocket Partial Book Depth Streams
+                Partial Book Depth Streams
 
                 Top **\<levels\>** bids and asks, pushed every second.
 

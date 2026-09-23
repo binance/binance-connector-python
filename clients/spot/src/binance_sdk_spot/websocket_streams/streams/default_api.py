@@ -561,7 +561,7 @@ class DefaultApi:
         update_speed: Optional[PartialBookDepthUpdateSpeedEnum] = None,
     ) -> RequestStreamHandle:
         r"""
-            WebSocket Partial Book Depth Streams
+            Partial Book Depth Streams
             /<symbol>@depth<levels>@<updateSpeed>
             https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/ws-streams/~#partial-book-depth
 

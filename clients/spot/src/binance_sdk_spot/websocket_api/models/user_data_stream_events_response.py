@@ -17,6 +17,7 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     ValidationError,
+    model_validator,
 )
 from typing import Any, Optional
 from binance_sdk_spot.websocket_api.models.balance_update import BalanceUpdate
@@ -31,6 +32,7 @@ from binance_sdk_spot.websocket_api.models.list_status import ListStatus
 from binance_sdk_spot.websocket_api.models.outbound_account_position import (
     OutboundAccountPosition,
 )
+from pydantic import model_validator
 from typing import Union, Set, Dict
 from typing_extensions import Self
 
@@ -42,6 +44,35 @@ USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "ListStatus",
     "OutboundAccountPosition",
 ]
+
+# The `oneof_schema_N_validator` field each event schema is declared under, set
+# alongside `actual_instance` so that a routed event is reachable under both names.
+USERDATASTREAMEVENTSRESPONSE_VALIDATOR_FIELD_MAP = {
+    BalanceUpdate: "oneof_schema_1_validator",
+    EventStreamTerminated: "oneof_schema_2_validator",
+    ExecutionReport: "oneof_schema_3_validator",
+    ExternalLockUpdate: "oneof_schema_4_validator",
+    ListStatus: "oneof_schema_5_validator",
+    OutboundAccountPosition: "oneof_schema_6_validator",
+}
+
+# The event schemas, keyed by the event name the `e` field of the payload carries.
+USERDATASTREAMEVENTSRESPONSE_EVENT_SCHEMA_MAP = {
+    "balanceUpdate": BalanceUpdate,
+    "eventStreamTerminated": EventStreamTerminated,
+    "executionReport": ExecutionReport,
+    "externalLockUpdate": ExternalLockUpdate,
+    "listStatus": ListStatus,
+    "outboundAccountPosition": OutboundAccountPosition,
+}
+
+# The same schemas, with their validator field, keyed by event name without
+# separators or case, which is how an incoming event is looked up.
+USERDATASTREAMEVENTSRESPONSE_EVENT_TYPE_MAP = {
+    event_name.replace("_", "").replace("-", "").lower(): (schema, validator_field)
+    for event_name, schema in USERDATASTREAMEVENTSRESPONSE_EVENT_SCHEMA_MAP.items()
+    if (validator_field := USERDATASTREAMEVENTSRESPONSE_VALIDATOR_FIELD_MAP.get(schema))
+}
 
 
 class UserDataStreamEventsResponse(BaseModel):
@@ -102,6 +133,37 @@ class UserDataStreamEventsResponse(BaseModel):
             super().__init__(**kwargs)
 
     @classmethod
+    def resolve_event_schema(cls, event_name: Any) -> Optional[Any]:
+        """Returns the `(schema, validator field)` pair `event_name` belongs to.
+
+        The event name is the only thing telling user data events apart: their
+        schemas declare every field as optional, so most of them validate any
+        event. Names are compared without separators or case, to accept both
+        `executionReport` and `ORDER_TRADE_UPDATE`.
+        """
+        if not isinstance(event_name, str):
+            return None
+
+        key = event_name.replace("_", "").replace("-", "").lower()
+        return USERDATASTREAMEVENTSRESPONSE_EVENT_TYPE_MAP.get(key)
+
+    @model_validator(mode="before")
+    @classmethod
+    def route_user_data_event(cls, data: Any) -> Any:
+        """Deserializes a raw user data event into the schema its `e` field names."""
+        if not isinstance(data, dict) or "actual_instance" in data:
+            return data
+
+        resolved = cls.resolve_event_schema(data.get("e"))
+        if resolved is None:
+            return data
+
+        schema, validator_field = resolved
+
+        instance = schema.from_dict(data)
+        return {"actual_instance": instance, validator_field: instance}
+
+    @classmethod
     def is_oneof_model(cls) -> bool:
         return True
 
@@ -113,41 +175,8 @@ class UserDataStreamEventsResponse(BaseModel):
         if parsed is None:
             return instance
 
-        if isinstance(parsed, dict) and "filterType" in parsed:
-            filter_type_map = {
-                "balanceUpdate": BalanceUpdate,
-                "eventStreamTerminated": EventStreamTerminated,
-                "executionReport": ExecutionReport,
-                "externalLockUpdate": ExternalLockUpdate,
-                "listStatus": ListStatus,
-                "outboundAccountPosition": OutboundAccountPosition,
-            }
-            validator_mapping = {
-                "BalanceUpdate": "oneof_schema_1_validator",
-                "EventStreamTerminated": "oneof_schema_2_validator",
-                "ExecutionReport": "oneof_schema_3_validator",
-                "ExternalLockUpdate": "oneof_schema_4_validator",
-                "ListStatus": "oneof_schema_5_validator",
-                "OutboundAccountPosition": "oneof_schema_6_validator",
-            }
-
-            ft = parsed.get("filterType")
-            target_cls = filter_type_map.get(ft)
-
-            if target_cls is not None:
-                # Deserialize directly into the proper schema
-                instance = cls.model_construct()
-
-                # S049499
-                class_name = str(target_cls).split(".")[-1].split("'")[0]
-                if class_name in validator_mapping:
-                    setattr(
-                        instance,
-                        validator_mapping[class_name],
-                        target_cls.from_dict(parsed),
-                    )
-                instance.actual_instance = target_cls.from_dict(parsed)
-                return instance
+        if isinstance(parsed, dict) and cls.resolve_event_schema(parsed.get("e")):
+            return cls.model_validate(parsed)
 
         error_messages = []
         match = 0
