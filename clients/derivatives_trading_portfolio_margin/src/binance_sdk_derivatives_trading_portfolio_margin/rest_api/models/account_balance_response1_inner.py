@@ -31,7 +31,9 @@ class AccountBalanceResponse1Inner(BaseModel):
         default=None, description="Total Wallet Balance.", alias="totalWalletBalance"
     )
     cross_margin_asset: Optional[StrictStr] = Field(
-        default=None, description="Cross Margin Asset.", alias="crossMarginAsset"
+        default=None,
+        description="Cross Margin Asset. Equal to crossMarginFree + crossMarginLocked.",
+        alias="crossMarginAsset",
     )
     cross_margin_borrowed: Optional[StrictStr] = Field(
         default=None, description="Cross Margin Borrowed.", alias="crossMarginBorrowed"
