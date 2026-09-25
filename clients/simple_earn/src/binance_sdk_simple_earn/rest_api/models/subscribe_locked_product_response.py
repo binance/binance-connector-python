@@ -16,7 +16,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Set
 from typing_extensions import Self
 
@@ -27,7 +27,9 @@ class SubscribeLockedProductResponse(BaseModel):
     """  # noqa: E501
 
     purchase_id: Optional[StrictInt] = Field(default=None, alias="purchaseId")
-    position_id: Optional[StrictStr] = Field(default=None, alias="positionId")
+    position_id: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="positionId"
+    )
     success: Optional[StrictBool] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["purchaseId", "positionId", "success"]
