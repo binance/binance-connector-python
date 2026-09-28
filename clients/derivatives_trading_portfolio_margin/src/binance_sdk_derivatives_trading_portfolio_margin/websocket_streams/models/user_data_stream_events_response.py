@@ -18,7 +18,6 @@ from pydantic import (
     ConfigDict,
     ValidationError,
     field_validator,
-    model_validator,
 )
 from typing import Any, Optional
 from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.account_config_update import (
