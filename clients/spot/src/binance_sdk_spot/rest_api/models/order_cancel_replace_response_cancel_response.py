@@ -28,7 +28,9 @@ class OrderCancelReplaceResponseCancelResponse(BaseModel):
 
     symbol: Optional[StrictStr] = None
     orig_client_order_id: Optional[StrictStr] = Field(
-        default=None, alias="origClientOrderId"
+        default=None,
+        description="cancelOrigClientOrderId from request",
+        alias="origClientOrderId",
     )
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
     order_list_id: Optional[StrictInt] = Field(
@@ -36,7 +38,11 @@ class OrderCancelReplaceResponseCancelResponse(BaseModel):
         description="Unless it's part of an order list, value will be -1",
         alias="orderListId",
     )
-    client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
+    client_order_id: Optional[StrictStr] = Field(
+        default=None,
+        description="cancelNewClientOrderId from request",
+        alias="clientOrderId",
+    )
     transact_time: Optional[StrictInt] = Field(default=None, alias="transactTime")
     price: Optional[StrictStr] = None
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")

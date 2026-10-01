@@ -536,7 +536,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 2,
                     "clientOrderId": "pO9ufTiFGg3nw2fOdgeOXa",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "clientOrderId": "TXOvglzXuaubXAaENpaRCB",
+                },
             ],
             "orderReports": [
                 {
@@ -555,22 +560,27 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS_LIMIT",
                     "side": "SELL",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                    "stopPrice": "1.00000000",
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "origClientOrderId": "TXOvglzXuaubXAaENpaRCB",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "unfWT8ig8i0uj6lPuYLez6",
+                    "transactTime": 1688005070874,
+                    "price": "3.00000000",
+                    "origQty": "10.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "CANCELED",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -637,7 +647,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 2,
                     "clientOrderId": "pO9ufTiFGg3nw2fOdgeOXa",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "clientOrderId": "TXOvglzXuaubXAaENpaRCB",
+                },
             ],
             "orderReports": [
                 {
@@ -656,22 +671,27 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS_LIMIT",
                     "side": "SELL",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                    "stopPrice": "1.00000000",
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "origClientOrderId": "TXOvglzXuaubXAaENpaRCB",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "unfWT8ig8i0uj6lPuYLez6",
+                    "transactTime": 1688005070874,
+                    "price": "3.00000000",
+                    "origQty": "10.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "CANCELED",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -746,13 +766,54 @@ class TestTradeApi:
             "orderListId": -1,
             "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
             "transactTime": 1507725176595,
+            "price": "0.00000000",
+            "origQty": "10.00000000",
+            "executedQty": "10.00000000",
+            "origQuoteOrderQty": "0.000000",
+            "cummulativeQuoteQty": "10.00000000",
             "status": "FILLED",
             "timeInForce": "GTC",
             "type": "MARKET",
             "side": "SELL",
             "workingTime": 1507725176595,
             "selfTradePreventionMode": "NONE",
-            "fills": [{"commissionAsset": "USDT", "tradeId": 56}],
+            "fills": [
+                {
+                    "price": "4000.00000000",
+                    "qty": "1.00000000",
+                    "commission": "4.00000000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 56,
+                },
+                {
+                    "price": "3999.00000000",
+                    "qty": "5.00000000",
+                    "commission": "19.99500000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 57,
+                },
+                {
+                    "price": "3998.00000000",
+                    "qty": "2.00000000",
+                    "commission": "7.99600000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 58,
+                },
+                {
+                    "price": "3997.00000000",
+                    "qty": "1.00000000",
+                    "commission": "3.99700000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 59,
+                },
+                {
+                    "price": "3995.00000000",
+                    "qty": "1.00000000",
+                    "commission": "3.99500000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 60,
+                },
+            ],
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -829,13 +890,54 @@ class TestTradeApi:
             "orderListId": -1,
             "clientOrderId": "6gCrw2kRUAF9CvJDGP16IP",
             "transactTime": 1507725176595,
+            "price": "0.00000000",
+            "origQty": "10.00000000",
+            "executedQty": "10.00000000",
+            "origQuoteOrderQty": "0.000000",
+            "cummulativeQuoteQty": "10.00000000",
             "status": "FILLED",
             "timeInForce": "GTC",
             "type": "MARKET",
             "side": "SELL",
             "workingTime": 1507725176595,
             "selfTradePreventionMode": "NONE",
-            "fills": [{"commissionAsset": "USDT", "tradeId": 56}],
+            "fills": [
+                {
+                    "price": "4000.00000000",
+                    "qty": "1.00000000",
+                    "commission": "4.00000000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 56,
+                },
+                {
+                    "price": "3999.00000000",
+                    "qty": "5.00000000",
+                    "commission": "19.99500000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 57,
+                },
+                {
+                    "price": "3998.00000000",
+                    "qty": "2.00000000",
+                    "commission": "7.99600000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 58,
+                },
+                {
+                    "price": "3997.00000000",
+                    "qty": "1.00000000",
+                    "commission": "3.99700000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 59,
+                },
+                {
+                    "price": "3995.00000000",
+                    "qty": "1.00000000",
+                    "commission": "3.99500000",
+                    "commissionAsset": "USDT",
+                    "tradeId": 60,
+                },
+            ],
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -927,7 +1029,7 @@ class TestTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "new_qty": 1,
+            "new_qty": 5,
         }
 
         expected_response = {
@@ -978,7 +1080,12 @@ class TestTradeApi:
                         "symbol": "BTCUSDT",
                         "orderId": 8,
                         "clientOrderId": "GkwwHZUUbFtZOoH1YsZk9Q",
-                    }
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 9,
+                        "clientOrderId": "UQ1Np3bmQ71jJzsSDW9Vpi",
+                    },
                 ],
             },
         }
@@ -1001,7 +1108,7 @@ class TestTradeApi:
         assert "/api/v3/order/amend/keepPriority" in request_kwargs["url"]
         assert request_kwargs["method"] == "PUT"
         assert normalized["symbol"] == "BNBUSDT"
-        assert normalized["newQty"] == 1
+        assert normalized["newQty"] == 5
 
         assert response is not None
 
@@ -1032,7 +1139,7 @@ class TestTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "new_qty": 1,
+            "new_qty": 5,
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "myOrder2",
@@ -1087,7 +1194,12 @@ class TestTradeApi:
                         "symbol": "BTCUSDT",
                         "orderId": 8,
                         "clientOrderId": "GkwwHZUUbFtZOoH1YsZk9Q",
-                    }
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 9,
+                        "clientOrderId": "UQ1Np3bmQ71jJzsSDW9Vpi",
+                    },
                 ],
             },
         }
@@ -1130,7 +1242,7 @@ class TestTradeApi:
         """Test that order_amend_keep_priority() raises RequiredError when 'symbol' is missing."""
         params = {
             "symbol": "BNBUSDT",
-            "new_qty": 1,
+            "new_qty": 5,
         }
         params["symbol"] = None
 
@@ -1141,7 +1253,7 @@ class TestTradeApi:
         """Test that order_amend_keep_priority() raises RequiredError when 'new_qty' is missing."""
         params = {
             "symbol": "BNBUSDT",
-            "new_qty": 1,
+            "new_qty": 5,
         }
         params["new_qty"] = None
 
@@ -1153,7 +1265,7 @@ class TestTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "new_qty": 1,
+            "new_qty": 5,
         }
 
         mock_error = Exception("ResponseError")
@@ -1227,15 +1339,7 @@ class TestTradeApi:
                 "type": "LIMIT",
                 "side": "BUY",
                 "workingTime": 1669277163808,
-                "fills": [
-                    {
-                        "price": "4000.00000000",
-                        "qty": "1.00000000",
-                        "commission": "4.00000000",
-                        "commissionAsset": "USDT",
-                        "tradeId": 12345,
-                    }
-                ],
+                "fills": [],
                 "selfTradePreventionMode": "NONE",
                 "icebergQty": "0.00000000",
                 "preventedMatchId": 0,
@@ -1393,15 +1497,7 @@ class TestTradeApi:
                 "type": "LIMIT",
                 "side": "BUY",
                 "workingTime": 1669277163808,
-                "fills": [
-                    {
-                        "price": "4000.00000000",
-                        "qty": "1.00000000",
-                        "commission": "4.00000000",
-                        "commissionAsset": "USDT",
-                        "tradeId": 12345,
-                    }
-                ],
+                "fills": [],
                 "selfTradePreventionMode": "NONE",
                 "icebergQty": "0.00000000",
                 "preventedMatchId": 0,
@@ -1558,7 +1654,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 10,
                     "clientOrderId": "44nZvqpemY7sVYgPYbvPih",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 11,
+                    "clientOrderId": "NuMp0nVYnciDiFmVqfpBqK",
+                },
             ],
             "orderReports": [
                 {
@@ -1576,11 +1677,29 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS_LIMIT",
                     "side": "SELL",
-                    "workingTime": -1,
-                    "selfTradePreventionMode": "NONE",
                     "stopPrice": "1.00000000",
+                    "workingTime": -1,
                     "icebergQty": "1.00000000",
-                }
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 11,
+                    "orderListId": 1,
+                    "clientOrderId": "NuMp0nVYnciDiFmVqfpBqK",
+                    "transactTime": 1710485608839,
+                    "price": "3.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": 1710485608839,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -1642,8 +1761,8 @@ class TestTradeApi:
             "list_client_order_id": "lH1YDkuQKWiXVXHPSKYEIp",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
-            "above_price": 1,
-            "above_stop_price": 1,
+            "above_price": 1.5,
+            "above_stop_price": 1.50000001,
             "above_trailing_delta": 1,
             "above_time_in_force": OrderListOcoAboveTimeInForceEnum["GTC"].value,
             "above_strategy_id": 1,
@@ -1657,8 +1776,8 @@ class TestTradeApi:
             "above_peg_offset_value": 1,
             "below_client_order_id": "belowOrder1",
             "below_iceberg_qty": 1,
-            "below_price": 1,
-            "below_stop_price": 1,
+            "below_price": 1.49999999,
+            "below_stop_price": 1.50000001,
             "below_trailing_delta": 1,
             "below_time_in_force": OrderListOcoBelowTimeInForceEnum["GTC"].value,
             "below_strategy_id": 1,
@@ -1690,7 +1809,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 10,
                     "clientOrderId": "44nZvqpemY7sVYgPYbvPih",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 11,
+                    "clientOrderId": "NuMp0nVYnciDiFmVqfpBqK",
+                },
             ],
             "orderReports": [
                 {
@@ -1708,11 +1832,29 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS_LIMIT",
                     "side": "SELL",
-                    "workingTime": -1,
-                    "selfTradePreventionMode": "NONE",
                     "stopPrice": "1.00000000",
+                    "workingTime": -1,
                     "icebergQty": "1.00000000",
-                }
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 11,
+                    "orderListId": 1,
+                    "clientOrderId": "NuMp0nVYnciDiFmVqfpBqK",
+                    "transactTime": 1710485608839,
+                    "price": "3.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": 1710485608839,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -1868,7 +2010,12 @@ class TestTradeApi:
                     "symbol": "BTCUSDT",
                     "orderId": 2,
                     "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                },
             ],
             "orderReports": [
                 {
@@ -1878,6 +2025,7 @@ class TestTradeApi:
                     "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
                     "transactTime": 1762998011671,
                     "price": "102264.00000000",
+                    "origQty": "0.00060000",
                     "executedQty": "0.00000000",
                     "origQuoteOrderQty": "0.00000000",
                     "cummulativeQuoteQty": "0.00000000",
@@ -1887,23 +2035,24 @@ class TestTradeApi:
                     "side": "BUY",
                     "workingTime": 1762998011671,
                     "selfTradePreventionMode": "NONE",
-                    "origQty": "0.00060000",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                    "transactTime": 1762998011671,
+                    "price": "0.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2011,7 +2160,12 @@ class TestTradeApi:
                     "symbol": "BTCUSDT",
                     "orderId": 2,
                     "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                },
             ],
             "orderReports": [
                 {
@@ -2021,6 +2175,7 @@ class TestTradeApi:
                     "clientOrderId": "JX6xfdjo0wysiGumfHNmPu",
                     "transactTime": 1762998011671,
                     "price": "102264.00000000",
+                    "origQty": "0.00060000",
                     "executedQty": "0.00000000",
                     "origQuoteOrderQty": "0.00000000",
                     "cummulativeQuoteQty": "0.00000000",
@@ -2030,23 +2185,24 @@ class TestTradeApi:
                     "side": "BUY",
                     "workingTime": 1762998011671,
                     "selfTradePreventionMode": "NONE",
-                    "origQty": "0.00060000",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "2ZJCY0IjOhuYIMLGN8kU8S",
+                    "transactTime": 1762998011671,
+                    "price": "0.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2254,7 +2410,17 @@ class TestTradeApi:
                     "symbol": "BTCUSDT",
                     "orderId": 9,
                     "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                },
             ],
             "orderReports": [
                 {
@@ -2264,6 +2430,7 @@ class TestTradeApi:
                     "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
                     "transactTime": 1763000506354,
                     "price": "102496.00000000",
+                    "origQty": "0.00170000",
                     "executedQty": "0.00000000",
                     "origQuoteOrderQty": "0.00000000",
                     "cummulativeQuoteQty": "0.00000000",
@@ -2273,23 +2440,42 @@ class TestTradeApi:
                     "side": "BUY",
                     "workingTime": 1763000506354,
                     "selfTradePreventionMode": "NONE",
-                    "origQty": "0.00170000",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "orderListId": 2,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                    "transactTime": 1763000506354,
+                    "price": "101613.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "SELL",
+                    "stopPrice": "10100.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "orderListId": 2,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                    "transactTime": 1763000506354,
+                    "price": "104261.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2422,7 +2608,17 @@ class TestTradeApi:
                     "symbol": "BTCUSDT",
                     "orderId": 9,
                     "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                },
             ],
             "orderReports": [
                 {
@@ -2432,6 +2628,7 @@ class TestTradeApi:
                     "clientOrderId": "OLSBhMWaIlLSzZ9Zm7fnKB",
                     "transactTime": 1763000506354,
                     "price": "102496.00000000",
+                    "origQty": "0.00170000",
                     "executedQty": "0.00000000",
                     "origQuoteOrderQty": "0.00000000",
                     "cummulativeQuoteQty": "0.00000000",
@@ -2441,23 +2638,42 @@ class TestTradeApi:
                     "side": "BUY",
                     "workingTime": 1763000506354,
                     "selfTradePreventionMode": "NONE",
-                    "origQty": "0.00170000",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 10,
+                    "orderListId": 2,
+                    "clientOrderId": "mfif39yPTHsB3C0FIXznR2",
+                    "transactTime": 1763000506354,
+                    "price": "101613.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "SELL",
+                    "stopPrice": "10100.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "orderId": 11,
+                    "orderListId": 2,
+                    "clientOrderId": "yINkaXSJeoi3bU5vWMY8Z8",
+                    "transactTime": 1763000506354,
+                    "price": "104261.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.00000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "SELL",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2680,7 +2896,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 4,
                     "clientOrderId": "Bq17mn9fP6vyCn75Jw1xya",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 5,
+                    "clientOrderId": "arLFo0zGJVDE69cvGBaU0d",
+                },
             ],
             "orderReports": [
                 {
@@ -2700,22 +2921,25 @@ class TestTradeApi:
                     "side": "SELL",
                     "workingTime": 1712289389158,
                     "selfTradePreventionMode": "NONE",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 5,
+                    "orderListId": 0,
+                    "clientOrderId": "arLFo0zGJVDE69cvGBaU0d",
+                    "transactTime": 1712289389158,
+                    "price": "0.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "BUY",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2825,7 +3049,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 4,
                     "clientOrderId": "Bq17mn9fP6vyCn75Jw1xya",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 5,
+                    "clientOrderId": "arLFo0zGJVDE69cvGBaU0d",
+                },
             ],
             "orderReports": [
                 {
@@ -2845,22 +3074,25 @@ class TestTradeApi:
                     "side": "SELL",
                     "workingTime": 1712289389158,
                     "selfTradePreventionMode": "NONE",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 5,
+                    "orderListId": 0,
+                    "clientOrderId": "arLFo0zGJVDE69cvGBaU0d",
+                    "transactTime": 1712289389158,
+                    "price": "0.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "MARKET",
+                    "side": "BUY",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3096,7 +3328,17 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 6,
                     "clientOrderId": "fM9Y4m23IFJVCQmIrlUmMK",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 7,
+                    "clientOrderId": "6pcQbFIzTXGZQ1e2MkGDq4",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 8,
+                    "clientOrderId": "r4JMv9cwAYYUwwBZfbussx",
+                },
             ],
             "orderReports": [
                 {
@@ -3116,22 +3358,44 @@ class TestTradeApi:
                     "side": "SELL",
                     "workingTime": 1712291372842,
                     "selfTradePreventionMode": "NONE",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 7,
+                    "orderListId": 1,
+                    "clientOrderId": "6pcQbFIzTXGZQ1e2MkGDq4",
+                    "transactTime": 1712291372842,
+                    "price": "1.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "IOC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "BUY",
+                    "stopPrice": "6.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 8,
+                    "orderListId": 1,
+                    "clientOrderId": "r4JMv9cwAYYUwwBZfbussx",
+                    "transactTime": 1712291372842,
+                    "price": "3.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "BUY",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3266,7 +3530,17 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 6,
                     "clientOrderId": "fM9Y4m23IFJVCQmIrlUmMK",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 7,
+                    "clientOrderId": "6pcQbFIzTXGZQ1e2MkGDq4",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 8,
+                    "clientOrderId": "r4JMv9cwAYYUwwBZfbussx",
+                },
             ],
             "orderReports": [
                 {
@@ -3286,22 +3560,44 @@ class TestTradeApi:
                     "side": "SELL",
                     "workingTime": 1712291372842,
                     "selfTradePreventionMode": "NONE",
-                    "icebergQty": "0.00000000",
-                    "preventedMatchId": 0,
-                    "preventedQuantity": "1.200000",
-                    "stopPrice": "0.00000000",
-                    "strategyId": 1,
-                    "strategyType": 1000000,
-                    "trailingDelta": 10,
-                    "trailingTime": -1,
-                    "usedSor": True,
-                    "workingFloor": "SOR",
-                    "pegPriceType": "PRIMARY_PEG",
-                    "pegOffsetType": "PRICE_LEVEL",
-                    "pegOffsetValue": 5,
-                    "peggedPrice": "87523.83710000",
-                    "expiryReason": "INSUFFICIENT_LIQUIDITY",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 7,
+                    "orderListId": 1,
+                    "clientOrderId": "6pcQbFIzTXGZQ1e2MkGDq4",
+                    "transactTime": 1712291372842,
+                    "price": "1.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "IOC",
+                    "type": "STOP_LOSS_LIMIT",
+                    "side": "BUY",
+                    "stopPrice": "6.00000000",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 8,
+                    "orderListId": 1,
+                    "clientOrderId": "r4JMv9cwAYYUwwBZfbussx",
+                    "transactTime": 1712291372842,
+                    "price": "3.00000000",
+                    "origQty": "5.00000000",
+                    "executedQty": "0.00000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.00000000",
+                    "status": "PENDING_NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "BUY",
+                    "workingTime": -1,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3550,7 +3846,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 2,
                     "clientOrderId": "Kk7sqHb9J6mJWTMDVW7Vos",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "clientOrderId": "xTXKaGYd4bluPVp78IVRvl",
+                },
             ],
             "orderReports": [
                 {
@@ -3568,10 +3869,28 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS",
                     "side": "BUY",
+                    "stopPrice": "0.960664",
                     "workingTime": -1,
                     "selfTradePreventionMode": "NONE",
-                    "stopPrice": "0.960664",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "xTXKaGYd4bluPVp78IVRvl",
+                    "transactTime": 1563417480525,
+                    "price": "0.036435",
+                    "origQty": "0.624363",
+                    "executedQty": "0.000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "BUY",
+                    "workingTime": 1563417480525,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3659,7 +3978,12 @@ class TestTradeApi:
                     "symbol": "LTCBTC",
                     "orderId": 2,
                     "clientOrderId": "Kk7sqHb9J6mJWTMDVW7Vos",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "clientOrderId": "xTXKaGYd4bluPVp78IVRvl",
+                },
             ],
             "orderReports": [
                 {
@@ -3677,10 +4001,28 @@ class TestTradeApi:
                     "timeInForce": "GTC",
                     "type": "STOP_LOSS",
                     "side": "BUY",
+                    "stopPrice": "0.960664",
                     "workingTime": -1,
                     "selfTradePreventionMode": "NONE",
-                    "stopPrice": "0.960664",
-                }
+                },
+                {
+                    "symbol": "LTCBTC",
+                    "orderId": 3,
+                    "orderListId": 0,
+                    "clientOrderId": "xTXKaGYd4bluPVp78IVRvl",
+                    "transactTime": 1563417480525,
+                    "price": "0.036435",
+                    "origQty": "0.624363",
+                    "executedQty": "0.000000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "0.000000",
+                    "status": "NEW",
+                    "timeInForce": "GTC",
+                    "type": "LIMIT_MAKER",
+                    "side": "BUY",
+                    "workingTime": 1563417480525,
+                    "selfTradePreventionMode": "NONE",
+                },
             ],
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3818,11 +4160,18 @@ class TestTradeApi:
         }
 
         expected_response = {
+            "standardCommissionForOrder": {
+                "maker": "0.00000112",
+                "taker": "0.00000114",
+            },
+            "specialCommissionForOrder": {"maker": "0.05000000", "taker": "0.06000000"},
+            "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
                 "enabledForSymbol": True,
                 "discountAsset": "BNB",
-            }
+                "discount": "0.25000000",
+            },
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -3895,11 +4244,18 @@ class TestTradeApi:
         }
 
         expected_response = {
+            "standardCommissionForOrder": {
+                "maker": "0.00000112",
+                "taker": "0.00000114",
+            },
+            "specialCommissionForOrder": {"maker": "0.05000000", "taker": "0.06000000"},
+            "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
                 "enabledForSymbol": True,
                 "discountAsset": "BNB",
-            }
+                "discount": "0.25000000",
+            },
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -4237,11 +4593,17 @@ class TestTradeApi:
         }
 
         expected_response = {
+            "standardCommissionForOrder": {
+                "maker": "0.00000112",
+                "taker": "0.00000114",
+            },
+            "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
                 "enabledForSymbol": True,
                 "discountAsset": "BNB",
-            }
+                "discount": "0.25000000",
+            },
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -4309,11 +4671,17 @@ class TestTradeApi:
         }
 
         expected_response = {
+            "standardCommissionForOrder": {
+                "maker": "0.00000112",
+                "taker": "0.00000114",
+            },
+            "taxCommissionForOrder": {"maker": "0.00000112", "taker": "0.00000114"},
             "discount": {
                 "enabledForAccount": True,
                 "enabledForSymbol": True,
                 "discountAsset": "BNB",
-            }
+                "discount": "0.25000000",
+            },
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

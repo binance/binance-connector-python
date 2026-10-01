@@ -31,7 +31,9 @@ class OrderPlaceResponseResult(BaseModel):
 
     symbol: Optional[StrictStr] = None
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
-    order_list_id: Optional[StrictInt] = Field(default=None, alias="orderListId")
+    order_list_id: Optional[StrictInt] = Field(
+        default=None, description="always -1 for singular orders", alias="orderListId"
+    )
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     transact_time: Optional[StrictInt] = Field(default=None, alias="transactTime")
     price: Optional[StrictStr] = None

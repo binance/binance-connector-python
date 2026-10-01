@@ -15,32 +15,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
 
-class ReferencePriceResponseResult(BaseModel):
+class OrderTestResponseResultTaxCommissionForOrder(BaseModel):
     """
-    ReferencePriceResponseResult
+    Tax commission rates for trades from the order.
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = None
-    reference_price: Optional[StrictStr] = Field(default=None, alias="referencePrice")
-    timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp when the reference price was valid"
-    )
-    code: Optional[StrictInt] = None
-    msg: Optional[StrictStr] = None
+    maker: Optional[StrictStr] = None
+    taker: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "symbol",
-        "referencePrice",
-        "timestamp",
-        "code",
-        "msg",
-    ]
+    __properties: ClassVar[List[str]] = ["maker", "taker"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,7 +52,7 @@ class ReferencePriceResponseResult(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReferencePriceResponseResult from a JSON string"""
+        """Create an instance of OrderTestResponseResultTaxCommissionForOrder from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -97,7 +86,7 @@ class ReferencePriceResponseResult(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReferencePriceResponseResult from a dict"""
+        """Create an instance of OrderTestResponseResultTaxCommissionForOrder from a dict"""
         if obj is None:
             return None
 
@@ -105,13 +94,7 @@ class ReferencePriceResponseResult(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "symbol": obj.get("symbol"),
-                "referencePrice": obj.get("referencePrice"),
-                "timestamp": obj.get("timestamp"),
-                "code": obj.get("code"),
-                "msg": obj.get("msg"),
-            }
+            {"maker": obj.get("maker"), "taker": obj.get("taker")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

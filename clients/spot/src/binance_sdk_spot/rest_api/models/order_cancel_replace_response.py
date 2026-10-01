@@ -29,7 +29,7 @@ from typing_extensions import Self
 
 class OrderCancelReplaceResponse(BaseModel):
     """
-    OrderCancelReplaceResponse
+    Both the cancel and the new order placement succeeded, and the account has not exceeded its unfilled order count:
     """  # noqa: E501
 
     cancel_result: Optional[StrictStr] = Field(default=None, alias="cancelResult")

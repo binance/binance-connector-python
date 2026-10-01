@@ -26,8 +26,16 @@ class SessionStatusResponseResult(BaseModel):
     SessionStatusResponseResult
     """  # noqa: E501
 
-    api_key: Optional[StrictStr] = Field(default=None, alias="apiKey")
-    authorized_since: Optional[StrictInt] = Field(default=None, alias="authorizedSince")
+    api_key: Optional[StrictStr] = Field(
+        default=None,
+        description="`null` if the connection is not authenticated.",
+        alias="apiKey",
+    )
+    authorized_since: Optional[StrictInt] = Field(
+        default=None,
+        description="`null` if the connection is not authenticated.",
+        alias="authorizedSince",
+    )
     connected_since: Optional[StrictInt] = Field(default=None, alias="connectedSince")
     return_rate_limits: Optional[StrictBool] = Field(
         default=None, alias="returnRateLimits"

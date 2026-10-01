@@ -71,6 +71,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "a": 12345,
+            "p": "0.001",
+            "q": "100",
             "f": 100,
             "l": 105,
             "T": 1672515782136,
@@ -110,6 +112,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "a": 12345,
+            "p": "0.001",
+            "q": "100",
             "f": 100,
             "l": 105,
             "T": 1672515782136,
@@ -133,6 +137,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "a": 12345,
+            "p": "0.001",
+            "q": "100",
             "f": 100,
             "l": 105,
             "T": 1672515782136,
@@ -186,6 +192,15 @@ class TestWebSocketStreams:
                 "e": "1hTicker",
                 "E": 1672515782136,
                 "s": "BNBBTC",
+                "p": "0.0015",
+                "P": "250.00",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "c": "0.0025",
+                "w": "0.0018",
+                "v": "10000",
+                "q": "18",
                 "O": 0,
                 "C": 1675216573749,
                 "F": 0,
@@ -228,6 +243,15 @@ class TestWebSocketStreams:
                 "e": "1hTicker",
                 "E": 1672515782136,
                 "s": "BNBBTC",
+                "p": "0.0015",
+                "P": "250.00",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "c": "0.0025",
+                "w": "0.0018",
+                "v": "10000",
+                "q": "18",
                 "O": 0,
                 "C": 1675216573749,
                 "F": 0,
@@ -259,6 +283,15 @@ class TestWebSocketStreams:
                 "e": "1hTicker",
                 "E": 1672515782136,
                 "s": "BNBBTC",
+                "p": "0.0015",
+                "P": "250.00",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "c": "0.0025",
+                "w": "0.0018",
+                "v": "10000",
+                "q": "18",
                 "O": 0,
                 "C": 1675216573749,
                 "F": 0,
@@ -314,7 +347,19 @@ class TestWebSocketStreams:
     async def test_all_mini_ticker_subscription(self):
         """Test that all_mini_ticker() subscribes to the correct WebSocket stream."""
 
-        expected_response = [{"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}]
+        expected_response = [
+            {
+                "e": "24hrMiniTicker",
+                "E": 1672515782136,
+                "s": "BNBBTC",
+                "c": "0.0025",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "v": "10000",
+                "q": "18",
+            }
+        ]
         stream_endpoint = ws_streams_placeholder(
             "/!miniTicker@arr".replace("/", "", 1),
             {},
@@ -339,7 +384,19 @@ class TestWebSocketStreams:
     async def test_all_mini_ticker_success(self):
         """Test all_mini_ticker() successfully with required parameters only."""
 
-        expected_response = [{"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}]
+        expected_response = [
+            {
+                "e": "24hrMiniTicker",
+                "E": 1672515782136,
+                "s": "BNBBTC",
+                "c": "0.0025",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "v": "10000",
+                "q": "18",
+            }
+        ]
         self.ws_streams.all_mini_ticker = AsyncMock(return_value=expected_response)
 
         response = await self.ws_streams.all_mini_ticker()
@@ -352,7 +409,19 @@ class TestWebSocketStreams:
 
         params = {"id": "e9d6b4349871b40611412680b3445fac"}
 
-        expected_response = [{"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}]
+        expected_response = [
+            {
+                "e": "24hrMiniTicker",
+                "E": 1672515782136,
+                "s": "BNBBTC",
+                "c": "0.0025",
+                "o": "0.0010",
+                "h": "0.0025",
+                "l": "0.0010",
+                "v": "10000",
+                "q": "18",
+            }
+        ]
 
         self.ws_streams.all_mini_ticker = AsyncMock(return_value=expected_response)
 
@@ -383,6 +452,7 @@ class TestWebSocketStreams:
             "E": 1693907033000,
             "s": "BTCUSDT",
             "i": "5m",
+            "w": "25776.86000000",
             "T": 1693907032213,
         }
         stream_endpoint = ws_streams_placeholder(
@@ -418,6 +488,7 @@ class TestWebSocketStreams:
             "E": 1693907033000,
             "s": "BTCUSDT",
             "i": "5m",
+            "w": "25776.86000000",
             "T": 1693907032213,
         }
         self.ws_streams.avg_price = AsyncMock(return_value=expected_response)
@@ -437,6 +508,7 @@ class TestWebSocketStreams:
             "E": 1693907033000,
             "s": "BTCUSDT",
             "i": "5m",
+            "w": "25776.86000000",
             "T": 1693907032213,
         }
 
@@ -589,7 +661,14 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
         }
 
-        expected_response = {"u": 400900217, "s": "BNBUSDT"}
+        expected_response = {
+            "u": 400900217,
+            "s": "BNBUSDT",
+            "b": "25.35190000",
+            "B": "31.21000000",
+            "a": "25.36520000",
+            "A": "40.66000000",
+        }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@bookTicker".replace("/", "", 1),
             params,
@@ -618,7 +697,14 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
         }
 
-        expected_response = {"u": 400900217, "s": "BNBUSDT"}
+        expected_response = {
+            "u": 400900217,
+            "s": "BNBUSDT",
+            "b": "25.35190000",
+            "B": "31.21000000",
+            "a": "25.36520000",
+            "A": "40.66000000",
+        }
         self.ws_streams.book_ticker = AsyncMock(return_value=expected_response)
 
         response = await self.ws_streams.book_ticker(**params)
@@ -631,7 +717,14 @@ class TestWebSocketStreams:
 
         params = {"symbol": "bnbusdt", "id": "e9d6b4349871b40611412680b3445fac"}
 
-        expected_response = {"u": 400900217, "s": "BNBUSDT"}
+        expected_response = {
+            "u": 400900217,
+            "s": "BNBUSDT",
+            "b": "25.35190000",
+            "B": "31.21000000",
+            "a": "25.36520000",
+            "A": "40.66000000",
+        }
 
         self.ws_streams.book_ticker = AsyncMock(return_value=expected_response)
 
@@ -795,8 +888,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
         stream_endpoint = ws_streams_placeholder(
@@ -839,8 +941,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
         self.ws_streams.kline = AsyncMock(return_value=expected_response)
@@ -870,8 +981,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
 
@@ -942,8 +1062,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
         stream_endpoint = ws_streams_placeholder(
@@ -986,8 +1115,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
         self.ws_streams.kline_offset = AsyncMock(return_value=expected_response)
@@ -1017,8 +1155,17 @@ class TestWebSocketStreams:
                 "i": "1m",
                 "f": 100,
                 "L": 200,
+                "o": "0.0010",
+                "c": "0.0020",
+                "h": "0.0025",
+                "l": "0.0015",
+                "v": "1000",
                 "n": 100,
                 "x": False,
+                "q": "1.0000",
+                "V": "500",
+                "Q": "0.500",
+                "B": "123456",
             },
         }
 
@@ -1077,7 +1224,17 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
         }
 
-        expected_response = {"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}
+        expected_response = {
+            "e": "24hrMiniTicker",
+            "E": 1672515782136,
+            "s": "BNBBTC",
+            "c": "0.0025",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
+        }
         stream_endpoint = ws_streams_placeholder(
             "/<symbol>@miniTicker".replace("/", "", 1),
             params,
@@ -1106,7 +1263,17 @@ class TestWebSocketStreams:
             "symbol": "bnbusdt",
         }
 
-        expected_response = {"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}
+        expected_response = {
+            "e": "24hrMiniTicker",
+            "E": 1672515782136,
+            "s": "BNBBTC",
+            "c": "0.0025",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
+        }
         self.ws_streams.mini_ticker = AsyncMock(return_value=expected_response)
 
         response = await self.ws_streams.mini_ticker(**params)
@@ -1119,7 +1286,17 @@ class TestWebSocketStreams:
 
         params = {"symbol": "bnbusdt", "id": "e9d6b4349871b40611412680b3445fac"}
 
-        expected_response = {"e": "24hrMiniTicker", "E": 1672515782136, "s": "BNBBTC"}
+        expected_response = {
+            "e": "24hrMiniTicker",
+            "E": 1672515782136,
+            "s": "BNBBTC",
+            "c": "0.0025",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
+        }
 
         self.ws_streams.mini_ticker = AsyncMock(return_value=expected_response)
 
@@ -1379,6 +1556,15 @@ class TestWebSocketStreams:
             "e": "1hTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "c": "0.0025",
+            "w": "0.0018",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1418,6 +1604,15 @@ class TestWebSocketStreams:
             "e": "1hTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "c": "0.0025",
+            "w": "0.0018",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1446,6 +1641,15 @@ class TestWebSocketStreams:
             "e": "1hTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "c": "0.0025",
+            "w": "0.0018",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1514,6 +1718,21 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "w": "0.0018",
+            "x": "0.0009",
+            "c": "0.0025",
+            "Q": "10",
+            "b": "0.0024",
+            "B": "10",
+            "a": "0.0026",
+            "A": "100",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1552,6 +1771,21 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "w": "0.0018",
+            "x": "0.0009",
+            "c": "0.0025",
+            "Q": "10",
+            "b": "0.0024",
+            "B": "10",
+            "a": "0.0026",
+            "A": "100",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1574,6 +1808,21 @@ class TestWebSocketStreams:
             "e": "24hrTicker",
             "E": 1672515782136,
             "s": "BNBBTC",
+            "p": "0.0015",
+            "P": "250.00",
+            "w": "0.0018",
+            "x": "0.0009",
+            "c": "0.0025",
+            "Q": "10",
+            "b": "0.0024",
+            "B": "10",
+            "a": "0.0026",
+            "A": "100",
+            "o": "0.0010",
+            "h": "0.0025",
+            "l": "0.0010",
+            "v": "10000",
+            "q": "18",
             "O": 0,
             "C": 1675216573749,
             "F": 0,
@@ -1625,6 +1874,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "t": 12345,
+            "p": "0.001",
+            "q": "100",
             "T": 1672515782136,
             "m": True,
             "M": True,
@@ -1662,6 +1913,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "t": 12345,
+            "p": "0.001",
+            "q": "100",
             "T": 1672515782136,
             "m": True,
             "M": True,
@@ -1683,6 +1936,8 @@ class TestWebSocketStreams:
             "E": 1672515782136,
             "s": "BNBBTC",
             "t": 12345,
+            "p": "0.001",
+            "q": "100",
             "T": 1672515782136,
             "m": True,
             "M": True,

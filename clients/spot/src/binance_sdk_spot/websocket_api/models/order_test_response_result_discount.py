@@ -23,7 +23,7 @@ from typing_extensions import Self
 
 class OrderTestResponseResultDiscount(BaseModel):
     """
-    OrderTestResponseResultDiscount
+    Discount on standard commissions when paying in BNB.
     """  # noqa: E501
 
     enabled_for_account: Optional[StrictBool] = Field(
@@ -33,7 +33,10 @@ class OrderTestResponseResultDiscount(BaseModel):
         default=None, alias="enabledForSymbol"
     )
     discount_asset: Optional[StrictStr] = Field(default=None, alias="discountAsset")
-    discount: Optional[StrictStr] = None
+    discount: Optional[StrictStr] = Field(
+        default=None,
+        description="Standard commission is reduced by this rate when paying commission in BNB.",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "enabledForAccount",

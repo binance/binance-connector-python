@@ -44,11 +44,13 @@ class ExchangeInfoResponse(BaseModel):
         default=None, alias="rateLimits"
     )
     exchange_filters: Optional[List[MyFiltersResponseExchangeFiltersInner]] = Field(
-        default=None, alias="exchangeFilters"
+        default=None,
+        description='Exchange filters are explained on the "Filters" page: All exchange filters are optional.',
+        alias="exchangeFilters",
     )
     symbols: Optional[List[ExchangeInfoResponseSymbolsInner]] = None
     sors: Optional[List[ExchangeInfoResponseSorsInner]] = Field(
-        default=None, description="Optional. Present only when SOR is available."
+        default=None, description="Optional field. Present only when SOR is available."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

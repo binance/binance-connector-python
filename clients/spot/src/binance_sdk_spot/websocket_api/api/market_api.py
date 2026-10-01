@@ -143,7 +143,7 @@ class MarketApi:
         Security Type: NONE
 
         Notes:
-        - Data Source: Database
+        **Data Source:** Database
 
             Args:
                     symbol (Union[str, None]):
@@ -204,7 +204,7 @@ class MarketApi:
           * `<symbol>@depth<levels>`
           * `<symbol>@depth`
 
-        You can use `depth` request together with `<symbol>@depth` streams to [maintain a local order book](/products/spot/web-socket-streams#how-to-manage-a-local-order-book-correctly).
+        You can use `depth` request together with `<symbol>@depth` streams to maintain a local order book.
 
         Weight: Adjusted based on the limit:
 
@@ -278,7 +278,7 @@ class MarketApi:
         If you need access to real-time kline updates, please consider using WebSocket Streams:
           * `<symbol>@kline_<interval>`
 
-        If you need historical kline data, please consider using [data.binance.vision](https://github.com/binance/binance-public-data/#klines).
+        If you need historical kline data, please consider using data.binance.vision.
 
         Weight(IP): 2
 
@@ -371,6 +371,15 @@ class MarketApi:
 
         Notes:
         **Data Source:** Memory
+
+        If the symbol has never had a reference price set, the request is rejected with:
+
+        ```json
+        {
+            "code": -2043,
+            "msg": "This symbol doesn't have a reference price."
+        }
+        ```
 
             Args:
                     symbol (Union[str, None]):
@@ -873,7 +882,7 @@ class MarketApi:
 
         * `<symbol>@aggTrade`
 
-        If you need historical aggregate trade data, please consider using [data.binance.vision](https://github.com/binance/binance-public-data/#aggtrades).
+        If you need historical aggregate trade data, please consider using data.binance.vision.
 
         Weight(IP): 4
 

@@ -179,6 +179,9 @@ class GeneralApi:
 
         Security Type: NONE
 
+        Notes:
+        **Data Source:** Memory
+
                 Args:
 
                 Returns:
@@ -215,6 +218,9 @@ class GeneralApi:
         Weight(IP): 1
 
         Security Type: NONE
+
+        Notes:
+        **Data Source:** Memory
 
                 Args:
 

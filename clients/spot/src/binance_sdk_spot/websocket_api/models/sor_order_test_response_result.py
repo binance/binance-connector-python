@@ -23,6 +23,9 @@ from binance_sdk_spot.websocket_api.models.order_test_response_result_discount i
 from binance_sdk_spot.websocket_api.models.order_test_response_result_standard_commission_for_order import (
     OrderTestResponseResultStandardCommissionForOrder,
 )
+from binance_sdk_spot.websocket_api.models.order_test_response_result_tax_commission_for_order import (
+    OrderTestResponseResultTaxCommissionForOrder,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -35,9 +38,9 @@ class SorOrderTestResponseResult(BaseModel):
     standard_commission_for_order: Optional[
         OrderTestResponseResultStandardCommissionForOrder
     ] = Field(default=None, alias="standardCommissionForOrder")
-    tax_commission_for_order: Optional[
-        OrderTestResponseResultStandardCommissionForOrder
-    ] = Field(default=None, alias="taxCommissionForOrder")
+    tax_commission_for_order: Optional[OrderTestResponseResultTaxCommissionForOrder] = (
+        Field(default=None, alias="taxCommissionForOrder")
+    )
     discount: Optional[OrderTestResponseResultDiscount] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -129,7 +132,7 @@ class SorOrderTestResponseResult(BaseModel):
                     else None
                 ),
                 "taxCommissionForOrder": (
-                    OrderTestResponseResultStandardCommissionForOrder.from_dict(
+                    OrderTestResponseResultTaxCommissionForOrder.from_dict(
                         obj["taxCommissionForOrder"]
                     )
                     if obj.get("taxCommissionForOrder") is not None

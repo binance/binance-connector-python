@@ -17,7 +17,6 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     ValidationError,
-    model_validator,
 )
 from typing import Any, Optional
 from binance_sdk_spot.websocket_api.models.balance_update import BalanceUpdate

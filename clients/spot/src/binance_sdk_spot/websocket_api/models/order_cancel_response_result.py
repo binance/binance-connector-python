@@ -34,11 +34,19 @@ class OrderCancelResponseResult(BaseModel):
 
     symbol: Optional[StrictStr] = None
     orig_client_order_id: Optional[StrictStr] = Field(
-        default=None, alias="origClientOrderId"
+        default=None,
+        description="clientOrderId that was canceled",
+        alias="origClientOrderId",
     )
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
-    order_list_id: Optional[StrictInt] = Field(default=None, alias="orderListId")
-    client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
+    order_list_id: Optional[StrictInt] = Field(
+        default=None,
+        description="set only for legs of an order list",
+        alias="orderListId",
+    )
+    client_order_id: Optional[StrictStr] = Field(
+        default=None, description="newClientOrderId from request", alias="clientOrderId"
+    )
     transact_time: Optional[StrictInt] = Field(default=None, alias="transactTime")
     price: Optional[StrictStr] = None
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")
@@ -55,27 +63,27 @@ class OrderCancelResponseResult(BaseModel):
     side: Optional[StrictStr] = None
     stop_price: Optional[StrictStr] = Field(
         default=None,
-        description="Appears for STOP_LOSS, TAKE_PROFIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT orders.",
+        description="present only if stopPrice set for the order",
         alias="stopPrice",
     )
     trailing_delta: Optional[StrictInt] = Field(
         default=None,
-        description="Delta price change required before order activation.",
+        description="present only if trailingDelta set for the order",
         alias="trailingDelta",
     )
     iceberg_qty: Optional[StrictStr] = Field(
         default=None,
-        description="Appears only if the parameter icebergQty was sent in the request.",
+        description="present only if icebergQty set for the order",
         alias="icebergQty",
     )
     strategy_id: Optional[StrictInt] = Field(
         default=None,
-        description="Appears only if the strategyId parameter was provided upon order placement.",
+        description="present only if strategyId set for the order",
         alias="strategyId",
     )
     strategy_type: Optional[StrictInt] = Field(
         default=None,
-        description="Appears only if the strategyType parameter was provided upon order placement.",
+        description="present only if strategyType set for the order",
         alias="strategyType",
     )
     self_trade_prevention_mode: Optional[StrictStr] = Field(

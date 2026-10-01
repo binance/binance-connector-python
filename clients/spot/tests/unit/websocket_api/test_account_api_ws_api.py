@@ -65,6 +65,12 @@ class TestWebSocketAccountApi:
                     "buyer": "0.03000000",
                     "seller": "0.04000000",
                 },
+                "taxCommission": {
+                    "maker": "0.00000112",
+                    "taker": "0.00000114",
+                    "buyer": "0.00000118",
+                    "seller": "0.00000116",
+                },
                 "discount": {
                     "enabledForAccount": True,
                     "enabledForSymbol": True,
@@ -78,7 +84,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -142,6 +148,12 @@ class TestWebSocketAccountApi:
                     "buyer": "0.03000000",
                     "seller": "0.04000000",
                 },
+                "taxCommission": {
+                    "maker": "0.00000112",
+                    "taker": "0.00000114",
+                    "buyer": "0.00000118",
+                    "seller": "0.00000116",
+                },
                 "discount": {
                     "enabledForAccount": True,
                     "enabledForSymbol": True,
@@ -155,7 +167,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -233,7 +245,14 @@ class TestWebSocketAccountApi:
                     "intervalNum": 10,
                     "limit": 50,
                     "count": 0,
-                }
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                    "count": 0,
+                },
             ],
             "rateLimits": [
                 {
@@ -241,7 +260,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 40,
                 }
             ],
         }
@@ -294,7 +313,14 @@ class TestWebSocketAccountApi:
                     "intervalNum": 10,
                     "limit": 50,
                     "count": 0,
-                }
+                },
+                {
+                    "rateLimitType": "ORDERS",
+                    "interval": "DAY",
+                    "intervalNum": 1,
+                    "limit": 160000,
+                    "count": 0,
+                },
             ],
             "rateLimits": [
                 {
@@ -302,7 +328,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 40,
                 }
             ],
         }
@@ -367,12 +393,22 @@ class TestWebSocketAccountApi:
                 "canTrade": True,
                 "canWithdraw": True,
                 "canDeposit": True,
+                "commissionRates": {
+                    "maker": "0.00150000",
+                    "taker": "0.00150000",
+                    "buyer": "0.00000000",
+                    "seller": "0.00000000",
+                },
                 "brokered": False,
                 "requireSelfTradePrevention": False,
                 "preventSor": False,
                 "updateTime": 1660801833000,
                 "accountType": "SPOT",
-                "balances": [{"asset": "BNB"}],
+                "balances": [
+                    {"asset": "BNB", "free": "0.00000000", "locked": "0.00000000"},
+                    {"asset": "BTC", "free": "1.3447112", "locked": "0.08600000"},
+                    {"asset": "USDT", "free": "1021.21000000", "locked": "0.00000000"},
+                ],
                 "permissions": ["SPOT"],
                 "uid": 354937868,
             },
@@ -382,7 +418,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -437,12 +473,22 @@ class TestWebSocketAccountApi:
                 "canTrade": True,
                 "canWithdraw": True,
                 "canDeposit": True,
+                "commissionRates": {
+                    "maker": "0.00150000",
+                    "taker": "0.00150000",
+                    "buyer": "0.00000000",
+                    "seller": "0.00000000",
+                },
                 "brokered": False,
                 "requireSelfTradePrevention": False,
                 "preventSor": False,
                 "updateTime": 1660801833000,
                 "accountType": "SPOT",
-                "balances": [{"asset": "BNB"}],
+                "balances": [
+                    {"asset": "BNB", "free": "0.00000000", "locked": "0.00000000"},
+                    {"asset": "BTC", "free": "1.3447112", "locked": "0.08600000"},
+                    {"asset": "USDT", "free": "1021.21000000", "locked": "0.00000000"},
+                ],
                 "permissions": ["SPOT"],
                 "uid": 354937868,
             },
@@ -452,7 +498,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -521,7 +567,12 @@ class TestWebSocketAccountApi:
                             "symbol": "BTCUSDT",
                             "orderId": 12569138901,
                             "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU",
-                        }
+                        },
+                        {
+                            "symbol": "BTCUSDT",
+                            "orderId": 12569138902,
+                            "clientOrderId": "jLnZpj5enfMXTuhKB1d0us",
+                        },
                     ],
                 }
             ],
@@ -531,7 +582,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -595,7 +646,12 @@ class TestWebSocketAccountApi:
                             "symbol": "BTCUSDT",
                             "orderId": 12569138901,
                             "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU",
-                        }
+                        },
+                        {
+                            "symbol": "BTCUSDT",
+                            "orderId": 12569138902,
+                            "clientOrderId": "jLnZpj5enfMXTuhKB1d0us",
+                        },
                     ],
                 }
             ],
@@ -605,7 +661,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -673,6 +729,10 @@ class TestWebSocketAccountApi:
                     "orderId": 12569099453,
                     "orderListId": -1,
                     "clientOrderId": "4d96324ff9d44481926157",
+                    "price": "23416.10000000",
+                    "origQty": "0.00847000",
+                    "executedQty": "0.00847000",
+                    "cummulativeQuoteQty": "198.33521500",
                     "status": "FILLED",
                     "timeInForce": "GTC",
                     "type": "LIMIT",
@@ -681,8 +741,10 @@ class TestWebSocketAccountApi:
                     "updateTime": 1660801717945,
                     "isWorking": True,
                     "workingTime": 1660801715639,
+                    "origQuoteOrderQty": "0.000000",
                     "selfTradePreventionMode": "NONE",
                     "preventedMatchId": 0,
+                    "preventedQuantity": "1.200000",
                     "icebergQty": "0.00000000",
                     "stopPrice": "0.00000000",
                     "strategyId": 1,
@@ -704,7 +766,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -761,6 +823,10 @@ class TestWebSocketAccountApi:
                     "orderId": 12569099453,
                     "orderListId": -1,
                     "clientOrderId": "4d96324ff9d44481926157",
+                    "price": "23416.10000000",
+                    "origQty": "0.00847000",
+                    "executedQty": "0.00847000",
+                    "cummulativeQuoteQty": "198.33521500",
                     "status": "FILLED",
                     "timeInForce": "GTC",
                     "type": "LIMIT",
@@ -769,8 +835,10 @@ class TestWebSocketAccountApi:
                     "updateTime": 1660801717945,
                     "isWorking": True,
                     "workingTime": 1660801715639,
+                    "origQuoteOrderQty": "0.000000",
                     "selfTradePreventionMode": "NONE",
                     "preventedMatchId": 0,
+                    "preventedQuantity": "1.200000",
                     "icebergQty": "0.00000000",
                     "stopPrice": "0.00000000",
                     "strategyId": 1,
@@ -792,7 +860,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -882,6 +950,10 @@ class TestWebSocketAccountApi:
                     "allocationType": "SOR",
                     "orderId": 500,
                     "orderListId": -1,
+                    "price": "1.00000000",
+                    "qty": "0.10000000",
+                    "quoteQty": "0.10000000",
+                    "commission": "0.00000000",
                     "commissionAsset": "BTC",
                     "time": 1687319487614,
                     "isBuyer": False,
@@ -895,7 +967,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -956,6 +1028,10 @@ class TestWebSocketAccountApi:
                     "allocationType": "SOR",
                     "orderId": 500,
                     "orderListId": -1,
+                    "price": "1.00000000",
+                    "qty": "0.10000000",
+                    "quoteQty": "0.10000000",
+                    "commission": "0.00000000",
                     "commissionAsset": "BTC",
                     "time": 1687319487614,
                     "isBuyer": False,
@@ -969,7 +1045,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -1054,6 +1130,7 @@ class TestWebSocketAccountApi:
         }
 
         expected_response = {
+            "id": "1758009606869",
             "status": 200,
             "result": {
                 "exchangeFilters": [
@@ -1082,7 +1159,7 @@ class TestWebSocketAccountApi:
                         "interval": "MINUTE",
                         "intervalNum": 1,
                         "limit": 6000,
-                        "count": 321,
+                        "count": 40,
                     }
                 ],
             },
@@ -1128,6 +1205,7 @@ class TestWebSocketAccountApi:
         }
 
         expected_response = {
+            "id": "1758009606869",
             "status": 200,
             "result": {
                 "exchangeFilters": [
@@ -1156,7 +1234,7 @@ class TestWebSocketAccountApi:
                         "interval": "MINUTE",
                         "intervalNum": 1,
                         "limit": 6000,
-                        "count": 321,
+                        "count": 40,
                     }
                 ],
             },
@@ -1241,6 +1319,8 @@ class TestWebSocketAccountApi:
                     "makerOrderId": 3,
                     "tradeGroupId": 1,
                     "selfTradePreventionMode": "EXPIRE_MAKER",
+                    "price": "1.100000",
+                    "makerPreventedQuantity": "1.300000",
                     "transactTime": 1669101687094,
                 }
             ],
@@ -1250,7 +1330,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -1315,6 +1395,8 @@ class TestWebSocketAccountApi:
                     "makerOrderId": 3,
                     "tradeGroupId": 1,
                     "selfTradePreventionMode": "EXPIRE_MAKER",
+                    "price": "1.100000",
+                    "makerPreventedQuantity": "1.300000",
                     "transactTime": 1669101687094,
                 }
             ],
@@ -1324,7 +1406,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -1418,12 +1500,31 @@ class TestWebSocketAccountApi:
                     "id": 1650422481,
                     "orderId": 12569099453,
                     "orderListId": -1,
+                    "price": "23416.10000000",
+                    "qty": "0.00635000",
+                    "quoteQty": "148.69223500",
+                    "commission": "0.00000000",
                     "commissionAsset": "BNB",
                     "time": 1660801715793,
                     "isBuyer": False,
                     "isMaker": True,
                     "isBestMatch": True,
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "id": 1650422482,
+                    "orderId": 12569099453,
+                    "orderListId": -1,
+                    "price": "23416.50000000",
+                    "qty": "0.00212000",
+                    "quoteQty": "49.64298000",
+                    "commission": "0.00000000",
+                    "commissionAsset": "BNB",
+                    "time": 1660801715793,
+                    "isBuyer": False,
+                    "isMaker": True,
+                    "isBestMatch": True,
+                },
             ],
             "rateLimits": [
                 {
@@ -1431,7 +1532,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -1489,12 +1590,31 @@ class TestWebSocketAccountApi:
                     "id": 1650422481,
                     "orderId": 12569099453,
                     "orderListId": -1,
+                    "price": "23416.10000000",
+                    "qty": "0.00635000",
+                    "quoteQty": "148.69223500",
+                    "commission": "0.00000000",
                     "commissionAsset": "BNB",
                     "time": 1660801715793,
                     "isBuyer": False,
                     "isMaker": True,
                     "isBestMatch": True,
-                }
+                },
+                {
+                    "symbol": "BTCUSDT",
+                    "id": 1650422482,
+                    "orderId": 12569099453,
+                    "orderListId": -1,
+                    "price": "23416.50000000",
+                    "qty": "0.00212000",
+                    "quoteQty": "49.64298000",
+                    "commission": "0.00000000",
+                    "commissionAsset": "BNB",
+                    "time": 1660801715793,
+                    "isBuyer": False,
+                    "isMaker": True,
+                    "isBestMatch": True,
+                },
             ],
             "rateLimits": [
                 {
@@ -1502,7 +1622,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 20,
                 }
             ],
         }
@@ -1597,7 +1717,12 @@ class TestWebSocketAccountApi:
                             "symbol": "BTCUSDT",
                             "orderId": 4,
                             "clientOrderId": "CUhLgTXnX5n2c0gWiLpV4d",
-                        }
+                        },
+                        {
+                            "symbol": "BTCUSDT",
+                            "orderId": 5,
+                            "clientOrderId": "1ZqG7bBuYwaF4SU8CwnwHm",
+                        },
                     ],
                 }
             ],
@@ -1607,7 +1732,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 6,
                 }
             ],
         }
@@ -1667,7 +1792,12 @@ class TestWebSocketAccountApi:
                             "symbol": "BTCUSDT",
                             "orderId": 4,
                             "clientOrderId": "CUhLgTXnX5n2c0gWiLpV4d",
-                        }
+                        },
+                        {
+                            "symbol": "BTCUSDT",
+                            "orderId": 5,
+                            "clientOrderId": "1ZqG7bBuYwaF4SU8CwnwHm",
+                        },
                     ],
                 }
             ],
@@ -1677,7 +1807,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 6,
                 }
             ],
         }
@@ -1740,6 +1870,11 @@ class TestWebSocketAccountApi:
                     "orderId": 12569099453,
                     "orderListId": -1,
                     "clientOrderId": "4d96324ff9d44481926157",
+                    "price": "23416.10000000",
+                    "origQty": "0.00847000",
+                    "executedQty": "0.00720000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "172.43931000",
                     "status": "PARTIALLY_FILLED",
                     "timeInForce": "GTC",
                     "type": "LIMIT",
@@ -1772,7 +1907,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 6,
                 }
             ],
         }
@@ -1825,6 +1960,11 @@ class TestWebSocketAccountApi:
                     "orderId": 12569099453,
                     "orderListId": -1,
                     "clientOrderId": "4d96324ff9d44481926157",
+                    "price": "23416.10000000",
+                    "origQty": "0.00847000",
+                    "executedQty": "0.00720000",
+                    "origQuoteOrderQty": "0.000000",
+                    "cummulativeQuoteQty": "172.43931000",
                     "status": "PARTIALLY_FILLED",
                     "timeInForce": "GTC",
                     "type": "LIMIT",
@@ -1857,7 +1997,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 6,
                 }
             ],
         }
@@ -1927,6 +2067,8 @@ class TestWebSocketAccountApi:
                     "executionId": 60,
                     "origClientOrderId": "my_pending_order",
                     "newClientOrderId": "xbxXh5SSwaHS7oUEOCI88B",
+                    "origQty": "7.00000000",
+                    "newQty": "5.00000000",
                     "time": 1741924229819,
                 }
             ],
@@ -1936,7 +2078,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }
@@ -2000,6 +2142,8 @@ class TestWebSocketAccountApi:
                     "executionId": 60,
                     "origClientOrderId": "my_pending_order",
                     "newClientOrderId": "xbxXh5SSwaHS7oUEOCI88B",
+                    "origQty": "7.00000000",
+                    "newQty": "5.00000000",
                     "time": 1741924229819,
                 }
             ],
@@ -2009,7 +2153,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }
@@ -2124,7 +2268,12 @@ class TestWebSocketAccountApi:
                         "symbol": "BTCUSDT",
                         "orderId": 12569138901,
                         "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU",
-                    }
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 12569138902,
+                        "clientOrderId": "jLnZpj5enfMXTuhKB1d0us",
+                    },
                 ],
             },
             "rateLimits": [
@@ -2133,7 +2282,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }
@@ -2194,7 +2343,12 @@ class TestWebSocketAccountApi:
                         "symbol": "BTCUSDT",
                         "orderId": 12569138901,
                         "clientOrderId": "BqtFCj5odMoWtSqGk2X9tU",
-                    }
+                    },
+                    {
+                        "symbol": "BTCUSDT",
+                        "orderId": 12569138902,
+                        "clientOrderId": "jLnZpj5enfMXTuhKB1d0us",
+                    },
                 ],
             },
             "rateLimits": [
@@ -2203,7 +2357,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }
@@ -2271,12 +2425,19 @@ class TestWebSocketAccountApi:
                 "orderId": 12569099453,
                 "orderListId": -1,
                 "clientOrderId": "4d96324ff9d44481926157",
+                "price": "23416.10000000",
+                "origQty": "0.00847000",
+                "executedQty": "0.00847000",
+                "origQuoteOrderQty": "0.000000",
+                "cummulativeQuoteQty": "198.33521500",
                 "status": "FILLED",
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "side": "SELL",
+                "stopPrice": "0.00000000",
                 "trailingDelta": 10,
                 "trailingTime": -1,
+                "icebergQty": "0.00000000",
                 "time": 1660801715639,
                 "updateTime": 1660801717945,
                 "isWorking": True,
@@ -2285,6 +2446,7 @@ class TestWebSocketAccountApi:
                 "strategyType": 1000000,
                 "selfTradePreventionMode": "NONE",
                 "preventedMatchId": 0,
+                "preventedQuantity": "1.200000",
                 "usedSor": True,
                 "workingFloor": "SOR",
                 "pegPriceType": "PRIMARY_PEG",
@@ -2299,7 +2461,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }
@@ -2355,12 +2517,19 @@ class TestWebSocketAccountApi:
                 "orderId": 12569099453,
                 "orderListId": -1,
                 "clientOrderId": "4d96324ff9d44481926157",
+                "price": "23416.10000000",
+                "origQty": "0.00847000",
+                "executedQty": "0.00847000",
+                "origQuoteOrderQty": "0.000000",
+                "cummulativeQuoteQty": "198.33521500",
                 "status": "FILLED",
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "side": "SELL",
+                "stopPrice": "0.00000000",
                 "trailingDelta": 10,
                 "trailingTime": -1,
+                "icebergQty": "0.00000000",
                 "time": 1660801715639,
                 "updateTime": 1660801717945,
                 "isWorking": True,
@@ -2369,6 +2538,7 @@ class TestWebSocketAccountApi:
                 "strategyType": 1000000,
                 "selfTradePreventionMode": "NONE",
                 "preventedMatchId": 0,
+                "preventedQuantity": "1.200000",
                 "usedSor": True,
                 "workingFloor": "SOR",
                 "pegPriceType": "PRIMARY_PEG",
@@ -2383,7 +2553,7 @@ class TestWebSocketAccountApi:
                     "interval": "MINUTE",
                     "intervalNum": 1,
                     "limit": 6000,
-                    "count": 321,
+                    "count": 4,
                 }
             ],
         }

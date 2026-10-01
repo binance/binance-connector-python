@@ -752,8 +752,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
                 Query Relevant Filters (USER_DATA)
 
-                Retrieves the list of [filters](/products/spot/filters) relevant to an account on a given symbol. This is the only method
-        that shows if an account has [`MAX_ASSET`](/products/spot/filters#max_asset) filters applied to it.
+                Retrieves the list of filters relevant to an account on a given symbol. This is the only method
+        that shows if an account has `MAX_ASSET` filters applied to it.
 
         Weight(IP): 40
 
@@ -861,7 +861,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Security Type: USER_DATA
 
         Notes:
-        Data Source: Memory => Database
+        **Data Source:** Memory => Database
 
         Notes:
         - If `fromId` is specified, return trades with trade ID >= `fromId`.
@@ -954,7 +954,10 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Security Type: USER_DATA
 
         Notes:
-        Data Source: Memory => Database
+        **Data Source:** Memory => Database
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
                 Args:
                     id (Optional[str] = None): Client-generated request identifier.
@@ -1084,6 +1087,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * For some historical orders the `cummulativeQuoteQty` response field may be negative,
           meaning the data is not available at this time.
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
                 Args:
                     symbol (Union[str, None]):
@@ -1412,7 +1418,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Security Type: NONE
 
         Notes:
-        - Data Source: Database
+        **Data Source:** Database
 
                 Args:
                     symbol (Union[str, None]):
@@ -1448,7 +1454,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
           * `<symbol>@depth<levels>`
           * `<symbol>@depth`
 
-        You can use `depth` request together with `<symbol>@depth` streams to [maintain a local order book](/products/spot/web-socket-streams#how-to-manage-a-local-order-book-correctly).
+        You can use `depth` request together with `<symbol>@depth` streams to maintain a local order book.
 
         Weight: Adjusted based on the limit:
 
@@ -1501,7 +1507,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         If you need access to real-time kline updates, please consider using WebSocket Streams:
           * `<symbol>@kline_<interval>`
 
-        If you need historical kline data, please consider using [data.binance.vision](https://github.com/binance/binance-public-data/#klines).
+        If you need historical kline data, please consider using data.binance.vision.
 
         Weight(IP): 2
 
@@ -1568,6 +1574,15 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         Notes:
         **Data Source:** Memory
+
+        If the symbol has never had a reference price set, the request is rejected with:
+
+        ```json
+        {
+            "code": -2043,
+            "msg": "This symbol doesn't have a reference price."
+        }
+        ```
 
                 Args:
                     symbol (Union[str, None]):
@@ -1954,7 +1969,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * `<symbol>@aggTrade`
 
-        If you need historical aggregate trade data, please consider using [data.binance.vision](https://github.com/binance/binance-public-data/#aggtrades).
+        If you need historical aggregate trade data, please consider using data.binance.vision.
 
         Weight(IP): 4
 
@@ -2136,6 +2151,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Notes:
         **Data Source:** Matching Engine
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Client-generated request identifier.
@@ -2168,7 +2186,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         This adds 0 orders to the `EXCHANGE_MAX_ORDERS` filter and the `MAX_NUM_ORDERS` filter.
 
-        Read [Order Amend Keep Priority FAQ](/products/spot/faqs/order_amend_keep_priority) to learn more.
+        Read Order Amend Keep Priority FAQ to learn more.
 
         Weight(IP): 4
 
@@ -2178,6 +2196,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         Notes:
         **Data Source:** Matching Engine
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
                 Args:
                     symbol (Union[str, None]):
@@ -2238,13 +2259,33 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * The performance for canceling an order (single cancel or as part of a cancel-replace) is always better when only `orderId` is sent. Sending `origClientOrderId` or both `orderId` + `origClientOrderId` will be slower.
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
+        **Regarding `cancelRestrictions`**
+
+        * If the `cancelRestrictions` value is not any of the supported values, the error will be:
+        ```json
+        {
+            "code": -1145,
+            "msg": "Invalid cancelRestrictions"
+        }
+        ```
+        * If the order did not pass the conditions for `cancelRestrictions`, the error will be:
+        ```json
+        {
+            "code": -2011,
+            "msg": "Order was not canceled due to cancel restrictions."
+        }
+        ```
+
                 Args:
                     symbol (Union[str, None]):
                     id (Optional[str] = None): Client-generated request identifier.
                     order_id (Optional[int] = None):
                     orig_client_order_id (Optional[str] = None):
                     new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default.
-                    cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum] = None): Supported values: <br>`ONLY_NEW` - Cancel will succeed if the order status is `NEW`.<br> `ONLY_PARTIALLY_FILLED` - Cancel will succeed if order status is `PARTIALLY_FILLED`.
+                    cancel_restrictions (Optional[OrderCancelCancelRestrictionsEnum] = None): Supported values: <br>`ONLY_NEW` - Cancel will succeed if the order status is `NEW`.<br> `ONLY_PARTIALLY_FILLED` - Cancel will succeed if order status is `PARTIALLY_FILLED`. For more information please refer to Regarding `cancelRestrictions`.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2303,7 +2344,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 * Cancel an existing order and immediately place a new order instead of the canceled one.
         * A new order that was not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
-        * You can only cancel an individual order from an orderList using this method, but the result is the same as canceling the entire orderList.not attempted (i.e. when `newOrderResult: NOT_ATTEMPTED`), will still increase the unfilled order count by 1.
+        * You can only cancel an individual order from an orderList using this method, but the result is the same as canceling the entire orderList.
 
         Weight(IP): 1
 
@@ -2314,7 +2355,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Notes:
         **Data Source:** Matching Engine
 
-        Similar to the [`order.place`](#order-place) request,
+        Similar to the `order.place` request,
         additional mandatory parameters (*) are determined by the new order `type`.
 
         Available `cancelReplaceMode` options:
@@ -2512,32 +2553,35 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * If new order placement is not attempted, your order count is still incremented.
 
-        * Like [`order.cancel`](#order-cancel), if you cancel an individual order from an order list, the entire order list is canceled.
+        * Like `order.cancel`, if you cancel an individual order from an order list, the entire order list is canceled.
 
         * The performance for canceling an order (single cancel or as part of a cancel-replace) is always better when only `orderId` is sent. Sending `origClientOrderId` or both `orderId` + `origClientOrderId` will be slower.
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
                 Args:
                     symbol (Union[str, None]):
                     cancel_replace_mode (Union[OrderCancelReplaceCancelReplaceModeEnum, None]): The allowed values are: <br/> `STOP_ON_FAILURE` - If the cancel request fails, the new order placement will not be attempted. <br/> `ALLOW_FAILURE` - new order placement will be attempted even if cancel request fails.
-                    side (Union[OrderCancelReplaceSideEnum, None]): Please see [Enums](/products/spot/enums#side) for supported values.
-                    type (Union[OrderCancelReplaceTypeEnum, None]): Please see [Enums](/products/spot/enums#ordertypes) for supported values.
+                    side (Union[OrderCancelReplaceSideEnum, None]): Please see Enums for supported values.
+                    type (Union[OrderCancelReplaceTypeEnum, None]): Please see Enums for supported values.
                     id (Optional[str] = None): Client-generated request identifier.
                     cancel_order_id (Optional[int] = None): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br>If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br>If both conditions are not met the request will be rejected.
                     cancel_orig_client_order_id (Optional[str] = None): Either `cancelOrderId` or `cancelOrigClientOrderId` must be sent. <br></br> If both `cancelOrderId` and `cancelOrigClientOrderId` parameters are provided, the `cancelOrderId` is searched first, then the `cancelOrigClientOrderId` from that result is checked against that order. <br></br> If both conditions are not met the request will be rejected.
                     cancel_new_client_order_id (Optional[str] = None): Used to uniquely identify this cancel. Automatically generated by default.
-                    time_in_force (Optional[OrderCancelReplaceTimeInForceEnum] = None): Please see [Enums](/products/spot/enums#timeinforce) for supported values.
+                    time_in_force (Optional[OrderCancelReplaceTimeInForceEnum] = None): Please see Enums for supported values.
                     price (Optional[float] = None):
                     quantity (Optional[float] = None):
                     quote_order_qty (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): Used to identify the new order.
                     new_order_resp_type (Optional[OrderCancelReplaceNewOrderRespTypeEnum] = None): Allowed values: <br/> `ACK`, `RESULT`, `FULL` <br/> `MARKET` and `LIMIT` orders types default to `FULL`; all other orders default to `ACK`
                     stop_price (Optional[float] = None): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
-                    trailing_delta (Optional[float] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     strategy_id (Optional[int] = None):
                     strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
-                    self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. The possible supported values are: [STP Modes](/products/spot/enums#stpmodes).
-                    cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum] = None): Supported values: <br>`ONLY_NEW` - Cancel will succeed if the order status is `NEW`.<br> `ONLY_PARTIALLY_FILLED` - Cancel will succeed if order status is `PARTIALLY_FILLED`.
+                    self_trade_prevention_mode (Optional[OrderCancelReplaceSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. The possible supported values are: STP Modes.
+                    cancel_restrictions (Optional[OrderCancelReplaceCancelRestrictionsEnum] = None): Supported values: <br>`ONLY_NEW` - Cancel will succeed if the order status is `NEW`.<br> `ONLY_PARTIALLY_FILLED` - Cancel will succeed if order status is `PARTIALLY_FILLED`. For more information please refer to Regarding `cancelRestrictions`.
                     order_rate_limit_exceeded_mode (Optional[OrderCancelReplaceOrderRateLimitExceededModeEnum] = None): Supported values: <br> `DO_NOTHING` (default)- will only attempt to cancel the order if account has not exceeded the unfilled order rate limit<br> `CANCEL_ONLY` - will always cancel the order
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG` <br> See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100) <br> See Pegged Orders
@@ -2606,7 +2650,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * If both `orderListId` and `listClientOrderId` parameters are provided, the `orderListId` is searched first, then the `listClientOrderId` from that result is checked against that order. If both conditions are not met the request will be rejected.
 
-        * Canceling an individual order with [`order.cancel`](#order-cancel) will cancel the entire order list as well.
+        * Canceling an individual order with `order.cancel` will cancel the entire order list as well.
 
                 Args:
                     symbol (Union[str, None]):
@@ -2708,7 +2752,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     symbol (Union[str, None]):
-                    side (Union[OrderListPlaceSideEnum, None]): Please see [Enums](/products/spot/enums#side) for supported values.
+                    side (Union[OrderListPlaceSideEnum, None]): Please see Enums for supported values.
                     price (Union[float, None]):
                     quantity (Union[float, None]):
                     id (Optional[str] = None): Client-generated request identifier.
@@ -2725,8 +2769,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     stop_iceberg_qty (Optional[float] = None): Used with `STOP_LOSS_LIMIT` leg to make an iceberg order.
                     stop_strategy_id (Optional[int] = None):
                     stop_strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
-                    new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: [Order Response Type](/products/spot/enums#orderresponsetype)
-                    self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum] = None): The allowed values are dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    new_order_resp_type (Optional[OrderListPlaceNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: Order Response Type
+                    self_trade_prevention_mode (Optional[OrderListPlaceSelfTradePreventionModeEnum] = None): The allowed values are dependent on what is configured on the symbol. Supported values: STP Modes
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2840,26 +2884,26 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     above_iceberg_qty (Optional[int] = None): Note that this can only be used if `aboveTimeInForce` is `GTC`.
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
-                    above_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    above_trailing_delta (Optional[int] = None): See Trailing Stop order FAQ
                     above_time_in_force (Optional[OrderListPlaceOcoAboveTimeInForceEnum] = None): Required if `aboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
                     above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the above order within an order strategy.
                     above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the above order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    above_peg_price_type (Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    above_peg_price_type (Optional[OrderListPlaceOcoAbovePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See Pegged Orders
                     above_peg_offset_type (Optional[OrderListPlaceOcoAbovePegOffsetTypeEnum] = None):
                     above_peg_offset_value (Optional[int] = None):
                     below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the below order. Automatically generated if not sent.
                     below_iceberg_qty (Optional[int] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
                     below_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `belowStopPrice` or `belowTrailingDelta` or both, must be specified.
-                    below_trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    below_trailing_delta (Optional[int] = None): See Trailing Stop order FAQ
                     below_time_in_force (Optional[OrderListPlaceOcoBelowTimeInForceEnum] = None): Required if `belowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
                     below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the below order within an order strategy.
                     below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the below order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    below_peg_price_type (Optional[OrderListPlaceOcoBelowPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    below_peg_price_type (Optional[OrderListPlaceOcoBelowPegPriceTypeEnum] = None): See Pegged Orders
                     below_peg_offset_type (Optional[OrderListPlaceOcoBelowPegOffsetTypeEnum] = None):
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None): Select response format: `ACK`, `RESULT`, `FULL`.
-                    self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2952,7 +2996,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
                 OPO (TRADE)
 
-                Place an [OPO](/products/spot/faqs/opo).
+                Place an OPO.
 
         * OPOs add 2 orders to the EXCHANGE_MAX_NUM_ORDERS filter and MAX_NUM_ORDERS filter.
 
@@ -2965,24 +3009,27 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Notes:
         **Data Source:** Matching Engine
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     working_type (Union[OrderListPlaceOpoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
-                    working_side (Union[OrderListPlaceOpoWorkingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    working_side (Union[OrderListPlaceOpoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]): Price for the working order.
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
-                    pending_type (Union[OrderListPlaceOpoPendingTypeEnum, None]): Supported values: [Order Types](/products/spot/enums#ordertypes). Note that `MARKET` orders using `quoteOrderQty` are not supported.
-                    pending_side (Union[OrderListPlaceOpoPendingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    pending_type (Union[OrderListPlaceOpoPendingTypeEnum, None]): Supported values: Order Types. Note that `MARKET` orders using `quoteOrderQty` are not supported.
+                    pending_side (Union[OrderListPlaceOpoPendingSideEnum, None]): Supported values: Order Side
                     id (Optional[str] = None): Client-generated request identifier.
                     list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId` and the `pendingClientOrderId`.
-                    new_order_resp_type (Optional[OrderListPlaceOpoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: [Order Response Type](/products/spot/enums#orderresponsetype)
-                    self_trade_prevention_mode (Optional[OrderListPlaceOpoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    new_order_resp_type (Optional[OrderListPlaceOpoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: Order Response Type
+                    self_trade_prevention_mode (Optional[OrderListPlaceOpoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListPlaceOpoWorkingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    working_time_in_force (Optional[OrderListPlaceOpoWorkingTimeInForceEnum] = None): Supported values: Time In Force
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
                     working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    working_peg_price_type (Optional[OrderListPlaceOpoWorkingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    working_peg_price_type (Optional[OrderListPlaceOpoWorkingPegPriceTypeEnum] = None): See Pegged Orders
                     working_peg_offset_type (Optional[OrderListPlaceOpoWorkingPegOffsetTypeEnum] = None):
                     working_peg_offset_value (Optional[int] = None):
                     pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
@@ -2990,10 +3037,10 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_stop_price (Optional[float] = None): Stop price for the pending order.
                     pending_trailing_delta (Optional[float] = None): Trailing delta for the pending order.
                     pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
-                    pending_time_in_force (Optional[OrderListPlaceOpoPendingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    pending_time_in_force (Optional[OrderListPlaceOpoPendingTimeInForceEnum] = None): Supported values: Time In Force
                     pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
                     pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    pending_peg_price_type (Optional[OrderListPlaceOpoPendingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_peg_price_type (Optional[OrderListPlaceOpoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_type (Optional[OrderListPlaceOpoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
@@ -3109,7 +3156,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
                 OPOCO (TRADE)
 
-                Place an [OPOCO](/products/spot/faqs/opo).
+                Place an OPOCO.
 
         Weight(IP): 1
 
@@ -3120,47 +3167,50 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Notes:
         **Data Source:** Matching Engine
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]):
-                    working_side (Union[OrderListPlaceOpocoWorkingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    working_side (Union[OrderListPlaceOpocoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]): Price for the working order.
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
-                    pending_side (Union[OrderListPlaceOpocoPendingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    pending_side (Union[OrderListPlaceOpocoPendingSideEnum, None]): Supported values: Order Side
                     pending_above_type (Union[OrderListPlaceOpocoPendingAboveTypeEnum, None]): Supported values: `STOP_LOSS_LIMIT`, `STOP_LOSS`, `LIMIT_MAKER`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
                     id (Optional[str] = None): Client-generated request identifier.
-                    list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId` and the `pendingClientOrderId`.
-                    new_order_resp_type (Optional[OrderListPlaceOpocoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: [Order Response Type](/products/spot/enums#orderresponsetype)
-                    self_trade_prevention_mode (Optional[OrderListPlaceOpocoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId`, `pendingAboveClientOrderId`, and the `pendingBelowClientOrderId`.
+                    new_order_resp_type (Optional[OrderListPlaceOpocoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: Order Response Type
+                    self_trade_prevention_mode (Optional[OrderListPlaceOpocoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListPlaceOpocoWorkingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    working_time_in_force (Optional[OrderListPlaceOpocoWorkingTimeInForceEnum] = None): Supported values: Time In Force
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
                     working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    working_peg_price_type (Optional[OrderListPlaceOpocoWorkingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    working_peg_offset_type (Optional[OrderListPlaceOpocoWorkingPegOffsetTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    working_peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    working_peg_price_type (Optional[OrderListPlaceOpocoWorkingPegPriceTypeEnum] = None): See Pegged Orders
+                    working_peg_offset_type (Optional[OrderListPlaceOpocoWorkingPegOffsetTypeEnum] = None): See Pegged Orders
+                    working_peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
                     pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
                     pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`.
-                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    pending_above_trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
                     pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or `pendingAboveType` is `LIMIT_MAKER`.
                     pending_above_time_in_force (Optional[OrderListPlaceOpocoPendingAboveTimeInForceEnum] = None): Required if `pendingAboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
                     pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
                     pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    pending_above_peg_price_type (Optional[OrderListPlaceOpocoPendingAbovePegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    pending_above_peg_offset_type (Optional[OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    pending_above_peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_above_peg_price_type (Optional[OrderListPlaceOpocoPendingAbovePegPriceTypeEnum] = None): See Pegged Orders
+                    pending_above_peg_offset_type (Optional[OrderListPlaceOpocoPendingAbovePegOffsetTypeEnum] = None): See Pegged Orders
+                    pending_above_peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
                     pending_below_type (Optional[OrderListPlaceOpocoPendingBelowTypeEnum] = None): Supported values: `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
                     pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
                     pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
-                    pending_below_trailing_delta (Optional[float] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    pending_below_trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
                     pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC` or `pendingBelowType` is `LIMIT_MAKER`.
-                    pending_below_time_in_force (Optional[OrderListPlaceOpocoPendingBelowTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    pending_below_time_in_force (Optional[OrderListPlaceOpocoPendingBelowTimeInForceEnum] = None): Supported values: Time In Force
                     pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
                     pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    pending_below_peg_price_type (Optional[OrderListPlaceOpocoPendingBelowPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_below_peg_price_type (Optional[OrderListPlaceOpocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
@@ -3307,25 +3357,28 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         |`pendingType` = `STOP_LOSS` or `TAKE_PROFIT`           |`pendingStopPrice` and/or `pendingTrailingDelta`|
         |`pendingType` =`STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`|`pendingPrice`, `pendingStopPrice` and/or `pendingTrailingDelta`, `pendingTimeInForce`|
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     working_type (Union[OrderListPlaceOtoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
-                    working_side (Union[OrderListPlaceOtoWorkingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    working_side (Union[OrderListPlaceOtoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]):
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
-                    pending_type (Union[OrderListPlaceOtoPendingTypeEnum, None]): Supported values: [Order Types](/products/spot/enums#ordertypes). Note that `MARKET` orders using `quoteOrderQty` are not supported.
-                    pending_side (Union[OrderListPlaceOtoPendingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    pending_type (Union[OrderListPlaceOtoPendingTypeEnum, None]): Supported values: Order Types. Note that `MARKET` orders using `quoteOrderQty` are not supported.
+                    pending_side (Union[OrderListPlaceOtoPendingSideEnum, None]): Supported values: Order Side
                     pending_quantity (Union[float, None]): Sets the quantity for the pending order.
                     id (Optional[str] = None): Client-generated request identifier.
                     list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId` and the `pendingClientOrderId`.
-                    new_order_resp_type (Optional[OrderListPlaceOtoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: [Order Response Type](/products/spot/enums#orderresponsetype)
-                    self_trade_prevention_mode (Optional[OrderListPlaceOtoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    new_order_resp_type (Optional[OrderListPlaceOtoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: Order Response Type
+                    self_trade_prevention_mode (Optional[OrderListPlaceOtoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListPlaceOtoWorkingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    working_time_in_force (Optional[OrderListPlaceOtoWorkingTimeInForceEnum] = None): Supported values: Time In Force
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
                     working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    working_peg_price_type (Optional[OrderListPlaceOtoWorkingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    working_peg_price_type (Optional[OrderListPlaceOtoWorkingPegPriceTypeEnum] = None): See Pegged Orders
                     working_peg_offset_type (Optional[OrderListPlaceOtoWorkingPegOffsetTypeEnum] = None):
                     working_peg_offset_value (Optional[int] = None):
                     pending_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending order. Automatically generated if not sent.
@@ -3333,11 +3386,11 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_stop_price (Optional[float] = None):
                     pending_trailing_delta (Optional[float] = None):
                     pending_iceberg_qty (Optional[float] = None): This can only be used if `pendingTimeInForce` is `GTC` or if `pendingType` is `LIMIT_MAKER`.
-                    pending_time_in_force (Optional[OrderListPlaceOtoPendingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    pending_time_in_force (Optional[OrderListPlaceOtoPendingTimeInForceEnum] = None): Supported values: Time In Force
                     pending_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending order within an order strategy.
                     pending_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending order strategy. Values smaller than `1000000` are reserved and cannot be used.
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
-                    pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_value (Optional[int] = None):
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
@@ -3458,9 +3511,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         * An OTOCO (One-Triggers-One-Cancels-the-Other) is an order list comprised of 3 orders.
         * The first order is called the **working order** and must be `LIMIT` or `LIMIT_MAKER`. Initially, only the working order goes on the order book.
-          * The behavior of the working order is the same as the [OTO](#order-list-place-oto).
+          * The behavior of the working order is the same as the OTO.
         * OTOCO has 2 pending orders (pending above and pending below), forming an OCO pair. The pending orders are only placed on the order book when the working order gets **fully filled**.
-          * The rules of the pending above and pending below follow the same rules as the [Order list OCO](#order-list-place-oco).
+          * The rules of the pending above and pending below follow the same rules as the Order list OCO.
         * OTOCOs add **3 orders** to the `EXCHANGE_MAX_NUM_ORDERS` filter and `MAX_NUM_ORDERS` filter.
 
         Weight(IP): 1
@@ -3486,48 +3539,51 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         `pendingBelowType= STOP_LOSS/TAKE_PROFIT`         |`pendingBelowStopPrice` and/or `pendingBelowTrailingDelta`|
         |`pendingBelowType=STOP_LOSS_LIMIT/TAKE_PROFIT_LIMIT`|`pendingBelowPrice`, `pendingBelowStopPrice` and/or `pendingBelowTrailingDelta`, `pendingBelowTimeInForce`|
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     working_type (Union[OrderListPlaceOtocoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
-                    working_side (Union[OrderListPlaceOtocoWorkingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    working_side (Union[OrderListPlaceOtocoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]):
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
-                    pending_side (Union[OrderListPlaceOtocoPendingSideEnum, None]): Supported values: [Order Side](/products/spot/enums#side)
+                    pending_side (Union[OrderListPlaceOtocoPendingSideEnum, None]): Supported values: Order Side
                     pending_quantity (Union[float, None]): Sets the quantity for the pending orders.
                     pending_above_type (Union[OrderListPlaceOtocoPendingAboveTypeEnum, None]): Supported values: `STOP_LOSS_LIMIT`, `STOP_LOSS`, `LIMIT_MAKER`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
                     id (Optional[str] = None): Client-generated request identifier.
-                    list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId` and the `pendingClientOrderId`.
-                    new_order_resp_type (Optional[OrderListPlaceOtocoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: [Order Response Type](/products/spot/enums#orderresponsetype)
-                    self_trade_prevention_mode (Optional[OrderListPlaceOtocoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `workingClientOrderId`, `pendingAboveClientOrderId`, and the `pendingBelowClientOrderId`.
+                    new_order_resp_type (Optional[OrderListPlaceOtocoNewOrderRespTypeEnum] = None): Format of the JSON response. Supported values: Order Response Type
+                    self_trade_prevention_mode (Optional[OrderListPlaceOtocoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     working_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the working order. Automatically generated if not sent.
                     working_iceberg_qty (Optional[float] = None): This can only be used if `workingTimeInForce` is `GTC`, or if `workingType` is `LIMIT_MAKER`.
-                    working_time_in_force (Optional[OrderListPlaceOtocoWorkingTimeInForceEnum] = None): Supported values: [Time In Force](/products/spot/enums#timeinforce)
+                    working_time_in_force (Optional[OrderListPlaceOtocoWorkingTimeInForceEnum] = None): Supported values: Time In Force
                     working_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the working order within an order strategy.
                     working_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the working order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    working_peg_price_type (Optional[OrderListPlaceOtocoWorkingPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    working_peg_price_type (Optional[OrderListPlaceOtocoWorkingPegPriceTypeEnum] = None): See Pegged Orders
                     working_peg_offset_type (Optional[OrderListPlaceOtocoWorkingPegOffsetTypeEnum] = None):
                     working_peg_offset_value (Optional[int] = None):
                     pending_above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending above order. Automatically generated if not sent.
                     pending_above_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     pending_above_stop_price (Optional[float] = None): Can be used if `pendingAboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`.
-                    pending_above_trailing_delta (Optional[float] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    pending_above_trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
                     pending_above_iceberg_qty (Optional[float] = None): This can only be used if `pendingAboveTimeInForce` is `GTC` or if `pendingAboveType` is `LIMIT_MAKER`.
                     pending_above_time_in_force (Optional[OrderListPlaceOtocoPendingAboveTimeInForceEnum] = None): Required if `pendingAboveType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
                     pending_above_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending above order within an order strategy.
                     pending_above_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending above order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    pending_above_peg_price_type (Optional[OrderListPlaceOtocoPendingAbovePegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_above_peg_price_type (Optional[OrderListPlaceOtocoPendingAbovePegPriceTypeEnum] = None): See Pegged Orders
                     pending_above_peg_offset_type (Optional[OrderListPlaceOtocoPendingAbovePegOffsetTypeEnum] = None):
                     pending_above_peg_offset_value (Optional[int] = None):
                     pending_below_type (Optional[OrderListPlaceOtocoPendingBelowTypeEnum] = None): Supported values: `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`
                     pending_below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the pending below order. Automatically generated if not sent.
                     pending_below_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     pending_below_stop_price (Optional[float] = None): Can be used if `pendingBelowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `pendingBelowStopPrice` or `pendingBelowTrailingDelta` or both, must be specified.
-                    pending_below_trailing_delta (Optional[float] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    pending_below_trailing_delta (Optional[float] = None): See Trailing Stop order FAQ
                     pending_below_iceberg_qty (Optional[float] = None): This can only be used if `pendingBelowTimeInForce` is `GTC`, or if `pendingBelowType` is `LIMIT_MAKER`.
                     pending_below_time_in_force (Optional[OrderListPlaceOtocoPendingBelowTimeInForceEnum] = None): Required if `pendingBelowType` is `STOP_LOSS_LIMIT` or `TAKE_PROFIT_LIMIT`.
                     pending_below_strategy_id (Optional[int] = None): Arbitrary numeric value identifying the pending below order within an order strategy.
                     pending_below_strategy_type (Optional[int] = None): Arbitrary numeric value identifying the pending below order strategy. Values smaller than `1000000` are reserved and cannot be used.
-                    pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None): See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
@@ -3628,7 +3684,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         Notes:
         **Data Source:** Matching Engine
 
-        <a id="order-type">Certain parameters (*)</a> become mandatory based on the order `type`:
+        Certain parameters (*) become mandatory based on the order `type`:
 
         <table>
         <thead>
@@ -3811,7 +3867,6 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         </tbody>
         </table>
 
-        <a id="pegged-orders-info"></a>
         Notes on using parameters for Pegged Orders:
 
         * These parameters are allowed for `LIMIT`, `LIMIT_MAKER`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT_LIMIT` orders.
@@ -3819,8 +3874,6 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         * `pegPriceType=PRIMARY_PEG` means the primary peg, that is the best price on the same side of the order book as your order.
         * `pegPriceType=MARKET_PEG` means the market peg, that is the best price on the opposite side of the order book from your order.
         * Use `pegOffsetType` and `pegOffsetValue` to request a price level other than the best one. These parameters must be specified together.
-
-        <a id="timeInForce"></a>
 
         Available `timeInForce` options,
         setting how long the order should be active before expiration:
@@ -3846,16 +3899,16 @@ class SpotWebSocketAPI(WebSocketAPIBase):
           * `stopPrice` must be above market price: `STOP_LOSS BUY`, `TAKE_PROFIT SELL`
           * `stopPrice` must be below market price: `STOP_LOSS SELL`, `TAKE_PROFIT BUY`
 
-        * `MARKET` orders using `quoteOrderQty` follow [`LOT_SIZE`](/products/spot/filters#lot_size) filter rules.
+        * `MARKET` orders using `quoteOrderQty` follow `LOT_SIZE` filter rules.
 
           The order will execute a quantity that has notional value as close as possible to requested `quoteOrderQty`.
 
                 Args:
                     symbol (Union[str, None]):
-                    side (Union[OrderPlaceSideEnum, None]): Please see [Enums](/products/spot/enums#side) for supported values.
-                    type (Union[OrderPlaceTypeEnum, None]): Please see [Enums](/products/spot/enums#ordertypes) for supported values.
+                    side (Union[OrderPlaceSideEnum, None]): Please see Enums for supported values.
+                    type (Union[OrderPlaceTypeEnum, None]): Please see Enums for supported values.
                     id (Optional[str] = None): Client-generated request identifier.
-                    time_in_force (Optional[OrderPlaceTimeInForceEnum] = None): Please see [Enums](/products/spot/enums#timeinforce) for supported values.
+                    time_in_force (Optional[OrderPlaceTimeInForceEnum] = None): Please see Enums for supported values.
                     price (Optional[float] = None):
                     quantity (Optional[float] = None):
                     quote_order_qty (Optional[float] = None):
@@ -3949,25 +4002,25 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     symbol (Union[str, None]):
-                    side (Union[OrderTestSideEnum, None]): Please see [Enums](/products/spot/enums#side) for supported values.
-                    type (Union[OrderTestTypeEnum, None]): Please see [Enums](/products/spot/enums#ordertypes) for supported values.
+                    side (Union[OrderTestSideEnum, None]): Please see Enums for supported values.
+                    type (Union[OrderTestTypeEnum, None]): Please see Enums for supported values.
                     id (Optional[str] = None): Client-generated request identifier.
-                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See [Commissions FAQ](/products/spot/faqs/commission_faq#test-order-diferences) to learn more.
-                    time_in_force (Optional[OrderTestTimeInForceEnum] = None): Please see [Enums](/products/spot/enums#timeinforce) for supported values.
+                    compute_commission_rates (Optional[bool] = None): Default: `false` <br> See Commissions FAQ to learn more.
+                    time_in_force (Optional[OrderTestTimeInForceEnum] = None): Please see Enums for supported values.
                     price (Optional[float] = None):
                     quantity (Optional[float] = None):
                     quote_order_qty (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
                     new_order_resp_type (Optional[OrderTestNewOrderRespTypeEnum] = None): Set the response JSON. `ACK`, `RESULT`, or `FULL`; `MARKET` and `LIMIT` order types default to `FULL`, all other orders default to `ACK`.
                     stop_price (Optional[float] = None): Used with `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, and `TAKE_PROFIT_LIMIT` orders.
-                    trailing_delta (Optional[int] = None): See [Trailing Stop order FAQ](/products/spot/faqs/trailing-stop-faq)
+                    trailing_delta (Optional[int] = None): See Trailing Stop order FAQ
                     iceberg_qty (Optional[float] = None): Used with `LIMIT`, `STOP_LOSS_LIMIT`, and `TAKE_PROFIT_LIMIT` to create an iceberg order.
                     strategy_id (Optional[int] = None):
                     strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
-                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
-                    peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See [Pegged Orders](/products/spot/faqs/pegged_orders)
-                    peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See [Pegged Orders](/products/spot/faqs/pegged_orders)
+                    self_trade_prevention_mode (Optional[OrderTestSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
+                    peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See Pegged Orders
+                    peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
+                    peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -4028,7 +4081,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         This adds 1 order to the `EXCHANGE_MAX_ORDERS` filter and the `MAX_NUM_ORDERS` filter.
 
-        Read [SOR FAQ](/products/spot/faqs/sor_faq) to learn more.
+        Read SOR FAQ to learn more.
 
         Weight(IP): 1
 
@@ -4054,7 +4107,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     iceberg_qty (Optional[float] = None): Used with `LIMIT` to create an iceberg order.
                     strategy_id (Optional[int] = None):
                     strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
-                    self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. The possible supported values are: [STP Modes](/products/spot/enums#stpmodes).
+                    self_trade_prevention_mode (Optional[SorOrderPlaceSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. The possible supported values are: STP Modes.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -4120,19 +4173,19 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     symbol (Union[str, None]):
-                    side (Union[SorOrderTestSideEnum, None]): Please see [Enums](/products/spot/enums#side) for supported values.
-                    type (Union[SorOrderTestTypeEnum, None]): Please see [Enums](/products/spot/enums#ordertypes) for supported values.
+                    side (Union[SorOrderTestSideEnum, None]): Please see Enums for supported values.
+                    type (Union[SorOrderTestTypeEnum, None]): Please see Enums for supported values.
                     quantity (Union[float, None]):
                     id (Optional[str] = None): Client-generated request identifier.
                     compute_commission_rates (Optional[bool] = None): Default: `false`
-                    time_in_force (Optional[SorOrderTestTimeInForceEnum] = None): Please see [Enums](/products/spot/enums#timeinforce) for supported values.
+                    time_in_force (Optional[SorOrderTestTimeInForceEnum] = None): Please see Enums for supported values.
                     price (Optional[float] = None):
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Orders with the same `newClientOrderID` can be accepted only when the previous one is filled, otherwise the order will be rejected.
                     new_order_resp_type (Optional[SorOrderTestNewOrderRespTypeEnum] = None): Set the response JSON. `ACK`, `RESULT`, or `FULL`. Default to `FULL`.
                     iceberg_qty (Optional[float] = None): Used with `LIMIT` to create an iceberg order.
                     strategy_id (Optional[int] = None):
                     strategy_type (Optional[int] = None): The value cannot be less than `1000000`.
-                    self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: [STP Modes](/products/spot/enums#stpmodes)
+                    self_trade_prevention_mode (Optional[SorOrderTestSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -4199,20 +4252,20 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         WebsocketApiResponse[UserDataStreamSubscribeResponse], RequestStreamHandle
     ]:
         """
-                Subscribe to User Data Stream
+                Subscribe to User Data Stream (USER_STREAM)
 
                 Subscribe to the User Data Stream in the current WebSocket connection.
 
         **Notes:**
-          - This method requires an authenticated WebSocket connection using Ed25519 keys. Please refer to [`session.logon`](/catalog/core-trading-spot-trading/api/ws-api/auth#session-logon).
-          - To check the subscription status, use [`session.status`](/catalog/core-trading-spot-trading/api/ws-api/auth#session-status), see the `userDataStream` flag indicating you have have an active subscription.
-          - User Data Stream events are available in both JSON and [SBE](/products/spot/faqs/sbe_faq) sessions.
-            - Please refer to [User Data Streams](/products/spot/user-data-stream) for the event format details.
+          - This method requires an authenticated WebSocket connection using Ed25519 keys. Please refer to `session.logon`.
+          - To check the subscription status, use `session.status`, see the `userDataStream` flag indicating you have an active subscription.
+          - User Data Stream events are available in both JSON and SBE sessions.
+            - Please refer to User Data Streams for the event format details.
             - For SBE, only SBE schema 2:1 or later is supported.
 
         Weight(IP): 2
 
-        Security Type: NONE
+        Security Type: USER_STREAM
 
                 Args:
                     id (Optional[str] = None): Client-generated request identifier.
@@ -4295,7 +4348,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         subscription_id: Optional[int] = None,
     ) -> WebsocketApiResponse[UserDataStreamUnsubscribeResponse]:
         """
-                WebSocket Unsubscribe from User Data Stream
+                Unsubscribe from User Data Stream
 
                 Stop listening to the User Data Stream in the current WebSocket
         connection.

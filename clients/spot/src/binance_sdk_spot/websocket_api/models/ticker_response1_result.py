@@ -57,7 +57,9 @@ class TickerResponse1Result(BaseModel):
     first_id: Optional[StrictInt] = Field(
         default=None, description="Trade IDs", alias="firstId"
     )
-    last_id: Optional[StrictInt] = Field(default=None, alias="lastId")
+    last_id: Optional[StrictInt] = Field(
+        default=None, description="Last trade ID", alias="lastId"
+    )
     count: Optional[StrictInt] = Field(
         default=None, description="Number of trades in the interval"
     )

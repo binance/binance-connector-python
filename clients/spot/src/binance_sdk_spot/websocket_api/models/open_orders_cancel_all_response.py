@@ -17,11 +17,11 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.account_commission_response_rate_limits_inner import (
-    AccountCommissionResponseRateLimitsInner,
-)
 from binance_sdk_spot.websocket_api.models.open_orders_cancel_all_response_result_inner import (
     OpenOrdersCancelAllResponseResultInner,
+)
+from binance_sdk_spot.websocket_api.models.ping_response_rate_limits_inner import (
+    PingResponseRateLimitsInner,
 )
 from typing import Set
 from typing_extensions import Self
@@ -38,7 +38,7 @@ class OpenOrdersCancelAllResponse(BaseModel):
         default=None, alias="result"
     )
 
-    rate_limits: Optional[List[AccountCommissionResponseRateLimitsInner]] = Field(
+    rate_limits: Optional[List[PingResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
 
@@ -135,7 +135,7 @@ class OpenOrdersCancelAllResponse(BaseModel):
                 ),
                 "rateLimits": (
                     [
-                        AccountCommissionResponseRateLimitsInner.from_dict(_item)
+                        PingResponseRateLimitsInner.from_dict(_item)
                         for _item in obj["rateLimits"]
                     ]
                     if obj.get("rateLimits") is not None

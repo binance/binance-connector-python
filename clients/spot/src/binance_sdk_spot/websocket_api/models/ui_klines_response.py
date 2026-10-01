@@ -17,8 +17,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.account_commission_response_rate_limits_inner import (
-    AccountCommissionResponseRateLimitsInner,
+from binance_sdk_spot.websocket_api.models.avg_price_response_rate_limits_inner import (
+    AvgPriceResponseRateLimitsInner,
 )
 from binance_sdk_spot.websocket_api.models.klines_response_result_inner_inner import (
     KlinesResponseResultInnerInner,
@@ -36,7 +36,7 @@ class UiKlinesResponse(BaseModel):
     status: Optional[StrictInt] = None
     result: Optional[List[List[Any]]] = Field(default=None, alias="result")
 
-    rate_limits: Optional[List[AccountCommissionResponseRateLimitsInner]] = Field(
+    rate_limits: Optional[List[AvgPriceResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
 
@@ -142,7 +142,7 @@ class UiKlinesResponse(BaseModel):
                 ),
                 "rateLimits": (
                     [
-                        AccountCommissionResponseRateLimitsInner.from_dict(_item)
+                        AvgPriceResponseRateLimitsInner.from_dict(_item)
                         for _item in obj["rateLimits"]
                     ]
                     if obj.get("rateLimits") is not None

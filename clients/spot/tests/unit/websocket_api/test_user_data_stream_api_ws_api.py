@@ -38,7 +38,7 @@ class TestWebSocketUserDataStreamApi:
         expected_response = {
             "id": "d3df5a22-88ea-4fe0-9f4e-0fcea5d418b7",
             "status": 200,
-            "result": [{"subscriptionId": 0}],
+            "result": [{"subscriptionId": 0}, {"subscriptionId": 1}],
         }
 
         self.mock_websocket_api.send_message = AsyncMock(
@@ -81,7 +81,7 @@ class TestWebSocketUserDataStreamApi:
         expected_response = {
             "id": "d3df5a22-88ea-4fe0-9f4e-0fcea5d418b7",
             "status": 200,
-            "result": [{"subscriptionId": 0}],
+            "result": [{"subscriptionId": 0}, {"subscriptionId": 1}],
         }
 
         self.mock_websocket_api.send_message = AsyncMock(

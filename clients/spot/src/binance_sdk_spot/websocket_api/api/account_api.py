@@ -435,8 +435,8 @@ class AccountApi:
             /myFilters
             https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/ws-api/account#my-filters
 
-            Retrieves the list of [filters](/products/spot/filters) relevant to an account on a given symbol. This is the only method
-        that shows if an account has [`MAX_ASSET`](/products/spot/filters#max_asset) filters applied to it.
+            Retrieves the list of filters relevant to an account on a given symbol. This is the only method
+        that shows if an account has `MAX_ASSET` filters applied to it.
 
         Weight(IP): 40
 
@@ -590,7 +590,7 @@ class AccountApi:
         Security Type: USER_DATA
 
         Notes:
-        Data Source: Memory => Database
+        **Data Source:** Memory => Database
 
         Notes:
         - If `fromId` is specified, return trades with trade ID >= `fromId`.
@@ -722,7 +722,10 @@ class AccountApi:
         Security Type: USER_DATA
 
         Notes:
-        Data Source: Memory => Database
+        **Data Source:** Memory => Database
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
             Args:
                     id (Optional[str] = None): Client-generated request identifier.
@@ -914,6 +917,9 @@ class AccountApi:
 
         * For some historical orders the `cummulativeQuoteQty` response field may be negative,
           meaning the data is not available at this time.
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
             Args:
                     symbol (Union[str, None]):

@@ -185,6 +185,9 @@ class AccountApi:
         - If `startTime` and/or `endTime` provided, `orderId` is not required.
         - The time between `startTime` and `endTime` can't be longer than 24 hours.
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Union[str, None]):
                     order_id (Optional[int] = None):
@@ -297,6 +300,9 @@ class AccountApi:
 
         - If the symbol is not sent, orders for all symbols will be returned in an array.
 
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
+
                 Args:
                     symbol (Optional[str] = None):
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
@@ -349,6 +355,9 @@ class AccountApi:
         - Either `orderId` or `origClientOrderId` must be sent.
         - If both `orderId` and `origClientOrderId` are provided, the `orderId` is searched first, then the `origClientOrderId` from that result is checked against that order. If both conditions are not met the request will be rejected.
         - For some historical orders `cummulativeQuoteQty` will be < 0, meaning the data is not available at this time.
+
+        Response Notes:
+        **Note:** The payload above does not show all fields that can appear. Please refer to Conditional fields in Order Responses.
 
                 Args:
                     symbol (Union[str, None]):

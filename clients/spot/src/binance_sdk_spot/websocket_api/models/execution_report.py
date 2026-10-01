@@ -259,6 +259,11 @@ class ExecutionReport(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if N (nullable) is None
+        # and model_fields_set contains the field
+        if self.N is None and "N" in self.model_fields_set:
+            _dict["N"] = None
+
         return _dict
 
     @classmethod

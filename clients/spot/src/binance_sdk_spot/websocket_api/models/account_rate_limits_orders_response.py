@@ -17,8 +17,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.account_commission_response_rate_limits_inner import (
-    AccountCommissionResponseRateLimitsInner,
+from binance_sdk_spot.websocket_api.models.account_rate_limits_orders_response_rate_limits_inner import (
+    AccountRateLimitsOrdersResponseRateLimitsInner,
 )
 from binance_sdk_spot.websocket_api.models.account_rate_limits_orders_response_result_inner import (
     AccountRateLimitsOrdersResponseResultInner,
@@ -38,7 +38,7 @@ class AccountRateLimitsOrdersResponse(BaseModel):
         default=None, alias="result"
     )
 
-    rate_limits: Optional[List[AccountCommissionResponseRateLimitsInner]] = Field(
+    rate_limits: Optional[List[AccountRateLimitsOrdersResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
 
@@ -135,7 +135,7 @@ class AccountRateLimitsOrdersResponse(BaseModel):
                 ),
                 "rateLimits": (
                     [
-                        AccountCommissionResponseRateLimitsInner.from_dict(_item)
+                        AccountRateLimitsOrdersResponseRateLimitsInner.from_dict(_item)
                         for _item in obj["rateLimits"]
                     ]
                     if obj.get("rateLimits") is not None

@@ -23,7 +23,7 @@ from typing_extensions import Self
 
 class OrderCancelReplaceResponseResultNewOrderResponse(BaseModel):
     """
-    OrderCancelReplaceResponseResultNewOrderResponse
+    Format is identical to "order.place" format, affected by "newOrderRespType". Some fields are optional and are included only for orders that set them.
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = None

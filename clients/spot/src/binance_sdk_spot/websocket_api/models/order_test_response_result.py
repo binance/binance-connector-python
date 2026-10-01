@@ -20,8 +20,14 @@ from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_spot.websocket_api.models.order_test_response_result_discount import (
     OrderTestResponseResultDiscount,
 )
+from binance_sdk_spot.websocket_api.models.order_test_response_result_special_commission_for_order import (
+    OrderTestResponseResultSpecialCommissionForOrder,
+)
 from binance_sdk_spot.websocket_api.models.order_test_response_result_standard_commission_for_order import (
     OrderTestResponseResultStandardCommissionForOrder,
+)
+from binance_sdk_spot.websocket_api.models.order_test_response_result_tax_commission_for_order import (
+    OrderTestResponseResultTaxCommissionForOrder,
 )
 from typing import Set
 from typing_extensions import Self
@@ -36,11 +42,11 @@ class OrderTestResponseResult(BaseModel):
         OrderTestResponseResultStandardCommissionForOrder
     ] = Field(default=None, alias="standardCommissionForOrder")
     special_commission_for_order: Optional[
-        OrderTestResponseResultStandardCommissionForOrder
+        OrderTestResponseResultSpecialCommissionForOrder
     ] = Field(default=None, alias="specialCommissionForOrder")
-    tax_commission_for_order: Optional[
-        OrderTestResponseResultStandardCommissionForOrder
-    ] = Field(default=None, alias="taxCommissionForOrder")
+    tax_commission_for_order: Optional[OrderTestResponseResultTaxCommissionForOrder] = (
+        Field(default=None, alias="taxCommissionForOrder")
+    )
     discount: Optional[OrderTestResponseResultDiscount] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -138,14 +144,14 @@ class OrderTestResponseResult(BaseModel):
                     else None
                 ),
                 "specialCommissionForOrder": (
-                    OrderTestResponseResultStandardCommissionForOrder.from_dict(
+                    OrderTestResponseResultSpecialCommissionForOrder.from_dict(
                         obj["specialCommissionForOrder"]
                     )
                     if obj.get("specialCommissionForOrder") is not None
                     else None
                 ),
                 "taxCommissionForOrder": (
-                    OrderTestResponseResultStandardCommissionForOrder.from_dict(
+                    OrderTestResponseResultTaxCommissionForOrder.from_dict(
                         obj["taxCommissionForOrder"]
                     )
                     if obj.get("taxCommissionForOrder") is not None

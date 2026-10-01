@@ -23,7 +23,7 @@ from typing_extensions import Self
 
 class OrderTestResponseResultStandardCommissionForOrder(BaseModel):
     """
-    OrderTestResponseResultStandardCommissionForOrder
+    Standard commission rates on trades from the order.
     """  # noqa: E501
 
     maker: Optional[StrictStr] = None

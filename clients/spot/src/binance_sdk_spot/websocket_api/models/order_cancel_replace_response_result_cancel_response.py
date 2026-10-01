@@ -23,16 +23,22 @@ from typing_extensions import Self
 
 class OrderCancelReplaceResponseResultCancelResponse(BaseModel):
     """
-    OrderCancelReplaceResponseResultCancelResponse
+    Format is identical to "order.cancel" format. Some fields are optional and are included only for orders that set them.
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = None
     orig_client_order_id: Optional[StrictStr] = Field(
-        default=None, alias="origClientOrderId"
+        default=None,
+        description="cancelOrigClientOrderId from request",
+        alias="origClientOrderId",
     )
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
     order_list_id: Optional[StrictInt] = Field(default=None, alias="orderListId")
-    client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
+    client_order_id: Optional[StrictStr] = Field(
+        default=None,
+        description="cancelNewClientOrderId from request",
+        alias="clientOrderId",
+    )
     transact_time: Optional[StrictInt] = Field(default=None, alias="transactTime")
     price: Optional[StrictStr] = None
     orig_qty: Optional[StrictStr] = Field(default=None, alias="origQty")

@@ -299,7 +299,7 @@ class MarketApi:
         Security Type: MARKET_DATA
 
         Notes:
-        - Data Source: Database
+        **Data Source:** Database
 
                 Args:
                     symbol (Union[str, None]):
@@ -497,6 +497,15 @@ class MarketApi:
 
         Notes:
         **Data Source:** Memory
+
+        If the symbol has never had a reference price set, the request is rejected with:
+
+        ```json
+        {
+            "code": -2043,
+            "msg": "This symbol doesn't have a reference price."
+        }
+        ```
 
                 Args:
                     symbol (Union[str, None]):

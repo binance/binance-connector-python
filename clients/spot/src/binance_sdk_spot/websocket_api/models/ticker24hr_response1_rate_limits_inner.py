@@ -21,64 +21,22 @@ from typing import Set
 from typing_extensions import Self
 
 
-class TickerTradingDayResponseResultInner(BaseModel):
+class Ticker24hrResponse1RateLimitsInner(BaseModel):
     """
-    TickerTradingDayResponseResultInner
+    Ticker24hrResponse1RateLimitsInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = None
-    price_change: Optional[StrictStr] = Field(
-        default=None, description="Absolute price change", alias="priceChange"
-    )
-    price_change_percent: Optional[StrictStr] = Field(
-        default=None,
-        description="Relative price change in percent",
-        alias="priceChangePercent",
-    )
-    weighted_avg_price: Optional[StrictStr] = Field(
-        default=None, description="quoteVolume / volume", alias="weightedAvgPrice"
-    )
-    open_price: Optional[StrictStr] = Field(default=None, alias="openPrice")
-    high_price: Optional[StrictStr] = Field(default=None, alias="highPrice")
-    low_price: Optional[StrictStr] = Field(default=None, alias="lowPrice")
-    last_price: Optional[StrictStr] = Field(default=None, alias="lastPrice")
-    volume: Optional[StrictStr] = Field(
-        default=None, description="Volume in base asset"
-    )
-    quote_volume: Optional[StrictStr] = Field(
-        default=None, description="Volume in quote asset", alias="quoteVolume"
-    )
-    open_time: Optional[StrictInt] = Field(default=None, alias="openTime")
-    close_time: Optional[StrictInt] = Field(default=None, alias="closeTime")
-    first_id: Optional[StrictInt] = Field(
-        default=None,
-        description="Trade ID of the first trade in the interval",
-        alias="firstId",
-    )
-    last_id: Optional[StrictInt] = Field(
-        default=None,
-        description="Trade ID of the last trade in the interval",
-        alias="lastId",
-    )
-    count: Optional[StrictInt] = Field(
-        default=None, description="Number of trades in the interval"
-    )
+    rate_limit_type: Optional[StrictStr] = Field(default=None, alias="rateLimitType")
+    interval: Optional[StrictStr] = None
+    interval_num: Optional[StrictInt] = Field(default=None, alias="intervalNum")
+    limit: Optional[StrictInt] = None
+    count: Optional[StrictInt] = Field(default=None, description="Number of trades")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "symbol",
-        "priceChange",
-        "priceChangePercent",
-        "weightedAvgPrice",
-        "openPrice",
-        "highPrice",
-        "lowPrice",
-        "lastPrice",
-        "volume",
-        "quoteVolume",
-        "openTime",
-        "closeTime",
-        "firstId",
-        "lastId",
+        "rateLimitType",
+        "interval",
+        "intervalNum",
+        "limit",
         "count",
     ]
 
@@ -103,7 +61,7 @@ class TickerTradingDayResponseResultInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TickerTradingDayResponseResultInner from a JSON string"""
+        """Create an instance of Ticker24hrResponse1RateLimitsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -137,7 +95,7 @@ class TickerTradingDayResponseResultInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TickerTradingDayResponseResultInner from a dict"""
+        """Create an instance of Ticker24hrResponse1RateLimitsInner from a dict"""
         if obj is None:
             return None
 
@@ -146,20 +104,10 @@ class TickerTradingDayResponseResultInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "symbol": obj.get("symbol"),
-                "priceChange": obj.get("priceChange"),
-                "priceChangePercent": obj.get("priceChangePercent"),
-                "weightedAvgPrice": obj.get("weightedAvgPrice"),
-                "openPrice": obj.get("openPrice"),
-                "highPrice": obj.get("highPrice"),
-                "lowPrice": obj.get("lowPrice"),
-                "lastPrice": obj.get("lastPrice"),
-                "volume": obj.get("volume"),
-                "quoteVolume": obj.get("quoteVolume"),
-                "openTime": obj.get("openTime"),
-                "closeTime": obj.get("closeTime"),
-                "firstId": obj.get("firstId"),
-                "lastId": obj.get("lastId"),
+                "rateLimitType": obj.get("rateLimitType"),
+                "interval": obj.get("interval"),
+                "intervalNum": obj.get("intervalNum"),
+                "limit": obj.get("limit"),
                 "count": obj.get("count"),
             }
         )

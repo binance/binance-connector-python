@@ -36,7 +36,11 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
         default=None, alias="baseAssetPrecision"
     )
     quote_asset: Optional[StrictStr] = Field(default=None, alias="quoteAsset")
-    quote_precision: Optional[StrictInt] = Field(default=None, alias="quotePrecision")
+    quote_precision: Optional[StrictInt] = Field(
+        default=None,
+        description="will be removed in future api versions (v4+)",
+        alias="quotePrecision",
+    )
     quote_asset_precision: Optional[StrictInt] = Field(
         default=None, alias="quoteAssetPrecision"
     )
@@ -70,7 +74,10 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
     is_margin_trading_allowed: Optional[StrictBool] = Field(
         default=None, alias="isMarginTradingAllowed"
     )
-    filters: Optional[List[MyFiltersResponseSymbolFiltersInner]] = None
+    filters: Optional[List[MyFiltersResponseSymbolFiltersInner]] = Field(
+        default=None,
+        description='Symbol filters are explained on the "Filters" page: All symbol filters are optional.',
+    )
     permissions: Optional[List[StrictStr]] = None
     permission_sets: Optional[List[List[StrictStr]]] = Field(
         default=None, alias="permissionSets"

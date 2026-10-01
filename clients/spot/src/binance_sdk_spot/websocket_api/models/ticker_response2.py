@@ -17,8 +17,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_spot.websocket_api.models.account_commission_response_rate_limits_inner import (
-    AccountCommissionResponseRateLimitsInner,
+from binance_sdk_spot.websocket_api.models.ticker_response2_rate_limits_inner import (
+    TickerResponse2RateLimitsInner,
 )
 from binance_sdk_spot.websocket_api.models.ticker_response2_result_inner import (
     TickerResponse2ResultInner,
@@ -29,7 +29,7 @@ from typing_extensions import Self
 
 class TickerResponse2(BaseModel):
     """
-    TickerResponse2
+    If more than one symbol is requested, response returns an array:
     """  # noqa: E501
 
     id: Optional[StrictStr] = None
@@ -38,7 +38,7 @@ class TickerResponse2(BaseModel):
         default=None, alias="result"
     )
 
-    rate_limits: Optional[List[AccountCommissionResponseRateLimitsInner]] = Field(
+    rate_limits: Optional[List[TickerResponse2RateLimitsInner]] = Field(
         default=None, alias="rateLimits"
     )
 
@@ -135,7 +135,7 @@ class TickerResponse2(BaseModel):
                 ),
                 "rateLimits": (
                     [
-                        AccountCommissionResponseRateLimitsInner.from_dict(_item)
+                        TickerResponse2RateLimitsInner.from_dict(_item)
                         for _item in obj["rateLimits"]
                     ]
                     if obj.get("rateLimits") is not None
