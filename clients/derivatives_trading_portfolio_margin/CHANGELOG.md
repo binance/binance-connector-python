@@ -1,5 +1,20 @@
 # Changelog
 
+## 15.0.0 - 2026-10-01
+
+### Changed (3)
+
+#### REST API
+
+- Modified parameter `selfTradePreventionMode`:
+  - enum removed: `NONE`
+  - affected methods:
+    - `new_um_order()` (`POST /papi/v1/um/order`)
+#### WebSocket Streams
+
+- Modified response schema `UserDataStreamEventsResponse`:
+  - oneOf modified
+
 ## 14.0.0 - 2026-09-28
 
 ### Changed (1)

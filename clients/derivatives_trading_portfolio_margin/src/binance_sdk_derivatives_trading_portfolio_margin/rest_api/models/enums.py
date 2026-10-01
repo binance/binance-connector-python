@@ -372,7 +372,6 @@ class NewUmOrderPriceMatchEnum(Enum):
 
 
 class NewUmOrderSelfTradePreventionModeEnum(Enum):
-    NONE = "NONE"
     EXPIRE_TAKER = "EXPIRE_TAKER"
     EXPIRE_BOTH = "EXPIRE_BOTH"
     EXPIRE_MAKER = "EXPIRE_MAKER"

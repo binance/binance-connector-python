@@ -1877,7 +1877,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1571110484038,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }
@@ -1946,7 +1946,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1571110484038,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }
@@ -3515,7 +3515,7 @@ class TestTradeApi:
             "side": "BUY",
             "positionSide": "LONG",
             "origType": "LIMIT",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "updateTime": 1629182711600,
             "priceMatch": "NONE",
@@ -3594,7 +3594,7 @@ class TestTradeApi:
             "side": "BUY",
             "positionSide": "LONG",
             "origType": "LIMIT",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "updateTime": 1629182711600,
             "priceMatch": "NONE",
@@ -4567,7 +4567,7 @@ class TestTradeApi:
             "symbol": "BTCUSDT",
             "timeInForce": "GTD",
             "type": "MARKET",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
             "updateTime": 1566818724722,
             "priceMatch": "NONE",
@@ -4630,7 +4630,7 @@ class TestTradeApi:
             "new_order_resp_type": NewUmOrderNewOrderRespTypeEnum["ACK"].value,
             "price_match": NewUmOrderPriceMatchEnum["OPPONENT"].value,
             "self_trade_prevention_mode": NewUmOrderSelfTradePreventionModeEnum[
-                "NONE"
+                "EXPIRE_TAKER"
             ].value,
             "good_till_date": 1770736694138,
             "recv_window": 5000,
@@ -4650,7 +4650,7 @@ class TestTradeApi:
             "symbol": "BTCUSDT",
             "timeInForce": "GTD",
             "type": "MARKET",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
             "updateTime": 1566818724722,
             "priceMatch": "NONE",
@@ -5338,7 +5338,7 @@ class TestTradeApi:
                 "algoStatus": "NEW",
                 "triggerPrice": "750.000",
                 "price": "750.000",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "workingType": "CONTRACT_PRICE",
                 "priceMatch": "NONE",
                 "closePosition": False,
@@ -5418,7 +5418,7 @@ class TestTradeApi:
                 "algoStatus": "NEW",
                 "triggerPrice": "750.000",
                 "price": "750.000",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "workingType": "CONTRACT_PRICE",
                 "priceMatch": "NONE",
                 "closePosition": False,
@@ -5503,7 +5503,7 @@ class TestTradeApi:
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "updateTime": 1579276756075,
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "priceMatch": "NONE",
             }
@@ -5574,7 +5574,7 @@ class TestTradeApi:
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "updateTime": 1579276756075,
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "priceMatch": "NONE",
             }
@@ -5826,7 +5826,7 @@ class TestTradeApi:
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "updateTime": 1579276756075,
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "priceMatch": "NONE",
             }
@@ -5902,7 +5902,7 @@ class TestTradeApi:
                 "timeInForce": "GTC",
                 "type": "LIMIT",
                 "updateTime": 1579276756075,
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "priceMatch": "NONE",
             }
@@ -7134,7 +7134,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1579276756075,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }
@@ -7210,7 +7210,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1579276756075,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }
@@ -8198,7 +8198,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1579276756075,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }
@@ -8270,7 +8270,7 @@ class TestTradeApi:
             "timeInForce": "GTC",
             "type": "LIMIT",
             "updateTime": 1579276756075,
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "priceMatch": "NONE",
         }

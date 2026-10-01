@@ -1999,7 +1999,7 @@ class TradeApi:
                     new_client_order_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,32}$`
                     new_order_resp_type (Optional[NewUmOrderNewOrderRespTypeEnum] = None): `ACK`, `RESULT`, default `ACK`
                     price_match (Optional[NewUmOrderPriceMatchEnum] = None): only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can be set to `OPPONENT`/ `OPPONENT_5`/ `OPPONENT_10`/ `OPPONENT_20`: /`QUEUE`/ `QUEUE_5`/ `QUEUE_10`/ `QUEUE_20`; Can't be passed together with `price`
-                    self_trade_prevention_mode (Optional[NewUmOrderSelfTradePreventionModeEnum] = None): `NONE`: No STP / `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers
+                    self_trade_prevention_mode (Optional[NewUmOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers
                     good_till_date (Optional[int] = None): order cancel time for timeInForce `GTD`, mandatory when `timeInforce` set to `GTD`; order the timestamp only retains second-level precision, ms part will be ignored; The goodTillDate timestamp must be greater than the current time plus 600 seconds and smaller than 253402300799000Mode. It must be sent in Hedge Mode.
                     recv_window (Optional[int] = None):
 
@@ -3514,7 +3514,7 @@ class TradeApi:
 
                 Query user's margin force orders
 
-        > **Note:** Portfolio Margin accounts liquidated through the [Risk-Based Liquidation Adjustment](https://www.binance.com/en/support/faq/detail/662268636eb44b71af55c6c6a597d481) flow will not have any order or trade records returned by this endpoint. Query the capital flow endpoint instead: [Query Cross Isolated Margin Capital Flow](https://developers.binance.com/en/docs/catalog/core-trading-margin-trading/api/rest-api/account#query-cross-isolated-margin-capital-flow).
+        > **Note:** Portfolio Margin accounts liquidated through the Risk-Based Liquidation Adjustment flow will not have any order or trade records returned by this endpoint. Query the capital flow endpoint instead: Query Cross Isolated Margin Capital Flow.
 
         Weight(IP): 1
 
