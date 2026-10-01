@@ -293,6 +293,15 @@ from .query_margin_accounts_open_orders_response import (
 from .query_margin_accounts_open_orders_response_inner import (
     QueryMarginAccountsOpenOrdersResponseInner as QueryMarginAccountsOpenOrdersResponseInner,
 )
+from .query_margin_accounts_open_otootoco_order_lists_response import (
+    QueryMarginAccountsOpenOtootocoOrderListsResponse as QueryMarginAccountsOpenOtootocoOrderListsResponse,
+)
+from .query_margin_accounts_open_otootoco_order_lists_response_inner import (
+    QueryMarginAccountsOpenOtootocoOrderListsResponseInner as QueryMarginAccountsOpenOtootocoOrderListsResponseInner,
+)
+from .query_margin_accounts_open_otootoco_order_lists_response_inner_orders_inner import (
+    QueryMarginAccountsOpenOtootocoOrderListsResponseInnerOrdersInner as QueryMarginAccountsOpenOtootocoOrderListsResponseInnerOrdersInner,
+)
 from .query_margin_accounts_order_response import (
     QueryMarginAccountsOrderResponse as QueryMarginAccountsOrderResponse,
 )

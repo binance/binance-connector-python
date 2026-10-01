@@ -436,7 +436,7 @@ class BorrowRepayApi:
 
         Notes:
         - If isolatedSymbol is not sent, crossed margin data will be sent.
-        - `borrowLimit` is also available from [https://www.binance.com/en/margin-fee](https://www.binance.com/en/margin-fee)
+        - `borrowLimit` is also available from https://www.binance.com/en/margin-fee
 
                 Args:
                     asset (Union[str, None]):

@@ -57,6 +57,9 @@ from binance_sdk_margin_trading.rest_api.models import (
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsOpenOrdersResponse,
 )
+from binance_sdk_margin_trading.rest_api.models import (
+    QueryMarginAccountsOpenOtootocoOrderListsResponse,
+)
 from binance_sdk_margin_trading.rest_api.models import QueryMarginAccountsOrderResponse
 from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAccountsTradeListResponse,
@@ -4297,6 +4300,153 @@ class TestTradeApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.query_margin_accounts_open_orders()
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_margin_accounts_open_otootoco_order_lists_success(
+        self, mock_get_signature
+    ):
+        """Test query_margin_accounts_open_otootoco_order_lists() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "orderListId": 24867326110,
+                "contingencyType": "OTOCO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "web_6324e98951224f96b8a24f312abe5067",
+                "transactionTime": 1790063061632,
+                "symbol": "ASTERUSDT",
+                "orders": [
+                    {
+                        "symbol": "ASTERUSDT",
+                        "orderId": 499470863,
+                        "status": "NEW",
+                        "clientOrderId": "web_f8890794e27b42a1a2ef6b5aef79a949",
+                    }
+                ],
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_margin_accounts_open_otootoco_order_lists()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/margin/oto/openOrderList" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryMarginAccountsOpenOtootocoOrderListsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOtootocoOrderListsResponse, "from_dict")
+        ):
+            expected = QueryMarginAccountsOpenOtootocoOrderListsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                QueryMarginAccountsOpenOtootocoOrderListsResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_query_margin_accounts_open_otootoco_order_lists_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test query_margin_accounts_open_otootoco_order_lists() successfully with optional parameters."""
+
+        params = {"symbol": "ASTERUSDT", "recv_window": 5000}
+
+        expected_response = [
+            {
+                "orderListId": 24867326110,
+                "contingencyType": "OTOCO",
+                "listStatusType": "EXEC_STARTED",
+                "listOrderStatus": "EXECUTING",
+                "listClientOrderId": "web_6324e98951224f96b8a24f312abe5067",
+                "transactionTime": 1790063061632,
+                "symbol": "ASTERUSDT",
+                "orders": [
+                    {
+                        "symbol": "ASTERUSDT",
+                        "orderId": 499470863,
+                        "status": "NEW",
+                        "clientOrderId": "web_f8890794e27b42a1a2ef6b5aef79a949",
+                    }
+                ],
+            }
+        ]
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.query_margin_accounts_open_otootoco_order_lists(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/margin/oto/openOrderList" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(QueryMarginAccountsOpenOtootocoOrderListsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(QueryMarginAccountsOpenOtootocoOrderListsResponse, "from_dict")
+        ):
+            expected = QueryMarginAccountsOpenOtootocoOrderListsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                QueryMarginAccountsOpenOtootocoOrderListsResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_query_margin_accounts_open_otootoco_order_lists_server_error(self):
+        """Test that query_margin_accounts_open_otootoco_order_lists() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.query_margin_accounts_open_otootoco_order_lists = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.query_margin_accounts_open_otootoco_order_lists()
 
     @patch("binance_common.utils.get_signature")
     def test_query_margin_accounts_order_success(self, mock_get_signature):

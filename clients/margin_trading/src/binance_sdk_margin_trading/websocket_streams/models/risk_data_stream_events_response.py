@@ -125,7 +125,6 @@ class RiskDataStreamEventsResponse(BaseModel):
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
-
         error_messages = []
         match = 0
         # validate data type: MarginLevelStatusChange
