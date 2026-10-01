@@ -11,134 +11,131 @@ Do not edit the class manually.
 """
 
 from __future__ import annotations
-import json
 import pprint
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    ValidationError,
-)
-from typing import Any, Optional
-from binance_sdk_spot.websocket_api.models.reference_price_response1 import (
-    ReferencePriceResponse1,
-)
-from binance_sdk_spot.websocket_api.models.reference_price_response2 import (
-    ReferencePriceResponse2,
-)
-from typing import Union, Set, Dict
-from typing_extensions import Self
+import re  # noqa: F401
+import json
 
-REFERENCEPRICERESPONSE_ONE_OF_SCHEMAS = [
-    "ReferencePriceResponse1",
-    "ReferencePriceResponse2",
-]
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_spot.websocket_api.models.avg_price_response_rate_limits_inner import (
+    AvgPriceResponseRateLimitsInner,
+)
+from binance_sdk_spot.websocket_api.models.reference_price_response_result import (
+    ReferencePriceResponseResult,
+)
+from typing import Set
+from typing_extensions import Self
 
 
 class ReferencePriceResponse(BaseModel):
     """
     ReferencePriceResponse
-    """
+    """  # noqa: E501
 
-    # data type: ReferencePriceResponse1
-    oneof_schema_1_validator: Optional[ReferencePriceResponse1] = None
-    # data type: ReferencePriceResponse2
-    oneof_schema_2_validator: Optional[ReferencePriceResponse2] = None
-    actual_instance: Optional[
-        Union[ReferencePriceResponse1, ReferencePriceResponse2]
-    ] = None
-    one_of_schemas: Set[str] = {"ReferencePriceResponse1", "ReferencePriceResponse2"}
+    id: Optional[StrictStr] = None
+    status: Optional[StrictInt] = None
+    result: Optional[ReferencePriceResponseResult] = None
+    rate_limits: Optional[List[AvgPriceResponseRateLimitsInner]] = Field(
+        default=None, alias="rateLimits"
+    )
+
+    additional_properties: Dict[str, Any] = {}
+    __properties: ClassVar[List[str]] = ["id", "status", "result", "rateLimits"]
 
     model_config = ConfigDict(
+        populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError(
-                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
-                )
-            if kwargs:
-                raise ValueError(
-                    "If a position argument is used, keyword arguments cannot be used."
-                )
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
-
-    @classmethod
-    def is_oneof_model(cls) -> bool:
-        return True
-
-    @classmethod
-    def from_dict(cls, parsed) -> Self:
-        """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        match = 0
-
-        is_list = isinstance(parsed, list)
-
-        # deserialize data into ReferencePriceResponse1
-        if is_list == ReferencePriceResponse1.is_array():
-            try:
-                instance.actual_instance = ReferencePriceResponse1.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into ReferencePriceResponse2
-        if is_list == ReferencePriceResponse2.is_array():
-            try:
-                instance.actual_instance = ReferencePriceResponse2.from_dict(parsed)
-                match += 1
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-
-        if match > 1:
-            # more than 1 match
-            raise ValueError(
-                "Multiple matches found when deserializing the JSON string into ReferencePriceResponse with oneOf schemas: ReferencePriceResponse1, ReferencePriceResponse2. Details: "
-                + ", ".join(error_messages)
-            )
-        elif match == 0:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into ReferencePriceResponse with oneOf schemas: ReferencePriceResponse1, ReferencePriceResponse2. Details: "
-                + ", ".join(error_messages)
-            )
-        else:
-            return instance
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
-        if hasattr(self.actual_instance, "to_json") and callable(
-            self.actual_instance.to_json
-        ):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+    @classmethod
+    def is_array(cls) -> bool:
+        return False
 
-    def to_dict(
-        self,
-    ) -> Optional[
-        Union[Dict[str, Any], ReferencePriceResponse1, ReferencePriceResponse2]
-    ]:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of ReferencePriceResponse from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # override the default output from pydantic by calling `to_dict()` of result
+        if self.result:
+            _dict["result"] = self.result.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in rate_limits (list)
+        _items = []
+        if self.rate_limits:
+            for _item_rate_limits in self.rate_limits:
+                if _item_rate_limits:
+                    _items.append(_item_rate_limits.to_dict())
+            _dict["rateLimits"] = _items
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of ReferencePriceResponse from a dict"""
+        if obj is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict") and callable(
-            self.actual_instance.to_dict
-        ):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.model_dump())
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "status": obj.get("status"),
+                "result": (
+                    ReferencePriceResponseResult.from_dict(obj["result"])
+                    if obj.get("result") is not None
+                    else None
+                ),
+                "rateLimits": (
+                    [
+                        AvgPriceResponseRateLimitsInner.from_dict(_item)
+                        for _item in obj["rateLimits"]
+                    ]
+                    if obj.get("rateLimits") is not None
+                    else None
+                ),
+            }
+        )
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
+        return _obj

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-Spot REST API
+Spot WebSocket API
 
 Access market data, manage accounts, and trade on Binance Spot.
 The version of the OpenAPI document: 1.0.0
@@ -21,22 +21,26 @@ from typing import Set
 from typing_extensions import Self
 
 
-class ReferencePriceResponse1(BaseModel):
+class ReferencePriceResponseResult(BaseModel):
     """
-    If a reference price is set:
+    ReferencePriceResponseResult
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = None
-    reference_price: Optional[StrictStr] = Field(
-        default=None,
-        description="Reference price. Can be `null` if no reference price is set.",
-        alias="referencePrice",
-    )
+    reference_price: Optional[StrictStr] = Field(default=None, alias="referencePrice")
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Timestamp when reference price was valid."
+        default=None, description="Timestamp when the reference price was valid"
     )
+    code: Optional[StrictInt] = None
+    msg: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["symbol", "referencePrice", "timestamp"]
+    __properties: ClassVar[List[str]] = [
+        "symbol",
+        "referencePrice",
+        "timestamp",
+        "code",
+        "msg",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -59,7 +63,7 @@ class ReferencePriceResponse1(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ReferencePriceResponse1 from a JSON string"""
+        """Create an instance of ReferencePriceResponseResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -89,11 +93,16 @@ class ReferencePriceResponse1(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if reference_price (nullable) is None
+        # and model_fields_set contains the field
+        if self.reference_price is None and "reference_price" in self.model_fields_set:
+            _dict["referencePrice"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ReferencePriceResponse1 from a dict"""
+        """Create an instance of ReferencePriceResponseResult from a dict"""
         if obj is None:
             return None
 
@@ -105,6 +114,8 @@ class ReferencePriceResponse1(BaseModel):
                 "symbol": obj.get("symbol"),
                 "referencePrice": obj.get("referencePrice"),
                 "timestamp": obj.get("timestamp"),
+                "code": obj.get("code"),
+                "msg": obj.get("msg"),
             }
         )
         # store additional fields in additional_properties

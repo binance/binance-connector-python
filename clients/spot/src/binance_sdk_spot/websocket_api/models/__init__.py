@@ -351,17 +351,8 @@ from .reference_price_calculation_response_result import (
     ReferencePriceCalculationResponseResult as ReferencePriceCalculationResponseResult,
 )
 from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
-from .reference_price_response1 import (
-    ReferencePriceResponse1 as ReferencePriceResponse1,
-)
-from .reference_price_response1_result import (
-    ReferencePriceResponse1Result as ReferencePriceResponse1Result,
-)
-from .reference_price_response2 import (
-    ReferencePriceResponse2 as ReferencePriceResponse2,
-)
-from .reference_price_response2_result import (
-    ReferencePriceResponse2Result as ReferencePriceResponse2Result,
+from .reference_price_response_result import (
+    ReferencePriceResponseResult as ReferencePriceResponseResult,
 )
 from .session_logon_response import SessionLogonResponse as SessionLogonResponse
 from .session_logon_response_result import (

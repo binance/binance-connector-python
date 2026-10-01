@@ -258,12 +258,6 @@ from .reference_price_calculation_response import (
     ReferencePriceCalculationResponse as ReferencePriceCalculationResponse,
 )
 from .reference_price_response import ReferencePriceResponse as ReferencePriceResponse
-from .reference_price_response1 import (
-    ReferencePriceResponse1 as ReferencePriceResponse1,
-)
-from .reference_price_response2 import (
-    ReferencePriceResponse2 as ReferencePriceResponse2,
-)
 from .sor_order_response import SorOrderResponse as SorOrderResponse
 from .sor_order_response_fills_inner import (
     SorOrderResponseFillsInner as SorOrderResponseFillsInner,
