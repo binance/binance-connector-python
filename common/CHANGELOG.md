@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.5.1 - 2026-10-06
+
+### Changed (3)
+
+- Fixed HTTP `500`, `502`, `503` and `504` responses never being retried: `GET` and `DELETE` requests are now retried up to `retries` times before raising `ServerError`.
+- Fixed network errors being retried one time less than `retries`: a request is now sent up to `retries + 1` times in total.
+- Signed requests are now signed again on each retry, so a retried request gets a fresh `timestamp` and `signature` instead of reusing ones that may fall outside `recvWindow`. A `timestamp` set on the request parameters is still kept.
+
 ## 4.5.0 - 2026-09-23
 
 ### Added (1)
