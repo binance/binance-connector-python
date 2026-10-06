@@ -522,6 +522,7 @@ def send_request(
         headers["Connection"] = "close"
 
     attempt = 0
+    max_attempts = retries + 1
 
     if is_signed:
         cleaned_payload = clean_none_value(payload)
@@ -535,7 +536,7 @@ def send_request(
         )
         payload = cleaned_payload
 
-    while attempt <= retries:
+    while attempt < max_attempts:
         try:
             response = session.request(
                 method=method,
@@ -656,11 +657,24 @@ def send_request(
             )
         except requests.RequestException as e:
             attempt += 1
+            retries_left = max_attempts - attempt
 
-            if should_retry_request(e, method, retries - attempt):
+            if should_retry_request(e, method, retries_left):
                 time.sleep(backoff * attempt)
             else:
                 raise NetworkError(error_message=f"Network error: {str(e)}") from e
+        except ServerError as e:
+            attempt += 1
+            retries_left = max_attempts - attempt
+
+            if retries_left <= 0:
+                raise
+            if method is None or method.upper() not in ("GET", "DELETE"):
+                raise
+            if e.status_code not in (500, 502, 503, 504):
+                raise
+
+            time.sleep(backoff * attempt)
 
     raise Exception(f"Request failed after {retries} retries.")
 

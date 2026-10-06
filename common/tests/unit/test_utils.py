@@ -1183,14 +1183,21 @@ class TestSendRequest(unittest.TestCase):
     ):
         """Test request retrying on network errors."""
 
+        # issue 566 a 5xx response is now retriable, so the session must
+        # yield enough 500s to exhaust every attempt (1 initial + retries)
+
         mock_response = Mock(status_code=500)
         self.session.request.side_effect = [
             requests.RequestException("Network Error"),
             mock_response,
+            Mock(status_code=500),
+            Mock(status_code=500),
         ]
 
         with self.assertRaises(ServerError):
             send_request(self.session, self.configuration, self.method, self.path, {})
+
+        self.assertEqual(self.session.request.call_count, 4)
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
