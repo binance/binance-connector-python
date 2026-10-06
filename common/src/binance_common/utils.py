@@ -523,24 +523,26 @@ def send_request(
 
     attempt = 0
 
-    if is_signed:
-        cleaned_payload = clean_none_value(payload)
-        if body:
-            cleaned_payload.update(clean_none_value(body))
-        if "timestamp" not in cleaned_payload:
-            cleaned_payload["timestamp"] = get_timestamp()
-        query_string = encoded_string(cleaned_payload)
-        cleaned_payload["signature"] = get_signature(
-            configuration, query_string, signer
-        )
-        payload = cleaned_payload
-
     while attempt <= retries:
+        request_payload = payload
+
+        if is_signed:
+            cleaned_payload = dict(clean_none_value(payload))
+            if body:
+                cleaned_payload.update(clean_none_value(body))
+            if "timestamp" not in cleaned_payload:
+                cleaned_payload["timestamp"] = get_timestamp()
+            query_string = encoded_string(cleaned_payload)
+            cleaned_payload["signature"] = get_signature(
+                configuration, query_string, signer
+            )
+            request_payload = cleaned_payload
+
         try:
             response = session.request(
                 method=method,
                 url=url,
-                params=encoded_string(clean_none_value(payload)),
+                params=encoded_string(clean_none_value(request_payload)),
                 headers=headers,
                 timeout=timeout,
                 proxies=proxies,
@@ -587,6 +589,15 @@ def send_request(
                         retry_after=parse_retry_after(response.headers),
                     )
                 elif 500 <= status < 600:
+                    retries_left = retries - attempt
+                    attempt += 1
+
+                    if should_retry_request(
+                        requests.HTTPError(response=response), method, retries_left
+                    ):
+                        time.sleep(backoff * attempt)
+                        continue
+
                     raise ServerError(
                         error_message=f"Server error: {status}", status_code=status
                     )
@@ -655,9 +666,10 @@ def send_request(
                 rate_limits=parse_rate_limit_headers(response.headers),
             )
         except requests.RequestException as e:
+            retries_left = retries - attempt
             attempt += 1
 
-            if should_retry_request(e, method, retries - attempt):
+            if should_retry_request(e, method, retries_left):
                 time.sleep(backoff * attempt)
             else:
                 raise NetworkError(error_message=f"Network error: {str(e)}") from e

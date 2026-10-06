@@ -1209,6 +1209,89 @@ class TestSendRequest(unittest.TestCase):
 
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("time.sleep", return_value=None)
+    def test_network_error_retries_configured_times(
+        self, mock_sleep, mock_clean_none, mock_encoded_string
+    ):
+        """Test a network error being retried exactly `retries` times."""
+        for retries in [0, 1, 3]:
+            with self.subTest(retries=retries):
+                self.session.request.reset_mock()
+                self.session.request.side_effect = requests.ConnectionError("boom")
+                self.configuration.retries = retries
+
+                with self.assertRaises(NetworkError):
+                    send_request(
+                        self.session, self.configuration, self.method, self.path, {}
+                    )
+
+                self.assertEqual(self.session.request.call_count, retries + 1)
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("time.sleep", return_value=None)
+    def test_server_error_retries_configured_times(
+        self, mock_sleep, mock_clean_none, mock_encoded_string
+    ):
+        """Test a retriable 5xx being retried exactly `retries` times."""
+        for status in [500, 502, 503, 504]:
+            for retries in [0, 1, 3]:
+                with self.subTest(status=status, retries=retries):
+                    self.session.request.reset_mock()
+                    self.session.request.side_effect = None
+                    self.session.request.return_value = Mock(status_code=status)
+                    self.configuration.retries = retries
+
+                    with self.assertRaises(ServerError) as context:
+                        send_request(
+                            self.session, self.configuration, self.method, self.path, {}
+                        )
+
+                    self.assertEqual(context.exception.status_code, status)
+                    self.assertEqual(self.session.request.call_count, retries + 1)
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    @patch("time.sleep", return_value=None)
+    def test_server_error_recovers_after_retry(
+        self, mock_sleep, mock_parse_rate_limits, mock_clean_none, mock_encoded_string
+    ):
+        """Test a request succeeding after a retried 5xx response."""
+        success = Mock(status_code=200, headers={}, text='{"ok": true}')
+        self.session.request.side_effect = [Mock(status_code=503), success]
+
+        response = send_request(
+            self.session, self.configuration, self.method, self.path, {}
+        )
+
+        self.assertEqual(response.data(), {"ok": True})
+        self.assertEqual(self.session.request.call_count, 2)
+        mock_sleep.assert_called_once_with(self.configuration.backoff / 1000)
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("time.sleep", return_value=None)
+    def test_server_error_not_retried(
+        self, mock_sleep, mock_clean_none, mock_encoded_string
+    ):
+        """Test non-retriable 5xx statuses and methods not being retried."""
+        for method, status in [("POST", 503), ("PUT", 500), ("GET", 501)]:
+            with self.subTest(method=method, status=status):
+                self.session.request.reset_mock()
+                self.session.request.side_effect = None
+                self.session.request.return_value = Mock(status_code=status)
+
+                with self.assertRaises(ServerError):
+                    send_request(
+                        self.session, self.configuration, method, self.path, {}
+                    )
+
+                self.assertEqual(self.session.request.call_count, 1)
+        mock_sleep.assert_not_called()
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     def test_correct_headers_and_proxies(self, mock_clean_none, mock_encoded_string):
         """Ensure correct headers and proxies are used in request."""
         self.configuration.proxy = {
@@ -1330,6 +1413,81 @@ class TestSendRequest(unittest.TestCase):
                 "signature": "signed_signature",
             },
         )
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    @patch("binance_common.utils.get_timestamp", side_effect=[1000, 2000])
+    @patch("binance_common.utils.get_signature", side_effect=["sig_1", "sig_2"])
+    @patch("time.sleep", return_value=None)
+    def test_signed_request_is_resigned_on_retry(
+        self,
+        mock_sleep,
+        mock_get_signature,
+        mock_get_timestamp,
+        mock_parse_rate_limits,
+        mock_clean_none,
+        mock_encoded_string,
+    ):
+        """A retried signed request gets a fresh timestamp and signature."""
+        payload = {"param": "value"}
+        success = Mock(status_code=200, headers={}, text='{"success": true}')
+        self.session.request.side_effect = [Mock(status_code=503), success]
+
+        send_request(
+            self.session,
+            self.configuration,
+            self.method,
+            self.path,
+            payload=payload,
+            is_signed=True,
+        )
+
+        params = [c.kwargs["params"] for c in self.session.request.call_args_list]
+        self.assertEqual(
+            params,
+            [
+                {"param": "value", "timestamp": 1000, "signature": "sig_1"},
+                {"param": "value", "timestamp": 2000, "signature": "sig_2"},
+            ],
+        )
+        self.assertEqual(payload, {"param": "value"})
+
+    @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
+    @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    @patch("binance_common.utils.get_timestamp", return_value=1234567890)
+    @patch("binance_common.utils.get_signature", return_value="signed_signature")
+    @patch("time.sleep", return_value=None)
+    def test_signed_request_retry_keeps_user_provided_timestamp(
+        self,
+        mock_sleep,
+        mock_get_signature,
+        mock_get_timestamp,
+        mock_parse_rate_limits,
+        mock_clean_none,
+        mock_encoded_string,
+    ):
+        """A timestamp passed in the payload is kept on every retry."""
+        success = Mock(status_code=200, headers={}, text='{"success": true}')
+        self.session.request.side_effect = [
+            requests.ConnectionError("boom"),
+            success,
+        ]
+
+        send_request(
+            self.session,
+            self.configuration,
+            self.method,
+            self.path,
+            payload={"param": "value", "timestamp": 1111111111},
+            is_signed=True,
+        )
+
+        mock_get_timestamp.assert_not_called()
+        self.assertEqual(mock_get_signature.call_count, 2)
+        for c in self.session.request.call_args_list:
+            self.assertEqual(c.kwargs["params"]["timestamp"], 1111111111)
 
 
 class TestParseRateLimitHeaders(unittest.TestCase):
