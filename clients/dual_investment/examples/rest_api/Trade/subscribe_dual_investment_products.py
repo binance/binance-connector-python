@@ -6,9 +6,6 @@ from binance_sdk_dual_investment.dual_investment import (
     ConfigurationRestAPI,
     DUAL_INVESTMENT_REST_API_PROD_URL,
 )
-from binance_sdk_dual_investment.rest_api.models import (
-    SubscribeDualInvestmentProductsAutoCompoundPlanEnum,
-)
 
 
 # Configure logging
@@ -31,9 +28,6 @@ def subscribe_dual_investment_products():
             id="741590",
             order_id="8257205859",
             deposit_amount=1,
-            auto_compound_plan=SubscribeDualInvestmentProductsAutoCompoundPlanEnum[
-                "NONE"
-            ].value,
         )
 
         rate_limits = response.rate_limits
