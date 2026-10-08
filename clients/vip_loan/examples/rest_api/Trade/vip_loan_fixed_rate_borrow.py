@@ -29,7 +29,7 @@ def vip_loan_fixed_rate_borrow():
             borrow_coin="BUSD",
             loan_term=30,
             borrow_uid=12345678,
-            collateral_coin="BNB,ETH,BTC",
+            collateral_coin="BNB,BNB-Earn,ETH,BTC",
             collateral_account_id="12345,67890,13579",
         )
 

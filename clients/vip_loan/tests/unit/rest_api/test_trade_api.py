@@ -59,7 +59,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
 
@@ -70,7 +70,7 @@ class TestTradeApi:
             "isFlexibleRate": "Yes",
             "loanAmount": "100.55",
             "collateralAccountId": "12345678,12345678,12345678",
-            "collateralCoin": "BUSD,USDT,ETH",
+            "collateralCoin": "BUSD,USDT,USDT-Earn,ETH",
             "loanTerm": "30",
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -95,7 +95,7 @@ class TestTradeApi:
         assert normalized["loanCoin"] == "BTC"
         assert normalized["loanAmount"] == 1.0
         assert normalized["collateralAccountId"] == "12345678,12345678,12345678"
-        assert normalized["collateralCoin"] == "BUSD,USDT,ETH"
+        assert normalized["collateralCoin"] == "BUSD,USDT,USDT-Earn,ETH"
         assert normalized["isFlexibleRate"] is True
 
         assert response is not None
@@ -126,7 +126,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
             "loan_term": 30,
             "recv_window": 5000,
@@ -139,7 +139,7 @@ class TestTradeApi:
             "isFlexibleRate": "Yes",
             "loanAmount": "100.55",
             "collateralAccountId": "12345678,12345678,12345678",
-            "collateralCoin": "BUSD,USDT,ETH",
+            "collateralCoin": "BUSD,USDT,USDT-Earn,ETH",
             "loanTerm": "30",
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -182,7 +182,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["loan_account_id"] = None
@@ -199,7 +199,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["loan_coin"] = None
@@ -216,7 +216,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["loan_amount"] = None
@@ -233,7 +233,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["collateral_account_id"] = None
@@ -250,7 +250,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["collateral_coin"] = None
@@ -267,7 +267,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
         params["is_flexible_rate"] = None
@@ -285,7 +285,7 @@ class TestTradeApi:
             "loan_coin": "BTC",
             "loan_amount": 1.0,
             "collateral_account_id": "12345678,12345678,12345678",
-            "collateral_coin": "BUSD,USDT,ETH",
+            "collateral_coin": "BUSD,USDT,USDT-Earn,ETH",
             "is_flexible_rate": True,
         }
 
@@ -304,7 +304,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
 
@@ -312,7 +312,7 @@ class TestTradeApi:
             "borrowCoin": "BUSD",
             "borrowAmount": "100.5",
             "actualReceivedAmount": "98.75",
-            "collateralCoin": "BNB,ETH,BTC",
+            "collateralCoin": "BNB,BNB-Earn,ETH,BTC",
             "collateralAccountId": "12345,67890,13579",
             "borrowInterestRate": "0.01501231",
             "duration": "30Days",
@@ -342,7 +342,7 @@ class TestTradeApi:
         assert normalized["borrowCoin"] == "BUSD"
         assert normalized["loanTerm"] == 30
         assert normalized["borrowUid"] == 12345678
-        assert normalized["collateralCoin"] == "BNB,ETH,BTC"
+        assert normalized["collateralCoin"] == "BNB,BNB-Earn,ETH,BTC"
         assert normalized["collateralAccountId"] == "12345,67890,13579"
 
         assert response is not None
@@ -377,7 +377,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
             "auto_repay": True,
             "recv_window": 5000,
@@ -387,7 +387,7 @@ class TestTradeApi:
             "borrowCoin": "BUSD",
             "borrowAmount": "100.5",
             "actualReceivedAmount": "98.75",
-            "collateralCoin": "BNB,ETH,BTC",
+            "collateralCoin": "BNB,BNB-Earn,ETH,BTC",
             "collateralAccountId": "12345,67890,13579",
             "borrowInterestRate": "0.01501231",
             "duration": "30Days",
@@ -437,7 +437,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["supply_request"] = None
@@ -454,7 +454,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["borrow_coin"] = None
@@ -471,7 +471,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["loan_term"] = None
@@ -488,7 +488,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["borrow_uid"] = None
@@ -505,7 +505,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["collateral_coin"] = None
@@ -524,7 +524,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
         params["collateral_account_id"] = None
@@ -542,7 +542,7 @@ class TestTradeApi:
             "borrow_coin": "BUSD",
             "loan_term": 30,
             "borrow_uid": 12345678,
-            "collateral_coin": "BNB,ETH,BTC",
+            "collateral_coin": "BNB,BNB-Earn,ETH,BTC",
             "collateral_account_id": "12345,67890,13579",
         }
 

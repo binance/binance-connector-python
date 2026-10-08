@@ -321,6 +321,8 @@ class VipLoanRestAPI:
         - Only master account applications are supported.
         - `loanAccountId` and `collateralAccountId` must be under the same master account.
         - `loanTerm` is mandatory if the user chooses a fixed rate (`isFlexibleRate = FALSE`).
+        - Every coin in `collateralCoin` is pledged from every account in `collateralAccountId`.
+        - To pledge a Simple Earn Flexible position, add `<ASSET>-Earn` (e.g. `USDT-Earn`) to `collateralCoin` together with its Spot asset (e.g. `USDT,USDT-Earn`). Sending `<ASSET>-Earn` without its Spot asset returns `-10213`.
         - Rate limit: 1 request per 2 seconds per account.
 
                 Args:
@@ -328,7 +330,7 @@ class VipLoanRestAPI:
                     loan_coin (Union[str, None]):
                     loan_amount (Union[float, None]):
                     collateral_account_id (Union[str, None]): Collateral account ID(s). Multiple split by `,`
-                    collateral_coin (Union[str, None]):
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Use `<ASSET>-Earn` for a Simple Earn Flexible position; it must be sent together with its Spot asset, e.g. `USDT,USDT-Earn`.
                     is_flexible_rate (Union[bool, None]): TRUE: flexible rate; FALSE: fixed rate
                     loan_term (Optional[int] = None): Mandatory for fixed rate. Optional for flexible rate. e.g. 30/60 days
                     recv_window (Optional[int] = None):
@@ -375,13 +377,15 @@ class VipLoanRestAPI:
         Notes:
         - **Rate limit:** 2 requests per second per account.
         - When multiple `supplyRequest` entries are provided, all `requestId` values must correspond to the same `borrowCoin` and `loanTerm` (validated by collateral facade).
+        - Every coin in `collateralCoin` is pledged from every account in `collateralAccountId`.
+        - To pledge a Simple Earn Flexible position, add `<ASSET>-Earn` (e.g. `BNB-Earn`) to `collateralCoin` together with its Spot asset (e.g. `BNB,BNB-Earn`). Sending `<ASSET>-Earn` without its Spot asset returns `-10213`.
 
                 Args:
                     supply_request (Union[str, None]): Supply request string, positional encoding (no key). Multiple entries separated by `;`, fields separated by `:`, order: `<requestId>:<interestRate>:<amount>`. Example: `1212:0.12:100;3434:0.13:50`
                     borrow_coin (Union[str, None]): Borrow coin
                     loan_term (Union[int, None]): Loan term in days
                     borrow_uid (Union[int, None]): Borrow receiving account UID
-                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire spot account balance)
+                    collateral_coin (Union[str, None]): Collateral coin(s), multiple separated by `,`. Only coin names, no amount (VIP loan collateral amount = entire Spot balance of the coin; for `<ASSET>-Earn`, the Simple Earn Flexible position of the asset). `<ASSET>-Earn` must be sent together with its Spot asset, e.g. `BNB,BNB-Earn`.
                     collateral_account_id (Union[str, None]): Collateral account ID(s), multiple separated by `,`
                     auto_repay (Optional[bool] = None): Default: `true`. `true`: auto repay at expiration; `false`: auto-convert to flexible (floating rate) at expiration
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`

@@ -29,7 +29,7 @@ def vip_loan_borrow():
             loan_coin="BTC",
             loan_amount=1.0,
             collateral_account_id="12345678,12345678,12345678",
-            collateral_coin="BUSD,USDT,ETH",
+            collateral_coin="BUSD,USDT,USDT-Earn,ETH",
             is_flexible_rate=True,
         )
 

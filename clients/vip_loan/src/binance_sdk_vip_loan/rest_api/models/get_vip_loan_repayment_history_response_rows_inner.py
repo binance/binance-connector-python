@@ -28,6 +28,8 @@ class GetVIPLoanRepaymentHistoryResponseRowsInner(BaseModel):
 
     loan_coin: Optional[StrictStr] = Field(default=None, alias="loanCoin")
     repay_amount: Optional[StrictStr] = Field(default=None, alias="repayAmount")
+    repay_principal: Optional[StrictStr] = Field(default=None, alias="repayPrincipal")
+    repay_interest: Optional[StrictStr] = Field(default=None, alias="repayInterest")
     collateral_coin: Optional[StrictStr] = Field(default=None, alias="collateralCoin")
     repay_status: Optional[StrictStr] = Field(
         default=None,
@@ -41,6 +43,8 @@ class GetVIPLoanRepaymentHistoryResponseRowsInner(BaseModel):
     __properties: ClassVar[List[str]] = [
         "loanCoin",
         "repayAmount",
+        "repayPrincipal",
+        "repayInterest",
         "collateralCoin",
         "repayStatus",
         "loanDate",
@@ -114,6 +118,8 @@ class GetVIPLoanRepaymentHistoryResponseRowsInner(BaseModel):
             {
                 "loanCoin": obj.get("loanCoin"),
                 "repayAmount": obj.get("repayAmount"),
+                "repayPrincipal": obj.get("repayPrincipal"),
+                "repayInterest": obj.get("repayInterest"),
                 "collateralCoin": obj.get("collateralCoin"),
                 "repayStatus": obj.get("repayStatus"),
                 "loanDate": obj.get("loanDate"),

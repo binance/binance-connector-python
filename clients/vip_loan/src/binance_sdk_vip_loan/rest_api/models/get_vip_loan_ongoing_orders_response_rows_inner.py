@@ -40,7 +40,11 @@ class GetVIPLoanOngoingOrdersResponseRowsInner(BaseModel):
     collateral_account_id: Optional[StrictStr] = Field(
         default=None, alias="collateralAccountId"
     )
-    collateral_coin: Optional[StrictStr] = Field(default=None, alias="collateralCoin")
+    collateral_coin: Optional[StrictStr] = Field(
+        default=None,
+        description="Includes `<ASSET>-Earn` entries when a Simple Earn Flexible position is pledged.",
+        alias="collateralCoin",
+    )
     total_collateral_value_after_haircut: Optional[StrictStr] = Field(
         default=None, alias="totalCollateralValueAfterHaircut"
     )
