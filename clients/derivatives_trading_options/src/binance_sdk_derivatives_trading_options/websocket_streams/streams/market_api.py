@@ -175,7 +175,7 @@ class MarketApi:
             /<underlying>@openInterest@<expirationDate>
             https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/ws-streams/market#open-interest
 
-            Option open interest for specific underlying asset on specific expiration date. E.g.[ethusdt@openInterest@221125](wss://fstream.binance.com/market/stream?streams=ethusdt@openInterest@221125)
+            Option open interest for specific underlying asset on specific expiration date. E.g.ethusdt@openInterest@221125
 
         Update Speed: 60s
 
@@ -229,7 +229,7 @@ class MarketApi:
             /<underlying>@optionMarkPrice
             https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/ws-streams/market#option-mark-price
 
-            The mark price for all option symbols on specific underlying asset. E.g.[btcusdt@optionMarkPrice](wss://fstream.binance.com/market/stream?streams=btcusdt@optionMarkPrice)
+            The mark price for all option symbols on specific underlying asset. E.g.btcusdt@optionMarkPrice
 
         Update Speed: 1000ms
 

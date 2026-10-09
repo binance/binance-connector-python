@@ -68,6 +68,7 @@ class TestAccountApi:
                 "id": 1125899906842624000,
                 "asset": "USDT",
                 "amount": "-0.552",
+                "symbol": "BTC-200730-9000-C",
                 "type": "FEE",
                 "createDate": 1592449456000,
             }
@@ -131,6 +132,7 @@ class TestAccountApi:
                 "id": 1125899906842624000,
                 "asset": "USDT",
                 "amount": "-0.552",
+                "symbol": "BTC-200730-9000-C",
                 "type": "FEE",
                 "createDate": 1592449456000,
             }

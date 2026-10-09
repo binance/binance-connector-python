@@ -32,12 +32,23 @@ class AccountFundingFlowResponseInner(BaseModel):
         default=None,
         description="Amount (positive numbers represent inflow, negative numbers represent outflow)",
     )
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Option symbol the record relates to. Returned only for contract-related types (e.g. `CONTRACT`, `FEE`, `EXERCISE_PNL`, `EXERCISE_FEE`); omitted for other types such as `TRANSFER`. Older records may not include this field.",
+    )
     type: Optional[StrictStr] = Field(default=None, description="type (fees)")
     create_date: Optional[StrictInt] = Field(
         default=None, description="Time", alias="createDate"
     )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "asset", "amount", "type", "createDate"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "asset",
+        "amount",
+        "symbol",
+        "type",
+        "createDate",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -106,6 +117,7 @@ class AccountFundingFlowResponseInner(BaseModel):
                 "id": obj.get("id"),
                 "asset": obj.get("asset"),
                 "amount": obj.get("amount"),
+                "symbol": obj.get("symbol"),
                 "type": obj.get("type"),
                 "createDate": obj.get("createDate"),
             }

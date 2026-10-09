@@ -259,7 +259,7 @@ class PublicApi:
             /<symbol>@optionTrade
             https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/ws-streams/public#trade-streams
 
-            The Trade Streams push raw trade information for specific symbol or underlying asset. E.g.[btcusdt@optionTrade](wss://fstream.binance.com/public/stream?streams=btcusdt@optionTrade)
+            The Trade Streams push raw trade information for specific symbol or underlying asset. E.g.btcusdt@optionTrade
 
         Update Speed: 50ms
 

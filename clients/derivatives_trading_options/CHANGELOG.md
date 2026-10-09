@@ -1,5 +1,19 @@
 # Changelog
 
+## 8.5.1 - 2026-10-09
+
+### Changed (4)
+
+#### REST API
+
+- Modified response for `account_funding_flow()` (`GET /eapi/v1/bill`):
+  - items: property `symbol` added
+  - items: item property `symbol` added
+
+- Modified response schema `accountFundingFlowResponse`:
+  - items: property `symbol` added
+  - items: item property `symbol` added
+
 ## 8.5.0 - 2026-10-06
 
 ### Changed (1)
