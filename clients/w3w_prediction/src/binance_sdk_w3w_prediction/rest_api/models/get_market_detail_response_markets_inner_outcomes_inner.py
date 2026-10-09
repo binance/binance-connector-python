@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -31,8 +31,19 @@ class GetMarketDetailResponseMarketsInnerOutcomesInner(BaseModel):
     chance: Optional[StrictStr] = None
     index: Optional[StrictInt] = None
     token_id: Optional[StrictStr] = Field(default=None, alias="tokenId")
+    winner: Optional[StrictBool] = Field(
+        default=None,
+        description="Whether this outcome won. Returned only after the market is resolved. More than one outcome can be `true` when the payout is split",
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["name", "price", "chance", "index", "tokenId"]
+    __properties: ClassVar[List[str]] = [
+        "name",
+        "price",
+        "chance",
+        "index",
+        "tokenId",
+        "winner",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -103,6 +114,7 @@ class GetMarketDetailResponseMarketsInnerOutcomesInner(BaseModel):
                 "chance": obj.get("chance"),
                 "index": obj.get("index"),
                 "tokenId": obj.get("tokenId"),
+                "winner": obj.get("winner"),
             }
         )
         # store additional fields in additional_properties

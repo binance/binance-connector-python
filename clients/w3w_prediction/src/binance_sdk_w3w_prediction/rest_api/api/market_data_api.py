@@ -52,6 +52,11 @@ class MarketDataApi:
 
         Weight(IP): 1
 
+        Response Notes:
+        - `status` is a case-sensitive string. `REGISTERED`: registered and not yet resolved, this value alone does not guarantee that trading is available. `RESOLVED`: the outcome has been determined, it does not mean that the user has already claimed the payout. `PAUSED`: trading is temporarily suspended and may resume. `CLOSED`: closed for display, for example the end time has passed or the market was removed, it does not guarantee that trading is closed.
+        - `markets[].tradingStatus` shows whether new orders may be attempted. `OPEN`: new orders may be attempted, this is the only value that allows new orders. `MATCHING_NOT_ENABLED`: order matching is not enabled. `CANCEL_ONLY`: only cancellation is allowed. `CLOSED`: trading has stopped. Use `markets[].tradingStatus`, not `status`, to decide whether to place an order, because a market whose `status` is `CLOSED` can still have `tradingStatus` `OPEN`. A topic can contain several markets and an order is placed on one market, so only the `tradingStatus` of that market matters. A successful quote does not guarantee that an order is accepted or filled.
+        - `outcomes[].winner` is returned only after the market is resolved. There is no separate cancelled, invalid or refunded status. A resolved market can pay more than one outcome, in that case several outcomes have `winner` set to `true` and `price` is the settled value per share, for example `0.5` for each of two outcomes.
+
                 Args:
                     market_topic_id (Union[int, None]): Market topic ID. Must be > 0
 
@@ -140,6 +145,9 @@ class MarketDataApi:
                 Get a paginated list of prediction market topics, with optional category and sort filters.
 
         Weight(IP): 1
+
+        Response Notes:
+        - For the values of `status` and `markets[].tradingStatus`, see Get Market Detail.
 
                 Args:
                     l1_category (Optional[str] = None): Level-1 category filter

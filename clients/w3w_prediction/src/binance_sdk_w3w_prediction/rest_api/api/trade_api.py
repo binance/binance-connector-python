@@ -147,16 +147,16 @@ class TradeApi:
 
         Response Notes:
         - `feeAmount` is a string because it is denominated in wei (18 decimals) and may exceed JavaScript's safe integer range. `feeDiscountBps` is also a string to allow fractional basis-point values in the future. `feeRateBps` and `slippageBps` are integers and will never exceed safe integer bounds.
-        - **MARKET order minimum amount:** For `MARKET` orders, `amountIn` must be at least approximately **1.5 USDT** (in wei: `1500000000000000000`). The exact minimum varies by market liquidity. If the amount is too small, the server returns `-9000 Your order amount is too small`. This limit does **not** apply to `LIMIT` orders.
+        - **Minimum order amount:** The minimum order amount is set by the server and the upstream market rules and may change, so no fixed value is documented. `BUY` orders are checked by amount (`amountIn`) and `SELL` orders by share quantity, for both `MARKET` and `LIMIT` orders. If the `amountIn` of a `BUY` order is below the minimum, the server returns `-9000` with the message `Your order amount is too small`. A successful quote does not guarantee that the order is accepted or filled, so check the error message and the final order status.
 
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
                     token_id (Union[str, None]): Prediction outcome token ID
                     side (Union[GetQuoteSideEnum, None]): Trade direction. Enum: `BUY`, `SELL`
-                    amount_in (Union[str, None]): Input amount in wei (18 decimals). Must be > 0. For `MARKET` orders, minimum is approximately 1.5 USDT (varies by market depth). Example: `1000000000000000000` = 1 USDT
+                    amount_in (Union[str, None]): Input amount in wei (18 decimals). Must be > 0. The minimum is set by the server and may change, see the response notes. Example: `1000000000000000000` = 1 USDT
                     order_type (Union[GetQuoteOrderTypeEnum, None]): Order type. Enum: `MARKET`, `LIMIT`
                     slippage_bps (Union[int, None]): Slippage tolerance in basis points. Range 1–10000
-                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`. Must be > 0
+                    price_limit (Optional[str] = None): Limit price. Required when `orderType=LIMIT`. Must be > 0. A price that is not on the price tick of the market (see `decimalPrecision` in Get Market Detail) is truncated down instead of being rejected, unless the result is 0
                     chain_id (Optional[str] = None): Chain ID. Default `56` (BSC)
                     fee_rate_bps (Optional[int] = None): Fee rate in basis points. Default `200`, range 1–10000
                     funding_source (Optional[GetQuoteFundingSourceEnum] = None): Funding source. Enum: `MPC`, `CEX`. Default `MPC`

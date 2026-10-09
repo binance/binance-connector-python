@@ -295,6 +295,9 @@ class PositionApi:
 
         Security Type: PREDICTION_TRADE
 
+        Response Notes:
+        - There is no separate cancelled, invalid or refunded status. A resolved market pays each outcome by its payout ratio, which can be fractional, for example `0.5` for each of two outcomes. This is not a refund of the purchase cost. Use `finalOutcome`, `isWinner`, `claimAmount` and `redeemStatus` together with your own claim records, and Get Market Detail for `outcomes[].winner`.
+
                 Args:
                     wallet_address (Union[str, None]): User's prediction wallet address
                     l1_category (Optional[str] = None): Filter by level-1 category

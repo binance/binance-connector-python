@@ -118,6 +118,7 @@ class TestMarketDataApi:
                             "chance": "0.52",
                             "index": 0,
                             "tokenId": "112233",
+                            "winner": True,
                         }
                     ],
                 }
@@ -226,6 +227,7 @@ class TestMarketDataApi:
                             "chance": "0.52",
                             "index": 0,
                             "tokenId": "112233",
+                            "winner": True,
                         }
                     ],
                 }

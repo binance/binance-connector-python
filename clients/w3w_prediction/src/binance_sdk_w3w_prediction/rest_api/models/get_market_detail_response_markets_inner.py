@@ -40,7 +40,9 @@ class GetMarketDetailResponseMarketsInner(BaseModel):
     trade_volume: Optional[StrictStr] = Field(default=None, alias="tradeVolume")
     liquidity: Optional[StrictStr] = None
     decimal_precision: Optional[StrictInt] = Field(
-        default=None, alias="decimalPrecision"
+        default=None,
+        description="Price precision of the market, in decimal places. The price tick is 10 to the power of minus `decimalPrecision`, for example `2` means a tick of 0.01. A limit price that is not on the tick is truncated down",
+        alias="decimalPrecision",
     )
     outcomes: Optional[List[GetMarketDetailResponseMarketsInnerOutcomesInner]] = None
     additional_properties: Dict[str, Any] = {}
