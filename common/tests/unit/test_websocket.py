@@ -3225,3 +3225,74 @@ class TestWebSocketAPIBase:
             ws_api.on_connection("pong", MagicMock(), "missing")
 
         assert "Connection missing not connected." in caplog.text
+
+
+class TestSessionReLogOn:
+    """Issue #569: the logon re-sent after a reconnect must be signed."""
+
+    @staticmethod
+    def _api():
+        config = SimpleNamespace(
+            api_key="test-api-key", private_key="key", private_key_passphrase=None
+        )
+        api = WebSocketAPIBase.__new__(WebSocketAPIBase)
+        api.configuration = config
+        return api
+
+    @pytest.mark.asyncio
+    async def test_re_logon_is_signed_with_api_key_timestamp_and_signature(self):
+        api = self._api()
+        connection = SimpleNamespace(id="conn-1", is_session_log_on=False)
+        request = {"method": "session.logon", "params": {}, "id": "logon-id"}
+
+        with patch(
+            "binance_common.websocket.Signers.get_signer", return_value=MagicMock()
+        ), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ) as mock_signature, patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+            await api.session_re_log_on(request, connection)
+
+        mock_send.assert_awaited_once()
+        sent = mock_send.await_args.args[1]
+        assert sent["method"] == "session.logon"
+        assert sent["params"]["apiKey"] == "test-api-key"
+        assert sent["params"]["signature"] == "signed"
+        assert "timestamp" in sent["params"]
+        mock_signature.assert_called_once()
+        assert connection.is_session_log_on is True
+
+    @pytest.mark.asyncio
+    async def test_re_logon_leaves_the_stored_request_untouched(self):
+        api = self._api()
+        request = {"method": "session.logon", "params": {}, "id": "logon-id"}
+
+        with patch(
+            "binance_common.websocket.Signers.get_signer", return_value=MagicMock()
+        ), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ), patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+            for name in ("conn-1", "conn-2"):
+                connection = SimpleNamespace(id=name, is_session_log_on=False)
+                await api.session_re_log_on(request, connection)
+
+        # Nothing from one re-logon leaks into the next: each one is signed afresh.
+        assert request == {"method": "session.logon", "params": {}, "id": "logon-id"}
+        assert mock_send.await_count == 2
+
+    @pytest.mark.asyncio
+    async def test_no_re_logon_when_the_session_is_already_logged_on(self):
+        api = self._api()
+        connection = SimpleNamespace(id="conn-1", is_session_log_on=True)
+
+        with patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+            await api.session_re_log_on(
+                {"method": "session.logon", "params": {}, "id": "x"}, connection
+            )
+
+        mock_send.assert_not_awaited()
