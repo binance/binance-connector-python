@@ -21,8 +21,11 @@ from ..models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
 from ..models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from ..models import QuerySubOrdersSpotAlgoResponse
 from ..models import TimeWeightedAveragePriceSpotAlgoResponse
+from ..models import VolumeParticipationResponse
 from ..models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
 from ..models import TimeWeightedAveragePriceSpotAlgoSideEnum
+from ..models import VolumeParticipationSideEnum
+from ..models import VolumeParticipationUrgencyEnum
 
 
 class SpotAlgoApi:
@@ -49,7 +52,7 @@ class SpotAlgoApi:
                 DELETE /sapi/v1/algo/spot/order
                 https://developers.binance.com/en/docs/catalog/advanced-trading-algo-trading/api/rest-api/spot-algo#cancel-algo-order-spot-algo
 
-                Cancel an open TWAP order
+                Cancel an open TWAP or VP algo order
 
         Weight(IP): 1
 
@@ -100,7 +103,7 @@ class SpotAlgoApi:
                 GET /sapi/v1/algo/spot/openOrders
                 https://developers.binance.com/en/docs/catalog/advanced-trading-algo-trading/api/rest-api/spot-algo#query-current-algo-open-orders-spot-algo
 
-                Get all open SPOT TWAP orders
+                Get all open Spot TWAP and VP algo orders
 
         Weight(IP): 1
 
@@ -148,7 +151,7 @@ class SpotAlgoApi:
                 GET /sapi/v1/algo/spot/historicalOrders
                 https://developers.binance.com/en/docs/catalog/advanced-trading-algo-trading/api/rest-api/spot-algo#query-historical-algo-orders-spot-algo
 
-                Get all historical SPOT TWAP orders
+                Get all historical Spot TWAP and VP algo orders
 
         Weight(IP): 1
 
@@ -330,6 +333,96 @@ class SpotAlgoApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=TimeWeightedAveragePriceSpotAlgoResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def volume_participation(
+        self,
+        symbol: Union[str, None],
+        side: Union[VolumeParticipationSideEnum, None],
+        quantity: Union[float, None],
+        urgency: Union[VolumeParticipationUrgencyEnum, None],
+        client_algo_id: Optional[str] = None,
+        vp_time_limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VolumeParticipationResponse]:
+        """
+                Volume Participation (VP) New Order (TRADE)
+                POST /sapi/v1/algo/spot/newOrderVp
+                https://developers.binance.com/en/docs/catalog/advanced-trading-algo-trading/api/rest-api/spot-algo#volume-participation
+
+                Place a new spot VP (Volume Participation) order with Algo service. A VP order automatically slices the total quantity over time, targeting a percentage of the market volume.
+
+        Weight(UID): 3000
+
+        Security Type: TRADE
+
+        Notes:
+        - VP orders do not accept `price` or `timeInForce`; pricing is determined algorithmically based on market volume.
+        - `urgency` controls the participation rate: LOW = passive, MEDIUM = neutral, HIGH = aggressive.
+        - Receiving `"success": true` does not guarantee execution; use the query order endpoints (`GET /sapi/v1/algo/spot/openOrders` or `GET /sapi/v1/algo/spot/historicalOrders`) to check the final status.
+        - You need to enable the `Spot Trading` permission for the API key requesting this endpoint.
+        - Base URL: `https://api.binance.com`
+
+                Args:
+                    symbol (Union[str, None]): Trading symbol eg. BTCUSDT
+                    side (Union[VolumeParticipationSideEnum, None]): Trading side ( BUY or SELL )
+                    quantity (Union[float, None]): Total order quantity in base asset; The notional must be at least the equivalent of 1,000 USDT, and the
+        maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if your
+        order is above the maximum notional per order.
+                    urgency (Union[VolumeParticipationUrgencyEnum, None]): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
+                    client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters). If it is not sent, we will give
+        default value. Must be unique across all open Algo orders.
+                    vp_time_limit (Optional[int] = None): Max allowed duration in seconds (minimum 300, maximum 86400). If it is not sent, 86400 is used and the
+        order runs until fully filled or cancelled.
+                    recv_window (Optional[int] = None): Cannot be greater than 60000
+
+                Returns:
+                    ApiResponse[VolumeParticipationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if quantity is None:
+            raise RequiredError(
+                field="quantity", error_message="Missing required parameter 'quantity'"
+            )
+        if urgency is None:
+            raise RequiredError(
+                field="urgency", error_message="Missing required parameter 'urgency'"
+            )
+
+        request_body = {}
+        payload = {
+            "symbol": symbol,
+            "side": side,
+            "quantity": quantity,
+            "urgency": urgency,
+            "client_algo_id": client_algo_id,
+            "vp_time_limit": vp_time_limit,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v1/algo/spot/newOrderVp",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=VolumeParticipationResponse,
             is_signed=True,
             signer=self._signer,
         )

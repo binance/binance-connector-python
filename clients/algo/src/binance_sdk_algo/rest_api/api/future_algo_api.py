@@ -315,7 +315,9 @@ class FutureAlgoApi:
                     symbol (Union[str, None]): Trading symbol eg. BTCUSDT
                     side (Union[TimeWeightedAveragePriceFutureAlgoSideEnum, None]): Trading side ( BUY or SELL )
                     quantity (Union[float, None]): Quantity of base asset; The notional (`quantity` * `mark price(base asset)`) must be more than the
-        equivalent of 1,000 USDT and less than the equivalent of 1,000,000 USDT
+        equivalent of 1,000 USDT, and the maximum notional varies by symbol: up to 50,000,000 USDT for
+        BTCUSDT perpetual, up to 25,000,000 USDT for ETHUSDT perpetual, and up to 5,000,000 USDT for
+        other symbols
                     duration (Union[int, None]): Duration for TWAP orders in seconds
                     position_side (Optional[TimeWeightedAveragePriceFutureAlgoPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
                     client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give
@@ -414,7 +416,9 @@ class FutureAlgoApi:
                     symbol (Union[str, None]): Trading symbol eg. BTCUSDT
                     side (Union[VolumeParticipationFutureAlgoSideEnum, None]): Trading side ( BUY or SELL )
                     quantity (Union[float, None]): Quantity of base asset; The notional (`quantity` * `mark price(base asset)`) must be more than the
-        equivalent of 10,000 USDT and less than the equivalent of 1,000,000 USDT
+        equivalent of 10,000 USDT, and the maximum notional varies by symbol: up to 50,000,000 USDT for
+        BTCUSDT perpetual, up to 25,000,000 USDT for ETHUSDT perpetual, and up to 5,000,000 USDT for
+        other symbols
                     urgency (Union[VolumeParticipationFutureAlgoUrgencyEnum, None]): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
                     position_side (Optional[VolumeParticipationFutureAlgoPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
                     client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give

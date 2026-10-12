@@ -25,8 +25,12 @@ from binance_sdk_algo.rest_api.models import QueryCurrentAlgoOpenOrdersSpotAlgoR
 from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from binance_sdk_algo.rest_api.models import QuerySubOrdersSpotAlgoResponse
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoResponse
+from binance_sdk_algo.rest_api.models import VolumeParticipationResponse
 from binance_sdk_algo.rest_api.models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoSideEnum
+from binance_sdk_algo.rest_api.models import VolumeParticipationSideEnum
+
+from binance_sdk_algo.rest_api.models import VolumeParticipationUrgencyEnum
 
 
 class TestSpotAlgoApi:
@@ -171,8 +175,9 @@ class TestSpotAlgoApi:
                     "bookTime": 1649756817004,
                     "endTime": 0,
                     "algoStatus": "WORKING",
-                    "algoType": "VP",
+                    "algoType": "TWAP",
                     "urgency": "LOW",
+                    "duration": 86400,
                 }
             ],
         }
@@ -240,8 +245,9 @@ class TestSpotAlgoApi:
                     "bookTime": 1649756817004,
                     "endTime": 0,
                     "algoStatus": "WORKING",
-                    "algoType": "VP",
+                    "algoType": "TWAP",
                     "urgency": "LOW",
+                    "duration": 86400,
                 }
             ],
         }
@@ -314,8 +320,9 @@ class TestSpotAlgoApi:
                     "bookTime": 1649757019503,
                     "endTime": 1649757088101,
                     "algoStatus": "CANCELLED",
-                    "algoType": "VP",
+                    "algoType": "TWAP",
                     "urgency": "LOW",
+                    "duration": 86400,
                 }
             ],
         }
@@ -391,8 +398,9 @@ class TestSpotAlgoApi:
                     "bookTime": 1649757019503,
                     "endTime": 1649757088101,
                     "algoStatus": "CANCELLED",
-                    "algoType": "VP",
+                    "algoType": "TWAP",
                     "urgency": "LOW",
+                    "duration": 86400,
                 }
             ],
         }
@@ -811,3 +819,187 @@ class TestSpotAlgoApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.time_weighted_average_price_spot_algo(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_volume_participation_success(self, mock_get_signature):
+        """Test volume_participation() successfully with required parameters only."""
+
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+
+        expected_response = {
+            "clientAlgoId": "65ce1630101a480b85915d7e11fd5078",
+            "success": True,
+            "code": 0,
+            "msg": "OK",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.volume_participation(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/algo/spot/newOrderVp" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["symbol"] == "BTCUSDT"
+        assert normalized["side"] == VolumeParticipationSideEnum["BUY"].value
+        assert normalized["quantity"] == 1
+        assert normalized["urgency"] == VolumeParticipationUrgencyEnum["LOW"].value
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VolumeParticipationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(VolumeParticipationResponse, "from_dict"):
+            expected = VolumeParticipationResponse.from_dict(expected_response)
+        else:
+            expected = VolumeParticipationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_volume_participation_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test volume_participation() successfully with optional parameters."""
+
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+            "client_algo_id": "1",
+            "vp_time_limit": 5000,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "clientAlgoId": "65ce1630101a480b85915d7e11fd5078",
+            "success": True,
+            "code": 0,
+            "msg": "OK",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.volume_participation(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/algo/spot/newOrderVp" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(VolumeParticipationResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(VolumeParticipationResponse, "from_dict"):
+            expected = VolumeParticipationResponse.from_dict(expected_response)
+        else:
+            expected = VolumeParticipationResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_volume_participation_missing_required_param_symbol(self):
+        """Test that volume_participation() raises RequiredError when 'symbol' is missing."""
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+        params["symbol"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
+            self.client.volume_participation(**params)
+
+    def test_volume_participation_missing_required_param_side(self):
+        """Test that volume_participation() raises RequiredError when 'side' is missing."""
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+        params["side"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'side'"):
+            self.client.volume_participation(**params)
+
+    def test_volume_participation_missing_required_param_quantity(self):
+        """Test that volume_participation() raises RequiredError when 'quantity' is missing."""
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+        params["quantity"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'quantity'"
+        ):
+            self.client.volume_participation(**params)
+
+    def test_volume_participation_missing_required_param_urgency(self):
+        """Test that volume_participation() raises RequiredError when 'urgency' is missing."""
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+        params["urgency"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'urgency'"):
+            self.client.volume_participation(**params)
+
+    def test_volume_participation_server_error(self):
+        """Test that volume_participation() raises an error when the server returns an error."""
+
+        params = {
+            "symbol": "BTCUSDT",
+            "side": VolumeParticipationSideEnum["BUY"].value,
+            "quantity": 1,
+            "urgency": VolumeParticipationUrgencyEnum["LOW"].value,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.volume_participation = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.volume_participation(**params)

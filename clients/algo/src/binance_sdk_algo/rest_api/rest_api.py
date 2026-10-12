@@ -34,8 +34,11 @@ from .models import QueryCurrentAlgoOpenOrdersSpotAlgoResponse
 from .models import QueryHistoricalAlgoOrdersSpotAlgoResponse
 from .models import QuerySubOrdersSpotAlgoResponse
 from .models import TimeWeightedAveragePriceSpotAlgoResponse
+from .models import VolumeParticipationResponse
 from .models import QueryHistoricalAlgoOrdersSpotAlgoSideEnum
 from .models import TimeWeightedAveragePriceSpotAlgoSideEnum
+from .models import VolumeParticipationSideEnum
+from .models import VolumeParticipationUrgencyEnum
 
 
 T = TypeVar("T")
@@ -311,7 +314,9 @@ class AlgoRestAPI:
                     symbol (Union[str, None]): Trading symbol eg. BTCUSDT
                     side (Union[TimeWeightedAveragePriceFutureAlgoSideEnum, None]): Trading side ( BUY or SELL )
                     quantity (Union[float, None]): Quantity of base asset; The notional (`quantity` * `mark price(base asset)`) must be more than the
-        equivalent of 1,000 USDT and less than the equivalent of 1,000,000 USDT
+        equivalent of 1,000 USDT, and the maximum notional varies by symbol: up to 50,000,000 USDT for
+        BTCUSDT perpetual, up to 25,000,000 USDT for ETHUSDT perpetual, and up to 5,000,000 USDT for
+        other symbols
                     duration (Union[int, None]): Duration for TWAP orders in seconds
                     position_side (Optional[TimeWeightedAveragePriceFutureAlgoPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
                     client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give
@@ -377,7 +382,9 @@ class AlgoRestAPI:
                     symbol (Union[str, None]): Trading symbol eg. BTCUSDT
                     side (Union[VolumeParticipationFutureAlgoSideEnum, None]): Trading side ( BUY or SELL )
                     quantity (Union[float, None]): Quantity of base asset; The notional (`quantity` * `mark price(base asset)`) must be more than the
-        equivalent of 10,000 USDT and less than the equivalent of 1,000,000 USDT
+        equivalent of 10,000 USDT, and the maximum notional varies by symbol: up to 50,000,000 USDT for
+        BTCUSDT perpetual, up to 25,000,000 USDT for ETHUSDT perpetual, and up to 5,000,000 USDT for
+        other symbols
                     urgency (Union[VolumeParticipationFutureAlgoUrgencyEnum, None]): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
                     position_side (Optional[VolumeParticipationFutureAlgoPositionSideEnum] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
                     client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters)， If it is not sent, we will give
@@ -416,7 +423,7 @@ class AlgoRestAPI:
         """
                 Cancel Spot Algo Order (TRADE)
 
-                Cancel an open TWAP order
+                Cancel an open TWAP or VP algo order
 
         Weight(IP): 1
 
@@ -449,7 +456,7 @@ class AlgoRestAPI:
         """
                 Query Current Spot Algo Open Orders (USER_DATA)
 
-                Get all open SPOT TWAP orders
+                Get all open Spot TWAP and VP algo orders
 
         Weight(IP): 1
 
@@ -481,7 +488,7 @@ class AlgoRestAPI:
         """
                 Query Historical Spot Algo Orders (USER_DATA)
 
-                Get all historical SPOT TWAP orders
+                Get all historical Spot TWAP and VP algo orders
 
         Weight(IP): 1
 
@@ -583,4 +590,55 @@ class AlgoRestAPI:
 
         return self._spotAlgoApi.time_weighted_average_price_spot_algo(
             symbol, side, quantity, duration, client_algo_id, limit_price
+        )
+
+    def volume_participation(
+        self,
+        symbol: Union[str, None],
+        side: Union[VolumeParticipationSideEnum, None],
+        quantity: Union[float, None],
+        urgency: Union[VolumeParticipationUrgencyEnum, None],
+        client_algo_id: Optional[str] = None,
+        vp_time_limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[VolumeParticipationResponse]:
+        """
+                Volume Participation (VP) New Order (TRADE)
+
+                Place a new spot VP (Volume Participation) order with Algo service. A VP order automatically slices the total quantity over time, targeting a percentage of the market volume.
+
+        Weight(UID): 3000
+
+        Security Type: TRADE
+
+        Notes:
+        - VP orders do not accept `price` or `timeInForce`; pricing is determined algorithmically based on market volume.
+        - `urgency` controls the participation rate: LOW = passive, MEDIUM = neutral, HIGH = aggressive.
+        - Receiving `"success": true` does not guarantee execution; use the query order endpoints (`GET /sapi/v1/algo/spot/openOrders` or `GET /sapi/v1/algo/spot/historicalOrders`) to check the final status.
+        - You need to enable the `Spot Trading` permission for the API key requesting this endpoint.
+        - Base URL: `https://api.binance.com`
+
+                Args:
+                    symbol (Union[str, None]): Trading symbol eg. BTCUSDT
+                    side (Union[VolumeParticipationSideEnum, None]): Trading side ( BUY or SELL )
+                    quantity (Union[float, None]): Total order quantity in base asset; The notional must be at least the equivalent of 1,000 USDT, and the
+        maximum notional per order is 200k, 2mm or 10mm, depending on symbol. Please reduce your size if your
+        order is above the maximum notional per order.
+                    urgency (Union[VolumeParticipationUrgencyEnum, None]): Represent the relative speed of the current execution; ENUM: LOW, MEDIUM, HIGH
+                    client_algo_id (Optional[str] = None): A unique id among Algo orders (length should be 32 characters). If it is not sent, we will give
+        default value. Must be unique across all open Algo orders.
+                    vp_time_limit (Optional[int] = None): Max allowed duration in seconds (minimum 300, maximum 86400). If it is not sent, 86400 is used and the
+        order runs until fully filled or cancelled.
+                    recv_window (Optional[int] = None): Cannot be greater than 60000
+
+                Returns:
+                    ApiResponse[VolumeParticipationResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._spotAlgoApi.volume_participation(
+            symbol, side, quantity, urgency, client_algo_id, vp_time_limit, recv_window
         )

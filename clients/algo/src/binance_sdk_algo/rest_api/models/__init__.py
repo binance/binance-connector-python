@@ -56,6 +56,9 @@ from .time_weighted_average_price_spot_algo_response import (
 from .volume_participation_future_algo_response import (
     VolumeParticipationFutureAlgoResponse as VolumeParticipationFutureAlgoResponse,
 )
+from .volume_participation_response import (
+    VolumeParticipationResponse as VolumeParticipationResponse,
+)
 from .enums import (
     QueryHistoricalAlgoOrdersFutureAlgoSideEnum as QueryHistoricalAlgoOrdersFutureAlgoSideEnum,
 )
@@ -80,3 +83,5 @@ from .enums import (
 from .enums import (
     TimeWeightedAveragePriceSpotAlgoSideEnum as TimeWeightedAveragePriceSpotAlgoSideEnum,
 )
+from .enums import VolumeParticipationSideEnum as VolumeParticipationSideEnum
+from .enums import VolumeParticipationUrgencyEnum as VolumeParticipationUrgencyEnum

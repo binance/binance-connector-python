@@ -52,3 +52,14 @@ class QueryHistoricalAlgoOrdersSpotAlgoSideEnum(Enum):
 class TimeWeightedAveragePriceSpotAlgoSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"
+
+
+class VolumeParticipationSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class VolumeParticipationUrgencyEnum(Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"

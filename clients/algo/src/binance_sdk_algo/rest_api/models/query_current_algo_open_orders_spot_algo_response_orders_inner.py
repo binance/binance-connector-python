@@ -59,6 +59,10 @@ class QueryCurrentAlgoOpenOrdersSpotAlgoResponseOrdersInner(BaseModel):
         default=None, description="Algo order type", alias="algoType"
     )
     urgency: Optional[StrictStr] = Field(default=None, description="Execution urgency")
+    duration: Optional[StrictInt] = Field(
+        default=None,
+        description="Order duration in seconds. Only returned for TWAP orders",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "algoId",
@@ -74,6 +78,7 @@ class QueryCurrentAlgoOpenOrdersSpotAlgoResponseOrdersInner(BaseModel):
         "algoStatus",
         "algoType",
         "urgency",
+        "duration",
     ]
 
     model_config = ConfigDict(
@@ -153,6 +158,7 @@ class QueryCurrentAlgoOpenOrdersSpotAlgoResponseOrdersInner(BaseModel):
                 "algoStatus": obj.get("algoStatus"),
                 "algoType": obj.get("algoType"),
                 "urgency": obj.get("urgency"),
+                "duration": obj.get("duration"),
             }
         )
         # store additional fields in additional_properties
