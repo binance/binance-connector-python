@@ -99,22 +99,22 @@ class ExecutionReport(BaseModel):
     V: Optional[StrictStr] = Field(
         default=None, description="selfTradePreventionMode", alias="V"
     )
-    d: Optional[StrictStr] = Field(
+    d: Optional[StrictInt] = Field(
         default=None,
         description="Trailing Delta; This is only visible if the order was a trailing stop order.",
     )
-    D: Optional[StrictStr] = Field(default=None, description="Trailing Time", alias="D")
-    j: Optional[StrictStr] = Field(default=None, description="Strategy Id")
-    J: Optional[StrictStr] = Field(default=None, description="Strategy Type", alias="J")
-    v: Optional[StrictStr] = Field(default=None, description="Prevented Match Id")
+    D: Optional[StrictInt] = Field(default=None, description="Trailing Time", alias="D")
+    j: Optional[StrictInt] = Field(default=None, description="Strategy Id")
+    J: Optional[StrictInt] = Field(default=None, description="Strategy Type", alias="J")
+    v: Optional[StrictInt] = Field(default=None, description="Prevented Match Id")
     A: Optional[StrictStr] = Field(
         default=None, description="Prevented Quantity", alias="A"
     )
     B: Optional[StrictStr] = Field(
         default=None, description="Last Prevented Quantity", alias="B"
     )
-    u: Optional[StrictStr] = Field(default=None, description="Trade Group Id")
-    U: Optional[StrictStr] = Field(
+    u: Optional[StrictInt] = Field(default=None, description="Trade Group Id")
+    U: Optional[StrictInt] = Field(
         default=None, description="Counter Order Id", alias="U"
     )
     Cs: Optional[StrictStr] = Field(
@@ -130,7 +130,7 @@ class ExecutionReport(BaseModel):
         default=None, description="Prevented Execution Quote Qty", alias="pY"
     )
     b: Optional[StrictStr] = Field(default=None, description="Match Type")
-    a: Optional[StrictStr] = Field(default=None, description="Allocation ID")
+    a: Optional[StrictInt] = Field(default=None, description="Allocation ID")
     k: Optional[StrictStr] = Field(default=None, description="Working Floor")
     uS: Optional[StrictBool] = Field(default=None, description="UsedSor", alias="uS")
     additional_properties: Dict[str, Any] = {}
