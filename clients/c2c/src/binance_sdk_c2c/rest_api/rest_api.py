@@ -19,7 +19,6 @@ from .api.default_api import DefaultApi
 from .models import GetC2CTradeHistoryResponse
 from .models import GetC2CTradeHistoryTradeTypeEnum
 
-
 T = TypeVar("T")
 
 
