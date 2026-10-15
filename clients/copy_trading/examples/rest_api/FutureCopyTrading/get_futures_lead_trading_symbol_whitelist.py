@@ -7,7 +7,6 @@ from binance_sdk_copy_trading.copy_trading import (
     COPY_TRADING_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

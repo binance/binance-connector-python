@@ -19,7 +19,6 @@ from .api.future_copy_trading_api import FutureCopyTradingApi
 from .models import GetFuturesLeadTraderStatusResponse
 from .models import GetFuturesLeadTradingSymbolWhitelistResponse
 
-
 T = TypeVar("T")
 
 
