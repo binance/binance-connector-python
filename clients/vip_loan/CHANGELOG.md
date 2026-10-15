@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.6.0 - 2026-10-15
+
+### Changed (2)
+
+- Updated `binance-common` library to version `4.6.0`
+- Updated Dependencies
+
 ## 7.5.1 - 2026-10-08
 
 ### Changed (2)

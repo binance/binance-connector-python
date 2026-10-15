@@ -33,7 +33,6 @@ from .models import GetVIPLoanOngoingOrdersResponse
 from .models import GetVIPLoanRepaymentHistoryResponse
 from .models import QueryApplicationStatusResponse
 
-
 T = TypeVar("T")
 
 

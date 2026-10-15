@@ -7,7 +7,6 @@ from binance_sdk_vip_loan.vip_loan import (
     VIP_LOAN_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
