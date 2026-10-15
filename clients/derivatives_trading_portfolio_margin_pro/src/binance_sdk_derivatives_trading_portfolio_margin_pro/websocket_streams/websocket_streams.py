@@ -21,7 +21,6 @@ from binance_common.websocket import (
 
 from .models import UserDataStreamEventsResponse
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

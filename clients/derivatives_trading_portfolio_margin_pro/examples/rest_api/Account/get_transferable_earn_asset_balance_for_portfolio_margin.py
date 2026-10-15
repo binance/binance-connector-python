@@ -10,7 +10,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

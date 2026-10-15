@@ -7,7 +7,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.derivatives_trading_po
     DERIVATIVES_TRADING_PORTFOLIO_MARGIN_PRO_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

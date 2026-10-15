@@ -50,7 +50,6 @@ from .models import PortfolioMarginCollateralRateResponse
 from .models import PortfolioMarginProTieredCollateralRateResponse
 from .models import QueryPortfolioMarginAssetIndexPriceResponse
 
-
 T = TypeVar("T")
 
 
