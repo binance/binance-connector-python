@@ -108,7 +108,7 @@ class TradingScheduleResponse(BaseModel):
                     TradingScheduleResponseMarketSchedules.from_dict(
                         obj["marketSchedules"]
                     )
-                    if obj.get("marketSchedules") is not None
+                    if obj.get("marketSchedules") not in (None, {})
                     else None
                 ),
             }

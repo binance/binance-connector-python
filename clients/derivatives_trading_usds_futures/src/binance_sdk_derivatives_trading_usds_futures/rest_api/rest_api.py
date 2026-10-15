@@ -167,7 +167,6 @@ from .models import UsersForceOrdersAutoCloseTypeEnum
 from .models import KeepaliveUserDataStreamResponse
 from .models import StartUserDataStreamResponse
 
-
 T = TypeVar("T")
 
 
@@ -395,7 +394,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
                 Futures Trading Quantitative Rules Indicators (USER_DATA)
 
-                Futures trading quantitative rules indicators, for more information on this, please refer to the [Futures Trading Quantitative Rules](https://www.binance.com/en/support/faq/4f462ebe6ff445d4a170be7d9e897272)
+                Futures trading quantitative rules indicators, for more information on this, please refer to the Futures Trading Quantitative Rules
 
         Weight: - **1** for a single symbol
         - **10** when the symbol parameter is omitted
@@ -2512,7 +2511,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    leverage (Union[int, None]): target initial leverage
+                    leverage (Union[int, None]): Target initial leverage. The maximum is symbol-specific: use `initialLeverage` of bracket 1 from `GET /fapi/v1/leverageBracket`.
                     recv_window (Optional[int] = None):
 
                 Returns:

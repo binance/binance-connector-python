@@ -446,7 +446,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
             }
         ]
@@ -526,7 +526,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
             }
         ]
@@ -1083,7 +1083,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "code": -2011,
                 "msg": "Unknown order sent.",
@@ -1165,7 +1165,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "code": -2011,
                 "msg": "Unknown order sent.",
@@ -1258,7 +1258,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -1334,7 +1334,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -2095,7 +2095,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
             }
         ]
@@ -2168,7 +2168,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
             }
         ]
@@ -2832,7 +2832,7 @@ class TestTradeApi:
                 "priceProtect": False,
                 "origType": "LIMIT",
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "updateTime": 1629182711600,
                 "code": -2022,
@@ -2926,7 +2926,7 @@ class TestTradeApi:
                 "priceProtect": False,
                 "origType": "LIMIT",
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 0,
                 "updateTime": 1629182711600,
                 "code": -2022,
@@ -3052,7 +3052,7 @@ class TestTradeApi:
             "priceProtect": False,
             "origType": "LIMIT",
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "updateTime": 1629182711600,
         }
@@ -3137,7 +3137,7 @@ class TestTradeApi:
             "priceProtect": False,
             "origType": "LIMIT",
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
             "updateTime": 1629182711600,
         }
@@ -3515,7 +3515,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3603,7 +3603,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -3736,7 +3736,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 1693207680000,
                 "code": -2022,
                 "msg": "ReduceOnly Order is rejected.",
@@ -3830,7 +3830,7 @@ class TestTradeApi:
                 "workingType": "CONTRACT_PRICE",
                 "priceProtect": False,
                 "priceMatch": "NONE",
-                "selfTradePreventionMode": "NONE",
+                "selfTradePreventionMode": "EXPIRE_MAKER",
                 "goodTillDate": 1693207680000,
                 "code": -2022,
                 "msg": "ReduceOnly Order is rejected.",
@@ -4661,7 +4661,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -4741,7 +4741,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -4833,7 +4833,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -4911,7 +4911,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 0,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -5005,7 +5005,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -5103,7 +5103,7 @@ class TestTradeApi:
             "workingType": "CONTRACT_PRICE",
             "priceProtect": False,
             "priceMatch": "NONE",
-            "selfTradePreventionMode": "NONE",
+            "selfTradePreventionMode": "EXPIRE_MAKER",
             "goodTillDate": 1693207680000,
         }
         mock_get_signature.return_value = "mocked_signature"

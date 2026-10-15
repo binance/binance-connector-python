@@ -13,7 +13,6 @@ from binance_sdk_derivatives_trading_usds_futures.websocket_api.models import (
     ModifyOrderSideEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

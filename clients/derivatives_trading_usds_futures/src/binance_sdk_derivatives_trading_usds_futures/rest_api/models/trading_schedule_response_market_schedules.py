@@ -155,40 +155,40 @@ class TradingScheduleResponseMarketSchedules(BaseModel):
                     TradingScheduleResponseMarketSchedulesEQUITY.from_dict(
                         obj["EQUITY"]
                     )
-                    if obj.get("EQUITY") is not None
+                    if obj.get("EQUITY") not in (None, {})
                     else None
                 ),
                 "COMMODITY": (
                     TradingScheduleResponseMarketSchedulesCOMMODITY.from_dict(
                         obj["COMMODITY"]
                     )
-                    if obj.get("COMMODITY") is not None
+                    if obj.get("COMMODITY") not in (None, {})
                     else None
                 ),
                 "KR_EQUITY": (
                     TradingScheduleResponseMarketSchedulesKREQUITY.from_dict(
                         obj["KR_EQUITY"]
                     )
-                    if obj.get("KR_EQUITY") is not None
+                    if obj.get("KR_EQUITY") not in (None, {})
                     else None
                 ),
                 "HK_EQUITY": (
                     TradingScheduleResponseMarketSchedulesHKEQUITY.from_dict(
                         obj["HK_EQUITY"]
                     )
-                    if obj.get("HK_EQUITY") is not None
+                    if obj.get("HK_EQUITY") not in (None, {})
                     else None
                 ),
                 "CN_EQUITY": (
                     TradingScheduleResponseMarketSchedulesHKEQUITY.from_dict(
                         obj["CN_EQUITY"]
                     )
-                    if obj.get("CN_EQUITY") is not None
+                    if obj.get("CN_EQUITY") not in (None, {})
                     else None
                 ),
                 "FX": (
                     TradingScheduleResponseMarketSchedulesFX.from_dict(obj["FX"])
-                    if obj.get("FX") is not None
+                    if obj.get("FX") not in (None, {})
                     else None
                 ),
             }

@@ -8,7 +8,6 @@ from binance_sdk_derivatives_trading_usds_futures.derivatives_trading_usds_futur
     ConfigurationWebSocketStreams,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

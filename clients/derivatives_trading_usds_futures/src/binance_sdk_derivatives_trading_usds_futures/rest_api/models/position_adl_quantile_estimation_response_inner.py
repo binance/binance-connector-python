@@ -108,7 +108,7 @@ class PositionAdlQuantileEstimationResponseInner(BaseModel):
                     PositionAdlQuantileEstimationResponseInnerAdlQuantile.from_dict(
                         obj["adlQuantile"]
                     )
-                    if obj.get("adlQuantile") is not None
+                    if obj.get("adlQuantile") not in (None, {})
                     else None
                 ),
             }

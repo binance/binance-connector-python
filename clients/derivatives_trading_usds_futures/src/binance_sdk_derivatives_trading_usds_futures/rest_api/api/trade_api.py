@@ -605,7 +605,7 @@ class TradeApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    leverage (Union[int, None]): target initial leverage
+                    leverage (Union[int, None]): Target initial leverage. The maximum is symbol-specific: use `initialLeverage` of bracket 1 from `GET /fapi/v1/leverageBracket`.
                     recv_window (Optional[int] = None):
 
                 Returns:
