@@ -23,7 +23,6 @@ from .models import FetchTokenLimitResponse
 from .models import RedeemABinanceGiftCardResponse
 from .models import VerifyBinanceGiftCardByGiftCardNumberResponse
 
-
 T = TypeVar("T")
 
 
@@ -120,11 +119,11 @@ class GiftCardRestAPI:
         100 USDT before redemption, and will be redeemable to BTC equivalent to 100 USDT upon redemption.
 
         * Once successfully created, the amount of baseToken (e.g. USDT) in the fixed-value gift card along with the fee
-        would be deducted from your funding wallet.
+        would be deducted from your Spot wallet.
           * To get started with, please make sure:
           * You have a Binance account
           * You have passed KYB
-          * You have a sufﬁcient balance(Gift Card amount and fee amount) in your Binance funding wallet
+          * You have a sufﬁcient balance(Gift Card amount and fee amount) in your Binance Spot wallet
           * You need Enable Withdrawals for the API Key which requests this endpoint.
 
         Weight(IP): 1
@@ -164,7 +163,7 @@ class GiftCardRestAPI:
         To get started with, please make sure:
           * You have a Binance account
           * You have passed KYB
-          * You have a sufﬁcient balance(Gift Card amount and fee amount) in your Binance funding wallet
+          * You have a sufﬁcient balance(Gift Card amount and fee amount) in your Binance Spot wallet
           * You need `Enable Withdrawals` for the API Key which requests this endpoint.
 
         Weight(IP): 1
@@ -255,7 +254,7 @@ class GiftCardRestAPI:
         """
                 Redeem a Binance Gift Card (USER_DATA)
 
-                This API is for redeeming a Binance Gift Card. Once redeemed, the coins will be deposited in your funding wallet.
+                This API is for redeeming a Binance Gift Card. Once redeemed, the coins will be deposited in your Spot wallet.
 
         Weight(IP): 1
 

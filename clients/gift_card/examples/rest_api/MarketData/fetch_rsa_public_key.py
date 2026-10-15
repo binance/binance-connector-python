@@ -7,7 +7,6 @@ from binance_sdk_gift_card.gift_card import (
     GIFT_CARD_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
