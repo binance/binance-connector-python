@@ -61,7 +61,6 @@ from .models import NewOrderNewOrderRespTypeEnum
 from .models import NewOrderPriceMatchEnum
 from .models import NewOrderSelfTradePreventionModeEnum
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

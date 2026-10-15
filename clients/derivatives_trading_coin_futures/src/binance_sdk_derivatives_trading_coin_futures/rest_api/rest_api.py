@@ -120,7 +120,6 @@ from .models import UsersForceOrdersAutoCloseTypeEnum
 from .models import KeepaliveUserDataStreamResponse
 from .models import StartUserDataStreamResponse
 
-
 T = TypeVar("T")
 
 

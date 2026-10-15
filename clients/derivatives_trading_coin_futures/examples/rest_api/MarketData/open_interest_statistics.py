@@ -10,7 +10,6 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
     OpenInterestStatisticsPeriodEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

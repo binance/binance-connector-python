@@ -8,7 +8,6 @@ from binance_sdk_derivatives_trading_coin_futures.derivatives_trading_coin_futur
     ConfigurationWebSocketAPI,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

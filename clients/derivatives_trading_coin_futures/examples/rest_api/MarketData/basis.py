@@ -11,7 +11,6 @@ from binance_sdk_derivatives_trading_coin_futures.rest_api.models import (
 )
 from binance_sdk_derivatives_trading_coin_futures.rest_api.models import BasisPeriodEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

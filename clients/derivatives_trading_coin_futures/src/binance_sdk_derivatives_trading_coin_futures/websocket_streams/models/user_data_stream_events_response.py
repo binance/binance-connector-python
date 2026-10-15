@@ -18,7 +18,6 @@ from pydantic import (
     ConfigDict,
     ValidationError,
     field_validator,
-    model_validator,
 )
 from typing import Any, Optional
 from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.account_config_update import (
@@ -182,7 +181,6 @@ class UserDataStreamEventsResponse(BaseModel):
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_oneof(cls, v):
-
         error_messages = []
         match = 0
         # validate data type: AccountConfigUpdate
