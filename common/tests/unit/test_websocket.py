@@ -3706,10 +3706,22 @@ class TestSessionReLogOn:
         api.configuration = config
         return api
 
+    @staticmethod
+    def _connection(name="conn-1", is_session_log_on=False):
+        return SimpleNamespace(
+            id=name, is_session_log_on=is_session_log_on, pending_request={}
+        )
+
+    @staticmethod
+    def _ok_response(*_args, **_kwargs):
+        future = asyncio.get_running_loop().create_future()
+        future.set_result({"status": 200})
+        return future
+
     @pytest.mark.asyncio
     async def test_re_logon_is_signed_with_api_key_timestamp_and_signature(self):
         api = self._api()
-        connection = SimpleNamespace(id="conn-1", is_session_log_on=False)
+        connection = self._connection()
         request = {"method": "session.logon", "params": {}, "id": "logon-id"}
 
         with patch(
@@ -3717,7 +3729,10 @@ class TestSessionReLogOn:
         ), patch(
             "binance_common.utils.get_signature", return_value="signed"
         ) as mock_signature, patch.object(
-            WebSocketCommon, "send_message", new_callable=AsyncMock
+            WebSocketCommon,
+            "send_message",
+            new_callable=AsyncMock,
+            side_effect=self._ok_response,
         ) as mock_send:
             await api.session_re_log_on(request, connection)
 
@@ -3740,10 +3755,13 @@ class TestSessionReLogOn:
         ), patch(
             "binance_common.utils.get_signature", return_value="signed"
         ), patch.object(
-            WebSocketCommon, "send_message", new_callable=AsyncMock
+            WebSocketCommon,
+            "send_message",
+            new_callable=AsyncMock,
+            side_effect=self._ok_response,
         ) as mock_send:
             for name in ("conn-1", "conn-2"):
-                connection = SimpleNamespace(id=name, is_session_log_on=False)
+                connection = self._connection(name)
                 await api.session_re_log_on(request, connection)
 
         # Nothing from one re-logon leaks into the next: each one is signed afresh.
@@ -3753,7 +3771,7 @@ class TestSessionReLogOn:
     @pytest.mark.asyncio
     async def test_no_re_logon_when_the_session_is_already_logged_on(self):
         api = self._api()
-        connection = SimpleNamespace(id="conn-1", is_session_log_on=True)
+        connection = self._connection(is_session_log_on=True)
 
         with patch.object(
             WebSocketCommon, "send_message", new_callable=AsyncMock
