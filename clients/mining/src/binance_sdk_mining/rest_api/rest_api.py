@@ -30,7 +30,6 @@ from .models import RequestForDetailMinerListResponse
 from .models import RequestForMinerListResponse
 from .models import StatisticListResponse
 
-
 T = TypeVar("T")
 
 
