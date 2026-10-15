@@ -18,7 +18,6 @@ from .api.default_api import DefaultApi
 
 from .models import GetSpotRebateHistoryRecordsResponse
 
-
 T = TypeVar("T")
 
 
