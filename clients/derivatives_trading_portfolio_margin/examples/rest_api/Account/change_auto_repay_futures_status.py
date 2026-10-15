@@ -10,7 +10,6 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ChangeAutoRepayFuturesStatusAutoRepayEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

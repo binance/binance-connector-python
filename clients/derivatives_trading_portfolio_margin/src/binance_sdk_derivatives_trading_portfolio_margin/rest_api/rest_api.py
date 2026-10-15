@@ -178,7 +178,6 @@ from .models import QueryUsersUmForceOrdersAutoCloseTypeEnum
 from .models import ToggleBnbBurnOnUmFuturesTradeFeeBurnEnum
 from .models import StartUserDataStreamResponse
 
-
 T = TypeVar("T")
 
 
@@ -458,7 +457,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    leverage (Union[int, None]): target initial leverage
+                    leverage (Union[int, None]): Target initial leverage. The maximum is symbol-specific: use `initialLeverage` of bracket 1 from `GET /papi/v1/um/leverageBracket`.
                     recv_window (Optional[int] = None):
 
                 Returns:
