@@ -8,7 +8,6 @@ from binance_sdk_alpha.alpha import (
     ConfigurationWebSocketStreams,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

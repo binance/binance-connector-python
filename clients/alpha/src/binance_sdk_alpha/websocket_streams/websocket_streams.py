@@ -34,7 +34,6 @@ from .models import KlineStreamIntervalEnum
 from .models import PartialDepthStreamLevelsEnum
 from .models import PartialDepthStreamIntervalEnum
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

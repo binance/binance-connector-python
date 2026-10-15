@@ -25,7 +25,6 @@ from .models import TokenListResponse
 from .models import FullDepthLimitEnum
 from .models import KlinesIntervalEnum
 
-
 T = TypeVar("T")
 
 
