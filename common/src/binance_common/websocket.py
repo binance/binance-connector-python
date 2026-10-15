@@ -3,10 +3,12 @@ import asyncio
 import inspect
 import json
 import logging
+import secrets
 
 from pydantic import BaseModel
 from typing import Callable, Optional, Dict, Generic, Union, TypeVar, Type
 from collections import defaultdict
+from urllib.parse import quote, urlencode
 
 from binance_common.configuration import (
     ConfigurationWebSocketAPI,
@@ -27,6 +29,8 @@ from binance_common.models import (
 )
 from binance_common.signature import Signers
 from binance_common.utils import (
+    get_signature,
+    get_timestamp,
     get_uuid,
     get_random_int,
     parse_proxies,
@@ -43,30 +47,6 @@ T = TypeVar("T", bound=BaseModel)
 class StreamConnectionsMap:
     def __init__(self):
         self.stream_connections_map: dict[Union[str, int], WebSocketConnection] = {}
-
-
-global_stream_connections = StreamConnectionsMap()
-global_user_stream_connections = StreamConnectionsMap()
-
-
-def _forget_connection_streams(connection: "WebSocketConnection") -> None:
-    """Drop every stream mapping that points at a connection.
-
-    A connection that is gone for good must not be left in the global stream
-    maps, or a later subscribe would treat its streams as still live and
-    silently skip them.
-
-    Args:
-        connection (WebSocketConnection): The connection being forgotten.
-    """
-
-    for stream_map in (global_stream_connections, global_user_stream_connections):
-        for stream in [
-            stream
-            for stream, mapped in stream_map.stream_connections_map.items()
-            if mapped is connection
-        ]:
-            stream_map.stream_connections_map.pop(stream, None)
 
 
 class WebSocketConnection:
@@ -157,6 +137,28 @@ class WebSocketCommon:
         self.configuration = configuration
         self.session = None
         self.user_data_endpoints = user_data_endpoints
+        self.stream_connections = StreamConnectionsMap()
+        self.user_stream_connections = StreamConnectionsMap()
+        self.signed = False
+
+    def _forget_connection_streams(self, connection: WebSocketConnection) -> None:
+        """Drop every stream mapping that points at a connection.
+
+        A connection that is gone for good must not be left in the stream
+        maps, or a later subscribe would treat its streams as still live and
+        silently skip them.
+
+        Args:
+            connection (WebSocketConnection): The connection being forgotten.
+        """
+
+        for stream_map in (self.stream_connections, self.user_stream_connections):
+            for stream in [
+                stream
+                for stream, mapped in stream_map.stream_connections_map.items()
+                if mapped is connection
+            ]:
+                stream_map.stream_connections_map.pop(stream, None)
 
     async def connect(
         self,
@@ -246,10 +248,14 @@ class WebSocketCommon:
                     else get_uuid()
                 )
         else:
+            headers = {"User-Agent": user_agent}
+            if self.signed:
+                headers["X-MBX-APIKEY"] = configuration.api_key or ""
+
             websocket = await self.session.ws_connect(
                 url,
                 compress=configuration.compression,
-                headers={"User-Agent": user_agent},
+                headers=headers,
                 max_msg_size=20 * 1024 * 1024,
                 proxy=proxy,
                 ssl=ssl_option,
@@ -282,6 +288,8 @@ class WebSocketCommon:
         async for msg in connection.websocket:
             if msg.type == aiohttp.WSMsgType.TEXT:
                 data = json.loads(msg.data)
+                if self.signed:
+                    data = self.parse_signed_stream_message(data)
 
                 request_id = data.get("id")
                 if request_id and request_id in connection.pending_request:
@@ -896,21 +904,22 @@ class WebSocketCommon:
                         f"pool after a failed reconnect."
                     )
 
-                _forget_connection_streams(connection)
+                self._forget_connection_streams(connection)
                 return None
-
-            if connection.session_logon_request and self.configuration.session_re_logon:
-                await self.session_re_log_on(
-                    connection.session_logon_request, new_connection
-                )
-                await asyncio.sleep(1)
-                await self._resubscribe_user_streams(connection, new_connection)
 
             if connection.connection_callback_map:
                 new_connection.connection_callback_map = defaultdict(
                     list,
                     {event: callbacks.copy() for event, callbacks in connection.connection_callback_map.items()}
                 )
+
+            if connection.session_logon_request and self.configuration.session_re_logon:
+                if await self.session_re_log_on(
+                    connection.session_logon_request, new_connection
+                ):
+                    await self._resubscribe_user_streams(connection, new_connection)
+                else:
+                    self._drop_user_streams(connection)
 
             await self._resubscribe_global_streams(connection, new_connection)
             self._emit_connection_event(new_connection, "open")
@@ -932,7 +941,7 @@ class WebSocketCommon:
             new_connection (WebSocketConnection): The new WebSocket connection.
         """
         for stream, old_target in old_connection.stream_callback_map.items():
-            if stream not in global_user_stream_connections.stream_connections_map:
+            if stream not in self.user_stream_connections.stream_connections_map:
                 continue
 
             json_msg = {
@@ -942,13 +951,39 @@ class WebSocketCommon:
             }
             await WebSocketCommon.send_message(self, json_msg, new_connection)
 
-            global_user_stream_connections.stream_connections_map[stream] = (
-                new_connection
-            )
+            self.user_stream_connections.stream_connections_map[stream] = new_connection
             new_connection.stream_callback_map[stream] = old_target
             new_connection.response_types[stream] = old_connection.response_types.get(
                 stream
             )
+
+    def stream_messages(self, method: str, streams: list[str]) -> list[dict]:
+        """Build the messages that subscribe to or unsubscribe from streams.
+
+        Args:
+            method (str): Either `SUBSCRIBE` or `UNSUBSCRIBE`.
+            streams (list[str]): The streams to subscribe to or unsubscribe from.
+
+        Returns:
+            list[dict]: One `{"command": ..., "value": <stream>}` message per stream
+                for signed streams, otherwise a single `{"method": ..., "params": [...]}`
+                message.
+        """
+
+        if self.signed:
+            return [{"command": method, "value": stream} for stream in streams]
+
+        return [
+            {
+                "method": method,
+                "params": streams,
+                "id": (
+                    get_random_int()
+                    if getattr(self, "id_strict_int", False)
+                    else get_uuid()
+                ),
+            }
+        ]
 
     async def _resubscribe_global_streams(
         self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
@@ -963,7 +998,7 @@ class WebSocketCommon:
         streams = [
             stream
             for stream, conn in list(
-                global_stream_connections.stream_connections_map.items()
+                self.stream_connections.stream_connections_map.items()
             )
             if conn == old_connection and isinstance(stream, str)
         ]
@@ -971,17 +1006,11 @@ class WebSocketCommon:
         if not streams:
             return
 
-        json_msg = {
-            "method": "SUBSCRIBE",
-            "params": streams,
-            "id": (
-                get_random_int() if getattr(self, "id_strict_int", False) else get_uuid()
-            ),
-        }
-        await self.send_message(json_msg, new_connection)
+        for json_msg in self.stream_messages("SUBSCRIBE", streams):
+            await self.send_message(json_msg, new_connection)
 
         for stream in streams:
-            global_stream_connections.stream_connections_map[stream] = new_connection
+            self.stream_connections.stream_connections_map[stream] = new_connection
             new_connection.stream_callback_map[stream] = (
                 old_connection.stream_callback_map.get(stream)
             )
@@ -989,21 +1018,51 @@ class WebSocketCommon:
                 stream
             )
 
-    async def session_re_log_on(self, request, connection: WebSocketConnection):
-        """Re-logon the session.
+    def _drop_user_streams(self, connection: WebSocketConnection) -> None:
+        """Forget the user data streams of a connection that could not be resubscribed.
+
         Args:
-            connection (WebSocketConnection): WebSocket connection object.
+            connection (WebSocketConnection): The connection being replaced.
         """
 
-        if request and not connection.is_session_log_on:
-            # A new connection is not authenticated, so the logon has to be
-            # signed again: apiKey, a fresh timestamp and a new signature. The
-            # params are copied so the stored request is left untouched.
-            data = {
-                "method": request["method"],
-                "params": dict(request["params"]),
-                "id": request["id"],
-            }
+        user_streams = self.user_stream_connections.stream_connections_map
+        for stream in [s for s, mapped in user_streams.items() if mapped is connection]:
+            user_streams.pop(stream, None)
+            logging.warning(
+                f"User data stream {stream} dropped: the session could not be "
+                f"logged on again after reconnecting WebSocket {connection.id}."
+            )
+
+    async def session_re_log_on(self, request, connection: WebSocketConnection) -> bool:
+        """Log the session on again on a renewed connection.
+
+        Args:
+            request (dict): The original `session.logon` request.
+            connection (WebSocketConnection): WebSocket connection object.
+
+        Returns:
+            bool: Whether the session is logged on.
+        """
+
+        if not request:
+            return False
+
+        if connection.is_session_log_on:
+            return True
+
+        # Keep the request so a later reconnect can log on again, even if
+        # this attempt fails.
+        connection.session_logon_request = request
+
+        params = {
+            k: v
+            for k, v in request["params"].items()
+            if k not in ("timestamp", "signature")
+        }
+        data = {"method": request["method"], "params": params}
+        payload = {}
+
+        try:
             signer = Signers.get_signer(
                 self.configuration.private_key,
                 self.configuration.private_key_passphrase,
@@ -1013,13 +1072,22 @@ class WebSocketCommon:
             )
             payload = ws_api_payload(self.configuration, data, websocket_options)
 
-            try:
-                await WebSocketCommon.send_message(self, payload, connection)
-                connection.is_session_log_on = True
-            except Exception as e:
-                logging.error(
-                    f"Session re-logon failed for connection {connection.id}: {e}"
-                )
+            future = await WebSocketCommon.send_message(self, payload, connection)
+            response = await asyncio.wait_for(future, timeout=20)
+            if response.get("status") != 200:
+                raise ValueError(response.get("error") or response)
+        except Exception as e:
+            if isinstance(e, asyncio.TimeoutError):
+                e = TimeoutError("no response to session.logon")
+            connection.pending_request.pop(payload.get("id"), None)
+            logging.error(
+                f"Session re-logon failed for connection {connection.id}: {e}"
+            )
+            self._emit_connection_event(connection, "error", e)
+            return False
+
+        connection.is_session_log_on = True
+        return True
 
     async def close_connection(
         self,
@@ -1067,7 +1135,7 @@ class WebSocketCommon:
             logging.error(f"Error closing WebSocket {connection.id}: {e}")
 
         if user_initiated:
-            _forget_connection_streams(connection)
+            self._forget_connection_streams(connection)
 
 
 class WebSocketStreamBase(WebSocketCommon):
@@ -1076,6 +1144,7 @@ class WebSocketStreamBase(WebSocketCommon):
         configuration: ConfigurationWebSocketStreams,
         id_strict_int: Optional[bool] = False,
         url_paths: Optional[str] = None,
+        signed: Optional[bool] = False,
     ):
         """Initialize the WebSocketStreamBase class.
 
@@ -1083,14 +1152,98 @@ class WebSocketStreamBase(WebSocketCommon):
             configuration (ConfigurationWebSocketStreams): Configuration object.
             id_strict_int (Optional[bool]): Whether to use strict integer IDs.
             url_paths (Optional[str]): URL paths for the WebSocket connection.
+            signed (Optional[bool]): Whether the streams require a signed connection.
         """
 
-        if configuration.stream_url and not configuration.stream_url.endswith("stream"):
+        if (
+            not signed
+            and configuration.stream_url
+            and not configuration.stream_url.endswith("stream")
+        ):
             configuration.stream_url = configuration.stream_url + "/stream"
         super().__init__(configuration)
         self.configuration = configuration
         self.id_strict_int = id_strict_int
         self.url_paths = url_paths
+        self.signed = signed
+        self.signer = (
+            Signers.get_signer(
+                configuration.private_key, configuration.private_key_passphrase
+            )
+            if signed and configuration.private_key
+            else None
+        )
+
+    def sign_stream_url(self, url: str) -> str:
+        """Append a freshly signed query string to a signed streams URL.
+
+        Args:
+            url (str): The WebSocket URL to sign.
+
+        Returns:
+            str: The URL with the `random`, `recvWindow`, `timestamp` and `signature` query parameters.
+        """
+
+        query = urlencode(
+            {
+                "random": secrets.token_hex(16),
+                "recvWindow": 30000,
+                "timestamp": get_timestamp(),
+            }
+        )
+        signature = get_signature(self.configuration, query, self.signer)
+        return f"{url}?{query}&signature={quote(signature, safe='')}"
+
+    @staticmethod
+    def parse_signed_stream_message(data: dict) -> dict:
+        """Convert a signed streams data push to the stream message format.
+
+        Signed streams push `{"type": "DATA", "topic": ..., "data": ...}`, where
+        `data` may be a JSON string; any other message is returned unchanged.
+
+        Args:
+            data (dict): The received message.
+
+        Returns:
+            dict: `{"stream": <topic>, "data": <payload>}` for data pushes, otherwise `data`.
+        """
+
+        if (
+            not isinstance(data, dict)
+            or data.get("type") != "DATA"
+            or "topic" not in data
+        ):
+            return data
+
+        payload = data.get("data")
+        if isinstance(payload, str):
+            try:
+                payload = json.loads(payload)
+            except ValueError:
+                pass
+        return {"stream": data["topic"], "data": payload}
+
+    async def init_connection(
+        self,
+        url,
+        configuration: ConfigurationWebSocketStreams,
+        url_path: Optional[str] = None,
+        ws_id: Optional[Union[str, int]] = None,
+    ):
+        """Initialize a WebSocket connection, signing the URL for signed streams.
+
+        The URL is signed on every call, so reconnects never reuse an expired signature.
+
+        Args:
+            url (str): WebSocket URL.
+            configuration (ConfigurationWebSocketStreams): Configuration object.
+            url_path (Optional[str]): Optional URL path for the connection.
+            ws_id (Optional[Union[str, int]]): Optional WebSocket ID for the connection.
+        """
+
+        if self.signed:
+            url = self.sign_stream_url(url)
+        await super().init_connection(url, configuration, url_path, ws_id)
 
     async def create_connection(self):
         """Create a WebSocket connection.
@@ -1135,7 +1288,7 @@ class WebSocketStreamBase(WebSocketCommon):
         streams = [
             stream
             for stream in streams
-            if stream not in global_stream_connections.stream_connections_map
+            if stream not in self.stream_connections.stream_connections_map
         ]
 
         grouped = self._group_streams_by_connection(streams, stream_url)
@@ -1145,16 +1298,12 @@ class WebSocketStreamBase(WebSocketCommon):
                 f"Subscribing to streams on WebSocket {connection.id}: "
                 f"{connection_streams}"
             )
-            json_msg = {
-                "method": "SUBSCRIBE",
-                "params": connection_streams,
-                "id": get_random_int() if self.id_strict_int else get_uuid(),
-            }
             await asyncio.sleep(SUBSCRIBE_MESSAGE_DELAY_SECONDS)
-            await self.send_message(json_msg, connection)
+            for json_msg in self.stream_messages("SUBSCRIBE", connection_streams):
+                await self.send_message(json_msg, connection)
 
             for stream in connection_streams:
-                global_stream_connections.stream_connections_map[stream] = connection
+                self.stream_connections.stream_connections_map[stream] = connection
                 connection.stream_callback_map.update({stream: []})
                 connection.response_types.update({stream: response_model})
 
@@ -1209,8 +1358,8 @@ class WebSocketStreamBase(WebSocketCommon):
         if event != "message":
             raise ValueError(f"Unsupported event: {event}")
         connection = (
-            global_stream_connections.stream_connections_map[stream]
-            if stream in global_stream_connections.stream_connections_map
+            self.stream_connections.stream_connections_map[stream]
+            if stream in self.stream_connections.stream_connections_map
             else None
         )
 
@@ -1240,7 +1389,7 @@ class WebSocketStreamBase(WebSocketCommon):
         missing_stream = [
             stream
             for stream in streams
-            if stream not in global_stream_connections.stream_connections_map
+            if stream not in self.stream_connections.stream_connections_map
         ]
 
         if missing_stream:
@@ -1249,27 +1398,21 @@ class WebSocketStreamBase(WebSocketCommon):
 
         grouped: dict[Union[str, int], tuple[WebSocketConnection, list[str]]] = {}
         for stream in streams:
-            connection = global_stream_connections.stream_connections_map.get(stream)
+            connection = self.stream_connections.stream_connections_map.get(stream)
             if connection is None:
                 raise ValueError(f"Stream {stream} not connected.")
             grouped.setdefault(connection.id, (connection, []))[1].append(stream)
 
         for connection, connection_streams in grouped.values():
-            json_msg = json.dumps(
-                {
-                    "method": "UNSUBSCRIBE",
-                    "params": connection_streams,
-                    "id": get_random_int() if self.id_strict_int else get_uuid(),
-                }
-            )
-            await connection.websocket.send_str(json_msg)
+            for json_msg in self.stream_messages("UNSUBSCRIBE", connection_streams):
+                await connection.websocket.send_str(json.dumps(json_msg))
 
             logging.info(
                 f"Unsubscribed from streams on WebSocket {connection.id}: "
                 f"{connection_streams}"
             )
             for stream in connection_streams:
-                global_stream_connections.stream_connections_map.pop(stream, None)
+                self.stream_connections.stream_connections_map.pop(stream, None)
                 connection.stream_callback_map.pop(stream, None)
                 connection.response_types.pop(stream, None)
 
@@ -1378,6 +1521,9 @@ class WebSocketAPIBase(WebSocketCommon):
                     payload["id"] = _payload["id"]
                     connection.is_session_log_on = True
                     connection.session_logon_request = payload
+                elif session_logout:
+                    connection.is_session_log_on = False
+                    connection.session_logon_request = None
 
                 return WebsocketApiResponse[T](
                     data_function=lambda: (
@@ -1473,6 +1619,9 @@ class WebSocketAPIBase(WebSocketCommon):
                     payload["id"] = _payload["id"]
                     connection.is_session_log_on = True
                     connection.session_logon_request = payload
+                elif session_logout:
+                    connection.is_session_log_on = False
+                    connection.session_logon_request = None
 
                 if response_model and hasattr(response_model, "from_dict"):
                     def data_function():
@@ -1556,7 +1705,7 @@ class WebSocketAPIBase(WebSocketCommon):
             self.round_robin_index = (self.round_robin_index + 1) % len(
                 self.connections
             )
-        global_user_stream_connections.stream_connections_map[id] = connection
+        self.user_stream_connections.stream_connections_map[id] = connection
         connection.stream_callback_map.update({id: []})
         connection.response_types.update({id: response_model})
 
@@ -1573,8 +1722,8 @@ class WebSocketAPIBase(WebSocketCommon):
             raise ValueError(f"Unsupported event: {event}")
 
         connection = (
-            global_user_stream_connections.stream_connections_map[id]
-            if id in global_user_stream_connections.stream_connections_map
+            self.user_stream_connections.stream_connections_map[id]
+            if id in self.user_stream_connections.stream_connections_map
             else None
         )
 
@@ -1594,17 +1743,17 @@ class WebSocketAPIBase(WebSocketCommon):
             logging.warning("No user data connections available for unsubscription.")
             return
 
-        if id not in global_user_stream_connections.stream_connections_map:
+        if id not in self.user_stream_connections.stream_connections_map:
             logging.warning(f"Stream {id} is not subscribed.")
             return
 
         connection = (
-            global_user_stream_connections.stream_connections_map[id]
-            if id in global_user_stream_connections.stream_connections_map
+            self.user_stream_connections.stream_connections_map[id]
+            if id in self.user_stream_connections.stream_connections_map
             else None
         )
         if connection:
-            global_user_stream_connections.stream_connections_map.pop(id, None)
+            self.user_stream_connections.stream_connections_map.pop(id, None)
             connection.stream_callback_map.pop(id, None)
             connection.response_types.pop(id, None)
             logging.info(f"Unsubscribed from stream: {id}")

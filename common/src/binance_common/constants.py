@@ -33,6 +33,9 @@ AUTO_INVEST_REST_API_PROD_URL = "https://api.binance.com"
 # C2C constants
 C2C_REST_API_PROD_URL = "https://api.binance.com"
 
+# CMS constants
+CMS_WS_STREAMS_PROD_URL = "wss://api.binance.com/sapi/wss"
+
 # Convert constants
 CONVERT_REST_API_PROD_URL = "https://api.binance.com"
 
@@ -154,3 +157,4 @@ WALLET_REST_API_PROD_URL = "https://api.binance.com"
 
 # W3W Prediction constants
 W3W_PREDICTION_REST_API_PROD_URL = "https://api.binance.com"
+W3W_PREDICTION_WS_STREAMS_PROD_URL = "wss://api.binance.com/sapi/wss"

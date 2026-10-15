@@ -1,4 +1,5 @@
 import copy
+from decimal import Decimal
 import pickle
 import re
 import ssl
@@ -498,8 +499,14 @@ class TestMakeSerializable(unittest.TestCase):
         result = make_serializable(obj)
         self.assertEqual(result, obj.__dict__)
 
-    def test_int_and_string(self):
-        self.assertEqual(make_serializable(42), 42)
+    def test_int(self):
+        self.assertEqual(make_serializable(42), "42")
+        self.assertEqual(make_serializable(-1), "-1")
+
+    def test_decimal(self):
+        self.assertEqual(make_serializable(Decimal("0.001")), "0.001")
+
+    def test_string(self):
         self.assertEqual(make_serializable("hello"), "hello")
 
     def test_list_of_mixed(self):
@@ -1967,6 +1974,23 @@ class TestWsApiPayload(unittest.TestCase):
         assert isinstance(result["params"]["dictParam"], str)
         assert result["params"]["someParam"] == "value"
 
+    def test_payload_serializes_numeric_params_as_strings(self):
+        websocket_options = WebsocketApiOptions(
+            api_key=False, skip_auth=False, is_signed=False, signer=None
+        )
+        payload = {
+            "params": {
+                "quantity": 1,
+                "price": Decimal("0.001"),
+                "order_ids": [1, 2],
+            }
+        }
+        result = ws_api_payload(self.dummy_config, payload, websocket_options)
+
+        assert result["params"]["quantity"] == "1"
+        assert result["params"]["price"] == "0.001"
+        assert result["params"]["orderIds"] == "[1,2]"
+
     def test_payload_generates_new_id_if_missing(self):
         websocket_options = WebsocketApiOptions(
             api_key=True, skip_auth=False, is_signed=False, signer=None
@@ -2013,7 +2037,7 @@ class TestWsApiPayload(unittest.TestCase):
             result = ws_api_payload(self.dummy_config, payload, websocket_options)
 
             mock_get_timestamp.assert_not_called()
-            assert result["params"]["timestamp"] == 1111111111
+            assert result["params"]["timestamp"] == "1111111111"
 
 
 class TestWebsocketApiSignature(unittest.TestCase):

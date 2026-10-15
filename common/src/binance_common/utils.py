@@ -17,6 +17,7 @@ from collections import OrderedDict
 from Crypto.Hash import SHA256
 from Crypto.Signature.pkcs1_15 import PKCS115_SigScheme
 from datetime import datetime, timezone
+from decimal import Decimal
 from enum import Enum
 from types import UnionType
 from pydantic import BaseModel, Strict
@@ -181,7 +182,7 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
         return [v.__dict__ if hasattr(v, "__dict__") else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
-    if isinstance(val, float):
+    if isinstance(val, (int, float, Decimal)):
         return str(val)
     if isinstance(val, Enum):
         return val.value
@@ -205,6 +206,8 @@ def transform_query(
         return {snake_to_camel(k): transform_query(v) for k, v in data.items()}
     elif isinstance(data, list):
         return [transform_query(v) for v in data]
+    elif isinstance(data, int) and not isinstance(data, bool):
+        return data
     else:
         return make_serializable(data)
 
@@ -526,6 +529,7 @@ def send_request(
     while attempt <= retries:
         request_payload = payload
 
+        # Signed per attempt, so a retry gets a fresh timestamp unless the caller set one.
         if is_signed:
             cleaned_payload = dict(clean_none_value(payload))
             if body:

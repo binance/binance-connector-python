@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.6.0 - 2026-10-15
+
+### Added (2)
+
+- Added signed WebSocket Streams support: `WebSocketStreamBase(..., signed=True)` signs the connection URL on every connect and reconnect, sends the API key, and subscribes with `command`/`value` messages. `ConfigurationWebSocketStreams` now accepts `api_key`, `api_secret`, `private_key` and `private_key_passphrase`.
+- Added the `CMS_WS_STREAMS_PROD_URL` and `W3W_PREDICTION_WS_STREAMS_PROD_URL` base URLs.
+
+### Changed (5)
+
+- Fixed the session re-logon after a WebSocket API reconnect being sent unsigned and marked as successful without a server response. It is now signed, waits for the server, and is retried on later reconnects. (#569)
+- Fixed `session.logout` leaving the connection marked as logged on, so later signed requests were sent unsigned.
+- Fixed clients in the same process sharing their stream subscriptions, so a client following a stream name already used by another client (e.g. Spot and USDⓈ-M Futures) received the other client's data. (#570)
+- Fixed WebSocket API requests rejected as malformed when a parameter was an `int`: `int` and `Decimal` parameters are now sent as strings.
+- Updated `pyproject.toml` dependencies
+
+### Removed (1)
+
+- Removed the module-level `global_stream_connections` and `global_user_stream_connections` from `binance_common.websocket`: each client now keeps its own `stream_connections` and `user_stream_connections`.
+
 ## 4.5.1 - 2026-10-06
 
 ### Changed (3)

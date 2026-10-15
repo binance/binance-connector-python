@@ -1,4 +1,6 @@
 import asyncio
+import hashlib
+import hmac
 import aiohttp
 import json
 import logging
@@ -12,6 +14,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional, Set, Union
 from unittest.mock import AsyncMock, call, MagicMock, patch
 from types import SimpleNamespace
+from urllib.parse import parse_qsl
 
 from binance_common.configuration import (
     ConfigurationWebSocketAPI,
@@ -23,10 +26,9 @@ from binance_common.constants import (
     WebsocketMode,
 )
 from binance_common.websocket import (
-    global_stream_connections,
-    global_user_stream_connections,
     RequestStream,
     RequestStreamHandle,
+    StreamConnectionsMap,
     WebSocketStreamBase,
     WebSocketAPIBase,
     WebSocketCommon,
@@ -124,22 +126,32 @@ def mock_connection():
     return conn
 
 
+def _share_registry(monkeypatch, attribute: str) -> StreamConnectionsMap:
+    """Hand one stream map to every client created during the test."""
+
+    registry = StreamConnectionsMap()
+    original_init = WebSocketCommon.__init__
+
+    def init(self, *args, **kwargs):
+        original_init(self, *args, **kwargs)
+        setattr(self, attribute, registry)
+
+    monkeypatch.setattr(WebSocketCommon, "__init__", init)
+    return registry
+
+
 @pytest.fixture
 def mock_registry(monkeypatch):
-    mock = type(global_stream_connections)()
-    monkeypatch.setattr("binance_common.websocket.global_stream_connections", mock)
-    return mock
+    return _share_registry(monkeypatch, "stream_connections")
 
 
 @pytest.fixture
 def mock_user_registry(monkeypatch):
-    mock = type(global_user_stream_connections)()
-    monkeypatch.setattr("binance_common.websocket.global_user_stream_connections", mock)
-    return mock
+    return _share_registry(monkeypatch, "user_stream_connections")
 
 
 @pytest.fixture
-def websocket_stream(mock_config, mock_connection):
+def websocket_stream(mock_config, mock_connection, mock_registry):
     instance = WebSocketStreamBase(mock_config)
     instance.connections = [mock_connection]
     instance.reconnect_tasks = []
@@ -147,7 +159,7 @@ def websocket_stream(mock_config, mock_connection):
 
 
 @pytest.fixture
-def ws_api(mock_config):
+def ws_api(mock_config, mock_user_registry):
     return WebSocketAPIBase(mock_config)
 
 
@@ -2061,6 +2073,271 @@ class TestReconnectAttemptsConfiguration:
         )
 
 
+class TestSignedWebSocketStreams:
+    @pytest.fixture
+    def signed_config(self):
+        config = ConfigurationWebSocketStreams(
+            stream_url="wss://test.com/sapi/wss",
+            api_key="test-api-key",
+            api_secret="test-api-secret",
+            reconnect_delay=0,
+            reconnect_attempts=1,
+        )
+        return config
+
+    @pytest.fixture
+    def signed_streams(self, signed_config):
+        return WebSocketStreamBase(signed_config, signed=True)
+
+    def test_signed_keeps_stream_url(self, signed_config):
+        WebSocketStreamBase(signed_config, signed=True)
+
+        assert signed_config.stream_url == "wss://test.com/sapi/wss"
+
+    def test_unsigned_appends_stream_suffix(self):
+        config = ConfigurationWebSocketStreams(stream_url="wss://test.com/ws")
+
+        WebSocketStreamBase(config)
+
+        assert config.stream_url == "wss://test.com/ws/stream"
+
+    def test_signed_with_private_key_uses_signer(self, signed_config):
+        signed_config.private_key = "private-key"
+        signed_config.private_key_passphrase = "passphrase"
+        signer = MagicMock()
+
+        with patch(
+            "binance_common.websocket.Signers.get_signer", return_value=signer
+        ) as mock_get_signer:
+            streams = WebSocketStreamBase(signed_config, signed=True)
+
+        mock_get_signer.assert_called_once_with("private-key", "passphrase")
+        assert streams.signer is signer
+
+    def test_sign_stream_url_adds_signed_query(self, signed_streams):
+        url = signed_streams.sign_stream_url("wss://test.com/sapi/wss")
+
+        base, query = url.split("?", 1)
+        payload, signature = query.split("&signature=")
+        params = dict(parse_qsl(payload))
+        expected = hmac.new(
+            b"test-api-secret", payload.encode("utf-8"), hashlib.sha256
+        ).hexdigest()
+
+        assert base == "wss://test.com/sapi/wss"
+        assert set(params) == {"random", "recvWindow", "timestamp"}
+        assert params["recvWindow"] == "30000"
+        assert len(params["random"]) == 32
+        assert signature == expected
+
+    def test_sign_stream_url_is_fresh_on_each_call(self, signed_streams):
+        first = signed_streams.sign_stream_url("wss://test.com/sapi/wss")
+        second = signed_streams.sign_stream_url("wss://test.com/sapi/wss")
+
+        assert first != second
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_create_connection_signs_url_and_sends_api_key(
+        self, mock_ws_connect, signed_streams, mock_websocket
+    ):
+        mock_ws_connect.return_value = mock_websocket
+
+        await signed_streams.create_connection()
+
+        args, kwargs = mock_ws_connect.call_args
+        assert args[0].startswith("wss://test.com/sapi/wss?random=")
+        assert "&signature=" in args[0]
+        assert kwargs["headers"]["X-MBX-APIKEY"] == "test-api-key"
+        await signed_streams.close_connection(close_session=True)
+
+    @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_unsigned_connection_sends_no_api_key(
+        self, mock_ws_connect, mock_websocket
+    ):
+        mock_ws_connect.return_value = mock_websocket
+        config = ConfigurationWebSocketStreams(
+            stream_url="wss://test.com/ws", api_key="test-api-key"
+        )
+        streams = WebSocketStreamBase(config)
+
+        await streams.create_connection()
+
+        args, kwargs = mock_ws_connect.call_args
+        assert args[0] == "wss://test.com/ws/stream"
+        assert "X-MBX-APIKEY" not in kwargs["headers"]
+        await streams.close_connection(close_session=True)
+
+    @pytest.mark.asyncio
+    async def test_init_connection_signs_url_on_reconnect(self, signed_streams):
+        with patch.object(
+            WebSocketCommon, "init_connection", AsyncMock()
+        ) as mock_init_connection:
+            await signed_streams.init_connection(
+                "wss://test.com/sapi/wss",
+                signed_streams.configuration,
+                None,
+                "conn-1",
+            )
+            await signed_streams.init_connection(
+                "wss://test.com/sapi/wss",
+                signed_streams.configuration,
+                None,
+                "conn-1",
+            )
+
+        first_url = mock_init_connection.await_args_list[0].args[0]
+        second_url = mock_init_connection.await_args_list[1].args[0]
+        assert "&signature=" in first_url
+        assert first_url != second_url
+        assert mock_init_connection.await_args_list[0].args[3] == "conn-1"
+
+    def test_stream_messages_signed(self, signed_streams):
+        assert signed_streams.stream_messages("SUBSCRIBE", ["topic_a", "topic_b"]) == [
+            {"command": "SUBSCRIBE", "value": "topic_a"},
+            {"command": "SUBSCRIBE", "value": "topic_b"},
+        ]
+
+    def test_stream_messages_unsigned(self):
+        streams = WebSocketStreamBase(
+            ConfigurationWebSocketStreams(stream_url="wss://test.com/ws")
+        )
+
+        messages = streams.stream_messages("UNSUBSCRIBE", ["topic_a", "topic_b"])
+
+        assert len(messages) == 1
+        assert messages[0]["method"] == "UNSUBSCRIBE"
+        assert messages[0]["params"] == ["topic_a", "topic_b"]
+        assert "id" in messages[0]
+
+    @pytest.mark.asyncio
+    async def test_subscribe_signed_sends_one_command_per_stream(self, signed_streams):
+        connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        signed_streams.connections = [connection]
+        signed_streams.send_message = AsyncMock()
+
+        with patch("binance_common.websocket.asyncio.sleep", AsyncMock()):
+            await signed_streams.subscribe(["topic_a", "topic_b"])
+
+        assert signed_streams.send_message.await_args_list == [
+            call({"command": "SUBSCRIBE", "value": "topic_a"}, connection),
+            call({"command": "SUBSCRIBE", "value": "topic_b"}, connection),
+        ]
+        assert (
+            signed_streams.stream_connections.stream_connections_map["topic_a"]
+            is connection
+        )
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_signed_sends_commands(self, signed_streams):
+        websocket = AsyncMock()
+        connection = WebSocketConnection(
+            websocket, "conn-1", "ConfigurationWebSocketStreams"
+        )
+        signed_streams.connections = [connection]
+        signed_streams.stream_connections.stream_connections_map["topic_a"] = connection
+        connection.stream_callback_map["topic_a"] = []
+
+        await signed_streams.unsubscribe(["topic_a"])
+
+        websocket.send_str.assert_awaited_once_with(
+            json.dumps({"command": "UNSUBSCRIBE", "value": "topic_a"})
+        )
+        assert "topic_a" not in signed_streams.stream_connections.stream_connections_map
+
+    @pytest.mark.asyncio
+    async def test_resubscribe_signed_streams_after_reconnect(self, signed_streams):
+        old_connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        new_connection = WebSocketConnection(
+            AsyncMock(), "conn-1", "ConfigurationWebSocketStreams"
+        )
+        signed_streams.stream_connections.stream_connections_map["topic_a"] = (
+            old_connection
+        )
+        old_connection.stream_callback_map["topic_a"] = []
+        signed_streams.send_message = AsyncMock()
+
+        await signed_streams._resubscribe_global_streams(old_connection, new_connection)
+
+        signed_streams.send_message.assert_awaited_once_with(
+            {"command": "SUBSCRIBE", "value": "topic_a"}, new_connection
+        )
+
+    def test_parse_signed_stream_message_with_json_string_payload(self):
+        data = {
+            "type": "DATA",
+            "topic": "topic_a",
+            "data": json.dumps({"price": "1.0"}),
+        }
+
+        assert WebSocketStreamBase.parse_signed_stream_message(data) == {
+            "stream": "topic_a",
+            "data": {"price": "1.0"},
+        }
+
+    def test_parse_signed_stream_message_keeps_non_json_string_payload(self):
+        data = {"type": "DATA", "topic": "topic_a", "data": "plain"}
+
+        assert WebSocketStreamBase.parse_signed_stream_message(data) == {
+            "stream": "topic_a",
+            "data": "plain",
+        }
+
+    def test_parse_signed_stream_message_passes_command_replies_through(self):
+        reply = {
+            "type": "COMMAND",
+            "data": "SUCCESS",
+            "subType": "REGISTER",
+            "code": "00000000",
+        }
+
+        assert WebSocketStreamBase.parse_signed_stream_message(reply) is reply
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_routes_signed_data_to_stream_callback(
+        self, signed_streams
+    ):
+        websocket = MagicMock()
+        websocket.__aiter__.return_value = [
+            aiohttp.WSMessage(
+                aiohttp.WSMsgType.TEXT,
+                json.dumps(
+                    {
+                        "type": "DATA",
+                        "topic": "topic_a",
+                        "data": json.dumps({"price": "1.0"}),
+                    }
+                ),
+                None,
+            )
+        ]
+        connection = WebSocketConnection(
+            websocket, "conn-1", "ConfigurationWebSocketStreams"
+        )
+        callback = MagicMock()
+        connection.stream_callback_map["topic_a"] = [callback]
+        connection.response_types["topic_a"] = None
+        signed_streams.connections = [connection]
+
+        with patch.object(signed_streams, "_discard_connection", AsyncMock()):
+            await signed_streams.receive_loop(connection)
+
+        callback.assert_called_once_with(
+            {"stream": "topic_a", "data": {"price": "1.0"}}
+        )
+
+
 class TestWebSocketStreamBase:
 
     @pytest.mark.asyncio
@@ -2517,6 +2794,49 @@ class TestWebSocketStreamBase:
         assert sent_message["method"] == "LIST_SUBSCRIPTIONS"
         assert "id" in sent_message
 
+    @pytest.mark.asyncio
+    async def test_subscribe_same_stream_on_two_clients_keeps_them_apart(self):
+        def client(name):
+            config = ConfigurationWebSocketStreams(
+                stream_url=f"wss://{name}.example.com/stream"
+            )
+            conn = MagicMock()
+            conn.id = name
+            conn.reconnect = False
+            conn.websocket = AsyncMock()
+            conn.stream_callback_map = {}
+            conn.response_types = {}
+            conn.pending_request = {}
+            instance = WebSocketStreamBase(config)
+            instance.connections = [conn]
+            return instance, conn
+
+        spot, spot_conn = client("spot")
+        futures, futures_conn = client("futures")
+
+        with patch("asyncio.sleep", new_callable=AsyncMock):
+            await spot.subscribe(["btcusdt@aggTrade"])
+            await futures.subscribe(["btcusdt@aggTrade"])
+
+        spot_conn.websocket.send_str.assert_called_once()
+        futures_conn.websocket.send_str.assert_called_once()
+        sent = json.loads(futures_conn.websocket.send_str.call_args[0][0])
+        assert sent["method"] == "SUBSCRIBE"
+        assert sent["params"] == ["btcusdt@aggTrade"]
+
+        spot_cb, futures_cb = MagicMock(), MagicMock()
+        spot.on("message", spot_cb, "btcusdt@aggTrade")
+        futures.on("message", futures_cb, "btcusdt@aggTrade")
+        assert spot_conn.stream_callback_map["btcusdt@aggTrade"] == [spot_cb]
+        assert futures_conn.stream_callback_map["btcusdt@aggTrade"] == [futures_cb]
+
+        await spot.unsubscribe(["btcusdt@aggTrade"])
+        assert "btcusdt@aggTrade" not in spot.stream_connections.stream_connections_map
+        assert (
+            futures.stream_connections.stream_connections_map["btcusdt@aggTrade"]
+            is futures_conn
+        )
+
 
 # ========== WebSocketAPIBase Tests ==========
 
@@ -2833,6 +3153,153 @@ class TestWebSocketAPIBase:
             assert mock_connection.session_logon_request == payload
             assert "id" in payload
             assert isinstance(result, WebsocketApiResponse)
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("signed", [False, True])
+    async def test_session_logout_clears_connection_flags(
+        self, ws_api, mock_connection, signed
+    ):
+        ws_api.connections = [mock_connection]
+        ws_api.reconnect_tasks = []
+        ws_api.configuration.return_rate_limits = True
+        mock_connection.is_session_log_on = True
+        mock_connection.session_logon_request = {"method": "session.logon"}
+
+        payload = {"method": "session.logout", "params": {}}
+
+        with patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"status": 200, "result": {}, "rateLimits": []})
+            mock_send.return_value = mock_future
+
+            if signed:
+                await ws_api.send_signed_message(
+                    payload, signer=MagicMock(), session_logout=True
+                )
+            else:
+                await ws_api.send_message(payload, session_logout=True)
+
+        assert mock_connection.is_session_log_on is False
+        assert mock_connection.session_logon_request is None
+
+    @staticmethod
+    def _re_logon_connection():
+        conn = MagicMock()
+        conn.id = "new"
+        conn.is_session_log_on = False
+        conn.session_logon_request = None
+        conn.pending_request = {}
+        conn.connection_callback_map = defaultdict(list)
+        return conn
+
+    @pytest.mark.asyncio
+    async def test_session_re_log_on_signs_request_and_waits_for_success(self, ws_api):
+        conn = self._re_logon_connection()
+        request = {
+            "method": "session.logon",
+            "params": {"returnRateLimits": False},
+            "id": "1",
+        }
+
+        with patch("binance_common.websocket.Signers.get_signer"), patch(
+            "binance_common.utils.get_signature", return_value="sig"
+        ), patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send:
+            mock_future = asyncio.Future()
+            mock_future.set_result({"status": 200, "result": {}})
+            mock_send.return_value = mock_future
+
+            assert await ws_api.session_re_log_on(request, conn) is True
+
+        sent = mock_send.call_args[0][1]
+        assert sent["method"] == "session.logon"
+        assert sent["params"]["apiKey"] == "test-api-key"
+        assert sent["params"]["signature"] == "sig"
+        assert "timestamp" in sent["params"]
+        assert request["params"] == {"returnRateLimits": False}
+        assert conn.is_session_log_on is True
+        assert conn.session_logon_request is request
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "outcome",
+        [
+            ValueError({"code": -1102, "msg": "Mandatory parameter 'apiKey'"}),
+            {"status": 401, "result": {}},
+            asyncio.TimeoutError(),
+        ],
+    )
+    async def test_session_re_log_on_failure_keeps_session_logged_off(
+        self, ws_api, outcome
+    ):
+        conn = self._re_logon_connection()
+        request = {"method": "session.logon", "params": {}, "id": "1"}
+        ws_api._emit_connection_event = MagicMock()
+
+        with patch("binance_common.websocket.Signers.get_signer"), patch(
+            "binance_common.utils.get_signature", return_value="sig"
+        ), patch.object(
+            WebSocketCommon, "send_message", new_callable=AsyncMock
+        ) as mock_send, patch(
+            "binance_common.websocket.asyncio.wait_for", new_callable=AsyncMock
+        ) as mock_wait:
+            mock_send.return_value = asyncio.Future()
+            if isinstance(outcome, dict):
+                mock_wait.return_value = outcome
+            else:
+                mock_wait.side_effect = outcome
+
+            assert await ws_api.session_re_log_on(request, conn) is False
+
+        assert conn.is_session_log_on is False
+        assert conn.session_logon_request is request
+        assert conn.pending_request == {}
+        ws_api._emit_connection_event.assert_called_once()
+        assert ws_api._emit_connection_event.call_args[0][:2] == (conn, "error")
+
+    @pytest.mark.asyncio
+    async def test_reconnect_drops_user_streams_when_re_logon_fails(
+        self, mock_connection, mock_registry, mock_user_registry
+    ):
+        ws_common = WebSocketCommon(MagicMock())
+
+        old_conn = mock_connection
+        old_conn.id = "abc"
+        old_conn.url_path = None
+        old_conn.pending_request = {}
+        old_conn.session_logon_request = {
+            "method": "session.logon",
+            "params": {},
+            "id": "1",
+        }
+        old_conn.stream_callback_map = {"user_stream": ["cb1"]}
+        mock_user_registry.stream_connections_map = {"user_stream": old_conn}
+
+        new_conn = MagicMock()
+        new_conn.id = "abc"
+        ws_common.connections = [new_conn]
+
+        ws_common.close_connection = AsyncMock()
+        ws_common.init_connection = AsyncMock()
+        ws_common.session_re_log_on = AsyncMock(return_value=False)
+        ws_common._resubscribe_user_streams = AsyncMock()
+        ws_common._resubscribe_global_streams = AsyncMock()
+
+        config = MagicMock()
+        config.stream_url = "wss://test.com/ws"
+        config.reconnect_delay = 0
+        config.reconnect_attempts = 1
+
+        assert await ws_common.reconnect(old_conn, config) is new_conn
+
+        ws_common._resubscribe_user_streams.assert_not_awaited()
+        assert mock_user_registry.stream_connections_map == {}
+        ws_common._resubscribe_global_streams.assert_awaited_once_with(
+            old_conn, new_conn
+        )
 
     @pytest.mark.asyncio
     async def test_send_message_response_model_is_one_of_model(
