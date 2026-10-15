@@ -7,7 +7,6 @@ from binance_sdk_crypto_loan.crypto_loan import (
     CRYPTO_LOAN_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

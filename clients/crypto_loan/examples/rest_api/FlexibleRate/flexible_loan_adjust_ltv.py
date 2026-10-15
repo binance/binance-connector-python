@@ -8,7 +8,6 @@ from binance_sdk_crypto_loan.crypto_loan import (
 )
 from binance_sdk_crypto_loan.rest_api.models import FlexibleLoanAdjustLtvDirectionEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

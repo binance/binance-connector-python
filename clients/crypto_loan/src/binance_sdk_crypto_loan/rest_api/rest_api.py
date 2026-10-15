@@ -37,7 +37,6 @@ from .models import GetLoanLtvAdjustmentHistoryResponse
 from .models import GetLoanRepaymentHistoryResponse
 from .models import GetCryptoLoansIncomeHistoryTypeEnum
 
-
 T = TypeVar("T")
 
 
