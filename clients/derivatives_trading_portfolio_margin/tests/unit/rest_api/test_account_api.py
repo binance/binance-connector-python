@@ -160,6 +160,9 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     ChangeUmPositionModeDualSidePositionEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    FundCollectionByAssetFutureTypeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetCmIncomeHistoryIncomeTypeEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
@@ -1513,7 +1516,12 @@ class TestAccountApi:
     ):
         """Test fund_collection_by_asset() successfully with optional parameters."""
 
-        params = {"asset": "BTC", "recv_window": 5000}
+        params = {
+            "asset": "BTC",
+            "amount": 10,
+            "future_type": FundCollectionByAssetFutureTypeEnum["UM"].value,
+            "recv_window": 5000,
+        }
 
         expected_response = {"msg": "success"}
         mock_get_signature.return_value = "mocked_signature"

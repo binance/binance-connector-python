@@ -31,6 +31,12 @@ class ChangeUmPositionModeDualSidePositionEnum(Enum):
     FALSE = "false"
 
 
+class FundCollectionByAssetFutureTypeEnum(Enum):
+    UM = "UM"
+    CM = "CM"
+    OPTION = "OPTION"
+
+
 class GetCmIncomeHistoryIncomeTypeEnum(Enum):
     TRANSFER = "TRANSFER"
     WELCOME_BONUS = "WELCOME_BONUS"

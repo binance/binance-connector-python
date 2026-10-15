@@ -480,6 +480,9 @@ from .enums import (
 from .enums import (
     ChangeUmPositionModeDualSidePositionEnum as ChangeUmPositionModeDualSidePositionEnum,
 )
+from .enums import (
+    FundCollectionByAssetFutureTypeEnum as FundCollectionByAssetFutureTypeEnum,
+)
 from .enums import GetCmIncomeHistoryIncomeTypeEnum as GetCmIncomeHistoryIncomeTypeEnum
 from .enums import (
     GetMarginBorrowLoanInterestHistoryArchivedEnum as GetMarginBorrowLoanInterestHistoryArchivedEnum,
