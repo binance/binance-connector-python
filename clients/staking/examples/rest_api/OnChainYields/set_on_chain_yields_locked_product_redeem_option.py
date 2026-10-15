@@ -10,7 +10,6 @@ from binance_sdk_staking.rest_api.models import (
     SetOnChainYieldsLockedProductRedeemOptionRedeemToEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

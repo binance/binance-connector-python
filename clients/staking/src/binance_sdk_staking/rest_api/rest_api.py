@@ -62,7 +62,6 @@ from .models import SolStakingAccountResponse
 from .models import SubscribeSolStakingResponse
 from .models import GetBoostRewardsHistoryTypeEnum
 
-
 T = TypeVar("T")
 
 

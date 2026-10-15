@@ -7,7 +7,6 @@ from binance_sdk_staking.staking import (
     STAKING_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

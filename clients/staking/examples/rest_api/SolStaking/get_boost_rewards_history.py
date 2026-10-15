@@ -8,7 +8,6 @@ from binance_sdk_staking.staking import (
 )
 from binance_sdk_staking.rest_api.models import GetBoostRewardsHistoryTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
