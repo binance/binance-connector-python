@@ -84,7 +84,6 @@ from .models import (
     QueryManagedSubAccountTransferLogSubAccountTradingTransferFunctionAccountTypeEnum,
 )
 
-
 T = TypeVar("T")
 
 
@@ -1922,7 +1921,7 @@ class SubAccountRestAPI:
         allocation and account application, while delegating trades to a professional trading team.
 
         Please refer to
-        [link](https://www.binance.com/en/support/faq/how-to-get-started-with-managed-sub-account-functions-and-frequently-asked-questions-0594748722704383a7c369046e489459)
+        link
 
         Weight(IP): 1
 
@@ -1977,7 +1976,7 @@ class SubAccountRestAPI:
         asset allocation and account application, while delegating trades to a professional trading team.
 
         Please refer to
-        [link](https://www.binance.com/en/support/faq/how-to-get-started-with-managed-sub-account-functions-and-frequently-asked-questions-0594748722704383a7c369046e489459)
+        link
 
         Weight(UID): 60
 

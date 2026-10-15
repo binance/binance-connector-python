@@ -9,7 +9,6 @@ from binance_sdk_sub_account.sub_account import (
 from binance_sdk_sub_account.rest_api.models import UniversalTransferFromAccountTypeEnum
 from binance_sdk_sub_account.rest_api.models import UniversalTransferToAccountTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

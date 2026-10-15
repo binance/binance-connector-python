@@ -10,7 +10,6 @@ from binance_sdk_sub_account.rest_api.models import (
     QueryManagedSubAccountSnapshotTypeEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
