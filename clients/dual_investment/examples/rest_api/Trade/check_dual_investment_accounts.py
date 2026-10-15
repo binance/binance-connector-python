@@ -7,7 +7,6 @@ from binance_sdk_dual_investment.dual_investment import (
     DUAL_INVESTMENT_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

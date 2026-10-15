@@ -10,7 +10,6 @@ from binance_sdk_dual_investment.rest_api.models import (
     GetDualInvestmentProductListOptionTypeEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

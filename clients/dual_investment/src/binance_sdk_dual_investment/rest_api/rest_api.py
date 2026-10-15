@@ -24,7 +24,6 @@ from .models import GetDualInvestmentPositionsResponse
 from .models import SubscribeDualInvestmentProductsResponse
 from .models import GetDualInvestmentPositionsStatusEnum
 
-
 T = TypeVar("T")
 
 
