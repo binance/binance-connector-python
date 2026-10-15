@@ -996,9 +996,12 @@ class WebSocketCommon:
         """
 
         if request and not connection.is_session_log_on:
+            # A new connection is not authenticated, so the logon has to be
+            # signed again: apiKey, a fresh timestamp and a new signature. The
+            # params are copied so the stored request is left untouched.
             data = {
                 "method": request["method"],
-                "params": request["params"],
+                "params": dict(request["params"]),
                 "id": request["id"],
             }
             signer = Signers.get_signer(
@@ -1006,7 +1009,7 @@ class WebSocketCommon:
                 self.configuration.private_key_passphrase,
             )
             websocket_options = WebsocketApiOptions(
-                signer=signer, api_key=False, is_signed=True, skip_auth=True
+                signer=signer, api_key=True, is_signed=True, skip_auth=False
             )
             payload = ws_api_payload(self.configuration, data, websocket_options)
 
