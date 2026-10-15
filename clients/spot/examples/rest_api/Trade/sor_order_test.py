@@ -5,7 +5,6 @@ from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD
 from binance_sdk_spot.rest_api.models import SorOrderTestSideEnum
 from binance_sdk_spot.rest_api.models import SorOrderTestTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

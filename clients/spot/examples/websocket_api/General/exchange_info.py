@@ -4,7 +4,6 @@ import logging
 
 from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSocketAPI
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

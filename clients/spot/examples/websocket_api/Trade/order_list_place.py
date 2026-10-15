@@ -7,7 +7,6 @@ from binance_sdk_spot.spot import Spot, SPOT_WS_API_PROD_URL, ConfigurationWebSo
 
 from binance_sdk_spot.websocket_api.models import OrderListPlaceSideEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

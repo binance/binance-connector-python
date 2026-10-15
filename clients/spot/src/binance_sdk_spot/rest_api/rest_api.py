@@ -190,7 +190,6 @@ from .models import SorOrderTestTimeInForceEnum
 from .models import SorOrderTestNewOrderRespTypeEnum
 from .models import SorOrderTestSelfTradePreventionModeEnum
 
-
 T = TypeVar("T")
 
 

@@ -5,7 +5,6 @@ from binance_sdk_spot.spot import Spot, ConfigurationRestAPI, SPOT_REST_API_PROD
 from binance_sdk_spot.rest_api.models import NewOrderSideEnum
 from binance_sdk_spot.rest_api.models import NewOrderTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

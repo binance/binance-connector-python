@@ -43,7 +43,6 @@ from .models import PartialBookDepthUpdateSpeedEnum
 
 from .models import RollingWindowTickerWindowSizeEnum
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

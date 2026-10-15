@@ -361,7 +361,6 @@ from .models import SorOrderTestNewOrderRespTypeEnum
 
 from .models import SorOrderTestSelfTradePreventionModeEnum
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

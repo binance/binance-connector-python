@@ -12,7 +12,6 @@ from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoWorkingSideEn
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoPendingTypeEnum
 from binance_sdk_spot.websocket_api.models import OrderListPlaceOtoPendingSideEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

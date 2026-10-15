@@ -7,7 +7,6 @@ from binance_sdk_spot.rest_api.models import OrderListOtoWorkingSideEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingTypeEnum
 from binance_sdk_spot.rest_api.models import OrderListOtoPendingSideEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

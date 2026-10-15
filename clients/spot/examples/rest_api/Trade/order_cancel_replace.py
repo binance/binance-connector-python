@@ -6,7 +6,6 @@ from binance_sdk_spot.rest_api.models import OrderCancelReplaceSideEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceTypeEnum
 from binance_sdk_spot.rest_api.models import OrderCancelReplaceCancelReplaceModeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
