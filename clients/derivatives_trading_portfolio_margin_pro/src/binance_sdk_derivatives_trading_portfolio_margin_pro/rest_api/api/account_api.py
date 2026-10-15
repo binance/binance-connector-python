@@ -38,6 +38,7 @@ from ..models import SwitchDeltaModeResponse
 from ..models import TransferLdusdtRwusdForPortfolioMarginResponse
 from ..models import BnbTransferTransferSideEnum
 from ..models import ChangeAutoRepayFuturesStatusAutoRepayEnum
+from ..models import FundCollectionByAssetFutureTypeEnum
 from ..models import GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum
 from ..models import PortfolioMarginProBankruptcyLoanRepayVarFromEnum
 from ..models import RepayFuturesNegativeBalanceVarFromEnum
@@ -263,6 +264,8 @@ class AccountApi:
     def fund_collection_by_asset(
         self,
         asset: Union[str, None],
+        amount: Optional[float] = None,
+        future_type: Optional[FundCollectionByAssetFutureTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FundCollectionByAssetResponse]:
         """
@@ -281,6 +284,8 @@ class AccountApi:
 
                 Args:
                     asset (Union[str, None]):
+                    amount (Optional[float] = None): Amount to collect. When provided, `futureType` is required.
+                    future_type (Optional[FundCollectionByAssetFutureTypeEnum] = None): Target wallet for the collection. `OPTION` is for SPAN only. Cannot be sent without `amount`. `amount` and `futureType` must be provided together. If neither is provided, existing behavior is unchanged (query all wallets + transfer).
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -297,7 +302,12 @@ class AccountApi:
             )
 
         request_body = {}
-        payload = {"asset": asset, "recv_window": recv_window}
+        payload = {
+            "asset": asset,
+            "amount": amount,
+            "future_type": future_type,
+            "recv_window": recv_window,
+        }
 
         return send_request(
             self._session,

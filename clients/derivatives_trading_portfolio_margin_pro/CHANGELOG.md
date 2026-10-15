@@ -1,5 +1,18 @@
 # Changelog
 
+## 8.7.0 - 2026-10-15
+
+### Changed (2)
+
+#### REST API
+
+- Added parameter `amount`
+  - affected methods:
+    - `fund_collection_by_asset()` (`POST /sapi/v1/portfolio/asset-collection`)
+- Added parameter `futureType`
+  - affected methods:
+    - `fund_collection_by_asset()` (`POST /sapi/v1/portfolio/asset-collection`)
+
 ## 8.6.0 - 2026-10-15
 
 ### Changed (2)

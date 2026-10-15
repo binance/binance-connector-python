@@ -21,6 +21,12 @@ class ChangeAutoRepayFuturesStatusAutoRepayEnum(Enum):
     FALSE = "false"
 
 
+class FundCollectionByAssetFutureTypeEnum(Enum):
+    UM = "UM"
+    CM = "CM"
+    OPTION = "OPTION"
+
+
 class GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum(Enum):
     EARN_TO_FUTURE = "EARN_TO_FUTURE"
     FUTURE_TO_EARN = "FUTURE_TO_EARN"

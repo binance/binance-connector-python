@@ -110,6 +110,9 @@ from .enums import (
     ChangeAutoRepayFuturesStatusAutoRepayEnum as ChangeAutoRepayFuturesStatusAutoRepayEnum,
 )
 from .enums import (
+    FundCollectionByAssetFutureTypeEnum as FundCollectionByAssetFutureTypeEnum,
+)
+from .enums import (
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum as GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
 from .enums import (

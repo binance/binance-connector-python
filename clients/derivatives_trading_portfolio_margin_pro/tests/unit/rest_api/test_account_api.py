@@ -88,6 +88,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     ChangeAutoRepayFuturesStatusAutoRepayEnum,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    FundCollectionByAssetFutureTypeEnum,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
 
@@ -630,7 +633,12 @@ class TestAccountApi:
     ):
         """Test fund_collection_by_asset() successfully with optional parameters."""
 
-        params = {"asset": "USDT", "recv_window": 5000}
+        params = {
+            "asset": "USDT",
+            "amount": 10,
+            "future_type": FundCollectionByAssetFutureTypeEnum["UM"].value,
+            "recv_window": 5000,
+        }
 
         expected_response = {"msg": "success"}
         mock_get_signature.return_value = "mocked_signature"

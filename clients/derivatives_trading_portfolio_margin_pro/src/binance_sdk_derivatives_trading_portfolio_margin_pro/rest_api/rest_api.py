@@ -39,6 +39,7 @@ from .models import SwitchDeltaModeResponse
 from .models import TransferLdusdtRwusdForPortfolioMarginResponse
 from .models import BnbTransferTransferSideEnum
 from .models import ChangeAutoRepayFuturesStatusAutoRepayEnum
+from .models import FundCollectionByAssetFutureTypeEnum
 from .models import GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum
 from .models import PortfolioMarginProBankruptcyLoanRepayVarFromEnum
 from .models import RepayFuturesNegativeBalanceVarFromEnum
@@ -253,6 +254,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
     def fund_collection_by_asset(
         self,
         asset: Union[str, None],
+        amount: Optional[float] = None,
+        future_type: Optional[FundCollectionByAssetFutureTypeEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[FundCollectionByAssetResponse]:
         """
@@ -269,6 +272,8 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
                 Args:
                     asset (Union[str, None]):
+                    amount (Optional[float] = None): Amount to collect. When provided, `futureType` is required.
+                    future_type (Optional[FundCollectionByAssetFutureTypeEnum] = None): Target wallet for the collection. `OPTION` is for SPAN only. Cannot be sent without `amount`. `amount` and `futureType` must be provided together. If neither is provided, existing behavior is unchanged (query all wallets + transfer).
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -279,7 +284,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         """
 
-        return self._accountApi.fund_collection_by_asset(asset, recv_window)
+        return self._accountApi.fund_collection_by_asset(
+            asset, amount, future_type, recv_window
+        )
 
     def get_auto_repay_futures_status(
         self,
