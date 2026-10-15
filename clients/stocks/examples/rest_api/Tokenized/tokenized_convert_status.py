@@ -8,7 +8,6 @@ from binance_sdk_stocks.stocks import (
 )
 from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusConvertTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

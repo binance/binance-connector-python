@@ -42,7 +42,7 @@ class MarketStreamsApi:
         /calendar
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#calendar-stream
 
-        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Single-stream broadcast of market-phase transitions. One message per transition; no periodic heartbeat payload. Server polls every 5 seconds. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 id (Optional[str] = None): Unique WebSocket request ID.
@@ -80,7 +80,7 @@ class MarketStreamsApi:
         /<symbol>@kline_<interval>
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#kline-stream
 
-        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Per-symbol candlestick updates. One stream per (symbol, interval) combination. Supported intervals: 5m, 1h, 1d, 1w, 1M. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
@@ -129,7 +129,7 @@ class MarketStreamsApi:
         /price
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#price-stream
 
-        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Push-all price snapshot, polled every 3 seconds. One message carries the latest price for every active US-equity symbol. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 id (Optional[str] = None): Unique WebSocket request ID.
@@ -166,7 +166,7 @@ class MarketStreamsApi:
         /<symbol>@quote
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#quote-stream
 
-        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Per-symbol real-time best-bid / best-ask. Each symbol has its own stream. Per-symbol throttle: at most one push per symbol every 200 ms. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
@@ -210,7 +210,7 @@ class MarketStreamsApi:
         /<symbol>@tradability
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#tradability-stream
 
-        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value). Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Per-symbol push whenever the tradable direction of a symbol changes. Pushed only when the value actually changes (new value ≠ old value). Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.
@@ -254,7 +254,7 @@ class MarketStreamsApi:
         /<symbol>@tradingStatus
         https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/ws-streams/market-streams#trading-status-stream
 
-        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see [Subscribing via RPC](https://developers.binance.com/en/docs/products/stocks/websocket-streams-general-info#subscribing-via-rpc).
+        Per-symbol trading-status transitions (halts, resumes, SSR, LULD pauses, etc.). Events that do not match a known status/reason rule are not pushed. Also reachable via the SUBSCRIBE/UNSUBSCRIBE RPC — see Subscribing via RPC.
 
         Args:
                 symbol (Union[str, None]): US-equity ticker (UPPERCASE), e.g. `AAPL`.

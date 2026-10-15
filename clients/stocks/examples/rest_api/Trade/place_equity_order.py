@@ -9,7 +9,6 @@ from binance_sdk_stocks.stocks import (
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderSideEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderOrderTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

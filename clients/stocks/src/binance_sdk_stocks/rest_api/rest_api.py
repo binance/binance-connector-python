@@ -46,7 +46,6 @@ from .models import PlaceEquityOrderTradingSessionEnum
 from .models import PlaceEquityOrderWalletTypeEnum
 from .models import CreateRenewListenKeyResponse
 
-
 T = TypeVar("T")
 
 
