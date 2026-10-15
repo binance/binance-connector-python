@@ -7,7 +7,6 @@ from binance_sdk_margin_trading.margin_trading import (
     MARGIN_TRADING_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

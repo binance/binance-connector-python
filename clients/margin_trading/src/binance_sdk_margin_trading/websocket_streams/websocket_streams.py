@@ -23,7 +23,6 @@ from binance_common.websocket import (
 from .models import RiskDataStreamEventsResponse
 from .models import TradeDataStreamEventsResponse
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

@@ -11,7 +11,6 @@ from binance_sdk_margin_trading.rest_api.models import (
 )
 from binance_sdk_margin_trading.rest_api.models import MarginAccountBorrowRepayTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

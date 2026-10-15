@@ -8,7 +8,6 @@ from binance_sdk_margin_trading.margin_trading import (
 )
 from binance_sdk_margin_trading.rest_api.models import MarginManualLiquidationTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

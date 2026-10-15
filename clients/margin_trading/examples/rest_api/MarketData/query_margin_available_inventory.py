@@ -10,7 +10,6 @@ from binance_sdk_margin_trading.rest_api.models import (
     QueryMarginAvailableInventoryTypeEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

@@ -138,7 +138,6 @@ from .models import QueryMaxTransferOutAmountResponse
 from .models import GetCrossMarginTransferHistoryTypeEnum
 from .models import StartUserDataStreamResponse
 
-
 T = TypeVar("T")
 
 

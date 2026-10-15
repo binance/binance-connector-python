@@ -9,7 +9,6 @@ from binance_sdk_margin_trading.margin_trading import (
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderSideEnum
 from binance_sdk_margin_trading.rest_api.models import MarginAccountNewOrderTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
