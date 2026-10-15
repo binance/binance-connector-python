@@ -7,7 +7,6 @@ from binance_sdk_simple_earn.simple_earn import (
     SIMPLE_EARN_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

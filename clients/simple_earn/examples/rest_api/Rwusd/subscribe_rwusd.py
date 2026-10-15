@@ -8,7 +8,6 @@ from binance_sdk_simple_earn.simple_earn import (
 )
 from binance_sdk_simple_earn.rest_api.models import SubscribeRwusdAssetEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

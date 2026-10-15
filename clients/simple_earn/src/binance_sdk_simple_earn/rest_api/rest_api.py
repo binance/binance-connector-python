@@ -73,7 +73,6 @@ from .models import RedeemRwusdTypeEnum
 from .models import SubscribeRwusdAssetEnum
 from .models import GetYieldArenaActivitiesResponse
 
-
 T = TypeVar("T")
 
 

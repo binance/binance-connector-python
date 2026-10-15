@@ -10,7 +10,6 @@ from binance_sdk_simple_earn.rest_api.models import (
     SetLockedProductRedeemOptionRedeemToEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
