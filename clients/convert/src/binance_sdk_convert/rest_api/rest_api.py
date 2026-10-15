@@ -32,7 +32,6 @@ from .models import PlaceLimitOrderWalletTypeEnum
 from .models import SendQuoteRequestWalletTypeEnum
 from .models import SendQuoteRequestValidTimeEnum
 
-
 T = TypeVar("T")
 
 

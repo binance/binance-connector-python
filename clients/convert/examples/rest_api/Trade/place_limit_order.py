@@ -9,7 +9,6 @@ from binance_sdk_convert.convert import (
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderSideEnum
 from binance_sdk_convert.rest_api.models import PlaceLimitOrderExpiredTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
