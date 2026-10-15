@@ -9,9 +9,10 @@
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a client library for the Binance W3W Prediction API, enabling developers to interact programmatically with Binance's W3W Prediction trading platform. The library provides tools to place and manage prediction market orders, query positions and transfer funds through the REST API:
+This is a client library for the Binance W3W Prediction API, enabling developers to interact programmatically with Binance's W3W Prediction trading platform. The library provides tools to place and manage prediction market orders, query positions and transfer funds through the REST API, and to receive real-time trading events and order book updates through the WebSocket Streams:
 
 - [REST API](./src/binance_sdk_w3w_prediction/rest_api/rest_api.py)
+- [WebSocket Streams](./src/binance_sdk_w3w_prediction/websocket_streams/websocket_streams.py)
 
 ## Table of Contents
 
@@ -19,6 +20,7 @@ This is a client library for the Binance W3W Prediction API, enabling developers
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
+- [Websocket Streams](#websocket-streams)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -27,6 +29,8 @@ This is a client library for the Binance W3W Prediction API, enabling developers
 
 - REST API Endpoints:
   - `/sapi/v1/w3w/wallet/prediction/*`
+- WebSocket Streams:
+  - Real-time trading, claim, transfer and market resolution events, and order book updates.
 - Inclusion of test cases and examples for quick onboarding.
 
 ## Installation
@@ -46,6 +50,8 @@ For detailed information, refer to the [Binance API Documentation](https://devel
 All REST API endpoints are available through the [`rest_api`](./src/binance_sdk_w3w_prediction/rest_api/rest_api.py) module. The REST API enables you to fetch market data, manage trades, and access account information. Note that some endpoints require authentication using your Binance API credentials.
 
 ```python
+import logging
+
 from binance_common.configuration import ConfigurationRestAPI
 from binance_common.constants import W3W_PREDICTION_REST_API_PROD_URL
 from binance_sdk_w3w_prediction.w3w_prediction import W3wPrediction
@@ -138,6 +144,128 @@ See the [Error Handling example](./docs/rest_api/error-handling.md) for detailed
 
 If `base_path` is not provided, it defaults to `https://api.binance.com`.
 
+### Websocket Streams
+
+WebSocket Streams push real-time events for your prediction orders, reward claims, fund transfers and market resolutions, as well as order book updates. Use the [websocket-streams](./src/binance_sdk_w3w_prediction/websocket_streams/websocket_streams.py) module to subscribe to these streams.
+
+The streams are signed: provide your Binance API credentials in the configuration. The connection URL is signed again on every connect and reconnect.
+
+```python
+import asyncio
+import logging
+
+from binance_common.configuration import ConfigurationWebSocketStreams
+from binance_common.constants import W3W_PREDICTION_WS_STREAMS_PROD_URL
+from binance_sdk_w3w_prediction.w3w_prediction import W3wPrediction
+
+logging.basicConfig(level=logging.INFO)
+
+configuration_ws_streams = ConfigurationWebSocketStreams(
+    api_key="your-api-key",
+    api_secret="your-api-secret",
+    stream_url=W3W_PREDICTION_WS_STREAMS_PROD_URL,
+)
+
+client = W3wPrediction(config_ws_streams=configuration_ws_streams)
+
+
+async def prediction_order_book_by_market_id():
+    connection = None
+    try:
+        connection = await client.websocket_streams.create_connection()
+
+        stream = await connection.prediction_order_book_by_market_id(
+            market_id="8859231",
+        )
+        stream.on("message", lambda data: print(f"{data}"))
+
+        await asyncio.sleep(5)
+    except Exception as e:
+        logging.error(f"prediction_order_book_by_market_id() error: {e}")
+    finally:
+        if connection:
+            await connection.close_connection(close_session=True)
+
+
+if __name__ == "__main__":
+    asyncio.run(prediction_order_book_by_market_id())
+```
+
+More examples are available in the [`examples/websocket_streams`](./examples/websocket_streams/) folder.
+
+#### Configuration Options
+
+The WebSocket Streams API supports the following advanced configuration options:
+
+- `api_key`: Binance API key, sent with every connection.
+- `api_secret`: Binance API secret, used to sign the connection URL.
+- `private_key`: RSA or ED25519 private key, used to sign the connection URL instead of `api_secret`.
+- `private_key_passphrase`: Passphrase for the private key, if encrypted.
+- `reconnect_delay`: Delay (ms) between reconnections.
+- `reconnect_attempts`: Maximum number of WebSocket reconnection attempts (max: 10).
+- `compression`: Enable response compression.
+- `mode`: Choose between `single` and `pool` connection modes.
+  - `single`: A single WebSocket connection.
+  - `pool`: A pool of WebSocket connections.
+- `pool_size`: Define the number of WebSocket connections in pool mode.
+- `proxy`: Proxy configuration (`host`, `port`, `protocol` and `auth`).
+- `https_agent`: Custom HTTPS agent for advanced TLS configuration.
+- `user_agent`: Custom user agent string for WebSocket Streams.
+
+##### Key Pair Based Authentication
+
+The WebSocket Streams support key pair-based authentication. You can use `RSA` or `ED25519` keys to sign the connection URL. See the [Key Pair Based Authentication example](./docs/websocket_streams/key-pair-authentication.md) for detailed usage.
+
+##### Reconnect Delay
+
+Specify the delay in milliseconds between WebSocket reconnection attempts for streams. See the [Reconnect Delay example](./docs/websocket_streams/reconnect-delay.md) for detailed usage.
+
+##### Websocket Reconnect Attempts
+
+Specify how many times a failed reconnection is retried before the connection is given up on. A value between `1` and `10` is accepted. See the [Reconnect Attempts example](./docs/websocket_streams/reconnect_attempts.md) for detailed usage.
+
+##### Compression
+
+Enable or disable compression for WebSocket Streams messages. See the [Compression example](./docs/websocket_streams/compression.md) for detailed usage.
+
+##### Connection Mode
+
+Choose between `single` and `pool` connection modes for WebSocket Streams. The `single` mode uses a single WebSocket connection, while the `pool` mode uses a pool of WebSocket connections. See the [Connection Mode example](./docs/websocket_streams/connection-mode.md) for detailed usage.
+
+##### Proxy
+
+The WebSocket Streams support HTTP/HTTPS proxy configurations. See the [Proxy example](./docs/websocket_streams/proxy.md) for detailed usage.
+
+##### WebSocket Http Agent
+
+Customize the agent for advanced configurations. See the [WebSocket Http Agent example](./docs/websocket_streams/agent.md) for detailed usage.
+
+#### Unsubscribing from Streams
+
+You can unsubscribe from specific WebSocket streams using the `unsubscribe` method. This is useful for managing active subscriptions without closing the connection.
+
+```python
+async def limit_order_fully_filled():
+    connection = None
+    try:
+        connection = await client.websocket_streams.create_connection()
+
+        stream = await connection.limit_order_fully_filled()
+        stream.on("message", lambda data: print(f"{data}"))
+
+        await asyncio.sleep(5)
+        await stream.unsubscribe()
+    except Exception as e:
+        logging.error(f"limit_order_fully_filled() error: {e}")
+    finally:
+        if connection:
+            await connection.close_connection(close_session=True)
+```
+
+#### Reconnecting
+
+Messages are delivered at most once, their order is not guaranteed and messages sent while you are disconnected are not cached. After a reconnect, fetch the latest state through the REST API and deduplicate events on `pushId` (business events) or on `marketId` + `updateTimestampMs` (order book).
+
 ## Testing
 
 To run the tests, ensure you have [Poetry](https://python-poetry.org/) installed, then execute the following commands:
@@ -149,6 +277,7 @@ poetry run pytest ./tests
 
 The tests cover:
 * REST API endpoints
+* WebSocket Streams endpoints
 * Error handling
 * Edge cases
 

@@ -8,7 +8,6 @@ from binance_sdk_w3w_prediction.w3w_prediction import (
 )
 from binance_sdk_w3w_prediction.rest_api.models import CreateOtcBlocktradeSideEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

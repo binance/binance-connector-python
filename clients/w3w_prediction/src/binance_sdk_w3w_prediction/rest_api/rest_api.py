@@ -79,7 +79,6 @@ from .models import GetQuotaStatusResponse
 from .models import ListPredictionWalletsResponse
 from .models import QueryPaymentOptionBalancesResponse
 
-
 T = TypeVar("T")
 
 

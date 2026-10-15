@@ -13,11 +13,13 @@ from binance_common.errors import (
 )
 from binance_common.constants import (
     W3W_PREDICTION_REST_API_PROD_URL,
+    W3W_PREDICTION_WS_STREAMS_PROD_URL,
 )
 
 __all__ = [
     "W3wPrediction",
     "W3W_PREDICTION_REST_API_PROD_URL",
+    "W3W_PREDICTION_WS_STREAMS_PROD_URL",
     "ClientError",
     "RequiredError",
     "UnauthorizedError",
