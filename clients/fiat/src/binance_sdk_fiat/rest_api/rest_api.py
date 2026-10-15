@@ -25,7 +25,6 @@ from .models import DepositApiPaymentMethodEnum
 from .models import FiatWithdrawApiPaymentMethodEnum
 from .models import FiatWithdrawRequestAccountInfo
 
-
 T = TypeVar("T")
 
 

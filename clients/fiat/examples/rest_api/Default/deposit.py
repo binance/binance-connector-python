@@ -4,7 +4,6 @@ import logging
 from binance_sdk_fiat.fiat import Fiat, ConfigurationRestAPI, FIAT_REST_API_PROD_URL
 from binance_sdk_fiat.rest_api.models import DepositApiPaymentMethodEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
