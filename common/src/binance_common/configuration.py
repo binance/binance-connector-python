@@ -184,6 +184,7 @@ class ConfigurationWebSocketStreams(RedactedRepr):
     - HTTPS Agent
     - WebSocket Pool
     - Time Unit
+    - Signed streams authentication
     """
 
     def __init__(
@@ -197,6 +198,10 @@ class ConfigurationWebSocketStreams(RedactedRepr):
         pool_size: int = 2,
         time_unit: Optional[TimeUnit] = None,
         https_agent: Optional[ssl.SSLContext] = None,
+        api_key: Optional[str] = None,
+        api_secret: Optional[str] = None,
+        private_key: Optional[Union[bytes, str]] = None,
+        private_key_passphrase: Optional[str] = None,
     ):
         """
         Initialize the Websocket Stream configuration.
@@ -213,6 +218,10 @@ class ConfigurationWebSocketStreams(RedactedRepr):
             pool_size (int): Number of WebSocket connections in pool (default: 2).
             time_unit (Optional[TimeUnit]): Time unit for time-based responses (default: None).
             https_agent (Optional[ssl.SSLContext]): Custom HTTPS Agent (default: None).
+            api_key (Optional[str]): API key for signed streams (default: None).
+            api_secret (Optional[str]): API secret for signed streams (default: None).
+            private_key (Optional[Union[bytes, str]]): Private key for signed streams (default: None).
+            private_key_passphrase (Optional[str]): Passphrase for private key (default: None).
 
         Raises:
             ValueError: If `reconnect_attempts` is outside the supported range.
@@ -233,4 +242,8 @@ class ConfigurationWebSocketStreams(RedactedRepr):
         self.pool_size = pool_size
         self.time_unit = time_unit
         self.https_agent = https_agent
+        self.api_key = api_key
+        self.api_secret = api_secret
+        self.private_key = private_key
+        self.private_key_passphrase = private_key_passphrase
         self.user_agent = ""
