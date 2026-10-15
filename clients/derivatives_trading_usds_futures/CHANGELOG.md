@@ -1,5 +1,15 @@
 # Changelog
 
+## 18.0.0 - 2026-10-15
+
+### Changed (1)
+
+#### REST API
+
+- Deleted parameter `page`
+  - affected methods:
+    - `get_income_history()` (`GET /fapi/v1/income`)
+
 ## 17.7.0 - 2026-10-15
 
 ### Changed (2)

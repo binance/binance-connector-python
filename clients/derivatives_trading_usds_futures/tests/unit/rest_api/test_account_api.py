@@ -2306,7 +2306,6 @@ class TestAccountApi:
             "income_type": GetIncomeHistoryIncomeTypeEnum["TRANSFER"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
-            "page": 1,
             "limit": 30,
             "recv_window": 5000,
         }

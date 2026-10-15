@@ -708,7 +708,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
         income_type: Optional[GetIncomeHistoryIncomeTypeEnum] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetIncomeHistoryResponse]:
@@ -732,7 +731,6 @@ class DerivativesTradingUsdsFuturesRestAPI:
                     income_type (Optional[GetIncomeHistoryIncomeTypeEnum] = None): Income type.
                     start_time (Optional[int] = None): Timestamp in milliseconds (inclusive start).
                     end_time (Optional[int] = None): Timestamp in milliseconds (inclusive end).
-                    page (Optional[int] = None): Pagination page number.
                     limit (Optional[int] = None): Maximum number of records to return.
                     recv_window (Optional[int] = None):
 
@@ -745,7 +743,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         """
 
         return self._accountApi.get_income_history(
-            symbol, income_type, start_time, end_time, page, limit, recv_window
+            symbol, income_type, start_time, end_time, limit, recv_window
         )
 
     def notional_and_leverage_brackets(
