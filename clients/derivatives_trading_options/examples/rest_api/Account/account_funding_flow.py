@@ -10,7 +10,6 @@ from binance_sdk_derivatives_trading_options.rest_api.models import (
     AccountFundingFlowCurrencyEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

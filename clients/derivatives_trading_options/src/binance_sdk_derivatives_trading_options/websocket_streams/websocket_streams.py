@@ -35,7 +35,6 @@ from .models import DiffBookDepthStreamsUpdateSpeedEnum
 from .models import PartialBookDepthStreamsLevelEnum
 from .models import PartialBookDepthStreamsUpdateSpeedEnum
 
-
 T = TypeVar("T", bound=BaseModel)
 
 

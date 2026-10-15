@@ -9,7 +9,6 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
 from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderSideEnum
 from binance_sdk_derivatives_trading_options.rest_api.models import NewOrderTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

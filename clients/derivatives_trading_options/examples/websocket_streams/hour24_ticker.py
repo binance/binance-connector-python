@@ -8,7 +8,6 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
     ConfigurationWebSocketStreams,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

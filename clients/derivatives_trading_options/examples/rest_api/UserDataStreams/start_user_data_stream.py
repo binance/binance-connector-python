@@ -7,7 +7,6 @@ from binance_sdk_derivatives_trading_options.derivatives_trading_options import 
     DERIVATIVES_TRADING_OPTIONS_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

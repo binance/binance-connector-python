@@ -74,7 +74,6 @@ from .models import NewOrderNewOrderRespTypeEnum
 from .models import NewOrderSelfTradePreventionModeEnum
 from .models import StartUserDataStreamResponse
 
-
 T = TypeVar("T")
 
 
