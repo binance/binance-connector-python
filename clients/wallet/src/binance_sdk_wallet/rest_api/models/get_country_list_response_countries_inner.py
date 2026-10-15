@@ -51,7 +51,7 @@ class GetCountryListResponseCountriesInner(BaseModel):
     )
     has_region_restrictions: Optional[StrictBool] = Field(
         default=None,
-        description="Whether this country has region-level restrictions.",
+        description="Whether this country has region-level restrictions. Always `false` for the BR entity, which does not collect region/city.",
         alias="hasRegionRestrictions",
     )
     additional_properties: Dict[str, Any] = {}

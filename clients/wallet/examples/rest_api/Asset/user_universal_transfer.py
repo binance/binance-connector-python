@@ -8,7 +8,6 @@ from binance_sdk_wallet.wallet import (
 )
 from binance_sdk_wallet.rest_api.models import UserUniversalTransferTypeEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

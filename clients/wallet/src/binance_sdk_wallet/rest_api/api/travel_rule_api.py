@@ -438,7 +438,7 @@ class TravelRuleApi:
                 GET /sapi/v1/localentity/country/list
                 https://developers.binance.com/en/docs/catalog/core-trading-wallet/api/rest-api/travel-rule#get-country-list
 
-                Query the active country list for travel rule questionnaires. Currently, only supports AU entity.
+                Query the active country list for travel rule questionnaires. Currently supports AU and BR entities.
 
         Weight(IP): 1
 
