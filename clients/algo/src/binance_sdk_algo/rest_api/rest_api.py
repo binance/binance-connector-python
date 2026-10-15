@@ -40,7 +40,6 @@ from .models import TimeWeightedAveragePriceSpotAlgoSideEnum
 from .models import VolumeParticipationSideEnum
 from .models import VolumeParticipationUrgencyEnum
 
-
 T = TypeVar("T")
 
 

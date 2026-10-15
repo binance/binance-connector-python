@@ -4,7 +4,6 @@ import logging
 from binance_sdk_algo.algo import Algo, ConfigurationRestAPI, ALGO_REST_API_PROD_URL
 from binance_sdk_algo.rest_api.models import TimeWeightedAveragePriceSpotAlgoSideEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

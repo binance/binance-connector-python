@@ -5,7 +5,6 @@ from binance_sdk_algo.algo import Algo, ConfigurationRestAPI, ALGO_REST_API_PROD
 from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoSideEnum
 from binance_sdk_algo.rest_api.models import VolumeParticipationFutureAlgoUrgencyEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

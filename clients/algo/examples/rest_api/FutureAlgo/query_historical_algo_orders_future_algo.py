@@ -3,7 +3,6 @@ import logging
 
 from binance_sdk_algo.algo import Algo, ConfigurationRestAPI, ALGO_REST_API_PROD_URL
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
