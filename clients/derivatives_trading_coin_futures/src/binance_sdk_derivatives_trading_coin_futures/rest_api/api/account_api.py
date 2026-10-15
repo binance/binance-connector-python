@@ -535,7 +535,6 @@ class AccountApi:
         income_type: Optional[GetIncomeHistoryIncomeTypeEnum] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetIncomeHistoryResponse]:
@@ -560,7 +559,6 @@ class AccountApi:
                     income_type (Optional[GetIncomeHistoryIncomeTypeEnum] = None): Income type.
                     start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int] = None): Page number
                     limit (Optional[int] = None): Maximum number of records to return.
                     recv_window (Optional[int] = None):
 
@@ -578,7 +576,6 @@ class AccountApi:
             "income_type": income_type,
             "start_time": start_time,
             "end_time": end_time,
-            "page": page,
             "limit": limit,
             "recv_window": recv_window,
         }

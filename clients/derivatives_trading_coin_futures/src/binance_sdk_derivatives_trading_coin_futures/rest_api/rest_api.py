@@ -503,7 +503,6 @@ class DerivativesTradingCoinFuturesRestAPI:
         income_type: Optional[GetIncomeHistoryIncomeTypeEnum] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetIncomeHistoryResponse]:
@@ -526,7 +525,6 @@ class DerivativesTradingCoinFuturesRestAPI:
                     income_type (Optional[GetIncomeHistoryIncomeTypeEnum] = None): Income type.
                     start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int] = None): Page number
                     limit (Optional[int] = None): Maximum number of records to return.
                     recv_window (Optional[int] = None):
 
@@ -539,7 +537,7 @@ class DerivativesTradingCoinFuturesRestAPI:
         """
 
         return self._accountApi.get_income_history(
-            symbol, income_type, start_time, end_time, page, limit, recv_window
+            symbol, income_type, start_time, end_time, limit, recv_window
         )
 
     def notional_bracket_for_pair(
