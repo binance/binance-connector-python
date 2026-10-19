@@ -1752,6 +1752,42 @@ class TestWsStreamsPlaceholder(unittest.TestCase):
         result = ws_streams_placeholder(stream, params)
         self.assertEqual(result, "btcusdt@depth")
 
+    def test_enum_values_are_unwrapped(self):
+        class IntervalEnum(Enum):
+            INTERVAL_1m = "1m"
+
+        class ContractTypeEnum(Enum):
+            NEXT_QUARTER = "next_quarter"
+
+        class WindowSizeEnum(Enum):
+            WINDOW_SIZE_1h = "1h"
+
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<symbol>@kline_<interval>",
+                {"symbol": "BTCUSDT", "interval": IntervalEnum.INTERVAL_1m},
+            ),
+            "btcusdt@kline_1m",
+        )
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<pair>_<contractType>@continuousKline_<interval>",
+                {
+                    "pair": "btcusdt",
+                    "contract_type": ContractTypeEnum.NEXT_QUARTER,
+                    "interval": IntervalEnum.INTERVAL_1m,
+                },
+            ),
+            "btcusdt_next_quarter@continuousKline_1m",
+        )
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<symbol>@ticker_<windowSize>",
+                {"symbol": "BTCUSDT", "window_size": WindowSizeEnum.WINDOW_SIZE_1h},
+            ),
+            "btcusdt@ticker_1h",
+        )
+
 
 class TestParseWsRateLimitHeaders(unittest.TestCase):
     def test_parse_single_ratelimit_header(self):
