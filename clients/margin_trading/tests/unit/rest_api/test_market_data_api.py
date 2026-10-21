@@ -360,9 +360,9 @@ class TestMarketDataApi:
                 "assetName": "USDC",
                 "isBorrowable": True,
                 "isMortgageable": True,
-                "userMinBorrow": "0.00000000",
+                "userMinBorrow": "5.00000000",
                 "userMinRepay": "0.00000000",
-                "delistTime": 1704973040,
+                "delistTime": 1704973040000,
             }
         ]
 
@@ -409,9 +409,9 @@ class TestMarketDataApi:
                 "assetName": "USDC",
                 "isBorrowable": True,
                 "isMortgageable": True,
-                "userMinBorrow": "0.00000000",
+                "userMinBorrow": "5.00000000",
                 "userMinRepay": "0.00000000",
-                "delistTime": 1704973040,
+                "delistTime": 1704973040000,
             }
         ]
 

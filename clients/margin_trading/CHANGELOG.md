@@ -1,5 +1,21 @@
 # Changelog
 
+## 8.8.0 - 2026-10-21
+
+### Added (3)
+
+#### REST API
+
+- `close_user_data_stream_v2()` (`DELETE /sapi/v2/margin/listen-key`)
+- `keepalive_user_data_stream_v2()` (`PUT /sapi/v2/margin/listen-key`)
+- `start_user_data_stream_v2()` (`POST /sapi/v2/margin/listen-key`)
+
+### Changed (1)
+
+#### REST API
+
+- Added response schema `startUserDataStreamV2Response`
+
 ## 8.7.0 - 2026-10-15
 
 ### Changed (2)

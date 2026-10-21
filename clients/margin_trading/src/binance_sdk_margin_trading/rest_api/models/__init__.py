@@ -345,6 +345,9 @@ from .query_special_key_response import (
 from .start_user_data_stream_response import (
     StartUserDataStreamResponse as StartUserDataStreamResponse,
 )
+from .start_user_data_stream_v2_response import (
+    StartUserDataStreamV2Response as StartUserDataStreamV2Response,
+)
 from .enums import (
     QueryCrossIsolatedMarginCapitalFlowTypeEnum as QueryCrossIsolatedMarginCapitalFlowTypeEnum,
 )

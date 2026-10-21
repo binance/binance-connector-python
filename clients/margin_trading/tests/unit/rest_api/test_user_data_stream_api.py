@@ -21,6 +21,7 @@ from binance_common.utils import normalize_query_values, is_one_of_model, snake_
 
 from binance_sdk_margin_trading.rest_api.api import UserDataStreamApi
 from binance_sdk_margin_trading.rest_api.models import StartUserDataStreamResponse
+from binance_sdk_margin_trading.rest_api.models import StartUserDataStreamV2Response
 
 
 class TestUserDataStreamApi:
@@ -75,6 +76,35 @@ class TestUserDataStreamApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.close_user_data_stream()
+
+    def test_close_user_data_stream_v2_success(self):
+        """Test close_user_data_stream_v2() successfully with required parameters only."""
+
+        self.set_mock_response({})
+
+        response = self.client.close_user_data_stream_v2()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v2/margin/listen-key" in request_kwargs["url"]
+        assert request_kwargs["method"] == "DELETE"
+
+        assert response is not None
+
+        assert response.data() == {}
+
+    def test_close_user_data_stream_v2_server_error(self):
+        """Test that close_user_data_stream_v2() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.close_user_data_stream_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.close_user_data_stream_v2()
 
     def test_keepalive_user_data_stream_success(self):
         """Test keepalive_user_data_stream() successfully with required parameters only."""
@@ -144,6 +174,74 @@ class TestUserDataStreamApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.keepalive_user_data_stream(**params)
 
+    def test_keepalive_user_data_stream_v2_success(self):
+        """Test keepalive_user_data_stream_v2() successfully with required parameters only."""
+
+        params = {"listen_key": "listen_key_example"}
+
+        self.set_mock_response({})
+
+        response = self.client.keepalive_user_data_stream_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v2/margin/listen-key" in request_kwargs["url"]
+        assert request_kwargs["method"] == "PUT"
+        assert normalized["listenKey"] == "listen_key_example"
+
+        assert response is not None
+
+        assert response.data() == {}
+
+    def test_keepalive_user_data_stream_v2_success_with_optional_params(self):
+        """Test keepalive_user_data_stream_v2() successfully with optional parameters."""
+
+        params = {"listen_key": "listen_key_example"}
+
+        self.set_mock_response({})
+
+        response = self.client.keepalive_user_data_stream_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/sapi/v2/margin/listen-key" in request_kwargs["url"]
+        assert request_kwargs["method"] == "PUT"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        assert response.data() == {}
+
+    def test_keepalive_user_data_stream_v2_missing_required_param_listen_key(self):
+        """Test that keepalive_user_data_stream_v2() raises RequiredError when 'listen_key' is missing."""
+        params = {"listen_key": "listen_key_example"}
+        params["listen_key"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'listen_key'"
+        ):
+            self.client.keepalive_user_data_stream_v2(**params)
+
+    def test_keepalive_user_data_stream_v2_server_error(self):
+        """Test that keepalive_user_data_stream_v2() raises an error when the server returns an error."""
+
+        params = {"listen_key": "listen_key_example"}
+
+        mock_error = Exception("ResponseError")
+        self.client.keepalive_user_data_stream_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.keepalive_user_data_stream_v2(**params)
+
     def test_start_user_data_stream_success(self):
         """Test start_user_data_stream() successfully with required parameters only."""
 
@@ -191,3 +289,51 @@ class TestUserDataStreamApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.start_user_data_stream()
+
+    def test_start_user_data_stream_v2_success(self):
+        """Test start_user_data_stream_v2() successfully with required parameters only."""
+
+        expected_response = {
+            "listenKey": "T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhd"
+        }
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.start_user_data_stream_v2()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v2/margin/listen-key" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(StartUserDataStreamV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(StartUserDataStreamV2Response, "from_dict"):
+            expected = StartUserDataStreamV2Response.from_dict(expected_response)
+        else:
+            expected = StartUserDataStreamV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_start_user_data_stream_v2_server_error(self):
+        """Test that start_user_data_stream_v2() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.start_user_data_stream_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.start_user_data_stream_v2()

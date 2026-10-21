@@ -16,6 +16,7 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 from ..models import StartUserDataStreamResponse
+from ..models import StartUserDataStreamV2Response
 
 
 class UserDataStreamApi:
@@ -68,6 +69,43 @@ class UserDataStreamApi:
             time_unit=self._configuration.time_unit,
         )
 
+    def close_user_data_stream_v2(
+        self,
+    ) -> ApiResponse[None]:
+        """
+                Close User Data Stream V2 (USER_STREAM)
+                DELETE /sapi/v2/margin/listen-key
+                https://developers.binance.com/en/docs/catalog/core-trading-margin-trading/api/rest-api/user-data-stream#close-user-data-stream-v2
+
+                Close out a user data stream.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+
+                Returns:
+                    ApiResponse[None]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = None
+        payload = None
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/sapi/v2/margin/listen-key",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+        )
+
     def keepalive_user_data_stream(
         self,
         listen_key: Union[str, None],
@@ -113,6 +151,51 @@ class UserDataStreamApi:
             time_unit=self._configuration.time_unit,
         )
 
+    def keepalive_user_data_stream_v2(
+        self,
+        listen_key: Union[str, None],
+    ) -> ApiResponse[None]:
+        """
+                Keepalive User Data Stream V2 (USER_STREAM)
+                PUT /sapi/v2/margin/listen-key
+                https://developers.binance.com/en/docs/catalog/core-trading-margin-trading/api/rest-api/user-data-stream#keepalive-user-data-stream-v2
+
+                Keepalive a user data stream to prevent a time out.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+                    listen_key (Union[str, None]):
+
+                Returns:
+                    ApiResponse[None]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if listen_key is None:
+            raise RequiredError(
+                field="listen_key",
+                error_message="Missing required parameter 'listen_key'",
+            )
+
+        request_body = {}
+        payload = {"listen_key": listen_key}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="PUT",
+            path="/sapi/v2/margin/listen-key",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+        )
+
     def start_user_data_stream(
         self,
     ) -> ApiResponse[StartUserDataStreamResponse]:
@@ -149,4 +232,42 @@ class UserDataStreamApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=StartUserDataStreamResponse,
+        )
+
+    def start_user_data_stream_v2(
+        self,
+    ) -> ApiResponse[StartUserDataStreamV2Response]:
+        """
+                Start User Data Stream V2 (USER_STREAM)
+                POST /sapi/v2/margin/listen-key
+                https://developers.binance.com/en/docs/catalog/core-trading-margin-trading/api/rest-api/user-data-stream#start-user-data-stream-v2
+
+                Start a new user data stream.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+
+                Returns:
+                    ApiResponse[StartUserDataStreamV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = None
+        payload = None
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v2/margin/listen-key",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=StartUserDataStreamV2Response,
         )

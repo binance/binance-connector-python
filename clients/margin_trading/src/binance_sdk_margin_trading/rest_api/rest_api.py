@@ -137,6 +137,7 @@ from .models import GetCrossMarginTransferHistoryResponse
 from .models import QueryMaxTransferOutAmountResponse
 from .models import GetCrossMarginTransferHistoryTypeEnum
 from .models import StartUserDataStreamResponse
+from .models import StartUserDataStreamV2Response
 
 T = TypeVar("T")
 
@@ -2854,6 +2855,30 @@ class MarginTradingRestAPI:
 
         return self._userDataStreamApi.close_user_data_stream()
 
+    def close_user_data_stream_v2(
+        self,
+    ) -> ApiResponse[None]:
+        """
+                Close User Data Stream V2 (USER_STREAM)
+
+                Close out a user data stream.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+
+                Returns:
+                    ApiResponse[None]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._userDataStreamApi.close_user_data_stream_v2()
+
     def keepalive_user_data_stream(
         self,
         listen_key: Union[str, None],
@@ -2880,6 +2905,32 @@ class MarginTradingRestAPI:
 
         return self._userDataStreamApi.keepalive_user_data_stream(listen_key)
 
+    def keepalive_user_data_stream_v2(
+        self,
+        listen_key: Union[str, None],
+    ) -> ApiResponse[None]:
+        """
+                Keepalive User Data Stream V2 (USER_STREAM)
+
+                Keepalive a user data stream to prevent a time out.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+                    listen_key (Union[str, None]):
+
+                Returns:
+                    ApiResponse[None]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._userDataStreamApi.keepalive_user_data_stream_v2(listen_key)
+
     def start_user_data_stream(
         self,
     ) -> ApiResponse[StartUserDataStreamResponse]:
@@ -2903,3 +2954,27 @@ class MarginTradingRestAPI:
         """
 
         return self._userDataStreamApi.start_user_data_stream()
+
+    def start_user_data_stream_v2(
+        self,
+    ) -> ApiResponse[StartUserDataStreamV2Response]:
+        """
+                Start User Data Stream V2 (USER_STREAM)
+
+                Start a new user data stream.
+
+        Weight(IP): 1
+
+        Security Type: USER_STREAM
+
+                Args:
+
+                Returns:
+                    ApiResponse[StartUserDataStreamV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._userDataStreamApi.start_user_data_stream_v2()
