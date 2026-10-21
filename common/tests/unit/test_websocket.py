@@ -34,7 +34,11 @@ from binance_common.websocket import (
     WebSocketCommon,
     WebSocketConnection,
 )
-from binance_common.models import WebsocketApiResponse, WebsocketApiRateLimit
+from binance_common.models import (
+    WebsocketApiResponse,
+    WebsocketApiRateLimit,
+    WebsocketApiUserDataEndpoints,
+)
 
 
 class OrderTradeUpdate(BaseModel):
@@ -3781,3 +3785,260 @@ class TestSessionReLogOn:
             )
 
         mock_send.assert_not_awaited()
+
+
+class TestSignatureUserDataResubscribe:
+    """Issue #578: a signature user data subscription must survive a reconnect."""
+
+    SUBSCRIBE = "userDataStream.subscribe.signature"
+
+    @staticmethod
+    def _api():
+        config = MagicMock(
+            api_key="test-api-key",
+            mode=WebsocketMode.SINGLE,
+            return_rate_limits=False,
+            session_re_logon=True,
+            stream_url="wss://test.com/ws",
+            reconnect_delay=0,
+            reconnect_attempts=1,
+        )
+        endpoints = WebsocketApiUserDataEndpoints(
+            user_data_stream_subscribe="userDataStream.subscribe",
+            user_data_stream_logout="session.logout",
+        )
+        api = WebSocketAPIBase(config, endpoints)
+        api.close_connection = AsyncMock()
+        return api
+
+    @staticmethod
+    def _server(subscription_ids=None, fail=False):
+        """Fake server: answers each request and records what was sent where."""
+
+        sent = []
+        ids = defaultdict(int)
+
+        async def send(self, payload, connection):
+            sent.append((connection, payload))
+            future = asyncio.get_running_loop().create_future()
+            if fail and connection.id == "conn-1" and len(sent) > 1:
+                future.set_exception(ValueError({"code": -1022, "msg": "bad"}))
+                return future
+            result = {}
+            if payload["method"].startswith("userDataStream.subscribe"):
+                key = id(connection)
+                if subscription_ids is not None and key in subscription_ids:
+                    result = {"subscriptionId": subscription_ids[key].pop(0)}
+                else:
+                    result = {"subscriptionId": ids[key]}
+                    ids[key] += 1
+            future.set_result({"id": payload["id"], "status": 200, "result": result})
+            return future
+
+        return sent, send
+
+    @classmethod
+    def _replays(cls, sent, connection):
+        return [p for c, p in sent if c is connection and p["method"] == cls.SUBSCRIBE]
+
+    @staticmethod
+    def _connection():
+        websocket = AsyncMock()
+        websocket.__aiter__.return_value = []
+        return WebSocketConnection(websocket, "conn-1", "ConfigurationWebSocketAPI")
+
+    async def _subscribe(self, api):
+        response = await api.send_signed_message(
+            payload={"method": self.SUBSCRIBE, "params": {"recv_window": 5000}},
+            signer=None,
+        )
+        subscription_id = response.data()["result"]["subscriptionId"]
+        handle = await RequestStream(api, subscription_id)
+        return subscription_id, handle
+
+    async def _reconnect(self, api, old_conn):
+        new_conn = self._connection()
+
+        async def fake_init(*args, **kwargs):
+            api.connections.append(new_conn)
+
+        api.init_connection = fake_init
+        await api.reconnect(old_conn, api.configuration)
+        return new_conn
+
+    @staticmethod
+    async def _deliver(api, connection, subscription_id, event):
+        message = SimpleNamespace(
+            type=aiohttp.WSMsgType.TEXT,
+            data=json.dumps({"subscriptionId": subscription_id, "event": event}),
+        )
+        connection.websocket.__aiter__.return_value = [message]
+        await api.receive_loop(connection)
+
+    @pytest.mark.asyncio
+    async def test_subscription_is_signed_again_on_the_new_connection(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server()
+        callback = MagicMock()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ), patch("binance_common.utils.get_timestamp", side_effect=[1, 2]):
+            subscription_id, handle = await self._subscribe(api)
+            handle.on("message", callback)
+            new_conn = await self._reconnect(api, old_conn)
+
+        replays = self._replays(sent, new_conn)
+        assert len(replays) == 1
+        params = replays[0]["params"]
+        assert params["signature"] == "signed"
+        assert params["apiKey"] == "test-api-key"
+        assert params["recvWindow"] == "5000"
+        assert params["timestamp"] == 2
+
+        await self._deliver(api, new_conn, subscription_id, {"e": "executionReport"})
+        callback.assert_called_once_with({"e": "executionReport"})
+
+    @pytest.mark.asyncio
+    async def test_callbacks_follow_the_new_subscription_id(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server()
+        first, second = MagicMock(), MagicMock()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            id_0, handle_0 = await self._subscribe(api)
+            id_1, handle_1 = await self._subscribe(api)
+            handle_0.on("message", first)
+            handle_1.on("message", second)
+            await handle_0.unsubscribe()
+            new_conn = await self._reconnect(api, old_conn)
+
+        assert (id_0, id_1) == (0, 1)
+        replays = self._replays(sent, new_conn)
+        # The unsubscribed stream is not restored; the other one gets id 0 now.
+        assert len(replays) == 1
+        assert handle_1._stream == 0
+        assert api.user_stream_connections.stream_connections_map == {0: new_conn}
+
+        late = MagicMock()
+        handle_1.on("message", late)
+        await self._deliver(api, new_conn, 0, {"e": "outboundAccountPosition"})
+        second.assert_called_once_with({"e": "outboundAccountPosition"})
+        late.assert_called_once()
+        first.assert_not_called()
+
+        await handle_1.unsubscribe()
+        assert api.user_stream_connections.stream_connections_map == {}
+        assert new_conn.user_data_subscribe_requests == {}
+
+    @pytest.mark.asyncio
+    async def test_server_side_unsubscribe_is_not_restored(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            await self._subscribe(api)
+            await self._subscribe(api)
+            await api.send_message(
+                payload={
+                    "method": "userDataStream.unsubscribe",
+                    "params": {"subscription_id": 1},
+                }
+            )
+            new_conn = await self._reconnect(api, old_conn)
+
+        replays = self._replays(sent, new_conn)
+        assert len(replays) == 1
+        assert list(new_conn.user_data_subscribe_requests) == [0]
+
+    @pytest.mark.asyncio
+    async def test_unsubscribe_all_is_not_restored(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            await self._subscribe(api)
+            await api.send_message(
+                payload={"method": "userDataStream.unsubscribe", "params": {}}
+            )
+            new_conn = await self._reconnect(api, old_conn)
+
+        assert not [p for c, p in sent if c is new_conn]
+
+    @pytest.mark.asyncio
+    async def test_failed_resubscribe_emits_error_and_drops_the_stream(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server(fail=True)
+        errors = []
+        api.on_connection("error", errors.append)
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            await self._subscribe(api)
+            new_conn = await self._reconnect(api, old_conn)
+
+        assert len(errors) == 1
+        assert isinstance(errors[0], ValueError)
+        assert api.user_stream_connections.stream_connections_map == {}
+        assert new_conn.user_data_subscribe_requests == {}
+        assert new_conn.pending_request == {}
+
+    @pytest.mark.asyncio
+    async def test_session_logon_subscription_is_not_replayed_as_signature(self):
+        api = self._api()
+        old_conn = self._connection()
+        api.connections = [old_conn]
+        sent, send = self._server()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            signature_id, _ = await self._subscribe(api)
+            old_conn.session_logon_request = {
+                "method": "session.logon",
+                "params": {},
+                "id": "logon",
+            }
+            old_conn.is_session_log_on = False
+            await api.subscribe_user_data(id="logon-stream")
+            api.session_re_log_on = AsyncMock(return_value=True)
+            new_conn = await self._reconnect(api, old_conn)
+
+        methods = [p["method"] for c, p in sent if c is new_conn]
+        assert methods.count(self.SUBSCRIBE) == 1
+        assert methods.count("userDataStream.subscribe") == 1
+
+    @pytest.mark.asyncio
+    async def test_closed_connection_forgets_its_signature_subscriptions(self):
+        api = self._api()
+        conn = self._connection()
+        api.connections = [conn]
+        _, send = self._server()
+
+        with patch.object(WebSocketCommon, "send_message", new=send), patch(
+            "binance_common.utils.get_signature", return_value="signed"
+        ):
+            await self._subscribe(api)
+
+        assert list(conn.user_data_subscribe_requests) == [0]
+        await WebSocketCommon.close_connection(api, conn, close_session=False)
+
+        assert conn.user_data_subscribe_requests == {}
+        assert api.user_stream_connections.stream_connections_map == {}
