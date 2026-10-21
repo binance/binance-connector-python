@@ -2837,6 +2837,80 @@ class TestWebSocketStreamBase:
             is futures_conn
         )
 
+    @staticmethod
+    def _dropping_connection(conn_id):
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = []
+        ws_mock.closed = False
+        return WebSocketConnection(ws_mock, conn_id, "ConfigurationWebSocketStreams")
+
+    @pytest.mark.asyncio
+    async def test_resubscribe_after_connection_drop_sends_subscribe(self):
+        stream = "bnbusdt@depth"
+        client = WebSocketStreamBase(
+            ConfigurationWebSocketStreams(stream_url="wss://test.com/stream")
+        )
+        old_conn = self._dropping_connection("conn-1")
+        client.connections = [old_conn]
+
+        with patch("asyncio.sleep", new_callable=AsyncMock):
+            await client.subscribe([stream])
+            # The server drops the connection; the receive loop ends.
+            await client.receive_loop(old_conn)
+
+            assert client.connections == []
+            assert stream not in client.stream_connections.stream_connections_map
+
+            new_conn = self._dropping_connection("conn-2")
+            client.connections = [new_conn]
+            await client.subscribe([stream])
+
+        new_conn.websocket.send_str.assert_called_once()
+        sent = json.loads(new_conn.websocket.send_str.call_args[0][0])
+        assert sent["method"] == "SUBSCRIBE"
+        assert sent["params"] == [stream]
+        assert client.stream_connections.stream_connections_map[stream] is new_conn
+
+        callback = MagicMock()
+        client.on("message", callback, stream)
+        assert new_conn.stream_callback_map[stream] == [callback]
+
+    @pytest.mark.asyncio
+    async def test_connection_drop_keeps_streams_of_other_connections(self):
+        client = WebSocketStreamBase(
+            ConfigurationWebSocketStreams(
+                stream_url="wss://test.com/stream",
+                mode=WebsocketMode.POOL,
+                pool_size=2,
+            )
+        )
+        dropped = self._dropping_connection("conn-1")
+        alive = self._dropping_connection("conn-2")
+        client.connections = [dropped, alive]
+
+        with patch("asyncio.sleep", new_callable=AsyncMock):
+            await client.subscribe(["a@trade", "b@trade"])
+            await client.receive_loop(dropped)
+
+        assert client.connections == [alive]
+        assert client.stream_connections.stream_connections_map == {"b@trade": alive}
+
+    @pytest.mark.asyncio
+    async def test_connection_drop_during_reconnect_keeps_streams(self):
+        client = WebSocketStreamBase(
+            ConfigurationWebSocketStreams(stream_url="wss://test.com/stream")
+        )
+        conn = self._dropping_connection("conn-1")
+        client.connections = [conn]
+
+        with patch("asyncio.sleep", new_callable=AsyncMock):
+            await client.subscribe(["a@trade"])
+
+        conn.is_being_replaced = True
+        await client._discard_connection(conn)
+
+        assert client.stream_connections.stream_connections_map == {"a@trade": conn}
+
 
 # ========== WebSocketAPIBase Tests ==========
 

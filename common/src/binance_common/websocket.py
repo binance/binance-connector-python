@@ -499,6 +499,8 @@ class WebSocketCommon:
                 f"WebSocket {connection.id} removed from the connection pool."
             )
 
+        self._forget_connection_streams(connection)
+
     async def send_message(
         self,
         payload: Dict,
