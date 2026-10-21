@@ -857,7 +857,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
 
@@ -885,7 +885,7 @@ class TestMarketDataApi:
         )
         assert (
             normalized["interval"]
-            == ContinuousContractKlineCandlestickDataIntervalEnum["INTERVAL_1m"].value
+            == ContinuousContractKlineCandlestickDataIntervalEnum["INTERVAL_1s"].value
         )
 
         assert response is not None
@@ -926,7 +926,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
@@ -984,7 +984,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["pair"] = None
@@ -1002,7 +1002,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["contract_type"] = None
@@ -1022,7 +1022,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
         params["interval"] = None
@@ -1041,7 +1041,7 @@ class TestMarketDataApi:
                 "PERPETUAL"
             ].value,
             "interval": ContinuousContractKlineCandlestickDataIntervalEnum[
-                "INTERVAL_1m"
+                "INTERVAL_1s"
             ].value,
         }
 

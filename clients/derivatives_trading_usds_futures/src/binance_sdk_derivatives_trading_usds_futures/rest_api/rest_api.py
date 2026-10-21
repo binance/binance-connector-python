@@ -583,7 +583,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         Security Type: USER_DATA
 
         Notes:
-        - Request Limitation is 5 times per month, shared by front end download page and rest api
+        - The request limit is 100 times per month, shared across the front end download page and rest api, as well as between USDⓈ-M and COIN-M contracts.
         - The time between `startTime` and `endTime` can not be longer than 1 year
 
                 Args:
@@ -1613,6 +1613,7 @@ class DerivativesTradingUsdsFuturesRestAPI:
         - If startTime and endTime are not sent, the most recent data is returned.
         - Only the data of the latest 1 month is available.
         - IP rate limit 1000 requests/5min
+        - A period with no trades has no record and is omitted from the response. Such gaps are expected and are not backfilled.
 
                 Args:
                     symbol (Union[str, None]):

@@ -63,6 +63,7 @@ class ContinuousContractKlineCandlestickDataContractTypeEnum(Enum):
 
 
 class ContinuousContractKlineCandlestickDataIntervalEnum(Enum):
+    INTERVAL_1s = "1s"
     INTERVAL_1m = "1m"
     INTERVAL_3m = "3m"
     INTERVAL_5m = "5m"

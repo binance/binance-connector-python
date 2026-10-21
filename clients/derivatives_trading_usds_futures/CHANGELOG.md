@@ -1,5 +1,16 @@
 # Changelog
 
+## 18.0.1 - 2026-10-21
+
+### Changed (1)
+
+#### REST API
+
+- Modified parameter `interval`:
+  - enum added: `1s`
+  - affected methods:
+    - `continuous_contract_kline_candlestick_data()` (`GET /fapi/v1/continuousKlines`)
+
 ## 18.0.0 - 2026-10-15
 
 ### Changed (1)

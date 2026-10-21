@@ -1029,6 +1029,7 @@ class MarketDataApi:
         - If startTime and endTime are not sent, the most recent data is returned.
         - Only the data of the latest 1 month is available.
         - IP rate limit 1000 requests/5min
+        - A period with no trades has no record and is omitted from the response. Such gaps are expected and are not backfilled.
 
                 Args:
                     symbol (Union[str, None]):
