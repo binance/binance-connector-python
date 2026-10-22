@@ -1,5 +1,16 @@
 # Changelog
 
+## 9.0.0 - 2026-10-22
+
+### Changed (1)
+
+#### REST API
+
+- Deleted parameter `from`
+  - affected methods:
+    - `portfolio_margin_pro_bankruptcy_loan_repay()` (`POST /sapi/v1/portfolio/repay`)
+    - `repay_futures_negative_balance()` (`POST /sapi/v1/portfolio/repay-futures-negative-balance`)
+
 ## 8.7.0 - 2026-10-15
 
 ### Changed (2)

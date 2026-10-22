@@ -115,12 +115,6 @@ from .enums import (
 from .enums import (
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum as GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
-from .enums import (
-    PortfolioMarginProBankruptcyLoanRepayVarFromEnum as PortfolioMarginProBankruptcyLoanRepayVarFromEnum,
-)
-from .enums import (
-    RepayFuturesNegativeBalanceVarFromEnum as RepayFuturesNegativeBalanceVarFromEnum,
-)
 from .enums import SwitchDeltaModeDeltaEnabledEnum as SwitchDeltaModeDeltaEnabledEnum
 from .enums import (
     TransferLdusdtRwusdForPortfolioMarginAssetEnum as TransferLdusdtRwusdForPortfolioMarginAssetEnum,

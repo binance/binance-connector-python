@@ -32,16 +32,6 @@ class GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum(Enum):
     FUTURE_TO_EARN = "FUTURE_TO_EARN"
 
 
-class PortfolioMarginProBankruptcyLoanRepayVarFromEnum(Enum):
-    SPOT = "SPOT"
-    MARGIN = "MARGIN"
-
-
-class RepayFuturesNegativeBalanceVarFromEnum(Enum):
-    SPOT = "SPOT"
-    MARGIN = "MARGIN"
-
-
 class SwitchDeltaModeDeltaEnabledEnum(Enum):
     TRUE = "true"
     FALSE = "false"

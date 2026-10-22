@@ -40,8 +40,6 @@ from ..models import BnbTransferTransferSideEnum
 from ..models import ChangeAutoRepayFuturesStatusAutoRepayEnum
 from ..models import FundCollectionByAssetFutureTypeEnum
 from ..models import GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum
-from ..models import PortfolioMarginProBankruptcyLoanRepayVarFromEnum
-from ..models import RepayFuturesNegativeBalanceVarFromEnum
 from ..models import SwitchDeltaModeDeltaEnabledEnum
 from ..models import TransferLdusdtRwusdForPortfolioMarginAssetEnum
 from ..models import TransferLdusdtRwusdForPortfolioMarginTransferTypeEnum
@@ -640,7 +638,6 @@ class AccountApi:
 
     def portfolio_margin_pro_bankruptcy_loan_repay(
         self,
-        var_from: Optional[PortfolioMarginProBankruptcyLoanRepayVarFromEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PortfolioMarginProBankruptcyLoanRepayResponse]:
         """
@@ -656,9 +653,9 @@ class AccountApi:
 
         Notes:
         - Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
+        - USDT is taken from the Spot account and transferred to the Cross Margin account to repay the loan.
 
                 Args:
-                    var_from (Optional[PortfolioMarginProBankruptcyLoanRepayVarFromEnum] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -670,7 +667,7 @@ class AccountApi:
         """
 
         request_body = {}
-        payload = {"var_from": var_from, "recv_window": recv_window}
+        payload = {"recv_window": recv_window}
 
         return send_request(
             self._session,
@@ -850,7 +847,6 @@ class AccountApi:
 
     def repay_futures_negative_balance(
         self,
-        var_from: Optional[RepayFuturesNegativeBalanceVarFromEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RepayFuturesNegativeBalanceResponse]:
         """
@@ -864,8 +860,10 @@ class AccountApi:
 
         Security Type: USER_DATA
 
+        Notes:
+        - The negative balance is repaid from the Cross Margin account.
+
                 Args:
-                    var_from (Optional[RepayFuturesNegativeBalanceVarFromEnum] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -877,7 +875,7 @@ class AccountApi:
         """
 
         request_body = {}
-        payload = {"var_from": var_from, "recv_window": recv_window}
+        payload = {"recv_window": recv_window}
 
         return send_request(
             self._session,

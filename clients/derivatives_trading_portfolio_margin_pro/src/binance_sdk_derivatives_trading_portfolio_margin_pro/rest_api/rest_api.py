@@ -41,8 +41,6 @@ from .models import BnbTransferTransferSideEnum
 from .models import ChangeAutoRepayFuturesStatusAutoRepayEnum
 from .models import FundCollectionByAssetFutureTypeEnum
 from .models import GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum
-from .models import PortfolioMarginProBankruptcyLoanRepayVarFromEnum
-from .models import RepayFuturesNegativeBalanceVarFromEnum
 from .models import SwitchDeltaModeDeltaEnabledEnum
 from .models import TransferLdusdtRwusdForPortfolioMarginAssetEnum
 from .models import TransferLdusdtRwusdForPortfolioMarginTransferTypeEnum
@@ -486,7 +484,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def portfolio_margin_pro_bankruptcy_loan_repay(
         self,
-        var_from: Optional[PortfolioMarginProBankruptcyLoanRepayVarFromEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PortfolioMarginProBankruptcyLoanRepayResponse]:
         """
@@ -500,9 +497,9 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         Notes:
         - Please note that the API Key has enabled Spot & Margin Trading permissions to access this endpoint.
+        - USDT is taken from the Spot account and transferred to the Cross Margin account to repay the loan.
 
                 Args:
-                    var_from (Optional[PortfolioMarginProBankruptcyLoanRepayVarFromEnum] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -513,9 +510,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         """
 
-        return self._accountApi.portfolio_margin_pro_bankruptcy_loan_repay(
-            var_from, recv_window
-        )
+        return self._accountApi.portfolio_margin_pro_bankruptcy_loan_repay(recv_window)
 
     def query_portfolio_margin_pro_bankruptcy_loan_amount(
         self,
@@ -630,7 +625,6 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
     def repay_futures_negative_balance(
         self,
-        var_from: Optional[RepayFuturesNegativeBalanceVarFromEnum] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[RepayFuturesNegativeBalanceResponse]:
         """
@@ -642,8 +636,10 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         Security Type: USER_DATA
 
+        Notes:
+        - The negative balance is repaid from the Cross Margin account.
+
                 Args:
-                    var_from (Optional[RepayFuturesNegativeBalanceVarFromEnum] = None):
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -654,7 +650,7 @@ class DerivativesTradingPortfolioMarginProRestAPI:
 
         """
 
-        return self._accountApi.repay_futures_negative_balance(var_from, recv_window)
+        return self._accountApi.repay_futures_negative_balance(recv_window)
 
     def set_margin_call_level(
         self,

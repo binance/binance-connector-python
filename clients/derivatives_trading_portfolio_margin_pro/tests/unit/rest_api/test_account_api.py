@@ -93,13 +93,6 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     GetTransferableEarnAssetBalanceForPortfolioMarginTransferTypeEnum,
 )
-
-from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    PortfolioMarginProBankruptcyLoanRepayVarFromEnum,
-)
-from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
-    RepayFuturesNegativeBalanceVarFromEnum,
-)
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     SwitchDeltaModeDeltaEnabledEnum,
 )
@@ -1618,10 +1611,7 @@ class TestAccountApi:
     ):
         """Test portfolio_margin_pro_bankruptcy_loan_repay() successfully with optional parameters."""
 
-        params = {
-            "var_from": PortfolioMarginProBankruptcyLoanRepayVarFromEnum["SPOT"].value,
-            "recv_window": 5000,
-        }
+        params = {"recv_window": 5000}
 
         expected_response = {"tranId": 58203331886213500}
         mock_get_signature.return_value = "mocked_signature"
@@ -2133,10 +2123,7 @@ class TestAccountApi:
     ):
         """Test repay_futures_negative_balance() successfully with optional parameters."""
 
-        params = {
-            "var_from": RepayFuturesNegativeBalanceVarFromEnum["SPOT"].value,
-            "recv_window": 5000,
-        }
+        params = {"recv_window": 5000}
 
         expected_response = {"msg": "success"}
         mock_get_signature.return_value = "mocked_signature"
