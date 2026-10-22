@@ -1989,7 +1989,6 @@ class TestAccountApi:
             "income_type": GetCmIncomeHistoryIncomeTypeEnum["TRANSFER"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
-            "page": 1,
             "limit": 100,
             "recv_window": 5000,
         }
@@ -3593,7 +3592,6 @@ class TestAccountApi:
             "income_type": GetUmIncomeHistoryIncomeTypeEnum["TRANSFER"].value,
             "start_time": 1623319461670,
             "end_time": 1641782889000,
-            "page": 1,
             "limit": 100,
             "recv_window": 5000,
         }

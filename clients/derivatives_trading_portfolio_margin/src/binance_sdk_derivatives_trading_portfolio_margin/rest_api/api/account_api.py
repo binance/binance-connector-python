@@ -775,7 +775,6 @@ class AccountApi:
         income_type: Optional[GetCmIncomeHistoryIncomeTypeEnum] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetCmIncomeHistoryResponse]:
@@ -801,7 +800,6 @@ class AccountApi:
                     income_type (Optional[GetCmIncomeHistoryIncomeTypeEnum] = None):
                     start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int] = None):
                     limit (Optional[int] = None): Number of results returned.
                     recv_window (Optional[int] = None):
 
@@ -819,7 +817,6 @@ class AccountApi:
             "income_type": income_type,
             "start_time": start_time,
             "end_time": end_time,
-            "page": page,
             "limit": limit,
             "recv_window": recv_window,
         }
@@ -1395,7 +1392,6 @@ class AccountApi:
         income_type: Optional[GetUmIncomeHistoryIncomeTypeEnum] = None,
         start_time: Optional[int] = None,
         end_time: Optional[int] = None,
-        page: Optional[int] = None,
         limit: Optional[int] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[GetUmIncomeHistoryResponse]:
@@ -1421,7 +1417,6 @@ class AccountApi:
                     income_type (Optional[GetUmIncomeHistoryIncomeTypeEnum] = None): Income type.
                     start_time (Optional[int] = None): Timestamp in ms to get funding from INCLUSIVE.
                     end_time (Optional[int] = None): Timestamp in ms to get funding until INCLUSIVE.
-                    page (Optional[int] = None): Page number.
                     limit (Optional[int] = None): Number of results returned.
                     recv_window (Optional[int] = None):
 
@@ -1439,7 +1434,6 @@ class AccountApi:
             "income_type": income_type,
             "start_time": start_time,
             "end_time": end_time,
-            "page": page,
             "limit": limit,
             "recv_window": recv_window,
         }
