@@ -407,7 +407,7 @@ class FlexibleRateApi:
                 GET /sapi/v2/loan/flexible/borrow/history
                 https://developers.binance.com/en/docs/catalog/investment-and-services-crypto-loan/api/rest-api/flexible-rate#get-flexible-loan-borrow-history
 
-                Get Flexible Loan Borrow History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan Borrow History.
 
         Weight(IP): 400
 
@@ -661,7 +661,7 @@ class FlexibleRateApi:
                 GET /sapi/v2/loan/flexible/ltv/adjustment/history
                 https://developers.binance.com/en/docs/catalog/investment-and-services-crypto-loan/api/rest-api/flexible-rate#get-flexible-loan-ltv-adjustment-history
 
-                Get Flexible Loan LTV Adjustment History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan LTV Adjustment History.
 
         Weight(UID): 400
 
@@ -787,7 +787,7 @@ class FlexibleRateApi:
                 GET /sapi/v2/loan/flexible/repay/history
                 https://developers.binance.com/en/docs/catalog/investment-and-services-crypto-loan/api/rest-api/flexible-rate#get-flexible-loan-repayment-history
 
-                Get Flexible Loan Repayment History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan Repayment History.
 
         Weight(IP): 400
 

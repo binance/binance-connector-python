@@ -15,7 +15,6 @@ from binance_common.models import ApiResponse
 from binance_common.signature import Signers
 from binance_common.utils import send_request
 from .api.flexible_rate_api import FlexibleRateApi
-from .api.stable_rate_api import StableRateApi
 
 from .models import CheckCollateralRepayRateResponse
 from .models import FlexibleLoanAdjustLtvResponse
@@ -31,11 +30,6 @@ from .models import GetFlexibleLoanOngoingOrdersResponse
 from .models import GetFlexibleLoanRepaymentHistoryResponse
 from .models import FlexibleLoanAdjustLtvDirectionEnum
 from .models import FlexibleLoanRepayRepaymentTypeEnum
-from .models import GetCryptoLoansIncomeHistoryResponse
-from .models import GetLoanBorrowHistoryResponse
-from .models import GetLoanLtvAdjustmentHistoryResponse
-from .models import GetLoanRepaymentHistoryResponse
-from .models import GetCryptoLoansIncomeHistoryTypeEnum
 
 T = TypeVar("T")
 
@@ -56,9 +50,6 @@ class CryptoLoanRestAPI:
         )
 
         self._flexibleRateApi = FlexibleRateApi(
-            self.configuration, self._session, self._signer
-        )
-        self._stableRateApi = StableRateApi(
             self.configuration, self._session, self._signer
         )
 
@@ -333,7 +324,7 @@ class CryptoLoanRestAPI:
         """
                 Get Flexible Loan Borrow History (USER_DATA)
 
-                Get Flexible Loan Borrow History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan Borrow History.
 
         Weight(IP): 400
 
@@ -510,7 +501,7 @@ class CryptoLoanRestAPI:
         """
                 Get Flexible Loan LTV Adjustment History (USER_DATA)
 
-                Get Flexible Loan LTV Adjustment History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan LTV Adjustment History.
 
         Weight(UID): 400
 
@@ -600,7 +591,7 @@ class CryptoLoanRestAPI:
         """
                 Get Flexible Loan Repayment History (USER_DATA)
 
-                Get Flexible Loan Repayment History. It can be used to check history before 2024-02-27 08:00.
+                Get Flexible Loan Repayment History.
 
         Weight(IP): 400
 
@@ -629,207 +620,6 @@ class CryptoLoanRestAPI:
         """
 
         return self._flexibleRateApi.get_flexible_loan_repayment_history(
-            loan_coin,
-            collateral_coin,
-            start_time,
-            end_time,
-            current,
-            limit,
-            recv_window,
-        )
-
-    def get_crypto_loans_income_history(
-        self,
-        asset: Optional[str] = None,
-        type: Optional[GetCryptoLoansIncomeHistoryTypeEnum] = None,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
-        limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetCryptoLoansIncomeHistoryResponse]:
-        """
-                Get Crypto Loans Income History (USER_DATA)
-
-                Get Crypto Loans Income History
-
-        Weight(UID): 6000
-
-        Security Type: USER_DATA
-
-        Notes:
-        - If `startTime` and `endTime` are both omitted, the most recent 7 days of data are returned.
-        - The maximum interval between `startTime` and `endTime` is 30 days.
-
-                Args:
-                    asset (Optional[str] = None):
-                    type (Optional[GetCryptoLoansIncomeHistoryTypeEnum] = None): All types will be returned by default.
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
-                    limit (Optional[int] = None): Number of records to return
-                    recv_window (Optional[int] = None): Request validity window in milliseconds
-
-                Returns:
-                    ApiResponse[GetCryptoLoansIncomeHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._stableRateApi.get_crypto_loans_income_history(
-            asset, type, start_time, end_time, limit, recv_window
-        )
-
-    def get_loan_borrow_history(
-        self,
-        order_id: Optional[int] = None,
-        loan_coin: Optional[str] = None,
-        collateral_coin: Optional[str] = None,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
-        current: Optional[int] = None,
-        limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLoanBorrowHistoryResponse]:
-        """
-                Get Loan Borrow History (USER_DATA)
-
-                Get Loan Borrow History
-
-        Weight(IP): 400
-
-        Security Type: USER_DATA
-
-        Notes:
-        - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
-        - The max interval between `startTime` and `endTime` is 180 days.
-
-                Args:
-                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str] = None):
-                    collateral_coin (Optional[str] = None):
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page
-                    limit (Optional[int] = None): Number of records to return
-                    recv_window (Optional[int] = None): Request validity window in milliseconds
-
-                Returns:
-                    ApiResponse[GetLoanBorrowHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._stableRateApi.get_loan_borrow_history(
-            order_id,
-            loan_coin,
-            collateral_coin,
-            start_time,
-            end_time,
-            current,
-            limit,
-            recv_window,
-        )
-
-    def get_loan_ltv_adjustment_history(
-        self,
-        order_id: Optional[int] = None,
-        loan_coin: Optional[str] = None,
-        collateral_coin: Optional[str] = None,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
-        current: Optional[int] = None,
-        limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLoanLtvAdjustmentHistoryResponse]:
-        """
-                Get Loan LTV Adjustment History (USER_DATA)
-
-                Get Loan LTV Adjustment History
-
-        Weight(IP): 400
-
-        Security Type: USER_DATA
-
-        Notes:
-        - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
-        - The max interval between `startTime` and `endTime` is 180 days.
-
-                Args:
-                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str] = None):
-                    collateral_coin (Optional[str] = None):
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page
-                    limit (Optional[int] = None): Number of records to return
-                    recv_window (Optional[int] = None): Request validity window in milliseconds
-
-                Returns:
-                    ApiResponse[GetLoanLtvAdjustmentHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._stableRateApi.get_loan_ltv_adjustment_history(
-            order_id,
-            loan_coin,
-            collateral_coin,
-            start_time,
-            end_time,
-            current,
-            limit,
-            recv_window,
-        )
-
-    def get_loan_repayment_history(
-        self,
-        order_id: Optional[int] = None,
-        loan_coin: Optional[str] = None,
-        collateral_coin: Optional[str] = None,
-        start_time: Optional[int] = None,
-        end_time: Optional[int] = None,
-        current: Optional[int] = None,
-        limit: Optional[int] = None,
-        recv_window: Optional[int] = None,
-    ) -> ApiResponse[GetLoanRepaymentHistoryResponse]:
-        """
-                Get Loan Repayment History (USER_DATA)
-
-                Get Loan Repayment History
-
-        Weight(IP): 400
-
-        Security Type: USER_DATA
-
-        Notes:
-        - If `startTime` and `endTime` are not sent, the recent 90-day data is returned.
-        - The max interval between `startTime` and `endTime` is 180 days.
-
-                Args:
-                    order_id (Optional[int] = None): orderId in `POST /sapi/v1/loan/borrow`
-                    loan_coin (Optional[str] = None):
-                    collateral_coin (Optional[str] = None):
-                    start_time (Optional[int] = None):
-                    end_time (Optional[int] = None):
-                    current (Optional[int] = None): Current querying page
-                    limit (Optional[int] = None): Number of records to return
-                    recv_window (Optional[int] = None): Request validity window in milliseconds
-
-                Returns:
-                    ApiResponse[GetLoanRepaymentHistoryResponse]
-
-                Raises:
-                    RequiredError: If a required parameter is missing.
-
-        """
-
-        return self._stableRateApi.get_loan_repayment_history(
-            order_id,
             loan_coin,
             collateral_coin,
             start_time,

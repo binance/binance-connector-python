@@ -19,13 +19,3 @@ class FlexibleLoanAdjustLtvDirectionEnum(Enum):
 class FlexibleLoanRepayRepaymentTypeEnum(Enum):
     REPAYMENT_TYPE_1 = 1
     REPAYMENT_TYPE_2 = 2
-
-
-class GetCryptoLoansIncomeHistoryTypeEnum(Enum):
-    borrowIn = "borrowIn"
-    collateralSpent = "collateralSpent"
-    repayAmount = "repayAmount"
-    collateralReturn = "collateralReturn"
-    addCollateral = "addCollateral"
-    removeCollateral = "removeCollateral"
-    collateralReturnAfterLiquidation = "collateralReturnAfterLiquidation"

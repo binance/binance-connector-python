@@ -9,4 +9,3 @@ Do not edit the class manually.
 """
 
 from .flexible_rate_api import FlexibleRateApi as FlexibleRateApi
-from .stable_rate_api import StableRateApi as StableRateApi
