@@ -1,5 +1,20 @@
 # Changelog
 
+## 13.3.0 - 2026-10-23
+
+### Changed (4)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated description of response field `discount.discount` for `account_commission()` (`GET /api/v3/account/commission`)
+
+#### WebSocket API
+
+- Updated description of response field `discount.discount` for `account_commission()` (`account.commission` method)
+
 ## 13.2.0 - 2026-10-15
 
 ### Changed (2)

@@ -35,7 +35,7 @@ class AccountCommissionResponseResultDiscount(BaseModel):
     discount_asset: Optional[StrictStr] = Field(default=None, alias="discountAsset")
     discount: Optional[StrictStr] = Field(
         default=None,
-        description="Standard commission is reduced by this rate when paying commission in BNB.",
+        description="Multiplier applied to the standard commission when paying commission in BNB (e.g. 0.75 = 75% of the standard commission is charged).",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
