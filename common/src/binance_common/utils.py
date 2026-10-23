@@ -817,7 +817,11 @@ def ws_streams_placeholder(stream: str, params: Optional[dict] = None) -> str:
     if params is None:
         params = {}
 
-    params = {k: v for k, v in params.items() if v is not None}
+    params = {
+        k: v.value if isinstance(v, Enum) else v
+        for k, v in params.items()
+        if v is not None
+    }
 
     normalized_variables = {
         re.sub(r"[-_]", "", key.lower()): value for key, value in params.items()
