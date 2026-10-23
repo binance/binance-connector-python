@@ -108,7 +108,7 @@ class C2CRestAPI:
         """
                 Get C2C Trade History (USER_DATA)
 
-                Get C2C Trade History
+                Get C2C (also known as P2P) trade history, including both buy and sell orders.
 
         Weight(IP): 1
 

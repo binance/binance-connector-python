@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.7.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated description of `get_c2_c_trade_history()` (`GET /sapi/v1/c2c/orderMatch/listUserOrderHistory`)
+
 ## 5.6.0 - 2026-10-15
 
 ### Changed (2)

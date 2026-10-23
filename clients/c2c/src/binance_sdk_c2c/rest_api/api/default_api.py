@@ -45,7 +45,7 @@ class DefaultApi:
                 GET /sapi/v1/c2c/orderMatch/listUserOrderHistory
                 https://developers.binance.com/en/docs/catalog/investment-and-services-c2-c/api/rest-api/~#get-c2-ctrade-history
 
-                Get C2C Trade History
+                Get C2C (also known as P2P) trade history, including both buy and sell orders.
 
         Weight(IP): 1
 
