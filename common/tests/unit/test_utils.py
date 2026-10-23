@@ -20,6 +20,7 @@ from pydantic import (
     ValidationError,
 )
 import requests
+from urllib3.exceptions import NewConnectionError
 
 from base64 import b64decode, b64encode
 from collections import OrderedDict
@@ -81,6 +82,7 @@ from binance_common.utils import (
     websocket_api_signature,
     ws_api_payload,
     ws_streams_placeholder,
+    ws_streams_placeholder_preserve_case,
 )
 from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
@@ -997,6 +999,23 @@ class TestShouldRetryRequest(unittest.TestCase):
         error = Mock(response=None)
         self.assertTrue(should_retry_request(error, method="GET", retries_left=3))
 
+    def test_no_delete_retry_when_the_request_may_have_been_applied(self):
+        error = requests.ReadTimeout("read timed out")
+        self.assertTrue(should_retry_request(error, method="GET", retries_left=3))
+        self.assertFalse(should_retry_request(error, method="DELETE", retries_left=3))
+
+        error = requests.ConnectionError("connection aborted")
+        self.assertFalse(should_retry_request(error, method="DELETE", retries_left=3))
+
+    def test_delete_retry_when_the_request_never_reached_the_server(self):
+        error = requests.ConnectTimeout("connect timed out")
+        self.assertTrue(should_retry_request(error, method="DELETE", retries_left=3))
+
+        refused = requests.ConnectionError(
+            Mock(reason=NewConnectionError(None, "connection refused"))
+        )
+        self.assertTrue(should_retry_request(refused, method="DELETE", retries_left=3))
+
     def test_no_retry_when_method_is_none(self):
         error = Mock(response=Mock(status_code=500))
         self.assertFalse(should_retry_request(error, method=None, retries_left=3))
@@ -1862,6 +1881,38 @@ class TestWsStreamsPlaceholder(unittest.TestCase):
             ),
             "btcusdt@ticker_1h",
         )
+
+
+class TestWsStreamsPlaceholderPreserveCase(unittest.TestCase):
+    def test_replace_single_placeholder(self):
+        stream = "<symbol>@depth"
+        params = {"symbol": "AAPL"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
+
+    def test_replace_multiple_placeholders(self):
+        stream = "<symbol>@depth<update_speed>"
+        params = {"symbol": "AAPL", "update_speed": "100ms"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth@100ms")
+
+    def test_ignore_none_values(self):
+        stream = "<symbol>@depth<update_speed>"
+        params = {"symbol": "AAPL", "update_speed": None}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
+
+    def test_window_size_case_preserved(self):
+        stream = "<symbol>@ticker_<windowSize>"
+        params = {"symbol": "AAPL", "window_size": "1H"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@ticker_1H")
+
+    def test_placeholder_not_found_in_params(self):
+        stream = "<symbol>@depth<missing>"
+        params = {"symbol": "AAPL"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
 
 
 class TestParseWsRateLimitHeaders(unittest.TestCase):

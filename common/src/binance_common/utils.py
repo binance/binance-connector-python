@@ -36,6 +36,7 @@ from typing import (
     get_origin,
 )
 from urllib.parse import urlencode
+from urllib3.exceptions import NewConnectionError
 from urllib3.util.ssl_ import create_urllib3_context
 
 from binance_common.constants import TimeUnit
@@ -182,7 +183,6 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
         return [v.__dict__ if hasattr(v, "__dict__") else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
-    # Preserve the Decimal's digits and scale in fixed-point notation.
     if isinstance(val, Decimal):
         return format(val, "f")
     if isinstance(val, (int, float)):
@@ -368,10 +368,26 @@ def should_retry_request(
         return False
 
     if not hasattr(error, "response") or error.response is None:
-        return True
+        return method.upper() == "GET" or request_not_sent(error)
 
     status = getattr(error.response, "status_code", 0)
     return status in retriable_status_codes
+
+
+def request_not_sent(error) -> bool:
+    """Determines whether a failed request never reached the server.
+
+    :param error: The error raised by the request.
+    :return: True if the connection could not be established, False otherwise.
+    """
+
+    if isinstance(error, requests.ConnectTimeout):
+        return True
+
+    reason = getattr(error.args[0], "reason", None) if error.args else None
+    return isinstance(error, requests.ConnectionError) and isinstance(
+        reason, NewConnectionError
+    )
 
 
 def strip_strict_types(annotation: Any) -> Any:
@@ -817,6 +833,29 @@ def ws_streams_placeholder(stream: str, params: Optional[dict] = None) -> str:
     Returns:
         str: The stream string with placeholders replaced by actual values.
     """
+    return _ws_streams_placeholder(stream, params, lowercase_values=True)
+
+
+def ws_streams_placeholder_preserve_case(
+    stream: str, params: Optional[dict] = None
+) -> str:
+    """Replaces placeholders in the stream string with values from the params dictionary,
+    without changing the case of any value. Same as `ws_streams_placeholder`, except that
+    `<symbol>` and `<windowSize>` values are kept as given.
+
+    Args:
+        stream (str): The stream string with placeholders.
+        params (Optional[dict]): A dictionary containing values to replace the placeholders. Defaults to None.
+
+    Returns:
+        str: The stream string with placeholders replaced by actual values.
+    """
+    return _ws_streams_placeholder(stream, params, lowercase_values=False)
+
+
+def _ws_streams_placeholder(
+    stream: str, params: Optional[dict], lowercase_values: bool
+) -> str:
     if params is None:
         params = {}
 
@@ -836,7 +875,7 @@ def ws_streams_placeholder(stream: str, params: Optional[dict] = None) -> str:
             (
                 lambda nf, v=normalized_variables: (
                     (
-                        str(v[nf]).lower()
+                        (str(v[nf]).lower() if lowercase_values else str(v[nf]))
                         if nf in ("symbol", "windowsize")
                         else (
                             f"@{v[nf]}"

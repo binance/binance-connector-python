@@ -23,19 +23,6 @@ pip install binance-common
 - **Optimized for Binance Connectors** to ensure seamless integration.
 - **Lightweight & Tree-Shakeable** – only imports what you need.
 
-## Financial parameters
-
-Pass prices, quantities, and other exact values as decimal strings, or as `decimal.Decimal` values built from those strings. `Decimal` parameters are written in fixed-point notation, preserving the digits and scale you supplied:
-
-```python
-from decimal import Decimal
-
-price = Decimal("0.00000001")  # sent as 0.00000001
-quantity = "1.2300"  # a decimal string is sent unchanged
-```
-
-A binary float keeps the result of its arithmetic. `0.1 + 0.2` evaluates to `0.30000000000000004`, and that value is what gets sent. `Decimal(0.1)` stores that same binary fraction rather than the decimal `0.1`. The connector leaves float values unchanged and does not round them to a guessed precision.
-
 ## Contributing
 
 Contributions are welcome!

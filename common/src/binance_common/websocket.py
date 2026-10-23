@@ -1,10 +1,10 @@
 import aiohttp
 import asyncio
+import copy
 import inspect
 import json
 import logging
 import secrets
-import weakref
 
 from pydantic import BaseModel
 from typing import Callable, Optional, Dict, Generic, Union, TypeVar, Type
@@ -74,9 +74,8 @@ class WebSocketConnection:
             is never reported twice.
         is_session_log_on (bool): Flag indicating if the session is logged on.
         session_logon_request (Optional[dict]): The session logon request data.
-        user_data_subscribe_requests (dict): Signature user data subscriptions
-            made on this connection, keyed by `subscriptionId`, so they can be
-            made again after a reconnect.
+        user_data_requests (dict): Map of user data subscription IDs to the
+            request that opened them, kept so a reconnect can subscribe again.
         url_path (Optional[str]): The URL path for the WebSocket connection.
         close_initiated (bool): Flag indicating that the user asked for this
             connection to be closed, so it must not be reconnected.
@@ -106,7 +105,7 @@ class WebSocketConnection:
         self.reconnect_emitted = False
         self.is_session_log_on = False
         self.session_logon_request = None
-        self.user_data_subscribe_requests = {}
+        self.user_data_requests = {}
         self.url_path = url_path
         self.close_initiated = False
         self.scheduled_reconnect_task = None
@@ -144,7 +143,8 @@ class WebSocketCommon:
         self.user_data_endpoints = user_data_endpoints
         self.stream_connections = StreamConnectionsMap()
         self.user_stream_connections = StreamConnectionsMap()
-        self.user_stream_handles = weakref.WeakSet()
+        self.user_stream_handles = {}
+        self.user_data_subscribe_connections = {}
         self.signed = False
 
     def _forget_connection_streams(self, connection: WebSocketConnection) -> None:
@@ -152,8 +152,7 @@ class WebSocketCommon:
 
         A connection that is gone for good must not be left in the stream
         maps, or a later subscribe would treat its streams as still live and
-        silently skip them. Its signature user data subscriptions are
-        forgotten too, so they are never subscribed again.
+        silently skip them.
 
         Args:
             connection (WebSocketConnection): The connection being forgotten.
@@ -166,8 +165,15 @@ class WebSocketCommon:
                 if mapped is connection
             ]:
                 stream_map.stream_connections_map.pop(stream, None)
+                if stream_map is self.user_stream_connections:
+                    self.user_stream_handles.pop(stream, None)
 
-        connection.user_data_subscribe_requests.clear()
+        for subscription_id in [
+            subscription_id
+            for subscription_id, mapped in self.user_data_subscribe_connections.items()
+            if mapped is connection
+        ]:
+            self.user_data_subscribe_connections.pop(subscription_id, None)
 
     async def connect(
         self,
@@ -303,7 +309,12 @@ class WebSocketCommon:
                 request_id = data.get("id")
                 if request_id and request_id in connection.pending_request:
                     future = connection.pending_request.pop(request_id)
-                    if data.get("error"):
+                    if future.done():
+                        logging.warning(
+                            f"Ignoring a late response for request {request_id}: "
+                            f"its caller stopped waiting."
+                        )
+                    elif data.get("error"):
                         logging.error(
                             f"Error received from server for request "
                             f"{request_id}: {data['error']}"
@@ -924,15 +935,15 @@ class WebSocketCommon:
                     {event: callbacks.copy() for event, callbacks in connection.connection_callback_map.items()}
                 )
 
+            session_logged_on = False
             if connection.session_logon_request and self.configuration.session_re_logon:
-                if await self.session_re_log_on(
+                session_logged_on = await self.session_re_log_on(
                     connection.session_logon_request, new_connection
-                ):
-                    await self._resubscribe_user_streams(connection, new_connection)
-                else:
-                    self._drop_user_streams(connection)
+                )
 
-            await self._resubscribe_signature_user_streams(connection, new_connection)
+            await self._resubscribe_user_streams(
+                connection, new_connection, session_logged_on
+            )
             await self._resubscribe_global_streams(connection, new_connection)
             self._emit_connection_event(new_connection, "open")
         finally:
@@ -944,32 +955,290 @@ class WebSocketCommon:
         return new_connection
 
     async def _resubscribe_user_streams(
-        self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
+        self,
+        old_connection: WebSocketConnection,
+        new_connection: WebSocketConnection,
+        session_logged_on: bool = False,
     ):
         """Resubscribe all user streams from old_connection to new_connection.
+
+        Each subscription is sent again with the request that opened it and
+        moved to the `subscriptionId` the server returns, which can differ
+        from the old one. Signature subscriptions do not depend on the
+        session; the others are only restored when the session is logged on
+        again.
 
         Args:
             old_connection (WebSocketConnection): The old WebSocket connection.
             new_connection (WebSocketConnection): The new WebSocket connection.
+            session_logged_on (bool): Whether the session is logged on again
+                on the new connection.
         """
-        for stream, old_target in old_connection.stream_callback_map.items():
-            if stream not in self.user_stream_connections.stream_connections_map:
-                continue
-            if stream in old_connection.user_data_subscribe_requests:
+
+        user_streams = self.user_stream_connections.stream_connections_map
+        streams = [s for s, mapped in user_streams.items() if mapped is old_connection]
+        if not streams:
+            return
+
+        resubscribed = []
+        for stream in streams:
+            request = old_connection.user_data_requests.get(stream)
+
+            if not (request and request["signed"]) and not session_logged_on:
+                logging.warning(
+                    f"User data stream {stream} dropped: the session could not be "
+                    f"logged on again after reconnecting WebSocket "
+                    f"{old_connection.id}."
+                )
                 continue
 
-            json_msg = {
-                "method": self.user_data_endpoints.user_data_stream_subscribe,
-                "params": {},
-                "id": old_connection.id,
-            }
-            await WebSocketCommon.send_message(self, json_msg, new_connection)
+            if request is None:
+                request = {
+                    "payload": {
+                        "method": self.user_data_endpoints.user_data_stream_subscribe,
+                        "params": {},
+                    },
+                    "signer": None,
+                    "signed": False,
+                    "api_key": False,
+                }
 
-            self.user_stream_connections.stream_connections_map[stream] = new_connection
-            new_connection.stream_callback_map[stream] = old_target
-            new_connection.response_types[stream] = old_connection.response_types.get(
-                stream
+            new_stream = await self._replay_user_data_subscription(
+                request, new_connection
             )
+            if new_stream is None:
+                logging.warning(
+                    f"User data stream {stream} dropped: it could not be "
+                    f"subscribed again after reconnecting WebSocket "
+                    f"{old_connection.id}."
+                )
+                continue
+
+            resubscribed.append((stream, new_stream, request))
+
+        # Every old id is released before the new ids are taken, so an id that
+        # moved onto another one's old value is never overwritten.
+        handles = {}
+        for stream in streams:
+            user_streams.pop(stream, None)
+            handles[stream] = self.user_stream_handles.pop(stream, [])
+
+        for stream, new_stream, request in resubscribed:
+            user_streams[new_stream] = new_connection
+            new_connection.user_data_requests[new_stream] = request
+            new_connection.stream_callback_map[new_stream] = (
+                old_connection.stream_callback_map.get(stream, [])
+            )
+            new_connection.response_types[new_stream] = (
+                old_connection.response_types.get(stream)
+            )
+            for handle in handles[stream]:
+                handle._stream = new_stream
+            if handles[stream]:
+                self.user_stream_handles[new_stream] = handles[stream]
+
+            if new_stream != stream:
+                logging.info(
+                    f"User data stream {stream} is subscription {new_stream} "
+                    f"on the reconnected WebSocket {new_connection.id}."
+                )
+
+    async def _replay_user_data_subscription(
+        self, request: dict, connection: WebSocketConnection
+    ) -> Optional[Union[str, int]]:
+        """Send a user data subscription request again on a connection.
+
+        Args:
+            request (dict): The stored subscription request.
+            connection (WebSocketConnection): The connection to subscribe on.
+
+        Returns:
+            Optional[Union[str, int]]: The new `subscriptionId`, or None when
+                the subscription failed.
+        """
+
+        payload = {}
+
+        try:
+            websocket_options = WebsocketApiOptions(
+                signer=request["signer"],
+                api_key=request["api_key"],
+                is_signed=request["signed"],
+                skip_auth=not request["signed"],
+            )
+            payload = ws_api_payload(
+                self.configuration,
+                copy.deepcopy(request["payload"]),
+                websocket_options,
+            )
+
+            future = await WebSocketCommon.send_message(self, payload, connection)
+            response = await asyncio.wait_for(future, timeout=20)
+            result = response.get("result")
+            if not isinstance(result, dict) or "subscriptionId" not in result:
+                raise ValueError(response.get("error") or response)
+        except Exception as e:
+            if isinstance(e, asyncio.TimeoutError):
+                e = TimeoutError(f"no response to {request['payload'].get('method')}")
+            connection.pending_request.pop(payload.get("id"), None)
+            logging.error(
+                f"User data resubscription failed for connection "
+                f"{connection.id}: {e}"
+            )
+            self._emit_connection_event(connection, "error", e)
+            return None
+
+        return result["subscriptionId"]
+
+    def _remember_user_data_subscription(
+        self,
+        connection: WebSocketConnection,
+        response: dict,
+        request: Optional[dict],
+    ) -> None:
+        """Keep the request behind a user data subscription for reconnects.
+
+        Args:
+            connection (WebSocketConnection): The connection that subscribed.
+            response (dict): The server response to the subscription.
+            request (Optional[dict]): The request to replay, or None when the
+                message was not a user data subscription.
+        """
+
+        if request is None or not isinstance(response, dict):
+            return
+
+        result = response.get("result")
+        if not isinstance(result, dict) or "subscriptionId" not in result:
+            return
+
+        subscription_id = result["subscriptionId"]
+        connection.user_data_requests[subscription_id] = request
+        self.user_data_subscribe_connections[subscription_id] = connection
+
+    def _user_data_request(
+        self,
+        payload: Dict,
+        signer: Optional[Signers],
+        signed: bool,
+        api_key: Optional[bool],
+    ) -> Optional[dict]:
+        """Copy a user data subscription request before it is sent.
+
+        Args:
+            payload (Dict): The unsigned request payload.
+            signer (Optional[Signers]): Signer used for the request.
+            signed (bool): Whether the request is signed.
+            api_key (Optional[bool]): Whether the request carries the API key.
+
+        Returns:
+            Optional[dict]: The request to store, or None when the payload is
+                not a user data subscription.
+        """
+
+        subscribe_method = getattr(
+            self.user_data_endpoints, "user_data_stream_subscribe", None
+        )
+        if not isinstance(subscribe_method, str) or not str(
+            payload.get("method", "")
+        ).startswith(subscribe_method):
+            return None
+
+        request_payload = copy.deepcopy(payload)
+        for key in ("id", "timestamp", "signature"):
+            request_payload.get("params", {}).pop(key, None)
+
+        return {
+            "payload": request_payload,
+            "signer": signer,
+            "signed": signed,
+            "api_key": api_key,
+        }
+
+    def _user_data_unsubscribe_params(self, payload: Dict) -> Optional[dict]:
+        """Copy the params of a user data unsubscribe request before it is sent.
+
+        Args:
+            payload (Dict): The unsigned request payload.
+
+        Returns:
+            Optional[dict]: The request params, or None when the payload is not
+                a user data unsubscribe request.
+        """
+
+        unsubscribe_method = getattr(
+            self.user_data_endpoints, "user_data_stream_unsubscribe", None
+        )
+        if not isinstance(unsubscribe_method, str) or (
+            payload.get("method") != unsubscribe_method
+        ):
+            return None
+
+        return dict(payload.get("params") or {})
+
+    def _forget_user_data_streams(
+        self, connection: WebSocketConnection, streams: list
+    ) -> None:
+        """Forget user data streams the server no longer sends on a connection.
+
+        Args:
+            connection (WebSocketConnection): The connection the streams were on.
+            streams (list): The subscription IDs to forget.
+        """
+
+        for stream in streams:
+            self.user_stream_connections.stream_connections_map.pop(stream, None)
+            self.user_stream_handles.pop(stream, None)
+            connection.stream_callback_map.pop(stream, None)
+            connection.response_types.pop(stream, None)
+            connection.user_data_requests.pop(stream, None)
+
+    def _forget_unsubscribed_user_data(
+        self, connection: WebSocketConnection, params: Optional[dict]
+    ) -> None:
+        """Forget the user data streams closed by a `userDataStream.unsubscribe`.
+
+        Without a `subscriptionId` the server closes every subscription of the
+        connection, so they must not be subscribed again on a reconnect.
+
+        Args:
+            connection (WebSocketConnection): The connection that unsubscribed.
+            params (Optional[dict]): The params from
+                `_user_data_unsubscribe_params`, or None when the message was
+                not a user data unsubscribe request.
+        """
+
+        if params is None:
+            return
+
+        subscription_id = params.get("subscription_id", params.get("subscriptionId"))
+        user_streams = self.user_stream_connections.stream_connections_map
+        streams = [
+            stream
+            for stream, mapped in user_streams.items()
+            if mapped is connection
+            and (subscription_id is None or str(stream) == str(subscription_id))
+        ]
+        self._forget_user_data_streams(connection, streams)
+
+    def _forget_session_user_data(self, connection: WebSocketConnection) -> None:
+        """Forget the user data streams closed by a `session.logout`.
+
+        The logout closes the `userDataStream.subscribe` subscriptions of the
+        connection but keeps the signature ones.
+
+        Args:
+            connection (WebSocketConnection): The connection that logged out.
+        """
+
+        user_streams = self.user_stream_connections.stream_connections_map
+        streams = [
+            stream
+            for stream, mapped in user_streams.items()
+            if mapped is connection
+            and not connection.user_data_requests.get(stream, {}).get("signed")
+        ]
+        self._forget_user_data_streams(connection, streams)
 
     def stream_messages(self, method: str, streams: list[str]) -> list[dict]:
         """Build the messages that subscribe to or unsubscribe from streams.
@@ -1031,164 +1300,6 @@ class WebSocketCommon:
             new_connection.response_types[stream] = old_connection.response_types.get(
                 stream
             )
-
-    def _drop_user_streams(self, connection: WebSocketConnection) -> None:
-        """Forget the user data streams of a connection that could not be resubscribed.
-
-        Args:
-            connection (WebSocketConnection): The connection being replaced.
-        """
-
-        user_streams = self.user_stream_connections.stream_connections_map
-        for stream in [
-            s
-            for s, mapped in user_streams.items()
-            if mapped is connection and s not in connection.user_data_subscribe_requests
-        ]:
-            user_streams.pop(stream, None)
-            logging.warning(
-                f"User data stream {stream} dropped: the session could not be "
-                f"logged on again after reconnecting WebSocket {connection.id}."
-            )
-
-    async def _resubscribe_signature_user_streams(
-        self, old_connection: WebSocketConnection, new_connection: WebSocketConnection
-    ):
-        """Make the signature user data subscriptions again on a renewed connection.
-
-        Each subscription is signed again with a fresh `timestamp`. The server may
-        give it a different `subscriptionId`, so its callbacks, response type and
-        stream handles move to the new id. A subscription that cannot be made
-        again is dropped and reported with an `error` event.
-
-        Args:
-            old_connection (WebSocketConnection): The connection being replaced.
-            new_connection (WebSocketConnection): The new WebSocket connection.
-        """
-
-        user_streams = self.user_stream_connections.stream_connections_map
-        renewed = {}
-
-        requests = old_connection.user_data_subscribe_requests
-        for old_id, request in list(requests.items()):
-            mapped = user_streams.get(old_id)
-            if mapped is None:
-                continue
-
-            payload = {}
-            try:
-                websocket_options = WebsocketApiOptions(
-                    signer=request["signer"],
-                    is_signed=True,
-                    skip_auth=new_connection.is_session_log_on is True,
-                )
-                payload = ws_api_payload(
-                    self.configuration,
-                    {"method": request["method"], "params": dict(request["params"])},
-                    websocket_options,
-                )
-                future = await WebSocketCommon.send_message(
-                    self, payload, new_connection
-                )
-                response = await asyncio.wait_for(future, timeout=20)
-                new_id = (response.get("result") or {}).get("subscriptionId")
-                if response.get("status") != 200 or new_id is None:
-                    raise ValueError(response.get("error") or response)
-            except Exception as e:
-                if isinstance(e, asyncio.TimeoutError):
-                    e = TimeoutError(f"no response to {request['method']}")
-                new_connection.pending_request.pop(payload.get("id"), None)
-                logging.error(
-                    f"User data stream {old_id} could not be subscribed again "
-                    f"after reconnecting WebSocket {old_connection.id}: {e}"
-                )
-                user_streams.pop(old_id, None)
-                mapped.stream_callback_map.pop(old_id, None)
-                mapped.response_types.pop(old_id, None)
-                self._emit_connection_event(new_connection, "error", e)
-                continue
-
-            new_connection.user_data_subscribe_requests[new_id] = request
-            renewed[old_id] = (new_id, mapped)
-
-        # Move every stream only once all are known, so a new id that equals
-        # another stream's old id does not overwrite it.
-        for old_id in renewed:
-            user_streams.pop(old_id, None)
-
-        for old_id, (new_id, mapped) in renewed.items():
-            user_streams[new_id] = new_connection
-            new_connection.stream_callback_map[new_id] = mapped.stream_callback_map.pop(
-                old_id, []
-            )
-            new_connection.response_types[new_id] = mapped.response_types.pop(
-                old_id, None
-            )
-
-        for handle in list(self.user_stream_handles):
-            if handle._stream in renewed:
-                handle._stream = renewed[handle._stream][0]
-
-    def _track_user_data_request(
-        self, payload: Dict, signer: Optional[Signers] = None
-    ) -> Optional[dict]:
-        """Keep a copy of a signature user data subscribe or unsubscribe request.
-
-        Args:
-            payload (Dict): The request about to be sent.
-            signer (Optional[Signers]): The signer the request is sent with.
-
-        Returns:
-            Optional[dict]: The request without its `id`, or None when it is not a
-                user data subscribe or unsubscribe request.
-        """
-
-        endpoints = self.user_data_endpoints
-        method = payload.get("method")
-        if endpoints is None or method not in (
-            endpoints.user_data_stream_subscribe_signature,
-            endpoints.user_data_stream_unsubscribe,
-        ):
-            return None
-
-        # A replay is signed again, so a caller's timestamp or signature is not kept.
-        params = {
-            k: v
-            for k, v in payload.get("params", {}).items()
-            if k not in ("id", "timestamp", "signature")
-        }
-        return {"method": method, "params": params, "signer": signer}
-
-    def _update_user_data_requests(
-        self, connection: WebSocketConnection, request: Optional[dict], response: dict
-    ) -> None:
-        """Record a signature subscription, or forget unsubscribed ones.
-
-        Args:
-            connection (WebSocketConnection): The connection the request was sent on.
-            request (Optional[dict]): The request from `_track_user_data_request`.
-            response (dict): The server response.
-        """
-
-        if request is None:
-            return
-
-        requests = connection.user_data_subscribe_requests
-        if request["method"] == self.user_data_endpoints.user_data_stream_unsubscribe:
-            params = request["params"]
-            subscription_id = params.get(
-                "subscription_id", params.get("subscriptionId")
-            )
-            if subscription_id is None:
-                requests.clear()
-            else:
-                for key in [k for k in requests if str(k) == str(subscription_id)]:
-                    requests.pop(key, None)
-            return
-
-        subscription_id = (response.get("result") or {}).get("subscriptionId")
-        if subscription_id is not None:
-            requests[subscription_id] = request
 
     async def session_re_log_on(self, request, connection: WebSocketConnection) -> bool:
         """Log the session on again on a renewed connection.
@@ -1588,6 +1699,7 @@ class WebSocketStreamBase(WebSocketCommon):
                 logging.info(f"Current subscriptions: {response}")
                 return response
             except asyncio.TimeoutError:
+                connection.pending_request.pop(json_msg["id"], None)
                 logging.warning(
                     f"Timeout waiting for response to LIST_SUBSCRIPTIONS for connection {connection.id}"
                 )
@@ -1668,16 +1780,18 @@ class WebSocketAPIBase(WebSocketCommon):
             else:
                 payload["params"] = {"returnRateLimits": False}
 
-        user_data_request = self._track_user_data_request(payload, signer)
+        user_data_request = self._user_data_request(payload, signer, True, api_key)
+        user_data_unsubscribe = self._user_data_unsubscribe_params(payload)
         _payload = ws_api_payload(self.configuration, payload, websocket_options)
 
         future = await super().send_message(_payload, connection)
         if promised:
             try:
                 ws_response = await asyncio.wait_for(future, timeout=20)
-                self._update_user_data_requests(
-                    connection, user_data_request, ws_response
+                self._remember_user_data_subscription(
+                    connection, ws_response, user_data_request
                 )
+                self._forget_unsubscribed_user_data(connection, user_data_unsubscribe)
                 if session_logon:
                     payload["id"] = _payload["id"]
                     connection.is_session_log_on = True
@@ -1685,6 +1799,7 @@ class WebSocketAPIBase(WebSocketCommon):
                 elif session_logout:
                     connection.is_session_log_on = False
                     connection.session_logon_request = None
+                    self._forget_session_user_data(connection)
 
                 return WebsocketApiResponse[T](
                     data_function=lambda: (
@@ -1699,8 +1814,9 @@ class WebSocketAPIBase(WebSocketCommon):
                     ),
                 )
             except asyncio.TimeoutError:
+                connection.pending_request.pop(_payload["id"], None)
                 logging.warning(
-                    f"Timeout waiting for response to message ID {payload.get('id')}"
+                    f"Timeout waiting for response to message ID {_payload['id']}"
                 )
                 return WebsocketApiResponse[T](
                     data_function=lambda: {"error": "timeout"},
@@ -1769,16 +1885,18 @@ class WebSocketAPIBase(WebSocketCommon):
             else:
                 payload["params"] = {"returnRateLimits": False}
 
-        user_data_request = self._track_user_data_request(payload)
+        user_data_request = self._user_data_request(payload, None, False, api_key)
+        user_data_unsubscribe = self._user_data_unsubscribe_params(payload)
         _payload = ws_api_payload(self.configuration, payload, websocket_options)
 
         future = await super().send_message(_payload, connection)
         if promised:
             try:
                 ws_response = await asyncio.wait_for(future, timeout=20)
-                self._update_user_data_requests(
-                    connection, user_data_request, ws_response
+                self._remember_user_data_subscription(
+                    connection, ws_response, user_data_request
                 )
+                self._forget_unsubscribed_user_data(connection, user_data_unsubscribe)
 
                 if session_logon:
                     payload["id"] = _payload["id"]
@@ -1787,6 +1905,7 @@ class WebSocketAPIBase(WebSocketCommon):
                 elif session_logout:
                     connection.is_session_log_on = False
                     connection.session_logon_request = None
+                    self._forget_session_user_data(connection)
 
                 if response_model and hasattr(response_model, "from_dict"):
                     def data_function():
@@ -1816,8 +1935,9 @@ class WebSocketAPIBase(WebSocketCommon):
                     ),
                 )
             except asyncio.TimeoutError:
+                connection.pending_request.pop(_payload["id"], None)
                 logging.warning(
-                    f"Timeout waiting for response to message ID {payload.get('id')}"
+                    f"Timeout waiting for response to message ID {_payload['id']}"
                 )
                 return WebsocketApiResponse[T](
                     data_function=lambda: {"error": "timeout"},
@@ -1861,15 +1981,18 @@ class WebSocketAPIBase(WebSocketCommon):
             id (str): User Data ID.
             response_model (Optional[Type[T]]): Pydantic model to validate the response data.
         """
-        if self.configuration.mode == WebsocketMode.SINGLE:
-            connection = self.connections[0]
-        else:
-            connection = self.connections[
-                self.round_robin_index % len(self.connections)
-            ]
-            self.round_robin_index = (self.round_robin_index + 1) % len(
-                self.connections
-            )
+        # Events arrive on the connection that sent the subscription.
+        connection = self.user_data_subscribe_connections.pop(id, None)
+        if connection not in self.connections:
+            if self.configuration.mode == WebsocketMode.SINGLE:
+                connection = self.connections[0]
+            else:
+                connection = self.connections[
+                    self.round_robin_index % len(self.connections)
+                ]
+                self.round_robin_index = (self.round_robin_index + 1) % len(
+                    self.connections
+                )
         self.user_stream_connections.stream_connections_map[id] = connection
         connection.stream_callback_map.update({id: []})
         connection.response_types.update({id: response_model})
@@ -1918,12 +2041,7 @@ class WebSocketAPIBase(WebSocketCommon):
             else None
         )
         if connection:
-            self.user_stream_connections.stream_connections_map.pop(id, None)
-            connection.stream_callback_map.pop(id, None)
-            connection.response_types.pop(id, None)
-            # Unsubscribed streams must not be subscribed again on a reconnect.
-            for pooled_connection in [connection, *self.connections]:
-                pooled_connection.user_data_subscribe_requests.pop(id, None)
+            self._forget_user_data_streams(connection, [id])
             logging.info(f"Unsubscribed from stream: {id}")
         else:
             raise ValueError(f"Subscription id {id} not connected.")
@@ -1996,12 +2114,10 @@ async def RequestStream(
         await websocket_base.subscribe(
             streams=[stream], response_model=response_model, stream_url=stream_url
         )
-    else:
-        await websocket_base.subscribe_user_data(
-            id=stream, response_model=response_model
-        )
+        return RequestStreamHandle(websocket_base, stream, response_model)
+
+    await websocket_base.subscribe_user_data(id=stream, response_model=response_model)
 
     handle = RequestStreamHandle(websocket_base, stream, response_model)
-    if isinstance(websocket_base, WebSocketAPIBase):
-        websocket_base.user_stream_handles.add(handle)
+    websocket_base.user_stream_handles.setdefault(stream, []).append(handle)
     return handle
