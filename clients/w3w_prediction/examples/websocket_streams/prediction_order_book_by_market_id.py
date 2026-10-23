@@ -28,7 +28,7 @@ async def prediction_order_book_by_market_id():
         connection = await client.websocket_streams.create_connection()
 
         stream = await connection.prediction_order_book_by_market_id(
-            market_id="8859231",
+            market_id="8859231"
         )
         stream.on("message", lambda data: print(f"{data}"))
 
