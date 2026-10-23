@@ -26,10 +26,17 @@ class FetchDepositAddressListWithNetworkResponseInner(BaseModel):
     FetchDepositAddressListWithNetworkResponseInner
     """  # noqa: E501
 
-    coin: Optional[StrictStr] = None
+    coin: Optional[StrictStr] = Field(
+        default=None,
+        description="coin here means network address space, ETH for all EVM-like network",
+    )
     address: Optional[StrictStr] = None
     tag: Optional[StrictStr] = None
-    is_default: Optional[StrictInt] = Field(default=None, alias="isDefault")
+    is_default: Optional[StrictInt] = Field(
+        default=None,
+        description="'isDefault' is 1 means the address is default, same as shown in the app.",
+        alias="isDefault",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["coin", "address", "tag", "isDefault"]
 

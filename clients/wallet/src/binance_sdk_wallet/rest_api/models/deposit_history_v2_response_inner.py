@@ -35,7 +35,9 @@ class DepositHistoryV2ResponseInner(BaseModel):
     coin: Optional[StrictStr] = None
     deposit_status: Optional[StrictInt] = Field(default=None, alias="depositStatus")
     travel_rule_req_status: Optional[StrictInt] = Field(
-        default=None, alias="travelRuleReqStatus"
+        default=None,
+        description="0:PASS,2:REJECTED,3:PENDING,-1:FAILED",
+        alias="travelRuleReqStatus",
     )
     address: Optional[StrictStr] = None
     address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
@@ -43,7 +45,9 @@ class DepositHistoryV2ResponseInner(BaseModel):
     transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
     confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
     require_questionnaire: Optional[StrictBool] = Field(
-        default=None, alias="requireQuestionnaire"
+        default=None,
+        description="true: This deposit require user to answer questionnaire to get it credited, false: This deposit doesn't require user to answer questionnaire as it's already completed or information has been verified",
+        alias="requireQuestionnaire",
     )
     questionnaire: Optional[DepositHistoryV2ResponseInnerQuestionnaire] = None
     insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")

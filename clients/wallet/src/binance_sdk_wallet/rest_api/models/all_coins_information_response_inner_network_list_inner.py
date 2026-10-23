@@ -34,8 +34,16 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
     is_default: Optional[StrictBool] = Field(default=None, alias="isDefault")
     deposit_enable: Optional[StrictBool] = Field(default=None, alias="depositEnable")
     withdraw_enable: Optional[StrictBool] = Field(default=None, alias="withdrawEnable")
-    deposit_desc: Optional[StrictStr] = Field(default=None, alias="depositDesc")
-    withdraw_desc: Optional[StrictStr] = Field(default=None, alias="withdrawDesc")
+    deposit_desc: Optional[StrictStr] = Field(
+        default=None,
+        description='shown only when "depositEnable" is false.',
+        alias="depositDesc",
+    )
+    withdraw_desc: Optional[StrictStr] = Field(
+        default=None,
+        description='shown only when "withdrawEnable" is false.',
+        alias="withdrawDesc",
+    )
     special_tips: Optional[StrictStr] = Field(default=None, alias="specialTips")
     special_withdraw_tips: Optional[StrictStr] = Field(
         default=None, alias="specialWithdrawTips"
@@ -50,13 +58,31 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
     withdraw_min: Optional[StrictStr] = Field(default=None, alias="withdrawMin")
     withdraw_max: Optional[StrictStr] = Field(default=None, alias="withdrawMax")
     withdraw_internal_min: Optional[StrictStr] = Field(
-        default=None, alias="withdrawInternalMin"
+        default=None,
+        description="Minimum internal transfer amount",
+        alias="withdrawInternalMin",
     )
     deposit_dust: Optional[StrictStr] = Field(default=None, alias="depositDust")
-    min_confirm: Optional[StrictInt] = Field(default=None, alias="minConfirm")
-    un_lock_confirm: Optional[StrictInt] = Field(default=None, alias="unLockConfirm")
-    same_address: Optional[StrictBool] = Field(default=None, alias="sameAddress")
-    withdraw_tag: Optional[StrictBool] = Field(default=None, alias="withdrawTag")
+    min_confirm: Optional[StrictInt] = Field(
+        default=None,
+        description="min number for balance confirmation",
+        alias="minConfirm",
+    )
+    un_lock_confirm: Optional[StrictInt] = Field(
+        default=None,
+        description="confirmation number for balance unlock",
+        alias="unLockConfirm",
+    )
+    same_address: Optional[StrictBool] = Field(
+        default=None,
+        description="Obsoleted, recomment to use withdrawTag",
+        alias="sameAddress",
+    )
+    withdraw_tag: Optional[StrictBool] = Field(
+        default=None,
+        description="If the coin needs to provide memo to withdraw",
+        alias="withdrawTag",
+    )
     estimated_arrival_time: Optional[StrictInt] = Field(
         default=None, alias="estimatedArrivalTime"
     )
@@ -65,7 +91,9 @@ class AllCoinsInformationResponseInnerNetworkListInner(BaseModel):
         default=None, alias="contractAddressUrl"
     )
     contract_address: Optional[StrictStr] = Field(default=None, alias="contractAddress")
-    denomination: Optional[StrictInt] = None
+    denomination: Optional[StrictInt] = Field(
+        default=None, description="1 1MBABYDOGE = 1000000 BABYDOGE"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "network",

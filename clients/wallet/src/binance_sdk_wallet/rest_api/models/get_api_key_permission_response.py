@@ -30,18 +30,34 @@ class GetApiKeyPermissionResponse(BaseModel):
     create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
     enable_reading: Optional[StrictBool] = Field(default=None, alias="enableReading")
     enable_withdrawals: Optional[StrictBool] = Field(
-        default=None, alias="enableWithdrawals"
+        default=None,
+        description="This option allows you to withdraw via API. You must apply the IP Access Restriction filter in order to enable withdrawals",
+        alias="enableWithdrawals",
     )
     enable_internal_transfer: Optional[StrictBool] = Field(
-        default=None, alias="enableInternalTransfer"
+        default=None,
+        description="This option authorizes this key to transfer funds between your master account and your sub account instantly",
+        alias="enableInternalTransfer",
     )
-    enable_margin: Optional[StrictBool] = Field(default=None, alias="enableMargin")
-    enable_futures: Optional[StrictBool] = Field(default=None, alias="enableFutures")
+    enable_margin: Optional[StrictBool] = Field(
+        default=None,
+        description="This option can be adjusted after the Cross Margin account transfer is completed",
+        alias="enableMargin",
+    )
+    enable_futures: Optional[StrictBool] = Field(
+        default=None,
+        description="The Futures API cannot be used if the API key was created before the Futures account was opened, or if you have enabled portfolio margin.",
+        alias="enableFutures",
+    )
     permits_universal_transfer: Optional[StrictBool] = Field(
-        default=None, alias="permitsUniversalTransfer"
+        default=None,
+        description="Authorizes this key to be used for a dedicated universal transfer API to transfer multiple supported currencies. Each business's own transfer API rights are not affected by this authorization",
+        alias="permitsUniversalTransfer",
     )
     enable_vanilla_options: Optional[StrictBool] = Field(
-        default=None, alias="enableVanillaOptions"
+        default=None,
+        description="Authorizes this key to Vanilla options trading",
+        alias="enableVanillaOptions",
     )
     enable_fix_api_trade: Optional[StrictBool] = Field(
         default=None, alias="enableFixApiTrade"
@@ -50,10 +66,14 @@ class GetApiKeyPermissionResponse(BaseModel):
         default=None, alias="enableFixReadOnly"
     )
     enable_spot_and_margin_trading: Optional[StrictBool] = Field(
-        default=None, alias="enableSpotAndMarginTrading"
+        default=None,
+        description="Spot and margin trading",
+        alias="enableSpotAndMarginTrading",
     )
     enable_portfolio_margin_trading: Optional[StrictBool] = Field(
-        default=None, alias="enablePortfolioMarginTrading"
+        default=None,
+        description="API Key created before your activate portfolio margin does not support portfolio margin API service",
+        alias="enablePortfolioMarginTrading",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

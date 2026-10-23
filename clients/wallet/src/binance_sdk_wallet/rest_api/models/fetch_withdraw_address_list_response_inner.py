@@ -29,11 +29,22 @@ class FetchWithdrawAddressListResponseInner(BaseModel):
     address: Optional[StrictStr] = None
     address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
     coin: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
+    name: Optional[StrictStr] = Field(
+        default=None, description="is a user-defined name"
+    )
     network: Optional[StrictStr] = None
-    origin: Optional[StrictStr] = None
-    origin_type: Optional[StrictStr] = Field(default=None, alias="originType")
-    white_status: Optional[StrictBool] = Field(default=None, alias="whiteStatus")
+    origin: Optional[StrictStr] = Field(
+        default=None,
+        description="if originType != 'others', this value is blank, otherwise the origin is manually filled in by the user",
+    )
+    origin_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Address source type, including but not limited to: type Exchange Address: Binance, CoinBase, HTX, Bitfinex, OKX, Bithumb, Kraken, Kucoin, Gemini, Bitget, Bybit, Upbit, Gate.io;  type Wallet Address: Binance Web3 Wallet, Trust Wallet, MetaMask, Rabby Wallet, Phantom, OKX Web 3 Wallet, Coinbase Wallet, Bitget Wallet; type Others: others(multilanguage support)",
+        alias="originType",
+    )
+    white_status: Optional[StrictBool] = Field(
+        default=None, description="Is it whitelisted", alias="whiteStatus"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "address",

@@ -28,13 +28,23 @@ class GetAssetsThatCanBeConvertedIntoBnbResponseDetailsInner(BaseModel):
 
     asset: Optional[StrictStr] = None
     asset_full_name: Optional[StrictStr] = Field(default=None, alias="assetFullName")
-    amount_free: Optional[StrictStr] = Field(default=None, alias="amountFree")
-    to_btc: Optional[StrictStr] = Field(default=None, alias="toBTC")
-    to_bnb: Optional[StrictStr] = Field(default=None, alias="toBNB")
-    to_bnb_off_exchange: Optional[StrictStr] = Field(
-        default=None, alias="toBNBOffExchange"
+    amount_free: Optional[StrictStr] = Field(
+        default=None, description="Convertible amount", alias="amountFree"
     )
-    exchange: Optional[StrictStr] = None
+    to_btc: Optional[StrictStr] = Field(
+        default=None, description="BTC amount", alias="toBTC"
+    )
+    to_bnb: Optional[StrictStr] = Field(
+        default=None,
+        description="BNB amount（Not deducted commission fee）",
+        alias="toBNB",
+    )
+    to_bnb_off_exchange: Optional[StrictStr] = Field(
+        default=None,
+        description="BNB amount（Deducted commission fee）",
+        alias="toBNBOffExchange",
+    )
+    exchange: Optional[StrictStr] = Field(default=None, description="Commission fee")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "asset",

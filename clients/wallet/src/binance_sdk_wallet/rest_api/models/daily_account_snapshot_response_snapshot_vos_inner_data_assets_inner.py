@@ -27,7 +27,11 @@ class DailyAccountSnapshotResponseSnapshotVosInnerDataAssetsInner(BaseModel):
     """  # noqa: E501
 
     asset: Optional[StrictStr] = None
-    margin_balance: Optional[StrictStr] = Field(default=None, alias="marginBalance")
+    margin_balance: Optional[StrictStr] = Field(
+        default=None,
+        description="Not real-time data, can ignore",
+        alias="marginBalance",
+    )
     wallet_balance: Optional[StrictStr] = Field(default=None, alias="walletBalance")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["asset", "marginBalance", "walletBalance"]

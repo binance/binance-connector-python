@@ -32,7 +32,10 @@ class AssetDividendRecordResponseRowsInner(BaseModel):
     div_time: Optional[StrictInt] = Field(default=None, alias="divTime")
     en_info: Optional[StrictStr] = Field(default=None, alias="enInfo")
     tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
-    direction: Optional[StrictInt] = None
+    direction: Optional[StrictInt] = Field(
+        default=None,
+        description="direction: 1 for Asset credited (inflow), -1 for Asset debited (outflow)",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

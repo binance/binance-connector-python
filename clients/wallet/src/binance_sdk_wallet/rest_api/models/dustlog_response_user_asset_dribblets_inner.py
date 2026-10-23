@@ -31,10 +31,14 @@ class DustlogResponseUserAssetDribbletsInner(BaseModel):
 
     operate_time: Optional[StrictInt] = Field(default=None, alias="operateTime")
     total_transfered_amount: Optional[StrictStr] = Field(
-        default=None, alias="totalTransferedAmount"
+        default=None,
+        description="Total transfered BNB amount for this exchange.",
+        alias="totalTransferedAmount",
     )
     total_service_charge_amount: Optional[StrictStr] = Field(
-        default=None, alias="totalServiceChargeAmount"
+        default=None,
+        description="Total service charge amount for this exchange.",
+        alias="totalServiceChargeAmount",
     )
     trans_id: Optional[StrictInt] = Field(default=None, alias="transId")
     user_asset_dribblet_details: Optional[

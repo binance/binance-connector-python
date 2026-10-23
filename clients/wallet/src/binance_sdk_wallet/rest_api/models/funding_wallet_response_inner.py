@@ -27,9 +27,9 @@ class FundingWalletResponseInner(BaseModel):
     """  # noqa: E501
 
     asset: Optional[StrictStr] = None
-    free: Optional[StrictStr] = None
-    locked: Optional[StrictStr] = None
-    freeze: Optional[StrictStr] = None
+    free: Optional[StrictStr] = Field(default=None, description="avalible balance")
+    locked: Optional[StrictStr] = Field(default=None, description="locked asset")
+    freeze: Optional[StrictStr] = Field(default=None, description="freeze asset")
     withdrawing: Optional[StrictStr] = None
     btc_valuation: Optional[StrictStr] = Field(default=None, alias="btcValuation")
     additional_properties: Dict[str, Any] = {}

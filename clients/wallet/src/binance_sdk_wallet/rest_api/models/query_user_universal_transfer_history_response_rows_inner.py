@@ -29,7 +29,9 @@ class QueryUserUniversalTransferHistoryResponseRowsInner(BaseModel):
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
     type: Optional[StrictStr] = None
-    status: Optional[StrictStr] = None
+    status: Optional[StrictStr] = Field(
+        default=None, description="status: CONFIRMED / FAILED / PENDING"
+    )
     tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     timestamp: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}

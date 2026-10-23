@@ -52,7 +52,9 @@ class DepositHistoryTravelRuleResponseInner(BaseModel):
     transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
     confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
     require_questionnaire: Optional[StrictBool] = Field(
-        default=None, alias="requireQuestionnaire"
+        default=None,
+        description="true: This deposit require user to answer questionnaire to get it credited, false: This deposit doesn't require user to answer questionnaire as it's already completed or information has been verified",
+        alias="requireQuestionnaire",
     )
     questionnaire: Optional[StrictStr] = None
     additional_properties: Dict[str, Any] = {}

@@ -29,9 +29,15 @@ class AccountApiTradingStatusResponseData(BaseModel):
     AccountApiTradingStatusResponseData
     """  # noqa: E501
 
-    is_locked: Optional[StrictBool] = Field(default=None, alias="isLocked")
+    is_locked: Optional[StrictBool] = Field(
+        default=None,
+        description="API trading function is locked or not",
+        alias="isLocked",
+    )
     planned_recover_time: Optional[StrictInt] = Field(
-        default=None, alias="plannedRecoverTime"
+        default=None,
+        description="If API trading function is locked, this is the planned recover time",
+        alias="plannedRecoverTime",
     )
     trigger_condition: Optional[AccountApiTradingStatusResponseDataTriggerCondition] = (
         Field(default=None, alias="triggerCondition")

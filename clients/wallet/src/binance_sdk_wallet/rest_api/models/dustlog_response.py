@@ -29,7 +29,9 @@ class DustlogResponse(BaseModel):
     DustlogResponse
     """  # noqa: E501
 
-    total: Optional[StrictInt] = None
+    total: Optional[StrictInt] = Field(
+        default=None, description="Total counts of exchange"
+    )
     user_asset_dribblets: Optional[List[DustlogResponseUserAssetDribbletsInner]] = (
         Field(default=None, alias="userAssetDribblets")
     )

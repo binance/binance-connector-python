@@ -29,8 +29,10 @@ class DailyAccountSnapshotResponse(BaseModel):
     DailyAccountSnapshotResponse
     """  # noqa: E501
 
-    code: Optional[StrictInt] = None
-    msg: Optional[StrictStr] = None
+    code: Optional[StrictInt] = Field(
+        default=None, description="200 for success; others are error codes"
+    )
+    msg: Optional[StrictStr] = Field(default=None, description="error message")
     snapshot_vos: Optional[List[DailyAccountSnapshotResponseSnapshotVosInner]] = Field(
         default=None, alias="snapshotVos"
     )

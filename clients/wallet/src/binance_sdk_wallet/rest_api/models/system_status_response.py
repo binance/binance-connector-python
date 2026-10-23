@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
@@ -26,8 +26,12 @@ class SystemStatusResponse(BaseModel):
     SystemStatusResponse
     """  # noqa: E501
 
-    status: Optional[StrictInt] = None
-    msg: Optional[StrictStr] = None
+    status: Optional[StrictInt] = Field(
+        default=None, description="0: normal，1：system maintenance"
+    )
+    msg: Optional[StrictStr] = Field(
+        default=None, description='"normal", "system_maintenance"'
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["status", "msg"]
 

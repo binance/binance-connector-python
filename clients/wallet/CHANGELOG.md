@@ -1,5 +1,39 @@
 # Changelog
 
+## 13.8.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Added descriptions to response fields
+  - affected methods:
+    - `account_api_trading_status()` (`GET /sapi/v1/account/apiTradingStatus`)
+    - `account_info()` (`GET /sapi/v1/account/info`)
+    - `all_coins_information()` (`GET /sapi/v1/capital/config/getall`)
+    - `asset_detail()` (`GET /sapi/v1/asset/assetDetail`)
+    - `asset_dividend_record()` (`GET /sapi/v1/asset/assetDividend`)
+    - `broker_withdraw()` (`POST /sapi/v1/localentity/broker/withdraw/apply`)
+    - `daily_account_snapshot()` (`GET /sapi/v1/accountSnapshot`)
+    - `deposit_history()` (`GET /sapi/v1/capital/deposit/hisrec`)
+    - `deposit_history_travel_rule()` (`GET /sapi/v1/localentity/deposit/history`)
+    - `deposit_history_v2()` (`GET /sapi/v2/localentity/deposit/history`)
+    - `dustlog()` (`GET /sapi/v1/asset/dribblet`)
+    - `fetch_deposit_address_list_with_network()` (`GET /sapi/v1/capital/deposit/address/list`)
+    - `fetch_withdraw_address_list()` (`GET /sapi/v1/capital/withdraw/address/list`)
+    - `fetch_withdraw_quota()` (`GET /sapi/v1/capital/withdraw/quota`)
+    - `funding_wallet()` (`POST /sapi/v1/asset/get-funding-asset`)
+    - `get_api_key_permission()` (`GET /sapi/v1/account/apiRestrictions`)
+    - `get_assets_that_can_be_converted_into_bnb()` (`POST /sapi/v1/asset/dust-btc`)
+    - `query_user_universal_transfer_history()` (`GET /sapi/v1/asset/transfer`)
+    - `system_status()` (`GET /sapi/v1/system/status`)
+    - `withdraw_history()` (`GET /sapi/v1/capital/withdraw/history`)
+    - `withdraw_history_v1()` (`GET /sapi/v1/localentity/withdraw/history`)
+    - `withdraw_travel_rule()` (`POST /sapi/v1/localentity/withdraw/apply`)
+
 ## 13.7.0 - 2026-10-15
 
 ### Changed (2)

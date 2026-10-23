@@ -39,7 +39,7 @@ class GetAssetsThatCanBeConvertedIntoBnbResponse(BaseModel):
         default=None, alias="totalTransferBNB"
     )
     dribblet_percentage: Optional[StrictStr] = Field(
-        default=None, alias="dribbletPercentage"
+        default=None, description="Commission fee", alias="dribbletPercentage"
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

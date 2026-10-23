@@ -26,8 +26,16 @@ class FetchWithdrawQuotaResponse(BaseModel):
     FetchWithdrawQuotaResponse
     """  # noqa: E501
 
-    wd_quota: Optional[StrictStr] = Field(default=None, alias="wdQuota")
-    used_wd_quota: Optional[StrictStr] = Field(default=None, alias="usedWdQuota")
+    wd_quota: Optional[StrictStr] = Field(
+        default=None,
+        description="User's total withdrawal quota in the past 24 hours (including on-chain withdrawal and internal transfer), unit in USD",
+        alias="wdQuota",
+    )
+    used_wd_quota: Optional[StrictStr] = Field(
+        default=None,
+        description="User withdrawal quota usage in the past 24 hours, unit in USD",
+        alias="usedWdQuota",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["wdQuota", "usedWdQuota"]
 

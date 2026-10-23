@@ -26,24 +26,48 @@ class WithdrawHistoryResponseInner(BaseModel):
     WithdrawHistoryResponseInner
     """  # noqa: E501
 
-    id: Optional[StrictStr] = None
-    amount: Optional[StrictStr] = None
-    transaction_fee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
+    id: Optional[StrictStr] = Field(
+        default=None, description="Withdrawal id in Binance"
+    )
+    amount: Optional[StrictStr] = Field(default=None, description="withdrawal amount")
+    transaction_fee: Optional[StrictStr] = Field(
+        default=None, description="transaction fee", alias="transactionFee"
+    )
     coin: Optional[StrictStr] = None
     status: Optional[StrictInt] = None
     address: Optional[StrictStr] = None
-    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
-    apply_time: Optional[StrictStr] = Field(default=None, alias="applyTime")
-    network: Optional[StrictStr] = None
-    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
-    withdraw_order_id: Optional[StrictStr] = Field(
-        default=None, alias="withdrawOrderId"
+    tx_id: Optional[StrictStr] = Field(
+        default=None, description="withdrawal transaction id", alias="txId"
     )
-    info: Optional[StrictStr] = None
-    confirm_no: Optional[StrictInt] = Field(default=None, alias="confirmNo")
-    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
+    apply_time: Optional[StrictStr] = Field(
+        default=None, description="UTC time", alias="applyTime"
+    )
+    network: Optional[StrictStr] = None
+    transfer_type: Optional[StrictInt] = Field(
+        default=None,
+        description="1 for internal transfer, 0 for external transfer",
+        alias="transferType",
+    )
+    withdraw_order_id: Optional[StrictStr] = Field(
+        default=None,
+        description="will not be returned if there's no withdrawOrderId for this withdraw.",
+        alias="withdrawOrderId",
+    )
+    info: Optional[StrictStr] = Field(
+        default=None, description="reason for withdrawal failure"
+    )
+    confirm_no: Optional[StrictInt] = Field(
+        default=None, description="confirm times for withdraw", alias="confirmNo"
+    )
+    wallet_type: Optional[StrictInt] = Field(
+        default=None, description="1: Funding Wallet 0:Spot Wallet", alias="walletType"
+    )
     tx_key: Optional[StrictStr] = Field(default=None, alias="txKey")
-    complete_time: Optional[StrictStr] = Field(default=None, alias="completeTime")
+    complete_time: Optional[StrictStr] = Field(
+        default=None,
+        description="complete UTC time when user's asset is deduct from withdrawing, only if status =  6(success)",
+        alias="completeTime",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

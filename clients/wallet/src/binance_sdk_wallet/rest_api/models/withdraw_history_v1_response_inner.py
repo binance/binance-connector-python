@@ -26,31 +26,70 @@ class WithdrawHistoryV1ResponseInner(BaseModel):
     WithdrawHistoryV1ResponseInner
     """  # noqa: E501
 
-    id: Optional[StrictStr] = None
-    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
-    amount: Optional[StrictStr] = None
-    transaction_fee: Optional[StrictStr] = Field(default=None, alias="transactionFee")
+    id: Optional[StrictStr] = Field(
+        default=None, description="Withdrawal id in Binance"
+    )
+    tr_id: Optional[StrictInt] = Field(
+        default=None, description="Travel rule record id", alias="trId"
+    )
+    amount: Optional[StrictStr] = Field(default=None, description="withdrawal amount")
+    transaction_fee: Optional[StrictStr] = Field(
+        default=None,
+        description="only available for sAPI requests",
+        alias="transactionFee",
+    )
     coin: Optional[StrictStr] = None
     withdrawal_status: Optional[StrictInt] = Field(
-        default=None, alias="withdrawalStatus"
+        default=None,
+        description="Capital withdrawal status, only available for sAPI requests",
+        alias="withdrawalStatus",
     )
     travel_rule_status: Optional[StrictInt] = Field(
-        default=None, alias="travelRuleStatus"
+        default=None, description="Travel rule status.", alias="travelRuleStatus"
     )
     address: Optional[StrictStr] = None
-    tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
-    apply_time: Optional[StrictStr] = Field(default=None, alias="applyTime")
-    network: Optional[StrictStr] = None
-    transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
-    withdraw_order_id: Optional[StrictStr] = Field(
-        default=None, alias="withdrawOrderId"
+    tx_id: Optional[StrictStr] = Field(
+        default=None, description="withdrawal transaction id", alias="txId"
     )
-    info: Optional[StrictStr] = None
-    confirm_no: Optional[StrictInt] = Field(default=None, alias="confirmNo")
-    wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
-    tx_key: Optional[StrictStr] = Field(default=None, alias="txKey")
-    questionnaire: Optional[StrictStr] = None
-    complete_time: Optional[StrictStr] = Field(default=None, alias="completeTime")
+    apply_time: Optional[StrictStr] = Field(
+        default=None, description="UTC time", alias="applyTime"
+    )
+    network: Optional[StrictStr] = None
+    transfer_type: Optional[StrictInt] = Field(
+        default=None,
+        description="1 for internal transfer, 0 for external transfer, only available for sAPI requests",
+        alias="transferType",
+    )
+    withdraw_order_id: Optional[StrictStr] = Field(
+        default=None,
+        description="will not be returned if there's no withdrawOrderId for this withdraw, only available for sAPI requests",
+        alias="withdrawOrderId",
+    )
+    info: Optional[StrictStr] = Field(
+        default=None,
+        description="reason for withdrawal failure, only available for sAPI requests",
+    )
+    confirm_no: Optional[StrictInt] = Field(
+        default=None,
+        description="confirm times for withdraw, only available for sAPI requests",
+        alias="confirmNo",
+    )
+    wallet_type: Optional[StrictInt] = Field(
+        default=None,
+        description="1: Funding Wallet 0:Spot Wallet, only available for sAPI requests",
+        alias="walletType",
+    )
+    tx_key: Optional[StrictStr] = Field(
+        default=None, description="only available for sAPI requests", alias="txKey"
+    )
+    questionnaire: Optional[StrictStr] = Field(
+        default=None, description="The answers of the questionnaire"
+    )
+    complete_time: Optional[StrictStr] = Field(
+        default=None,
+        description="complete UTC time when user's asset is deduct from withdrawing, only if status =  6(success)",
+        alias="completeTime",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "id",

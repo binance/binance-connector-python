@@ -28,16 +28,18 @@ class AccountInfoResponse(BaseModel):
 
     vip_level: Optional[StrictInt] = Field(default=None, alias="vipLevel")
     is_margin_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isMarginEnabled"
+        default=None, description="true or false for margin.", alias="isMarginEnabled"
     )
     is_future_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isFutureEnabled"
+        default=None, description="true or false for futures.", alias="isFutureEnabled"
     )
     is_options_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isOptionsEnabled"
+        default=None, description="true or false for options.", alias="isOptionsEnabled"
     )
     is_portfolio_margin_retail_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isPortfolioMarginRetailEnabled"
+        default=None,
+        description="true or false for portfolio margin retail.",
+        alias="isPortfolioMarginRetailEnabled",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

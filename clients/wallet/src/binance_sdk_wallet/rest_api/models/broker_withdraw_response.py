@@ -26,9 +26,15 @@ class BrokerWithdrawResponse(BaseModel):
     BrokerWithdrawResponse
     """  # noqa: E501
 
-    tr_id: Optional[StrictInt] = Field(default=None, alias="trId")
-    accepted: Optional[StrictBool] = None
-    info: Optional[StrictStr] = None
+    tr_id: Optional[StrictInt] = Field(
+        default=None, description="The travel rule record Id", alias="trId"
+    )
+    accepted: Optional[StrictBool] = Field(
+        default=None, description="Whether the withdraw request is accepted"
+    )
+    info: Optional[StrictStr] = Field(
+        default=None, description="The detailed infomation of the withdrawal result."
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["trId", "accepted", "info"]
 

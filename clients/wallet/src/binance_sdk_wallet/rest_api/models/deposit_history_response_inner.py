@@ -35,13 +35,19 @@ class DepositHistoryResponseInner(BaseModel):
     address_tag: Optional[StrictStr] = Field(default=None, alias="addressTag")
     tx_id: Optional[StrictStr] = Field(default=None, alias="txId")
     insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")
-    complete_time: Optional[StrictInt] = Field(default=None, alias="completeTime")
+    complete_time: Optional[StrictInt] = Field(
+        default=None,
+        description="represents deposit completion datetime, available for deposits after 6-Mar-2025.",
+        alias="completeTime",
+    )
     transfer_type: Optional[StrictInt] = Field(default=None, alias="transferType")
     confirm_times: Optional[StrictStr] = Field(default=None, alias="confirmTimes")
     unlock_confirm: Optional[StrictInt] = Field(default=None, alias="unlockConfirm")
     wallet_type: Optional[StrictInt] = Field(default=None, alias="walletType")
     travel_rule_status: Optional[StrictInt] = Field(
-        default=None, alias="travelRuleStatus"
+        default=None,
+        description="0: travel rule not required OR info already provided and funds ready to use, 1: travel rule required to provide deposit info",
+        alias="travelRuleStatus",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
