@@ -13,10 +13,10 @@ logging.basicConfig(level=logging.INFO)
 
 # Create configuration for the WebSocket Streams
 configuration_ws_streams = ConfigurationWebSocketStreams(
-    stream_url=os.getenv("STREAM_URL", CMS_WS_STREAMS_PROD_URL)
+    api_key=os.getenv("API_KEY", ""),
+    api_secret=os.getenv("API_SECRET", ""),
+    stream_url=os.getenv("STREAM_URL", CMS_WS_STREAMS_PROD_URL),
 )
-configuration_ws_streams.api_key = os.getenv("API_KEY", "")
-configuration_ws_streams.api_secret = os.getenv("API_SECRET", "")
 
 # Initialize Cms client
 client = Cms(config_ws_streams=configuration_ws_streams)
