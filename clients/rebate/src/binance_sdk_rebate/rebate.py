@@ -1,8 +1,12 @@
 import platform
 from importlib.metadata import version
 
-from binance_common.configuration import ConfigurationRestAPI
-from binance_common.constants import REBATE_REST_API_PROD_URL
+from binance_common.configuration import (
+    ConfigurationRestAPI,
+)
+from binance_common.constants import (
+    REBATE_REST_API_PROD_URL,
+)
 from . import metadata
 from .rest_api import RebateRestAPI
 
@@ -13,7 +17,10 @@ LIB_VERSION = version(LIB_NAME)
 class Rebate:
     """Rebate API that exposes REST APIs in a single interface."""
 
-    def __init__(self, config_rest_api: ConfigurationRestAPI = None) -> None:
+    def __init__(
+        self,
+        config_rest_api: ConfigurationRestAPI = None,
+    ) -> None:
         self._rest_api = None
         self._rest_api_config = (
             ConfigurationRestAPI() if config_rest_api is None else config_rest_api
