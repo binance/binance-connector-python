@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.7.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated description of `set_auto_cancel_all_open_orders()` (`POST /eapi/v1/countdownCancelAll`): new orders are no longer rejected with error code `-2010` after the countdown
+
 ## 8.6.0 - 2026-10-15
 
 ### Changed (2)
