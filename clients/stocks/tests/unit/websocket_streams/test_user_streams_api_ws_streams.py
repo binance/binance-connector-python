@@ -14,7 +14,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
-from binance_common.utils import ws_streams_placeholder
+from binance_common.utils import ws_streams_placeholder_preserve_case
 from binance_common.websocket import WebSocketStreamBase, RequestStreamHandle
 from binance_sdk_stocks.websocket_streams.streams import UserStreamsApi
 
@@ -65,7 +65,7 @@ class TestWebSocketStreams:
             "T": 1710000000000,
             "U": 1710000060000,
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/<listenKey>@orderReport".replace("/", "", 1),
             params,
         )

@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 from binance_common.errors import RequiredError
-from binance_common.utils import ws_streams_placeholder
+from binance_common.utils import ws_streams_placeholder_preserve_case
 from binance_common.websocket import (
     WebSocketStreamBase,
     RequestStream,
@@ -55,7 +55,7 @@ class MarketStreamsApi:
 
         """
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/calendar".replace("/", "", 1),
             {
                 "id": id,
@@ -104,7 +104,7 @@ class MarketStreamsApi:
                 field="interval", error_message="Missing required parameter 'interval'"
             )
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/<symbol>@kline_<interval>".replace("/", "", 1),
             {
                 "symbol": symbol,
@@ -142,7 +142,7 @@ class MarketStreamsApi:
 
         """
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/price".replace("/", "", 1),
             {
                 "id": id,
@@ -185,7 +185,7 @@ class MarketStreamsApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/<symbol>@quote".replace("/", "", 1),
             {
                 "symbol": symbol,
@@ -229,7 +229,7 @@ class MarketStreamsApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/<symbol>@tradability".replace("/", "", 1),
             {
                 "symbol": symbol,
@@ -273,7 +273,7 @@ class MarketStreamsApi:
                 field="symbol", error_message="Missing required parameter 'symbol'"
             )
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/<symbol>@tradingStatus".replace("/", "", 1),
             {
                 "symbol": symbol,

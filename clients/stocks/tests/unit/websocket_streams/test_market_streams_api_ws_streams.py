@@ -14,7 +14,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 from binance_common.configuration import ConfigurationWebSocketStreams
 from binance_common.errors import RequiredError
-from binance_common.utils import ws_streams_placeholder
+from binance_common.utils import ws_streams_placeholder_preserve_case
 from binance_common.websocket import WebSocketStreamBase, RequestStreamHandle
 from binance_sdk_stocks.websocket_streams.streams import MarketStreamsApi
 
@@ -45,7 +45,7 @@ class TestWebSocketStreams:
             "to": "MARKET_OPEN",
             "ts": 1710334200000,
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/calendar".replace("/", "", 1),
             {},
         )
@@ -138,7 +138,7 @@ class TestWebSocketStreams:
                 "vw": "182.95",
             },
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/<symbol>@kline_<interval>".replace("/", "", 1),
             params,
         )
@@ -287,7 +287,7 @@ class TestWebSocketStreams:
                 }
             ],
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/price".replace("/", "", 1),
             {},
         )
@@ -386,7 +386,7 @@ class TestWebSocketStreams:
             "as": 200,
             "T": 1710320399500,
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/<symbol>@quote".replace("/", "", 1),
             params,
         )
@@ -493,7 +493,7 @@ class TestWebSocketStreams:
             "tradability": "BUY_SELL",
             "t": 1712345678000,
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/<symbol>@tradability".replace("/", "", 1),
             params,
         )
@@ -597,7 +597,7 @@ class TestWebSocketStreams:
             "z": "C",
             "tradability": "NONE",
         }
-        stream_endpoint = ws_streams_placeholder(
+        stream_endpoint = ws_streams_placeholder_preserve_case(
             "/<symbol>@tradingStatus".replace("/", "", 1),
             params,
         )

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Fixed WebSocket Streams names being converted to lowercase: the case of stream names is now kept
+- Updated Dependencies
+
 ## 1.5.0 - 2026-10-15
 
 ### Changed (2)

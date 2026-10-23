@@ -9,7 +9,7 @@ Do not edit the class manually.
 """
 
 from binance_common.errors import RequiredError
-from binance_common.utils import ws_streams_placeholder
+from binance_common.utils import ws_streams_placeholder_preserve_case
 from binance_common.websocket import (
     WebSocketStreamBase,
     RequestStream,
@@ -58,7 +58,7 @@ class UserStreamsApi:
                 error_message="Missing required parameter 'listen_key'",
             )
 
-        stream = ws_streams_placeholder(
+        stream = ws_streams_placeholder_preserve_case(
             "/<listenKey>@orderReport".replace("/", "", 1),
             {
                 "listen_key": listen_key,
