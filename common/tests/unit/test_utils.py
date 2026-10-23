@@ -1,5 +1,5 @@
 import copy
-from decimal import Decimal
+from decimal import Context, Decimal, localcontext
 import pickle
 import re
 import ssl
@@ -485,6 +485,7 @@ class TestMakeSerializable(unittest.TestCase):
     def test_float(self):
         self.assertEqual(make_serializable(3.14), "3.14")
         self.assertEqual(make_serializable(-2.5), "-2.5")
+        self.assertEqual(make_serializable(0.1 + 0.2), "0.30000000000000004")
 
     def test_enum(self):
         class Color(Enum):
@@ -505,6 +506,27 @@ class TestMakeSerializable(unittest.TestCase):
 
     def test_decimal(self):
         self.assertEqual(make_serializable(Decimal("0.001")), "0.001")
+        self.assertEqual(make_serializable(Decimal("3.14")), "3.14")
+        self.assertEqual(make_serializable(Decimal("0.00000001")), "0.00000001")
+        self.assertEqual(make_serializable(Decimal("1E-8")), "0.00000001")
+        self.assertEqual(make_serializable(Decimal("1E+8")), "100000000")
+        self.assertEqual(make_serializable(Decimal("1.2300")), "1.2300")
+        self.assertEqual(make_serializable(Decimal("0")), "0")
+        self.assertEqual(make_serializable(Decimal("0.0")), "0.0")
+        self.assertEqual(make_serializable(Decimal("-0")), "-0")
+        self.assertEqual(make_serializable(Decimal("-0.0")), "-0.0")
+        self.assertEqual(make_serializable(Decimal("-1.50")), "-1.50")
+        self.assertEqual(make_serializable(Decimal("Infinity")), "Infinity")
+        self.assertEqual(make_serializable(Decimal("-Infinity")), "-Infinity")
+        self.assertEqual(make_serializable(Decimal("NaN")), "NaN")
+        self.assertEqual(make_serializable(Decimal("sNaN")), "sNaN")
+
+        long_value = Decimal("1.23456789012345678901234567890123456789")
+        with localcontext(Context(prec=6)):
+            self.assertEqual(
+                make_serializable(long_value),
+                "1.23456789012345678901234567890123456789",
+            )
 
     def test_string(self):
         self.assertEqual(make_serializable("hello"), "hello")
@@ -597,6 +619,36 @@ class TestEncodedString(unittest.TestCase):
         )
 
         self.assertEqual(encoded_string(query), expected_value)
+
+    def test_encode_decimal_financial_params(self):
+        query = {
+            "price": Decimal("0.00000001"),
+            "quantity": Decimal("1.2300"),
+            "order_info": {
+                "min_price": Decimal("1E-8"),
+                "max_qty": Decimal("1E+8"),
+                "ids": [1, Decimal("-1.50")],
+            },
+        }
+        expected_value = urlencode(
+            {
+                "price": "0.00000001",
+                "quantity": "1.2300",
+                "orderInfo": json.dumps(
+                    {
+                        "minPrice": "0.00000001",
+                        "maxQty": "100000000",
+                        "ids": [1, "-1.50"],
+                    },
+                    separators=(",", ":"),
+                ),
+            },
+            doseq=True,
+        )
+
+        result = encoded_string(query)
+        self.assertEqual(result, expected_value)
+        self.assertNotRegex(result, r"\dE[+-]")
 
     def test_encode_with_snake_case(self):
         query = {"user_email": "test@example.com", "admin_email": "admin@domain.com"}
@@ -1496,6 +1548,29 @@ class TestSendRequest(unittest.TestCase):
         for c in self.session.request.call_args_list:
             self.assertEqual(c.kwargs["params"]["timestamp"], 1111111111)
 
+    def test_request_sends_decimal_params_in_fixed_point(self):
+        """Decimal prices and quantities leave the client in fixed-point notation."""
+        mock_response = Mock(status_code=200, headers={}, text='{"success": true}')
+        self.session.request.return_value = mock_response
+
+        send_request(
+            self.session,
+            self.configuration,
+            self.method,
+            self.path,
+            {"price": Decimal("1E-8"), "quantity": Decimal("1.2300")},
+        )
+
+        _, kwargs = self.session.request.call_args
+        self.assertEqual(
+            kwargs["params"],
+            urlencode(
+                {"price": "0.00000001", "quantity": "1.2300"},
+                doseq=True,
+            ),
+        )
+        self.assertNotRegex(kwargs["params"], r"\dE[+-]")
+
 
 class TestParseRateLimitHeaders(unittest.TestCase):
     def test_parse_used_weight_header(self):
@@ -2017,15 +2092,22 @@ class TestWsApiPayload(unittest.TestCase):
         payload = {
             "params": {
                 "quantity": 1,
-                "price": Decimal("0.001"),
+                "price": Decimal("0.00000001"),
                 "order_ids": [1, 2],
+                "id": "123",
             }
         }
         result = ws_api_payload(self.dummy_config, payload, websocket_options)
 
-        assert result["params"]["quantity"] == "1"
-        assert result["params"]["price"] == "0.001"
-        assert result["params"]["orderIds"] == "[1,2]"
+        assert result == {
+            "params": {
+                "quantity": "1",
+                "price": "0.00000001",
+                "orderIds": "[1,2]",
+            },
+            "id": "123",
+        }
+        assert "E" not in result["params"]["price"]
 
     def test_payload_generates_new_id_if_missing(self):
         websocket_options = WebsocketApiOptions(

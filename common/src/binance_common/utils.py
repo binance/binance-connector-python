@@ -182,7 +182,10 @@ def make_serializable(val) -> Union[dict, list, str, int, float, bool]:
         return [v.__dict__ if hasattr(v, "__dict__") else v for v in val]
     if isinstance(val, bool):
         return str(val).lower()
-    if isinstance(val, (int, float, Decimal)):
+    # Preserve the Decimal's digits and scale in fixed-point notation.
+    if isinstance(val, Decimal):
+        return format(val, "f")
+    if isinstance(val, (int, float)):
         return str(val)
     if isinstance(val, Enum):
         return val.value
