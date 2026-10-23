@@ -1,5 +1,18 @@
 # Changelog
 
+## 16.1.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated description of parameter `callbackRate`: max changed from `10` to `20`
+  - affected methods:
+    - `new_um_algo_order()` (`POST /papi/v1/um/algo/order`)
+
 ## 16.0.0 - 2026-10-22
 
 ### Changed (3)

@@ -2786,7 +2786,7 @@ class DerivativesTradingPortfolioMarginRestAPI:
                     price_protect (Optional[NewUmAlgoOrderPriceProtectEnum] = None): Price protection. Default `false`
                     reduce_only (Optional[NewUmAlgoOrderReduceOnlyEnum] = None): Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
                     activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET`, default as latest price
-                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET`, min 0.1, max 10 (1 = 1%)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET`, min 0.1, max 20 (1 = 1%)
                     client_algo_id (Optional[str] = None): Unique id among open orders. Auto-generated if not sent
                     new_order_resp_type (Optional[NewUmAlgoOrderNewOrderRespTypeEnum] = None):
                     self_trade_prevention_mode (Optional[NewUmAlgoOrderSelfTradePreventionModeEnum] = None):
