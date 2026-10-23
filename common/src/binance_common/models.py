@@ -141,3 +141,4 @@ class WebsocketApiUserDataEndpoints(BaseModel):
 
     user_data_stream_subscribe: str
     user_data_stream_logout: str
+    user_data_stream_unsubscribe: str = "userDataStream.unsubscribe"

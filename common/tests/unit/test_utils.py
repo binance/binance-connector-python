@@ -1,5 +1,5 @@
 import copy
-from decimal import Decimal
+from decimal import Context, Decimal, localcontext
 import pickle
 import re
 import ssl
@@ -20,6 +20,7 @@ from pydantic import (
     ValidationError,
 )
 import requests
+from urllib3.exceptions import NewConnectionError
 
 from base64 import b64decode, b64encode
 from collections import OrderedDict
@@ -81,6 +82,7 @@ from binance_common.utils import (
     websocket_api_signature,
     ws_api_payload,
     ws_streams_placeholder,
+    ws_streams_placeholder_preserve_case,
 )
 from binance_common.headers import sanitize_header_value, parse_custom_headers
 from binance_common.signature import Signers
@@ -485,6 +487,7 @@ class TestMakeSerializable(unittest.TestCase):
     def test_float(self):
         self.assertEqual(make_serializable(3.14), "3.14")
         self.assertEqual(make_serializable(-2.5), "-2.5")
+        self.assertEqual(make_serializable(0.1 + 0.2), "0.30000000000000004")
 
     def test_enum(self):
         class Color(Enum):
@@ -505,6 +508,27 @@ class TestMakeSerializable(unittest.TestCase):
 
     def test_decimal(self):
         self.assertEqual(make_serializable(Decimal("0.001")), "0.001")
+        self.assertEqual(make_serializable(Decimal("3.14")), "3.14")
+        self.assertEqual(make_serializable(Decimal("0.00000001")), "0.00000001")
+        self.assertEqual(make_serializable(Decimal("1E-8")), "0.00000001")
+        self.assertEqual(make_serializable(Decimal("1E+8")), "100000000")
+        self.assertEqual(make_serializable(Decimal("1.2300")), "1.2300")
+        self.assertEqual(make_serializable(Decimal("0")), "0")
+        self.assertEqual(make_serializable(Decimal("0.0")), "0.0")
+        self.assertEqual(make_serializable(Decimal("-0")), "-0")
+        self.assertEqual(make_serializable(Decimal("-0.0")), "-0.0")
+        self.assertEqual(make_serializable(Decimal("-1.50")), "-1.50")
+        self.assertEqual(make_serializable(Decimal("Infinity")), "Infinity")
+        self.assertEqual(make_serializable(Decimal("-Infinity")), "-Infinity")
+        self.assertEqual(make_serializable(Decimal("NaN")), "NaN")
+        self.assertEqual(make_serializable(Decimal("sNaN")), "sNaN")
+
+        long_value = Decimal("1.23456789012345678901234567890123456789")
+        with localcontext(Context(prec=6)):
+            self.assertEqual(
+                make_serializable(long_value),
+                "1.23456789012345678901234567890123456789",
+            )
 
     def test_string(self):
         self.assertEqual(make_serializable("hello"), "hello")
@@ -597,6 +621,36 @@ class TestEncodedString(unittest.TestCase):
         )
 
         self.assertEqual(encoded_string(query), expected_value)
+
+    def test_encode_decimal_financial_params(self):
+        query = {
+            "price": Decimal("0.00000001"),
+            "quantity": Decimal("1.2300"),
+            "order_info": {
+                "min_price": Decimal("1E-8"),
+                "max_qty": Decimal("1E+8"),
+                "ids": [1, Decimal("-1.50")],
+            },
+        }
+        expected_value = urlencode(
+            {
+                "price": "0.00000001",
+                "quantity": "1.2300",
+                "orderInfo": json.dumps(
+                    {
+                        "minPrice": "0.00000001",
+                        "maxQty": "100000000",
+                        "ids": [1, "-1.50"],
+                    },
+                    separators=(",", ":"),
+                ),
+            },
+            doseq=True,
+        )
+
+        result = encoded_string(query)
+        self.assertEqual(result, expected_value)
+        self.assertNotRegex(result, r"\dE[+-]")
 
     def test_encode_with_snake_case(self):
         query = {"user_email": "test@example.com", "admin_email": "admin@domain.com"}
@@ -944,6 +998,23 @@ class TestShouldRetryRequest(unittest.TestCase):
     def test_retry_on_no_response_attribute(self):
         error = Mock(response=None)
         self.assertTrue(should_retry_request(error, method="GET", retries_left=3))
+
+    def test_no_delete_retry_when_the_request_may_have_been_applied(self):
+        error = requests.ReadTimeout("read timed out")
+        self.assertTrue(should_retry_request(error, method="GET", retries_left=3))
+        self.assertFalse(should_retry_request(error, method="DELETE", retries_left=3))
+
+        error = requests.ConnectionError("connection aborted")
+        self.assertFalse(should_retry_request(error, method="DELETE", retries_left=3))
+
+    def test_delete_retry_when_the_request_never_reached_the_server(self):
+        error = requests.ConnectTimeout("connect timed out")
+        self.assertTrue(should_retry_request(error, method="DELETE", retries_left=3))
+
+        refused = requests.ConnectionError(
+            Mock(reason=NewConnectionError(None, "connection refused"))
+        )
+        self.assertTrue(should_retry_request(refused, method="DELETE", retries_left=3))
 
     def test_no_retry_when_method_is_none(self):
         error = Mock(response=Mock(status_code=500))
@@ -1496,6 +1567,29 @@ class TestSendRequest(unittest.TestCase):
         for c in self.session.request.call_args_list:
             self.assertEqual(c.kwargs["params"]["timestamp"], 1111111111)
 
+    def test_request_sends_decimal_params_in_fixed_point(self):
+        """Decimal prices and quantities leave the client in fixed-point notation."""
+        mock_response = Mock(status_code=200, headers={}, text='{"success": true}')
+        self.session.request.return_value = mock_response
+
+        send_request(
+            self.session,
+            self.configuration,
+            self.method,
+            self.path,
+            {"price": Decimal("1E-8"), "quantity": Decimal("1.2300")},
+        )
+
+        _, kwargs = self.session.request.call_args
+        self.assertEqual(
+            kwargs["params"],
+            urlencode(
+                {"price": "0.00000001", "quantity": "1.2300"},
+                doseq=True,
+            ),
+        )
+        self.assertNotRegex(kwargs["params"], r"\dE[+-]")
+
 
 class TestParseRateLimitHeaders(unittest.TestCase):
     def test_parse_used_weight_header(self):
@@ -1752,6 +1846,74 @@ class TestWsStreamsPlaceholder(unittest.TestCase):
         result = ws_streams_placeholder(stream, params)
         self.assertEqual(result, "btcusdt@depth")
 
+    def test_enum_values_are_unwrapped(self):
+        class IntervalEnum(Enum):
+            INTERVAL_1m = "1m"
+
+        class ContractTypeEnum(Enum):
+            NEXT_QUARTER = "next_quarter"
+
+        class WindowSizeEnum(Enum):
+            WINDOW_SIZE_1h = "1h"
+
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<symbol>@kline_<interval>",
+                {"symbol": "BTCUSDT", "interval": IntervalEnum.INTERVAL_1m},
+            ),
+            "btcusdt@kline_1m",
+        )
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<pair>_<contractType>@continuousKline_<interval>",
+                {
+                    "pair": "btcusdt",
+                    "contract_type": ContractTypeEnum.NEXT_QUARTER,
+                    "interval": IntervalEnum.INTERVAL_1m,
+                },
+            ),
+            "btcusdt_next_quarter@continuousKline_1m",
+        )
+        self.assertEqual(
+            ws_streams_placeholder(
+                "<symbol>@ticker_<windowSize>",
+                {"symbol": "BTCUSDT", "window_size": WindowSizeEnum.WINDOW_SIZE_1h},
+            ),
+            "btcusdt@ticker_1h",
+        )
+
+
+class TestWsStreamsPlaceholderPreserveCase(unittest.TestCase):
+    def test_replace_single_placeholder(self):
+        stream = "<symbol>@depth"
+        params = {"symbol": "AAPL"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
+
+    def test_replace_multiple_placeholders(self):
+        stream = "<symbol>@depth<update_speed>"
+        params = {"symbol": "AAPL", "update_speed": "100ms"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth@100ms")
+
+    def test_ignore_none_values(self):
+        stream = "<symbol>@depth<update_speed>"
+        params = {"symbol": "AAPL", "update_speed": None}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
+
+    def test_window_size_case_preserved(self):
+        stream = "<symbol>@ticker_<windowSize>"
+        params = {"symbol": "AAPL", "window_size": "1H"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@ticker_1H")
+
+    def test_placeholder_not_found_in_params(self):
+        stream = "<symbol>@depth<missing>"
+        params = {"symbol": "AAPL"}
+        result = ws_streams_placeholder_preserve_case(stream, params)
+        self.assertEqual(result, "AAPL@depth")
+
 
 class TestParseWsRateLimitHeaders(unittest.TestCase):
     def test_parse_single_ratelimit_header(self):
@@ -1981,15 +2143,22 @@ class TestWsApiPayload(unittest.TestCase):
         payload = {
             "params": {
                 "quantity": 1,
-                "price": Decimal("0.001"),
+                "price": Decimal("0.00000001"),
                 "order_ids": [1, 2],
+                "id": "123",
             }
         }
         result = ws_api_payload(self.dummy_config, payload, websocket_options)
 
-        assert result["params"]["quantity"] == "1"
-        assert result["params"]["price"] == "0.001"
-        assert result["params"]["orderIds"] == "[1,2]"
+        assert result == {
+            "params": {
+                "quantity": "1",
+                "price": "0.00000001",
+                "orderIds": "[1,2]",
+            },
+            "id": "123",
+        }
+        assert "E" not in result["params"]["price"]
 
     def test_payload_generates_new_id_if_missing(self):
         websocket_options = WebsocketApiOptions(

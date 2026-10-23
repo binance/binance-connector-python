@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.7.0 - 2026-10-23
+
+### Added (1)
+
+- Added `ws_streams_placeholder_preserve_case`, which keeps the case of stream names.
+
+### Changed (5)
+
+- Fixed WebSocket Streams not subscribing again to a stream after its connection dropped. (#576)
+- Fixed user data subscriptions being lost after a WebSocket API reconnect: they are now sent again on the new connection, signed again for `userDataStream.subscribe.signature`, and follow the new `subscriptionId`. Subscriptions closed with `userDataStream.unsubscribe` or `session.logout` are no longer subscribed again. Also fixed user data events dropped in pool mode and the receive loop stopping on a reply that arrived after its timeout. (#578)
+- `DELETE` requests that time out while waiting for the response are no longer retried, as the first one may already have been applied. (#578)
+- Fixed enum values in WebSocket Streams names (#577), and `Decimal` parameters are now sent in fixed-point notation, e.g. `0.00000001` instead of `1E-8`. (#579)
+- Updated `pyproject.toml` dependencies
+
 ## 4.6.0 - 2026-10-15
 
 ### Added (2)
