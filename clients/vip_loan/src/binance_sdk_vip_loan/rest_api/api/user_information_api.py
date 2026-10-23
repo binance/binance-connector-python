@@ -245,6 +245,7 @@ class UserInformationApi:
         Notes:
         - If `startTime` and `endTime` are not sent, recent 90-day data is returned.
         - The maximum interval between `startTime` and `endTime` is 180 days.
+        - Rate limit: 1 request per second per account, shared with repayment history queries on the Binance website.
 
                 Args:
                     order_id (Optional[int] = None):
@@ -305,7 +306,7 @@ class UserInformationApi:
         Security Type: USER_DATA
 
         Notes:
-        - Rate limit: 5 requests per second per account.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     current (Optional[int] = None): Current page number, starting from 1.

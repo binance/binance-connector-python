@@ -53,7 +53,7 @@ class MarketDataApi:
         Security Type: USER_DATA
 
         Notes:
-        - Rate limit: 5 requests per second per account.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_coin (Union[str, None]): Max 10 assets, Multiple split by ","
@@ -213,6 +213,7 @@ class MarketDataApi:
         - If `startTime` and `endTime` are not sent, recent 90-day data is returned.
         - The maximum interval between `startTime` and `endTime` is 180 days.
         - Time is based on UTC+0.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     coin (Union[str, None]):

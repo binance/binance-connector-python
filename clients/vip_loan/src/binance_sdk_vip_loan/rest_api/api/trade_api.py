@@ -64,7 +64,7 @@ class TradeApi:
         - `loanTerm` is mandatory if the user chooses a fixed rate (`isFlexibleRate = FALSE`).
         - Every coin in `collateralCoin` is pledged from every account in `collateralAccountId`.
         - To pledge a Simple Earn Flexible position, add `<ASSET>-Earn` (e.g. `USDT-Earn`) to `collateralCoin` together with its Spot asset (e.g. `USDT,USDT-Earn`). Sending `<ASSET>-Earn` without its Spot asset returns `-10213`.
-        - Rate limit: 1 request per 2 seconds per account.
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     loan_account_id (Union[int, None]):
@@ -321,6 +321,9 @@ class TradeApi:
         Weight(UID): 6000
 
         Security Type: TRADE
+
+        Notes:
+        - Rate limit: 1 request per second per account.
 
                 Args:
                     order_id (Union[int, None]):

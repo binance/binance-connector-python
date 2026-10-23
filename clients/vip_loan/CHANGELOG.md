@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.7.0 - 2026-10-23
+
+### Changed (6)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated rate limit of `get_borrow_interest_rate()` (`GET /sapi/v1/loan/vip/request/interestRate`) from 5 requests per second to 1 request per second per account
+- Updated rate limit of `query_application_status()` (`GET /sapi/v1/loan/vip/request/data`) from 5 requests per second to 1 request per second per account
+- Updated rate limit of `vip_loan_borrow()` (`POST /sapi/v1/loan/vip/borrow`) from 1 request per 2 seconds to 1 request per second per account
+- Added rate limit notes (1 request per second per account)
+  - affected methods:
+    - `get_vip_loan_interest_rate_history()` (`GET /sapi/v1/loan/vip/interestRateHistory`)
+    - `get_vip_loan_repayment_history()` (`GET /sapi/v1/loan/vip/repay/history`)
+    - `vip_loan_repay()` (`POST /sapi/v1/loan/vip/repay`)
+
 ## 7.6.0 - 2026-10-15
 
 ### Changed (2)
