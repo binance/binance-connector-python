@@ -1,5 +1,16 @@
 # Changelog
 
+## 14.1.0 - 2026-10-23
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.7.0`
+- Updated Dependencies
+
+#### REST API
+
+- Updated notes of `get_download_id_for_futures_transaction_history()` (`GET /dapi/v1/income/asyn`): request limit raised from 8 to 100 times per month, shared between USDⓈ-M and COIN-M contracts
+
 ## 14.0.0 - 2026-10-15
 
 ### Changed (1)

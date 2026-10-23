@@ -323,7 +323,7 @@ class AccountApi:
         Security Type: USER_DATA
 
         Notes:
-        - Request Limitation is 8 times per month, shared by front end download page and rest api
+        - The request limit is 100 times per month, shared across the front end download page and rest api, as well as between USDⓈ-M and COIN-M contracts.
         - This endpoint uses the IP rate limit bucket and costs 1000 weight per call. The maximum is 2 calls per minute; the 3rd call within the same minute will trigger a ban.
         - The time between `startTime` and `endTime` can not be longer than 1 year
 
