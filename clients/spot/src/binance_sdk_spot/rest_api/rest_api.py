@@ -1324,7 +1324,7 @@ class SpotRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None): Supported values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[ReferencePriceCalculationSymbolStatusEnum] = None): Supported values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     ApiResponse[ReferencePriceCalculationResponse]

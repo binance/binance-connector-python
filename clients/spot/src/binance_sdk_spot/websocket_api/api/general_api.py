@@ -82,7 +82,7 @@ class GeneralApi:
                     symbols (Optional[List[str]] = None): Describe multiple symbols
                     permissions (Optional[List[str]] = None): Filter symbols by permissions
                     show_permission_sets (Optional[bool] = None): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`.
-                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. Valid values: `TRADING`, `HALT`, `BREAK`. Cannot be used in combination with `symbol` or `symbols`.
+                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`. Cannot be used in combination with `symbol` or `symbols`.
 
             Returns:
                 WebsocketApiResponse[ExchangeInfoResponse]
@@ -146,7 +146,7 @@ class GeneralApi:
                     id (Optional[str] = None): Client-generated request identifier.
                     symbol (Optional[str] = None): Query for specified symbol.
                     symbols (Optional[List[str]] = None): Query for multiple symbols.
-                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None): Query for all symbols with the specified status. Supported values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None): Query for all symbols with the specified status. Supported values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
             Returns:
                 WebsocketApiResponse[ExecutionRulesResponse]

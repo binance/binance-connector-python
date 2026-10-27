@@ -1251,7 +1251,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbols (Optional[List[str]] = None): Describe multiple symbols
                     permissions (Optional[List[str]] = None): Filter symbols by permissions
                     show_permission_sets (Optional[bool] = None): Controls whether the content of the `permissionSets` field is populated or not. Defaults to `true`.
-                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. Valid values: `TRADING`, `HALT`, `BREAK`. Cannot be used in combination with `symbol` or `symbols`.
+                    symbol_status (Optional[ExchangeInfoSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`. Cannot be used in combination with `symbol` or `symbols`.
 
                 Returns:
                     WebsocketApiResponse[ExchangeInfoResponse]
@@ -1295,7 +1295,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Client-generated request identifier.
                     symbol (Optional[str] = None): Query for specified symbol.
                     symbols (Optional[List[str]] = None): Query for multiple symbols.
-                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None): Query for all symbols with the specified status. Supported values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[ExecutionRulesSymbolStatusEnum] = None): Query for all symbols with the specified status. Supported values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[ExecutionRulesResponse]
@@ -1708,7 +1708,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbols (Optional[List[str]] = None): Query ticker for multiple symbols
                     type (Optional[TickerTypeEnum] = None): Ticker type. Supported values: FULL (default) or MINI
                     window_size (Optional[TickerWindowSizeEnum] = None): Defaults to 1d if no parameter provided.
-                    symbol_status (Optional[TickerSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[TickerSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[TickerResponse]
@@ -1772,7 +1772,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbol (Optional[str] = None):
                     symbols (Optional[List[str]] = None):
                     type (Optional[Ticker24hrTypeEnum] = None): Ticker type. Supported values: FULL (default) or MINI
-                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[Ticker24hrSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[Ticker24hrResponse]
@@ -1826,7 +1826,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Client-generated request identifier.
                     symbol (Optional[str] = None): Query ticker for a single symbol
                     symbols (Optional[List[str]] = None): Query ticker for multiple symbols
-                    symbol_status (Optional[TickerBookSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[TickerBookSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[TickerBookResponse]
@@ -1880,7 +1880,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     id (Optional[str] = None): Client-generated request identifier.
                     symbol (Optional[str] = None): Query price for a single symbol
                     symbols (Optional[List[str]] = None): Query price for multiple symbols
-                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[TickerPriceSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[TickerPriceResponse]
@@ -1926,7 +1926,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     symbols (Optional[List[str]] = None):
                     time_zone (Optional[str] = None): Default: 0 (UTC)
                     type (Optional[TickerTradingDayTypeEnum] = None): Ticker type. Supported values: FULL (default) or MINI
-                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`
+                    symbol_status (Optional[TickerTradingDaySymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`. For a single symbol, a status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`. For multiple or all symbols, non-matching ones are simply excluded from the response. Valid values: `TRADING`, `HALT`, `BREAK`, `CANCEL_ONLY`
 
                 Returns:
                     WebsocketApiResponse[TickerTradingDayResponse]

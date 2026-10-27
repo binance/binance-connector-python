@@ -15,18 +15,21 @@ class ExchangeInfoSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class ExecutionRulesSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class DepthSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class KlinesIntervalEnum(Enum):
@@ -52,6 +55,7 @@ class ReferencePriceCalculationSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class TickerTypeEnum(Enum):
@@ -155,6 +159,7 @@ class TickerSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class Ticker24hrTypeEnum(Enum):
@@ -166,18 +171,21 @@ class Ticker24hrSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class TickerBookSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class TickerPriceSymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class TickerTradingDayTypeEnum(Enum):
@@ -189,6 +197,7 @@ class TickerTradingDaySymbolStatusEnum(Enum):
     TRADING = "TRADING"
     HALT = "HALT"
     BREAK = "BREAK"
+    CANCEL_ONLY = "CANCEL_ONLY"
 
 
 class UiKlinesIntervalEnum(Enum):
