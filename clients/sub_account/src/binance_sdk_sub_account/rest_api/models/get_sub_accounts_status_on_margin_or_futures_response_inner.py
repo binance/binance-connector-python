@@ -26,19 +26,23 @@ class GetSubAccountsStatusOnMarginOrFuturesResponseInner(BaseModel):
     GetSubAccountsStatusOnMarginOrFuturesResponseInner
     """  # noqa: E501
 
-    email: Optional[StrictStr] = None
+    email: Optional[StrictStr] = Field(default=None, description="user email")
     is_sub_user_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isSubUserEnabled"
+        default=None, description="true or false", alias="isSubUserEnabled"
     )
-    is_user_active: Optional[StrictBool] = Field(default=None, alias="isUserActive")
-    insert_time: Optional[StrictInt] = Field(default=None, alias="insertTime")
+    is_user_active: Optional[StrictBool] = Field(
+        default=None, description="true or false", alias="isUserActive"
+    )
+    insert_time: Optional[StrictInt] = Field(
+        default=None, description="sub account create time", alias="insertTime"
+    )
     is_margin_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isMarginEnabled"
+        default=None, description="true or false for margin", alias="isMarginEnabled"
     )
     is_future_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isFutureEnabled"
+        default=None, description="true or false for futures.", alias="isFutureEnabled"
     )
-    mobile: Optional[StrictInt] = None
+    mobile: Optional[StrictInt] = Field(default=None, description="user mobile number")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "email",

@@ -28,7 +28,7 @@ class EnableFuturesForSubAccountResponse(BaseModel):
 
     email: Optional[StrictStr] = None
     is_futures_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isFuturesEnabled"
+        default=None, description="true or false", alias="isFuturesEnabled"
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["email", "isFuturesEnabled"]

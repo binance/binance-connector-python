@@ -48,7 +48,9 @@ class GetSummaryOfSubAccountsFuturesAccountResponseSubAccountListInner(BaseModel
     total_wallet_balance: Optional[StrictStr] = Field(
         default=None, alias="totalWalletBalance"
     )
-    asset: Optional[StrictStr] = None
+    asset: Optional[StrictStr] = Field(
+        default=None, description="The sum of BUSD and USDT"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "email",

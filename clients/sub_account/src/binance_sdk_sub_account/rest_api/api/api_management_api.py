@@ -18,6 +18,7 @@ from binance_common.utils import send_request
 
 from ..models import AddIpRestrictionForSubAccountApiKeyResponse
 from ..models import CreateSubAccountApiKeyResponse
+from ..models import CreateSubAccountApiKeyV2Response
 from ..models import DeleteIpListForASubAccountApiKeyResponse
 
 from ..models import GetIpRestrictionForASubAccountApiKeyResponse
@@ -121,6 +122,8 @@ class ApiManagementApi:
         can_futures_trade: Optional[bool] = None,
         can_universal_transfer: Optional[bool] = None,
         can_vanilla_options: Optional[bool] = None,
+        can_fix_api_trading: Optional[bool] = None,
+        can_fix_api_reading: Optional[bool] = None,
         ip_address: Optional[str] = None,
         third_party_name: Optional[str] = None,
         public_key: Optional[str] = None,
@@ -152,6 +155,8 @@ class ApiManagementApi:
                     can_futures_trade (Optional[bool] = None): Futures trading permission, default false
                     can_universal_transfer (Optional[bool] = None): Universal transfer permission, default false
                     can_vanilla_options (Optional[bool] = None): Vanilla options permission, default false
+                    can_fix_api_trading (Optional[bool] = None): FIX API Trading permission. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
+                    can_fix_api_reading (Optional[bool] = None): FIX API Reading permission. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
                     ip_address (Optional[str] = None): Required when status=2. IP address list, max 500 chars
                     third_party_name (Optional[str] = None): Required when status=3. Third-party name
                     public_key (Optional[str] = None): Ed25519 public key (optional, for Ed25519 type API Key)
@@ -188,6 +193,8 @@ class ApiManagementApi:
             "can_futures_trade": can_futures_trade,
             "can_universal_transfer": can_universal_transfer,
             "can_vanilla_options": can_vanilla_options,
+            "can_fix_api_trading": can_fix_api_trading,
+            "can_fix_api_reading": can_fix_api_reading,
             "ip_address": ip_address,
             "third_party_name": third_party_name,
             "public_key": public_key,
@@ -203,6 +210,108 @@ class ApiManagementApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=CreateSubAccountApiKeyResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def create_sub_account_api_key_v2(
+        self,
+        email: Union[str, None],
+        api_name: Union[str, None],
+        status: Union[int, None],
+        can_trade: Optional[bool] = None,
+        can_margin_loan_repay: Optional[bool] = None,
+        can_futures_trade: Optional[bool] = None,
+        can_universal_transfer: Optional[bool] = None,
+        can_vanilla_options: Optional[bool] = None,
+        can_fix_api_trading: Optional[bool] = None,
+        can_fix_api_reading: Optional[bool] = None,
+        ip_address: Optional[str] = None,
+        third_party_name: Optional[str] = None,
+        public_key: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CreateSubAccountApiKeyV2Response]:
+        """
+                Create Sub-account API Key V2 (For Master Account) (USER_DATA)
+                POST /sapi/v2/sub-account/subAccountApi
+                https://developers.binance.com/en/docs/catalog/vip-and-institutional-sub-account/api/rest-api/api-management#create-sub-account-api-key-v2
+
+                Create a new API Key for a sub-account.
+
+        Weight(UID): 3000
+
+        Security Type: USER_DATA
+
+        Notes:
+        - `status=2` requires `ipAddress`
+        - `status=3` requires `thirdPartyName`
+        - Asset Sub Account is not supported
+        - The caller must pass the KYC IP restriction check
+
+                Args:
+                    email (Union[str, None]): Sub-account email
+                    api_name (Union[str, None]): API Key name
+                    status (Union[int, None]): IP restriction status. 1 = unrestricted, 2 = restricted to trusted IPs, 3 = third-party IP restriction
+                    can_trade (Optional[bool] = None): Spot & Margin trading permission, default false
+                    can_margin_loan_repay (Optional[bool] = None): Margin borrow/repay permission, default false
+                    can_futures_trade (Optional[bool] = None): Futures trading permission, default false
+                    can_universal_transfer (Optional[bool] = None): Universal transfer permission, default false
+                    can_vanilla_options (Optional[bool] = None): Vanilla options permission, default false
+                    can_fix_api_trading (Optional[bool] = None): FIX API Trading permission. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
+                    can_fix_api_reading (Optional[bool] = None): FIX API Reading permission. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
+                    ip_address (Optional[str] = None): Required when status=2. IP address list, max 500 chars
+                    third_party_name (Optional[str] = None): Required when status=3. Third-party name
+                    public_key (Optional[str] = None): RSA or Ed25519 public key (optional). Must be sent in the request body; it is rejected if passed in the URL query string
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CreateSubAccountApiKeyV2Response]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if email is None:
+            raise RequiredError(
+                field="email", error_message="Missing required parameter 'email'"
+            )
+        if api_name is None:
+            raise RequiredError(
+                field="api_name", error_message="Missing required parameter 'api_name'"
+            )
+        if status is None:
+            raise RequiredError(
+                field="status", error_message="Missing required parameter 'status'"
+            )
+
+        request_body = {}
+        payload = {
+            "email": email,
+            "api_name": api_name,
+            "status": status,
+            "can_trade": can_trade,
+            "can_margin_loan_repay": can_margin_loan_repay,
+            "can_futures_trade": can_futures_trade,
+            "can_universal_transfer": can_universal_transfer,
+            "can_vanilla_options": can_vanilla_options,
+            "can_fix_api_trading": can_fix_api_trading,
+            "can_fix_api_reading": can_fix_api_reading,
+            "ip_address": ip_address,
+            "third_party_name": third_party_name,
+            "public_key": public_key,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/sapi/v2/sub-account/subAccountApi",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=CreateSubAccountApiKeyV2Response,
             is_signed=True,
             signer=self._signer,
         )
@@ -411,6 +520,8 @@ class ApiManagementApi:
         can_futures_trade: Optional[bool] = None,
         can_universal_transfer: Optional[bool] = None,
         can_vanilla_options: Optional[bool] = None,
+        can_fix_api_trading: Optional[bool] = None,
+        can_fix_api_reading: Optional[bool] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[ModifySubAccountApiKeyPermissionResponse]:
         """
@@ -437,6 +548,8 @@ class ApiManagementApi:
                     can_futures_trade (Optional[bool] = None): Futures trading permission
                     can_universal_transfer (Optional[bool] = None): Universal transfer permission
                     can_vanilla_options (Optional[bool] = None): Vanilla options permission
+                    can_fix_api_trading (Optional[bool] = None): FIX API Trading permission. If omitted, the existing value is unchanged. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
+                    can_fix_api_reading (Optional[bool] = None): FIX API Reading permission. If omitted, the existing value is unchanged. Only supported for API Keys using an Ed25519 public key. Setting it to `true` for any other key type returns `-9000` `Unsupported operation`
                     recv_window (Optional[int] = None):
 
                 Returns:
@@ -466,6 +579,8 @@ class ApiManagementApi:
             "can_futures_trade": can_futures_trade,
             "can_universal_transfer": can_universal_transfer,
             "can_vanilla_options": can_vanilla_options,
+            "can_fix_api_trading": can_fix_api_trading,
+            "can_fix_api_reading": can_fix_api_reading,
             "recv_window": recv_window,
         }
 

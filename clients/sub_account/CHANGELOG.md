@@ -1,5 +1,52 @@
 # Changelog
 
+## 8.6.0 - 2026-10-27
+
+### Added (1)
+
+- `create_sub_account_api_key_v2()` (`POST /sapi/v2/sub-account/subAccountApi`)
+
+### Changed (9)
+
+- Added parameter `canFixApiReading`
+  - affected methods:
+    - `create_sub_account_api_key()` (`POST /sapi/v1/sub-account/subAccountApi`)
+    - `modify_sub_account_api_key_permission()` (`POST /sapi/v1/sub-account/subAccountApiPermission`)
+- Added parameter `canFixApiTrading`
+  - affected methods:
+    - `create_sub_account_api_key()` (`POST /sapi/v1/sub-account/subAccountApi`)
+    - `modify_sub_account_api_key_permission()` (`POST /sapi/v1/sub-account/subAccountApiPermission`)
+- Modified response for `query_sub_account_api_key()` (`GET /sapi/v1/sub-account/subAccountApi`):
+  - `rows`.items: property `canFixApiTrading` added
+  - `rows`.items: property `canFixApiReading` added
+  - `rows`.items: item property `canFixApiTrading` added
+  - `rows`.items: item property `canFixApiReading` added
+
+- Modified response for `create_sub_account_api_key()` (`POST /sapi/v1/sub-account/subAccountApi`):
+  - property `canFixApiReading` added
+  - property `canFixApiTrading` added
+
+- Modified response for `modify_sub_account_api_key_permission()` (`POST /sapi/v1/sub-account/subAccountApiPermission`):
+  - property `canFixApiReading` added
+  - property `canFixApiTrading` added
+
+- Added response field `canFixApiTrading`
+  - affected events:
+    - `createSubAccountApiKeyResponse`
+    - `modifySubAccountApiKeyPermissionResponse`
+- Added response field `canFixApiReading`
+  - affected events:
+    - `createSubAccountApiKeyResponse`
+    - `modifySubAccountApiKeyPermissionResponse`
+- Modified response field `rows`:
+  - items: property `canFixApiReading` added
+  - items: property `canFixApiTrading` added
+  - items: item property `canFixApiReading` added
+  - items: item property `canFixApiTrading` added
+  - affected events:
+    - `querySubAccountApiKeyResponse`
+- Added response schema `createSubAccountApiKeyV2Response`
+
 ## 8.5.0 - 2026-10-23
 
 ### Changed (2)

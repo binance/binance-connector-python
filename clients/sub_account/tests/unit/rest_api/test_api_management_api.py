@@ -24,6 +24,7 @@ from binance_sdk_sub_account.rest_api.models import (
     AddIpRestrictionForSubAccountApiKeyResponse,
 )
 from binance_sdk_sub_account.rest_api.models import CreateSubAccountApiKeyResponse
+from binance_sdk_sub_account.rest_api.models import CreateSubAccountApiKeyV2Response
 from binance_sdk_sub_account.rest_api.models import (
     DeleteIpListForASubAccountApiKeyResponse,
 )
@@ -271,6 +272,8 @@ class TestApiManagementApi:
             "canFuturesTrade": False,
             "canUniversalTransfer": False,
             "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
             "status": 2,
             "ipList": ["69.210.67.14"],
         }
@@ -332,6 +335,8 @@ class TestApiManagementApi:
             "can_futures_trade": False,
             "can_universal_transfer": False,
             "can_vanilla_options": False,
+            "can_fix_api_trading": True,
+            "can_fix_api_reading": False,
             "ip_address": "69.210.67.14",
             "third_party_name": "thirdParty",
             "public_key": "",
@@ -347,6 +352,8 @@ class TestApiManagementApi:
             "canFuturesTrade": False,
             "canUniversalTransfer": False,
             "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
             "status": 2,
             "ipList": ["69.210.67.14"],
         }
@@ -437,6 +444,202 @@ class TestApiManagementApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.create_sub_account_api_key(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_create_sub_account_api_key_v2_success(self, mock_get_signature):
+        """Test create_sub_account_api_key_v2() successfully with required parameters only."""
+
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+        }
+
+        expected_response = {
+            "apiName": "myKey",
+            "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+            "secretKey": "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j",
+            "canTrade": True,
+            "canMarginLoanRepay": False,
+            "canFuturesTrade": False,
+            "canUniversalTransfer": False,
+            "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
+            "status": 2,
+            "ipList": ["69.210.67.14"],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.create_sub_account_api_key_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/sub-account/subAccountApi" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+        assert normalized["email"] == "123@test.com"
+        assert normalized["apiName"] == "myKey"
+        assert normalized["status"] == 2
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CreateSubAccountApiKeyV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateSubAccountApiKeyV2Response, "from_dict")
+        ):
+            expected = CreateSubAccountApiKeyV2Response.from_dict(expected_response)
+        else:
+            expected = CreateSubAccountApiKeyV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_create_sub_account_api_key_v2_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test create_sub_account_api_key_v2() successfully with optional parameters."""
+
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+            "can_trade": True,
+            "can_margin_loan_repay": False,
+            "can_futures_trade": False,
+            "can_universal_transfer": False,
+            "can_vanilla_options": False,
+            "can_fix_api_trading": True,
+            "can_fix_api_reading": False,
+            "ip_address": "69.210.67.14",
+            "third_party_name": "thirdParty",
+            "public_key": "",
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "apiName": "myKey",
+            "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+            "secretKey": "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j",
+            "canTrade": True,
+            "canMarginLoanRepay": False,
+            "canFuturesTrade": False,
+            "canUniversalTransfer": False,
+            "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
+            "status": 2,
+            "ipList": ["69.210.67.14"],
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.create_sub_account_api_key_v2(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v2/sub-account/subAccountApi" in request_kwargs["url"]
+        assert request_kwargs["method"] == "POST"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CreateSubAccountApiKeyV2Response)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(CreateSubAccountApiKeyV2Response, "from_dict")
+        ):
+            expected = CreateSubAccountApiKeyV2Response.from_dict(expected_response)
+        else:
+            expected = CreateSubAccountApiKeyV2Response.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_create_sub_account_api_key_v2_missing_required_param_email(self):
+        """Test that create_sub_account_api_key_v2() raises RequiredError when 'email' is missing."""
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+        }
+        params["email"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'email'"):
+            self.client.create_sub_account_api_key_v2(**params)
+
+    def test_create_sub_account_api_key_v2_missing_required_param_api_name(self):
+        """Test that create_sub_account_api_key_v2() raises RequiredError when 'api_name' is missing."""
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+        }
+        params["api_name"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'api_name'"
+        ):
+            self.client.create_sub_account_api_key_v2(**params)
+
+    def test_create_sub_account_api_key_v2_missing_required_param_status(self):
+        """Test that create_sub_account_api_key_v2() raises RequiredError when 'status' is missing."""
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+        }
+        params["status"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'status'"):
+            self.client.create_sub_account_api_key_v2(**params)
+
+    def test_create_sub_account_api_key_v2_server_error(self):
+        """Test that create_sub_account_api_key_v2() raises an error when the server returns an error."""
+
+        params = {
+            "email": "123@test.com",
+            "api_name": "myKey",
+            "status": 2,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.create_sub_account_api_key_v2 = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.create_sub_account_api_key_v2(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_delete_ip_list_for_a_sub_account_api_key_success(self, mock_get_signature):
@@ -924,6 +1127,8 @@ class TestApiManagementApi:
             "canFuturesTrade": True,
             "canUniversalTransfer": False,
             "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
             "timestamp": 1640000000000,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -989,6 +1194,8 @@ class TestApiManagementApi:
             "can_futures_trade": True,
             "can_universal_transfer": False,
             "can_vanilla_options": False,
+            "can_fix_api_trading": True,
+            "can_fix_api_reading": False,
             "recv_window": 5000,
         }
 
@@ -1000,6 +1207,8 @@ class TestApiManagementApi:
             "canFuturesTrade": True,
             "canUniversalTransfer": False,
             "canVanillaOptions": False,
+            "canFixApiTrading": True,
+            "canFixApiReading": False,
             "timestamp": 1640000000000,
         }
         mock_get_signature.return_value = "mocked_signature"
@@ -1103,6 +1312,8 @@ class TestApiManagementApi:
                     "canFuturesTrade": False,
                     "canUniversalTransfer": False,
                     "canVanillaOptions": False,
+                    "canFixApiTrading": True,
+                    "canFixApiReading": False,
                     "timestamp": 1640000000000,
                 }
             ],
@@ -1172,6 +1383,8 @@ class TestApiManagementApi:
                     "canFuturesTrade": False,
                     "canUniversalTransfer": False,
                     "canVanillaOptions": False,
+                    "canFixApiTrading": True,
+                    "canFixApiReading": False,
                     "timestamp": 1640000000000,
                 }
             ],

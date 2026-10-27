@@ -27,8 +27,14 @@ class GetFuturesPositionRiskOfSubAccountResponseInner(BaseModel):
     """  # noqa: E501
 
     entry_price: Optional[StrictStr] = Field(default=None, alias="entryPrice")
-    leverage: Optional[StrictStr] = None
-    max_notional: Optional[StrictStr] = Field(default=None, alias="maxNotional")
+    leverage: Optional[StrictStr] = Field(
+        default=None, description="current initial leverage"
+    )
+    max_notional: Optional[StrictStr] = Field(
+        default=None,
+        description="notional value limit of current initial leverage",
+        alias="maxNotional",
+    )
     liquidation_price: Optional[StrictStr] = Field(
         default=None, alias="liquidationPrice"
     )

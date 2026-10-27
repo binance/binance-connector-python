@@ -17,6 +17,9 @@ from .create_a_virtual_sub_account_response import (
 from .create_sub_account_api_key_response import (
     CreateSubAccountApiKeyResponse as CreateSubAccountApiKeyResponse,
 )
+from .create_sub_account_api_key_v2_response import (
+    CreateSubAccountApiKeyV2Response as CreateSubAccountApiKeyV2Response,
+)
 from .delete_ip_list_for_a_sub_account_api_key_response import (
     DeleteIpListForASubAccountApiKeyResponse as DeleteIpListForASubAccountApiKeyResponse,
 )

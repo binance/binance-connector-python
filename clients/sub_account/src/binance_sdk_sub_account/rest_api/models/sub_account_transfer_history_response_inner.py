@@ -28,14 +28,18 @@ class SubAccountTransferHistoryResponseInner(BaseModel):
 
     counter_party: Optional[StrictStr] = Field(default=None, alias="counterParty")
     email: Optional[StrictStr] = None
-    type: Optional[StrictInt] = None
+    type: Optional[StrictInt] = Field(
+        default=None, description="1 for transfer in, 2 for transfer out"
+    )
     asset: Optional[StrictStr] = None
     qty: Optional[StrictStr] = None
     from_account_type: Optional[StrictStr] = Field(
         default=None, alias="fromAccountType"
     )
     to_account_type: Optional[StrictStr] = Field(default=None, alias="toAccountType")
-    status: Optional[StrictStr] = None
+    status: Optional[StrictStr] = Field(
+        default=None, description="status: PROCESS / SUCCESS / FAILURE"
+    )
     tran_id: Optional[StrictInt] = Field(default=None, alias="tranId")
     time: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}

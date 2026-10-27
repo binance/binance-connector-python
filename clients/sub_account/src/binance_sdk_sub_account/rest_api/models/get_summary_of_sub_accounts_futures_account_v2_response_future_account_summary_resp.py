@@ -52,7 +52,9 @@ class GetSummaryOfSubAccountsFuturesAccountV2ResponseFutureAccountSummaryResp(
     total_wallet_balance: Optional[StrictStr] = Field(
         default=None, alias="totalWalletBalance"
     )
-    asset: Optional[StrictStr] = None
+    asset: Optional[StrictStr] = Field(
+        default=None, description="The sum of BUSD and USDT"
+    )
     sub_account_list: Optional[
         List[GetSummaryOfSubAccountsFuturesAccountResponseSubAccountListInner]
     ] = Field(default=None, alias="subAccountList")

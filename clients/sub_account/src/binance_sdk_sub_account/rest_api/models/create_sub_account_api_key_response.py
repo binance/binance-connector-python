@@ -46,6 +46,12 @@ class CreateSubAccountApiKeyResponse(BaseModel):
     can_vanilla_options: Optional[StrictBool] = Field(
         default=None, alias="canVanillaOptions"
     )
+    can_fix_api_trading: Optional[StrictBool] = Field(
+        default=None, alias="canFixApiTrading"
+    )
+    can_fix_api_reading: Optional[StrictBool] = Field(
+        default=None, alias="canFixApiReading"
+    )
     status: Optional[StrictInt] = None
     ip_list: Optional[List[StrictStr]] = Field(default=None, alias="ipList")
     additional_properties: Dict[str, Any] = {}
@@ -58,6 +64,8 @@ class CreateSubAccountApiKeyResponse(BaseModel):
         "canFuturesTrade",
         "canUniversalTransfer",
         "canVanillaOptions",
+        "canFixApiTrading",
+        "canFixApiReading",
         "status",
         "ipList",
     ]
@@ -134,6 +142,8 @@ class CreateSubAccountApiKeyResponse(BaseModel):
                 "canFuturesTrade": obj.get("canFuturesTrade"),
                 "canUniversalTransfer": obj.get("canUniversalTransfer"),
                 "canVanillaOptions": obj.get("canVanillaOptions"),
+                "canFixApiTrading": obj.get("canFixApiTrading"),
+                "canFixApiReading": obj.get("canFixApiReading"),
                 "status": obj.get("status"),
                 "ipList": obj.get("ipList"),
             }

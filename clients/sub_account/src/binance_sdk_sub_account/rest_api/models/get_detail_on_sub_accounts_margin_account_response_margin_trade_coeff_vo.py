@@ -27,10 +27,16 @@ class GetDetailOnSubAccountsMarginAccountResponseMarginTradeCoeffVo(BaseModel):
     """  # noqa: E501
 
     force_liquidation_bar: Optional[StrictStr] = Field(
-        default=None, alias="forceLiquidationBar"
+        default=None,
+        description="Liquidation margin ratio",
+        alias="forceLiquidationBar",
     )
-    margin_call_bar: Optional[StrictStr] = Field(default=None, alias="marginCallBar")
-    normal_bar: Optional[StrictStr] = Field(default=None, alias="normalBar")
+    margin_call_bar: Optional[StrictStr] = Field(
+        default=None, description="Margin call margin ratio", alias="marginCallBar"
+    )
+    normal_bar: Optional[StrictStr] = Field(
+        default=None, description="Initial margin ratio", alias="normalBar"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "forceLiquidationBar",

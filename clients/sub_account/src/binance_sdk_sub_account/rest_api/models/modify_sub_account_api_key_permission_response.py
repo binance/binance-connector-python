@@ -41,6 +41,12 @@ class ModifySubAccountApiKeyPermissionResponse(BaseModel):
     can_vanilla_options: Optional[StrictBool] = Field(
         default=None, alias="canVanillaOptions"
     )
+    can_fix_api_trading: Optional[StrictBool] = Field(
+        default=None, alias="canFixApiTrading"
+    )
+    can_fix_api_reading: Optional[StrictBool] = Field(
+        default=None, alias="canFixApiReading"
+    )
     timestamp: Optional[StrictInt] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -51,6 +57,8 @@ class ModifySubAccountApiKeyPermissionResponse(BaseModel):
         "canFuturesTrade",
         "canUniversalTransfer",
         "canVanillaOptions",
+        "canFixApiTrading",
+        "canFixApiReading",
         "timestamp",
     ]
 
@@ -125,6 +133,8 @@ class ModifySubAccountApiKeyPermissionResponse(BaseModel):
                 "canFuturesTrade": obj.get("canFuturesTrade"),
                 "canUniversalTransfer": obj.get("canUniversalTransfer"),
                 "canVanillaOptions": obj.get("canVanillaOptions"),
+                "canFixApiTrading": obj.get("canFixApiTrading"),
+                "canFixApiReading": obj.get("canFixApiReading"),
                 "timestamp": obj.get("timestamp"),
             }
         )

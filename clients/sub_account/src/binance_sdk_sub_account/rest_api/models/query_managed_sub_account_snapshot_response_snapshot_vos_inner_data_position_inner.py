@@ -33,7 +33,9 @@ class QueryManagedSubAccountSnapshotResponseSnapshotVosInnerDataPositionInner(
     position_amt: Optional[StrictStr] = Field(default=None, alias="positionAmt")
     symbol: Optional[StrictStr] = None
     un_realized_profit: Optional[StrictStr] = Field(
-        default=None, alias="unRealizedProfit"
+        default=None,
+        description="Only show the value at the time of opening the position",
+        alias="unRealizedProfit",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

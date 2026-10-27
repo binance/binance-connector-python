@@ -28,7 +28,7 @@ class EnableOptionsForSubAccountResponse(BaseModel):
 
     email: Optional[StrictStr] = None
     is_e_options_enabled: Optional[StrictBool] = Field(
-        default=None, alias="isEOptionsEnabled"
+        default=None, description="true or false", alias="isEOptionsEnabled"
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["email", "isEOptionsEnabled"]
