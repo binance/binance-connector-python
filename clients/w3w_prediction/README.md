@@ -35,7 +35,7 @@ This is a client library for the Binance W3W Prediction API, enabling developers
 
 ## Installation
 
-To use this library, ensure your environment is running Python version **3.10** or later.
+To use this library, ensure your environment is running Python version **3.11** or later.
 
 ```bash
 pip install binance-sdk-w3w-prediction
