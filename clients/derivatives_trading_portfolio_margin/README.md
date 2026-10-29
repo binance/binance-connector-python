@@ -32,7 +32,7 @@ This is a client library for the Binance Derivatives Trading Portfolio Margin SD
 
 ## Installation
 
-To use this library, ensure your environment is running Python version **3.10** or later.
+To use this library, ensure your environment is running Python version **3.11** or later.
 
 ```bash
 pip install binance-sdk-derivatives-trading-portfolio-margin
