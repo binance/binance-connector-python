@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.7.1 - 2026-10-29
+
+### Changed (1)
+
+- Updated Dependencies
+
 ## 4.7.0 - 2026-10-23
 
 ### Added (1)

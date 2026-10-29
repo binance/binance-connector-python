@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-common"
-version = "4.7.0"
+version = "4.7.1"
 description = "Binance Common Types and Utilities for Binance Connectors"
 authors = ["Binance"]
 license = "MIT"
@@ -22,6 +22,10 @@ aiohttp = "^3.14.5"
 [tool.poetry.group.dev.dependencies]
 tox = "^4.65.0"
 virtualenv = ">=21.14.9"
+filelock = [
+  { version = ">=4.2.1", python = ">=3.11" },
+  { version = ">=3.25", python = "<3.11" },
+]
 pytest-asyncio = "^1.4.0"
 black = "^26.10.1"
 ruff = "^0.17.0"
