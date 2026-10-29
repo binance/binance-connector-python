@@ -31,7 +31,7 @@ This is a client library for the Binance Dual Investment SDK API, enabling devel
 
 ## Installation
 
-To use this library, ensure your environment is running Python version **3.10** or later.
+To use this library, ensure your environment is running Python version **3.11** or later.
 
 ```bash
 pip install binance-sdk-dual-investment
