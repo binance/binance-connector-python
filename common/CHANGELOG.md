@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.8.0 - 2026-10-29
+
+### Changed (2)
+
+- Updated Dependencies
+- Added python version `3.15`
+
+### Removed (1)
+
+- Dropped support for Python `3.10` (minimum supported version is now `3.11`)
+
 ## 4.7.1 - 2026-10-29
 
 ### Changed (1)

@@ -11,7 +11,7 @@
 
 ## Installation
 
-To use this library, ensure your environment is running Python version **3.10** or later.
+To use this library, ensure your environment is running Python version **3.11** or later.
 
 ```bash
 pip install binance-common
