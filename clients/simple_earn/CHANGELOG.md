@@ -1,5 +1,17 @@
 # Changelog
 
+## 9.8.0 - 2026-10-29
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.8.0`
+- Updated Dependencies
+- Added python version `3.15`
+
+### Removed (1)
+
+- Dropped support for Python `3.10` (minimum supported version is now `3.11`)
+
 ## 9.7.0 - 2026-10-23
 
 ### Changed (2)
