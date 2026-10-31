@@ -16,7 +16,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Set
 from typing_extensions import Self
 
@@ -26,16 +26,20 @@ class GetLockedProductPositionResponseRowsInner(BaseModel):
     GetLockedProductPositionResponseRowsInner
     """  # noqa: E501
 
-    position_id: Optional[StrictInt] = Field(default=None, alias="positionId")
-    parent_position_id: Optional[StrictInt] = Field(
+    position_id: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="positionId"
+    )
+    parent_position_id: Optional[Union[StrictInt, StrictStr]] = Field(
         default=None, alias="parentPositionId"
     )
     project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
     asset: Optional[StrictStr] = None
     amount: Optional[StrictStr] = None
     purchase_time: Optional[StrictInt] = Field(default=None, alias="purchaseTime")
-    duration: Optional[StrictStr] = None
-    accrual_days: Optional[StrictStr] = Field(default=None, alias="accrualDays")
+    duration: Optional[Union[StrictInt, StrictStr]] = None
+    accrual_days: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="accrualDays"
+    )
     reward_asset: Optional[StrictStr] = Field(default=None, alias="rewardAsset")
     apy: Optional[StrictStr] = Field(default=None, alias="APY")
     reward_amt: Optional[StrictStr] = Field(default=None, alias="rewardAmt")
@@ -55,13 +59,17 @@ class GetLockedProductPositionResponseRowsInner(BaseModel):
     )
     next_pay: Optional[StrictStr] = Field(default=None, alias="nextPay")
     next_pay_date: Optional[StrictInt] = Field(default=None, alias="nextPayDate")
-    pay_period: Optional[StrictStr] = Field(default=None, alias="payPeriod")
+    pay_period: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="payPeriod"
+    )
     redeem_amount_early: Optional[StrictStr] = Field(
         default=None, alias="redeemAmountEarly"
     )
     rewards_end_date: Optional[StrictInt] = Field(default=None, alias="rewardsEndDate")
     deliver_date: Optional[StrictInt] = Field(default=None, alias="deliverDate")
-    redeem_period: Optional[StrictStr] = Field(default=None, alias="redeemPeriod")
+    redeem_period: Optional[Union[StrictInt, StrictStr]] = Field(
+        default=None, alias="redeemPeriod"
+    )
     redeeming_amt: Optional[StrictStr] = Field(default=None, alias="redeemingAmt")
     redeem_to: Optional[StrictStr] = Field(default=None, alias="redeemTo")
     partial_amt_deliver_date: Optional[StrictInt] = Field(
