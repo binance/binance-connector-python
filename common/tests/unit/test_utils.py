@@ -1814,6 +1814,81 @@ class TestParseProxies(unittest.TestCase):
 
         self.assertEqual(parse_proxies(proxy_config), expected_output)
 
+    def test_parse_proxy_encodes_reserved_characters_in_credentials(self):
+        """Test that credentials with URL-reserved characters are percent-encoded"""
+        proxy_config = {
+            "protocol": "http",
+            "host": "proxy.local",
+            "port": 8080,
+            "auth": {"username": "us@r", "password": "p#ss/w?%41rd"},
+        }
+
+        self.assertEqual(
+            parse_proxies(proxy_config)["http"],
+            "http://us%40r:p%23ss%2Fw%3F%2541rd@proxy.local:8080",
+        )
+
+    def test_parse_proxy_credentials_round_trip(self):
+        """Test that the proxy URL gives back the original credentials, as aiohttp reads them"""
+        from yarl import URL
+
+        url = URL(
+            parse_proxies(
+                {
+                    "protocol": "http",
+                    "host": "proxy.local",
+                    "port": 8080,
+                    "auth": {"username": "us@r", "password": "p#ss/w%41rd"},
+                }
+            )["http"]
+        )
+
+        self.assertEqual((url.host, url.port), ("proxy.local", 8080))
+        self.assertEqual((url.user, url.password), ("us@r", "p#ss/w%41rd"))
+
+    def test_rest_request_sends_reserved_characters_in_proxy_password(self):
+        """Test that a REST request through a proxy sends the password unchanged"""
+        import threading
+        from http.server import BaseHTTPRequestHandler, HTTPServer
+
+        for password in ["pa#ss", "pa/ss", "pa?ss", "pa%41ss"]:
+            with self.subTest(password=password):
+                seen = {}
+
+                class Proxy(BaseHTTPRequestHandler):
+                    def do_GET(self):
+                        seen["auth"] = self.headers.get("Proxy-Authorization")
+                        body = b"{}"
+                        self.send_response(200)
+                        self.send_header("Content-Type", "application/json")
+                        self.send_header("Content-Length", str(len(body)))
+                        self.end_headers()
+                        self.wfile.write(body)
+
+                    def log_message(self, *args):
+                        pass
+
+                server = HTTPServer(("127.0.0.1", 0), Proxy)
+                threading.Thread(target=server.serve_forever, daemon=True).start()
+                try:
+                    config = ConfigurationRestAPI(
+                        base_path="http://api.binance.invalid",
+                        retries=0,
+                        proxy={
+                            "protocol": "http",
+                            "host": "127.0.0.1",
+                            "port": server.server_port,
+                            "auth": {"username": "user", "password": password},
+                        },
+                    )
+                    send_request(requests.Session(), config, "GET", "/api/v3/time")
+                finally:
+                    server.shutdown()
+                    server.server_close()
+
+                expected = "Basic " + b64encode(f"user:{password}".encode()).decode()
+                self.assertEqual(seen.get("auth"), expected)
+
 
 class TestWsStreamsPlaceholder(unittest.TestCase):
     def test_replace_single_placeholder(self):
