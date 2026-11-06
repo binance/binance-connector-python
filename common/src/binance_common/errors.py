@@ -121,6 +121,18 @@ class NetworkError(Error):
         super().__init__(error_message)
 
 
+class ConnectionClosedError(Error, ConnectionError):
+    """Represents a WebSocket request whose connection closed before it was answered."""
+
+    def __init__(self, error_message: Optional[str] = None):
+        self.error_message = (
+            error_message
+            or "The connection closed before a response was received; "
+            "the request may still have been executed."
+        )
+        super().__init__(self.error_message)
+
+
 class NotFoundError(Error):
     """Represents an error when the requested resource was not found."""
 

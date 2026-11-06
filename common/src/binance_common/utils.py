@@ -94,6 +94,31 @@ class CustomHTTPSAdapter(requests.adapters.HTTPAdapter):
         return super().proxy_manager_for(*args, **kwargs)
 
 
+def mount_https_agent(session: requests.Session, https_agent: Any) -> None:
+    """Mount the adapter for `https_agent` on a session, once.
+
+    Args:
+        session (requests.Session): The session to send requests with.
+        https_agent (Any): The `https_agent` set on the configuration.
+    """
+
+    current = session.adapters.get("https://")
+    if getattr(current, "binance_https_agent", None) is https_agent:
+        return
+
+    if isinstance(https_agent, ssl.SSLContext):
+        https_adapter = CustomHTTPSAdapter(https_agent)
+    else:
+        https_adapter = requests.adapters.HTTPAdapter()
+    https_adapter.binance_https_agent = https_agent
+
+    session.mount("https://", https_adapter)
+    session.mount("http://", https_adapter)
+
+    if hasattr(current, "binance_https_agent"):
+        current.close()
+
+
 def hmac_hashing(api_secret: str, payload: str) -> str:
     """Generates an HMAC-SHA256 hash of the provided payload using the given API secret.
 
@@ -533,12 +558,7 @@ def send_request(
     )
 
     if configuration.https_agent:
-        if isinstance(configuration.https_agent, ssl.SSLContext):
-            https_adapter = CustomHTTPSAdapter(configuration.https_agent)
-        else:
-            https_adapter = requests.adapters.HTTPAdapter()
-        session.mount("https://", https_adapter)
-        session.mount("http://", https_adapter)
+        mount_https_agent(session, configuration.https_agent)
 
     if not configuration.keep_alive:
         headers["Connection"] = "close"

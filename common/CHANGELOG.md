@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.9.0 - 2026-11-06
+
+### Added (1)
+
+- Added `ConnectionClosedError`, raised for a WebSocket request whose connection closed before it was answered.
+
+### Changed (8)
+
+- Fixed WebSocket requests in flight during a `serverShutdown` or the 23 h rotation timing out although the server answered them. The new connection is now opened, logged on and subscribed first; the old one is closed only after its requests are answered. 
+- Fixed new WebSocket requests being sent on a connection that was shutting down or being replaced. 
+- WebSocket requests whose connection closes now return `{"error": "connection_closed"}` at once instead of `{"error": "timeout"}` after 20 s. Like a timeout, the request may still have been executed: check an order with `order.status` or its `newClientOrderId` before sending it again. 
+- WebSocket API requests now wait for `ConfigurationWebSocketAPI.timeout` (default 5000 ms) instead of a fixed 20 s. WebSocket Streams requests still wait 20 s. 
+- The session of a replaced WebSocket API connection is now logged out before the connection is closed.
+- When a connection cannot be replaced, the old one is kept in use and the replacement is tried again after 60 s.
+- Fixed REST requests opening a new connection every time when `https_agent` was set: the adapter is now mounted once per session, so keep-alive connections are reused.
+- WebSocket API connections now pass `aiohttp.ClientWSTimeout` to `ws_connect`, fixing the `aiohttp` deprecation warning for a `float` timeout.
+
 ## 4.8.0 - 2026-10-29
 
 ### Changed (2)

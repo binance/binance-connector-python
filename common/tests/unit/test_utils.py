@@ -62,6 +62,7 @@ from binance_common.utils import (
     hmac_hashing,
     is_one_of_model,
     make_serializable,
+    mount_https_agent,
     normalize_event_name,
     normalize_query_values,
     parse_proxies,
@@ -2952,6 +2953,54 @@ class TestSendRequestResponseValidation(unittest.TestCase):
 
         self.assertEqual(response.data(), payload)
         self.assertIn("Returning the raw payload", logs.output[0])
+
+
+class TestMountHttpsAgent(unittest.TestCase):
+    def test_mounts_the_adapter_once_per_agent(self):
+        session = requests.Session()
+        context = ssl.create_default_context()
+
+        mount_https_agent(session, context)
+        adapter = session.adapters["https://"]
+        mount_https_agent(session, context)
+
+        self.assertIs(session.adapters["https://"], adapter)
+        self.assertIs(session.adapters["http://"], adapter)
+        self.assertIs(adapter.ssl_context, context)
+
+    def test_replaces_the_adapter_when_the_agent_changes(self):
+        session = requests.Session()
+        first = ssl.create_default_context()
+        second = ssl.create_default_context()
+
+        mount_https_agent(session, first)
+        old_adapter = session.adapters["https://"]
+        with patch.object(old_adapter, "close") as close:
+            mount_https_agent(session, second)
+
+        self.assertIsNot(session.adapters["https://"], old_adapter)
+        self.assertIs(session.adapters["https://"].ssl_context, second)
+        close.assert_called_once()
+
+    def test_send_request_keeps_the_same_adapter(self):
+        session = requests.Session()
+        configuration = ConfigurationRestAPI(
+            api_key="key",
+            api_secret="secret",
+            base_path="https://api.example.com",
+            https_agent=ssl.create_default_context(),
+        )
+        response = Mock(status_code=200, headers={})
+        response.json.return_value = {}
+        response.text = "{}"
+
+        adapters = []
+        with patch.object(session, "request", return_value=response):
+            for _ in range(3):
+                send_request(session, configuration, "GET", "/api/v3/ping")
+                adapters.append(session.adapters["https://"])
+
+        self.assertEqual(len({id(adapter) for adapter in adapters}), 1)
 
 
 if __name__ == "__main__":

@@ -197,6 +197,31 @@ class TestWebSocketCommon:
         await ws_common.close_connection(close_session=True)
 
     @pytest.mark.asyncio
+    @patch(
+        "binance_common.websocket.aiohttp.ClientSession.ws_connect",
+        new_callable=AsyncMock,
+    )
+    async def test_ws_api_connect_uses_a_ws_timeout(
+        self, mock_ws_connect, mock_websocket
+    ):
+        config = ConfigurationWebSocketAPI(
+            api_key="key",
+            api_secret="secret",
+            stream_url="wss://test.com/ws",
+            mode=WebsocketMode.SINGLE,
+            timeout=7000,
+        )
+        mock_ws_connect.return_value = mock_websocket
+
+        ws_common = WebSocketCommon(config)
+        await ws_common.connect("wss://test.com/ws", config)
+
+        timeout = mock_ws_connect.call_args.kwargs["timeout"]
+        assert isinstance(timeout, aiohttp.ClientWSTimeout)
+        assert timeout.ws_close == 7.0
+        await ws_common.close_connection(close_session=True)
+
+    @pytest.mark.asyncio
     async def test_ping(self, mock_websocket):
         ws_common = WebSocketCommon(MagicMock())
         connection = MagicMock()
@@ -972,6 +997,8 @@ class TestWebSocketCommon:
         ws_common.reconnect = AsyncMock()
 
         await ws_common.receive_loop(conn)
+        # The replacement runs in the background so the loop keeps reading.
+        await asyncio.gather(*ws_common.background_tasks)
 
         ws_common.reconnect.assert_awaited_once()
 
