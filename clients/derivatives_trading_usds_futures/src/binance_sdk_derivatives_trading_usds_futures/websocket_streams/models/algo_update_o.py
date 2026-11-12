@@ -72,6 +72,16 @@ class AlgoUpdateO(BaseModel):
         default=None,
         description="Is activated or not, only meaningful for trailing order",
     )
+    spt: Optional[StrictStr] = Field(
+        default=None, description="Sub price type, only meaningful for CHASE order"
+    )
+    spv: Optional[StrictStr] = Field(
+        default=None, description="Sub price value, only meaningful for CHASE order"
+    )
+    splv: Optional[StrictStr] = Field(
+        default=None,
+        description="Sub price limit value, only meaningful for CHASE order",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "caid",
@@ -100,6 +110,9 @@ class AlgoUpdateO(BaseModel):
         "gtd",
         "rm",
         "ia",
+        "spt",
+        "spv",
+        "splv",
     ]
 
     model_config = ConfigDict(
@@ -188,6 +201,9 @@ class AlgoUpdateO(BaseModel):
                 "gtd": obj.get("gtd"),
                 "rm": obj.get("rm"),
                 "ia": obj.get("ia"),
+                "spt": obj.get("spt"),
+                "spv": obj.get("spv"),
+                "splv": obj.get("splv"),
             }
         )
         # store additional fields in additional_properties

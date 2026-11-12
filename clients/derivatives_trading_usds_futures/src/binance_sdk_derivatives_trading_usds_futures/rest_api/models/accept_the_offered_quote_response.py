@@ -28,7 +28,11 @@ class AcceptTheOfferedQuoteResponse(BaseModel):
 
     order_id: Optional[StrictStr] = Field(default=None, alias="orderId")
     create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
-    order_status: Optional[StrictStr] = Field(default=None, alias="orderStatus")
+    order_status: Optional[StrictStr] = Field(
+        default=None,
+        description="PROCESS/ACCEPT_SUCCESS/SUCCESS/FAIL",
+        alias="orderStatus",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["orderId", "createTime", "orderStatus"]
 

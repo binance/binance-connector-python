@@ -38,7 +38,9 @@ class NewAlgoOrderResponse(BaseModel):
     algo_status: Optional[StrictStr] = Field(default=None, alias="algoStatus")
     trigger_price: Optional[StrictStr] = Field(default=None, alias="triggerPrice")
     price: Optional[StrictStr] = None
-    iceberg_quantity: Optional[StrictStr] = Field(default=None, alias="icebergQuantity")
+    iceberg_quantity: Optional[StrictStr] = Field(
+        default=None, description="Reserved field, ignore.", alias="icebergQuantity"
+    )
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"
     )

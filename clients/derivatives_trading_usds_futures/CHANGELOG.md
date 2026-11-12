@@ -1,5 +1,19 @@
 # Changelog
 
+## 18.3.1 - 2026-11-12
+
+### Changed (1)
+
+#### WebSocket Streams
+
+- Modified response field `o`:
+  - property `spv` added
+  - property `splv` added
+  - property `spt` added
+  - affected events:
+    - `UserDataStreamEventsResponse`
+    - `algoUpdate`
+
 ## 18.3.0 - 2026-11-06
 
 ### Changed (1)

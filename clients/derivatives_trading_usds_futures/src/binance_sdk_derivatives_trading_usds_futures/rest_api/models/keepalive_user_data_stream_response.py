@@ -26,7 +26,9 @@ class KeepaliveUserDataStreamResponse(BaseModel):
     KeepaliveUserDataStreamResponse
     """  # noqa: E501
 
-    listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
+    listen_key: Optional[StrictStr] = Field(
+        default=None, description="the listenkey which got extended", alias="listenKey"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["listenKey"]
 

@@ -31,7 +31,7 @@ class ClassicPortfolioMarginAccountInformationResponse(BaseModel):
         description="Classic Portfolio margin maximum virtual amount for transfer out in USD",
         alias="maxWithdrawAmountUSD",
     )
-    asset: Optional[StrictStr] = None
+    asset: Optional[StrictStr] = Field(default=None, description="asset name")
     max_withdraw_amount: Optional[StrictStr] = Field(
         default=None,
         description="maximum amount for transfer out",

@@ -58,7 +58,9 @@ class QueryAlgoOrderResponse(BaseModel):
     )
     trigger_price: Optional[StrictStr] = Field(default=None, alias="triggerPrice")
     price: Optional[StrictStr] = None
-    iceberg_quantity: Optional[StrictStr] = Field(default=None, alias="icebergQuantity")
+    iceberg_quantity: Optional[StrictStr] = Field(
+        default=None, description="Reserved field, ignore.", alias="icebergQuantity"
+    )
     tp_order_type: Optional[StrictStr] = Field(default=None, alias="tpOrderType")
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"

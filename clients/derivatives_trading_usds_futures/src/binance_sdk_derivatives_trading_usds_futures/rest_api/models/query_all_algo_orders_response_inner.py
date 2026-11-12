@@ -40,7 +40,9 @@ class QueryAllAlgoOrdersResponseInner(BaseModel):
     actual_price: Optional[StrictStr] = Field(default=None, alias="actualPrice")
     trigger_price: Optional[StrictStr] = Field(default=None, alias="triggerPrice")
     price: Optional[StrictStr] = None
-    iceberg_quantity: Optional[StrictStr] = Field(default=None, alias="icebergQuantity")
+    iceberg_quantity: Optional[StrictStr] = Field(
+        default=None, description="Reserved field, ignore.", alias="icebergQuantity"
+    )
     tp_trigger_price: Optional[StrictStr] = Field(default=None, alias="tpTriggerPrice")
     tp_price: Optional[StrictStr] = Field(default=None, alias="tpPrice")
     sl_trigger_price: Optional[StrictStr] = Field(default=None, alias="slTriggerPrice")
