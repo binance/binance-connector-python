@@ -79,6 +79,7 @@ class UserDataStreamApi:
     async def user_data_stream_subscribe(
         self,
         id: Optional[str] = None,
+        filter: Optional[object] = None,
     ) -> WebsocketApiResponse[UserDataStreamSubscribeResponse]:
         """
             Subscribe to User Data Stream (USER_STREAM)
@@ -100,6 +101,7 @@ class UserDataStreamApi:
 
             Args:
                     id (Optional[str] = None): Client-generated request identifier.
+                    filter (Optional[object] = None): Optional filter that controls which events are delivered on this subscription. See User Data Stream Subscription Filters. When omitted, all events for the subscribed account are delivered.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamSubscribeResponse]
@@ -111,6 +113,7 @@ class UserDataStreamApi:
 
         params = {
             **({"id": id} if id is not None else {}),
+            **({"filter": filter} if filter is not None else {}),
         }
 
         payload = {
@@ -126,6 +129,7 @@ class UserDataStreamApi:
         self,
         id: Optional[str] = None,
         recv_window: Optional[float] = None,
+        filter: Optional[object] = None,
     ) -> WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]:
         """
             Subscribe to User Data Stream through signature subscription (USER_STREAM)
@@ -142,6 +146,7 @@ class UserDataStreamApi:
             Args:
                     id (Optional[str] = None): Client-generated request identifier.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+                    filter (Optional[object] = None): Optional event filter. See User Data Stream Subscription Filters. When included, `filter` must be in the signed string with sorted keys and no whitespace between JSON elements.
 
             Returns:
                 WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse]
@@ -154,6 +159,7 @@ class UserDataStreamApi:
         params = {
             **({"id": id} if id is not None else {}),
             **({"recv_window": recv_window} if recv_window is not None else {}),
+            **({"filter": filter} if filter is not None else {}),
         }
 
         payload = {

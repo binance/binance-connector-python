@@ -2336,6 +2336,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
@@ -2585,6 +2586,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG` <br> See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100) <br> See Pegged Orders
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported <br> See Pegged Orders
+                    quote_notional_limit (Optional[float] = None): For replacement orders on the BUY side only. Maximum quote-asset notional the replacement order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2621,6 +2623,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
@@ -2839,6 +2842,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self_trade_prevention_mode: Optional[
             OrderListPlaceOcoSelfTradePreventionModeEnum
         ] = None,
+        above_quote_notional_limit: Optional[float] = None,
+        below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOcoResponse]:
         """
@@ -2903,6 +2908,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None): Select response format: `ACK`, `RESULT`, `FULL`.
                     self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
+                    above_quote_notional_limit (Optional[float] = None): Quote notional limit for the above order (only for orders on the BUY side). See Quote Notional Limit.
+                    below_quote_notional_limit (Optional[float] = None): Quote notional limit for the below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2945,6 +2952,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             below_peg_offset_value,
             new_order_resp_type,
             self_trade_prevention_mode,
+            above_quote_notional_limit,
+            below_quote_notional_limit,
             recv_window,
         )
 
@@ -2990,6 +2999,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOpoPendingPegOffsetTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOpoResponse]:
         """
@@ -2997,6 +3007,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Place an OPO.
 
+        * The working order must be `LIMIT` or `LIMIT_MAKER`.
         * OPOs add 2 orders to the EXCHANGE_MAX_NUM_ORDERS filter and MAX_NUM_ORDERS filter.
 
         Weight(IP): 1
@@ -3042,6 +3053,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_peg_price_type (Optional[OrderListPlaceOpoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_type (Optional[OrderListPlaceOpoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3083,6 +3095,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             pending_peg_price_type,
             pending_peg_offset_type,
             pending_peg_offset_value,
+            working_quote_notional_limit,
             recv_window,
         )
 
@@ -3150,12 +3163,15 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOpocoResponse]:
         """
                 OPOCO (TRADE)
 
                 Place an OPOCO.
+
+        * The working order must be `LIMIT` or `LIMIT_MAKER`.
 
         Weight(IP): 1
 
@@ -3171,7 +3187,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     symbol (Union[str, None]):
-                    working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]):
+                    working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
                     working_side (Union[OrderListPlaceOpocoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]): Price for the working order.
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
@@ -3212,6 +3228,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_below_peg_price_type (Optional[OrderListPlaceOpocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3265,6 +3282,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             pending_below_peg_price_type,
             pending_below_peg_offset_type,
             pending_below_peg_offset_value,
+            working_quote_notional_limit,
             recv_window,
         )
 
@@ -3311,6 +3329,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOtoPendingPegPriceTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
@@ -3391,6 +3411,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3433,6 +3455,8 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             pending_peg_offset_type,
             pending_peg_price_type,
             pending_peg_offset_value,
+            working_quote_notional_limit,
+            pending_quote_notional_limit,
             recv_window,
         )
 
@@ -3501,6 +3525,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_above_quote_notional_limit: Optional[float] = None,
+        pending_below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
@@ -3585,6 +3612,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_above_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending above order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_below_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3639,6 +3669,9 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             pending_below_peg_price_type,
             pending_below_peg_offset_type,
             pending_below_peg_offset_value,
+            working_quote_notional_limit,
+            pending_above_quote_notional_limit,
+            pending_below_quote_notional_limit,
             recv_window,
         )
 
@@ -3665,6 +3698,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderPlacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderPlacePegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
@@ -3922,6 +3956,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_price_type (Optional[OrderPlacePegPriceTypeEnum] = None): See Pegged Orders Info
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100). See Pegged Orders Info
                     peg_offset_type (Optional[OrderPlacePegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders Info
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3952,6 +3987,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
@@ -3979,6 +4015,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
@@ -4020,6 +4057,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                     peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -4051,6 +4089,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
@@ -4247,6 +4286,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
     async def user_data_stream_subscribe(
         self,
         id: Optional[str] = None,
+        filter: Optional[object] = None,
     ) -> WebsocketApiUserDataStreamResponse[
         WebsocketApiResponse[UserDataStreamSubscribeResponse], RequestStreamHandle
     ]:
@@ -4268,6 +4308,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
                 Args:
                     id (Optional[str] = None): Client-generated request identifier.
+                    filter (Optional[object] = None): Optional filter that controls which events are delivered on this subscription. See User Data Stream Subscription Filters. When omitted, all events for the subscribed account are delivered.
 
                 Returns:
                     WebsocketApiUserDataStreamResponse[WebsocketApiResponse[UserDataStreamSubscribeResponse], RequestStreamHandle]
@@ -4277,7 +4318,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
 
         """
 
-        response = await self._userDataStreamApi.user_data_stream_subscribe(id)
+        response = await self._userDataStreamApi.user_data_stream_subscribe(id, filter)
         data = response.data()
         if isinstance(data, dict) and (
             data.get("result") is None or data.get("error") is not None
@@ -4297,6 +4338,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         self,
         id: Optional[str] = None,
         recv_window: Optional[float] = None,
+        filter: Optional[object] = None,
     ) -> WebsocketApiUserDataStreamResponse[
         WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse],
         RequestStreamHandle,
@@ -4314,6 +4356,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
                 Args:
                     id (Optional[str] = None): Client-generated request identifier.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
+                    filter (Optional[object] = None): Optional event filter. See User Data Stream Subscription Filters. When included, `filter` must be in the signed string with sorted keys and no whitespace between JSON elements.
 
                 Returns:
                     WebsocketApiUserDataStreamResponse[WebsocketApiResponse[UserDataStreamSubscribeSignatureResponse], RequestStreamHandle]
@@ -4324,7 +4367,7 @@ class SpotWebSocketAPI(WebSocketAPIBase):
         """
 
         response = await self._userDataStreamApi.user_data_stream_subscribe_signature(
-            id, recv_window
+            id, recv_window, filter
         )
         data = response.data()
         if isinstance(data, dict) and (

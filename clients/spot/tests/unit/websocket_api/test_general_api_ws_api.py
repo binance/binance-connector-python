@@ -101,6 +101,8 @@ class TestWebSocketGeneralApi:
                         "cancelReplaceAllowed": True,
                         "amendAllowed": False,
                         "pegInstructionsAllowed": True,
+                        "marketQuoteNotionalLimitAllowed": True,
+                        "limitQuoteNotionalLimitAllowed": True,
                         "isSpotTradingAllowed": True,
                         "isMarginTradingAllowed": True,
                         "filters": [
@@ -239,6 +241,8 @@ class TestWebSocketGeneralApi:
                         "cancelReplaceAllowed": True,
                         "amendAllowed": False,
                         "pegInstructionsAllowed": True,
+                        "marketQuoteNotionalLimitAllowed": True,
+                        "limitQuoteNotionalLimitAllowed": True,
                         "isSpotTradingAllowed": True,
                         "isMarginTradingAllowed": True,
                         "filters": [

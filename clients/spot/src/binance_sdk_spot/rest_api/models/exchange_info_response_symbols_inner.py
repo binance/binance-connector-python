@@ -68,6 +68,12 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
     peg_instructions_allowed: Optional[StrictBool] = Field(
         default=None, alias="pegInstructionsAllowed"
     )
+    market_quote_notional_limit_allowed: Optional[StrictBool] = Field(
+        default=None, alias="marketQuoteNotionalLimitAllowed"
+    )
+    limit_quote_notional_limit_allowed: Optional[StrictBool] = Field(
+        default=None, alias="limitQuoteNotionalLimitAllowed"
+    )
     is_spot_trading_allowed: Optional[StrictBool] = Field(
         default=None, alias="isSpotTradingAllowed"
     )
@@ -109,6 +115,8 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
         "cancelReplaceAllowed",
         "amendAllowed",
         "pegInstructionsAllowed",
+        "marketQuoteNotionalLimitAllowed",
+        "limitQuoteNotionalLimitAllowed",
         "isSpotTradingAllowed",
         "isMarginTradingAllowed",
         "filters",
@@ -208,6 +216,12 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
                 "cancelReplaceAllowed": obj.get("cancelReplaceAllowed"),
                 "amendAllowed": obj.get("amendAllowed"),
                 "pegInstructionsAllowed": obj.get("pegInstructionsAllowed"),
+                "marketQuoteNotionalLimitAllowed": obj.get(
+                    "marketQuoteNotionalLimitAllowed"
+                ),
+                "limitQuoteNotionalLimitAllowed": obj.get(
+                    "limitQuoteNotionalLimitAllowed"
+                ),
                 "isSpotTradingAllowed": obj.get("isSpotTradingAllowed"),
                 "isMarginTradingAllowed": obj.get("isMarginTradingAllowed"),
                 "filters": (

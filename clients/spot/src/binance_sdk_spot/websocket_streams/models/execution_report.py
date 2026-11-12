@@ -130,6 +130,16 @@ class ExecutionReport(BaseModel):
     pY: Optional[StrictStr] = Field(
         default=None, description="Prevented Execution Quote Qty", alias="pY"
     )
+    Qq: Optional[StrictStr] = Field(
+        default=None,
+        description="Quote Notional Limit. Appears only if the order was placed with a quote notional limit.",
+        alias="Qq",
+    )
+    eV: Optional[StrictStr] = Field(
+        default=None,
+        description="Effective Self Trade Prevention Mode. Appears on prevented-match reports when the applied STP mode differs from the order's `selfTradePreventionMode`. Values: `EXPIRE_MAKER`, `EXPIRE_BOTH`, `DECREMENT`.",
+        alias="eV",
+    )
     b: Optional[StrictStr] = Field(default=None, description="Match Type")
     a: Optional[StrictInt] = Field(default=None, description="Allocation ID")
     k: Optional[StrictStr] = Field(default=None, description="Working Floor")
@@ -197,6 +207,8 @@ class ExecutionReport(BaseModel):
         "pl",
         "pL",
         "pY",
+        "Qq",
+        "eV",
         "b",
         "a",
         "k",
@@ -319,6 +331,8 @@ class ExecutionReport(BaseModel):
                 "pl": obj.get("pl"),
                 "pL": obj.get("pL"),
                 "pY": obj.get("pY"),
+                "Qq": obj.get("Qq"),
+                "eV": obj.get("eV"),
                 "b": obj.get("b"),
                 "a": obj.get("a"),
                 "k": obj.get("k"),

@@ -564,6 +564,7 @@ class TradeApi:
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderCancelReplaceResponse]:
         """
@@ -815,6 +816,7 @@ class TradeApi:
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG` <br> See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100) <br> See Pegged Orders
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported <br> See Pegged Orders
+                    quote_notional_limit (Optional[float] = None): For replacement orders on the BUY side only. Maximum quote-asset notional the replacement order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -915,6 +917,11 @@ class TradeApi:
             **(
                 {"peg_offset_type": peg_offset_type}
                 if peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"quote_notional_limit": quote_notional_limit}
+                if quote_notional_limit is not None
                 else {}
             ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
@@ -1252,6 +1259,8 @@ class TradeApi:
         self_trade_prevention_mode: Optional[
             OrderListPlaceOcoSelfTradePreventionModeEnum
         ] = None,
+        above_quote_notional_limit: Optional[float] = None,
+        below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOcoResponse]:
         """
@@ -1318,6 +1327,8 @@ class TradeApi:
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListPlaceOcoNewOrderRespTypeEnum] = None): Select response format: `ACK`, `RESULT`, `FULL`.
                     self_trade_prevention_mode (Optional[OrderListPlaceOcoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
+                    above_quote_notional_limit (Optional[float] = None): Quote notional limit for the above order (only for orders on the BUY side). See Quote Notional Limit.
+                    below_quote_notional_limit (Optional[float] = None): Quote notional limit for the below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -1475,6 +1486,16 @@ class TradeApi:
                 if self_trade_prevention_mode is not None
                 else {}
             ),
+            **(
+                {"above_quote_notional_limit": above_quote_notional_limit}
+                if above_quote_notional_limit is not None
+                else {}
+            ),
+            **(
+                {"below_quote_notional_limit": below_quote_notional_limit}
+                if below_quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -1531,6 +1552,7 @@ class TradeApi:
             OrderListPlaceOpoPendingPegOffsetTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOpoResponse]:
         """
@@ -1540,6 +1562,7 @@ class TradeApi:
 
             Place an OPO.
 
+        * The working order must be `LIMIT` or `LIMIT_MAKER`.
         * OPOs add 2 orders to the EXCHANGE_MAX_NUM_ORDERS filter and MAX_NUM_ORDERS filter.
 
         Weight(IP): 1
@@ -1585,6 +1608,7 @@ class TradeApi:
                     pending_peg_price_type (Optional[OrderListPlaceOpoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_type (Optional[OrderListPlaceOpoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -1745,6 +1769,11 @@ class TradeApi:
                 if pending_peg_offset_value is not None
                 else {}
             ),
+            **(
+                {"working_quote_notional_limit": working_quote_notional_limit}
+                if working_quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -1823,6 +1852,7 @@ class TradeApi:
             OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOpocoResponse]:
         """
@@ -1831,6 +1861,8 @@ class TradeApi:
             https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/ws-api/trade#order-list-place-opoco
 
             Place an OPOCO.
+
+        * The working order must be `LIMIT` or `LIMIT_MAKER`.
 
         Weight(IP): 1
 
@@ -1846,7 +1878,7 @@ class TradeApi:
 
             Args:
                     symbol (Union[str, None]):
-                    working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]):
+                    working_type (Union[OrderListPlaceOpocoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
                     working_side (Union[OrderListPlaceOpocoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]): Price for the working order.
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
@@ -1887,6 +1919,7 @@ class TradeApi:
                     pending_below_peg_price_type (Optional[OrderListPlaceOpocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -2111,6 +2144,11 @@ class TradeApi:
                 if pending_below_peg_offset_value is not None
                 else {}
             ),
+            **(
+                {"working_quote_notional_limit": working_quote_notional_limit}
+                if working_quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -2168,6 +2206,8 @@ class TradeApi:
             OrderListPlaceOtoPendingPegPriceTypeEnum
         ] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtoResponse]:
         """
@@ -2250,6 +2290,8 @@ class TradeApi:
                     pending_peg_offset_type (Optional[OrderListPlaceOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_price_type (Optional[OrderListPlaceOtoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -2416,6 +2458,16 @@ class TradeApi:
                 if pending_peg_offset_value is not None
                 else {}
             ),
+            **(
+                {"working_quote_notional_limit": working_quote_notional_limit}
+                if working_quote_notional_limit is not None
+                else {}
+            ),
+            **(
+                {"pending_quote_notional_limit": pending_quote_notional_limit}
+                if pending_quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -2495,6 +2547,9 @@ class TradeApi:
             OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_above_quote_notional_limit: Optional[float] = None,
+        pending_below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderListPlaceOtocoResponse]:
         """
@@ -2581,6 +2636,9 @@ class TradeApi:
                     pending_below_peg_price_type (Optional[OrderListPlaceOtocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_above_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending above order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_below_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -2811,6 +2869,25 @@ class TradeApi:
                 if pending_below_peg_offset_value is not None
                 else {}
             ),
+            **(
+                {"working_quote_notional_limit": working_quote_notional_limit}
+                if working_quote_notional_limit is not None
+                else {}
+            ),
+            **(
+                {
+                    "pending_above_quote_notional_limit": pending_above_quote_notional_limit
+                }
+                if pending_above_quote_notional_limit is not None
+                else {}
+            ),
+            **(
+                {
+                    "pending_below_quote_notional_limit": pending_below_quote_notional_limit
+                }
+                if pending_below_quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -2848,6 +2925,7 @@ class TradeApi:
         peg_price_type: Optional[OrderPlacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderPlacePegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderPlaceResponse]:
         """
@@ -3107,6 +3185,7 @@ class TradeApi:
                     peg_price_type (Optional[OrderPlacePegPriceTypeEnum] = None): See Pegged Orders Info
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100). See Pegged Orders Info
                     peg_offset_type (Optional[OrderPlacePegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders Info
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -3178,6 +3257,11 @@ class TradeApi:
                 if peg_offset_type is not None
                 else {}
             ),
+            **(
+                {"quote_notional_limit": quote_notional_limit}
+                if quote_notional_limit is not None
+                else {}
+            ),
             **({"recv_window": recv_window} if recv_window is not None else {}),
         }
 
@@ -3214,6 +3298,7 @@ class TradeApi:
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> WebsocketApiResponse[OrderTestResponse]:
         """
@@ -3257,6 +3342,7 @@ class TradeApi:
                     peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
             Returns:
@@ -3331,6 +3417,11 @@ class TradeApi:
             **(
                 {"peg_offset_type": peg_offset_type}
                 if peg_offset_type is not None
+                else {}
+            ),
+            **(
+                {"quote_notional_limit": quote_notional_limit}
+                if quote_notional_limit is not None
                 else {}
             ),
             **({"recv_window": recv_window} if recv_window is not None else {}),

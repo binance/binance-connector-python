@@ -1553,6 +1553,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -1720,6 +1721,7 @@ class TestWebSocketTradeApi:
             params["peg_offset_type"]
             == OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value
         )
+        assert params["quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -1771,6 +1773,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -1818,6 +1821,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["cancel_replace_mode"] = None
@@ -1865,6 +1869,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["side"] = None
@@ -1910,6 +1915,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["type"] = None
@@ -2881,6 +2887,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -3051,6 +3059,8 @@ class TestWebSocketTradeApi:
             params["self_trade_prevention_mode"]
             == OrderListPlaceOcoSelfTradePreventionModeEnum["NONE"].value
         )
+        assert params["above_quote_notional_limit"] == 100
+        assert params["below_quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -3110,6 +3120,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -3163,6 +3175,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["side"] = None
@@ -3216,6 +3230,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["quantity"] = None
@@ -3271,6 +3287,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["above_type"] = None
@@ -3326,6 +3344,8 @@ class TestWebSocketTradeApi:
             "self_trade_prevention_mode": OrderListPlaceOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["below_type"] = None
@@ -3525,6 +3545,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -3666,6 +3687,7 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOpoPendingPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
         assert params["pending_peg_offset_value"] == 1
+        assert params["working_quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -3728,6 +3750,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -3784,6 +3807,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_type"] = None
@@ -3842,6 +3866,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_side"] = None
@@ -3900,6 +3925,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_price"] = None
@@ -3958,6 +3984,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_quantity"] = None
@@ -4016,6 +4043,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_type"] = None
@@ -4074,6 +4102,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_side"] = None
@@ -4327,6 +4356,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -4520,6 +4550,7 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOpocoPendingBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
         assert params["pending_below_peg_offset_value"] == 1
+        assert params["working_quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -4604,6 +4635,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -4682,6 +4714,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_type"] = None
@@ -4762,6 +4795,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_side"] = None
@@ -4842,6 +4876,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_price"] = None
@@ -4922,6 +4957,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_quantity"] = None
@@ -5002,6 +5038,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_side"] = None
@@ -5084,6 +5121,7 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_above_type"] = None
@@ -5308,6 +5346,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -5467,6 +5507,8 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOtoPendingPegPriceTypeEnum["PRIMARY_PEG"].value
         )
         assert params["pending_peg_offset_value"] == 1
+        assert params["working_quote_notional_limit"] == 100
+        assert params["pending_quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -5530,6 +5572,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -5587,6 +5631,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_type"] = None
@@ -5646,6 +5692,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_side"] = None
@@ -5705,6 +5753,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_price"] = None
@@ -5764,6 +5814,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_quantity"] = None
@@ -5823,6 +5875,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_type"] = None
@@ -5882,6 +5936,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_side"] = None
@@ -5941,6 +5997,8 @@ class TestWebSocketTradeApi:
                 "PRIMARY_PEG"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_quantity"] = None
@@ -6217,6 +6275,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -6429,6 +6490,9 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOtocoPendingBelowPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
         assert params["pending_below_peg_offset_value"] == 1
+        assert params["working_quote_notional_limit"] == 100
+        assert params["pending_above_quote_notional_limit"] == 100
+        assert params["pending_below_quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -6514,6 +6578,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -6593,6 +6660,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_type"] = None
@@ -6674,6 +6744,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_side"] = None
@@ -6755,6 +6828,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_price"] = None
@@ -6836,6 +6912,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["working_quantity"] = None
@@ -6917,6 +6996,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_side"] = None
@@ -6998,6 +7080,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_quantity"] = None
@@ -7081,6 +7166,9 @@ class TestWebSocketTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["pending_above_type"] = None
@@ -7259,6 +7347,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -7387,6 +7476,7 @@ class TestWebSocketTradeApi:
             params["peg_offset_type"]
             == OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value
         )
+        assert params["quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -7423,6 +7513,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -7456,6 +7547,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["side"] = None
@@ -7489,6 +7581,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderPlacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderPlacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["type"] = None
@@ -7613,6 +7706,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -7695,6 +7789,7 @@ class TestWebSocketTradeApi:
         assert (
             params["peg_offset_type"] == OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value
         )
+        assert params["quote_notional_limit"] == 100
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -7732,6 +7827,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -7766,6 +7862,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["side"] = None
@@ -7800,6 +7897,7 @@ class TestWebSocketTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
         params["type"] = None

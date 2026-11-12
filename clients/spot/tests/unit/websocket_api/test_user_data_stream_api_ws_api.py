@@ -174,7 +174,10 @@ class TestWebSocketUserDataStreamApi:
     async def test_user_data_stream_subscribe_success_with_optional_params(self):
         """Test user_data_stream_subscribe() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {
+            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "filter": {"key": {"e": ["executionReport"]}},
+        }
 
         expected_response = {
             "id": "d3df8a21-98ea-4fe0-8f4e-0fcea5d418b7",
@@ -204,6 +207,7 @@ class TestWebSocketUserDataStreamApi:
             "method"
         ] == "/userDataStream.subscribe".replace("/", "", 1)
         assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["filter"] == {"key": {"e": ["executionReport"]}}
 
         assert result is not None
         assert result.data() == expected_response
@@ -273,7 +277,11 @@ class TestWebSocketUserDataStreamApi:
     ):
         """Test user_data_stream_subscribe_signature() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b", "recv_window": 5000}
+        params = {
+            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "recv_window": 5000,
+            "filter": {"key": {"e": ["executionReport"]}},
+        }
 
         expected_response = {
             "id": "d3df8a22-98ea-4fe0-9f4e-0fcea5d418b7",
@@ -304,6 +312,7 @@ class TestWebSocketUserDataStreamApi:
         ] == "/userDataStream.subscribe.signature".replace("/", "", 1)
         assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
         assert params["recv_window"] == 5000
+        assert params["filter"] == {"key": {"e": ["executionReport"]}}
 
         assert result is not None
         assert result.data() == expected_response

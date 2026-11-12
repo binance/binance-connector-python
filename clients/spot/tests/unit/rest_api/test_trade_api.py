@@ -881,6 +881,7 @@ class TestTradeApi:
             "peg_price_type": NewOrderPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": NewOrderPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -1442,6 +1443,7 @@ class TestTradeApi:
             "peg_price_type": OrderCancelReplacePegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderCancelReplacePegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -1793,6 +1795,8 @@ class TestTradeApi:
             "self_trade_prevention_mode": OrderListOcoSelfTradePreventionModeEnum[
                 "NONE"
             ].value,
+            "above_quote_notional_limit": 100,
+            "below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -2144,6 +2148,7 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -2592,6 +2597,7 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -3033,6 +3039,8 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -3514,6 +3522,9 @@ class TestTradeApi:
                 "PRICE_LEVEL"
             ].value,
             "pending_below_peg_offset_value": 1,
+            "working_quote_notional_limit": 100,
+            "pending_above_quote_notional_limit": 100,
+            "pending_below_quote_notional_limit": 100,
             "recv_window": 5000,
         }
 
@@ -4240,6 +4251,7 @@ class TestTradeApi:
             "peg_price_type": OrderTestPegPriceTypeEnum["PRIMARY_PEG"].value,
             "peg_offset_value": 1,
             "peg_offset_type": OrderTestPegOffsetTypeEnum["PRICE_LEVEL"].value,
+            "quote_notional_limit": 100,
             "recv_window": 5000,
         }
 

@@ -97,6 +97,8 @@ class TestGeneralApi:
                     "cancelReplaceAllowed": False,
                     "amendAllowed": False,
                     "pegInstructionsAllowed": True,
+                    "marketQuoteNotionalLimitAllowed": True,
+                    "limitQuoteNotionalLimitAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
                     "filters": [
@@ -204,6 +206,8 @@ class TestGeneralApi:
                     "cancelReplaceAllowed": False,
                     "amendAllowed": False,
                     "pegInstructionsAllowed": True,
+                    "marketQuoteNotionalLimitAllowed": True,
+                    "limitQuoteNotionalLimitAllowed": True,
                     "isSpotTradingAllowed": True,
                     "isMarginTradingAllowed": True,
                     "filters": [

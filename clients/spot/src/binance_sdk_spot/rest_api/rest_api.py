@@ -1822,6 +1822,7 @@ class SpotRestAPI:
         peg_price_type: Optional[NewOrderPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[NewOrderPegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[NewOrderResponse]:
         """
@@ -1887,6 +1888,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[NewOrderPegPriceTypeEnum] = None): See Pegged Orders Info
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100). See Pegged Orders Info
                     peg_offset_type (Optional[NewOrderPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders Info
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -1916,6 +1918,7 @@ class SpotRestAPI:
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
@@ -2004,6 +2007,7 @@ class SpotRestAPI:
         peg_price_type: Optional[OrderCancelReplacePegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderCancelReplacePegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderCancelReplaceResponse]:
         """
@@ -2224,6 +2228,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[OrderCancelReplacePegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG` <br> See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level to peg the price to (max: 100) <br> See Pegged Orders
                     peg_offset_type (Optional[OrderCancelReplacePegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported <br> See Pegged Orders.
+                    quote_notional_limit (Optional[float] = None): For replacement orders on the BUY side only. Maximum quote-asset notional the replacement order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2259,6 +2264,7 @@ class SpotRestAPI:
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
@@ -2296,6 +2302,8 @@ class SpotRestAPI:
         self_trade_prevention_mode: Optional[
             OrderListOcoSelfTradePreventionModeEnum
         ] = None,
+        above_quote_notional_limit: Optional[float] = None,
+        below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOcoResponse]:
         """
@@ -2355,6 +2363,8 @@ class SpotRestAPI:
                     below_peg_offset_value (Optional[int] = None):
                     new_order_resp_type (Optional[OrderListOcoNewOrderRespTypeEnum] = None): Select response format: `ACK`, `RESULT`, `FULL`.
                     self_trade_prevention_mode (Optional[OrderListOcoSelfTradePreventionModeEnum] = None): The allowed enums is dependent on what is configured on the symbol. Supported values: STP Modes
+                    above_quote_notional_limit (Optional[float] = None): Quote notional limit for the above order (only for orders on the BUY side). See Quote Notional Limit.
+                    below_quote_notional_limit (Optional[float] = None): Quote notional limit for the below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2396,6 +2406,8 @@ class SpotRestAPI:
             below_peg_offset_value,
             new_order_resp_type,
             self_trade_prevention_mode,
+            above_quote_notional_limit,
+            below_quote_notional_limit,
             recv_window,
         )
 
@@ -2432,6 +2444,7 @@ class SpotRestAPI:
         pending_peg_price_type: Optional[OrderListOpoPendingPegPriceTypeEnum] = None,
         pending_peg_offset_type: Optional[OrderListOpoPendingPegOffsetTypeEnum] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOpoResponse]:
         """
@@ -2439,7 +2452,8 @@ class SpotRestAPI:
 
                 Place an OPO.
 
-        - OPOs add 2 orders to the `EXCHANGE_MAX_NUM_ORDERS`` filter and `MAX_NUM_ORDERS`` filter.
+        - The working order must be `LIMIT` or `LIMIT_MAKER`.
+        - OPOs add 2 orders to the `EXCHANGE_MAX_NUM_ORDERS` filter and `MAX_NUM_ORDERS` filter.
 
         Weight(IP): 1
 
@@ -2483,6 +2497,7 @@ class SpotRestAPI:
                     pending_peg_price_type (Optional[OrderListOpoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_type (Optional[OrderListOpoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2523,6 +2538,7 @@ class SpotRestAPI:
             pending_peg_price_type,
             pending_peg_offset_type,
             pending_peg_offset_value,
+            working_quote_notional_limit,
             recv_window,
         )
 
@@ -2585,12 +2601,15 @@ class SpotRestAPI:
             OrderListOpocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOpocoResponse]:
         """
                 New Order List - OPOCO (TRADE)
 
                 Place an OPOCO.
+
+        - The working order must be `LIMIT` or `LIMIT_MAKER`.
 
         Weight(IP): 1
 
@@ -2606,7 +2625,7 @@ class SpotRestAPI:
 
                 Args:
                     symbol (Union[str, None]):
-                    working_type (Union[OrderListOpocoWorkingTypeEnum, None]):
+                    working_type (Union[OrderListOpocoWorkingTypeEnum, None]): Supported values: `LIMIT`, `LIMIT_MAKER`
                     working_side (Union[OrderListOpocoWorkingSideEnum, None]): Supported values: Order Side
                     working_price (Union[float, None]): Price for the working order.
                     working_quantity (Union[float, None]): Sets the quantity for the working order.
@@ -2646,6 +2665,7 @@ class SpotRestAPI:
                     pending_below_peg_price_type (Optional[OrderListOpocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListOpocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working LIMIT order on the BUY side. See Quote Notional Limit.
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2698,6 +2718,7 @@ class SpotRestAPI:
             pending_below_peg_price_type,
             pending_below_peg_offset_type,
             pending_below_peg_offset_value,
+            working_quote_notional_limit,
             recv_window,
         )
 
@@ -2735,6 +2756,8 @@ class SpotRestAPI:
         pending_peg_price_type: Optional[OrderListOtoPendingPegPriceTypeEnum] = None,
         pending_peg_offset_type: Optional[OrderListOtoPendingPegOffsetTypeEnum] = None,
         pending_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtoResponse]:
         """
@@ -2803,6 +2826,8 @@ class SpotRestAPI:
                     pending_peg_price_type (Optional[OrderListOtoPendingPegPriceTypeEnum] = None): See Pegged Orders
                     pending_peg_offset_type (Optional[OrderListOtoPendingPegOffsetTypeEnum] = None):
                     pending_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -2844,6 +2869,8 @@ class SpotRestAPI:
             pending_peg_price_type,
             pending_peg_offset_type,
             pending_peg_offset_value,
+            working_quote_notional_limit,
+            pending_quote_notional_limit,
             recv_window,
         )
 
@@ -2907,6 +2934,9 @@ class SpotRestAPI:
             OrderListOtocoPendingBelowPegOffsetTypeEnum
         ] = None,
         pending_below_peg_offset_value: Optional[int] = None,
+        working_quote_notional_limit: Optional[float] = None,
+        pending_above_quote_notional_limit: Optional[float] = None,
+        pending_below_quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderListOtocoResponse]:
         """
@@ -2990,6 +3020,9 @@ class SpotRestAPI:
                     pending_below_peg_price_type (Optional[OrderListOtocoPendingBelowPegPriceTypeEnum] = None): See Pegged Orders
                     pending_below_peg_offset_type (Optional[OrderListOtocoPendingBelowPegOffsetTypeEnum] = None):
                     pending_below_peg_offset_value (Optional[int] = None):
+                    working_quote_notional_limit (Optional[float] = None): Quote notional limit for the working order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_above_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending above order (only for orders on the BUY side). See Quote Notional Limit.
+                    pending_below_quote_notional_limit (Optional[float] = None): Quote notional limit for the pending below order (only for orders on the BUY side). See Quote Notional Limit.
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3043,6 +3076,9 @@ class SpotRestAPI:
             pending_below_peg_price_type,
             pending_below_peg_offset_type,
             pending_below_peg_offset_value,
+            working_quote_notional_limit,
+            pending_above_quote_notional_limit,
+            pending_below_quote_notional_limit,
             recv_window,
         )
 
@@ -3169,6 +3205,7 @@ class SpotRestAPI:
         peg_price_type: Optional[OrderTestPegPriceTypeEnum] = None,
         peg_offset_value: Optional[int] = None,
         peg_offset_type: Optional[OrderTestPegOffsetTypeEnum] = None,
+        quote_notional_limit: Optional[float] = None,
         recv_window: Optional[float] = None,
     ) -> ApiResponse[OrderTestResponse]:
         """
@@ -3209,6 +3246,7 @@ class SpotRestAPI:
                     peg_price_type (Optional[OrderTestPegPriceTypeEnum] = None): `PRIMARY_PEG` or `MARKET_PEG`. See Pegged Orders
                     peg_offset_value (Optional[int] = None): Price level for pegging (max: 100). See Pegged Orders
                     peg_offset_type (Optional[OrderTestPegOffsetTypeEnum] = None): Only `PRICE_LEVEL` is supported. See Pegged Orders
+                    quote_notional_limit (Optional[float] = None): For orders on the BUY side only. Maximum quote-asset notional the order may consume. See Quote Notional Limit.
                     recv_window (Optional[float] = None): The value cannot be greater than `60000`. Supports up to three decimal places of precision (e.g., 6000.346) so that microseconds may be specified.
 
                 Returns:
@@ -3239,6 +3277,7 @@ class SpotRestAPI:
             peg_price_type,
             peg_offset_value,
             peg_offset_type,
+            quote_notional_limit,
             recv_window,
         )
 
