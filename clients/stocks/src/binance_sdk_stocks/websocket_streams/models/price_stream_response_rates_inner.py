@@ -41,17 +41,35 @@ class PriceStreamResponseRatesInner(BaseModel):
     )
     pc: Optional[StrictStr] = Field(
         default=None,
-        description="Previous day's RTH close price (reference); absent when unknown.",
+        description="Previous trading day's close price; absent when unknown.",
     )
     tc: Optional[StrictStr] = Field(
-        default=None, description="Today's RTH close price; absent before After-Hours."
+        default=None, description="Today's close price; absent before After-Hours."
+    )
+    lrc: Optional[StrictStr] = Field(
+        default=None,
+        description="Final close price of the most recent completed RTH trading day. Rolls forward only once the next trading day enters Post-Market and the 1-minute kline for the minute before that day's RTH close is available; while unavailable, the previous `lrc`/`prc` pair is retained.",
+    )
+    prc: Optional[StrictStr] = Field(
+        default=None,
+        description="Final close price of the trading day before the `lrc` trading day. `null` when the symbol has only one completed RTH trading day (e.g. a new IPO).",
     )
     mp: Optional[StrictStr] = Field(
         default=None,
         description="Per-symbol market phase: `C` Closed, `ON` Overnight, `PRE` Pre-Market, `O` Market Open, `POST` Post-Market.",
     )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["s", "ac", "p", "t", "pc", "tc", "mp"]
+    __properties: ClassVar[List[str]] = [
+        "s",
+        "ac",
+        "p",
+        "t",
+        "pc",
+        "tc",
+        "lrc",
+        "prc",
+        "mp",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +123,11 @@ class PriceStreamResponseRatesInner(BaseModel):
         if self.t is None and "t" in self.model_fields_set:
             _dict["t"] = None
 
+        # set to None if prc (nullable) is None
+        # and model_fields_set contains the field
+        if self.prc is None and "prc" in self.model_fields_set:
+            _dict["prc"] = None
+
         return _dict
 
     @classmethod
@@ -124,6 +147,8 @@ class PriceStreamResponseRatesInner(BaseModel):
                 "t": obj.get("t"),
                 "pc": obj.get("pc"),
                 "tc": obj.get("tc"),
+                "lrc": obj.get("lrc"),
+                "prc": obj.get("prc"),
                 "mp": obj.get("mp"),
             }
         )
