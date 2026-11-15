@@ -481,9 +481,21 @@ class WebSocketCommon:
         loop_reported_close = False
         async for msg in connection.websocket:
             if msg.type == aiohttp.WSMsgType.TEXT:
-                data = json.loads(msg.data)
-                if self.signed:
-                    data = self.parse_signed_stream_message(data)
+                try:
+                    data = json.loads(msg.data)
+                    if not isinstance(data, dict):
+                        raise ValueError(
+                            f"expected a JSON object, got {type(data).__name__}"
+                        )
+                    if self.signed:
+                        data = self.parse_signed_stream_message(data)
+                except ValueError as e:
+                    logging.error(
+                        f"Ignoring a malformed message on WebSocket "
+                        f"{connection.id}: {e}"
+                    )
+                    self._emit_connection_event(connection, "error", e)
+                    continue
 
                 request_id = data.get("id")
                 if request_id and request_id in connection.pending_request:
@@ -601,7 +613,15 @@ class WebSocketCommon:
                         logging.info(f"Received message: {data}")
             elif msg.type == aiohttp.WSMsgType.PING:
                 logging.info(f"Received PING from server for {connection.id}")
-                await connection.websocket.pong(msg.data)
+                try:
+                    await connection.websocket.pong(msg.data)
+                except Exception as e:
+                    # A socket that cannot answer a ping is on its way out: keep
+                    # reading so the loop reaches its normal close handling.
+                    logging.error(
+                        f"Error sending PONG on WebSocket {connection.id}: {e}"
+                    )
+                    self._emit_connection_event(connection, "error", e)
                 self._emit_connection_event(connection, "ping", msg.data)
 
             elif msg.type == aiohttp.WSMsgType.PONG:

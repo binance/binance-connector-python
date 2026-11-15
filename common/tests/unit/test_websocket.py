@@ -732,6 +732,71 @@ class TestWebSocketCommon:
         assert conn.is_open is False
 
     @pytest.mark.asyncio
+    async def test_receive_loop_pong_failure_keeps_loop_alive(self):
+        """A pong that cannot be sent must not tear down the receive loop."""
+
+        ping_msg = MagicMock()
+        ping_msg.type = aiohttp.WSMsgType.PING
+        ping_msg.data = b"ping-payload"
+
+        data_msg = MagicMock()
+        data_msg.type = aiohttp.WSMsgType.TEXT
+        data_msg.data = json.dumps({"stream": "ticker", "data": {"price": "100"}})
+
+        pong_error = ConnectionResetError("Cannot write to closing transport")
+        ws_mock = AsyncMock()
+        ws_mock.pong = AsyncMock(side_effect=pong_error)
+        ws_mock.__aiter__.return_value = [ping_msg, data_msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        error_cb = MagicMock()
+        conn.connection_callback_map["error"].append(error_cb)
+        stream_cb = MagicMock()
+        conn.stream_callback_map["ticker"] = [stream_cb]
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        error_cb.assert_called_once_with(pong_error)
+        stream_cb.assert_called_once_with(
+            {"stream": "ticker", "data": {"price": "100"}}
+        )
+
+    @pytest.mark.asyncio
+    async def test_receive_loop_malformed_text_frame_keeps_loop_alive(self):
+        """A text frame that is not a JSON object must not tear down the loop."""
+
+        not_json = MagicMock()
+        not_json.type = aiohttp.WSMsgType.TEXT
+        not_json.data = "not-json"
+
+        not_an_object = MagicMock()
+        not_an_object.type = aiohttp.WSMsgType.TEXT
+        not_an_object.data = "[]"
+
+        data_msg = MagicMock()
+        data_msg.type = aiohttp.WSMsgType.TEXT
+        data_msg.data = json.dumps({"stream": "ticker", "data": {"price": "100"}})
+
+        ws_mock = AsyncMock()
+        ws_mock.__aiter__.return_value = [not_json, not_an_object, data_msg]
+
+        conn = WebSocketConnection(ws_mock, "test_id", "ConfigurationWebSocketStreams")
+        error_cb = MagicMock()
+        conn.connection_callback_map["error"].append(error_cb)
+        stream_cb = MagicMock()
+        conn.stream_callback_map["ticker"] = [stream_cb]
+
+        ws_common = WebSocketCommon(None)
+        await ws_common.receive_loop(conn)
+
+        assert error_cb.call_count == 2
+        assert all(isinstance(c.args[0], ValueError) for c in error_cb.call_args_list)
+        stream_cb.assert_called_once_with(
+            {"stream": "ticker", "data": {"price": "100"}}
+        )
+
+    @pytest.mark.asyncio
     async def test_receive_loop_server_error_keeps_loop_alive(self):
         """A server error payload must not tear down the receive loop."""
 
