@@ -20,6 +20,8 @@ from binance_common.constants import (
     DEFAULT_RECONNECT_ATTEMPTS,
     DEFAULT_WS_REQUEST_TIMEOUT_SECONDS,
     MAX_RECONNECT_ATTEMPTS,
+    PONG_RETRY_ATTEMPTS,
+    PONG_RETRY_DELAY_SECONDS,
     REPLACEMENT_RETRY_DELAY_SECONDS,
     SUBSCRIBE_MESSAGE_DELAY_SECONDS,
     SUPPORTED_CONNECTION_EVENTS,
@@ -82,6 +84,9 @@ class WebSocketConnection:
         url_path (Optional[str]): The URL path for the WebSocket connection.
         close_initiated (bool): Flag indicating that the user asked for this
             connection to be closed, so it must not be reconnected.
+        closing_after_replacement (bool): Flag indicating that the library is
+            closing this connection because a replacement has taken over, as
+            opposed to the user closing it.
         scheduled_reconnect_task (Optional[asyncio.Task]): The pending automatic
             reconnect task, kept so it can be cancelled when the connection is
             replaced or closed.
@@ -115,6 +120,7 @@ class WebSocketConnection:
         self.user_data_requests = {}
         self.url_path = url_path
         self.close_initiated = False
+        self.closing_after_replacement = False
         self.scheduled_reconnect_task = None
         self.accepts_requests = True
 
@@ -297,6 +303,7 @@ class WebSocketCommon:
         if connection.is_session_log_on is True:
             await self._log_out_session(connection)
 
+        connection.closing_after_replacement = True
         await self.close_connection(connection, False)
 
     async def _log_out_session(self, connection: WebSocketConnection) -> bool:
@@ -463,6 +470,16 @@ class WebSocketCommon:
 
         try:
             await self._receive_messages(connection)
+        except asyncio.CancelledError:
+            raise
+        except Exception as e:
+            logging.error(
+                f"Receive loop for WebSocket {connection.id} stopped "
+                f"unexpectedly: {e}"
+            )
+            self._emit_connection_event(connection, "error", e)
+            self._emit_close_event(connection)
+            await self._discard_connection(connection)
         finally:
             connection.accepts_requests = False
             self._fail_pending_requests(
@@ -481,9 +498,27 @@ class WebSocketCommon:
         loop_reported_close = False
         async for msg in connection.websocket:
             if msg.type == aiohttp.WSMsgType.TEXT:
-                data = json.loads(msg.data)
+                try:
+                    data = json.loads(msg.data)
+                except ValueError as e:
+                    logging.error(
+                        f"Ignoring a non-JSON message on WebSocket "
+                        f"{connection.id}: {e}"
+                    )
+                    self._emit_connection_event(connection, "error", e)
+                    continue
                 if self.signed:
                     data = self.parse_signed_stream_message(data)
+                if not isinstance(data, dict):
+                    error = ValueError(
+                        f"Expected a JSON object, received "
+                        f"{type(data).__name__}"
+                    )
+                    logging.error(
+                        f"Ignoring a message on WebSocket {connection.id}: {error}"
+                    )
+                    self._emit_connection_event(connection, "error", error)
+                    continue
 
                 request_id = data.get("id")
                 if request_id and request_id in connection.pending_request:
@@ -502,7 +537,8 @@ class WebSocketCommon:
                     else:
                         future.set_result(data)
                 elif (
-                    data.get("event", {}).get("e") == "serverShutdown"
+                    isinstance(data.get("event"), dict)
+                    and data["event"].get("e") == "serverShutdown"
                     and not connection.reconnect
                     and connection.id not in self.reconnect_tasks
                     and not connection.close_initiated
@@ -601,7 +637,13 @@ class WebSocketCommon:
                         logging.info(f"Received message: {data}")
             elif msg.type == aiohttp.WSMsgType.PING:
                 logging.info(f"Received PING from server for {connection.id}")
-                await connection.websocket.pong(msg.data)
+                pong_error = await self._send_pong(connection, msg.data)
+                if pong_error is not None:
+                    self._emit_connection_event(connection, "error", pong_error)
+                    self._emit_close_event(connection)
+                    await self._discard_connection(connection)
+                    loop_reported_close = True
+                    break
                 self._emit_connection_event(connection, "ping", msg.data)
 
             elif msg.type == aiohttp.WSMsgType.PONG:
@@ -630,6 +672,39 @@ class WebSocketCommon:
             logging.info("WebSocket connection closed")
             self._emit_close_event(connection)
             await self._discard_connection(connection)
+
+    async def _send_pong(
+        self, connection: WebSocketConnection, data: bytes
+    ) -> Optional[Exception]:
+        """Answer a server PING, retrying a failed send a few times.
+
+        Args:
+            connection (WebSocketConnection): The connection that was pinged.
+            data (bytes): The PING payload to echo back.
+
+        Returns:
+            Optional[Exception]: None once the PONG is sent, otherwise the last
+                error. A closed socket is not retried.
+        """
+
+        attempts = 1 + PONG_RETRY_ATTEMPTS
+        for attempt in range(1, attempts + 1):
+            try:
+                await connection.websocket.pong(data)
+                return None
+            except Exception as e:
+                if connection.websocket.closed or attempt == attempts:
+                    logging.error(
+                        f"Could not answer PING on WebSocket {connection.id} "
+                        f"after {attempt} attempt(s): {e}"
+                    )
+                    return e
+                logging.warning(
+                    f"PONG attempt {attempt}/{attempts} failed on WebSocket "
+                    f"{connection.id}: {e}; retrying in "
+                    f"{PONG_RETRY_DELAY_SECONDS}s."
+                )
+                await asyncio.sleep(PONG_RETRY_DELAY_SECONDS)
 
     def _emit_close_event(self, connection: WebSocketConnection) -> None:
         """Mark a connection closed and emit its `close` event.
@@ -1112,6 +1187,10 @@ class WebSocketCommon:
                 self._forget_connection_streams(connection)
                 return None
 
+            if connection.close_initiated:
+                await self._abandon_replacement(connection, new_connection)
+                return None
+
             if connection.connection_callback_map:
                 new_connection.connection_callback_map = defaultdict(
                     list,
@@ -1124,6 +1203,10 @@ class WebSocketCommon:
                     connection.session_logon_request, new_connection
                 )
 
+            if connection.close_initiated:
+                await self._abandon_replacement(connection, new_connection)
+                return None
+
             connection.accepts_requests = False
             new_connection.accepts_requests = True
 
@@ -1131,6 +1214,10 @@ class WebSocketCommon:
                 connection, new_connection, session_logged_on
             )
             await self._resubscribe_global_streams(connection, new_connection)
+
+            if connection.close_initiated:
+                await self._abandon_replacement(connection, new_connection)
+                return None
 
             connection.stream_callback_map = {}
             connection.response_types = {}
@@ -1146,6 +1233,40 @@ class WebSocketCommon:
             await self._drain_and_close(connection)
 
         return new_connection
+
+    async def _abandon_replacement(
+        self,
+        connection: WebSocketConnection,
+        new_connection: WebSocketConnection,
+    ) -> None:
+        """Drop a replacement because the user closed the connection it replaces.
+
+        Args:
+            connection (WebSocketConnection): The connection the user closed.
+            new_connection (WebSocketConnection): Its replacement, already open.
+        """
+
+        logging.info(
+            f"Reconnect for WebSocket {connection.id} abandoned: closed by the user."
+        )
+        connection.reconnect = False
+        connection.is_being_replaced = False
+        new_connection.close_initiated = True
+        new_connection.close_emitted = True
+        new_connection.accepts_requests = False
+        new_connection.cancel_scheduled_reconnect()
+        try:
+            await new_connection.websocket.close()
+        except Exception as e:
+            logging.error(
+                f"Error closing the replacement for WebSocket {connection.id}: {e}"
+            )
+        if new_connection in self.connections:
+            self.connections.remove(new_connection)
+
+        self._forget_connection_streams(new_connection)
+        self._forget_connection_streams(connection)
+        self._emit_close_event(connection)
 
     async def _resubscribe_user_streams(
         self,
@@ -1559,7 +1680,11 @@ class WebSocketCommon:
 
         Args:
             connection (Optional[WebSocketConnection]): WebSocket connection object to close.
-            close_session (bool): Whether to close the aiohttp session.
+                Closing a connection that is being replaced also abandons its
+                replacement.
+            close_session (bool): Whether to close the aiohttp session. When a
+                single connection is closed, the session is only closed once
+                no other connection is using it.
         """
 
         if len(self.connections) == 0:
@@ -1570,7 +1695,8 @@ class WebSocketCommon:
             for pooled_connection in self.connections[:]:
                 await self._close_one(pooled_connection)
 
-        if close_session and self.session is not None:
+        session_in_use = connection is not None and len(self.connections) > 0
+        if close_session and self.session is not None and not session_in_use:
             await self.session.close()
             self.session = None
 
@@ -1581,7 +1707,9 @@ class WebSocketCommon:
             connection (WebSocketConnection): The connection to close.
         """
 
-        user_initiated = not (connection.reconnect or connection.is_being_replaced)
+        user_initiated = not (
+            connection.reconnect or connection.closing_after_replacement
+        )
 
         try:
             if user_initiated:

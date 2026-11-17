@@ -35,7 +35,7 @@ from typing import (
     get_args,
     get_origin,
 )
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 from urllib3.exceptions import NewConnectionError
 from urllib3.util.ssl_ import create_urllib3_context
 
@@ -834,8 +834,8 @@ def parse_proxies(
     port = proxy.get("port", "")
 
     if "auth" in proxy:
-        username = proxy["auth"].get("username", "")
-        password = proxy["auth"].get("password", "")
+        username = quote(str(proxy["auth"].get("username", "")), safe="")
+        password = quote(str(proxy["auth"].get("password", "")), safe="")
         proxy_url = f"{protocol}://{username}:{password}@{host}:{port}"
     else:
         proxy_url = f"{protocol}://{host}:{port}"

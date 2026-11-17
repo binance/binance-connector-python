@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.10.0 - 2026-11-17
+
+### Changed (5)
+
+- Fixed a WebSocket connection staying listed, open and silent after a message that is not a JSON object: such messages are now logged and reported as an `error` event, and the connection keeps reading. (#588)
+- A failed PONG reply to a server PING is now retried twice, 0.5 s apart; if it still fails, the connection emits `error` and `close` and is removed from the pool instead of staying open and silent. Any other unexpected error in the receive loop is handled the same way. (#588)
+- Fixed `close_connection(connection=c)` not stopping a replacement already in progress (`serverShutdown` or the 23 h rotation): the replacement is now abandoned, its new connection is closed, and a single `close` event is emitted. (#589)
+- `close_connection(connection=c, close_session=True)` now closes the shared `aiohttp` session only once no other connection uses it, so closing one connection no longer breaks the others. Closing all connections, or the last one, still closes the session. (#589)
+- Proxy usernames and passwords are now percent-encoded, so characters such as `#`, `/`, `?`, `@` or `%` no longer break the proxy URL or change the credentials sent. If you encoded them yourself as a workaround, pass the plain values instead. (#583)
+
 ## 4.9.0 - 2026-11-06
 
 ### Added (1)
