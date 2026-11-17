@@ -834,8 +834,6 @@ def parse_proxies(
     port = proxy.get("port", "")
 
     if "auth" in proxy:
-        # Percent-encode the credentials so characters such as "#", "/", "?",
-        # "@" or "%" stay part of the username or password in the proxy URL.
         username = quote(str(proxy["auth"].get("username", "")), safe="")
         password = quote(str(proxy["auth"].get("password", "")), safe="")
         proxy_url = f"{protocol}://{username}:{password}@{host}:{port}"

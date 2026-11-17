@@ -23,6 +23,7 @@ from binance_common.configuration import (
 from binance_common.constants import (
     DEFAULT_RECONNECT_ATTEMPTS,
     MAX_RECONNECT_ATTEMPTS,
+    PONG_RETRY_ATTEMPTS,
     WebsocketMode,
 )
 from binance_common.websocket import (
@@ -121,6 +122,7 @@ def mock_connection():
     conn.response_types = {}
     conn.is_open = True
     conn.close_initiated = False
+    conn.closing_after_replacement = False
     conn.is_session_log_on = False
     conn.user_data_requests = {}
     conn.scheduled_reconnect_task = None
@@ -4228,3 +4230,314 @@ class TestDiscardedConnectionStreams:
         assert stream.stream_connections.stream_connections_map == {
             "btcusdt@depth": connection
         }
+
+
+class _FrameSocket:
+    """A minimal aiohttp-like socket that yields the given messages."""
+
+    def __init__(self, messages, pong_error=None, pong_failures=None):
+        self.messages = list(messages)
+        self.closed = False
+        self.pong_error = pong_error
+        # How many PONG sends fail before one succeeds; None means all fail.
+        self.pong_failures = pong_failures
+        self.pong_calls = 0
+        self.close = AsyncMock(side_effect=self._close)
+
+    async def _close(self):
+        self.closed = True
+
+    async def pong(self, data):
+        self.pong_calls += 1
+        if self.pong_error and (
+            self.pong_failures is None or self.pong_calls <= self.pong_failures
+        ):
+            raise self.pong_error
+
+    def exception(self):
+        return None
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        if not self.messages:
+            raise StopAsyncIteration
+        return self.messages.pop(0)
+
+
+def _text(data):
+    return aiohttp.WSMessage(aiohttp.WSMsgType.TEXT, data, None)
+
+
+class TestReceiveLoopResilience:
+    """Issue #588: a bad frame or a failed PONG must not leave a dead connection."""
+
+    def _stream(self, mock_config, socket):
+        stream = WebSocketStreamBase(mock_config)
+        conn = WebSocketConnection(socket, "c1", "ConfigurationWebSocketStreams")
+        stream.connections = [conn]
+        stream.stream_connections.stream_connections_map["x"] = conn
+        events = []
+        conn.connection_callback_map["error"].append(
+            lambda e: events.append(("error", type(e).__name__))
+        )
+        conn.connection_callback_map["close"].append(lambda: events.append("close"))
+        return stream, conn, events
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("frame", ["not-json", "[]", "42", '"text"'])
+    async def test_malformed_frame_is_skipped(self, mock_config, mock_registry, frame):
+        socket = _FrameSocket([_text(frame), _text('{"stream":"x","data":{"a":1}}')])
+        stream, conn, events = self._stream(mock_config, socket)
+        received = []
+        conn.stream_callback_map["x"] = [received.append]
+
+        await stream.receive_loop(conn)
+
+        assert received == [{"stream": "x", "data": {"a": 1}}]
+        assert events[0][0] == "error"
+        assert events[-1] == "close"
+
+    @pytest.mark.asyncio
+    async def test_non_object_event_does_not_stop_the_loop(
+        self, mock_config, mock_registry
+    ):
+        socket = _FrameSocket(
+            [_text('{"event":"oops"}'), _text('{"stream":"x","data":{}}')]
+        )
+        stream, conn, _ = self._stream(mock_config, socket)
+        received = []
+        conn.stream_callback_map["x"] = [received.append]
+
+        await stream.receive_loop(conn)
+
+        assert received == [{"stream": "x", "data": {}}]
+
+    @pytest.mark.asyncio
+    async def test_pong_failure_closes_and_drops_the_connection(
+        self, mock_config, mock_registry
+    ):
+        ping = aiohttp.WSMessage(aiohttp.WSMsgType.PING, b"p", None)
+        socket = _FrameSocket(
+            [ping, _text('{"stream":"x","data":{}}')],
+            pong_error=ConnectionResetError("Cannot write to closing transport"),
+        )
+        stream, conn, events = self._stream(mock_config, socket)
+
+        with patch("binance_common.websocket.PONG_RETRY_DELAY_SECONDS", 0):
+            await stream.receive_loop(conn)
+
+        assert socket.pong_calls == 1 + PONG_RETRY_ATTEMPTS
+        assert events == [("error", "ConnectionResetError"), "close"]
+        assert conn not in stream.connections
+        assert socket.closed is True
+        assert conn.accepts_requests is False
+        assert stream.stream_connections.stream_connections_map == {}
+
+    @pytest.mark.asyncio
+    async def test_pong_is_retried_before_giving_up(self, mock_config, mock_registry):
+        ping = aiohttp.WSMessage(aiohttp.WSMsgType.PING, b"p", None)
+        socket = _FrameSocket(
+            [ping, _text('{"stream":"x","data":{}}')],
+            pong_error=ConnectionResetError("transient"),
+            pong_failures=PONG_RETRY_ATTEMPTS,
+        )
+        stream, conn, events = self._stream(mock_config, socket)
+        received = []
+        conn.stream_callback_map["x"] = [received.append]
+        pings = []
+        conn.connection_callback_map["ping"].append(pings.append)
+
+        with patch("binance_common.websocket.PONG_RETRY_DELAY_SECONDS", 0):
+            await stream.receive_loop(conn)
+
+        assert socket.pong_calls == 1 + PONG_RETRY_ATTEMPTS
+        assert pings == [b"p"]
+        assert ("error", "ConnectionResetError") not in events
+        assert received == [{"stream": "x", "data": {}}]
+
+    @pytest.mark.asyncio
+    async def test_pong_is_not_retried_on_a_closed_socket(
+        self, mock_config, mock_registry
+    ):
+        ping = aiohttp.WSMessage(aiohttp.WSMsgType.PING, b"p", None)
+        socket = _FrameSocket([ping], pong_error=ConnectionResetError("closed"))
+        socket.closed = True
+        stream, conn, events = self._stream(mock_config, socket)
+
+        await stream.receive_loop(conn)
+
+        assert socket.pong_calls == 1
+        assert events == [("error", "ConnectionResetError"), "close"]
+        assert conn not in stream.connections
+
+    @pytest.mark.asyncio
+    async def test_unexpected_error_closes_and_drops_the_connection(
+        self, mock_config, mock_registry
+    ):
+        socket = _FrameSocket([])
+        stream, conn, events = self._stream(mock_config, socket)
+        stream._receive_messages = AsyncMock(side_effect=RuntimeError("boom"))
+
+        await stream.receive_loop(conn)
+
+        assert events == [("error", "RuntimeError"), "close"]
+        assert conn not in stream.connections
+        assert socket.closed is True
+
+
+class TestCloseDuringReplacement:
+    """Issue #589: closing a connection must abort its in-flight replacement."""
+
+    def _setup(self, mock_config, delay_ms=0):
+        mock_config.reconnect_delay = delay_ms
+        mock_config.reconnect_attempts = 1
+        mock_config.session_re_logon = False
+        stream = WebSocketStreamBase(mock_config)
+        stream.session = AsyncMock()
+        old = WebSocketConnection(
+            _FrameSocket([]), "c1", "ConfigurationWebSocketStreams"
+        )
+        other = WebSocketConnection(
+            _FrameSocket([]), "c2", "ConfigurationWebSocketStreams"
+        )
+        stream.connections = [old, other]
+        stream.stream_connections.stream_connections_map["btcusdt@trade"] = old
+        events = []
+        old.connection_callback_map["close"].append(lambda: events.append("close"))
+        old.connection_callback_map["open"].append(lambda: events.append("open"))
+        return stream, old, other, events
+
+    @pytest.mark.asyncio
+    async def test_close_while_waiting_abandons_the_replacement(
+        self, mock_config, mock_registry
+    ):
+        stream, old, other, events = self._setup(mock_config, delay_ms=50)
+        stream.init_connection = AsyncMock()
+
+        task = asyncio.create_task(stream.schedule_reconnect(old, mock_config, 0))
+        await asyncio.sleep(0.01)
+        assert old.is_being_replaced is True
+
+        await stream.close_connection(connection=old)
+        result = await task
+
+        assert result is None
+        stream.init_connection.assert_not_awaited()
+        assert stream.connections == [other]
+        assert events == ["close"]
+        assert stream.stream_connections.stream_connections_map == {}
+        assert stream.reconnect_tasks == []
+
+    @pytest.mark.asyncio
+    async def test_close_while_connecting_drops_the_new_connection(
+        self, mock_config, mock_registry
+    ):
+        stream, old, other, events = self._setup(mock_config)
+        new = WebSocketConnection(
+            _FrameSocket([]), "c1", "ConfigurationWebSocketStreams"
+        )
+        new_events = []
+        new.connection_callback_map["close"].append(lambda: new_events.append("close"))
+        connecting = asyncio.Event()
+        release = asyncio.Event()
+
+        async def slow_init(*args, **kwargs):
+            connecting.set()
+            await release.wait()
+            stream.connections.append(new)
+
+        stream.init_connection = slow_init
+        stream._resubscribe_global_streams = AsyncMock()
+
+        task = asyncio.create_task(stream.reconnect(old, mock_config))
+        await connecting.wait()
+        await stream.close_connection(connection=old)
+        release.set()
+        result = await task
+
+        assert result is None
+        stream._resubscribe_global_streams.assert_not_awaited()
+        assert stream.connections == [other]
+        assert new.websocket.closed is True
+        assert events == ["close"]
+        assert new_events == []
+        assert stream.stream_connections.stream_connections_map == {}
+
+    @pytest.mark.asyncio
+    async def test_close_while_resubscribing_drops_the_new_connection(
+        self, mock_config, mock_registry
+    ):
+        stream, old, other, events = self._setup(mock_config)
+        new = WebSocketConnection(
+            _FrameSocket([]), "c1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            stream.connections.append(new)
+
+        async def resubscribe(old_conn, new_conn):
+            stream.stream_connections.stream_connections_map["btcusdt@trade"] = (
+                new_conn
+            )
+            await stream.close_connection(connection=old_conn)
+
+        stream.init_connection = fake_init
+        stream._resubscribe_global_streams = resubscribe
+
+        result = await stream.reconnect(old, mock_config)
+
+        assert result is None
+        assert stream.connections == [other]
+        assert new.websocket.closed is True
+        assert events == ["close"]
+        assert stream.stream_connections.stream_connections_map == {}
+
+    @pytest.mark.asyncio
+    async def test_replacement_drain_is_not_a_user_close(
+        self, mock_config, mock_registry
+    ):
+        stream, old, other, events = self._setup(mock_config)
+        new = WebSocketConnection(
+            _FrameSocket([]), "c1", "ConfigurationWebSocketStreams"
+        )
+
+        async def fake_init(*args, **kwargs):
+            stream.connections.append(new)
+
+        async def resubscribe(old_conn, new_conn):
+            stream.stream_connections.stream_connections_map["btcusdt@trade"] = (
+                new_conn
+            )
+
+        stream.init_connection = fake_init
+        stream._resubscribe_global_streams = resubscribe
+
+        result = await stream.reconnect(old, mock_config)
+
+        assert result is new
+        assert stream.connections == [other, new]
+        assert old.close_initiated is False
+        assert old.websocket.closed is True
+        assert stream.stream_connections.stream_connections_map == {
+            "btcusdt@trade": new
+        }
+        stream.session.close.assert_not_awaited()
+
+    @pytest.mark.asyncio
+    async def test_closing_one_connection_keeps_the_shared_session(
+        self, mock_config, mock_registry
+    ):
+        stream, old, other, _ = self._setup(mock_config)
+        session = stream.session
+
+        await stream.close_connection(connection=old)
+
+        session.close.assert_not_awaited()
+        assert stream.session is session
+
+        await stream.close_connection(connection=other)
+
+        session.close.assert_awaited_once()
+        assert stream.session is None
