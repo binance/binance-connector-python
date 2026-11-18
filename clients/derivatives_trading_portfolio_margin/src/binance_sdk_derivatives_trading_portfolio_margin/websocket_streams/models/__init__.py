@@ -27,7 +27,6 @@ from .execution_report import ExecutionReport as ExecutionReport
 from .liability_change import LiabilityChange as LiabilityChange
 from .listen_key_expired import ListenKeyExpired as ListenKeyExpired
 from .open_order_loss import OpenOrderLoss as OpenOrderLoss
-from .open_order_loss_o_inner import OpenOrderLossOInner as OpenOrderLossOInner
 from .order_trade_update import OrderTradeUpdate as OrderTradeUpdate
 from .order_trade_update_o import OrderTradeUpdateO as OrderTradeUpdateO
 from .outbound_account_position import (

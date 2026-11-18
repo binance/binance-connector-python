@@ -46,8 +46,12 @@ class NewUmAlgoOrderResponse(BaseModel):
     close_position: Optional[StrictBool] = Field(default=None, alias="closePosition")
     price_protect: Optional[StrictBool] = Field(default=None, alias="priceProtect")
     reduce_only: Optional[StrictBool] = Field(default=None, alias="reduceOnly")
-    activate_price: Optional[StrictStr] = Field(default=None, alias="activatePrice")
-    callback_rate: Optional[StrictStr] = Field(default=None, alias="callbackRate")
+    activate_price: Optional[StrictStr] = Field(
+        default=None, description="TRAILING_STOP_MARKET order", alias="activatePrice"
+    )
+    callback_rate: Optional[StrictStr] = Field(
+        default=None, description="TRAILING_STOP_MARKET order", alias="callbackRate"
+    )
     create_time: Optional[StrictInt] = Field(default=None, alias="createTime")
     update_time: Optional[StrictInt] = Field(default=None, alias="updateTime")
     trigger_time: Optional[StrictInt] = Field(default=None, alias="triggerTime")

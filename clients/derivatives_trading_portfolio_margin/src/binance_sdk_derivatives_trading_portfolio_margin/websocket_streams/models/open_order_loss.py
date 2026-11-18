@@ -15,11 +15,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_derivatives_trading_portfolio_margin.websocket_streams.models.open_order_loss_o_inner import (
-    OpenOrderLossOInner,
-)
 from typing import Set
 from typing_extensions import Self
 
@@ -30,11 +27,11 @@ class OpenOrderLoss(BaseModel):
     """  # noqa: E501
 
     E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    O: Optional[List[OpenOrderLossOInner]] = Field(
-        default=None, description="Update Data", alias="O"
+    o: Optional[StrictStr] = Field(
+        default=None, description="Aggregated account-level open order loss, in USD"
     )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["E", "O"]
+    __properties: ClassVar[List[str]] = ["E", "o"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,13 +75,6 @@ class OpenOrderLoss(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in O (list)
-        _items = []
-        if self.O:
-            for _item_o in self.O:
-                if _item_o:
-                    _items.append(_item_o.to_dict())
-            _dict["O"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -101,16 +91,7 @@ class OpenOrderLoss(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "E": obj.get("E"),
-                "O": (
-                    [OpenOrderLossOInner.from_dict(_item) for _item in obj["O"]]
-                    if obj.get("O") is not None
-                    else None
-                ),
-            }
-        )
+        _obj = cls.model_validate({"E": obj.get("E"), "o": obj.get("o")})
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
