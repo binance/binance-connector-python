@@ -45,6 +45,7 @@ from .models import SwitchDeltaModeDeltaEnabledEnum
 from .models import TransferLdusdtRwusdForPortfolioMarginAssetEnum
 from .models import TransferLdusdtRwusdForPortfolioMarginTransferTypeEnum
 from .models import GetPortfolioMarginAssetLeverageResponse
+from .models import GetPortfolioMarginTieredCollateralRatesResponse
 from .models import PortfolioMarginCollateralRateResponse
 from .models import PortfolioMarginProTieredCollateralRateResponse
 from .models import QueryPortfolioMarginAssetIndexPriceResponse
@@ -767,6 +768,30 @@ class DerivativesTradingPortfolioMarginProRestAPI:
         """
 
         return self._marketDataApi.get_portfolio_margin_asset_leverage()
+
+    def get_portfolio_margin_tiered_collateral_rates(
+        self,
+    ) -> ApiResponse[GetPortfolioMarginTieredCollateralRatesResponse]:
+        """
+                Get Portfolio Margin Tiered Collateral Rates (MARKET_DATA)
+
+                Query the tiered collateral rate configurations for Portfolio Margin assets.
+
+        Weight(IP): 50
+
+        Security Type: MARKET_DATA
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetPortfolioMarginTieredCollateralRatesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._marketDataApi.get_portfolio_margin_tiered_collateral_rates()
 
     def portfolio_margin_collateral_rate(
         self,

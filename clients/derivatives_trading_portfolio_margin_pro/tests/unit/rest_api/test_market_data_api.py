@@ -25,6 +25,9 @@ from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import
     GetPortfolioMarginAssetLeverageResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
+    GetPortfolioMarginTieredCollateralRatesResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
     PortfolioMarginCollateralRateResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin_pro.rest_api.models import (
@@ -115,6 +118,74 @@ class TestMarketDataApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_portfolio_margin_asset_leverage()
+
+    def test_get_portfolio_margin_tiered_collateral_rates_success(self):
+        """Test get_portfolio_margin_tiered_collateral_rates() successfully with required parameters only."""
+
+        expected_response = [
+            {
+                "asset": "BNB",
+                "collateralInfo": [
+                    {
+                        "tierFloor": "0.0000",
+                        "tierCap": "1000.0000",
+                        "collateralRate": "1.0000",
+                        "cum": "0.0000",
+                    }
+                ],
+            }
+        ]
+
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_portfolio_margin_tiered_collateral_rates()
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        self.mock_session.request.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/sapi/v2/portfolio/retail/collateralRate" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetPortfolioMarginTieredCollateralRatesResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetPortfolioMarginTieredCollateralRatesResponse, "from_dict")
+        ):
+            expected = GetPortfolioMarginTieredCollateralRatesResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetPortfolioMarginTieredCollateralRatesResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_portfolio_margin_tiered_collateral_rates_server_error(self):
+        """Test that get_portfolio_margin_tiered_collateral_rates() raises an error when the server returns an error."""
+
+        mock_error = Exception("ResponseError")
+        self.client.get_portfolio_margin_tiered_collateral_rates = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_portfolio_margin_tiered_collateral_rates()
 
     def test_portfolio_margin_collateral_rate_success(self):
         """Test portfolio_margin_collateral_rate() successfully with required parameters only."""

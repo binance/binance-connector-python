@@ -16,6 +16,7 @@ from binance_common.signature import Signers
 from binance_common.utils import send_request
 
 from ..models import GetPortfolioMarginAssetLeverageResponse
+from ..models import GetPortfolioMarginTieredCollateralRatesResponse
 from ..models import PortfolioMarginCollateralRateResponse
 from ..models import PortfolioMarginProTieredCollateralRateResponse
 from ..models import QueryPortfolioMarginAssetIndexPriceResponse
@@ -72,6 +73,44 @@ class MarketDataApi:
             response_model=GetPortfolioMarginAssetLeverageResponse,
             is_signed=True,
             signer=self._signer,
+        )
+
+    def get_portfolio_margin_tiered_collateral_rates(
+        self,
+    ) -> ApiResponse[GetPortfolioMarginTieredCollateralRatesResponse]:
+        """
+                Get Portfolio Margin Tiered Collateral Rates (MARKET_DATA)
+                GET /sapi/v2/portfolio/retail/collateralRate
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin-pro/api/rest-api/market-data#get-portfolio-margin-tiered-collateral-rates
+
+                Query the tiered collateral rate configurations for Portfolio Margin assets.
+
+        Weight(IP): 50
+
+        Security Type: MARKET_DATA
+
+                Args:
+
+                Returns:
+                    ApiResponse[GetPortfolioMarginTieredCollateralRatesResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = None
+        payload = None
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/sapi/v2/portfolio/retail/collateralRate",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetPortfolioMarginTieredCollateralRatesResponse,
         )
 
     def portfolio_margin_collateral_rate(

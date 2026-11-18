@@ -1,5 +1,23 @@
 # Changelog
 
+## 10.0.0 - 2026-11-18
+
+### Added (1)
+
+#### REST API
+
+- `get_portfolio_margin_tiered_collateral_rates()` (`GET /sapi/v2/portfolio/retail/collateralRate`)
+
+### Changed (2)
+
+#### REST API
+
+- Deleted parameter `from`
+  - affected methods:
+    - `portfolio_margin_pro_bankruptcy_loan_repay()` (`POST /sapi/v1/portfolio/repay`)
+    - `repay_futures_negative_balance()` (`POST /sapi/v1/portfolio/repay-futures-negative-balance`)
+- Added response schema `getPortfolioMarginTieredCollateralRatesResponse`
+
 ## 9.4.0 - 2026-11-17
 
 ### Changed (1)
