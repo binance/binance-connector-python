@@ -59,6 +59,8 @@ class NewAlgoOrderTimeInForceEnum(Enum):
     IOC = "IOC"
     GTC = "GTC"
     FOK = "FOK"
+    GTX = "GTX"
+    GTD = "GTD"
 
 
 class NewAlgoOrderWorkingTypeEnum(Enum):

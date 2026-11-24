@@ -697,7 +697,7 @@ class DerivativesTradingUsdsFuturesWebSocketAPI(WebSocketAPIBase):
                     type (Union[NewAlgoOrderTypeEnum, None]): For `CONDITIONAL` algoType, `STOP_MARKET`/`TAKE_PROFIT_MARKET`/`STOP`/`TAKE_PROFIT`/`TRAILING_STOP_MARKET` as order type
                     id (Optional[str] = None): Id.
                     position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default BOTH for One-way Mode ; LONG or SHORT for Hedge Mode. It must be sent in Hedge Mode.
-                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None): `IOC` or `GTC` or `FOK`, default `GTC`
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None): `IOC` or `GTC` or `FOK` or `GTX` or `GTD`, default `GTC`
                     quantity (Optional[float] = None): Cannot be sent with `closePosition`=`true`(Close-All)
                     price (Optional[float] = None): Price.
                     trigger_price (Optional[float] = None): Trigger Price.
