@@ -35,16 +35,18 @@ class EquityOrderHistoryResponseRowsInner(BaseModel):
     )
     side: Optional[StrictStr] = Field(default=None, description="`BUY` / `SELL`.")
     order_type: Optional[StrictStr] = Field(
-        default=None, description="`MARKET` / `LIMIT`.", alias="orderType"
+        default=None,
+        description="`MARKET` / `LIMIT`; stop-limit orders placed in the app are `STOP_LOSS_LIMIT` / `TAKE_PROFIT_LIMIT`, and stop-limit orders not placed through Binance are `STOP_LIMIT`.",
+        alias="orderType",
     )
     limit_price: Optional[StrictStr] = Field(
         default=None,
-        description="Limit price (USD). Non-null for `LIMIT` orders, `null` for `MARKET`.",
+        description="Limit price (USD). Returned for `LIMIT` and stop-limit orders; `MARKET` orders have no limit price (`null`).",
         alias="limitPrice",
     )
     avg_filled_price: Optional[StrictStr] = Field(
         default=None,
-        description="Average fill price (USD). `null` until the first fill. For `MARKET` orders this is the only meaningful price field.",
+        description="Average fill price (USD) as reported by the broker, returned for all order types. `null` until the first fill.",
         alias="avgFilledPrice",
     )
     qty: Optional[StrictStr] = Field(

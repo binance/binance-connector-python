@@ -25,6 +25,12 @@ from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusResponse
 from binance_sdk_stocks.rest_api.models import TokenizedMintResponse
 from binance_sdk_stocks.rest_api.models import TokenizedRedeemResponse
 from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusConvertTypeEnum
+from binance_sdk_stocks.rest_api.models import (
+    TokenizedMintTokenizedAssetSettleWalletTypeEnum,
+)
+from binance_sdk_stocks.rest_api.models import (
+    TokenizedRedeemTokenizedAssetSettleWalletTypeEnum,
+)
 
 
 class TestTokenizedApi:
@@ -67,6 +73,7 @@ class TestTokenizedApi:
                     "status": "S",
                     "createdAt": 1735900000000,
                     "updatedAt": 1735900060000,
+                    "tokenizedAssetSettleWalletType": "CARD",
                 }
             ],
             "hasMore": True,
@@ -135,6 +142,7 @@ class TestTokenizedApi:
                     "status": "S",
                     "createdAt": 1735900000000,
                     "updatedAt": 1735900060000,
+                    "tokenizedAssetSettleWalletType": "CARD",
                 }
             ],
             "hasMore": True,
@@ -203,6 +211,7 @@ class TestTokenizedApi:
             "status": "S",
             "createdAt": 1735900000000,
             "updatedAt": 1735900060000,
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -271,6 +280,7 @@ class TestTokenizedApi:
             "status": "S",
             "createdAt": 1735900000000,
             "updatedAt": 1735900060000,
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -359,6 +369,7 @@ class TestTokenizedApi:
         expected_response = {
             "issuerRequestId": "mint-20260505-8f3b9e1a2d3c4b5a",
             "status": "P",
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -408,12 +419,16 @@ class TestTokenizedApi:
             "underlying_asset": "AAPL",
             "underlying_asset_amount": "1",
             "client_order_id": "mint-client-id-32chars-0000000001",
+            "tokenized_asset_settle_wallet_type": TokenizedMintTokenizedAssetSettleWalletTypeEnum[
+                "MAIN"
+            ].value,
             "recv_window": 5000,
         }
 
         expected_response = {
             "issuerRequestId": "mint-20260505-8f3b9e1a2d3c4b5a",
             "status": "P",
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -500,6 +515,7 @@ class TestTokenizedApi:
         expected_response = {
             "issuerRequestId": "redeem-20260505-a1b2c3d4e5f6",
             "status": "P",
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)
@@ -549,12 +565,16 @@ class TestTokenizedApi:
             "tokenized_asset": "AAPLB",
             "tokenized_asset_amount": "1",
             "client_order_id": "redeem-client-id-32chars-000000001",
+            "tokenized_asset_settle_wallet_type": TokenizedRedeemTokenizedAssetSettleWalletTypeEnum[
+                "MAIN"
+            ].value,
             "recv_window": 5000,
         }
 
         expected_response = {
             "issuerRequestId": "redeem-20260505-a1b2c3d4e5f6",
             "status": "P",
+            "tokenizedAssetSettleWalletType": "CARD",
         }
         mock_get_signature.return_value = "mocked_signature"
         self.set_mock_response(expected_response)

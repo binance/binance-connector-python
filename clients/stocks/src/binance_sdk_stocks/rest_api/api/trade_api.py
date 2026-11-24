@@ -31,6 +31,7 @@ from ..models import PlaceEquityOrderOrderTypeEnum
 from ..models import PlaceEquityOrderTimeInForceEnum
 from ..models import PlaceEquityOrderTradingSessionEnum
 from ..models import PlaceEquityOrderWalletTypeEnum
+from ..models import PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum
 
 
 class TradeApi:
@@ -396,6 +397,9 @@ class TradeApi:
         wallet_type: Optional[PlaceEquityOrderWalletTypeEnum] = None,
         client_order_id: Optional[str] = None,
         tokenize: Optional[bool] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PlaceEquityOrderResponse]:
         """
@@ -445,6 +449,7 @@ class TradeApi:
                     wallet_type (Optional[PlaceEquityOrderWalletTypeEnum] = None): Payment wallet for `BUY` orders: `CARD` (default) / `MAIN`. `SELL` orders always settle to `CARD`.
                     client_order_id (Optional[str] = None): Client-supplied order id. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
                     tokenize (Optional[bool] = None): Whether to tokenize the purchased stock asset upon settlement. Default `true`. Only takes effect when the symbol is tokenization-enabled (check via `/market/tokenized-assets`); silently ignored for non-tokenized symbols, which always settle as traditional underlying-equity trades.
+                    tokenized_asset_settle_wallet_type (Optional[PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum] = None): Wallet that receives the tokenized asset minted after the order fills. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. Only applies when `side` = `BUY` and `tokenize` = `true`; ignored for `SELL` or `tokenize` = `false`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -483,6 +488,7 @@ class TradeApi:
             "wallet_type": wallet_type,
             "client_order_id": client_order_id,
             "tokenize": tokenize,
+            "tokenized_asset_settle_wallet_type": tokenized_asset_settle_wallet_type,
             "recv_window": recv_window,
         }
 

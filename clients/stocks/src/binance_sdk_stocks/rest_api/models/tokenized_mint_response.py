@@ -35,8 +35,17 @@ class TokenizedMintResponse(BaseModel):
         default=None,
         description="Convert status code: `P` = processing, `S` = success, `F` = failed.",
     )
+    tokenized_asset_settle_wallet_type: Optional[StrictStr] = Field(
+        default=None,
+        description="The wallet the tokenized asset is settled in: `MAIN` = Spot wallet, `CARD` = Funding wallet.",
+        alias="tokenizedAssetSettleWalletType",
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["issuerRequestId", "status"]
+    __properties: ClassVar[List[str]] = [
+        "issuerRequestId",
+        "status",
+        "tokenizedAssetSettleWalletType",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,7 +110,13 @@ class TokenizedMintResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"issuerRequestId": obj.get("issuerRequestId"), "status": obj.get("status")}
+            {
+                "issuerRequestId": obj.get("issuerRequestId"),
+                "status": obj.get("status"),
+                "tokenizedAssetSettleWalletType": obj.get(
+                    "tokenizedAssetSettleWalletType"
+                ),
+            }
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -16,6 +16,16 @@ class TokenizedConvertStatusConvertTypeEnum(Enum):
     REDEEM = "REDEEM"
 
 
+class TokenizedMintTokenizedAssetSettleWalletTypeEnum(Enum):
+    MAIN = "MAIN"
+    CARD = "CARD"
+
+
+class TokenizedRedeemTokenizedAssetSettleWalletTypeEnum(Enum):
+    MAIN = "MAIN"
+    CARD = "CARD"
+
+
 class EquityOrderHistoryOrderTypeEnum(Enum):
     MARKET = "MARKET"
     LIMIT = "LIMIT"
@@ -55,3 +65,8 @@ class PlaceEquityOrderTradingSessionEnum(Enum):
 class PlaceEquityOrderWalletTypeEnum(Enum):
     CARD = "CARD"
     MAIN = "MAIN"
+
+
+class PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum(Enum):
+    MAIN = "MAIN"
+    CARD = "CARD"

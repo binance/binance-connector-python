@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.10.0 - 2026-11-24
+
+### Changed (7)
+
+#### REST API
+
+- Added parameter `tokenizedAssetSettleWalletType`
+  - affected methods:
+    - `place_equity_order()` (`POST /sapi/v1/equity/order/place`)
+    - `tokenized_mint()` (`POST /sapi/v1/equity/tokenized/mint`)
+    - `tokenized_redeem()` (`POST /sapi/v1/equity/tokenized/redeem`)
+- Modified response for `tokenized_convert_status()` (`GET /sapi/v1/equity/tokenized/convert-status`):
+  - property `tokenizedAssetSettleWalletType` added
+
+- Modified response for `tokenized_convert_history()` (`GET /sapi/v1/equity/tokenized/history`):
+  - `rows`.items: property `tokenizedAssetSettleWalletType` added
+  - `rows`.items: item property `tokenizedAssetSettleWalletType` added
+
+- Modified response for `tokenized_mint()` (`POST /sapi/v1/equity/tokenized/mint`):
+  - property `tokenizedAssetSettleWalletType` added
+
+- Modified response for `tokenized_redeem()` (`POST /sapi/v1/equity/tokenized/redeem`):
+  - property `tokenizedAssetSettleWalletType` added
+
+- Added response field `tokenizedAssetSettleWalletType`
+  - affected events:
+    - `tokenizedConvertStatusResponse`
+    - `tokenizedMintResponse`
+    - `tokenizedRedeemResponse`
+- Modified response field `rows`:
+  - items: property `tokenizedAssetSettleWalletType` added
+  - items: item property `tokenizedAssetSettleWalletType` added
+  - affected events:
+    - `tokenizedConvertHistoryResponse`
+
 ## 1.9.0 - 2026-11-17
 
 ### Changed (1)

@@ -62,6 +62,11 @@ class TokenizedConvertStatusResponse(BaseModel):
     updated_at: Optional[StrictInt] = Field(
         default=None, description="Last update time (ms epoch).", alias="updatedAt"
     )
+    tokenized_asset_settle_wallet_type: Optional[StrictStr] = Field(
+        default=None,
+        description="The wallet the tokenized asset is settled in: `MAIN` = Spot wallet, `CARD` = Funding wallet.",
+        alias="tokenizedAssetSettleWalletType",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "underlyingAsset",
@@ -73,6 +78,7 @@ class TokenizedConvertStatusResponse(BaseModel):
         "status",
         "createdAt",
         "updatedAt",
+        "tokenizedAssetSettleWalletType",
     ]
 
     model_config = ConfigDict(
@@ -148,6 +154,9 @@ class TokenizedConvertStatusResponse(BaseModel):
                 "status": obj.get("status"),
                 "createdAt": obj.get("createdAt"),
                 "updatedAt": obj.get("updatedAt"),
+                "tokenizedAssetSettleWalletType": obj.get(
+                    "tokenizedAssetSettleWalletType"
+                ),
             }
         )
         # store additional fields in additional_properties

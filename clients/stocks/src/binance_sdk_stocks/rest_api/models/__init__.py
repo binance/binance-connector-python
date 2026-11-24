@@ -74,6 +74,12 @@ from .tokenized_redeem_response import (
 from .enums import (
     TokenizedConvertStatusConvertTypeEnum as TokenizedConvertStatusConvertTypeEnum,
 )
+from .enums import (
+    TokenizedMintTokenizedAssetSettleWalletTypeEnum as TokenizedMintTokenizedAssetSettleWalletTypeEnum,
+)
+from .enums import (
+    TokenizedRedeemTokenizedAssetSettleWalletTypeEnum as TokenizedRedeemTokenizedAssetSettleWalletTypeEnum,
+)
 from .enums import EquityOrderHistoryOrderTypeEnum as EquityOrderHistoryOrderTypeEnum
 from .enums import EquityOrderHistorySideEnum as EquityOrderHistorySideEnum
 from .enums import EquityTradeHistorySideEnum as EquityTradeHistorySideEnum
@@ -84,3 +90,6 @@ from .enums import (
     PlaceEquityOrderTradingSessionEnum as PlaceEquityOrderTradingSessionEnum,
 )
 from .enums import PlaceEquityOrderWalletTypeEnum as PlaceEquityOrderWalletTypeEnum
+from .enums import (
+    PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum as PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum,
+)

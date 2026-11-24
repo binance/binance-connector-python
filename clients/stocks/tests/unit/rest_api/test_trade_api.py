@@ -35,6 +35,9 @@ from binance_sdk_stocks.rest_api.models import PlaceEquityOrderOrderTypeEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderTimeInForceEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderTradingSessionEnum
 from binance_sdk_stocks.rest_api.models import PlaceEquityOrderWalletTypeEnum
+from binance_sdk_stocks.rest_api.models import (
+    PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum,
+)
 
 
 class TestTradeApi:
@@ -988,6 +991,9 @@ class TestTradeApi:
             "wallet_type": PlaceEquityOrderWalletTypeEnum["CARD"].value,
             "client_order_id": "web_2c9c92b74f1e4a7c8f3b9e1a2d3c4b5a",
             "tokenize": True,
+            "tokenized_asset_settle_wallet_type": PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum[
+                "MAIN"
+            ].value,
             "recv_window": 5000,
         }
 

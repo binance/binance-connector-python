@@ -29,6 +29,8 @@ from .models import TokenizedConvertStatusResponse
 from .models import TokenizedMintResponse
 from .models import TokenizedRedeemResponse
 from .models import TokenizedConvertStatusConvertTypeEnum
+from .models import TokenizedMintTokenizedAssetSettleWalletTypeEnum
+from .models import TokenizedRedeemTokenizedAssetSettleWalletTypeEnum
 from .models import CancelAllEquityOrdersResponse
 from .models import CancelEquityOrderResponse
 from .models import CurrentOpenOrdersResponse
@@ -44,6 +46,7 @@ from .models import PlaceEquityOrderOrderTypeEnum
 from .models import PlaceEquityOrderTimeInForceEnum
 from .models import PlaceEquityOrderTradingSessionEnum
 from .models import PlaceEquityOrderWalletTypeEnum
+from .models import PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum
 from .models import CreateRenewListenKeyResponse
 
 T = TypeVar("T")
@@ -309,6 +312,9 @@ class StocksRestAPI:
         underlying_asset: Union[str, None],
         underlying_asset_amount: Union[str, None],
         client_order_id: Optional[str] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            TokenizedMintTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TokenizedMintResponse]:
         """
@@ -324,6 +330,7 @@ class StocksRestAPI:
                     underlying_asset (Union[str, None]): Underlying US-equity ticker, e.g. `AAPL`, `TSLA`. Resolved against the active-symbol list; unknown tickers return `-26004`. The target tokenized asset is looked up from this field via `/market/tokenized-assets`.
                     underlying_asset_amount (Union[str, None]): Quantity of the underlying asset to mint from. Must be > 0.
                     client_order_id (Optional[str] = None): Client order id for idempotency. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
+                    tokenized_asset_settle_wallet_type (Optional[TokenizedMintTokenizedAssetSettleWalletTypeEnum] = None): Wallet that receives the minted tokenized asset. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -335,7 +342,11 @@ class StocksRestAPI:
         """
 
         return self._tokenizedApi.tokenized_mint(
-            underlying_asset, underlying_asset_amount, client_order_id, recv_window
+            underlying_asset,
+            underlying_asset_amount,
+            client_order_id,
+            tokenized_asset_settle_wallet_type,
+            recv_window,
         )
 
     def tokenized_redeem(
@@ -343,6 +354,9 @@ class StocksRestAPI:
         tokenized_asset: Union[str, None],
         tokenized_asset_amount: Union[str, None],
         client_order_id: Optional[str] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            TokenizedRedeemTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TokenizedRedeemResponse]:
         """
@@ -358,6 +372,7 @@ class StocksRestAPI:
                     tokenized_asset (Union[str, None]): Tokenized asset to redeem, e.g. `AAPLB`. Not a US-equity ticker — this is the on-chain tokenized asset identifier. Unknown asset returns `-1102` (the message currently says the parameter was empty/malformed, but it was in fact sent — it is simply unknown). The target underlying ticker is looked up from this field via `/market/tokenized-assets`.
                     tokenized_asset_amount (Union[str, None]): Quantity of the tokenized asset to redeem. Must be > 0.
                     client_order_id (Optional[str] = None): Client order id for idempotency. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
+                    tokenized_asset_settle_wallet_type (Optional[TokenizedRedeemTokenizedAssetSettleWalletTypeEnum] = None): Wallet the tokenized asset is deducted from on redeem. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -369,7 +384,11 @@ class StocksRestAPI:
         """
 
         return self._tokenizedApi.tokenized_redeem(
-            tokenized_asset, tokenized_asset_amount, client_order_id, recv_window
+            tokenized_asset,
+            tokenized_asset_amount,
+            client_order_id,
+            tokenized_asset_settle_wallet_type,
+            recv_window,
         )
 
     def cancel_all_equity_orders(
@@ -592,6 +611,9 @@ class StocksRestAPI:
         wallet_type: Optional[PlaceEquityOrderWalletTypeEnum] = None,
         client_order_id: Optional[str] = None,
         tokenize: Optional[bool] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[PlaceEquityOrderResponse]:
         """
@@ -639,6 +661,7 @@ class StocksRestAPI:
                     wallet_type (Optional[PlaceEquityOrderWalletTypeEnum] = None): Payment wallet for `BUY` orders: `CARD` (default) / `MAIN`. `SELL` orders always settle to `CARD`.
                     client_order_id (Optional[str] = None): Client-supplied order id. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
                     tokenize (Optional[bool] = None): Whether to tokenize the purchased stock asset upon settlement. Default `true`. Only takes effect when the symbol is tokenization-enabled (check via `/market/tokenized-assets`); silently ignored for non-tokenized symbols, which always settle as traditional underlying-equity trades.
+                    tokenized_asset_settle_wallet_type (Optional[PlaceEquityOrderTokenizedAssetSettleWalletTypeEnum] = None): Wallet that receives the tokenized asset minted after the order fills. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. Only applies when `side` = `BUY` and `tokenize` = `true`; ignored for `SELL` or `tokenize` = `false`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -662,6 +685,7 @@ class StocksRestAPI:
             wallet_type,
             client_order_id,
             tokenize,
+            tokenized_asset_settle_wallet_type,
             recv_window,
         )
 

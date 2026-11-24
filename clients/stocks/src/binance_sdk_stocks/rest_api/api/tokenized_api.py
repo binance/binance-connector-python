@@ -21,6 +21,8 @@ from ..models import TokenizedConvertStatusResponse
 from ..models import TokenizedMintResponse
 from ..models import TokenizedRedeemResponse
 from ..models import TokenizedConvertStatusConvertTypeEnum
+from ..models import TokenizedMintTokenizedAssetSettleWalletTypeEnum
+from ..models import TokenizedRedeemTokenizedAssetSettleWalletTypeEnum
 
 
 class TokenizedApi:
@@ -158,6 +160,9 @@ class TokenizedApi:
         underlying_asset: Union[str, None],
         underlying_asset_amount: Union[str, None],
         client_order_id: Optional[str] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            TokenizedMintTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TokenizedMintResponse]:
         """
@@ -175,6 +180,7 @@ class TokenizedApi:
                     underlying_asset (Union[str, None]): Underlying US-equity ticker, e.g. `AAPL`, `TSLA`. Resolved against the active-symbol list; unknown tickers return `-26004`. The target tokenized asset is looked up from this field via `/market/tokenized-assets`.
                     underlying_asset_amount (Union[str, None]): Quantity of the underlying asset to mint from. Must be > 0.
                     client_order_id (Optional[str] = None): Client order id for idempotency. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
+                    tokenized_asset_settle_wallet_type (Optional[TokenizedMintTokenizedAssetSettleWalletTypeEnum] = None): Wallet that receives the minted tokenized asset. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -201,6 +207,7 @@ class TokenizedApi:
             "underlying_asset": underlying_asset,
             "underlying_asset_amount": underlying_asset_amount,
             "client_order_id": client_order_id,
+            "tokenized_asset_settle_wallet_type": tokenized_asset_settle_wallet_type,
             "recv_window": recv_window,
         }
 
@@ -222,6 +229,9 @@ class TokenizedApi:
         tokenized_asset: Union[str, None],
         tokenized_asset_amount: Union[str, None],
         client_order_id: Optional[str] = None,
+        tokenized_asset_settle_wallet_type: Optional[
+            TokenizedRedeemTokenizedAssetSettleWalletTypeEnum
+        ] = None,
         recv_window: Optional[int] = None,
     ) -> ApiResponse[TokenizedRedeemResponse]:
         """
@@ -239,6 +249,7 @@ class TokenizedApi:
                     tokenized_asset (Union[str, None]): Tokenized asset to redeem, e.g. `AAPLB`. Not a US-equity ticker — this is the on-chain tokenized asset identifier. Unknown asset returns `-1102` (the message currently says the parameter was empty/malformed, but it was in fact sent — it is simply unknown). The target underlying ticker is looked up from this field via `/market/tokenized-assets`.
                     tokenized_asset_amount (Union[str, None]): Quantity of the tokenized asset to redeem. Must be > 0.
                     client_order_id (Optional[str] = None): Client order id for idempotency. Format `^[a-zA-Z0-9-_]{32,36}$`. Auto-generated when omitted.
+                    tokenized_asset_settle_wallet_type (Optional[TokenizedRedeemTokenizedAssetSettleWalletTypeEnum] = None): Wallet the tokenized asset is deducted from on redeem. `MAIN` = Spot wallet, `CARD` = Funding wallet. Default `CARD`. If `MAIN` is sent while Spot wallet settlement is not enabled, the request is rejected as an illegal parameter.
                     recv_window (Optional[int] = None): The value cannot be greater than `60000`.
 
                 Returns:
@@ -265,6 +276,7 @@ class TokenizedApi:
             "tokenized_asset": tokenized_asset,
             "tokenized_asset_amount": tokenized_asset_amount,
             "client_order_id": client_order_id,
+            "tokenized_asset_settle_wallet_type": tokenized_asset_settle_wallet_type,
             "recv_window": recv_window,
         }
 
