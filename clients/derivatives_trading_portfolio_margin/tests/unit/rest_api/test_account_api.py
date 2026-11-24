@@ -63,7 +63,25 @@ from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetCmCurrentPositionModeResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetCmFuturesOrderDownloadLinkByIdResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetCmFuturesTradeDownloadLinkByIdResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetCmFuturesTransactionDownloadLinkByIdResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetCmIncomeHistoryResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetDownloadIdForCmFuturesOrderHistoryResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetDownloadIdForCmFuturesTradeHistoryResponse,
+)
+from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
+    GetDownloadIdForCmFuturesTransactionHistoryResponse,
 )
 from binance_sdk_derivatives_trading_portfolio_margin.rest_api.models import (
     GetDownloadIdForUmFuturesOrderHistoryResponse,
@@ -1928,6 +1946,453 @@ class TestAccountApi:
             self.client.get_cm_current_position_mode()
 
     @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_order_download_link_by_id_success(self, mock_get_signature):
+        """Test get_cm_futures_order_download_link_by_id() successfully with required parameters only."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_order_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/order/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["downloadId"] == "545923594199212032"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesOrderDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesOrderDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesOrderDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetCmFuturesOrderDownloadLinkByIdResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_order_download_link_by_id_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_cm_futures_order_download_link_by_id() successfully with optional parameters."""
+
+        params = {"download_id": "545923594199212032", "recv_window": 5000}
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_order_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/order/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesOrderDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesOrderDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesOrderDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetCmFuturesOrderDownloadLinkByIdResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_cm_futures_order_download_link_by_id_missing_required_param_download_id(
+        self,
+    ):
+        """Test that get_cm_futures_order_download_link_by_id() raises RequiredError when 'download_id' is missing."""
+        params = {
+            "download_id": "545923594199212032",
+        }
+        params["download_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'download_id'"
+        ):
+            self.client.get_cm_futures_order_download_link_by_id(**params)
+
+    def test_get_cm_futures_order_download_link_by_id_server_error(self):
+        """Test that get_cm_futures_order_download_link_by_id() raises an error when the server returns an error."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_cm_futures_order_download_link_by_id = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_cm_futures_order_download_link_by_id(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_trade_download_link_by_id_success(self, mock_get_signature):
+        """Test get_cm_futures_trade_download_link_by_id() successfully with required parameters only."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_trade_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/trade/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["downloadId"] == "545923594199212032"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesTradeDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesTradeDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesTradeDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetCmFuturesTradeDownloadLinkByIdResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_trade_download_link_by_id_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_cm_futures_trade_download_link_by_id() successfully with optional parameters."""
+
+        params = {"download_id": "545923594199212032", "recv_window": 5000}
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_trade_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/trade/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesTradeDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesTradeDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesTradeDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = GetCmFuturesTradeDownloadLinkByIdResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_cm_futures_trade_download_link_by_id_missing_required_param_download_id(
+        self,
+    ):
+        """Test that get_cm_futures_trade_download_link_by_id() raises RequiredError when 'download_id' is missing."""
+        params = {
+            "download_id": "545923594199212032",
+        }
+        params["download_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'download_id'"
+        ):
+            self.client.get_cm_futures_trade_download_link_by_id(**params)
+
+    def test_get_cm_futures_trade_download_link_by_id_server_error(self):
+        """Test that get_cm_futures_trade_download_link_by_id() raises an error when the server returns an error."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_cm_futures_trade_download_link_by_id = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_cm_futures_trade_download_link_by_id(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_transaction_download_link_by_id_success(
+        self, mock_get_signature
+    ):
+        """Test get_cm_futures_transaction_download_link_by_id() successfully with required parameters only."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_transaction_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/income/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["downloadId"] == "545923594199212032"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesTransactionDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesTransactionDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesTransactionDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetCmFuturesTransactionDownloadLinkByIdResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_cm_futures_transaction_download_link_by_id_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_cm_futures_transaction_download_link_by_id() successfully with optional parameters."""
+
+        params = {"download_id": "545923594199212032", "recv_window": 5000}
+
+        expected_response = {
+            "downloadId": "545923594199212032",
+            "status": "processing",
+            "url": "",
+            "s3Link": "None",
+            "notified": False,
+            "expirationTimestamp": -1,
+            "isExpired": "None",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_cm_futures_transaction_download_link_by_id(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/income/asyn/id" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetCmFuturesTransactionDownloadLinkByIdResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetCmFuturesTransactionDownloadLinkByIdResponse, "from_dict")
+        ):
+            expected = GetCmFuturesTransactionDownloadLinkByIdResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetCmFuturesTransactionDownloadLinkByIdResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_cm_futures_transaction_download_link_by_id_missing_required_param_download_id(
+        self,
+    ):
+        """Test that get_cm_futures_transaction_download_link_by_id() raises RequiredError when 'download_id' is missing."""
+        params = {
+            "download_id": "545923594199212032",
+        }
+        params["download_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'download_id'"
+        ):
+            self.client.get_cm_futures_transaction_download_link_by_id(**params)
+
+    def test_get_cm_futures_transaction_download_link_by_id_server_error(self):
+        """Test that get_cm_futures_transaction_download_link_by_id() raises an error when the server returns an error."""
+
+        params = {
+            "download_id": "545923594199212032",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_cm_futures_transaction_download_link_by_id = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_cm_futures_transaction_download_link_by_id(**params)
+
+    @patch("binance_common.utils.get_signature")
     def test_get_cm_income_history_success(self, mock_get_signature):
         """Test get_cm_income_history() successfully with required parameters only."""
 
@@ -2046,6 +2511,508 @@ class TestAccountApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_cm_income_history()
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_order_history_success(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_order_history() successfully with required parameters only."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_order_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/order/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["startTime"] == 1623319461670
+        assert normalized["endTime"] == 1641782889000
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesOrderHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesOrderHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesOrderHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesOrderHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_order_history_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_order_history() successfully with optional parameters."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_order_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/order/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesOrderHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesOrderHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesOrderHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesOrderHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_download_id_for_cm_futures_order_history_missing_required_param_start_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_order_history() raises RequiredError when 'start_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["start_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'start_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_order_history(**params)
+
+    def test_get_download_id_for_cm_futures_order_history_missing_required_param_end_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_order_history() raises RequiredError when 'end_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["end_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'end_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_order_history(**params)
+
+    def test_get_download_id_for_cm_futures_order_history_server_error(self):
+        """Test that get_download_id_for_cm_futures_order_history() raises an error when the server returns an error."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_download_id_for_cm_futures_order_history = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_download_id_for_cm_futures_order_history(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_trade_history_success(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_trade_history() successfully with required parameters only."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_trade_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/trade/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["startTime"] == 1623319461670
+        assert normalized["endTime"] == 1641782889000
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesTradeHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesTradeHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesTradeHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesTradeHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_trade_history_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_trade_history() successfully with optional parameters."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_trade_history(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/trade/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesTradeHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesTradeHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesTradeHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesTradeHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_download_id_for_cm_futures_trade_history_missing_required_param_start_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_trade_history() raises RequiredError when 'start_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["start_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'start_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_trade_history(**params)
+
+    def test_get_download_id_for_cm_futures_trade_history_missing_required_param_end_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_trade_history() raises RequiredError when 'end_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["end_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'end_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_trade_history(**params)
+
+    def test_get_download_id_for_cm_futures_trade_history_server_error(self):
+        """Test that get_download_id_for_cm_futures_trade_history() raises an error when the server returns an error."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_download_id_for_cm_futures_trade_history = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_download_id_for_cm_futures_trade_history(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_transaction_history_success(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_transaction_history() successfully with required parameters only."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_transaction_history(
+            **params
+        )
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/income/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["startTime"] == 1623319461670
+        assert normalized["endTime"] == 1641782889000
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesTransactionHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesTransactionHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesTransactionHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesTransactionHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_get_download_id_for_cm_futures_transaction_history_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_download_id_for_cm_futures_transaction_history() successfully with optional parameters."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "avgCostTimestampOfLast30d": 7241837,
+            "downloadId": "546975389218332672",
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_download_id_for_cm_futures_transaction_history(
+            **params
+        )
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/papi/v1/cm/income/asyn" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetDownloadIdForCmFuturesTransactionHistoryResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(GetDownloadIdForCmFuturesTransactionHistoryResponse, "from_dict")
+        ):
+            expected = GetDownloadIdForCmFuturesTransactionHistoryResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = (
+                GetDownloadIdForCmFuturesTransactionHistoryResponse.model_validate_json(
+                    json.dumps(expected_response)
+                )
+            )
+
+        assert response.data() == expected
+
+    def test_get_download_id_for_cm_futures_transaction_history_missing_required_param_start_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_transaction_history() raises RequiredError when 'start_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["start_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'start_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_transaction_history(**params)
+
+    def test_get_download_id_for_cm_futures_transaction_history_missing_required_param_end_time(
+        self,
+    ):
+        """Test that get_download_id_for_cm_futures_transaction_history() raises RequiredError when 'end_time' is missing."""
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+        params["end_time"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'end_time'"
+        ):
+            self.client.get_download_id_for_cm_futures_transaction_history(**params)
+
+    def test_get_download_id_for_cm_futures_transaction_history_server_error(self):
+        """Test that get_download_id_for_cm_futures_transaction_history() raises an error when the server returns an error."""
+
+        params = {
+            "start_time": 1623319461670,
+            "end_time": 1641782889000,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_download_id_for_cm_futures_transaction_history = MagicMock(
+            side_effect=mock_error
+        )
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_download_id_for_cm_futures_transaction_history(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_get_download_id_for_um_futures_order_history_success(

@@ -129,11 +129,29 @@ from .get_cm_account_detail_response_positions_inner import (
 from .get_cm_current_position_mode_response import (
     GetCmCurrentPositionModeResponse as GetCmCurrentPositionModeResponse,
 )
+from .get_cm_futures_order_download_link_by_id_response import (
+    GetCmFuturesOrderDownloadLinkByIdResponse as GetCmFuturesOrderDownloadLinkByIdResponse,
+)
+from .get_cm_futures_trade_download_link_by_id_response import (
+    GetCmFuturesTradeDownloadLinkByIdResponse as GetCmFuturesTradeDownloadLinkByIdResponse,
+)
+from .get_cm_futures_transaction_download_link_by_id_response import (
+    GetCmFuturesTransactionDownloadLinkByIdResponse as GetCmFuturesTransactionDownloadLinkByIdResponse,
+)
 from .get_cm_income_history_response import (
     GetCmIncomeHistoryResponse as GetCmIncomeHistoryResponse,
 )
 from .get_cm_income_history_response_inner import (
     GetCmIncomeHistoryResponseInner as GetCmIncomeHistoryResponseInner,
+)
+from .get_download_id_for_cm_futures_order_history_response import (
+    GetDownloadIdForCmFuturesOrderHistoryResponse as GetDownloadIdForCmFuturesOrderHistoryResponse,
+)
+from .get_download_id_for_cm_futures_trade_history_response import (
+    GetDownloadIdForCmFuturesTradeHistoryResponse as GetDownloadIdForCmFuturesTradeHistoryResponse,
+)
+from .get_download_id_for_cm_futures_transaction_history_response import (
+    GetDownloadIdForCmFuturesTransactionHistoryResponse as GetDownloadIdForCmFuturesTransactionHistoryResponse,
 )
 from .get_download_id_for_um_futures_order_history_response import (
     GetDownloadIdForUmFuturesOrderHistoryResponse as GetDownloadIdForUmFuturesOrderHistoryResponse,

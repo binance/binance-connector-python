@@ -30,7 +30,13 @@ from ..models import FundCollectionByAssetResponse
 from ..models import GetAutoRepayFuturesStatusResponse
 from ..models import GetCmAccountDetailResponse
 from ..models import GetCmCurrentPositionModeResponse
+from ..models import GetCmFuturesOrderDownloadLinkByIdResponse
+from ..models import GetCmFuturesTradeDownloadLinkByIdResponse
+from ..models import GetCmFuturesTransactionDownloadLinkByIdResponse
 from ..models import GetCmIncomeHistoryResponse
+from ..models import GetDownloadIdForCmFuturesOrderHistoryResponse
+from ..models import GetDownloadIdForCmFuturesTradeHistoryResponse
+from ..models import GetDownloadIdForCmFuturesTransactionHistoryResponse
 from ..models import GetDownloadIdForUmFuturesOrderHistoryResponse
 from ..models import GetDownloadIdForUmFuturesTradeHistoryResponse
 from ..models import GetDownloadIdForUmFuturesTransactionHistoryResponse
@@ -769,6 +775,165 @@ class AccountApi:
             signer=self._signer,
         )
 
+    def get_cm_futures_order_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesOrderDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Order Download Link by Id (USER_DATA)
+                GET /papi/v1/cm/order/asyn/id
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-cm-futures-order-download-link-by-id
+
+                Get CM futures order download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesOrderDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if download_id is None:
+            raise RequiredError(
+                field="download_id",
+                error_message="Missing required parameter 'download_id'",
+            )
+
+        request_body = {}
+        payload = {"download_id": download_id, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/order/asyn/id",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetCmFuturesOrderDownloadLinkByIdResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_cm_futures_trade_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesTradeDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Trade Download Link by Id (USER_DATA)
+                GET /papi/v1/cm/trade/asyn/id
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-cm-futures-trade-download-link-by-id
+
+                Get CM futures trade download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesTradeDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if download_id is None:
+            raise RequiredError(
+                field="download_id",
+                error_message="Missing required parameter 'download_id'",
+            )
+
+        request_body = {}
+        payload = {"download_id": download_id, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/trade/asyn/id",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetCmFuturesTradeDownloadLinkByIdResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_cm_futures_transaction_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesTransactionDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Transaction Download Link by Id (USER_DATA)
+                GET /papi/v1/cm/income/asyn/id
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-cm-futures-transaction-download-link-by-id
+
+                Get CM futures Transaction download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesTransactionDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if download_id is None:
+            raise RequiredError(
+                field="download_id",
+                error_message="Missing required parameter 'download_id'",
+            )
+
+        request_body = {}
+        payload = {"download_id": download_id, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/income/asyn/id",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetCmFuturesTransactionDownloadLinkByIdResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def get_cm_income_history(
         self,
         symbol: Optional[str] = None,
@@ -830,6 +995,198 @@ class AccountApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=GetCmIncomeHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_download_id_for_cm_futures_order_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesOrderHistoryResponse]:
+        """
+                Get Download Id For CM Futures Order History (USER_DATA)
+                GET /papi/v1/cm/order/asyn
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-download-id-for-cm-futures-order-history
+
+                Get download id for CM futures order history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 10 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesOrderHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if start_time is None:
+            raise RequiredError(
+                field="start_time",
+                error_message="Missing required parameter 'start_time'",
+            )
+        if end_time is None:
+            raise RequiredError(
+                field="end_time", error_message="Missing required parameter 'end_time'"
+            )
+
+        request_body = {}
+        payload = {
+            "start_time": start_time,
+            "end_time": end_time,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/order/asyn",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetDownloadIdForCmFuturesOrderHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_download_id_for_cm_futures_trade_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesTradeHistoryResponse]:
+        """
+                Get Download Id For CM Futures Trade History (USER_DATA)
+                GET /papi/v1/cm/trade/asyn
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-download-id-for-cm-futures-trade-history
+
+                Get download id for CM futures trade history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 5 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesTradeHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if start_time is None:
+            raise RequiredError(
+                field="start_time",
+                error_message="Missing required parameter 'start_time'",
+            )
+        if end_time is None:
+            raise RequiredError(
+                field="end_time", error_message="Missing required parameter 'end_time'"
+            )
+
+        request_body = {}
+        payload = {
+            "start_time": start_time,
+            "end_time": end_time,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/trade/asyn",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetDownloadIdForCmFuturesTradeHistoryResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_download_id_for_cm_futures_transaction_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesTransactionHistoryResponse]:
+        """
+                Get Download Id For CM Futures Transaction History (USER_DATA)
+                GET /papi/v1/cm/income/asyn
+                https://developers.binance.com/en/docs/catalog/advanced-trading-derivatives-trading-portfolio-margin/api/rest-api/account#get-download-id-for-cm-futures-transaction-history
+
+                Get download id for CM futures transaction history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 5 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesTransactionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if start_time is None:
+            raise RequiredError(
+                field="start_time",
+                error_message="Missing required parameter 'start_time'",
+            )
+        if end_time is None:
+            raise RequiredError(
+                field="end_time", error_message="Missing required parameter 'end_time'"
+            )
+
+        request_body = {}
+        payload = {
+            "start_time": start_time,
+            "end_time": end_time,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/papi/v1/cm/income/asyn",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetDownloadIdForCmFuturesTransactionHistoryResponse,
             is_signed=True,
             signer=self._signer,
         )

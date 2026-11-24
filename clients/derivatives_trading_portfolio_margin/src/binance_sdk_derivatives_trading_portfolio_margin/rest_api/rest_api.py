@@ -33,7 +33,13 @@ from .models import FundCollectionByAssetResponse
 from .models import GetAutoRepayFuturesStatusResponse
 from .models import GetCmAccountDetailResponse
 from .models import GetCmCurrentPositionModeResponse
+from .models import GetCmFuturesOrderDownloadLinkByIdResponse
+from .models import GetCmFuturesTradeDownloadLinkByIdResponse
+from .models import GetCmFuturesTransactionDownloadLinkByIdResponse
 from .models import GetCmIncomeHistoryResponse
+from .models import GetDownloadIdForCmFuturesOrderHistoryResponse
+from .models import GetDownloadIdForCmFuturesTradeHistoryResponse
+from .models import GetDownloadIdForCmFuturesTransactionHistoryResponse
 from .models import GetDownloadIdForUmFuturesOrderHistoryResponse
 from .models import GetDownloadIdForUmFuturesTradeHistoryResponse
 from .models import GetDownloadIdForUmFuturesTransactionHistoryResponse
@@ -674,6 +680,105 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
         return self._accountApi.get_cm_current_position_mode(recv_window)
 
+    def get_cm_futures_order_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesOrderDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Order Download Link by Id (USER_DATA)
+
+                Get CM futures order download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesOrderDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_cm_futures_order_download_link_by_id(
+            download_id, recv_window
+        )
+
+    def get_cm_futures_trade_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesTradeDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Trade Download Link by Id (USER_DATA)
+
+                Get CM futures trade download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesTradeDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_cm_futures_trade_download_link_by_id(
+            download_id, recv_window
+        )
+
+    def get_cm_futures_transaction_download_link_by_id(
+        self,
+        download_id: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetCmFuturesTransactionDownloadLinkByIdResponse]:
+        """
+                Get CM Futures Transaction Download Link by Id (USER_DATA)
+
+                Get CM futures Transaction download link by Id
+
+        Weight(IP): 10
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Download link expiration: 7 days
+
+                Args:
+                    download_id (Union[str, None]): get by download id api
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetCmFuturesTransactionDownloadLinkByIdResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_cm_futures_transaction_download_link_by_id(
+            download_id, recv_window
+        )
+
     def get_cm_income_history(
         self,
         symbol: Optional[str] = None,
@@ -716,6 +821,114 @@ class DerivativesTradingPortfolioMarginRestAPI:
 
         return self._accountApi.get_cm_income_history(
             symbol, income_type, start_time, end_time, limit, recv_window
+        )
+
+    def get_download_id_for_cm_futures_order_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesOrderHistoryResponse]:
+        """
+                Get Download Id For CM Futures Order History (USER_DATA)
+
+                Get download id for CM futures order history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 10 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesOrderHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_download_id_for_cm_futures_order_history(
+            start_time, end_time, recv_window
+        )
+
+    def get_download_id_for_cm_futures_trade_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesTradeHistoryResponse]:
+        """
+                Get Download Id For CM Futures Trade History (USER_DATA)
+
+                Get download id for CM futures trade history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 5 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesTradeHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_download_id_for_cm_futures_trade_history(
+            start_time, end_time, recv_window
+        )
+
+    def get_download_id_for_cm_futures_transaction_history(
+        self,
+        start_time: Union[int, None],
+        end_time: Union[int, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[GetDownloadIdForCmFuturesTransactionHistoryResponse]:
+        """
+                Get Download Id For CM Futures Transaction History (USER_DATA)
+
+                Get download id for CM futures transaction history
+
+        Weight(IP): 1500
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Request Limitation is 5 times per month, shared by front end download page and rest api
+        - The time between `startTime` and `endTime` can not be longer than 1 year
+
+                Args:
+                    start_time (Union[int, None]): Timestamp in ms
+                    end_time (Union[int, None]): Timestamp in ms
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[GetDownloadIdForCmFuturesTransactionHistoryResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._accountApi.get_download_id_for_cm_futures_transaction_history(
+            start_time, end_time, recv_window
         )
 
     def get_download_id_for_um_futures_order_history(
