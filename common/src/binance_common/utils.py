@@ -594,14 +594,17 @@ def send_request(
 
             if response.status_code >= 400:
                 status = response.status_code
-                data = (
-                    response.json()
-                    if response.headers.get("Content-Type")
-                    and response.headers.get("Content-Type").startswith(
-                        "application/json"
-                    )
-                    else {}
-                )
+                data = {}
+                if response.headers.get("Content-Type", "").startswith(
+                    "application/json"
+                ):
+                    try:
+                        parsed_error = response.json()
+                    except ValueError:
+                        pass
+                    else:
+                        if isinstance(parsed_error, dict):
+                            data = parsed_error
 
                 if status == 400:
                     raise BadRequestError(
