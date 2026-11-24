@@ -135,7 +135,7 @@ class TestWebSocketMarketApi:
     async def test_avg_price_success_with_optional_params(self):
         """Test avg_price() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BNBUSDT", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "ddbfb65f-9ebf-42ec-8240-8f0f91de0867",
@@ -172,7 +172,7 @@ class TestWebSocketMarketApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/avgPrice".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -185,7 +185,7 @@ class TestWebSocketMarketApi:
     async def test_avg_price_missing_required_param_symbol(self):
         """Test that avg_price() raises RequiredError when 'symbol' is missing."""
 
-        params = {"symbol": "BNBUSDT", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BNBUSDT", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -280,7 +280,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBBTC",
             "from_id": 582,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 500,
         }
 
@@ -331,7 +331,7 @@ class TestWebSocketMarketApi:
         )
         assert params["symbol"] == "BNBBTC"
         assert params["from_id"] == 582
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["limit"] == 500
 
         assert result is not None
@@ -351,7 +351,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBBTC",
             "from_id": 582,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 500,
         }
         params["symbol"] = None
@@ -366,7 +366,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBBTC",
             "from_id": 582,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 500,
         }
         params["from_id"] = None
@@ -462,7 +462,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 1,
             "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
@@ -518,7 +518,7 @@ class TestWebSocketMarketApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/depth".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["limit"] == 1
         assert params["symbol_status"] == DepthSymbolStatusEnum["TRADING"].value
 
@@ -535,7 +535,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 1,
             "symbol_status": DepthSymbolStatusEnum["TRADING"].value,
         }
@@ -619,7 +619,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": KlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",
@@ -662,7 +662,7 @@ class TestWebSocketMarketApi:
         assert request_kwargs["payload"]["method"] == "/klines".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["interval"] == KlinesIntervalEnum["INTERVAL_1s"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
         assert params["time_zone"] == "0"
@@ -682,7 +682,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": KlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",
@@ -700,7 +700,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": KlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",
@@ -791,7 +791,7 @@ class TestWebSocketMarketApi:
     async def test_reference_price_success_with_optional_params(self):
         """Test reference_price() successfully with optional parameters."""
 
-        params = {"symbol": "BAZUSD", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BAZUSD", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "ddbfb65f-9ebf-42ec-8240-8f0f91de0867",
@@ -836,7 +836,7 @@ class TestWebSocketMarketApi:
             "/", "", 1
         )
         assert params["symbol"] == "BAZUSD"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -849,7 +849,7 @@ class TestWebSocketMarketApi:
     async def test_reference_price_missing_required_param_symbol(self):
         """Test that reference_price() raises RequiredError when 'symbol' is missing."""
 
-        params = {"symbol": "BAZUSD", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BAZUSD", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -937,7 +937,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BAZUSD",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol_status": ReferencePriceCalculationSymbolStatusEnum["TRADING"].value,
         }
 
@@ -984,7 +984,7 @@ class TestWebSocketMarketApi:
             "method"
         ] == "/referencePrice.calculation".replace("/", "", 1)
         assert params["symbol"] == "BAZUSD"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert (
             params["symbol_status"]
             == ReferencePriceCalculationSymbolStatusEnum["TRADING"].value
@@ -1006,7 +1006,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BAZUSD",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol_status": ReferencePriceCalculationSymbolStatusEnum["TRADING"].value,
         }
         params["symbol"] = None
@@ -1094,7 +1094,7 @@ class TestWebSocketMarketApi:
         """Test ticker() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "type": TickerTypeEnum["FULL"].value,
@@ -1152,7 +1152,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ticker".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["type"] == TickerTypeEnum["FULL"].value
@@ -1248,7 +1248,7 @@ class TestWebSocketMarketApi:
         """Test ticker24hr() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "type": Ticker24hrTypeEnum["FULL"].value,
@@ -1311,7 +1311,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ticker.24hr".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["type"] == Ticker24hrTypeEnum["FULL"].value
@@ -1390,7 +1390,7 @@ class TestWebSocketMarketApi:
         """Test ticker_book() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "symbol_status": TickerBookSymbolStatusEnum["TRADING"].value,
@@ -1436,7 +1436,7 @@ class TestWebSocketMarketApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ticker.book".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["symbol_status"] == TickerBookSymbolStatusEnum["TRADING"].value
@@ -1510,7 +1510,7 @@ class TestWebSocketMarketApi:
         """Test ticker_price() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "symbol_status": TickerPriceSymbolStatusEnum["TRADING"].value,
@@ -1552,7 +1552,7 @@ class TestWebSocketMarketApi:
         assert request_kwargs["payload"]["method"] == "/ticker.price".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["symbol_status"] == TickerPriceSymbolStatusEnum["TRADING"].value
@@ -1642,7 +1642,7 @@ class TestWebSocketMarketApi:
         """Test ticker_trading_day() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "time_zone": "0",
@@ -1702,7 +1702,7 @@ class TestWebSocketMarketApi:
         assert request_kwargs["payload"]["method"] == "/ticker.tradingDay".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["time_zone"] == "0"
@@ -1804,7 +1804,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -1859,7 +1859,7 @@ class TestWebSocketMarketApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["from_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
@@ -1881,7 +1881,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -1978,7 +1978,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_id": 1,
             "limit": 1,
         }
@@ -2030,7 +2030,7 @@ class TestWebSocketMarketApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["from_id"] == 1
         assert params["limit"] == 1
 
@@ -2050,7 +2050,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_id": 1,
             "limit": 1,
         }
@@ -2142,7 +2142,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 1,
         }
 
@@ -2193,7 +2193,7 @@ class TestWebSocketMarketApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["limit"] == 1
 
         assert result is not None
@@ -2209,7 +2209,7 @@ class TestWebSocketMarketApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "limit": 1,
         }
         params["symbol"] = None
@@ -2292,7 +2292,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": UiKlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",
@@ -2335,7 +2335,7 @@ class TestWebSocketMarketApi:
         assert request_kwargs["payload"]["method"] == "/uiKlines".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["interval"] == UiKlinesIntervalEnum["INTERVAL_1s"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
         assert params["time_zone"] == "0"
@@ -2355,7 +2355,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": UiKlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",
@@ -2373,7 +2373,7 @@ class TestWebSocketMarketApi:
         params = {
             "symbol": "BNBUSDT",
             "interval": UiKlinesIntervalEnum["INTERVAL_1s"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "time_zone": "0",

@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_spot.rest_api.models.new_order_response_fills_inner import (
     NewOrderResponseFillsInner,
@@ -55,6 +55,81 @@ class NewOrderResponse(BaseModel):
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"
     )
+    stop_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears for STOP_LOSS, TAKE_PROFIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT orders.",
+        alias="stopPrice",
+    )
+    trailing_delta: Optional[StrictInt] = Field(
+        default=None,
+        description="Delta price change required before order activation.",
+        alias="trailingDelta",
+    )
+    iceberg_qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears only if the parameter icebergQty was sent in the request.",
+        alias="icebergQty",
+    )
+    strategy_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyId parameter was provided upon order placement.",
+        alias="strategyId",
+    )
+    strategy_type: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyType parameter was provided upon order placement.",
+        alias="strategyType",
+    )
+    prevented_match_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the order expired due to STP.",
+        alias="preventedMatchId",
+    )
+    prevented_quantity: Optional[StrictStr] = Field(
+        default=None,
+        description="Order quantity that expired due to STP.",
+        alias="preventedQuantity",
+    )
+    trailing_time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time when the trailing order is now active and tracking price changes.",
+        alias="trailingTime",
+    )
+    used_sor: Optional[StrictBool] = Field(
+        default=None,
+        description="Field that determines whether order used SOR.",
+        alias="usedSor",
+    )
+    working_floor: Optional[StrictStr] = Field(
+        default=None,
+        description="Determines whether the order is being filled by the SOR or by the order book.",
+        alias="workingFloor",
+    )
+    peg_price_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg type. Only for pegged orders.",
+        alias="pegPriceType",
+    )
+    peg_offset_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg offset type. Only for pegged orders, if requested.",
+        alias="pegOffsetType",
+    )
+    peg_offset_value: Optional[StrictInt] = Field(
+        default=None,
+        description="Price peg offset value. Only for pegged orders, if requested.",
+        alias="pegOffsetValue",
+    )
+    pegged_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Current price order is pegged at. Only for pegged orders, once determined.",
+        alias="peggedPrice",
+    )
+    expiry_reason: Optional[StrictStr] = Field(
+        default=None,
+        description="Cause of the order's expiration. Appears when an order has expired.",
+        alias="expiryReason",
+    )
     fills: Optional[List[NewOrderResponseFillsInner]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
@@ -74,6 +149,21 @@ class NewOrderResponse(BaseModel):
         "side",
         "workingTime",
         "selfTradePreventionMode",
+        "stopPrice",
+        "trailingDelta",
+        "icebergQty",
+        "strategyId",
+        "strategyType",
+        "preventedMatchId",
+        "preventedQuantity",
+        "trailingTime",
+        "usedSor",
+        "workingFloor",
+        "pegPriceType",
+        "pegOffsetType",
+        "pegOffsetValue",
+        "peggedPrice",
+        "expiryReason",
         "fills",
     ]
 
@@ -164,6 +254,21 @@ class NewOrderResponse(BaseModel):
                 "side": obj.get("side"),
                 "workingTime": obj.get("workingTime"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
+                "stopPrice": obj.get("stopPrice"),
+                "trailingDelta": obj.get("trailingDelta"),
+                "icebergQty": obj.get("icebergQty"),
+                "strategyId": obj.get("strategyId"),
+                "strategyType": obj.get("strategyType"),
+                "preventedMatchId": obj.get("preventedMatchId"),
+                "preventedQuantity": obj.get("preventedQuantity"),
+                "trailingTime": obj.get("trailingTime"),
+                "usedSor": obj.get("usedSor"),
+                "workingFloor": obj.get("workingFloor"),
+                "pegPriceType": obj.get("pegPriceType"),
+                "pegOffsetType": obj.get("pegOffsetType"),
+                "pegOffsetValue": obj.get("pegOffsetValue"),
+                "peggedPrice": obj.get("peggedPrice"),
+                "expiryReason": obj.get("expiryReason"),
                 "fills": (
                     [
                         NewOrderResponseFillsInner.from_dict(_item)

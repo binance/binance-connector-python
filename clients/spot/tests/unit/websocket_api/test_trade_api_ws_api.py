@@ -571,7 +571,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "recv_window": 5000,
         }
 
@@ -697,7 +697,7 @@ class TestWebSocketTradeApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -717,7 +717,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -862,7 +862,7 @@ class TestWebSocketTradeApi:
         params = {
             "symbol": "BNBUSDT",
             "new_qty": 5,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "myOrder2",
@@ -963,7 +963,7 @@ class TestWebSocketTradeApi:
         ] == "/order.amend.keepPriority".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
         assert params["new_qty"] == 5
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "myOrder1"
         assert params["new_client_order_id"] == "myOrder2"
@@ -987,7 +987,7 @@ class TestWebSocketTradeApi:
         params = {
             "symbol": "BNBUSDT",
             "new_qty": 5,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "myOrder2",
@@ -1005,7 +1005,7 @@ class TestWebSocketTradeApi:
         params = {
             "symbol": "BNBUSDT",
             "new_qty": 5,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "myOrder2",
@@ -1179,7 +1179,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "cancelMyOrder1",
@@ -1312,7 +1312,7 @@ class TestWebSocketTradeApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "myOrder1"
         assert params["new_client_order_id"] == "cancelMyOrder1"
@@ -1336,7 +1336,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "new_client_order_id": "cancelMyOrder1",
@@ -1526,7 +1526,7 @@ class TestWebSocketTradeApi:
             ].value,
             "side": OrderCancelReplaceSideEnum["BUY"].value,
             "type": OrderCancelReplaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "cancel_order_id": 1,
             "cancel_orig_client_order_id": "myOrder1",
             "cancel_new_client_order_id": "cancelMyOrder1",
@@ -1682,7 +1682,7 @@ class TestWebSocketTradeApi:
         )
         assert params["side"] == OrderCancelReplaceSideEnum["BUY"].value
         assert params["type"] == OrderCancelReplaceTypeEnum["MARKET"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["cancel_order_id"] == 1
         assert params["cancel_orig_client_order_id"] == "myOrder1"
         assert params["cancel_new_client_order_id"] == "cancelMyOrder1"
@@ -1746,7 +1746,7 @@ class TestWebSocketTradeApi:
             ].value,
             "side": OrderCancelReplaceSideEnum["BUY"].value,
             "type": OrderCancelReplaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "cancel_order_id": 1,
             "cancel_orig_client_order_id": "myOrder1",
             "cancel_new_client_order_id": "cancelMyOrder1",
@@ -1794,7 +1794,7 @@ class TestWebSocketTradeApi:
             ].value,
             "side": OrderCancelReplaceSideEnum["BUY"].value,
             "type": OrderCancelReplaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "cancel_order_id": 1,
             "cancel_orig_client_order_id": "myOrder1",
             "cancel_new_client_order_id": "cancelMyOrder1",
@@ -1842,7 +1842,7 @@ class TestWebSocketTradeApi:
             ].value,
             "side": OrderCancelReplaceSideEnum["BUY"].value,
             "type": OrderCancelReplaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "cancel_order_id": 1,
             "cancel_orig_client_order_id": "myOrder1",
             "cancel_new_client_order_id": "cancelMyOrder1",
@@ -1888,7 +1888,7 @@ class TestWebSocketTradeApi:
             ].value,
             "side": OrderCancelReplaceSideEnum["BUY"].value,
             "type": OrderCancelReplaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "cancel_order_id": 1,
             "cancel_orig_client_order_id": "myOrder1",
             "cancel_new_client_order_id": "cancelMyOrder1",
@@ -2062,7 +2062,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_list_id": 1,
             "list_client_order_id": "C3wyj4WVEktd7u9aVBRXcN",
             "new_client_order_id": "cancelMyOrder1",
@@ -2163,7 +2163,7 @@ class TestWebSocketTradeApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_list_id"] == 1
         assert params["list_client_order_id"] == "C3wyj4WVEktd7u9aVBRXcN"
         assert params["new_client_order_id"] == "cancelMyOrder1"
@@ -2186,7 +2186,7 @@ class TestWebSocketTradeApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_list_id": 1,
             "list_client_order_id": "C3wyj4WVEktd7u9aVBRXcN",
             "new_client_order_id": "cancelMyOrder1",
@@ -2359,7 +2359,7 @@ class TestWebSocketTradeApi:
             "side": OrderListPlaceSideEnum["BUY"].value,
             "price": 1,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "08985fedd9ea2cf6b28996",
             "limit_client_order_id": "limitOrder1",
             "limit_iceberg_qty": 1,
@@ -2495,7 +2495,7 @@ class TestWebSocketTradeApi:
         assert params["side"] == OrderListPlaceSideEnum["BUY"].value
         assert params["price"] == 1
         assert params["quantity"] == 1
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "08985fedd9ea2cf6b28996"
         assert params["limit_client_order_id"] == "limitOrder1"
         assert params["limit_iceberg_qty"] == 1
@@ -2542,7 +2542,7 @@ class TestWebSocketTradeApi:
             "side": OrderListPlaceSideEnum["BUY"].value,
             "price": 1,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "08985fedd9ea2cf6b28996",
             "limit_client_order_id": "limitOrder1",
             "limit_iceberg_qty": 1,
@@ -2578,7 +2578,7 @@ class TestWebSocketTradeApi:
             "side": OrderListPlaceSideEnum["BUY"].value,
             "price": 1,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "08985fedd9ea2cf6b28996",
             "limit_client_order_id": "limitOrder1",
             "limit_iceberg_qty": 1,
@@ -2614,7 +2614,7 @@ class TestWebSocketTradeApi:
             "side": OrderListPlaceSideEnum["BUY"].value,
             "price": 1,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "08985fedd9ea2cf6b28996",
             "limit_client_order_id": "limitOrder1",
             "limit_iceberg_qty": 1,
@@ -2650,7 +2650,7 @@ class TestWebSocketTradeApi:
             "side": OrderListPlaceSideEnum["BUY"].value,
             "price": 1,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "08985fedd9ea2cf6b28996",
             "limit_client_order_id": "limitOrder1",
             "limit_iceberg_qty": 1,
@@ -2851,7 +2851,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3009,7 +3009,7 @@ class TestWebSocketTradeApi:
             == OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value
         )
         assert params["below_type"] == OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "cKPMnDCbcLQILtDYM4f4fX"
         assert params["above_client_order_id"] == "aboveOrder1"
         assert params["above_iceberg_qty"] == 1
@@ -3084,7 +3084,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3139,7 +3139,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3194,7 +3194,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3251,7 +3251,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3308,7 +3308,7 @@ class TestWebSocketTradeApi:
             "quantity": 1,
             "above_type": OrderListPlaceOcoAboveTypeEnum["STOP_LOSS_LIMIT"].value,
             "below_type": OrderListPlaceOcoBelowTypeEnum["STOP_LOSS"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "cKPMnDCbcLQILtDYM4f4fX",
             "above_client_order_id": "aboveOrder1",
             "above_iceberg_qty": 1,
@@ -3508,7 +3508,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -3640,7 +3640,7 @@ class TestWebSocketTradeApi:
         assert params["working_quantity"] == 1
         assert params["pending_type"] == OrderListPlaceOpoPendingTypeEnum["LIMIT"].value
         assert params["pending_side"] == OrderListPlaceOpoPendingSideEnum["BUY"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "OiOgqvRagBefpzdM5gjYX3"
         assert (
             params["new_order_resp_type"]
@@ -3713,7 +3713,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -3770,7 +3770,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -3829,7 +3829,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -3888,7 +3888,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -3947,7 +3947,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -4006,7 +4006,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -4065,7 +4065,7 @@ class TestWebSocketTradeApi:
             "working_quantity": 1,
             "pending_type": OrderListPlaceOpoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOpoPendingSideEnum["BUY"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "OiOgqvRagBefpzdM5gjYX3",
             "new_order_resp_type": OrderListPlaceOpoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpoSelfTradePreventionModeEnum[
@@ -4299,7 +4299,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4479,7 +4479,7 @@ class TestWebSocketTradeApi:
             params["pending_above_type"]
             == OrderListPlaceOpocoPendingAboveTypeEnum["STOP_LOSS_LIMIT"].value
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "TVbG6ymkYMXTj7tczbOsBf"
         assert (
             params["new_order_resp_type"]
@@ -4578,7 +4578,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4657,7 +4657,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4738,7 +4738,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4819,7 +4819,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4900,7 +4900,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -4981,7 +4981,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -5064,7 +5064,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOpocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "TVbG6ymkYMXTj7tczbOsBf",
             "new_order_resp_type": OrderListPlaceOpocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOpocoSelfTradePreventionModeEnum[
@@ -5309,7 +5309,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5460,7 +5460,7 @@ class TestWebSocketTradeApi:
         assert params["pending_type"] == OrderListPlaceOtoPendingTypeEnum["LIMIT"].value
         assert params["pending_side"] == OrderListPlaceOtoPendingSideEnum["BUY"].value
         assert params["pending_quantity"] == 1
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "KA4EBjGnzvSwSCQsDdTrlf"
         assert (
             params["new_order_resp_type"]
@@ -5535,7 +5535,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5594,7 +5594,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5655,7 +5655,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5716,7 +5716,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5777,7 +5777,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5838,7 +5838,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5899,7 +5899,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -5960,7 +5960,7 @@ class TestWebSocketTradeApi:
             "pending_type": OrderListPlaceOtoPendingTypeEnum["LIMIT"].value,
             "pending_side": OrderListPlaceOtoPendingSideEnum["BUY"].value,
             "pending_quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "KA4EBjGnzvSwSCQsDdTrlf",
             "new_order_resp_type": OrderListPlaceOtoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtoSelfTradePreventionModeEnum[
@@ -6218,7 +6218,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6419,7 +6419,7 @@ class TestWebSocketTradeApi:
             params["pending_above_type"]
             == OrderListPlaceOtocoPendingAboveTypeEnum["STOP_LOSS_LIMIT"].value
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["list_client_order_id"] == "GaeJHjZPasPItFj4x7Mqm6"
         assert (
             params["new_order_resp_type"]
@@ -6521,7 +6521,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6603,7 +6603,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6687,7 +6687,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6771,7 +6771,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6855,7 +6855,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -6939,7 +6939,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -7023,7 +7023,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -7109,7 +7109,7 @@ class TestWebSocketTradeApi:
             "pending_above_type": OrderListPlaceOtocoPendingAboveTypeEnum[
                 "STOP_LOSS_LIMIT"
             ].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "list_client_order_id": "GaeJHjZPasPItFj4x7Mqm6",
             "new_order_resp_type": OrderListPlaceOtocoNewOrderRespTypeEnum["ACK"].value,
             "self_trade_prevention_mode": OrderListPlaceOtocoSelfTradePreventionModeEnum[
@@ -7329,7 +7329,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderPlaceSideEnum["BUY"].value,
             "type": OrderPlaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": OrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "quantity": 1,
@@ -7450,7 +7450,7 @@ class TestWebSocketTradeApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderPlaceSideEnum["BUY"].value
         assert params["type"] == OrderPlaceTypeEnum["MARKET"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["time_in_force"] == OrderPlaceTimeInForceEnum["GTC"].value
         assert params["price"] == 1
         assert params["quantity"] == 1
@@ -7495,7 +7495,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderPlaceSideEnum["BUY"].value,
             "type": OrderPlaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": OrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "quantity": 1,
@@ -7529,7 +7529,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderPlaceSideEnum["BUY"].value,
             "type": OrderPlaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": OrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "quantity": 1,
@@ -7563,7 +7563,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderPlaceSideEnum["BUY"].value,
             "type": OrderPlaceTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": OrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "quantity": 1,
@@ -7687,7 +7687,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -7763,7 +7763,7 @@ class TestWebSocketTradeApi:
         assert params["symbol"] == "BNBUSDT"
         assert params["side"] == OrderTestSideEnum["BUY"].value
         assert params["type"] == OrderTestTypeEnum["MARKET"].value
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["compute_commission_rates"] is False
         assert params["time_in_force"] == OrderTestTimeInForceEnum["GTC"].value
         assert params["price"] == 1
@@ -7808,7 +7808,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -7843,7 +7843,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -7878,7 +7878,7 @@ class TestWebSocketTradeApi:
             "symbol": "BNBUSDT",
             "side": OrderTestSideEnum["BUY"].value,
             "type": OrderTestTypeEnum["MARKET"].value,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": OrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -8041,7 +8041,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderPlaceSideEnum["BUY"].value,
             "type": SorOrderPlaceTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": SorOrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "new_client_order_id": "myOrder1",
@@ -8140,7 +8140,7 @@ class TestWebSocketTradeApi:
         assert params["side"] == SorOrderPlaceSideEnum["BUY"].value
         assert params["type"] == SorOrderPlaceTypeEnum["MARKET"].value
         assert params["quantity"] == 1
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["time_in_force"] == SorOrderPlaceTimeInForceEnum["GTC"].value
         assert params["price"] == 1
         assert params["new_client_order_id"] == "myOrder1"
@@ -8177,7 +8177,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderPlaceSideEnum["BUY"].value,
             "type": SorOrderPlaceTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": SorOrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "new_client_order_id": "myOrder1",
@@ -8204,7 +8204,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderPlaceSideEnum["BUY"].value,
             "type": SorOrderPlaceTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": SorOrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "new_client_order_id": "myOrder1",
@@ -8231,7 +8231,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderPlaceSideEnum["BUY"].value,
             "type": SorOrderPlaceTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": SorOrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "new_client_order_id": "myOrder1",
@@ -8258,7 +8258,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderPlaceSideEnum["BUY"].value,
             "type": SorOrderPlaceTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "time_in_force": SorOrderPlaceTimeInForceEnum["GTC"].value,
             "price": 1,
             "new_client_order_id": "myOrder1",
@@ -8379,7 +8379,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderTestSideEnum["BUY"].value,
             "type": SorOrderTestTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -8446,7 +8446,7 @@ class TestWebSocketTradeApi:
         assert params["side"] == SorOrderTestSideEnum["BUY"].value
         assert params["type"] == SorOrderTestTypeEnum["MARKET"].value
         assert params["quantity"] == 1
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["compute_commission_rates"] is False
         assert params["time_in_force"] == SorOrderTestTimeInForceEnum["GTC"].value
         assert params["price"] == 1
@@ -8481,7 +8481,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderTestSideEnum["BUY"].value,
             "type": SorOrderTestTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -8509,7 +8509,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderTestSideEnum["BUY"].value,
             "type": SorOrderTestTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -8537,7 +8537,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderTestSideEnum["BUY"].value,
             "type": SorOrderTestTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
             "price": 1,
@@ -8565,7 +8565,7 @@ class TestWebSocketTradeApi:
             "side": SorOrderTestSideEnum["BUY"].value,
             "type": SorOrderTestTypeEnum["MARKET"].value,
             "quantity": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "compute_commission_rates": False,
             "time_in_force": SorOrderTestTimeInForceEnum["GTC"].value,
             "price": 1,

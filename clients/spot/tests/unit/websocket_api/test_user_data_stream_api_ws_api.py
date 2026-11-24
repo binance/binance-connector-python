@@ -76,7 +76,7 @@ class TestWebSocketUserDataStreamApi:
     async def test_session_subscriptions_success_with_optional_params(self):
         """Test session_subscriptions() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "d3df5a22-88ea-4fe0-9f4e-0fcea5d418b7",
@@ -107,7 +107,7 @@ class TestWebSocketUserDataStreamApi:
         )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -175,7 +175,7 @@ class TestWebSocketUserDataStreamApi:
         """Test user_data_stream_subscribe() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "filter": {"key": {"e": ["executionReport"]}},
         }
 
@@ -206,7 +206,7 @@ class TestWebSocketUserDataStreamApi:
         assert request_kwargs["payload"][
             "method"
         ] == "/userDataStream.subscribe".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["filter"] == {"key": {"e": ["executionReport"]}}
 
         assert result is not None
@@ -278,7 +278,7 @@ class TestWebSocketUserDataStreamApi:
         """Test user_data_stream_subscribe_signature() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "recv_window": 5000,
             "filter": {"key": {"e": ["executionReport"]}},
         }
@@ -310,7 +310,7 @@ class TestWebSocketUserDataStreamApi:
         assert request_kwargs["payload"][
             "method"
         ] == "/userDataStream.subscribe.signature".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
         assert params["filter"] == {"key": {"e": ["executionReport"]}}
 
@@ -380,7 +380,7 @@ class TestWebSocketUserDataStreamApi:
     async def test_user_data_stream_unsubscribe_success_with_optional_params(self):
         """Test user_data_stream_unsubscribe() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b", "subscription_id": 1}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976", "subscription_id": 1}
 
         expected_response = {
             "id": "d3df8a21-98ea-4fe0-8f4e-0fcea5d418b7",
@@ -409,7 +409,7 @@ class TestWebSocketUserDataStreamApi:
         assert request_kwargs["payload"][
             "method"
         ] == "/userDataStream.unsubscribe".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["subscription_id"] == 1
 
         assert result is not None

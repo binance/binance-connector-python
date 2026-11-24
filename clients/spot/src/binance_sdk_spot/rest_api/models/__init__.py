@@ -41,6 +41,12 @@ from .delete_open_orders_response import (
 from .delete_open_orders_response_inner import (
     DeleteOpenOrdersResponseInner as DeleteOpenOrdersResponseInner,
 )
+from .delete_open_orders_response_inner_order_reports_inner import (
+    DeleteOpenOrdersResponseInnerOrderReportsInner as DeleteOpenOrdersResponseInnerOrderReportsInner,
+)
+from .delete_open_orders_response_inner_orders_inner import (
+    DeleteOpenOrdersResponseInnerOrdersInner as DeleteOpenOrdersResponseInnerOrdersInner,
+)
 from .delete_order_list_response import (
     DeleteOrderListResponse as DeleteOrderListResponse,
 )

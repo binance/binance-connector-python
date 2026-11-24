@@ -54,6 +54,71 @@ class SorOrderResponse(BaseModel):
         default=None, alias="selfTradePreventionMode"
     )
     used_sor: Optional[StrictBool] = Field(default=None, alias="usedSor")
+    stop_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears for STOP_LOSS, TAKE_PROFIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT orders.",
+        alias="stopPrice",
+    )
+    trailing_delta: Optional[StrictInt] = Field(
+        default=None,
+        description="Delta price change required before order activation.",
+        alias="trailingDelta",
+    )
+    iceberg_qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears only if the parameter icebergQty was sent in the request.",
+        alias="icebergQty",
+    )
+    strategy_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyId parameter was provided upon order placement.",
+        alias="strategyId",
+    )
+    strategy_type: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyType parameter was provided upon order placement.",
+        alias="strategyType",
+    )
+    prevented_match_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the order expired due to STP.",
+        alias="preventedMatchId",
+    )
+    prevented_quantity: Optional[StrictStr] = Field(
+        default=None,
+        description="Order quantity that expired due to STP.",
+        alias="preventedQuantity",
+    )
+    trailing_time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time when the trailing order is now active and tracking price changes.",
+        alias="trailingTime",
+    )
+    peg_price_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg type. Only for pegged orders.",
+        alias="pegPriceType",
+    )
+    peg_offset_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg offset type. Only for pegged orders, if requested.",
+        alias="pegOffsetType",
+    )
+    peg_offset_value: Optional[StrictInt] = Field(
+        default=None,
+        description="Price peg offset value. Only for pegged orders, if requested.",
+        alias="pegOffsetValue",
+    )
+    pegged_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Current price order is pegged at. Only for pegged orders, once determined.",
+        alias="peggedPrice",
+    )
+    expiry_reason: Optional[StrictStr] = Field(
+        default=None,
+        description="Cause of the order's expiration. Appears when an order has expired.",
+        alias="expiryReason",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",
@@ -75,6 +140,19 @@ class SorOrderResponse(BaseModel):
         "workingFloor",
         "selfTradePreventionMode",
         "usedSor",
+        "stopPrice",
+        "trailingDelta",
+        "icebergQty",
+        "strategyId",
+        "strategyType",
+        "preventedMatchId",
+        "preventedQuantity",
+        "trailingTime",
+        "pegPriceType",
+        "pegOffsetType",
+        "pegOffsetValue",
+        "peggedPrice",
+        "expiryReason",
     ]
 
     model_config = ConfigDict(
@@ -174,6 +252,19 @@ class SorOrderResponse(BaseModel):
                 "workingFloor": obj.get("workingFloor"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
                 "usedSor": obj.get("usedSor"),
+                "stopPrice": obj.get("stopPrice"),
+                "trailingDelta": obj.get("trailingDelta"),
+                "icebergQty": obj.get("icebergQty"),
+                "strategyId": obj.get("strategyId"),
+                "strategyType": obj.get("strategyType"),
+                "preventedMatchId": obj.get("preventedMatchId"),
+                "preventedQuantity": obj.get("preventedQuantity"),
+                "trailingTime": obj.get("trailingTime"),
+                "pegPriceType": obj.get("pegPriceType"),
+                "pegOffsetType": obj.get("pegOffsetType"),
+                "pegOffsetValue": obj.get("pegOffsetValue"),
+                "peggedPrice": obj.get("peggedPrice"),
+                "expiryReason": obj.get("expiryReason"),
             }
         )
         # store additional fields in additional_properties

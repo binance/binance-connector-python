@@ -15,8 +15,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_spot.rest_api.models.delete_open_orders_response_inner_order_reports_inner import (
+    DeleteOpenOrdersResponseInnerOrderReportsInner,
+)
+from binance_sdk_spot.rest_api.models.delete_open_orders_response_inner_orders_inner import (
+    DeleteOpenOrdersResponseInnerOrdersInner,
+)
 from typing import Set
 from typing_extensions import Self
 
@@ -26,12 +32,25 @@ class DeleteOpenOrdersResponseInner(BaseModel):
     DeleteOpenOrdersResponseInner
     """  # noqa: E501
 
+    order_list_id: Optional[StrictInt] = Field(default=None, alias="orderListId")
+    contingency_type: Optional[StrictStr] = Field(default=None, alias="contingencyType")
+    list_status_type: Optional[StrictStr] = Field(default=None, alias="listStatusType")
+    list_order_status: Optional[StrictStr] = Field(
+        default=None, alias="listOrderStatus"
+    )
+    list_client_order_id: Optional[StrictStr] = Field(
+        default=None, alias="listClientOrderId"
+    )
+    transaction_time: Optional[StrictInt] = Field(default=None, alias="transactionTime")
     symbol: Optional[StrictStr] = None
+    orders: Optional[List[DeleteOpenOrdersResponseInnerOrdersInner]] = None
+    order_reports: Optional[List[DeleteOpenOrdersResponseInnerOrderReportsInner]] = (
+        Field(default=None, alias="orderReports")
+    )
     orig_client_order_id: Optional[StrictStr] = Field(
         default=None, alias="origClientOrderId"
     )
     order_id: Optional[StrictInt] = Field(default=None, alias="orderId")
-    order_list_id: Optional[StrictInt] = Field(default=None, alias="orderListId")
     client_order_id: Optional[StrictStr] = Field(default=None, alias="clientOrderId")
     transact_time: Optional[StrictInt] = Field(default=None, alias="transactTime")
     price: Optional[StrictStr] = None
@@ -47,15 +66,97 @@ class DeleteOpenOrdersResponseInner(BaseModel):
     time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
     type: Optional[StrictStr] = None
     side: Optional[StrictStr] = None
+    stop_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears for STOP_LOSS, TAKE_PROFIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT orders.",
+        alias="stopPrice",
+    )
+    trailing_delta: Optional[StrictInt] = Field(
+        default=None,
+        description="Delta price change required before order activation.",
+        alias="trailingDelta",
+    )
+    trailing_time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time when the trailing order is now active and tracking price changes.",
+        alias="trailingTime",
+    )
+    iceberg_qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Appears only if the parameter icebergQty was sent in the request.",
+        alias="icebergQty",
+    )
+    strategy_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyId parameter was provided upon order placement.",
+        alias="strategyId",
+    )
+    strategy_type: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the strategyType parameter was provided upon order placement.",
+        alias="strategyType",
+    )
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None, alias="selfTradePreventionMode"
     )
+    prevented_match_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Appears only if the order expired due to STP.",
+        alias="preventedMatchId",
+    )
+    prevented_quantity: Optional[StrictStr] = Field(
+        default=None,
+        description="Order quantity that expired due to STP.",
+        alias="preventedQuantity",
+    )
+    used_sor: Optional[StrictBool] = Field(
+        default=None,
+        description="Field that determines whether order used SOR.",
+        alias="usedSor",
+    )
+    working_floor: Optional[StrictStr] = Field(
+        default=None,
+        description="Determines whether the order is being filled by the SOR or by the order book.",
+        alias="workingFloor",
+    )
+    peg_price_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg type. Only for pegged orders.",
+        alias="pegPriceType",
+    )
+    peg_offset_type: Optional[StrictStr] = Field(
+        default=None,
+        description="Price peg offset type. Only for pegged orders, if requested.",
+        alias="pegOffsetType",
+    )
+    peg_offset_value: Optional[StrictInt] = Field(
+        default=None,
+        description="Price peg offset value. Only for pegged orders, if requested.",
+        alias="pegOffsetValue",
+    )
+    pegged_price: Optional[StrictStr] = Field(
+        default=None,
+        description="Current price order is pegged at. Only for pegged orders, once determined.",
+        alias="peggedPrice",
+    )
+    expiry_reason: Optional[StrictStr] = Field(
+        default=None,
+        description="Cause of the order's expiration. Appears when an order has expired.",
+        alias="expiryReason",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
+        "orderListId",
+        "contingencyType",
+        "listStatusType",
+        "listOrderStatus",
+        "listClientOrderId",
+        "transactionTime",
         "symbol",
+        "orders",
+        "orderReports",
         "origClientOrderId",
         "orderId",
-        "orderListId",
         "clientOrderId",
         "transactTime",
         "price",
@@ -67,7 +168,22 @@ class DeleteOpenOrdersResponseInner(BaseModel):
         "timeInForce",
         "type",
         "side",
+        "stopPrice",
+        "trailingDelta",
+        "trailingTime",
+        "icebergQty",
+        "strategyId",
+        "strategyType",
         "selfTradePreventionMode",
+        "preventedMatchId",
+        "preventedQuantity",
+        "usedSor",
+        "workingFloor",
+        "pegPriceType",
+        "pegOffsetType",
+        "pegOffsetValue",
+        "peggedPrice",
+        "expiryReason",
     ]
 
     model_config = ConfigDict(
@@ -116,6 +232,20 @@ class DeleteOpenOrdersResponseInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in orders (list)
+        _items = []
+        if self.orders:
+            for _item_orders in self.orders:
+                if _item_orders:
+                    _items.append(_item_orders.to_dict())
+            _dict["orders"] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in order_reports (list)
+        _items = []
+        if self.order_reports:
+            for _item_order_reports in self.order_reports:
+                if _item_order_reports:
+                    _items.append(_item_order_reports.to_dict())
+            _dict["orderReports"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -134,10 +264,31 @@ class DeleteOpenOrdersResponseInner(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "orderListId": obj.get("orderListId"),
+                "contingencyType": obj.get("contingencyType"),
+                "listStatusType": obj.get("listStatusType"),
+                "listOrderStatus": obj.get("listOrderStatus"),
+                "listClientOrderId": obj.get("listClientOrderId"),
+                "transactionTime": obj.get("transactionTime"),
                 "symbol": obj.get("symbol"),
+                "orders": (
+                    [
+                        DeleteOpenOrdersResponseInnerOrdersInner.from_dict(_item)
+                        for _item in obj["orders"]
+                    ]
+                    if obj.get("orders") is not None
+                    else None
+                ),
+                "orderReports": (
+                    [
+                        DeleteOpenOrdersResponseInnerOrderReportsInner.from_dict(_item)
+                        for _item in obj["orderReports"]
+                    ]
+                    if obj.get("orderReports") is not None
+                    else None
+                ),
                 "origClientOrderId": obj.get("origClientOrderId"),
                 "orderId": obj.get("orderId"),
-                "orderListId": obj.get("orderListId"),
                 "clientOrderId": obj.get("clientOrderId"),
                 "transactTime": obj.get("transactTime"),
                 "price": obj.get("price"),
@@ -149,7 +300,22 @@ class DeleteOpenOrdersResponseInner(BaseModel):
                 "timeInForce": obj.get("timeInForce"),
                 "type": obj.get("type"),
                 "side": obj.get("side"),
+                "stopPrice": obj.get("stopPrice"),
+                "trailingDelta": obj.get("trailingDelta"),
+                "trailingTime": obj.get("trailingTime"),
+                "icebergQty": obj.get("icebergQty"),
+                "strategyId": obj.get("strategyId"),
+                "strategyType": obj.get("strategyType"),
                 "selfTradePreventionMode": obj.get("selfTradePreventionMode"),
+                "preventedMatchId": obj.get("preventedMatchId"),
+                "preventedQuantity": obj.get("preventedQuantity"),
+                "usedSor": obj.get("usedSor"),
+                "workingFloor": obj.get("workingFloor"),
+                "pegPriceType": obj.get("pegPriceType"),
+                "pegOffsetType": obj.get("pegOffsetType"),
+                "pegOffsetValue": obj.get("pegOffsetValue"),
+                "peggedPrice": obj.get("peggedPrice"),
+                "expiryReason": obj.get("expiryReason"),
             }
         )
         # store additional fields in additional_properties

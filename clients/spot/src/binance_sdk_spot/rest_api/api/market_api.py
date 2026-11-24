@@ -192,6 +192,7 @@ class MarketApi:
         101-500| 25
         501-1000| 50
         1001-5000| 250
+        5001-7500| 500
 
         Security Type: NONE
 
@@ -200,7 +201,7 @@ class MarketApi:
 
                 Args:
                     symbol (Union[str, None]):
-                    limit (Optional[int] = None): If limit > 5000, only 5000 entries will be returned.
+                    limit (Optional[int] = None): If limit > 7500, only 7500 entries will be returned.
                     symbol_status (Optional[DepthSymbolStatusEnum] = None): Filters for symbols that have this `tradingStatus`.
         A status mismatch returns error `-1220 SYMBOL_DOES_NOT_MATCH_STATUS`.
 

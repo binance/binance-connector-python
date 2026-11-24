@@ -129,7 +129,7 @@ class TestWebSocketAccountApi:
     async def test_account_commission_success_with_optional_params(self):
         """Test account_commission() successfully with optional parameters."""
 
-        params = {"symbol": "BNBUSDT", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BNBUSDT", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "d3df8a61-98ea-4fe0-8f4e-0fcea5d418b0",
@@ -194,7 +194,7 @@ class TestWebSocketAccountApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -211,7 +211,7 @@ class TestWebSocketAccountApi:
     async def test_account_commission_missing_required_param_symbol(self):
         """Test that account_commission() raises RequiredError when 'symbol' is missing."""
 
-        params = {"symbol": "BNBUSDT", "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"symbol": "BNBUSDT", "id": "5494febb-d167-46a2-996d-70533eb4d976"}
         params["symbol"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'symbol'"):
@@ -301,7 +301,7 @@ class TestWebSocketAccountApi:
     async def test_account_rate_limits_orders_success_with_optional_params(self):
         """Test account_rate_limits_orders() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b", "recv_window": 5000}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976", "recv_window": 5000}
 
         expected_response = {
             "id": "d3783d8d-f8d1-4d2c-b8a0-b7596af5a664",
@@ -354,7 +354,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"][
             "method"
         ] == "/account.rateLimits.orders".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -457,7 +457,7 @@ class TestWebSocketAccountApi:
         """Test account_status() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "omit_zero_balances": False,
             "recv_window": 5000,
         }
@@ -524,7 +524,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"]["method"] == "/account.status".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["omit_zero_balances"] is False
         assert params["recv_window"] == 5000
 
@@ -621,7 +621,7 @@ class TestWebSocketAccountApi:
         """Test all_order_lists() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -687,7 +687,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"]["method"] == "/allOrderLists".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["from_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
@@ -806,7 +806,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -885,7 +885,7 @@ class TestWebSocketAccountApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/allOrders".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
@@ -906,7 +906,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -1009,7 +1009,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "from_allocation_id": 1,
@@ -1072,7 +1072,7 @@ class TestWebSocketAccountApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
         assert params["from_allocation_id"] == 1
@@ -1094,7 +1094,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "start_time": 1735693200000,
             "end_time": 1735693200000,
             "from_allocation_id": 1,
@@ -1200,7 +1200,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "recv_window": 5000,
         }
 
@@ -1260,7 +1260,7 @@ class TestWebSocketAccountApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/myFilters".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -1277,7 +1277,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "recv_window": 5000,
         }
         params["symbol"] = None
@@ -1375,7 +1375,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "prevented_match_id": 1,
             "order_id": 1,
             "from_prevented_match_id": 1,
@@ -1433,7 +1433,7 @@ class TestWebSocketAccountApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["prevented_match_id"] == 1
         assert params["order_id"] == 1
         assert params["from_prevented_match_id"] == 1
@@ -1457,7 +1457,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "prevented_match_id": 1,
             "order_id": 1,
             "from_prevented_match_id": 1,
@@ -1572,7 +1572,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -1647,7 +1647,7 @@ class TestWebSocketAccountApi:
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/myTrades".replace("/", "", 1)
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_id"] == 1
         assert params["start_time"] == 1735693200000
         assert params["end_time"] == 1735693200000
@@ -1669,7 +1669,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "start_time": 1735693200000,
             "end_time": 1735693200000,
@@ -1773,7 +1773,7 @@ class TestWebSocketAccountApi:
     async def test_open_order_lists_status_success_with_optional_params(self):
         """Test open_order_lists_status() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b", "recv_window": 5000}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976", "recv_window": 5000}
 
         expected_response = {
             "id": "3a4437e2-41a3-4c19-897c-9cadc5dce8b6",
@@ -1833,7 +1833,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"]["method"] == "/openOrderLists.status".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -1946,7 +1946,7 @@ class TestWebSocketAccountApi:
         """Test open_orders_status() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "recv_window": 5000,
         }
@@ -2023,7 +2023,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"]["method"] == "/openOrders.status".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["recv_window"] == 5000
 
@@ -2126,7 +2126,7 @@ class TestWebSocketAccountApi:
         params = {
             "symbol": "BNBUSDT",
             "order_id": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_execution_id": 1,
             "limit": 1,
             "recv_window": 5000,
@@ -2181,7 +2181,7 @@ class TestWebSocketAccountApi:
         )
         assert params["symbol"] == "BNBUSDT"
         assert params["order_id"] == 1
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["from_execution_id"] == 1
         assert params["limit"] == 1
         assert params["recv_window"] == 5000
@@ -2204,7 +2204,7 @@ class TestWebSocketAccountApi:
         params = {
             "symbol": "BNBUSDT",
             "order_id": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_execution_id": 1,
             "limit": 1,
             "recv_window": 5000,
@@ -2221,7 +2221,7 @@ class TestWebSocketAccountApi:
         params = {
             "symbol": "BNBUSDT",
             "order_id": 1,
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "from_execution_id": 1,
             "limit": 1,
             "recv_window": 5000,
@@ -2321,7 +2321,7 @@ class TestWebSocketAccountApi:
         """Test order_list_status() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "orig_client_order_id": "08985fedd9ea2cf6b28996",
             "order_list_id": 1,
             "recv_window": 5000,
@@ -2383,7 +2383,7 @@ class TestWebSocketAccountApi:
         assert request_kwargs["payload"]["method"] == "/orderList.status".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["orig_client_order_id"] == "08985fedd9ea2cf6b28996"
         assert params["order_list_id"] == 1
         assert params["recv_window"] == 5000
@@ -2503,7 +2503,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "recv_window": 5000,
@@ -2580,7 +2580,7 @@ class TestWebSocketAccountApi:
             "/", "", 1
         )
         assert params["symbol"] == "BNBUSDT"
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["order_id"] == 1
         assert params["orig_client_order_id"] == "myOrder1"
         assert params["recv_window"] == 5000
@@ -2599,7 +2599,7 @@ class TestWebSocketAccountApi:
 
         params = {
             "symbol": "BNBUSDT",
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "order_id": 1,
             "orig_client_order_id": "myOrder1",
             "recv_window": 5000,

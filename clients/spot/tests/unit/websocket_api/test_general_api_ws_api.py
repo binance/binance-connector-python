@@ -171,7 +171,7 @@ class TestWebSocketGeneralApi:
         """Test exchange_info() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BNBUSDT",
             "symbols": ["BTCUSDT"],
             "permissions": ["SPOT"],
@@ -301,7 +301,7 @@ class TestWebSocketGeneralApi:
         )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BNBUSDT"
         assert params["symbols"] == ["BTCUSDT"]
         assert params["permissions"] == ["SPOT"]
@@ -383,7 +383,7 @@ class TestWebSocketGeneralApi:
         """Test execution_rules() successfully with optional parameters."""
 
         params = {
-            "id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b",
+            "id": "5494febb-d167-46a2-996d-70533eb4d976",
             "symbol": "BAZUSD",
             "symbols": ["BAZUSD"],
             "symbol_status": ExecutionRulesSymbolStatusEnum["TRADING"].value,
@@ -431,7 +431,7 @@ class TestWebSocketGeneralApi:
         assert request_kwargs["payload"]["method"] == "/executionRules".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["symbol"] == "BAZUSD"
         assert params["symbols"] == ["BAZUSD"]
         assert (
@@ -504,7 +504,7 @@ class TestWebSocketGeneralApi:
     async def test_ping_success_with_optional_params(self):
         """Test ping() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "922bcc6e-9de8-440d-9e84-7c80933a8d0d",
@@ -540,7 +540,7 @@ class TestWebSocketGeneralApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/ping".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -608,7 +608,7 @@ class TestWebSocketGeneralApi:
     async def test_time_success_with_optional_params(self):
         """Test time() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "187d3cb2-942d-484c-8271-4e2141bbadb1",
@@ -644,7 +644,7 @@ class TestWebSocketGeneralApi:
         assert "payload" in request_kwargs
         assert "method" in request_kwargs["payload"]
         assert request_kwargs["payload"]["method"] == "/time".replace("/", "", 1)
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response

@@ -36,7 +36,7 @@ class TestWebSocketAuthApi:
             "id": "c174a2b1-3f51-4580-b200-8528bd237cb7",
             "status": 200,
             "result": {
-                "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+                "apiKey": "YOUR_API_KEY",
                 "authorizedSince": 1649729878532,
                 "connectedSince": 1649729873021,
                 "returnRateLimits": False,
@@ -79,13 +79,13 @@ class TestWebSocketAuthApi:
     async def test_session_logon_success_with_optional_params(self):
         """Test session_logon() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b", "recv_window": 5000}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976", "recv_window": 5000}
 
         expected_response = {
             "id": "c174a2b1-3f51-4580-b200-8528bd237cb7",
             "status": 200,
             "result": {
-                "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+                "apiKey": "YOUR_API_KEY",
                 "authorizedSince": 1649729878532,
                 "connectedSince": 1649729873021,
                 "returnRateLimits": False,
@@ -117,7 +117,7 @@ class TestWebSocketAuthApi:
         )
         assert "params" in request_kwargs["payload"]
         params = request_kwargs["payload"]["params"]
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
         assert params["recv_window"] == 5000
 
         assert result is not None
@@ -189,7 +189,7 @@ class TestWebSocketAuthApi:
     async def test_session_logout_success_with_optional_params(self):
         """Test session_logout() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "c174a2b1-3f51-4580-b200-8528bd237cb7",
@@ -225,7 +225,7 @@ class TestWebSocketAuthApi:
         assert request_kwargs["payload"]["method"] == "/session.logout".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response
@@ -253,7 +253,7 @@ class TestWebSocketAuthApi:
             "id": "b50c16cd-62c9-4e29-89e4-37f10111f5bf",
             "status": 200,
             "result": {
-                "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+                "apiKey": "YOUR_API_KEY",
                 "authorizedSince": 1649729878532,
                 "connectedSince": 1649729873021,
                 "returnRateLimits": False,
@@ -294,13 +294,13 @@ class TestWebSocketAuthApi:
     async def test_session_status_success_with_optional_params(self):
         """Test session_status() successfully with optional parameters."""
 
-        params = {"id": "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"}
+        params = {"id": "5494febb-d167-46a2-996d-70533eb4d976"}
 
         expected_response = {
             "id": "b50c16cd-62c9-4e29-89e4-37f10111f5bf",
             "status": 200,
             "result": {
-                "apiKey": "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A",
+                "apiKey": "YOUR_API_KEY",
                 "authorizedSince": 1649729878532,
                 "connectedSince": 1649729873021,
                 "returnRateLimits": False,
@@ -330,7 +330,7 @@ class TestWebSocketAuthApi:
         assert request_kwargs["payload"]["method"] == "/session.status".replace(
             "/", "", 1
         )
-        assert params["id"] == "7d3b9b46-5f4f-4c8b-9a2d-0a8f9a4a0f5b"
+        assert params["id"] == "5494febb-d167-46a2-996d-70533eb4d976"
 
         assert result is not None
         assert result.data() == expected_response

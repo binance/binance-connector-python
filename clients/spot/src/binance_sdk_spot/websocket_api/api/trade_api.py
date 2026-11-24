@@ -1234,7 +1234,7 @@ class TradeApi:
         id: Optional[str] = None,
         list_client_order_id: Optional[str] = None,
         above_client_order_id: Optional[str] = None,
-        above_iceberg_qty: Optional[int] = None,
+        above_iceberg_qty: Optional[float] = None,
         above_price: Optional[float] = None,
         above_stop_price: Optional[float] = None,
         above_trailing_delta: Optional[int] = None,
@@ -1245,7 +1245,7 @@ class TradeApi:
         above_peg_offset_type: Optional[OrderListPlaceOcoAbovePegOffsetTypeEnum] = None,
         above_peg_offset_value: Optional[int] = None,
         below_client_order_id: Optional[str] = None,
-        below_iceberg_qty: Optional[int] = None,
+        below_iceberg_qty: Optional[float] = None,
         below_price: Optional[float] = None,
         below_stop_price: Optional[float] = None,
         below_trailing_delta: Optional[int] = None,
@@ -1304,7 +1304,7 @@ class TradeApi:
                     id (Optional[str] = None): Client-generated request identifier.
                     list_client_order_id (Optional[str] = None): Arbitrary unique ID among open order lists. Automatically generated if not sent. A new order list with the same `listClientOrderId` is accepted only when the previous one is filled or completely expired. `listClientOrderId` is distinct from the `aboveClientOrderId` and the `belowClientOrderId`.
                     above_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the above order. Automatically generated if not sent.
-                    above_iceberg_qty (Optional[int] = None): Note that this can only be used if `aboveTimeInForce` is `GTC`.
+                    above_iceberg_qty (Optional[float] = None): Note that this can only be used if `aboveTimeInForce` is `GTC`.
                     above_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     above_stop_price (Optional[float] = None): Can be used if `aboveType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `aboveStopPrice` or `aboveTrailingDelta` or both, must be specified.
                     above_trailing_delta (Optional[int] = None): See Trailing Stop order FAQ
@@ -1315,7 +1315,7 @@ class TradeApi:
                     above_peg_offset_type (Optional[OrderListPlaceOcoAbovePegOffsetTypeEnum] = None):
                     above_peg_offset_value (Optional[int] = None):
                     below_client_order_id (Optional[str] = None): Arbitrary unique ID among open orders for the below order. Automatically generated if not sent.
-                    below_iceberg_qty (Optional[int] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
+                    below_iceberg_qty (Optional[float] = None): Note that this can only be used if `belowTimeInForce` is `GTC`.
                     below_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS_LIMIT`, `LIMIT_MAKER`, or `TAKE_PROFIT_LIMIT` to specify the limit price.
                     below_stop_price (Optional[float] = None): Can be used if `belowType` is `STOP_LOSS`, `STOP_LOSS_LIMIT`, `TAKE_PROFIT`, `TAKE_PROFIT_LIMIT`. Either `belowStopPrice` or `belowTrailingDelta` or both, must be specified.
                     below_trailing_delta (Optional[int] = None): See Trailing Stop order FAQ
