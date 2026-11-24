@@ -172,10 +172,10 @@ class MarketApi:
     ) -> RequestStreamHandle:
         r"""
             Open Interest
-            /<underlying>@openInterest@<expirationDate>
+            /<underlying>@optionOpenInterest@<expirationDate>
             https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/ws-streams/market#open-interest
 
-            Option open interest for specific underlying asset on specific expiration date. E.g.ethusdt@openInterest@221125
+            Option open interest for specific underlying asset on specific expiration date. E.g.ethusdt@optionOpenInterest@221125
 
         Update Speed: 60s
 
@@ -204,7 +204,7 @@ class MarketApi:
             )
 
         stream = ws_streams_placeholder(
-            "/<underlying>@openInterest@<expirationDate>".replace("/", "", 1),
+            "/<underlying>@optionOpenInterest@<expirationDate>".replace("/", "", 1),
             {
                 "underlying": underlying,
                 "expiration_date": expiration_date,

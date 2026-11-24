@@ -220,7 +220,7 @@ class DerivativesTradingOptionsWebSocketStreams(WebSocketStreamBase):
         r"""
                 Open Interest
 
-                Option open interest for specific underlying asset on specific expiration date. E.g.ethusdt@openInterest@221125
+                Option open interest for specific underlying asset on specific expiration date. E.g.ethusdt@optionOpenInterest@221125
 
         Update Speed: 60s
 

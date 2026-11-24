@@ -411,7 +411,7 @@ class TestWebSocketStreams:
             }
         ]
         stream_endpoint = ws_streams_placeholder(
-            "/<underlying>@openInterest@<expirationDate>".replace("/", "", 1),
+            "/<underlying>@optionOpenInterest@<expirationDate>".replace("/", "", 1),
             params,
         )
 

@@ -70,7 +70,9 @@ class QueryCurrentOpenOptionOrdersResponseInner(BaseModel):
     )
     mmp: Optional[StrictBool] = Field(default=None, description="mmp")
     self_trade_prevention_mode: Optional[StrictStr] = Field(
-        default=None, alias="selfTradePreventionMode"
+        default=None,
+        description="self trading prevention mode",
+        alias="selfTradePreventionMode",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
