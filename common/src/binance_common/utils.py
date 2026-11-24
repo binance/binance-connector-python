@@ -1,4 +1,5 @@
 import copy
+import functools
 import hashlib
 import hmac
 import importlib
@@ -25,6 +26,7 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
+    Callable,
     Dict,
     Iterator,
     List,
@@ -505,6 +507,25 @@ def relax_model_strictness(model_cls: Type[BaseModel]) -> None:
     model_cls.model_rebuild(force=True)
 
 
+class _SubscriptableFunction:
+    """Wraps a function so it can also be called as `function[T](...)`.
+
+    The generated clients call `send_request[T](...)` to name the response
+    type; the type argument is not used at runtime.
+    """
+
+    def __init__(self, function: Callable):
+        functools.update_wrapper(self, function)
+        self._function = function
+
+    def __getitem__(self, _response_type: Any) -> Callable:
+        return self._function
+
+    def __call__(self, *args, **kwargs):
+        return self._function(*args, **kwargs)
+
+
+@_SubscriptableFunction
 def send_request(
     session: requests.Session,
     configuration: "ConfigurationRestAPI",

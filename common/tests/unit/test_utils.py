@@ -1122,6 +1122,20 @@ class TestSendRequest(unittest.TestCase):
             data=None,
         )
 
+    @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
+    def test_request_with_type_argument(self, mock_parse_rate_limits):
+        """The generated clients call send_request[T](...)."""
+        mock_response = Mock(status_code=200)
+        mock_response.text = json.dumps({"success": True})
+        self.session.request.return_value = mock_response
+
+        response = send_request[BaseModel](
+            self.session, self.configuration, self.method, self.path
+        )
+
+        self.assertEqual(response.data(), {"success": True})
+        self.session.request.assert_called_once()
+
     @patch("binance_common.utils.encoded_string", side_effect=lambda x: x)
     @patch("binance_common.utils.clean_none_value", side_effect=lambda x: x)
     @patch("binance_common.utils.parse_rate_limit_headers", return_value=[])
