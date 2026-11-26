@@ -27,36 +27,49 @@ class PriceStreamResponseRatesInner(BaseModel):
     """  # noqa: E501
 
     s: Optional[StrictStr] = Field(
-        default=None, description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.'
+        default=None,
+        description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.',
+        json_schema_extra={"examples": ["AAPL"]},
     )
     ac: Optional[StrictStr] = Field(
         default=None,
         description="Internal asset code, `EQ_{symbol}`. Reference only; do not use as a trading identifier.",
+        json_schema_extra={"examples": ["EQ_AAPL"]},
     )
     p: Optional[StrictStr] = Field(
-        default=None, description="Latest price, trailing-zero stripped."
+        default=None,
+        description="Latest price, trailing-zero stripped.",
+        json_schema_extra={"examples": ["182.5"]},
     )
     t: Optional[StrictInt] = Field(
-        default=None, description="Price time (epoch milliseconds UTC); may be null."
+        default=None,
+        description="Price time (epoch milliseconds UTC); may be null.",
+        json_schema_extra={"examples": [1710320400000]},
     )
     pc: Optional[StrictStr] = Field(
         default=None,
         description="Previous trading day's close price; absent when unknown.",
+        json_schema_extra={"examples": ["181.2000"]},
     )
     tc: Optional[StrictStr] = Field(
-        default=None, description="Today's close price; absent before After-Hours."
+        default=None,
+        description="Today's close price; absent before After-Hours.",
+        json_schema_extra={"examples": ["182.0000"]},
     )
     lrc: Optional[StrictStr] = Field(
         default=None,
         description="Final close price of the most recent completed RTH trading day. Rolls forward only once the next trading day enters Post-Market and the 1-minute kline for the minute before that day's RTH close is available; while unavailable, the previous `lrc`/`prc` pair is retained.",
+        json_schema_extra={"examples": ["182.0000"]},
     )
     prc: Optional[StrictStr] = Field(
         default=None,
         description="Final close price of the trading day before the `lrc` trading day. `null` when the symbol has only one completed RTH trading day (e.g. a new IPO).",
+        json_schema_extra={"examples": ["181.2000"]},
     )
     mp: Optional[StrictStr] = Field(
         default=None,
         description="Per-symbol market phase: `C` Closed, `ON` Overnight, `PRE` Pre-Market, `O` Market Open, `POST` Post-Market.",
+        json_schema_extra={"examples": ["O"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

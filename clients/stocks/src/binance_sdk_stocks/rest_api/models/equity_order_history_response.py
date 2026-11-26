@@ -30,17 +30,47 @@ class EquityOrderHistoryResponse(BaseModel):
     """  # noqa: E501
 
     total: Optional[StrictInt] = Field(
-        default=None, description="Total number of rows matching the filter."
+        default=None,
+        description="Total number of rows matching the filter.",
+        json_schema_extra={"examples": [2]},
     )
     page: Optional[StrictInt] = Field(
-        default=None, description="Current page (echoes `current`)."
+        default=None,
+        description="Current page (echoes `current`).",
+        json_schema_extra={"examples": [1]},
     )
     size: Optional[StrictInt] = Field(
-        default=None, description="Current page size (echoes `size`)."
+        default=None,
+        description="Current page size (echoes `size`).",
+        json_schema_extra={"examples": [20]},
     )
     rows: Optional[List[EquityOrderHistoryResponseRowsInner]] = Field(
         default=None,
         description="Order rows on this page. Empty array if nothing matches.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "orderId": "c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71",
+                        "symbol": "AAPL",
+                        "quote": "USDC",
+                        "side": "BUY",
+                        "orderType": "LIMIT",
+                        "limitPrice": "180.50",
+                        "avgFilledPrice": "180.48",
+                        "qty": "1",
+                        "notional": "notional",
+                        "filledQty": "1",
+                        "filledTotal": "filledTotal",
+                        "fee": "0.10",
+                        "session": "RTH",
+                        "status": "FILLED",
+                        "createdAt": 1735900000000,
+                        "updatedAt": 1735900120000,
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["total", "page", "size", "rows"]

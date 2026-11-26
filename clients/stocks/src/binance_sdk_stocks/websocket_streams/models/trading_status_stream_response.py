@@ -27,29 +27,45 @@ class TradingStatusStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"tradingStatus"`.'
+        default=None,
+        description='Event type, always `"tradingStatus"`.',
+        json_schema_extra={"examples": ["tradingStatus"]},
     )
     symbol: Optional[StrictStr] = Field(
-        default=None, description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.'
+        default=None,
+        description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.',
+        json_schema_extra={"examples": ["AAPL"]},
     )
     asset_code: Optional[StrictStr] = Field(
         default=None,
         description="Internal asset code `EQ_{symbol}`; reference only.",
         alias="assetCode",
+        json_schema_extra={"examples": ["EQ_AAPL"]},
     )
-    status: Optional[StrictStr] = Field(default=None, description="Trading status.")
-    msg: Optional[StrictStr] = Field(default=None, description="Reason code.")
+    status: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading status.",
+        json_schema_extra={"examples": ["TRADING_HALTED"]},
+    )
+    msg: Optional[StrictStr] = Field(
+        default=None,
+        description="Reason code.",
+        json_schema_extra={"examples": ["MATERIAL_NEWS"]},
+    )
     time: Optional[StrictInt] = Field(
         default=None,
         description="Status-effective time (epoch milliseconds UTC). May be in the future.",
+        json_schema_extra={"examples": [1614021300000]},
     )
     z: Optional[StrictStr] = Field(
         default=None,
         description="Tape designation: `C` = CTA (NYSE / AMEX), `N` = UTP (Nasdaq).",
+        json_schema_extra={"examples": ["C"]},
     )
     tradability: Optional[StrictStr] = Field(
         default=None,
         description="Tradability after the status change: `BUY_SELL` / `BUY` / `SELL` / `NONE`.",
+        json_schema_extra={"examples": ["NONE"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

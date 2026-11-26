@@ -29,14 +29,19 @@ class PlaceEquityOrderResponse(BaseModel):
     status: Optional[StrictStr] = Field(
         default=None,
         description="Acknowledgement code: `S` = accepted, `F` = failed. Not an order lifecycle status — to poll lifecycle, call `/order/detail` or `/order/history`.",
+        json_schema_extra={"examples": ["S"]},
     )
     order_id: Optional[StrictStr] = Field(
-        default=None, description="Order id (UUID).", alias="orderId"
+        default=None,
+        description="Order id (UUID).",
+        alias="orderId",
+        json_schema_extra={"examples": ["c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71"]},
     )
     client_order_id: Optional[StrictStr] = Field(
         default=None,
         description="Echoes the supplied or server-generated client order id.",
         alias="clientOrderId",
+        json_schema_extra={"examples": ["web_2c9c92b74f1e4a7c8f3b9e1a2d3c4b5a"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["status", "orderId", "clientOrderId"]

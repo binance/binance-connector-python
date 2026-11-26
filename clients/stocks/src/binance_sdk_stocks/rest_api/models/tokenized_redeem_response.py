@@ -30,15 +30,18 @@ class TokenizedRedeemResponse(BaseModel):
         default=None,
         description="Server-assigned convert request id. Use it to poll `/tokenized/convert-status`.",
         alias="issuerRequestId",
+        json_schema_extra={"examples": ["redeem-20260505-a1b2c3d4e5f6"]},
     )
     status: Optional[StrictStr] = Field(
         default=None,
         description="Convert status code: `P` = processing, `S` = success, `F` = failed.",
+        json_schema_extra={"examples": ["P"]},
     )
     tokenized_asset_settle_wallet_type: Optional[StrictStr] = Field(
         default=None,
         description="The wallet the tokenized asset is settled in: `MAIN` = Spot wallet, `CARD` = Funding wallet.",
         alias="tokenizedAssetSettleWalletType",
+        json_schema_extra={"examples": ["CARD"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

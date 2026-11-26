@@ -29,9 +29,39 @@ class ExchangeInfoResponse(BaseModel):
     ExchangeInfoResponse
     """  # noqa: E501
 
-    timezone: Optional[StrictStr] = Field(default=None, description="Always `UTC`.")
+    timezone: Optional[StrictStr] = Field(
+        default=None,
+        description="Always `UTC`.",
+        json_schema_extra={"examples": ["UTC"]},
+    )
     symbols: Optional[List[ExchangeInfoResponseSymbolsInner]] = Field(
-        default=None, description="List of tradable symbols with trading rules."
+        default=None,
+        description="List of tradable symbols with trading rules.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "symbol": "AAPL",
+                        "tradability": "BUY_SELL",
+                        "tradabilityUpdateTime": 1735900000000,
+                        "overnightSupported": True,
+                        "fractionable": True,
+                        "fractionableEh": False,
+                        "extendedSession": True,
+                        "maxNumOrders": 200,
+                        "stepSize": "0.000000001",
+                        "multiplierUp": "1.10",
+                        "multiplierDown": "0.90",
+                        "minQty": "0.000000001",
+                        "maxQty": "100000.00000000",
+                        "minNotional": "1.00",
+                        "maxNotional": "1000000.00",
+                        "listingTime": 1700000000000,
+                        "delistingTime": 1,
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["timezone", "symbols"]

@@ -27,38 +27,64 @@ class KlineStreamResponseK(BaseModel):
     """  # noqa: E501
 
     t: Optional[StrictInt] = Field(
-        default=None, description="Open time (epoch milliseconds)."
+        default=None,
+        description="Open time (epoch milliseconds).",
+        json_schema_extra={"examples": [1710316800000]},
     )
     ct: Optional[StrictInt] = Field(
         default=None,
         description="Close time (epoch milliseconds). For fixed intervals: `openTime + duration − 1ms`. For `1M`: last day of month at 23:59:59.999 UTC.",
+        json_schema_extra={"examples": [1710317099999]},
     )
     s: Optional[StrictStr] = Field(
-        default=None, description="Symbol (UPPERCASE ticker)."
+        default=None,
+        description="Symbol (UPPERCASE ticker).",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     i: Optional[StrictStr] = Field(
         default=None,
         description='Interval — `"5m"` / `"1h"` / `"1d"` / `"1w"` / `"1M"`.',
+        json_schema_extra={"examples": ["5m"]},
     )
-    o: Optional[StrictStr] = Field(default=None, description="Open price.")
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="Open price.",
+        json_schema_extra={"examples": ["182.50"]},
+    )
     c: Optional[StrictStr] = Field(
-        default=None, description="Close price (latest print within the interval)."
+        default=None,
+        description="Close price (latest print within the interval).",
+        json_schema_extra={"examples": ["183.20"]},
     )
-    h: Optional[StrictStr] = Field(default=None, description="High price.")
-    l: Optional[StrictStr] = Field(default=None, description="Low price.")
+    h: Optional[StrictStr] = Field(
+        default=None,
+        description="High price.",
+        json_schema_extra={"examples": ["183.50"]},
+    )
+    l: Optional[StrictStr] = Field(
+        default=None,
+        description="Low price.",
+        json_schema_extra={"examples": ["182.30"]},
+    )
     v: Optional[StrictStr] = Field(
-        default=None, description='Volume (shares), default `"0"`.'
+        default=None,
+        description='Volume (shares), default `"0"`.',
+        json_schema_extra={"examples": ["15000"]},
     )
     n: Optional[StrictInt] = Field(
-        default=None, description="Trade count; absent when upstream did not populate."
+        default=None,
+        description="Trade count; absent when upstream did not populate.",
+        json_schema_extra={"examples": [120]},
     )
     x: Optional[StrictBool] = Field(
         default=None,
         description="Candle is closed — `true` once the interval has ended.",
+        json_schema_extra={"examples": [False]},
     )
     vw: Optional[StrictStr] = Field(
         default=None,
         description="VWAP (volume-weighted average price); absent when upstream did not populate.",
+        json_schema_extra={"examples": ["182.95"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

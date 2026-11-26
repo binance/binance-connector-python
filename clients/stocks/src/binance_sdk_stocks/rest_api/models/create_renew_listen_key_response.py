@@ -30,6 +30,9 @@ class CreateRenewListenKeyResponse(BaseModel):
         default=None,
         description="Session identifier for the stock user data stream.",
         alias="listenKey",
+        json_schema_extra={
+            "examples": ["pqia91ma19a5s61cv6a81va65sdf19v8a65s1cv1zuz3ee1c5xz2ef6ad7"]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["listenKey"]

@@ -27,60 +27,92 @@ class EquityOrderHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     order_id: Optional[StrictStr] = Field(
-        default=None, description="Equity order id.", alias="orderId"
+        default=None,
+        description="Equity order id.",
+        alias="orderId",
+        json_schema_extra={"examples": ["c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71"]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="US-equity ticker.")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="US-equity ticker.",
+        json_schema_extra={"examples": ["AAPL"]},
+    )
     quote: Optional[StrictStr] = Field(
-        default=None, description="Quote asset (e.g. `USDC`)."
+        default=None,
+        description="Quote asset (e.g. `USDC`).",
+        json_schema_extra={"examples": ["USDC"]},
     )
-    side: Optional[StrictStr] = Field(default=None, description="`BUY` / `SELL`.")
+    side: Optional[StrictStr] = Field(
+        default=None,
+        description="`BUY` / `SELL`.",
+        json_schema_extra={"examples": ["BUY"]},
+    )
     order_type: Optional[StrictStr] = Field(
         default=None,
         description="`MARKET` / `LIMIT`; stop-limit orders placed in the app are `STOP_LOSS_LIMIT` / `TAKE_PROFIT_LIMIT`, and stop-limit orders not placed through Binance are `STOP_LIMIT`.",
         alias="orderType",
+        json_schema_extra={"examples": ["LIMIT"]},
     )
     limit_price: Optional[StrictStr] = Field(
         default=None,
         description="Limit price (USD). Returned for `LIMIT` and stop-limit orders; `MARKET` orders have no limit price (`null`).",
         alias="limitPrice",
+        json_schema_extra={"examples": ["180.50"]},
     )
     avg_filled_price: Optional[StrictStr] = Field(
         default=None,
         description="Average fill price (USD) as reported by the broker, returned for all order types. `null` until the first fill.",
         alias="avgFilledPrice",
+        json_schema_extra={"examples": ["180.48"]},
     )
     qty: Optional[StrictStr] = Field(
         default=None,
         description="Requested quantity. `null` for `BUY MARKET` (use `notional` instead).",
+        json_schema_extra={"examples": ["1"]},
     )
     notional: Optional[StrictStr] = Field(
         default=None,
         description="Requested notional. Non-null for `BUY MARKET`; `null` otherwise.",
+        json_schema_extra={"examples": ["notional"]},
     )
     filled_qty: Optional[StrictStr] = Field(
-        default=None, description="Cumulative filled quantity.", alias="filledQty"
+        default=None,
+        description="Cumulative filled quantity.",
+        alias="filledQty",
+        json_schema_extra={"examples": ["1"]},
     )
     filled_total: Optional[StrictStr] = Field(
         default=None,
         description="Cumulative filled notional. Populated only for `BUY MARKET`.",
         alias="filledTotal",
+        json_schema_extra={"examples": ["filledTotal"]},
     )
     fee: Optional[StrictStr] = Field(
-        default=None, description="Total commission fee (USD)."
+        default=None,
+        description="Total commission fee (USD).",
+        json_schema_extra={"examples": ["0.10"]},
     )
     session: Optional[StrictStr] = Field(
         default=None,
         description="Trading session the order was placed under: `RTH` / `EXTENDED` / `24H`. `null` for `MARKET` orders.",
+        json_schema_extra={"examples": ["RTH"]},
     )
     status: Optional[StrictStr] = Field(
         default=None,
         description="Order lifecycle status — one of `NEW` / `ACCEPTED` / `PARTIALLY_FILLED` / `FILLED` / `CANCELED` / `EXPIRED` / `REJECTED`.",
+        json_schema_extra={"examples": ["FILLED"]},
     )
     created_at: Optional[StrictInt] = Field(
-        default=None, description="Order creation time (ms epoch).", alias="createdAt"
+        default=None,
+        description="Order creation time (ms epoch).",
+        alias="createdAt",
+        json_schema_extra={"examples": [1735900000000]},
     )
     updated_at: Optional[StrictInt] = Field(
-        default=None, description="Last update time (ms epoch).", alias="updatedAt"
+        default=None,
+        description="Last update time (ms epoch).",
+        alias="updatedAt",
+        json_schema_extra={"examples": [1735900120000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

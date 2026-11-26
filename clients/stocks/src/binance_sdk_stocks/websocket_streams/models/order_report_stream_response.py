@@ -27,80 +27,112 @@ class OrderReportStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"orderReport"`.'
+        default=None,
+        description='Event type, always `"orderReport"`.',
+        json_schema_extra={"examples": ["orderReport"]},
     )
     E: Optional[StrictInt] = Field(
         default=None,
         description="Event time (epoch milliseconds); server push time.",
         alias="E",
+        json_schema_extra={"examples": [1710000000000]},
     )
     x: Optional[StrictStr] = Field(
         default=None,
         description='Execution type: `"ORDER_UPDATE"` (still open) or `"ORDER_TERMINAL"` (reached terminal state).',
+        json_schema_extra={"examples": ["ORDER_UPDATE"]},
     )
-    i: Optional[StrictStr] = Field(default=None, description="Order ID (UUID).")
+    i: Optional[StrictStr] = Field(
+        default=None,
+        description="Order ID (UUID).",
+        json_schema_extra={"examples": ["b0b6dd9d-8b9b-48a9-ba46-b9d54906e415"]},
+    )
     ai: Optional[StrictStr] = Field(
-        default=None, description="Asset ID (internal identifier)."
+        default=None,
+        description="Asset ID (internal identifier).",
+        json_schema_extra={"examples": ["4ce9353c-66d1-46c2-898f-fce867ab0247"]},
     )
     b: Optional[StrictStr] = Field(
         default=None,
         description='Base asset — the internal asset code with an `EQ_` prefix (e.g. `"EQ_AAPL"`), not the bare ticker used in REST responses / order input. Strip the `EQ_` prefix to match a symbol used elsewhere.',
+        json_schema_extra={"examples": ["EQ_AAPL"]},
     )
     q: Optional[StrictStr] = Field(
-        default=None, description='Quote currency, e.g. `"USD"`.'
+        default=None,
+        description='Quote currency, e.g. `"USD"`.',
+        json_schema_extra={"examples": ["USD"]},
     )
     S: Optional[StrictStr] = Field(
         default=None,
         description='Order side: `"buy"` or `"sell"`. Note: lowercase, unlike REST responses.',
         alias="S",
+        json_schema_extra={"examples": ["buy"]},
     )
     o: Optional[StrictStr] = Field(
         default=None,
         description='Order type: `"market"` / `"limit"` / `"stop"` / `"stop_limit"` / `"trailing_stop"`. Note: lowercase.',
+        json_schema_extra={"examples": ["limit"]},
     )
     p: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Limit price; null for market orders."
+        default=None,
+        description="Limit price; null for market orders.",
+        json_schema_extra={"examples": [185.5]},
     )
     Q: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Order quantity (shares); `0` when the order was submitted as notional.",
         alias="Q",
+        json_schema_extra={"examples": [10]},
     )
     N: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Order notional; set when the order was submitted as notional (market buy), null when submitted as quantity.",
         alias="N",
+        json_schema_extra={"examples": [1]},
     )
     fq: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Filled quantity."
+        default=None,
+        description="Filled quantity.",
+        json_schema_extra={"examples": [5]},
     )
     FN: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Filled notional (= filledQty × filledAvgPrice).",
         alias="FN",
+        json_schema_extra={"examples": [927.5]},
     )
     tc: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Total cost — cumulative buy-in cost including the commission fee.",
+        json_schema_extra={"examples": [1856.2]},
     )
     Z: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Fill progress percentage (0–100, 2 dp). By notional: `FN / N × 100`. By qty: `fq / Q × 100`.",
         alias="Z",
+        json_schema_extra={"examples": [50]},
     )
     n: Optional[StrictStr] = Field(
         default=None,
         description='Trading session label, e.g. `"Regular"`, `"24 Hours Trading"`.',
+        json_schema_extra={"examples": ["Regular"]},
     )
     s: Optional[StrictStr] = Field(
         default=None,
         description='Order status, e.g. `"accepted"`, `"partially_filled"`, `"filled"`, `"canceled"`. Note: lowercase, unlike REST responses.',
+        json_schema_extra={"examples": ["partially_filled"]},
     )
     T: Optional[StrictInt] = Field(
-        default=None, description="Order create time (epoch milliseconds).", alias="T"
+        default=None,
+        description="Order create time (epoch milliseconds).",
+        alias="T",
+        json_schema_extra={"examples": [1710000000000]},
     )
     U: Optional[StrictInt] = Field(
-        default=None, description="Order update time (epoch milliseconds).", alias="U"
+        default=None,
+        description="Order update time (epoch milliseconds).",
+        alias="U",
+        json_schema_extra={"examples": [1710000060000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

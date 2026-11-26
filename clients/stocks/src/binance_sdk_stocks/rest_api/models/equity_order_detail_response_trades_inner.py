@@ -27,15 +27,27 @@ class EquityOrderDetailResponseTradesInner(BaseModel):
     """  # noqa: E501
 
     execution_id: Optional[StrictStr] = Field(
-        default=None, description="Execution (fill) id.", alias="executionId"
+        default=None,
+        description="Execution (fill) id.",
+        alias="executionId",
+        json_schema_extra={"examples": ["exec-20260504-0001"]},
     )
     execution_at: Optional[StrictInt] = Field(
-        default=None, description="Execution time (ms epoch).", alias="executionAt"
+        default=None,
+        description="Execution time (ms epoch).",
+        alias="executionAt",
+        json_schema_extra={"examples": [1735900115000]},
     )
     price: Optional[StrictStr] = Field(
-        default=None, description="Fill price for this execution (USD)."
+        default=None,
+        description="Fill price for this execution (USD).",
+        json_schema_extra={"examples": ["180.48"]},
     )
-    qty: Optional[StrictStr] = Field(default=None, description="Fill quantity.")
+    qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Fill quantity.",
+        json_schema_extra={"examples": ["1"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["executionId", "executionAt", "price", "qty"]
 

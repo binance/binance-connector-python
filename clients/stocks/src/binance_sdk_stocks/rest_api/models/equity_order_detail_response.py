@@ -30,55 +30,114 @@ class EquityOrderDetailResponse(BaseModel):
     """  # noqa: E501
 
     order_id: Optional[StrictStr] = Field(
-        default=None, description="Equity order id.", alias="orderId"
+        default=None,
+        description="Equity order id.",
+        alias="orderId",
+        json_schema_extra={"examples": ["c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71"]},
     )
     client_order_id: Optional[StrictStr] = Field(
         default=None,
         description="Client-supplied order id. Present only in Order Detail, not in Order History.",
         alias="clientOrderId",
+        json_schema_extra={"examples": ["web_2c9c92b74f1e4a7c8f3b9e1a2d3c4b5a"]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="US-equity ticker.")
-    quote: Optional[StrictStr] = Field(default=None, description="Quote asset.")
-    side: Optional[StrictStr] = Field(default=None, description="`BUY` / `SELL`.")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="US-equity ticker.",
+        json_schema_extra={"examples": ["AAPL"]},
+    )
+    quote: Optional[StrictStr] = Field(
+        default=None,
+        description="Quote asset.",
+        json_schema_extra={"examples": ["USDC"]},
+    )
+    side: Optional[StrictStr] = Field(
+        default=None,
+        description="`BUY` / `SELL`.",
+        json_schema_extra={"examples": ["BUY"]},
+    )
     order_type: Optional[StrictStr] = Field(
-        default=None, description="`MARKET` / `LIMIT`.", alias="orderType"
+        default=None,
+        description="`MARKET` / `LIMIT`.",
+        alias="orderType",
+        json_schema_extra={"examples": ["LIMIT"]},
     )
     limit_price: Optional[StrictStr] = Field(
         default=None,
         description="Limit price (USD). Non-null for `LIMIT`, `null` for `MARKET`.",
         alias="limitPrice",
+        json_schema_extra={"examples": ["180.50"]},
     )
     avg_filled_price: Optional[StrictStr] = Field(
         default=None,
         description="Average fill price (USD). Only present when the order has at least one fill.",
         alias="avgFilledPrice",
+        json_schema_extra={"examples": ["180.48"]},
     )
-    qty: Optional[StrictStr] = Field(default=None, description="Requested quantity.")
+    qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Requested quantity.",
+        json_schema_extra={"examples": ["1"]},
+    )
     notional: Optional[StrictStr] = Field(
-        default=None, description="Requested notional."
+        default=None,
+        description="Requested notional.",
+        json_schema_extra={"examples": ["notional"]},
     )
     filled_qty: Optional[StrictStr] = Field(
-        default=None, description="Cumulative filled quantity.", alias="filledQty"
+        default=None,
+        description="Cumulative filled quantity.",
+        alias="filledQty",
+        json_schema_extra={"examples": ["1"]},
     )
     filled_total: Optional[StrictStr] = Field(
-        default=None, description="Cumulative filled notional.", alias="filledTotal"
+        default=None,
+        description="Cumulative filled notional.",
+        alias="filledTotal",
+        json_schema_extra={"examples": ["filledTotal"]},
     )
     fee: Optional[StrictStr] = Field(
-        default=None, description="Total commission fee (USD)."
+        default=None,
+        description="Total commission fee (USD).",
+        json_schema_extra={"examples": ["0.10"]},
     )
-    session: Optional[StrictStr] = Field(default=None, description="Trading session.")
+    session: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading session.",
+        json_schema_extra={"examples": ["RTH"]},
+    )
     status: Optional[StrictStr] = Field(
-        default=None, description="Order lifecycle status."
+        default=None,
+        description="Order lifecycle status.",
+        json_schema_extra={"examples": ["FILLED"]},
     )
     created_at: Optional[StrictInt] = Field(
-        default=None, description="Order creation time (ms epoch).", alias="createdAt"
+        default=None,
+        description="Order creation time (ms epoch).",
+        alias="createdAt",
+        json_schema_extra={"examples": [1735900000000]},
     )
     updated_at: Optional[StrictInt] = Field(
-        default=None, description="Last update time (ms epoch).", alias="updatedAt"
+        default=None,
+        description="Last update time (ms epoch).",
+        alias="updatedAt",
+        json_schema_extra={"examples": [1735900120000]},
     )
     trades: Optional[List[EquityOrderDetailResponseTradesInner]] = Field(
         default=None,
         description="Trade executions for this order, most recent first. Empty array when no fills.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "executionId": "exec-20260504-0001",
+                        "executionAt": 1735900115000,
+                        "price": "180.48",
+                        "qty": "1",
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

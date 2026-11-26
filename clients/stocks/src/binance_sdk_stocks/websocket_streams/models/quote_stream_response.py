@@ -27,26 +27,47 @@ class QuoteStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"quote"`.'
+        default=None,
+        description='Event type, always `"quote"`.',
+        json_schema_extra={"examples": ["quote"]},
     )
     E: Optional[StrictInt] = Field(
         default=None,
         description="Event time — epoch milliseconds when the server pushed the message.",
         alias="E",
+        json_schema_extra={"examples": [1710320400000]},
     )
     s: Optional[StrictStr] = Field(
-        default=None, description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.'
+        default=None,
+        description='Symbol (UPPERCASE ticker), e.g. `"AAPL"`.',
+        json_schema_extra={"examples": ["AAPL"]},
     )
-    bp: Optional[StrictStr] = Field(default=None, description="Best bid price.")
-    ap: Optional[StrictStr] = Field(default=None, description="Best ask price.")
-    bs: Optional[StrictInt] = Field(default=None, description="Best bid size (shares).")
+    bp: Optional[StrictStr] = Field(
+        default=None,
+        description="Best bid price.",
+        json_schema_extra={"examples": ["182.50"]},
+    )
+    ap: Optional[StrictStr] = Field(
+        default=None,
+        description="Best ask price.",
+        json_schema_extra={"examples": ["182.55"]},
+    )
+    bs: Optional[StrictInt] = Field(
+        default=None,
+        description="Best bid size (shares).",
+        json_schema_extra={"examples": [100]},
+    )
     as_: Optional[StrictInt] = Field(
-        default=None, description="Best ask size (shares).", alias="as"
+        default=None,
+        description="Best ask size (shares).",
+        alias="as",
+        json_schema_extra={"examples": [200]},
     )
     T: Optional[StrictInt] = Field(
         default=None,
         description="Source quote timestamp (epoch milliseconds); may be null.",
         alias="T",
+        json_schema_extra={"examples": [1710320399500]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "bp", "ap", "bs", "as", "T"]

@@ -30,15 +30,20 @@ class KlineStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"kline"`.'
+        default=None,
+        description='Event type, always `"kline"`.',
+        json_schema_extra={"examples": ["kline"]},
     )
     E: Optional[StrictInt] = Field(
         default=None,
         description="Event time (epoch milliseconds); server-side system time when the message is pushed.",
         alias="E",
+        json_schema_extra={"examples": [1710320400000]},
     )
     s: Optional[StrictStr] = Field(
-        default=None, description="Symbol (UPPERCASE ticker)."
+        default=None,
+        description="Symbol (UPPERCASE ticker).",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     k: Optional[KlineStreamResponseK] = None
     additional_properties: Dict[str, Any] = {}

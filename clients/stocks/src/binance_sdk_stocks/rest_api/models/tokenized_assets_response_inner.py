@@ -30,25 +30,30 @@ class TokenizedAssetsResponseInner(BaseModel):
         default=None,
         description="Tokenized asset code, e.g. `AAPLB`.",
         alias="assetCode",
+        json_schema_extra={"examples": ["AAPLB"]},
     )
     asset_name: Optional[StrictStr] = Field(
         default=None,
         description="Human-readable display name of the tokenized asset.",
         alias="assetName",
+        json_schema_extra={"examples": ["Apple Inc. Tokenized Stock"]},
     )
     underlying_equity_symbol: Optional[StrictStr] = Field(
         default=None,
         description="Underlying US-equity ticker, e.g. `AAPL`. Use this when calling `/tokenized/mint` or `/tokenized/redeem`.",
         alias="underlyingEquitySymbol",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     multiplier: Optional[StrictStr] = Field(
         default=None,
         description="Conversion multiplier between the underlying equity and the tokenized asset.",
+        json_schema_extra={"examples": ["1"]},
     )
     multiplier_valid: Optional[StrictBool] = Field(
         default=None,
         description="Whether the multiplier is currently valid and applicable.",
         alias="multiplierValid",
+        json_schema_extra={"examples": [True]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

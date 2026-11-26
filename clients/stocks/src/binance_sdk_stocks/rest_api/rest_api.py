@@ -24,6 +24,8 @@ from .models import SignUsEquityDisclaimerResponse
 from .models import ExchangeInfoResponse
 from .models import LatestQuoteResponse
 from .models import TokenizedAssetsResponse
+from .models import BstocksCorporateActionRecordsResponse
+from .models import CorporateActionRecordsResponse
 from .models import TokenizedConvertHistoryResponse
 from .models import TokenizedConvertStatusResponse
 from .models import TokenizedMintResponse
@@ -238,6 +240,74 @@ class StocksRestAPI:
         """
 
         return self._marketDataApi.tokenized_assets()
+
+    def bstocks_corporate_action_records(
+        self,
+        limit: Union[int, None],
+        last_time: Optional[int] = None,
+        last_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[BstocksCorporateActionRecordsResponse]:
+        """
+                Bstocks Corporate Action Records (USER_DATA)
+
+                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/equity/corp-action`.
+
+        Weight: 1
+
+        Security Type: USER_DATA
+
+                Args:
+                    limit (Union[int, None]): Number of records to return. Default `20`, range `1` to `100`.
+                    last_time (Optional[int] = None): The `nextTime` returned by the previous page, in milliseconds. Must be sent together with `lastId`.
+                    last_id (Optional[int] = None): The `nextId` returned by the previous page. Must be sent together with `lastTime`.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`.
+
+                Returns:
+                    ApiResponse[BstocksCorporateActionRecordsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tokenizedApi.bstocks_corporate_action_records(
+            limit, last_time, last_id, recv_window
+        )
+
+    def corporate_action_records(
+        self,
+        limit: Union[int, None],
+        last_time: Optional[int] = None,
+        last_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CorporateActionRecordsResponse]:
+        """
+                Corporate Action Records (USER_DATA)
+
+                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/bstocks/corp-action`.
+
+        Weight: 1
+
+        Security Type: USER_DATA
+
+                Args:
+                    limit (Union[int, None]): Number of records to return. Default `20`, range `1` to `100`.
+                    last_time (Optional[int] = None): The `nextTime` returned by the previous page, in milliseconds. Must be sent together with `lastId`.
+                    last_id (Optional[int] = None): The `nextId` returned by the previous page. Must be sent together with `lastTime`.
+                    recv_window (Optional[int] = None): The value cannot be greater than `60000`.
+
+                Returns:
+                    ApiResponse[CorporateActionRecordsResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return self._tokenizedApi.corporate_action_records(
+            limit, last_time, last_id, recv_window
+        )
 
     def tokenized_convert_history(
         self,

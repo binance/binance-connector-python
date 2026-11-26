@@ -27,7 +27,9 @@ class SignUsEquityDisclaimerResponse(BaseModel):
     """  # noqa: E501
 
     success: Optional[StrictBool] = Field(
-        default=None, description="`true` = acceptance recorded successfully."
+        default=None,
+        description="`true` = acceptance recorded successfully.",
+        json_schema_extra={"examples": [True]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["success"]

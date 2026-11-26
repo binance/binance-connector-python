@@ -30,12 +30,40 @@ class EquityTradeHistoryResponse(BaseModel):
     """  # noqa: E501
 
     total: Optional[StrictInt] = Field(
-        default=None, description="Total number of rows matching the filter."
+        default=None,
+        description="Total number of rows matching the filter.",
+        json_schema_extra={"examples": [1]},
     )
-    page: Optional[StrictInt] = Field(default=None, description="Current page.")
-    size: Optional[StrictInt] = Field(default=None, description="Current page size.")
+    page: Optional[StrictInt] = Field(
+        default=None, description="Current page.", json_schema_extra={"examples": [1]}
+    )
+    size: Optional[StrictInt] = Field(
+        default=None,
+        description="Current page size.",
+        json_schema_extra={"examples": [20]},
+    )
     rows: Optional[List[EquityTradeHistoryResponseRowsInner]] = Field(
-        default=None, description="Trade rows on this page. Empty when nothing matches."
+        default=None,
+        description="Trade rows on this page. Empty when nothing matches.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "executionId": "exec-20260504-0001",
+                        "orderId": "c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71",
+                        "symbol": "AAPL",
+                        "quote": "USDC",
+                        "side": "BUY",
+                        "orderType": "LIMIT",
+                        "price": "180.50",
+                        "qty": "1",
+                        "total": "180.50",
+                        "executionAt": 1735900115000,
+                        "updatedAt": 1735900115200,
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["total", "page", "size", "rows"]

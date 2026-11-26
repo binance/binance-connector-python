@@ -29,6 +29,7 @@ class CancelAllEquityOrdersResponse(BaseModel):
     success: Optional[StrictBool] = Field(
         default=None,
         description="`true` when the cancel-all request was accepted by upstream. Per-order outcomes live in `/order/history`.",
+        json_schema_extra={"examples": [True]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["success"]

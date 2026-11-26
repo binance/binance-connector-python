@@ -32,16 +32,36 @@ class TokenizedConvertHistoryResponse(BaseModel):
     rows: Optional[List[TokenizedConvertHistoryResponseRowsInner]] = Field(
         default=None,
         description="Convert history rows on this page. Empty array if nothing matches.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "underlyingAsset": "AAPL",
+                        "underlyingAssetAmount": "1.000000000",
+                        "tokenizedAsset": "AAPLB",
+                        "tokenizedAssetAmount": "1.000000000",
+                        "issuerRequestId": "mint-20260505-8f3b9e1a2d3c4b5a",
+                        "convertType": "MINT",
+                        "status": "S",
+                        "createdAt": 1735900000000,
+                        "updatedAt": 1735900060000,
+                        "tokenizedAssetSettleWalletType": "CARD",
+                    }
+                ]
+            ]
+        },
     )
     has_more: Optional[StrictBool] = Field(
         default=None,
         description="`true` when more pages exist — pass `nextLastId` as `lastId` on the next request.",
         alias="hasMore",
+        json_schema_extra={"examples": [True]},
     )
     next_last_id: Optional[StrictInt] = Field(
         default=None,
         description="Pass this value as `lastId` on the next request to get the following page.",
         alias="nextLastId",
+        json_schema_extra={"examples": [10020]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["rows", "hasMore", "nextLastId"]

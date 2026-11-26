@@ -27,75 +27,103 @@ class ExchangeInfoResponseSymbolsInner(BaseModel):
     """  # noqa: E501
 
     symbol: Optional[StrictStr] = Field(
-        default=None, description="US-equity ticker, e.g. `AAPL`."
+        default=None,
+        description="US-equity ticker, e.g. `AAPL`.",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     tradability: Optional[StrictStr] = Field(
         default=None,
         description="Trading direction allowed — one of `BUY_SELL` / `BUY` / `SELL` / `NONE`.",
+        json_schema_extra={"examples": ["BUY_SELL"]},
     )
     tradability_update_time: Optional[StrictInt] = Field(
         default=None,
         description="Last time the `tradability` value was updated (ms epoch).",
         alias="tradabilityUpdateTime",
+        json_schema_extra={"examples": [1735900000000]},
     )
     overnight_supported: Optional[StrictBool] = Field(
         default=None,
         description="Whether the symbol supports overnight trading.",
         alias="overnightSupported",
+        json_schema_extra={"examples": [True]},
     )
     fractionable: Optional[StrictBool] = Field(
         default=None,
         description="Whether fractional shares are supported during the regular session.",
+        json_schema_extra={"examples": [True]},
     )
     fractionable_eh: Optional[StrictBool] = Field(
         default=None,
         description="Whether fractional shares are supported during extended hours.",
         alias="fractionableEh",
+        json_schema_extra={"examples": [False]},
     )
     extended_session: Optional[StrictBool] = Field(
         default=None,
         description="Whether extended-session trading is enabled.",
         alias="extendedSession",
+        json_schema_extra={"examples": [True]},
     )
     max_num_orders: Optional[StrictInt] = Field(
         default=None,
         description="Maximum number of open orders a user may have for this symbol.",
         alias="maxNumOrders",
+        json_schema_extra={"examples": [200]},
     )
     step_size: Optional[StrictStr] = Field(
         default=None,
         description="Lot size — minimum increment for `quantity`.",
         alias="stepSize",
+        json_schema_extra={"examples": ["0.000000001"]},
     )
     multiplier_up: Optional[StrictStr] = Field(
         default=None,
         description="Upper price multiplier limit relative to reference.",
         alias="multiplierUp",
+        json_schema_extra={"examples": ["1.10"]},
     )
     multiplier_down: Optional[StrictStr] = Field(
         default=None,
         description="Lower price multiplier limit relative to reference.",
         alias="multiplierDown",
+        json_schema_extra={"examples": ["0.90"]},
     )
     min_qty: Optional[StrictStr] = Field(
-        default=None, description="Minimum allowed `quantity`.", alias="minQty"
+        default=None,
+        description="Minimum allowed `quantity`.",
+        alias="minQty",
+        json_schema_extra={"examples": ["0.000000001"]},
     )
     max_qty: Optional[StrictStr] = Field(
-        default=None, description="Maximum allowed `quantity`.", alias="maxQty"
+        default=None,
+        description="Maximum allowed `quantity`.",
+        alias="maxQty",
+        json_schema_extra={"examples": ["100000.00000000"]},
     )
     min_notional: Optional[StrictStr] = Field(
-        default=None, description="Minimum order notional (USD).", alias="minNotional"
+        default=None,
+        description="Minimum order notional (USD).",
+        alias="minNotional",
+        json_schema_extra={"examples": ["1.00"]},
     )
     max_notional: Optional[StrictStr] = Field(
-        default=None, description="Maximum order notional (USD).", alias="maxNotional"
+        default=None,
+        description="Maximum order notional (USD).",
+        alias="maxNotional",
+        json_schema_extra={"examples": ["1000000.00"]},
     )
     listing_time: Optional[StrictInt] = Field(
-        default=None, description="Listing timestamp (ms epoch).", alias="listingTime"
+        default=None,
+        description="Listing timestamp (ms epoch).",
+        alias="listingTime",
+        json_schema_extra={"examples": [1700000000000]},
     )
     delisting_time: Optional[StrictInt] = Field(
         default=None,
         description="Scheduled delisting timestamp (ms epoch); `null` if not scheduled for delisting.",
         alias="delistingTime",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

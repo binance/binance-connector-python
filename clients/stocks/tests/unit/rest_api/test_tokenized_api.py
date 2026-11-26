@@ -20,6 +20,8 @@ from binance_common.errors import RequiredError
 from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_stocks.rest_api.api import TokenizedApi
+from binance_sdk_stocks.rest_api.models import BstocksCorporateActionRecordsResponse
+from binance_sdk_stocks.rest_api.models import CorporateActionRecordsResponse
 from binance_sdk_stocks.rest_api.models import TokenizedConvertHistoryResponse
 from binance_sdk_stocks.rest_api.models import TokenizedConvertStatusResponse
 from binance_sdk_stocks.rest_api.models import TokenizedMintResponse
@@ -56,6 +58,310 @@ class TestTokenizedApi:
         mock_response.headers = headers
 
         self.mock_session.request.return_value = mock_response
+
+    @patch("binance_common.utils.get_signature")
+    def test_bstocks_corporate_action_records_success(self, mock_get_signature):
+        """Test bstocks_corporate_action_records() successfully with required parameters only."""
+
+        params = {
+            "limit": 20,
+        }
+
+        expected_response = {
+            "items": [
+                {
+                    "id": 123456,
+                    "userId": 100001,
+                    "assetCode": "EQ_AAPL",
+                    "eventType": "FORWARD_SPLIT",
+                    "amount": "10.50000000",
+                    "dbModifyTime": 1795593600000,
+                }
+            ],
+            "nextTime": 1795593600000,
+            "nextId": 123456,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.bstocks_corporate_action_records(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/bstocks/corp-action" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["limit"] == 20
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(BstocksCorporateActionRecordsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(BstocksCorporateActionRecordsResponse, "from_dict")
+        ):
+            expected = BstocksCorporateActionRecordsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = BstocksCorporateActionRecordsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_bstocks_corporate_action_records_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test bstocks_corporate_action_records() successfully with optional parameters."""
+
+        params = {
+            "limit": 20,
+            "last_time": 1795593600000,
+            "last_id": 123456,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "items": [
+                {
+                    "id": 123456,
+                    "userId": 100001,
+                    "assetCode": "EQ_AAPL",
+                    "eventType": "FORWARD_SPLIT",
+                    "amount": "10.50000000",
+                    "dbModifyTime": 1795593600000,
+                }
+            ],
+            "nextTime": 1795593600000,
+            "nextId": 123456,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.bstocks_corporate_action_records(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/bstocks/corp-action" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(BstocksCorporateActionRecordsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof
+            or is_list
+            or hasattr(BstocksCorporateActionRecordsResponse, "from_dict")
+        ):
+            expected = BstocksCorporateActionRecordsResponse.from_dict(
+                expected_response
+            )
+        else:
+            expected = BstocksCorporateActionRecordsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_bstocks_corporate_action_records_missing_required_param_limit(self):
+        """Test that bstocks_corporate_action_records() raises RequiredError when 'limit' is missing."""
+        params = {
+            "limit": 20,
+        }
+        params["limit"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
+            self.client.bstocks_corporate_action_records(**params)
+
+    def test_bstocks_corporate_action_records_server_error(self):
+        """Test that bstocks_corporate_action_records() raises an error when the server returns an error."""
+
+        params = {
+            "limit": 20,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.bstocks_corporate_action_records = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.bstocks_corporate_action_records(**params)
+
+    @patch("binance_common.utils.get_signature")
+    def test_corporate_action_records_success(self, mock_get_signature):
+        """Test corporate_action_records() successfully with required parameters only."""
+
+        params = {
+            "limit": 20,
+        }
+
+        expected_response = {
+            "items": [
+                {
+                    "id": 123456,
+                    "userId": 100001,
+                    "assetCode": "EQ_AAPL",
+                    "eventType": "FORWARD_SPLIT",
+                    "amount": "10.50000000",
+                    "dbModifyTime": 1795593600000,
+                }
+            ],
+            "nextTime": 1795593600000,
+            "nextId": 123456,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.corporate_action_records(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/equity/corp-action" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["limit"] == 20
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CorporateActionRecordsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(CorporateActionRecordsResponse, "from_dict")
+        ):
+            expected = CorporateActionRecordsResponse.from_dict(expected_response)
+        else:
+            expected = CorporateActionRecordsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.get_signature")
+    def test_corporate_action_records_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test corporate_action_records() successfully with optional parameters."""
+
+        params = {
+            "limit": 20,
+            "last_time": 1795593600000,
+            "last_id": 123456,
+            "recv_window": 5000,
+        }
+
+        expected_response = {
+            "items": [
+                {
+                    "id": 123456,
+                    "userId": 100001,
+                    "assetCode": "EQ_AAPL",
+                    "eventType": "FORWARD_SPLIT",
+                    "amount": "10.50000000",
+                    "dbModifyTime": 1795593600000,
+                }
+            ],
+            "nextTime": 1795593600000,
+            "nextId": 123456,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.corporate_action_records(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "signature" in parse_qs(request_kwargs["params"])
+        assert "/sapi/v1/equity/corp-action" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(CorporateActionRecordsResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif (
+            is_oneof or is_list or hasattr(CorporateActionRecordsResponse, "from_dict")
+        ):
+            expected = CorporateActionRecordsResponse.from_dict(expected_response)
+        else:
+            expected = CorporateActionRecordsResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_corporate_action_records_missing_required_param_limit(self):
+        """Test that corporate_action_records() raises RequiredError when 'limit' is missing."""
+        params = {
+            "limit": 20,
+        }
+        params["limit"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'limit'"):
+            self.client.corporate_action_records(**params)
+
+    def test_corporate_action_records_server_error(self):
+        """Test that corporate_action_records() raises an error when the server returns an error."""
+
+        params = {
+            "limit": 20,
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.corporate_action_records = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.corporate_action_records(**params)
 
     @patch("binance_common.utils.get_signature")
     def test_tokenized_convert_history_success(self, mock_get_signature):

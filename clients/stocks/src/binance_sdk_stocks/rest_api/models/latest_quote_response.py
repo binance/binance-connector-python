@@ -26,18 +26,34 @@ class LatestQuoteResponse(BaseModel):
     LatestQuoteResponse
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="US-equity ticker.")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="US-equity ticker.",
+        json_schema_extra={"examples": ["AAPL"]},
+    )
     bid_price: Optional[StrictStr] = Field(
-        default=None, description="Best bid price (USD).", alias="bidPrice"
+        default=None,
+        description="Best bid price (USD).",
+        alias="bidPrice",
+        json_schema_extra={"examples": ["180.50"]},
     )
     ask_price: Optional[StrictStr] = Field(
-        default=None, description="Best ask price (USD).", alias="askPrice"
+        default=None,
+        description="Best ask price (USD).",
+        alias="askPrice",
+        json_schema_extra={"examples": ["180.52"]},
     )
     bid_size: Optional[StrictInt] = Field(
-        default=None, description="Best bid size (shares).", alias="bidSize"
+        default=None,
+        description="Best bid size (shares).",
+        alias="bidSize",
+        json_schema_extra={"examples": [100]},
     )
     ask_size: Optional[StrictInt] = Field(
-        default=None, description="Best ask size (shares).", alias="askSize"
+        default=None,
+        description="Best ask size (shares).",
+        alias="askSize",
+        json_schema_extra={"examples": [200]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

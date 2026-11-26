@@ -30,10 +30,30 @@ class PriceStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"price"`.'
+        default=None,
+        description='Event type, always `"price"`.',
+        json_schema_extra={"examples": ["price"]},
     )
     rates: Optional[List[PriceStreamResponseRatesInner]] = Field(
-        default=None, description="One entry per symbol."
+        default=None,
+        description="One entry per symbol.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "s": "AAPL",
+                        "ac": "EQ_AAPL",
+                        "p": "182.5",
+                        "t": 1710320400000,
+                        "pc": "181.2000",
+                        "tc": "182.0000",
+                        "lrc": "182.0000",
+                        "prc": "181.2000",
+                        "mp": "O",
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "rates"]

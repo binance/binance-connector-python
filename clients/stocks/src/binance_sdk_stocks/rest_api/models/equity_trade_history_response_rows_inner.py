@@ -27,29 +27,64 @@ class EquityTradeHistoryResponseRowsInner(BaseModel):
     """  # noqa: E501
 
     execution_id: Optional[StrictStr] = Field(
-        default=None, description="Execution (per-fill) id.", alias="executionId"
+        default=None,
+        description="Execution (per-fill) id.",
+        alias="executionId",
+        json_schema_extra={"examples": ["exec-20260504-0001"]},
     )
     order_id: Optional[StrictStr] = Field(
-        default=None, description="The owning order's id.", alias="orderId"
+        default=None,
+        description="The owning order's id.",
+        alias="orderId",
+        json_schema_extra={"examples": ["c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71"]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="US-equity ticker.")
-    quote: Optional[StrictStr] = Field(default=None, description="Quote asset.")
-    side: Optional[StrictStr] = Field(default=None, description="`BUY` / `SELL`.")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="US-equity ticker.",
+        json_schema_extra={"examples": ["AAPL"]},
+    )
+    quote: Optional[StrictStr] = Field(
+        default=None,
+        description="Quote asset.",
+        json_schema_extra={"examples": ["USDC"]},
+    )
+    side: Optional[StrictStr] = Field(
+        default=None,
+        description="`BUY` / `SELL`.",
+        json_schema_extra={"examples": ["BUY"]},
+    )
     order_type: Optional[StrictStr] = Field(
-        default=None, description="`MARKET` / `LIMIT`.", alias="orderType"
+        default=None,
+        description="`MARKET` / `LIMIT`.",
+        alias="orderType",
+        json_schema_extra={"examples": ["LIMIT"]},
     )
     price: Optional[StrictStr] = Field(
-        default=None, description="Execution price (USD)."
+        default=None,
+        description="Execution price (USD).",
+        json_schema_extra={"examples": ["180.50"]},
     )
-    qty: Optional[StrictStr] = Field(default=None, description="Executed quantity.")
+    qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Executed quantity.",
+        json_schema_extra={"examples": ["1"]},
+    )
     total: Optional[StrictStr] = Field(
-        default=None, description="Notional of this execution (`qty × price`)."
+        default=None,
+        description="Notional of this execution (`qty × price`).",
+        json_schema_extra={"examples": ["180.50"]},
     )
     execution_at: Optional[StrictInt] = Field(
-        default=None, description="Execution time (ms epoch).", alias="executionAt"
+        default=None,
+        description="Execution time (ms epoch).",
+        alias="executionAt",
+        json_schema_extra={"examples": [1735900115000]},
     )
     updated_at: Optional[StrictInt] = Field(
-        default=None, description="Last update time (ms epoch).", alias="updatedAt"
+        default=None,
+        description="Last update time (ms epoch).",
+        alias="updatedAt",
+        json_schema_extra={"examples": [1735900115200]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

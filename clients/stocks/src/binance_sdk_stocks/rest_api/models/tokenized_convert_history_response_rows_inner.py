@@ -30,42 +30,60 @@ class TokenizedConvertHistoryResponseRowsInner(BaseModel):
         default=None,
         description="Underlying US-equity ticker, e.g. `AAPL`.",
         alias="underlyingAsset",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     underlying_asset_amount: Optional[StrictStr] = Field(
         default=None,
         description="Quantity of the underlying asset involved.",
         alias="underlyingAssetAmount",
+        json_schema_extra={"examples": ["1.000000000"]},
     )
     tokenized_asset: Optional[StrictStr] = Field(
         default=None,
         description="Tokenized asset, e.g. `AAPLB`.",
         alias="tokenizedAsset",
+        json_schema_extra={"examples": ["AAPLB"]},
     )
     tokenized_asset_amount: Optional[StrictStr] = Field(
         default=None,
         description="Quantity of the tokenized asset involved.",
         alias="tokenizedAssetAmount",
+        json_schema_extra={"examples": ["1.000000000"]},
     )
     issuer_request_id: Optional[StrictStr] = Field(
-        default=None, description="Convert request id.", alias="issuerRequestId"
+        default=None,
+        description="Convert request id.",
+        alias="issuerRequestId",
+        json_schema_extra={"examples": ["mint-20260505-8f3b9e1a2d3c4b5a"]},
     )
     convert_type: Optional[StrictStr] = Field(
-        default=None, description="`MINT` or `REDEEM`.", alias="convertType"
+        default=None,
+        description="`MINT` or `REDEEM`.",
+        alias="convertType",
+        json_schema_extra={"examples": ["MINT"]},
     )
     status: Optional[StrictStr] = Field(
         default=None,
         description="Convert status: `P` = processing, `S` = success, `F` = failed.",
+        json_schema_extra={"examples": ["S"]},
     )
     created_at: Optional[StrictInt] = Field(
-        default=None, description="Creation time (ms epoch).", alias="createdAt"
+        default=None,
+        description="Creation time (ms epoch).",
+        alias="createdAt",
+        json_schema_extra={"examples": [1735900000000]},
     )
     updated_at: Optional[StrictInt] = Field(
-        default=None, description="Last update time (ms epoch).", alias="updatedAt"
+        default=None,
+        description="Last update time (ms epoch).",
+        alias="updatedAt",
+        json_schema_extra={"examples": [1735900060000]},
     )
     tokenized_asset_settle_wallet_type: Optional[StrictStr] = Field(
         default=None,
         description="The wallet the tokenized asset is settled in: `MAIN` = Spot wallet, `CARD` = Funding wallet.",
         alias="tokenizedAssetSettleWalletType",
+        json_schema_extra={"examples": ["CARD"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

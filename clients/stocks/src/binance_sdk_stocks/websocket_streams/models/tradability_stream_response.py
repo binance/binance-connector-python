@@ -27,22 +27,30 @@ class TradabilityStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"tradability"`.'
+        default=None,
+        description='Event type, always `"tradability"`.',
+        json_schema_extra={"examples": ["tradability"]},
     )
     symbol: Optional[StrictStr] = Field(
-        default=None, description="Symbol (UPPERCASE ticker)."
+        default=None,
+        description="Symbol (UPPERCASE ticker).",
+        json_schema_extra={"examples": ["AAPL"]},
     )
     asset_code: Optional[StrictStr] = Field(
         default=None,
         description="Internal asset code `EQ_{symbol}`; reference only. May be null for symbols not yet in the symbol dictionary.",
         alias="assetCode",
+        json_schema_extra={"examples": ["EQ_AAPL"]},
     )
     tradability: Optional[StrictStr] = Field(
         default=None,
         description="The new tradability value. `OFFMARKET` and `DELISTING` are protected states — trading-status events will not transition a symbol out of them.",
+        json_schema_extra={"examples": ["BUY_SELL"]},
     )
     t: Optional[StrictInt] = Field(
-        default=None, description="Push time (epoch milliseconds UTC)."
+        default=None,
+        description="Push time (epoch milliseconds UTC).",
+        json_schema_extra={"examples": [1712345678000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

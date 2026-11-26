@@ -27,11 +27,15 @@ class CancelEquityOrderResponse(BaseModel):
     """  # noqa: E501
 
     order_id: Optional[StrictStr] = Field(
-        default=None, description="Echoes the requested order id.", alias="orderId"
+        default=None,
+        description="Echoes the requested order id.",
+        alias="orderId",
+        json_schema_extra={"examples": ["c3c58f49-7b0d-4b9e-a2db-1a2f9a3b8c71"]},
     )
     status: Optional[StrictStr] = Field(
         default=None,
         description="Acknowledgement code: `S` = cancel accepted by upstream, `F` = cancel failed. Not an order lifecycle status — use `/order/detail` for lifecycle poll.",
+        json_schema_extra={"examples": ["S"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["orderId", "status"]

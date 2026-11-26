@@ -27,15 +27,25 @@ class CalendarStreamResponse(BaseModel):
     """  # noqa: E501
 
     e: Optional[StrictStr] = Field(
-        default=None, description='Event type, always `"calendar"`.'
+        default=None,
+        description='Event type, always `"calendar"`.',
+        json_schema_extra={"examples": ["calendar"]},
     )
     var_from: Optional[StrictStr] = Field(
-        default=None, description="Previous market phase.", alias="from"
+        default=None,
+        description="Previous market phase.",
+        alias="from",
+        json_schema_extra={"examples": ["PRE_MARKET"]},
     )
-    to: Optional[StrictStr] = Field(default=None, description="New market phase.")
+    to: Optional[StrictStr] = Field(
+        default=None,
+        description="New market phase.",
+        json_schema_extra={"examples": ["MARKET_OPEN"]},
+    )
     ts: Optional[StrictInt] = Field(
         default=None,
         description="Event timestamp (epoch milliseconds UTC) when the transition was detected.",
+        json_schema_extra={"examples": [1710334200000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "var_from", "to", "ts"]
