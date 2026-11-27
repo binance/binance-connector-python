@@ -26,11 +26,22 @@ class ChangeInitialLeverageResponse(BaseModel):
     ChangeInitialLeverageResponse
     """  # noqa: E501
 
-    leverage: Optional[StrictInt] = Field(default=None, description="Leverage value.")
-    max_qty: Optional[StrictStr] = Field(
-        default=None, description="maximum quantity of base asset", alias="maxQty"
+    leverage: Optional[StrictInt] = Field(
+        default=None,
+        description="Leverage value.",
+        json_schema_extra={"examples": [21]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    max_qty: Optional[StrictStr] = Field(
+        default=None,
+        description="maximum quantity of base asset",
+        alias="maxQty",
+        json_schema_extra={"examples": ["1000"]},
+    )
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["leverage", "maxQty", "symbol"]
 

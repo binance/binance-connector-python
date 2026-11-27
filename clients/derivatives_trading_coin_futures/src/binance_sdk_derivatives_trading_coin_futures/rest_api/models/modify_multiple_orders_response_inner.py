@@ -27,76 +27,143 @@ class ModifyMultipleOrdersResponseInner(BaseModel):
     """  # noqa: E501
 
     order_id: Optional[StrictInt] = Field(
-        default=None, description="Sub-order ID", alias="orderId"
+        default=None,
+        description="Sub-order ID",
+        alias="orderId",
+        json_schema_extra={"examples": [20072994037]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
-    status: Optional[StrictStr] = Field(default=None, description="Status.")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    status: Optional[StrictStr] = Field(
+        default=None, description="Status.", json_schema_extra={"examples": ["NEW"]}
+    )
     client_order_id: Optional[StrictStr] = Field(
-        default=None, description="Client order ID.", alias="clientOrderId"
+        default=None,
+        description="Client order ID.",
+        alias="clientOrderId",
+        json_schema_extra={"examples": ["LJ9R4QZDihCaS8UAOOLpgW"]},
     )
     modify_id: Optional[StrictInt] = Field(
         default=None,
         description="user-defined modification identifier, only returned if provided in the request",
         alias="modifyId",
+        json_schema_extra={"examples": [1]},
     )
-    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
+    price: Optional[StrictStr] = Field(
+        default=None,
+        description="Latest token price.",
+        json_schema_extra={"examples": ["30005"]},
+    )
     orig_qty: Optional[StrictStr] = Field(
-        default=None, description="Original order quantity", alias="origQty"
+        default=None,
+        description="Original order quantity",
+        alias="origQty",
+        json_schema_extra={"examples": ["1"]},
     )
     executed_qty: Optional[StrictStr] = Field(
-        default=None, description="Executed quantity", alias="executedQty"
+        default=None,
+        description="Executed quantity",
+        alias="executedQty",
+        json_schema_extra={"examples": ["0"]},
     )
     cum_qty: Optional[StrictStr] = Field(
-        default=None, description="Cumulative filled quantity.", alias="cumQty"
+        default=None,
+        description="Cumulative filled quantity.",
+        alias="cumQty",
+        json_schema_extra={"examples": ["0"]},
     )
     time_in_force: Optional[StrictStr] = Field(
-        default=None, description="Time in force", alias="timeInForce"
+        default=None,
+        description="Time in force",
+        alias="timeInForce",
+        json_schema_extra={"examples": ["GTC"]},
     )
-    type: Optional[StrictStr] = Field(default=None, description="Order type.")
+    type: Optional[StrictStr] = Field(
+        default=None,
+        description="Order type.",
+        json_schema_extra={"examples": ["LIMIT"]},
+    )
     reduce_only: Optional[StrictBool] = Field(
         default=None,
         description="Whether the order is reduce-only.",
         alias="reduceOnly",
+        json_schema_extra={"examples": [False]},
     )
     close_position: Optional[StrictBool] = Field(
-        default=None, description="if Close-All", alias="closePosition"
+        default=None,
+        description="if Close-All",
+        alias="closePosition",
+        json_schema_extra={"examples": [False]},
     )
-    side: Optional[StrictStr] = Field(default=None, description="Trading side")
+    side: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading side",
+        json_schema_extra={"examples": ["BUY"]},
+    )
     position_side: Optional[StrictStr] = Field(
-        default=None, description="Position side", alias="positionSide"
+        default=None,
+        description="Position side",
+        alias="positionSide",
+        json_schema_extra={"examples": ["LONG"]},
     )
     stop_price: Optional[StrictStr] = Field(
         default=None,
         description="please ignore when order type is TRAILING_STOP_MARKET",
         alias="stopPrice",
+        json_schema_extra={"examples": ["0"]},
     )
     working_type: Optional[StrictStr] = Field(
-        default=None, description="Stop trigger price type.", alias="workingType"
+        default=None,
+        description="Stop trigger price type.",
+        alias="workingType",
+        json_schema_extra={"examples": ["CONTRACT_PRICE"]},
     )
     price_protect: Optional[StrictBool] = Field(
         default=None,
         description="if conditional order trigger is protected",
         alias="priceProtect",
+        json_schema_extra={"examples": [False]},
     )
     orig_type: Optional[StrictStr] = Field(
-        default=None, description="Original order type.", alias="origType"
+        default=None,
+        description="Original order type.",
+        alias="origType",
+        json_schema_extra={"examples": ["LIMIT"]},
     )
     price_match: Optional[StrictStr] = Field(
-        default=None, description="price match mode", alias="priceMatch"
+        default=None,
+        description="price match mode",
+        alias="priceMatch",
+        json_schema_extra={"examples": ["NONE"]},
     )
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default=None,
         description="self trading preventation mode",
         alias="selfTradePreventionMode",
+        json_schema_extra={"examples": ["EXPIRE_MAKER"]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [1629182711600]},
     )
     code: Optional[StrictInt] = Field(
-        default=None, description='API response code. "000000" indicates success.'
+        default=None,
+        description='API response code. "000000" indicates success.',
+        json_schema_extra={"examples": [-2022]},
     )
-    msg: Optional[StrictStr] = Field(default=None, description="Message details.")
+    msg: Optional[StrictStr] = Field(
+        default=None,
+        description="Message details.",
+        json_schema_extra={"examples": ["ReduceOnly Order is rejected."]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "orderId",

@@ -33,21 +33,34 @@ class AccountInformationResponseResult(BaseModel):
     """  # noqa: E501
 
     fee_tier: Optional[StrictInt] = Field(
-        default=None, description="Fee tier level.", alias="feeTier"
+        default=None,
+        description="Fee tier level.",
+        alias="feeTier",
+        json_schema_extra={"examples": [0]},
     )
     can_trade: Optional[StrictBool] = Field(
-        default=None, description="Whether trading is enabled.", alias="canTrade"
+        default=None,
+        description="Whether trading is enabled.",
+        alias="canTrade",
+        json_schema_extra={"examples": [True]},
     )
     can_deposit: Optional[StrictBool] = Field(
-        default=None, description="Whether deposits are enabled.", alias="canDeposit"
+        default=None,
+        description="Whether deposits are enabled.",
+        alias="canDeposit",
+        json_schema_extra={"examples": [True]},
     )
     can_withdraw: Optional[StrictBool] = Field(
         default=None,
         description="Whether withdrawals are enabled.",
         alias="canWithdraw",
+        json_schema_extra={"examples": [True]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [0]},
     )
     assets: Optional[List[AccountInformationResponseResultAssetsInner]] = Field(
         default=None, alias="assets"

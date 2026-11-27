@@ -32,8 +32,14 @@ class PositionInformationResponse(BaseModel):
     PositionInformationResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["233b8741-a96d-48e8-8ce1-160f43548aeb"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[List[PositionInformationResponseResultInner]] = Field(
         default=None, alias="result"
     )

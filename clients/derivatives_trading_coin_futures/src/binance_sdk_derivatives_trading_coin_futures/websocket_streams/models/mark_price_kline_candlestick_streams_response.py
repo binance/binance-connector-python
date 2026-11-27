@@ -29,9 +29,20 @@ class MarkPriceKlineCandlestickStreamsResponse(BaseModel):
     MarkPriceKlineCandlestickStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event Name")
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event Name",
+        json_schema_extra={"examples": ["markPrice_kline"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1591267398004]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     k: Optional[MarkPriceKlineCandlestickStreamsResponseK] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "ps", "k"]

@@ -29,11 +29,34 @@ class QueryIndexPriceConstituentsResponse(BaseModel):
     QueryIndexPriceConstituentsResponse
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD"]},
+    )
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1697422647853]},
+    )
     constituents: Optional[
         List[QueryIndexPriceConstituentsResponseConstituentsInner]
-    ] = Field(default=None, description="Constituent list.")
+    ] = Field(
+        default=None,
+        description="Constituent list.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "exchange": "bitstamp",
+                        "symbol": "btcusd",
+                        "price": "94057.03000000",
+                        "weight": "0.25000000",
+                    }
+                ]
+            ]
+        },
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "time", "constituents"]
 

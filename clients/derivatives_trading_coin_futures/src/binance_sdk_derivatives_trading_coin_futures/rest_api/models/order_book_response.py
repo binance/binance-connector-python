@@ -28,22 +28,45 @@ class OrderBookResponse(BaseModel):
     """  # noqa: E501
 
     last_update_id: Optional[StrictInt] = Field(
-        default=None, description="Last update ID.", alias="lastUpdateId"
+        default=None,
+        description="Last update ID.",
+        alias="lastUpdateId",
+        json_schema_extra={"examples": [16769853]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     E: Optional[StrictInt] = Field(
-        default=None, description="Message output time", alias="E"
+        default=None,
+        description="Message output time",
+        alias="E",
+        json_schema_extra={"examples": [1591250106370]},
     )
     T: Optional[StrictInt] = Field(
-        default=None, description="Transaction time", alias="T"
+        default=None,
+        description="Transaction time",
+        alias="T",
+        json_schema_extra={"examples": [1591250106368]},
     )
     bids: Optional[
         List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]
-    ] = Field(default=None, description="Bid orders. Each entry is [price, quantity].")
+    ] = Field(
+        default=None,
+        description="Bid orders. Each entry is [price, quantity].",
+        json_schema_extra={"examples": [[["9638.00000000", "431.00000000"]]]},
+    )
     asks: Optional[
         List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]
-    ] = Field(default=None, description="Ask orders. Each entry is [price, quantity].")
+    ] = Field(
+        default=None,
+        description="Ask orders. Each entry is [price, quantity].",
+        json_schema_extra={"examples": [[["9638.20000000", "12.00000000"]]]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "lastUpdateId",

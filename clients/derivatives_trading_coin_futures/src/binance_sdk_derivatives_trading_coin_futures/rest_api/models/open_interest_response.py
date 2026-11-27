@@ -26,15 +26,31 @@ class OpenInterestResponse(BaseModel):
     OpenInterestResponse
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     open_interest: Optional[StrictStr] = Field(
-        default=None, description="Open interest.", alias="openInterest"
+        default=None,
+        description="Open interest.",
+        alias="openInterest",
+        json_schema_extra={"examples": ["15004"]},
     )
     contract_type: Optional[StrictStr] = Field(
-        default=None, description="Contract type.", alias="contractType"
+        default=None,
+        description="Contract type.",
+        alias="contractType",
+        json_schema_extra={"examples": ["CURRENT_QUARTER"]},
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1591261042378]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",

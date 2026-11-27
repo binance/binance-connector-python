@@ -26,8 +26,12 @@ class GetOrderModifyHistoryResponseInnerAmendmentOrigQty(BaseModel):
     Original order quantity
     """  # noqa: E501
 
-    before: Optional[StrictStr] = Field(default=None, description="Before value.")
-    after: Optional[StrictStr] = Field(default=None, description="After value.")
+    before: Optional[StrictStr] = Field(
+        default=None, description="Before value.", json_schema_extra={"examples": ["1"]}
+    )
+    after: Optional[StrictStr] = Field(
+        default=None, description="After value.", json_schema_extra={"examples": ["1"]}
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["before", "after"]
 

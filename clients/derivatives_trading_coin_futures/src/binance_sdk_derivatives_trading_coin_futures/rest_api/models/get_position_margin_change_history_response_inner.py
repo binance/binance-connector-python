@@ -26,13 +26,32 @@ class GetPositionMarginChangeHistoryResponseInner(BaseModel):
     GetPositionMarginChangeHistoryResponseInner
     """  # noqa: E501
 
-    amount: Optional[StrictStr] = Field(default=None, description="Amount.")
-    asset: Optional[StrictStr] = Field(default=None, description="asset name")
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    time: Optional[StrictInt] = Field(default=None, description="Time")
-    type: Optional[StrictInt] = Field(default=None, description="Order type.")
+    amount: Optional[StrictStr] = Field(
+        default=None,
+        description="Amount.",
+        json_schema_extra={"examples": ["23.36332311"]},
+    )
+    asset: Optional[StrictStr] = Field(
+        default=None, description="asset name", json_schema_extra={"examples": ["BTC"]}
+    )
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1578047897183]},
+    )
+    type: Optional[StrictInt] = Field(
+        default=None, description="Order type.", json_schema_extra={"examples": [1]}
+    )
     position_side: Optional[StrictStr] = Field(
-        default=None, description="Position side", alias="positionSide"
+        default=None,
+        description="Position side",
+        alias="positionSide",
+        json_schema_extra={"examples": ["BOTH"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

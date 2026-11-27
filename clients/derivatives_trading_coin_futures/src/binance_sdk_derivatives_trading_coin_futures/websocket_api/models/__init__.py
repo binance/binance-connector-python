@@ -23,6 +23,15 @@ from .account_information_response_result_assets_inner import (
 from .account_information_response_result_positions_inner import (
     AccountInformationResponseResultPositionsInner as AccountInformationResponseResultPositionsInner,
 )
+from .cancel_algo_order_response import (
+    CancelAlgoOrderResponse as CancelAlgoOrderResponse,
+)
+from .cancel_algo_order_response_rate_limits_inner import (
+    CancelAlgoOrderResponseRateLimitsInner as CancelAlgoOrderResponseRateLimitsInner,
+)
+from .cancel_algo_order_response_result import (
+    CancelAlgoOrderResponseResult as CancelAlgoOrderResponseResult,
+)
 from .cancel_order_response import CancelOrderResponse as CancelOrderResponse
 from .cancel_order_response_rate_limits_inner import (
     CancelOrderResponseRateLimitsInner as CancelOrderResponseRateLimitsInner,
@@ -52,6 +61,13 @@ from .modify_order_response import ModifyOrderResponse as ModifyOrderResponse
 from .modify_order_response_result import (
     ModifyOrderResponseResult as ModifyOrderResponseResult,
 )
+from .new_algo_order_response import NewAlgoOrderResponse as NewAlgoOrderResponse
+from .new_algo_order_response_rate_limits_inner import (
+    NewAlgoOrderResponseRateLimitsInner as NewAlgoOrderResponseRateLimitsInner,
+)
+from .new_algo_order_response_result import (
+    NewAlgoOrderResponseResult as NewAlgoOrderResponseResult,
+)
 from .new_order_response import NewOrderResponse as NewOrderResponse
 from .new_order_response_result import NewOrderResponseResult as NewOrderResponseResult
 from .position_information_response import (
@@ -74,6 +90,20 @@ from .start_user_data_stream_response_result import (
 
 from .enums import ModifyOrderSideEnum as ModifyOrderSideEnum
 from .enums import ModifyOrderPriceMatchEnum as ModifyOrderPriceMatchEnum
+from .enums import NewAlgoOrderAlgoTypeEnum as NewAlgoOrderAlgoTypeEnum
+from .enums import NewAlgoOrderSideEnum as NewAlgoOrderSideEnum
+from .enums import NewAlgoOrderTypeEnum as NewAlgoOrderTypeEnum
+from .enums import NewAlgoOrderPositionSideEnum as NewAlgoOrderPositionSideEnum
+from .enums import NewAlgoOrderTimeInForceEnum as NewAlgoOrderTimeInForceEnum
+from .enums import NewAlgoOrderWorkingTypeEnum as NewAlgoOrderWorkingTypeEnum
+from .enums import NewAlgoOrderPriceMatchEnum as NewAlgoOrderPriceMatchEnum
+from .enums import NewAlgoOrderClosePositionEnum as NewAlgoOrderClosePositionEnum
+from .enums import NewAlgoOrderPriceProtectEnum as NewAlgoOrderPriceProtectEnum
+from .enums import NewAlgoOrderReduceOnlyEnum as NewAlgoOrderReduceOnlyEnum
+from .enums import NewAlgoOrderNewOrderRespTypeEnum as NewAlgoOrderNewOrderRespTypeEnum
+from .enums import (
+    NewAlgoOrderSelfTradePreventionModeEnum as NewAlgoOrderSelfTradePreventionModeEnum,
+)
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderTypeEnum as NewOrderTypeEnum
 from .enums import NewOrderPositionSideEnum as NewOrderPositionSideEnum

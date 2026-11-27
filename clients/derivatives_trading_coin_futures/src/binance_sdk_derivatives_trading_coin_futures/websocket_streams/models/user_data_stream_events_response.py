@@ -26,6 +26,12 @@ from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.accou
 from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.account_update import (
     AccountUpdate,
 )
+from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.algo_update import (
+    AlgoUpdate,
+)
+from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.conditional_order_trigger_reject import (
+    ConditionalOrderTriggerReject,
+)
 from binance_sdk_derivatives_trading_coin_futures.websocket_streams.models.grid_update import (
     GridUpdate,
 )
@@ -48,6 +54,8 @@ from typing_extensions import Self
 USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
     "AccountConfigUpdate",
     "AccountUpdate",
+    "AlgoUpdate",
+    "ConditionalOrderTriggerReject",
     "GridUpdate",
     "ListenKeyExpired",
     "MarginCall",
@@ -60,17 +68,21 @@ USERDATASTREAMEVENTSRESPONSE_ONE_OF_SCHEMAS = [
 USERDATASTREAMEVENTSRESPONSE_VALIDATOR_FIELD_MAP = {
     AccountConfigUpdate: "oneof_schema_1_validator",
     AccountUpdate: "oneof_schema_2_validator",
-    GridUpdate: "oneof_schema_3_validator",
-    ListenKeyExpired: "oneof_schema_4_validator",
-    MarginCall: "oneof_schema_5_validator",
-    OrderTradeUpdate: "oneof_schema_6_validator",
-    StrategyUpdate: "oneof_schema_7_validator",
+    AlgoUpdate: "oneof_schema_3_validator",
+    ConditionalOrderTriggerReject: "oneof_schema_4_validator",
+    GridUpdate: "oneof_schema_5_validator",
+    ListenKeyExpired: "oneof_schema_6_validator",
+    MarginCall: "oneof_schema_7_validator",
+    OrderTradeUpdate: "oneof_schema_8_validator",
+    StrategyUpdate: "oneof_schema_9_validator",
 }
 
 # The event schemas, keyed by the event name the `e` field of the payload carries.
 USERDATASTREAMEVENTSRESPONSE_EVENT_SCHEMA_MAP = {
     "ACCOUNT_CONFIG_UPDATE": AccountConfigUpdate,
     "ACCOUNT_UPDATE": AccountUpdate,
+    "ALGO_UPDATE": AlgoUpdate,
+    "CONDITIONAL_ORDER_TRIGGER_REJECT": ConditionalOrderTriggerReject,
     "GRID_UPDATE": GridUpdate,
     "MARGIN_CALL": MarginCall,
     "ORDER_TRADE_UPDATE": OrderTradeUpdate,
@@ -96,20 +108,26 @@ class UserDataStreamEventsResponse(BaseModel):
     oneof_schema_1_validator: Optional[AccountConfigUpdate] = None
     # data type: AccountUpdate
     oneof_schema_2_validator: Optional[AccountUpdate] = None
+    # data type: AlgoUpdate
+    oneof_schema_3_validator: Optional[AlgoUpdate] = None
+    # data type: ConditionalOrderTriggerReject
+    oneof_schema_4_validator: Optional[ConditionalOrderTriggerReject] = None
     # data type: GridUpdate
-    oneof_schema_3_validator: Optional[GridUpdate] = None
+    oneof_schema_5_validator: Optional[GridUpdate] = None
     # data type: ListenKeyExpired
-    oneof_schema_4_validator: Optional[ListenKeyExpired] = None
+    oneof_schema_6_validator: Optional[ListenKeyExpired] = None
     # data type: MarginCall
-    oneof_schema_5_validator: Optional[MarginCall] = None
+    oneof_schema_7_validator: Optional[MarginCall] = None
     # data type: OrderTradeUpdate
-    oneof_schema_6_validator: Optional[OrderTradeUpdate] = None
+    oneof_schema_8_validator: Optional[OrderTradeUpdate] = None
     # data type: StrategyUpdate
-    oneof_schema_7_validator: Optional[StrategyUpdate] = None
+    oneof_schema_9_validator: Optional[StrategyUpdate] = None
     actual_instance: Optional[
         Union[
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
+            ConditionalOrderTriggerReject,
             GridUpdate,
             ListenKeyExpired,
             MarginCall,
@@ -120,6 +138,8 @@ class UserDataStreamEventsResponse(BaseModel):
     one_of_schemas: Set[str] = {
         "AccountConfigUpdate",
         "AccountUpdate",
+        "AlgoUpdate",
+        "ConditionalOrderTriggerReject",
         "GridUpdate",
         "ListenKeyExpired",
         "MarginCall",
@@ -197,6 +217,18 @@ class UserDataStreamEventsResponse(BaseModel):
             )
         else:
             match += 1
+        # validate data type: AlgoUpdate
+        if not isinstance(v, AlgoUpdate):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `AlgoUpdate`")
+        else:
+            match += 1
+        # validate data type: ConditionalOrderTriggerReject
+        if not isinstance(v, ConditionalOrderTriggerReject):
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `ConditionalOrderTriggerReject`"
+            )
+        else:
+            match += 1
         # validate data type: GridUpdate
         if not isinstance(v, GridUpdate):
             error_messages.append(f"Error! Input type `{type(v)}` is not `GridUpdate`")
@@ -231,13 +263,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
+                "Multiple matches found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
+                "No match found when setting `actual_instance` in UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -271,6 +303,18 @@ class UserDataStreamEventsResponse(BaseModel):
         # deserialize data into AccountUpdate
         try:
             instance.actual_instance = AccountUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into AlgoUpdate
+        try:
+            instance.actual_instance = AlgoUpdate.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
+        # deserialize data into ConditionalOrderTriggerReject
+        try:
+            instance.actual_instance = ConditionalOrderTriggerReject.from_json(json_str)
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
@@ -308,13 +352,13 @@ class UserDataStreamEventsResponse(BaseModel):
         if match > 1:
             # more than 1 match
             raise ValueError(
-                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
+                "Multiple matches found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
                 + ", ".join(error_messages)
             )
         elif match == 0:
             # no match
             raise ValueError(
-                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
+                "No match found when deserializing the JSON string into UserDataStreamEventsResponse with oneOf schemas: AccountConfigUpdate, AccountUpdate, AlgoUpdate, ConditionalOrderTriggerReject, GridUpdate, ListenKeyExpired, MarginCall, OrderTradeUpdate, StrategyUpdate. Details: "
                 + ", ".join(error_messages)
             )
         else:
@@ -339,6 +383,8 @@ class UserDataStreamEventsResponse(BaseModel):
             Dict[str, Any],
             AccountConfigUpdate,
             AccountUpdate,
+            AlgoUpdate,
+            ConditionalOrderTriggerReject,
             GridUpdate,
             ListenKeyExpired,
             MarginCall,

@@ -26,29 +26,59 @@ class PartialBookDepthStreamsResponse(BaseModel):
     PartialBookDepthStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["depthUpdate"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591269996801]},
+    )
     T: Optional[StrictInt] = Field(
-        default=None, description="Transaction time", alias="T"
+        default=None,
+        description="Transaction time",
+        alias="T",
+        json_schema_extra={"examples": [1591269996646]},
     )
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     U: Optional[StrictInt] = Field(
-        default=None, description="First update ID in event", alias="U"
+        default=None,
+        description="First update ID in event",
+        alias="U",
+        json_schema_extra={"examples": [17276694]},
     )
-    u: Optional[StrictInt] = Field(default=None, description="updateId")
+    u: Optional[StrictInt] = Field(
+        default=None, description="updateId", json_schema_extra={"examples": [17276701]}
+    )
     pu: Optional[StrictInt] = Field(
         default=None,
         description="Final update Id in last stream(ie `u` in last stream)",
+        json_schema_extra={"examples": [17276678]},
     )
     b: Optional[List[List[StrictStr]]] = Field(
-        default=None, description="Bids to be updated"
+        default=None,
+        description="Bids to be updated",
+        json_schema_extra={"examples": [[["9523.0"]]]},
     )
     a: Optional[List[List[StrictStr]]] = Field(
-        default=None, description="Asks to be updated"
+        default=None,
+        description="Asks to be updated",
+        json_schema_extra={"examples": [[["9524.6"]]]},
     )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -30,9 +30,17 @@ class StrategyUpdate(BaseModel):
     """  # noqa: E501
 
     T: Optional[StrictInt] = Field(
-        default=None, description="Transaction Time", alias="T"
+        default=None,
+        description="Transaction Time",
+        alias="T",
+        json_schema_extra={"examples": [1669261797627]},
     )
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1669261797628]},
+    )
     su: Optional[StrategyUpdateSu] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["T", "E", "su"]

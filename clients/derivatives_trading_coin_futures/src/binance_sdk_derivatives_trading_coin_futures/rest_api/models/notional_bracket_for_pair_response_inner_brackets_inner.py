@@ -26,21 +26,37 @@ class NotionalBracketForPairResponseInnerBracketsInner(BaseModel):
     NotionalBracketForPairResponseInnerBracketsInner
     """  # noqa: E501
 
-    bracket: Optional[StrictInt] = Field(default=None, description="bracket level")
+    bracket: Optional[StrictInt] = Field(
+        default=None, description="bracket level", json_schema_extra={"examples": [1]}
+    )
     initial_leverage: Optional[StrictInt] = Field(
-        default=None, description="the maximum leverage", alias="initialLeverage"
+        default=None,
+        description="the maximum leverage",
+        alias="initialLeverage",
+        json_schema_extra={"examples": [125]},
     )
     qty_cap: Optional[StrictInt] = Field(
-        default=None, description="upper edge of base asset quantity", alias="qtyCap"
+        default=None,
+        description="upper edge of base asset quantity",
+        alias="qtyCap",
+        json_schema_extra={"examples": [50]},
     )
     qtyl_floor: Optional[StrictInt] = Field(
-        default=None, description="lower edge of base asset quantity", alias="qtylFloor"
+        default=None,
+        description="lower edge of base asset quantity",
+        alias="qtylFloor",
+        json_schema_extra={"examples": [0]},
     )
     maint_margin_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Maintenance margin ratio.", alias="maintMarginRatio"
+        default=None,
+        description="Maintenance margin ratio.",
+        alias="maintMarginRatio",
+        json_schema_extra={"examples": [0.004]},
     )
     cum: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Cumulative value."
+        default=None,
+        description="Cumulative value.",
+        json_schema_extra={"examples": [0]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

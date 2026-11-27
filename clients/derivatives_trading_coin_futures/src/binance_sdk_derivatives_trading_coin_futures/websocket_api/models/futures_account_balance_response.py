@@ -32,8 +32,14 @@ class FuturesAccountBalanceResponse(BaseModel):
     FuturesAccountBalanceResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["9328e612-1560-4108-979e-283bf85b5acb"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[List[FuturesAccountBalanceResponseResultInner]] = Field(
         default=None, alias="result"
     )

@@ -30,80 +30,163 @@ class ExchangeInformationResponseSymbolsInner(BaseModel):
     """  # noqa: E501
 
     filters: Optional[List[ExchangeInformationResponseSymbolsInnerFiltersInner]] = (
-        Field(default=None, description="Trading filters and constraints.")
+        Field(
+            default=None,
+            description="Trading filters and constraints.",
+            json_schema_extra={
+                "examples": [
+                    [
+                        {
+                            "filterType": "PRICE_FILTER",
+                            "maxPrice": "100000",
+                            "minPrice": "0.1",
+                            "tickSize": "0.1",
+                            "maxQty": "100000",
+                            "minQty": "1",
+                            "stepSize": "1",
+                            "limit": 200,
+                            "multiplierUp": "1.0500",
+                            "multiplierDown": "0.9500",
+                            "multiplierDecimal": "4",
+                        }
+                    ]
+                ]
+            },
+        )
     )
     order_types: Optional[List[StrictStr]] = Field(
-        default=None, description="Supported order types.", alias="orderTypes"
+        default=None,
+        description="Supported order types.",
+        alias="orderTypes",
+        json_schema_extra={"examples": [["LIMIT"]]},
     )
     time_in_force: Optional[List[StrictStr]] = Field(
-        default=None, description="Time in force", alias="timeInForce"
+        default=None,
+        description="Time in force",
+        alias="timeInForce",
+        json_schema_extra={"examples": [["GTC"]]},
     )
     liquidation_fee: Optional[StrictStr] = Field(
-        default=None, description="liquidation fee rate", alias="liquidationFee"
+        default=None,
+        description="liquidation fee rate",
+        alias="liquidationFee",
+        json_schema_extra={"examples": ["0.010000"]},
     )
     market_take_bound: Optional[StrictStr] = Field(
         default=None,
         description="the max price difference rate( from mark price) a market order can make",
         alias="marketTakeBound",
+        json_schema_extra={"examples": ["0.30"]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     contract_type: Optional[StrictStr] = Field(
-        default=None, description="Contract type.", alias="contractType"
+        default=None,
+        description="Contract type.",
+        alias="contractType",
+        json_schema_extra={"examples": ["CURRENT_QUARTER"]},
     )
     delivery_date: Optional[StrictInt] = Field(
-        default=None, description="Delivery timestamp.", alias="deliveryDate"
+        default=None,
+        description="Delivery timestamp.",
+        alias="deliveryDate",
+        json_schema_extra={"examples": [1601020800000]},
     )
     onboard_date: Optional[StrictInt] = Field(
-        default=None, description="Onboard timestamp.", alias="onboardDate"
+        default=None,
+        description="Onboard timestamp.",
+        alias="onboardDate",
+        json_schema_extra={"examples": [1590739200000]},
     )
     contract_status: Optional[StrictStr] = Field(
-        default=None, description="Contract status.", alias="contractStatus"
+        default=None,
+        description="Contract status.",
+        alias="contractStatus",
+        json_schema_extra={"examples": ["TRADING"]},
     )
     contract_size: Optional[StrictInt] = Field(
-        default=None, description="Contract size.", alias="contractSize"
+        default=None,
+        description="Contract size.",
+        alias="contractSize",
+        json_schema_extra={"examples": [100]},
     )
     quote_asset: Optional[StrictStr] = Field(
-        default=None, description="Quote asset symbol.", alias="quoteAsset"
+        default=None,
+        description="Quote asset symbol.",
+        alias="quoteAsset",
+        json_schema_extra={"examples": ["USD"]},
     )
     base_asset: Optional[StrictStr] = Field(
-        default=None, description="Base asset symbol.", alias="baseAsset"
+        default=None,
+        description="Base asset symbol.",
+        alias="baseAsset",
+        json_schema_extra={"examples": ["BTC"]},
     )
     margin_asset: Optional[StrictStr] = Field(
-        default=None, description="Margin asset.", alias="marginAsset"
+        default=None,
+        description="Margin asset.",
+        alias="marginAsset",
+        json_schema_extra={"examples": ["BTC"]},
     )
     price_precision: Optional[StrictInt] = Field(
         default=None,
         description="please do not use it as tickSize",
         alias="pricePrecision",
+        json_schema_extra={"examples": [1]},
     )
     quantity_precision: Optional[StrictInt] = Field(
         default=None,
         description="please do not use it as stepSize",
         alias="quantityPrecision",
+        json_schema_extra={"examples": [0]},
     )
     base_asset_precision: Optional[StrictInt] = Field(
-        default=None, description="Base asset precision.", alias="baseAssetPrecision"
+        default=None,
+        description="Base asset precision.",
+        alias="baseAssetPrecision",
+        json_schema_extra={"examples": [8]},
     )
     quote_precision: Optional[StrictInt] = Field(
-        default=None, description="Quote asset precision.", alias="quotePrecision"
+        default=None,
+        description="Quote asset precision.",
+        alias="quotePrecision",
+        json_schema_extra={"examples": [8]},
     )
     equal_qty_precision: Optional[StrictInt] = Field(
-        default=None, description="ignore", alias="equalQtyPrecision"
+        default=None,
+        description="ignore",
+        alias="equalQtyPrecision",
+        json_schema_extra={"examples": [4]},
     )
     trigger_protect: Optional[StrictStr] = Field(
         default=None,
         description='threshold for algo order with "priceProtect"',
         alias="triggerProtect",
+        json_schema_extra={"examples": ["0.0500"]},
     )
     maint_margin_percent: Optional[StrictStr] = Field(
-        default=None, description="ignore", alias="maintMarginPercent"
+        default=None,
+        description="ignore",
+        alias="maintMarginPercent",
+        json_schema_extra={"examples": ["2.5000"]},
     )
     required_margin_percent: Optional[StrictStr] = Field(
-        default=None, description="ignore", alias="requiredMarginPercent"
+        default=None,
+        description="ignore",
+        alias="requiredMarginPercent",
+        json_schema_extra={"examples": ["5.0000"]},
     )
     underlying_type: Optional[StrictStr] = Field(
-        default=None, description="Underlying asset type.", alias="underlyingType"
+        default=None,
+        description="Underlying asset type.",
+        alias="underlyingType",
+        json_schema_extra={"examples": ["COIN"]},
     )
     underlying_sub_type: Optional[List[StrictStr]] = Field(
         default=None,

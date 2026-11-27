@@ -26,46 +26,91 @@ class AccountTradeListResponseInner(BaseModel):
     AccountTradeListResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    id: Optional[StrictInt] = Field(default=None, description="positionId")
-    order_id: Optional[StrictInt] = Field(
-        default=None, description="Sub-order ID", alias="orderId"
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
     )
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
-    side: Optional[StrictStr] = Field(default=None, description="Trading side")
-    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
-    qty: Optional[StrictStr] = Field(default=None, description="Quantity.")
+    id: Optional[StrictInt] = Field(
+        default=None, description="positionId", json_schema_extra={"examples": [6]}
+    )
+    order_id: Optional[StrictInt] = Field(
+        default=None,
+        description="Sub-order ID",
+        alias="orderId",
+        json_schema_extra={"examples": [28]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    side: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading side",
+        json_schema_extra={"examples": ["SELL"]},
+    )
+    price: Optional[StrictStr] = Field(
+        default=None,
+        description="Latest token price.",
+        json_schema_extra={"examples": ["8800"]},
+    )
+    qty: Optional[StrictStr] = Field(
+        default=None, description="Quantity.", json_schema_extra={"examples": ["1"]}
+    )
     realized_pnl: Optional[StrictStr] = Field(
-        default=None, description="Realized PnL.", alias="realizedPnl"
+        default=None,
+        description="Realized PnL.",
+        alias="realizedPnl",
+        json_schema_extra={"examples": ["0"]},
     )
     margin_asset: Optional[StrictStr] = Field(
-        default=None, description="Margin asset.", alias="marginAsset"
+        default=None,
+        description="Margin asset.",
+        alias="marginAsset",
+        json_schema_extra={"examples": ["BTC"]},
     )
     base_qty: Optional[StrictStr] = Field(
         default=None,
         description='Base asset quantity. Populated for COIN-M symbols; returns "0" for USDⓈ-M symbols.',
         alias="baseQty",
+        json_schema_extra={"examples": ["0.01136364"]},
     )
     quote_qty: Optional[StrictStr] = Field(
         default=None,
         description='Quote asset quantity. Populated for USDⓈ-M symbols; returns "0" for COIN-M symbols.',
         alias="quoteQty",
+        json_schema_extra={"examples": ["0"]},
     )
     commission: Optional[StrictStr] = Field(
-        default=None, description="Transaction Fee (in Crypto)"
+        default=None,
+        description="Transaction Fee (in Crypto)",
+        json_schema_extra={"examples": ["0.00000454"]},
     )
     commission_asset: Optional[StrictStr] = Field(
-        default=None, description="Commission asset.", alias="commissionAsset"
+        default=None,
+        description="Commission asset.",
+        alias="commissionAsset",
+        json_schema_extra={"examples": ["BTC"]},
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1590743483586]},
+    )
     position_side: Optional[StrictStr] = Field(
-        default=None, description="Position side", alias="positionSide"
+        default=None,
+        description="Position side",
+        alias="positionSide",
+        json_schema_extra={"examples": ["BOTH"]},
     )
     buyer: Optional[StrictBool] = Field(
-        default=None, description="Whether the trade is a buy side for the account."
+        default=None,
+        description="Whether the trade is a buy side for the account.",
+        json_schema_extra={"examples": [False]},
     )
     maker: Optional[StrictBool] = Field(
-        default=None, description="Whether the account is maker in this trade."
+        default=None,
+        description="Whether the account is maker in this trade.",
+        json_schema_extra={"examples": [False]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

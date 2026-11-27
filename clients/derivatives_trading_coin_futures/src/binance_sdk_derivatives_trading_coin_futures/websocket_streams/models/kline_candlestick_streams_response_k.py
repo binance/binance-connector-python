@@ -26,29 +26,92 @@ class KlineCandlestickStreamsResponseK(BaseModel):
     Kline payload
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, description="Kline start time")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Kline close time", alias="T"
+    t: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline start time",
+        json_schema_extra={"examples": [1591261500000]},
     )
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    i: Optional[StrictStr] = Field(default=None, description="Interval")
-    f: Optional[StrictInt] = Field(default=None, description="First trade ID")
-    L: Optional[StrictInt] = Field(default=None, description="Last trade ID", alias="L")
-    o: Optional[StrictStr] = Field(default=None, description="Open price")
-    c: Optional[StrictStr] = Field(default=None, description="Close price")
-    h: Optional[StrictStr] = Field(default=None, description="High price")
-    l: Optional[StrictStr] = Field(default=None, description="Low price")
-    v: Optional[StrictStr] = Field(default=None, description="volume")
-    n: Optional[StrictInt] = Field(default=None, description="Number of trades")
-    x: Optional[StrictBool] = Field(default=None, description="Is this kline closed?")
-    q: Optional[StrictStr] = Field(default=None, description="Base asset volume")
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline close time",
+        alias="T",
+        json_schema_extra={"examples": [1591261559999]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None, description="Interval", json_schema_extra={"examples": ["1m"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="First trade ID",
+        json_schema_extra={"examples": [606400]},
+    )
+    L: Optional[StrictInt] = Field(
+        default=None,
+        description="Last trade ID",
+        alias="L",
+        json_schema_extra={"examples": [606430]},
+    )
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="Open price",
+        json_schema_extra={"examples": ["9638.9"]},
+    )
+    c: Optional[StrictStr] = Field(
+        default=None,
+        description="Close price",
+        json_schema_extra={"examples": ["9639.8"]},
+    )
+    h: Optional[StrictStr] = Field(
+        default=None,
+        description="High price",
+        json_schema_extra={"examples": ["9639.8"]},
+    )
+    l: Optional[StrictStr] = Field(
+        default=None,
+        description="Low price",
+        json_schema_extra={"examples": ["9638.6"]},
+    )
+    v: Optional[StrictStr] = Field(
+        default=None, description="volume", json_schema_extra={"examples": ["156"]}
+    )
+    n: Optional[StrictInt] = Field(
+        default=None,
+        description="Number of trades",
+        json_schema_extra={"examples": [31]},
+    )
+    x: Optional[StrictBool] = Field(
+        default=None,
+        description="Is this kline closed?",
+        json_schema_extra={"examples": [False]},
+    )
+    q: Optional[StrictStr] = Field(
+        default=None,
+        description="Base asset volume",
+        json_schema_extra={"examples": ["1.61836886"]},
+    )
     V: Optional[StrictStr] = Field(
-        default=None, description="Taker buy volume", alias="V"
+        default=None,
+        description="Taker buy volume",
+        alias="V",
+        json_schema_extra={"examples": ["73"]},
     )
     Q: Optional[StrictStr] = Field(
-        default=None, description="Taker buy base asset volume", alias="Q"
+        default=None,
+        description="Taker buy base asset volume",
+        alias="Q",
+        json_schema_extra={"examples": ["0.75731156"]},
     )
-    B: Optional[StrictStr] = Field(default=None, description="Ignore", alias="B")
+    B: Optional[StrictStr] = Field(
+        default=None,
+        description="Ignore",
+        alias="B",
+        json_schema_extra={"examples": ["0"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "t",

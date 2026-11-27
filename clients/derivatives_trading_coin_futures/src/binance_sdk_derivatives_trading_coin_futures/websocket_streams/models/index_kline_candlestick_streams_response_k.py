@@ -26,29 +26,86 @@ class IndexKlineCandlestickStreamsResponseK(BaseModel):
     Kline payload
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, description="Kline start time")
-    T: Optional[StrictInt] = Field(
-        default=None, description="transactionTime", alias="T"
+    t: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline start time",
+        json_schema_extra={"examples": [1591267020000]},
     )
-    s: Optional[StrictStr] = Field(default=None, description="symbol")
-    i: Optional[StrictStr] = Field(default=None, description="interval")
-    f: Optional[StrictInt] = Field(default=None, description="Ignore")
-    L: Optional[StrictInt] = Field(default=None, description="Ignore", alias="L")
-    o: Optional[StrictStr] = Field(default=None, description="openPrice")
-    c: Optional[StrictStr] = Field(default=None, description="closePrice")
-    h: Optional[StrictStr] = Field(default=None, description="highPrice")
-    l: Optional[StrictStr] = Field(default=None, description="lowPrice")
-    v: Optional[StrictStr] = Field(default=None, description="volume")
-    n: Optional[StrictInt] = Field(default=None, description="tradeNum")
-    x: Optional[StrictBool] = Field(default=None, description="Is this kline closed?")
-    q: Optional[StrictStr] = Field(default=None, description="quoteVolume")
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="transactionTime",
+        alias="T",
+        json_schema_extra={"examples": [1591267079999]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None, description="symbol", json_schema_extra={"examples": ["0"]}
+    )
+    i: Optional[StrictStr] = Field(
+        default=None, description="interval", json_schema_extra={"examples": ["1m"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="Ignore",
+        json_schema_extra={"examples": [1591267020000]},
+    )
+    L: Optional[StrictInt] = Field(
+        default=None,
+        description="Ignore",
+        alias="L",
+        json_schema_extra={"examples": [1591267070000]},
+    )
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="openPrice",
+        json_schema_extra={"examples": ["9542.21900000"]},
+    )
+    c: Optional[StrictStr] = Field(
+        default=None,
+        description="closePrice",
+        json_schema_extra={"examples": ["9542.50440000"]},
+    )
+    h: Optional[StrictStr] = Field(
+        default=None,
+        description="highPrice",
+        json_schema_extra={"examples": ["9542.71640000"]},
+    )
+    l: Optional[StrictStr] = Field(
+        default=None,
+        description="lowPrice",
+        json_schema_extra={"examples": ["9542.21040000"]},
+    )
+    v: Optional[StrictStr] = Field(
+        default=None, description="volume", json_schema_extra={"examples": ["0"]}
+    )
+    n: Optional[StrictInt] = Field(
+        default=None, description="tradeNum", json_schema_extra={"examples": [51]}
+    )
+    x: Optional[StrictBool] = Field(
+        default=None,
+        description="Is this kline closed?",
+        json_schema_extra={"examples": [False]},
+    )
+    q: Optional[StrictStr] = Field(
+        default=None, description="quoteVolume", json_schema_extra={"examples": ["0"]}
+    )
     V: Optional[StrictStr] = Field(
-        default=None, description="Taker buy volume", alias="V"
+        default=None,
+        description="Taker buy volume",
+        alias="V",
+        json_schema_extra={"examples": ["0"]},
     )
     Q: Optional[StrictStr] = Field(
-        default=None, description="lastTradeVolume", alias="Q"
+        default=None,
+        description="lastTradeVolume",
+        alias="Q",
+        json_schema_extra={"examples": ["0"]},
     )
-    B: Optional[StrictStr] = Field(default=None, description="Best bid qty", alias="B")
+    B: Optional[StrictStr] = Field(
+        default=None,
+        description="Best bid qty",
+        alias="B",
+        json_schema_extra={"examples": ["0"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "t",

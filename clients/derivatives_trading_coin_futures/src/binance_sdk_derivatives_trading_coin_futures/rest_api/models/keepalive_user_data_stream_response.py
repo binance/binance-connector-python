@@ -27,7 +27,14 @@ class KeepaliveUserDataStreamResponse(BaseModel):
     """  # noqa: E501
 
     listen_key: Optional[StrictStr] = Field(
-        default=None, description="Listen key.", alias="listenKey"
+        default=None,
+        description="Listen key.",
+        alias="listenKey",
+        json_schema_extra={
+            "examples": [
+                "vmNt6gl1so8bXVsaAY153FG5tf63QaODxUarKUM8V8rY4ElSwEe431DNIYNKOkQp"
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["listenKey"]

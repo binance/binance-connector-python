@@ -32,13 +32,20 @@ class AccountUpdateA(BaseModel):
     Update Data
     """  # noqa: E501
 
-    m: Optional[StrictStr] = Field(default=None, description="Event reason type")
+    m: Optional[StrictStr] = Field(
+        default=None,
+        description="Event reason type",
+        json_schema_extra={"examples": ["ORDER"]},
+    )
     B: Optional[List[AccountUpdateABInner]] = Field(
         default=None, description="Balances", alias="B"
     )
     P: Optional[List[AccountUpdateAPInner]] = Field(default=None, alias="P")
     S: Optional[StrictStr] = Field(
-        default=None, description="Symbol associated with FUNDING_FEE event", alias="S"
+        default=None,
+        description="Symbol associated with FUNDING_FEE event",
+        alias="S",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["m", "B", "P", "S"]

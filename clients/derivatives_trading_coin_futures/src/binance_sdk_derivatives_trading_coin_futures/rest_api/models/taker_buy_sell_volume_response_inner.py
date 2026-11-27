@@ -26,24 +26,43 @@ class TakerBuySellVolumeResponseInner(BaseModel):
     TakerBuySellVolumeResponseInner
     """  # noqa: E501
 
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     contract_type: Optional[StrictStr] = Field(
-        default=None, description="Contract type.", alias="contractType"
+        default=None,
+        description="Contract type.",
+        alias="contractType",
+        json_schema_extra={"examples": ["CURRENT_QUARTER"]},
     )
     taker_buy_vol: Optional[StrictStr] = Field(
-        default=None, description="unit: cont", alias="takerBuyVol"
+        default=None,
+        description="unit: cont",
+        alias="takerBuyVol",
+        json_schema_extra={"examples": ["387"]},
     )
     taker_sell_vol: Optional[StrictStr] = Field(
-        default=None, description="unit: cont", alias="takerSellVol"
+        default=None,
+        description="unit: cont",
+        alias="takerSellVol",
+        json_schema_extra={"examples": ["248"]},
     )
     taker_buy_vol_value: Optional[StrictStr] = Field(
-        default=None, description="unit: base asset", alias="takerBuyVolValue"
+        default=None,
+        description="unit: base asset",
+        alias="takerBuyVolValue",
+        json_schema_extra={"examples": ["2342.1220"]},
     )
     taker_sell_vol_value: Optional[StrictStr] = Field(
-        default=None, description="unit: base asset", alias="takerSellVolValue"
+        default=None,
+        description="unit: base asset",
+        alias="takerSellVolValue",
+        json_schema_extra={"examples": ["4213.9800"]},
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Start time of the period, in milliseconds."
+        default=None,
+        description="Start time of the period, in milliseconds.",
+        json_schema_extra={"examples": [1591261042378]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

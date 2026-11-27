@@ -30,6 +30,7 @@ class CheckServerTimeResponse(BaseModel):
         default=None,
         description='Ignore please. If you want to check current server time, please check via "GET /dapi/v1/time"',
         alias="serverTime",
+        json_schema_extra={"examples": [1499827319559]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["serverTime"]

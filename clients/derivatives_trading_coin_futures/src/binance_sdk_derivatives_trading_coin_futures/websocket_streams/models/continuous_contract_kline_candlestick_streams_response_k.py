@@ -26,30 +26,83 @@ class ContinuousContractKlineCandlestickStreamsResponseK(BaseModel):
     Kline payload
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, description="Kline start time")
+    t: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline start time",
+        json_schema_extra={"examples": [1591261500000]},
+    )
     T: Optional[StrictInt] = Field(
-        default=None, description="transactionTime", alias="T"
+        default=None,
+        description="transactionTime",
+        alias="T",
+        json_schema_extra={"examples": [1591261559999]},
     )
-    i: Optional[StrictStr] = Field(default=None, description="interval")
-    f: Optional[StrictInt] = Field(default=None, description="First update ID")
+    i: Optional[StrictStr] = Field(
+        default=None, description="interval", json_schema_extra={"examples": ["1m"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="First update ID",
+        json_schema_extra={"examples": [606400]},
+    )
     L: Optional[StrictInt] = Field(
-        default=None, description="Last update ID", alias="L"
+        default=None,
+        description="Last update ID",
+        alias="L",
+        json_schema_extra={"examples": [606430]},
     )
-    o: Optional[StrictStr] = Field(default=None, description="openPrice")
-    c: Optional[StrictStr] = Field(default=None, description="closePrice")
-    h: Optional[StrictStr] = Field(default=None, description="highPrice")
-    l: Optional[StrictStr] = Field(default=None, description="lowPrice")
-    v: Optional[StrictStr] = Field(default=None, description="volume")
-    n: Optional[StrictInt] = Field(default=None, description="tradeNum")
-    x: Optional[StrictBool] = Field(default=None, description="Is this kline closed?")
-    q: Optional[StrictStr] = Field(default=None, description="quoteVolume")
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="openPrice",
+        json_schema_extra={"examples": ["9638.9"]},
+    )
+    c: Optional[StrictStr] = Field(
+        default=None,
+        description="closePrice",
+        json_schema_extra={"examples": ["9639.8"]},
+    )
+    h: Optional[StrictStr] = Field(
+        default=None,
+        description="highPrice",
+        json_schema_extra={"examples": ["9639.8"]},
+    )
+    l: Optional[StrictStr] = Field(
+        default=None, description="lowPrice", json_schema_extra={"examples": ["9638.6"]}
+    )
+    v: Optional[StrictStr] = Field(
+        default=None, description="volume", json_schema_extra={"examples": ["156"]}
+    )
+    n: Optional[StrictInt] = Field(
+        default=None, description="tradeNum", json_schema_extra={"examples": [31]}
+    )
+    x: Optional[StrictBool] = Field(
+        default=None,
+        description="Is this kline closed?",
+        json_schema_extra={"examples": [False]},
+    )
+    q: Optional[StrictStr] = Field(
+        default=None,
+        description="quoteVolume",
+        json_schema_extra={"examples": ["1.61836886"]},
+    )
     V: Optional[StrictStr] = Field(
-        default=None, description="Taker buy volume", alias="V"
+        default=None,
+        description="Taker buy volume",
+        alias="V",
+        json_schema_extra={"examples": ["73"]},
     )
     Q: Optional[StrictStr] = Field(
-        default=None, description="lastTradeVolume", alias="Q"
+        default=None,
+        description="lastTradeVolume",
+        alias="Q",
+        json_schema_extra={"examples": ["0.75731156"]},
     )
-    B: Optional[StrictStr] = Field(default=None, description="Best bid qty", alias="B")
+    B: Optional[StrictStr] = Field(
+        default=None,
+        description="Best bid qty",
+        alias="B",
+        json_schema_extra={"examples": ["0"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "t",

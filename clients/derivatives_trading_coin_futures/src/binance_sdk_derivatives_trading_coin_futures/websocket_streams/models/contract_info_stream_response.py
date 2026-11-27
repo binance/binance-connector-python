@@ -29,19 +29,68 @@ class ContractInfoStreamResponse(BaseModel):
     ContractInfoStreamResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event Type")
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
-    ct: Optional[StrictStr] = Field(default=None, description="Contract type")
-    dt: Optional[StrictInt] = Field(default=None, description="Delivery date time")
-    ot: Optional[StrictInt] = Field(default=None, description="onboard date time")
-    cs: Optional[StrictStr] = Field(default=None, description="Contract status")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event Type",
+        json_schema_extra={"examples": ["contractInfo"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1669647330375]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["APTUSD_PERP"]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["APTUSD"]}
+    )
+    ct: Optional[StrictStr] = Field(
+        default=None,
+        description="Contract type",
+        json_schema_extra={"examples": ["PERPETUAL"]},
+    )
+    dt: Optional[StrictInt] = Field(
+        default=None,
+        description="Delivery date time",
+        json_schema_extra={"examples": [4133404800000]},
+    )
+    ot: Optional[StrictInt] = Field(
+        default=None,
+        description="onboard date time",
+        json_schema_extra={"examples": [1666594800000]},
+    )
+    cs: Optional[StrictStr] = Field(
+        default=None,
+        description="Contract status",
+        json_schema_extra={"examples": ["TRADING"]},
+    )
     bks: Optional[List[ContractInfoStreamResponseBksInner]] = Field(
-        default=None, description="Bracket list."
+        default=None,
+        description="Bracket list.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "bs": 1,
+                        "bnf": 0,
+                        "bnc": 500000,
+                        "mmr": 0.0065,
+                        "cf": 75,
+                        "mi": 51,
+                        "ma": 75,
+                    }
+                ]
+            ]
+        },
     )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

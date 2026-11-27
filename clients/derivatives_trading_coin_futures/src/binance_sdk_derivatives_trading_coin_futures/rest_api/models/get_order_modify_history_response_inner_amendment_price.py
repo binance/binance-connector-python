@@ -26,8 +26,16 @@ class GetOrderModifyHistoryResponseInnerAmendmentPrice(BaseModel):
     Latest token price.
     """  # noqa: E501
 
-    before: Optional[StrictStr] = Field(default=None, description="Before value.")
-    after: Optional[StrictStr] = Field(default=None, description="After value.")
+    before: Optional[StrictStr] = Field(
+        default=None,
+        description="Before value.",
+        json_schema_extra={"examples": ["30004"]},
+    )
+    after: Optional[StrictStr] = Field(
+        default=None,
+        description="After value.",
+        json_schema_extra={"examples": ["30003.2"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["before", "after"]
 

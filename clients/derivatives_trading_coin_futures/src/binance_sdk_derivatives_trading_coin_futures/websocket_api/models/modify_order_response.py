@@ -32,8 +32,14 @@ class ModifyOrderResponse(BaseModel):
     ModifyOrderResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["88601d02-bd0d-430d-8733-2708a569ebda"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[ModifyOrderResponseResult] = None
     rate_limits: Optional[List[CancelOrderResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

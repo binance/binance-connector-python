@@ -29,11 +29,22 @@ class AllMarketLiquidationOrderStreamsResponse(BaseModel):
     AllMarketLiquidationOrderStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event Type")
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event Type",
+        json_schema_extra={"examples": ["forceOrder"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1591154240950]},
+    )
     o: Optional[AllMarketLiquidationOrderStreamsResponseO] = None
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "o", "st"]

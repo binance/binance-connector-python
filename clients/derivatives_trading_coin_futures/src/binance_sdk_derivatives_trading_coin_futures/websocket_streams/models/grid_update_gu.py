@@ -26,16 +26,52 @@ class GridUpdateGu(BaseModel):
     GridUpdateGu
     """  # noqa: E501
 
-    si: Optional[StrictInt] = Field(default=None, description="Strategy ID")
-    st: Optional[StrictStr] = Field(default=None, description="Strategy Type")
-    ss: Optional[StrictStr] = Field(default=None, description="Strategy Status")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    r: Optional[StrictStr] = Field(default=None, description="Realized PNL")
-    up: Optional[StrictStr] = Field(default=None, description="Unmatched Average Price")
-    uq: Optional[StrictStr] = Field(default=None, description="Unmatched Qty")
-    uf: Optional[StrictStr] = Field(default=None, description="Unmatched Fee")
-    mp: Optional[StrictStr] = Field(default=None, description="Matched PNL")
-    ut: Optional[StrictInt] = Field(default=None, description="Update Time")
+    si: Optional[StrictInt] = Field(
+        default=None,
+        description="Strategy ID",
+        json_schema_extra={"examples": [176057039]},
+    )
+    st: Optional[StrictStr] = Field(
+        default=None,
+        description="Strategy Type",
+        json_schema_extra={"examples": ["GRID"]},
+    )
+    ss: Optional[StrictStr] = Field(
+        default=None,
+        description="Strategy Status",
+        json_schema_extra={"examples": ["WORKING"]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None, description="Symbol", json_schema_extra={"examples": ["BTCUSDT"]}
+    )
+    r: Optional[StrictStr] = Field(
+        default=None,
+        description="Realized PNL",
+        json_schema_extra={"examples": ["-0.00300716"]},
+    )
+    up: Optional[StrictStr] = Field(
+        default=None,
+        description="Unmatched Average Price",
+        json_schema_extra={"examples": ["16720"]},
+    )
+    uq: Optional[StrictStr] = Field(
+        default=None,
+        description="Unmatched Qty",
+        json_schema_extra={"examples": ["-0.001"]},
+    )
+    uf: Optional[StrictStr] = Field(
+        default=None,
+        description="Unmatched Fee",
+        json_schema_extra={"examples": ["-0.00300716"]},
+    )
+    mp: Optional[StrictStr] = Field(
+        default=None, description="Matched PNL", json_schema_extra={"examples": ["0.0"]}
+    )
+    ut: Optional[StrictInt] = Field(
+        default=None,
+        description="Update Time",
+        json_schema_extra={"examples": [1669262908197]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "si",

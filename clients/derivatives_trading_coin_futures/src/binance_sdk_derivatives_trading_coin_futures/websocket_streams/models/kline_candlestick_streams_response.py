@@ -29,9 +29,22 @@ class KlineCandlestickStreamsResponse(BaseModel):
     KlineCandlestickStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["kline"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591261542539]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
     k: Optional[KlineCandlestickStreamsResponseK] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "k"]

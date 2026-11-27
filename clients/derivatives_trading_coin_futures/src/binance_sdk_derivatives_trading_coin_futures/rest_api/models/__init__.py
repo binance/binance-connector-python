@@ -30,6 +30,12 @@ from .auto_cancel_all_open_orders_response import (
 )
 from .basis_response import BasisResponse as BasisResponse
 from .basis_response_inner import BasisResponseInner as BasisResponseInner
+from .cancel_algo_order_response import (
+    CancelAlgoOrderResponse as CancelAlgoOrderResponse,
+)
+from .cancel_all_algo_open_orders_response import (
+    CancelAllAlgoOpenOrdersResponse as CancelAllAlgoOpenOrdersResponse,
+)
 from .cancel_all_open_orders_response import (
     CancelAllOpenOrdersResponse as CancelAllOpenOrdersResponse,
 )
@@ -60,6 +66,12 @@ from .compressed_aggregate_trades_list_response_inner import (
 )
 from .continuous_contract_kline_candlestick_data_response import (
     ContinuousContractKlineCandlestickDataResponse as ContinuousContractKlineCandlestickDataResponse,
+)
+from .current_all_algo_open_orders_response import (
+    CurrentAllAlgoOpenOrdersResponse as CurrentAllAlgoOpenOrdersResponse,
+)
+from .current_all_algo_open_orders_response_inner import (
+    CurrentAllAlgoOpenOrdersResponseInner as CurrentAllAlgoOpenOrdersResponseInner,
 )
 from .current_all_open_orders_response import (
     CurrentAllOpenOrdersResponse as CurrentAllOpenOrdersResponse,
@@ -180,6 +192,7 @@ from .modify_multiple_orders_response_inner import (
     ModifyMultipleOrdersResponseInner as ModifyMultipleOrdersResponseInner,
 )
 from .modify_order_response import ModifyOrderResponse as ModifyOrderResponse
+from .new_algo_order_response import NewAlgoOrderResponse as NewAlgoOrderResponse
 from .new_order_response import NewOrderResponse as NewOrderResponse
 from .notional_bracket_for_pair_response import (
     NotionalBracketForPairResponse as NotionalBracketForPairResponse,
@@ -236,6 +249,13 @@ from .position_information_response_inner import (
 )
 from .premium_index_kline_data_response import (
     PremiumIndexKlineDataResponse as PremiumIndexKlineDataResponse,
+)
+from .query_algo_order_response import QueryAlgoOrderResponse as QueryAlgoOrderResponse
+from .query_all_algo_orders_response import (
+    QueryAllAlgoOrdersResponse as QueryAllAlgoOrdersResponse,
+)
+from .query_all_algo_orders_response_inner import (
+    QueryAllAlgoOrdersResponseInner as QueryAllAlgoOrdersResponseInner,
 )
 from .query_current_open_order_response import (
     QueryCurrentOpenOrderResponse as QueryCurrentOpenOrderResponse,
@@ -348,6 +368,19 @@ from .enums import (
 )
 from .enums import ModifyOrderSideEnum as ModifyOrderSideEnum
 from .enums import ModifyOrderPriceMatchEnum as ModifyOrderPriceMatchEnum
+from .enums import NewAlgoOrderAlgoTypeEnum as NewAlgoOrderAlgoTypeEnum
+from .enums import NewAlgoOrderSideEnum as NewAlgoOrderSideEnum
+from .enums import NewAlgoOrderTypeEnum as NewAlgoOrderTypeEnum
+from .enums import NewAlgoOrderTimeInForceEnum as NewAlgoOrderTimeInForceEnum
+from .enums import NewAlgoOrderWorkingTypeEnum as NewAlgoOrderWorkingTypeEnum
+from .enums import NewAlgoOrderPriceMatchEnum as NewAlgoOrderPriceMatchEnum
+from .enums import NewAlgoOrderClosePositionEnum as NewAlgoOrderClosePositionEnum
+from .enums import NewAlgoOrderPriceProtectEnum as NewAlgoOrderPriceProtectEnum
+from .enums import NewAlgoOrderReduceOnlyEnum as NewAlgoOrderReduceOnlyEnum
+from .enums import NewAlgoOrderNewOrderRespTypeEnum as NewAlgoOrderNewOrderRespTypeEnum
+from .enums import (
+    NewAlgoOrderSelfTradePreventionModeEnum as NewAlgoOrderSelfTradePreventionModeEnum,
+)
 from .enums import NewOrderSideEnum as NewOrderSideEnum
 from .enums import NewOrderTypeEnum as NewOrderTypeEnum
 from .enums import NewOrderPositionSideEnum as NewOrderPositionSideEnum

@@ -37,12 +37,15 @@ class GetOrderModifyHistoryResponseInnerAmendment(BaseModel):
         default=None, alias="origQty"
     )
     count: Optional[StrictInt] = Field(
-        default=None, description="Total number of trades in the 24h window."
+        default=None,
+        description="Total number of trades in the 24h window.",
+        json_schema_extra={"examples": [3]},
     )
     modify_id: Optional[StrictInt] = Field(
         default=None,
         description="user-defined modification identifier, only returned if provided in the request",
         alias="modifyId",
+        json_schema_extra={"examples": [123]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["price", "origQty", "count", "modifyId"]

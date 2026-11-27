@@ -27,30 +27,48 @@ class FuturesAccountBalanceResponseInner(BaseModel):
     """  # noqa: E501
 
     account_alias: Optional[StrictStr] = Field(
-        default=None, description="unique account code", alias="accountAlias"
+        default=None,
+        description="unique account code",
+        alias="accountAlias",
+        json_schema_extra={"examples": ["SgsR"]},
     )
-    asset: Optional[StrictStr] = Field(default=None, description="asset name")
-    balance: Optional[StrictStr] = Field(default=None, description="Account balance.")
+    asset: Optional[StrictStr] = Field(
+        default=None, description="asset name", json_schema_extra={"examples": ["BTC"]}
+    )
+    balance: Optional[StrictStr] = Field(
+        default=None,
+        description="Account balance.",
+        json_schema_extra={"examples": ["0.00250000"]},
+    )
     withdraw_available: Optional[StrictStr] = Field(
         default=None,
         description="Available amount for withdrawal.",
         alias="withdrawAvailable",
+        json_schema_extra={"examples": ["0.00250000"]},
     )
     cross_wallet_balance: Optional[StrictStr] = Field(
         default=None,
         description="wallet balance for crossed margin",
         alias="crossWalletBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     cross_un_pnl: Optional[StrictStr] = Field(
         default=None,
         description="total unrealized profit or loss of crossed positions",
         alias="crossUnPnl",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     available_balance: Optional[StrictStr] = Field(
-        default=None, description="available margin balance", alias="availableBalance"
+        default=None,
+        description="available margin balance",
+        alias="availableBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [1592468353979]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

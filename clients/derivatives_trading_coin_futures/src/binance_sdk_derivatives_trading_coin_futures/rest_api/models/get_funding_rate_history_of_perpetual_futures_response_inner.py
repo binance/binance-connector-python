@@ -26,12 +26,22 @@ class GetFundingRateHistoryOfPerpetualFuturesResponseInner(BaseModel):
     GetFundingRateHistoryOfPerpetualFuturesResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
     funding_time: Optional[StrictInt] = Field(
-        default=None, description="Funding time.", alias="fundingTime"
+        default=None,
+        description="Funding time.",
+        alias="fundingTime",
+        json_schema_extra={"examples": [1596038400000]},
     )
     funding_rate: Optional[StrictStr] = Field(
-        default=None, description="Funding rate.", alias="fundingRate"
+        default=None,
+        description="Funding rate.",
+        alias="fundingRate",
+        json_schema_extra={"examples": ["-0.00300000"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "fundingTime", "fundingRate"]

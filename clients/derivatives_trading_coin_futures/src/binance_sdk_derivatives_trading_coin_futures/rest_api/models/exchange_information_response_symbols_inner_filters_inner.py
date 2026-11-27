@@ -27,39 +27,69 @@ class ExchangeInformationResponseSymbolsInnerFiltersInner(BaseModel):
     """  # noqa: E501
 
     filter_type: Optional[StrictStr] = Field(
-        default=None, description="Filter type.", alias="filterType"
+        default=None,
+        description="Filter type.",
+        alias="filterType",
+        json_schema_extra={"examples": ["PRICE_FILTER"]},
     )
     max_price: Optional[StrictStr] = Field(
-        default=None, description="Maximum price.", alias="maxPrice"
+        default=None,
+        description="Maximum price.",
+        alias="maxPrice",
+        json_schema_extra={"examples": ["100000"]},
     )
     min_price: Optional[StrictStr] = Field(
-        default=None, description="Minimum price.", alias="minPrice"
+        default=None,
+        description="Minimum price.",
+        alias="minPrice",
+        json_schema_extra={"examples": ["0.1"]},
     )
     tick_size: Optional[StrictStr] = Field(
-        default=None, description="Tick size.", alias="tickSize"
+        default=None,
+        description="Tick size.",
+        alias="tickSize",
+        json_schema_extra={"examples": ["0.1"]},
     )
     max_qty: Optional[StrictStr] = Field(
-        default=None, description="maximum quantity of base asset", alias="maxQty"
+        default=None,
+        description="maximum quantity of base asset",
+        alias="maxQty",
+        json_schema_extra={"examples": ["100000"]},
     )
     min_qty: Optional[StrictStr] = Field(
-        default=None, description="Minimum quantity.", alias="minQty"
+        default=None,
+        description="Minimum quantity.",
+        alias="minQty",
+        json_schema_extra={"examples": ["1"]},
     )
     step_size: Optional[StrictStr] = Field(
-        default=None, description="Step size.", alias="stepSize"
+        default=None,
+        description="Step size.",
+        alias="stepSize",
+        json_schema_extra={"examples": ["1"]},
     )
     limit: Optional[StrictInt] = Field(
-        default=None, description="Maximum allowed orders for this rule."
+        default=None,
+        description="Maximum allowed orders for this rule.",
+        json_schema_extra={"examples": [200]},
     )
     multiplier_up: Optional[StrictStr] = Field(
-        default=None, description="Upper multiplier bound.", alias="multiplierUp"
+        default=None,
+        description="Upper multiplier bound.",
+        alias="multiplierUp",
+        json_schema_extra={"examples": ["1.0500"]},
     )
     multiplier_down: Optional[StrictStr] = Field(
-        default=None, description="Lower multiplier bound.", alias="multiplierDown"
+        default=None,
+        description="Lower multiplier bound.",
+        alias="multiplierDown",
+        json_schema_extra={"examples": ["0.9500"]},
     )
     multiplier_decimal: Optional[StrictStr] = Field(
         default=None,
         description="Multiplier decimal precision.",
         alias="multiplierDecimal",
+        json_schema_extra={"examples": ["4"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

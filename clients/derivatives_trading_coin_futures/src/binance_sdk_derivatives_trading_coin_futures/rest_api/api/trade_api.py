@@ -19,22 +19,28 @@ from binance_common.utils import send_request
 from ..models import AccountTradeListResponse
 from ..models import AllOrdersResponse
 from ..models import AutoCancelAllOpenOrdersResponse
+from ..models import CancelAlgoOrderResponse
+from ..models import CancelAllAlgoOpenOrdersResponse
 from ..models import CancelAllOpenOrdersResponse
 from ..models import CancelMultipleOrdersResponse
 from ..models import CancelOrderResponse
 from ..models import ChangeInitialLeverageResponse
 from ..models import ChangeMarginTypeResponse
 from ..models import ChangePositionModeResponse
+from ..models import CurrentAllAlgoOpenOrdersResponse
 from ..models import CurrentAllOpenOrdersResponse
 from ..models import GetOrderModifyHistoryResponse
 from ..models import GetPositionMarginChangeHistoryResponse
 from ..models import ModifyIsolatedPositionMarginResponse
 from ..models import ModifyMultipleOrdersResponse
 from ..models import ModifyOrderResponse
+from ..models import NewAlgoOrderResponse
 from ..models import NewOrderResponse
 from ..models import PlaceMultipleOrdersResponse
 from ..models import PositionAdlQuantileEstimationResponse
 from ..models import PositionInformationResponse
+from ..models import QueryAlgoOrderResponse
+from ..models import QueryAllAlgoOrdersResponse
 from ..models import QueryCurrentOpenOrderResponse
 from ..models import QueryOrderResponse
 from ..models import UsersForceOrdersResponse
@@ -44,6 +50,17 @@ from ..models import ChangeMarginTypeMarginTypeEnum
 from ..models import ModifyIsolatedPositionMarginPositionSideEnum
 from ..models import ModifyOrderSideEnum
 from ..models import ModifyOrderPriceMatchEnum
+from ..models import NewAlgoOrderAlgoTypeEnum
+from ..models import NewAlgoOrderSideEnum
+from ..models import NewAlgoOrderTypeEnum
+from ..models import NewAlgoOrderTimeInForceEnum
+from ..models import NewAlgoOrderWorkingTypeEnum
+from ..models import NewAlgoOrderPriceMatchEnum
+from ..models import NewAlgoOrderClosePositionEnum
+from ..models import NewAlgoOrderPriceProtectEnum
+from ..models import NewAlgoOrderReduceOnlyEnum
+from ..models import NewAlgoOrderNewOrderRespTypeEnum
+from ..models import NewAlgoOrderSelfTradePreventionModeEnum
 from ..models import NewOrderSideEnum
 from ..models import NewOrderTypeEnum
 from ..models import NewOrderPositionSideEnum
@@ -294,6 +311,108 @@ class TradeApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=AutoCancelAllOpenOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def cancel_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAlgoOrderResponse]:
+        """
+                Cancel Algo Order (TRADE)
+                DELETE /dapi/v1/algoOrder
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#cancel-algo-order
+
+                Cancel an active algo (conditional) order, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on COIN-M Futures.
+
+        Weight(IP): 1
+
+        Security Type: TRADE
+
+        Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
+
+                Args:
+                    algo_id (Optional[int] = None):
+                    client_algo_id (Optional[str] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/dapi/v1/algoOrder",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def cancel_all_algo_open_orders(
+        self,
+        symbol: Union[str, None],
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CancelAllAlgoOpenOrdersResponse]:
+        """
+                Cancel All Algo Open Orders (TRADE)
+                DELETE /dapi/v1/algoOpenOrders
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#cancel-all-algo-open-orders
+
+                Cancel all open algo (conditional) orders on a symbol, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on COIN-M Futures.
+
+        Weight(IP): 1
+
+        Security Type: TRADE
+
+                Args:
+                    symbol (Union[str, None]):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CancelAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        request_body = {}
+        payload = {"symbol": symbol, "recv_window": recv_window}
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="DELETE",
+            path="/dapi/v1/algoOpenOrders",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=CancelAllAlgoOpenOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )
@@ -645,6 +764,64 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def current_all_algo_open_orders(
+        self,
+        algo_type: Optional[str] = None,
+        symbol: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[CurrentAllAlgoOpenOrdersResponse]:
+        """
+                Current All Algo Open Orders (USER_DATA)
+                GET /dapi/v1/openAlgoOrders
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#current-all-algo-open-orders
+
+                Get all open algo (conditional) orders on a symbol, including TP/SL (Take Profit / Stop Loss) and trailing stop orders on COIN-M Futures.
+
+        Weight: **1** for a single symbol; **40** when the symbol parameter is omitted
+
+        **Careful** when accessing this with no symbol.
+
+        Security Type: USER_DATA
+
+        Notes:
+        - If the symbol is not sent, orders for all symbols will be returned in an array.
+
+                Args:
+                    algo_type (Optional[str] = None):
+                    symbol (Optional[str] = None):
+                    algo_id (Optional[int] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[CurrentAllAlgoOpenOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/dapi/v1/openAlgoOrders",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=CurrentAllAlgoOpenOrdersResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def current_all_open_orders(
         self,
         symbol: Optional[str] = None,
@@ -976,7 +1153,7 @@ class TradeApi:
 
                 Order modify function, currently only LIMIT order modification is supported, modified orders will be reordered in the match queue
 
-        Weight(IP): 1
+        Weight(IP): 0
 
         Security Type: TRADE
 
@@ -1043,6 +1220,156 @@ class TradeApi:
             signer=self._signer,
         )
 
+    def new_algo_order(
+        self,
+        algo_type: Union[NewAlgoOrderAlgoTypeEnum, None],
+        symbol: Union[str, None],
+        side: Union[NewAlgoOrderSideEnum, None],
+        type: Union[NewAlgoOrderTypeEnum, None],
+        position_side: Optional[str] = None,
+        time_in_force: Optional[NewAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[NewAlgoOrderClosePositionEnum] = None,
+        price_protect: Optional[NewAlgoOrderPriceProtectEnum] = None,
+        reduce_only: Optional[NewAlgoOrderReduceOnlyEnum] = None,
+        activate_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        new_order_resp_type: Optional[NewAlgoOrderNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            NewAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[NewAlgoOrderResponse]:
+        """
+                New Algo Order (TRADE)
+                POST /dapi/v1/algoOrder
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#new-algo-order
+
+                Send in a new algo (conditional) order. Use this endpoint to place **TP/SL (Take Profit / Stop Loss)** and trailing stop orders on COIN-M Futures. Supported order types under `algoType=CONDITIONAL` are `STOP_MARKET`, `TAKE_PROFIT_MARKET`, `STOP`, `TAKE_PROFIT`, and `TRAILING_STOP_MARKET`.
+
+        Weight: 1 on 10s order rate limit(X-MBX-ORDER-COUNT-10S);
+        1 on 1min order rate limit(X-MBX-ORDER-COUNT-1M);
+        0 on IP rate limit(x-mbx-used-weight-1m)
+
+        Security Type: TRADE
+
+        Notes:
+        - Algo order with type `STOP`, parameter `timeInForce` can be sent (default `GTC`).
+        - Algo order with type `TAKE_PROFIT`, parameter `timeInForce` can be sent ( default `GTC`).
+        - Condition orders will be triggered when:
+          - If parameter`priceProtect`is sent as true:
+            - when price reaches the `triggerPrice` ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the "triggerProtect" of the symbol
+            - "triggerProtect" of a symbol can be got from `GET /dapi/v1/exchangeInfo`
+          - `STOP`, `STOP_MARKET`:
+            - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+            - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+          - `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+            - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+            - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+          - `TRAILING_STOP_MARKET`:
+            - BUY: the lowest price after order placed <= `activatePrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+            - SELL: the highest price after order placed >= `activatePrice`, and the latest price <= the highest price * (1 - `callbackRate`)
+        - For `TRAILING_STOP_MARKET`, if you got such error code. > `{"code": -2021, "msg": "Order would immediately trigger."}` > means that the parameters you send do not meet the following requirements:
+          - BUY: `activatePrice` should be smaller than latest price.
+          - SELL: `activatePrice` should be larger than latest price.
+        - `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+          - Follow the same rules for condition orders.
+          - If triggered，**close all** current long position( if `SELL`) or current short position( if `BUY`).
+          - Cannot be used with `quantity` parameter
+          - Cannot be used with `reduceOnly` parameter
+          - In Hedge Mode,cannot be used with `BUY` orders in `LONG` position side. and cannot be used with `SELL` orders in `SHORT` position side
+        - `selfTradePreventionMode` is only effective when `timeInForce` set to `IOC` or `GTC`.
+
+                Args:
+                    algo_type (Union[NewAlgoOrderAlgoTypeEnum, None]):
+                    symbol (Union[str, None]):
+                    side (Union[NewAlgoOrderSideEnum, None]):
+                    type (Union[NewAlgoOrderTypeEnum, None]):
+                    position_side (Optional[str] = None): Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None):
+                    quantity (Optional[float] = None): quantity measured by contract number, Cannot be sent with `closePosition`=`true`(Close-All)
+                    price (Optional[float] = None):
+                    trigger_price (Optional[float] = None): Trigger price
+                    working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None):
+                    price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only available for `LIMIT`/`STOP`/`TAKE_PROFIT` order; Can't be passed together with `price`
+                    close_position (Optional[NewAlgoOrderClosePositionEnum] = None): Close-All，used with `STOP_MARKET` or `TAKE_PROFIT_MARKET`.
+                    price_protect (Optional[NewAlgoOrderPriceProtectEnum] = None): Used with `STOP_MARKET` or `TAKE_PROFIT_MARKET` order. when price reaches the triggerPrice ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the Price Protection Threshold of the symbol.
+                    reduce_only (Optional[NewAlgoOrderReduceOnlyEnum] = None): Cannot be sent in Hedge Mode; cannot be sent with `closePosition`=`true`
+                    activate_price (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)
+                    callback_rate (Optional[float] = None): Used with `TRAILING_STOP_MARKET` orders
+                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    new_order_resp_type (Optional[NewAlgoOrderNewOrderRespTypeEnum] = None):
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`: expire taker order when STP triggers / `EXPIRE_MAKER`: expire maker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers; default `NONE`
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[NewAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if algo_type is None:
+            raise RequiredError(
+                field="algo_type",
+                error_message="Missing required parameter 'algo_type'",
+            )
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+        if side is None:
+            raise RequiredError(
+                field="side", error_message="Missing required parameter 'side'"
+            )
+        if type is None:
+            raise RequiredError(
+                field="type", error_message="Missing required parameter 'type'"
+            )
+
+        request_body = {}
+        payload = {
+            "algo_type": algo_type,
+            "symbol": symbol,
+            "side": side,
+            "type": type,
+            "position_side": position_side,
+            "time_in_force": time_in_force,
+            "quantity": quantity,
+            "price": price,
+            "trigger_price": trigger_price,
+            "working_type": working_type,
+            "price_match": price_match,
+            "close_position": close_position,
+            "price_protect": price_protect,
+            "reduce_only": reduce_only,
+            "activate_price": activate_price,
+            "callback_rate": callback_rate,
+            "client_algo_id": client_algo_id,
+            "new_order_resp_type": new_order_resp_type,
+            "self_trade_prevention_mode": self_trade_prevention_mode,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="POST",
+            path="/dapi/v1/algoOrder",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=NewAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
     def new_order(
         self,
         symbol: Union[str, None],
@@ -1089,13 +1416,13 @@ class TradeApi:
           - "triggerProtect" of a symbol can be got from `GET /dapi/v1/exchangeInfo`
           - `STOP`, `STOP_MARKET`:
           - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
-          - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE")
-          -`TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
-          - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE")
+          - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
+          - `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+          - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `stopPrice`
           - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `stopPrice`
           - `TRAILING_STOP_MARKET`:
-          - BUY: the lowest price after order placed ``= the lowest price * (1 + `callbackRate`)
-          - SELL: the highest price after order placed >= `activationPrice`, and the latest price
+          - BUY: the lowest price after order placed <= `activationPrice`, and the latest price >= the lowest price * (1 + `callbackRate`)
+          - SELL: the highest price after order placed >= `activationPrice`, and the latest price <= the highest price * (1 - `callbackRate`)
 
           - For `TRAILING_STOP_MARKET`, if you got such error code. > `{"code": -2021, "msg": "Order would immediately trigger."}` > means that the parameters you send do not meet the following requirements:
           - BUY: `activationPrice` should be smaller than latest price.
@@ -1361,6 +1688,136 @@ class TradeApi:
             body=request_body,
             time_unit=self._configuration.time_unit,
             response_model=PositionInformationResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_algo_order(
+        self,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAlgoOrderResponse]:
+        """
+                Query Algo Order (USER_DATA)
+                GET /dapi/v1/algoOrder
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#query-algo-order
+
+                Check the status of an algo (conditional) order, such as TP/SL (Take Profit / Stop Loss) or trailing stop orders on COIN-M Futures.
+
+        * These orders will not be found:
+          * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+          * order create time + 90 days < current time
+
+        Weight(IP): 1
+
+        Security Type: USER_DATA
+
+        Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
+        - `algoId` is self-increment for each specific `symbol`
+
+                Args:
+                    algo_id (Optional[int] = None): Order ID
+                    client_algo_id (Optional[str] = None): Client order ID
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        request_body = {}
+        payload = {
+            "algo_id": algo_id,
+            "client_algo_id": client_algo_id,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/dapi/v1/algoOrder",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryAlgoOrderResponse,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def query_all_algo_orders(
+        self,
+        symbol: Union[str, None],
+        algo_id: Optional[int] = None,
+        start_time: Optional[int] = None,
+        end_time: Optional[int] = None,
+        limit: Optional[int] = None,
+        recv_window: Optional[int] = None,
+    ) -> ApiResponse[QueryAllAlgoOrdersResponse]:
+        """
+                Query All Algo Orders (USER_DATA)
+                GET /dapi/v1/allAlgoOrders
+                https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-coin-m-futures/api/rest-api/trade#query-all-algo-orders
+
+                Get all algo (conditional) orders — active, CANCELED, TRIGGERED, or FINISHED — including TP/SL (Take Profit / Stop Loss) and trailing stop orders on COIN-M Futures.
+
+        * These orders will not be found:
+          * order status is `CANCELED` or `EXPIRED` **AND** order has NO filled trade **AND** created time + 3 days < current time
+          * order create time + 90 days < current time
+
+        Weight(IP): 5
+
+        Security Type: USER_DATA
+
+        Notes:
+        - If `algoId` is set, it will get orders >= that `algoId`. Otherwise most recent orders are returned.
+        - The query time period must be less than 7 days( default as the recent 7 days).
+
+                Args:
+                    symbol (Union[str, None]): Symbol
+                    algo_id (Optional[int] = None):
+                    start_time (Optional[int] = None):
+                    end_time (Optional[int] = None):
+                    limit (Optional[int] = None):
+                    recv_window (Optional[int] = None):
+
+                Returns:
+                    ApiResponse[QueryAllAlgoOrdersResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        if symbol is None:
+            raise RequiredError(
+                field="symbol", error_message="Missing required parameter 'symbol'"
+            )
+
+        request_body = {}
+        payload = {
+            "symbol": symbol,
+            "algo_id": algo_id,
+            "start_time": start_time,
+            "end_time": end_time,
+            "limit": limit,
+            "recv_window": recv_window,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/dapi/v1/allAlgoOrders",
+            payload=payload,
+            body=request_body,
+            time_unit=self._configuration.time_unit,
+            response_model=QueryAllAlgoOrdersResponse,
             is_signed=True,
             signer=self._signer,
         )

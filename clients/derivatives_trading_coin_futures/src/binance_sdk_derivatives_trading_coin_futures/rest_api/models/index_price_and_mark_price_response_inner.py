@@ -26,35 +26,55 @@ class IndexPriceAndMarkPriceResponseInner(BaseModel):
     IndexPriceAndMarkPriceResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     mark_price: Optional[StrictStr] = Field(
-        default=None, description="mark price", alias="markPrice"
+        default=None,
+        description="mark price",
+        alias="markPrice",
+        json_schema_extra={"examples": ["11029.69574559"]},
     )
     index_price: Optional[StrictStr] = Field(
-        default=None, description="index price", alias="indexPrice"
+        default=None,
+        description="index price",
+        alias="indexPrice",
+        json_schema_extra={"examples": ["10979.14437500"]},
     )
     estimated_settle_price: Optional[StrictStr] = Field(
         default=None,
         description="Estimated Settle Price, only useful in the last hour before the settlement starts.",
         alias="estimatedSettlePrice",
+        json_schema_extra={"examples": ["10981.74168236"]},
     )
     last_funding_rate: Optional[StrictStr] = Field(
         default=None,
         description='the lasted funding rate, for perpetual contract symbols only. For delivery symbols, "" will be shown.',
         alias="lastFundingRate",
+        json_schema_extra={"examples": ["0.00071003"]},
     )
     interest_rate: Optional[StrictStr] = Field(
         default=None,
         description='the base asset interest rate, for perpetual contract symbols only. For delivery symbols, "" will be shown.',
         alias="interestRate",
+        json_schema_extra={"examples": ["0.00010000"]},
     )
     next_funding_time: Optional[StrictInt] = Field(
         default=None,
         description="For perpetual contract symbols only. For delivery symbols, 0 will be shown",
         alias="nextFundingTime",
+        json_schema_extra={"examples": [1596096000000]},
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1596094042000]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "symbol",

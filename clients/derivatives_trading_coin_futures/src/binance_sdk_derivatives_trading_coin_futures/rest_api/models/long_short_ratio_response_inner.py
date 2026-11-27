@@ -26,18 +26,31 @@ class LongShortRatioResponseInner(BaseModel):
     LongShortRatioResponseInner
     """  # noqa: E501
 
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     long_short_ratio: Optional[StrictStr] = Field(
-        default=None, description="Long/short ratio.", alias="longShortRatio"
+        default=None,
+        description="Long/short ratio.",
+        alias="longShortRatio",
+        json_schema_extra={"examples": ["0.1960"]},
     )
     long_account: Optional[StrictStr] = Field(
-        default=None, description="64.42%", alias="longAccount"
+        default=None,
+        description="64.42%",
+        alias="longAccount",
+        json_schema_extra={"examples": ["0.6622"]},
     )
     short_account: Optional[StrictStr] = Field(
-        default=None, description="35.58%", alias="shortAccount"
+        default=None,
+        description="35.58%",
+        alias="shortAccount",
+        json_schema_extra={"examples": ["0.3378"]},
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="End time of the period, in milliseconds."
+        default=None,
+        description="End time of the period, in milliseconds.",
+        json_schema_extra={"examples": [1583139600000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

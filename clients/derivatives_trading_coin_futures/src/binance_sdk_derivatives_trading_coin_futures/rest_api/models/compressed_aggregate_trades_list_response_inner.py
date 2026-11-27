@@ -26,14 +26,37 @@ class CompressedAggregateTradesListResponseInner(BaseModel):
     CompressedAggregateTradesListResponseInner
     """  # noqa: E501
 
-    a: Optional[StrictInt] = Field(default=None, description="Aggregate tradeId")
-    p: Optional[StrictStr] = Field(default=None, description="Price")
-    q: Optional[StrictStr] = Field(default=None, description="Quantity")
-    f: Optional[StrictInt] = Field(default=None, description="First tradeId")
-    l: Optional[StrictInt] = Field(default=None, description="Last tradeId")
-    T: Optional[StrictInt] = Field(default=None, description="Timestamp", alias="T")
+    a: Optional[StrictInt] = Field(
+        default=None,
+        description="Aggregate tradeId",
+        json_schema_extra={"examples": [416690]},
+    )
+    p: Optional[StrictStr] = Field(
+        default=None, description="Price", json_schema_extra={"examples": ["9642.4"]}
+    )
+    q: Optional[StrictStr] = Field(
+        default=None, description="Quantity", json_schema_extra={"examples": ["3"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="First tradeId",
+        json_schema_extra={"examples": [595259]},
+    )
+    l: Optional[StrictInt] = Field(
+        default=None,
+        description="Last tradeId",
+        json_schema_extra={"examples": [595259]},
+    )
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Timestamp",
+        alias="T",
+        json_schema_extra={"examples": [1591250548649]},
+    )
     m: Optional[StrictBool] = Field(
-        default=None, description="Was the buyer the maker?"
+        default=None,
+        description="Was the buyer the maker?",
+        json_schema_extra={"examples": [False]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["a", "p", "q", "f", "l", "T", "m"]

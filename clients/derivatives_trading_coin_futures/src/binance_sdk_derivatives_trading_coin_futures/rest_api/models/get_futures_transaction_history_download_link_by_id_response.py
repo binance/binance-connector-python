@@ -27,22 +27,35 @@ class GetFuturesTransactionHistoryDownloadLinkByIdResponse(BaseModel):
     """  # noqa: E501
 
     download_id: Optional[StrictStr] = Field(
-        default=None, description="Download task ID.", alias="downloadId"
+        default=None,
+        description="Download task ID.",
+        alias="downloadId",
+        json_schema_extra={"examples": ["545923594199212032"]},
     )
     status: Optional[StrictStr] = Field(
-        default=None, description="Enum：completed，processing"
+        default=None,
+        description="Enum：completed，processing",
+        json_schema_extra={"examples": ["processing"]},
     )
     url: Optional[StrictStr] = Field(
-        default=None, description="The link is mapped to download id"
+        default=None,
+        description="The link is mapped to download id",
+        json_schema_extra={"examples": [""]},
     )
-    notified: Optional[StrictBool] = Field(default=None, description="ignore")
+    notified: Optional[StrictBool] = Field(
+        default=None, description="ignore", json_schema_extra={"examples": [False]}
+    )
     expiration_timestamp: Optional[StrictInt] = Field(
         default=None,
         description="The link would expire after this timestamp",
         alias="expirationTimestamp",
+        json_schema_extra={"examples": [-1]},
     )
     is_expired: Optional[StrictStr] = Field(
-        default=None, description="Whether the record is expired.", alias="isExpired"
+        default=None,
+        description="Whether the record is expired.",
+        alias="isExpired",
+        json_schema_extra={"examples": ["null"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

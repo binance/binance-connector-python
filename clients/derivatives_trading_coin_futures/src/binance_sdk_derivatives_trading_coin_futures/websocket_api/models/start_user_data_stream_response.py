@@ -32,8 +32,14 @@ class StartUserDataStreamResponse(BaseModel):
     StartUserDataStreamResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["d3df8a61-98ea-4fe0-8f4e-0fcea5d418b0"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[StartUserDataStreamResponseResult] = None
     rate_limits: Optional[List[CloseUserDataStreamResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

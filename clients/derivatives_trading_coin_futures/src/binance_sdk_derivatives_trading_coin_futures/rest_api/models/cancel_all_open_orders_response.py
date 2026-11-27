@@ -27,9 +27,17 @@ class CancelAllOpenOrdersResponse(BaseModel):
     """  # noqa: E501
 
     code: Optional[StrictInt] = Field(
-        default=None, description='API response code. "000000" indicates success.'
+        default=None,
+        description='API response code. "000000" indicates success.',
+        json_schema_extra={"examples": [200]},
     )
-    msg: Optional[StrictStr] = Field(default=None, description="Message details.")
+    msg: Optional[StrictStr] = Field(
+        default=None,
+        description="Message details.",
+        json_schema_extra={
+            "examples": ["The operation of cancel all open order is done."]
+        },
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["code", "msg"]
 

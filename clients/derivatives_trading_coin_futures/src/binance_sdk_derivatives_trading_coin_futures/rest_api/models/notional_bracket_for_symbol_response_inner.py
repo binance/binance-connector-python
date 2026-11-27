@@ -29,14 +29,34 @@ class NotionalBracketForSymbolResponseInner(BaseModel):
     NotionalBracketForSymbolResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
     notional_coef: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="user symbol bracket multiplier, only appears when user's symbol bracket is adjusted",
         alias="notionalCoef",
+        json_schema_extra={"examples": [1.5]},
     )
     brackets: Optional[List[NotionalBracketForPairResponseInnerBracketsInner]] = Field(
-        default=None, description="Leverage bracket details."
+        default=None,
+        description="Leverage bracket details.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "bracket": 1,
+                        "initialLeverage": 125,
+                        "qtyCap": 50,
+                        "qtylFloor": 0,
+                        "maintMarginRatio": 0.004,
+                        "cum": 0,
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "notionalCoef", "brackets"]

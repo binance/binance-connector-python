@@ -35,38 +35,50 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
     PlaceMultipleOrdersBatchOrdersParameterInner
     """  # noqa: E501
 
-    symbol: StrictStr = Field(description="Symbol")
-    side: StrictStr
+    symbol: StrictStr = Field(
+        description="Symbol", json_schema_extra={"examples": ["BTCUSD_PERP"]}
+    )
+    side: StrictStr = Field(json_schema_extra={"examples": ["BUY"]})
     position_side: Optional[StrictStr] = Field(
         default=None,
         description="Default `BOTH` for One-way Mode ; `LONG` or `SHORT` for Hedge Mode. It must be sent with Hedge Mode.",
         alias="positionSide",
+        json_schema_extra={"examples": ["BOTH"]},
     )
     type: StrictStr = Field(
-        description="**After CM migration, stop-type values (`STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`) are no longer accepted on a per-element basis and will return element-level `-4120`. Use the new `/dapi/v1/algoOrder` endpoint instead.**"
+        description="**After CM migration, stop-type values (`STOP`, `STOP_MARKET`, `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`, `TRAILING_STOP_MARKET`) are no longer accepted on a per-element basis and will return element-level `-4120`. Use the new `/dapi/v1/algoOrder` endpoint instead.**",
+        json_schema_extra={"examples": ["LIMIT"]},
     )
-    time_in_force: Optional[StrictStr] = Field(default=None, alias="timeInForce")
+    time_in_force: Optional[StrictStr] = Field(
+        default=None, alias="timeInForce", json_schema_extra={"examples": ["GTC"]}
+    )
     quantity: Union[StrictFloat, StrictInt] = Field(
-        description="quantity measured by contract number"
+        description="quantity measured by contract number",
+        json_schema_extra={"examples": [1]},
     )
-    reduce_only: Optional[StrictStr] = Field(default="FALSE", alias="reduceOnly")
+    reduce_only: Optional[StrictStr] = Field(
+        default="FALSE", alias="reduceOnly", json_schema_extra={"examples": ["TRUE"]}
+    )
     price: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Order price"
+        default=None, description="Order price", json_schema_extra={"examples": [10001]}
     )
     new_client_order_id: Optional[StrictStr] = Field(
         default=None,
         description="A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[\\.A-Z\\:/a-z0-9_-]{1,36}$`",
         alias="newClientOrderId",
+        json_schema_extra={"examples": ["1"]},
     )
     stop_price: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.",
         alias="stopPrice",
+        json_schema_extra={"examples": [9000]},
     )
     activation_price: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Used with `TRAILING_STOP_MARKET` orders, default as the latest price(supporting different `workingType`)",
         alias="activationPrice",
+        json_schema_extra={"examples": [9020]},
     )
     callback_rate: Optional[
         Union[
@@ -77,27 +89,33 @@ class PlaceMultipleOrdersBatchOrdersParameterInner(BaseModel):
         default=None,
         description="Used with `TRAILING_STOP_MARKET` orders, min 0.1, max 4 where 1 for 1%",
         alias="callbackRate",
+        json_schema_extra={"examples": [1]},
     )
     working_type: Optional[StrictStr] = Field(
-        default="CONTRACT_PRICE", alias="workingType"
+        default="CONTRACT_PRICE",
+        alias="workingType",
+        json_schema_extra={"examples": ["MARK_PRICE"]},
     )
     price_protect: Optional[StrictStr] = Field(
         default="FALSE",
         description="Used with `STOP/STOP_MARKET` or `TAKE_PROFIT/TAKE_PROFIT_MARKET` orders.",
         alias="priceProtect",
+        json_schema_extra={"examples": ["TRUE"]},
     )
     new_order_resp_type: Optional[StrictStr] = Field(
-        default="ACK", alias="newOrderRespType"
+        default="ACK", alias="newOrderRespType", json_schema_extra={"examples": ["ACK"]}
     )
     price_match: Optional[StrictStr] = Field(
         default=None,
         description="only avaliable for `LIMIT`/`STOP`/`TAKE_PROFIT` order; can't be passed together with `price`",
         alias="priceMatch",
+        json_schema_extra={"examples": ["OPPONENT"]},
     )
     self_trade_prevention_mode: Optional[StrictStr] = Field(
         default="EXPIRE_MAKER",
         description="`EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire taker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers",
         alias="selfTradePreventionMode",
+        json_schema_extra={"examples": ["EXPIRE_TAKER"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

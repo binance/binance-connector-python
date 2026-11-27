@@ -29,11 +29,21 @@ class MarginCall(BaseModel):
     MarginCall
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    i: Optional[StrictStr] = Field(default=None, description="Account Alias")
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1587727187525]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None,
+        description="Account Alias",
+        json_schema_extra={"examples": ["SfsR"]},
+    )
     cw: Optional[StrictStr] = Field(
         default=None,
         description="Cross Wallet Balance. Only pushed with crossed position margin call",
+        json_schema_extra={"examples": ["3.16812045"]},
     )
     p: Optional[List[MarginCallPInner]] = Field(
         default=None, description="Position(s) of Margin Call"

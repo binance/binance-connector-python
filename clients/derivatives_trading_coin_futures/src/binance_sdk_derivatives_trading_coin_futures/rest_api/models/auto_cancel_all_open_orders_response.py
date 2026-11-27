@@ -26,11 +26,16 @@ class AutoCancelAllOpenOrdersResponse(BaseModel):
     AutoCancelAllOpenOrdersResponse
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
     countdown_time: Optional[StrictStr] = Field(
         default=None,
         description="Countdown cancellation time in milliseconds.",
         alias="countdownTime",
+        json_schema_extra={"examples": ["100000"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "countdownTime"]

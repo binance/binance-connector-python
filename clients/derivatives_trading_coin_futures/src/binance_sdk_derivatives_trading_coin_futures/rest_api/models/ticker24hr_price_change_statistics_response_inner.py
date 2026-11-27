@@ -26,62 +26,101 @@ class Ticker24hrPriceChangeStatisticsResponseInner(BaseModel):
     Ticker24hrPriceChangeStatisticsResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     price_change: Optional[StrictStr] = Field(
         default=None,
         description="Absolute price change in the 24h window.",
         alias="priceChange",
+        json_schema_extra={"examples": ["136.6"]},
     )
     price_change_percent: Optional[StrictStr] = Field(
         default=None,
         description="Percentage price change in the 24h window.",
         alias="priceChangePercent",
+        json_schema_extra={"examples": ["1.436"]},
     )
     weighted_avg_price: Optional[StrictStr] = Field(
         default=None,
         description="Weighted average price in the 24h window.",
         alias="weightedAvgPrice",
+        json_schema_extra={"examples": ["9547.3"]},
     )
     last_price: Optional[StrictStr] = Field(
-        default=None, description="Latest traded price.", alias="lastPrice"
+        default=None,
+        description="Latest traded price.",
+        alias="lastPrice",
+        json_schema_extra={"examples": ["9651.6"]},
     )
     last_qty: Optional[StrictStr] = Field(
-        default=None, description="Quantity of the latest trade.", alias="lastQty"
+        default=None,
+        description="Quantity of the latest trade.",
+        alias="lastQty",
+        json_schema_extra={"examples": ["1"]},
     )
     open_price: Optional[StrictStr] = Field(
-        default=None, description="Opening price of the 24h window.", alias="openPrice"
+        default=None,
+        description="Opening price of the 24h window.",
+        alias="openPrice",
+        json_schema_extra={"examples": ["9515.0"]},
     )
     high_price: Optional[StrictStr] = Field(
-        default=None, description="Highest price in the 24h window.", alias="highPrice"
+        default=None,
+        description="Highest price in the 24h window.",
+        alias="highPrice",
+        json_schema_extra={"examples": ["9687.0"]},
     )
     low_price: Optional[StrictStr] = Field(
-        default=None, description="Lowest price in the 24h window.", alias="lowPrice"
+        default=None,
+        description="Lowest price in the 24h window.",
+        alias="lowPrice",
+        json_schema_extra={"examples": ["9499.5"]},
     )
     volume: Optional[StrictStr] = Field(
-        default=None, description="Base asset volume in the 24h window."
+        default=None,
+        description="Base asset volume in the 24h window.",
+        json_schema_extra={"examples": ["494109"]},
     )
     base_volume: Optional[StrictStr] = Field(
-        default=None, description="Base asset volume.", alias="baseVolume"
+        default=None,
+        description="Base asset volume.",
+        alias="baseVolume",
+        json_schema_extra={"examples": ["5192.94797687"]},
     )
     open_time: Optional[StrictInt] = Field(
         default=None,
         description="Start time of the 24h window (milliseconds).",
         alias="openTime",
+        json_schema_extra={"examples": [1591170300000]},
     )
     close_time: Optional[StrictInt] = Field(
         default=None,
         description="End time of the 24h window (milliseconds).",
         alias="closeTime",
+        json_schema_extra={"examples": [1591256718418]},
     )
     first_id: Optional[StrictInt] = Field(
-        default=None, description="First tradeId", alias="firstId"
+        default=None,
+        description="First tradeId",
+        alias="firstId",
+        json_schema_extra={"examples": [600507]},
     )
     last_id: Optional[StrictInt] = Field(
-        default=None, description="Last tradeId", alias="lastId"
+        default=None,
+        description="Last tradeId",
+        alias="lastId",
+        json_schema_extra={"examples": [697803]},
     )
     count: Optional[StrictInt] = Field(
-        default=None, description="Total number of trades in the 24h window."
+        default=None,
+        description="Total number of trades in the 24h window.",
+        json_schema_extra={"examples": [97297]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

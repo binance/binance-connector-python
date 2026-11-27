@@ -32,8 +32,14 @@ class AccountInformationResponse(BaseModel):
     AccountInformationResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["baaec739-c5cf-4920-b448-c0b9c5431410"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[AccountInformationResponseResult] = None
     rate_limits: Optional[List[AccountInformationResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

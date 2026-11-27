@@ -30,9 +30,13 @@ class GetDownloadIdForFuturesOrderHistoryResponse(BaseModel):
         default=None,
         description="Average time taken for data download in the past 30 days",
         alias="avgCostTimestampOfLast30d",
+        json_schema_extra={"examples": [7241837]},
     )
     download_id: Optional[StrictStr] = Field(
-        default=None, description="Download task ID.", alias="downloadId"
+        default=None,
+        description="Download task ID.",
+        alias="downloadId",
+        json_schema_extra={"examples": ["546975389218332672"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["avgCostTimestampOfLast30d", "downloadId"]

@@ -26,12 +26,32 @@ class StrategyUpdateSu(BaseModel):
     StrategyUpdateSu
     """  # noqa: E501
 
-    si: Optional[StrictInt] = Field(default=None, description="Strategy ID")
-    st: Optional[StrictStr] = Field(default=None, description="Strategy Type")
-    ss: Optional[StrictStr] = Field(default=None, description="Strategy Status")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ut: Optional[StrictInt] = Field(default=None, description="Update Time")
-    c: Optional[StrictInt] = Field(default=None, description="opCode")
+    si: Optional[StrictInt] = Field(
+        default=None,
+        description="Strategy ID",
+        json_schema_extra={"examples": [176054594]},
+    )
+    st: Optional[StrictStr] = Field(
+        default=None,
+        description="Strategy Type",
+        json_schema_extra={"examples": ["GRID"]},
+    )
+    ss: Optional[StrictStr] = Field(
+        default=None,
+        description="Strategy Status",
+        json_schema_extra={"examples": ["NEW"]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None, description="Symbol", json_schema_extra={"examples": ["BTCUSDT"]}
+    )
+    ut: Optional[StrictInt] = Field(
+        default=None,
+        description="Update Time",
+        json_schema_extra={"examples": [1669261797627]},
+    )
+    c: Optional[StrictInt] = Field(
+        default=None, description="opCode", json_schema_extra={"examples": [8007]}
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["si", "st", "ss", "s", "ut", "c"]
 

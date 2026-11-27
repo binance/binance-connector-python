@@ -26,18 +26,31 @@ class TopTraderLongShortRatioPositionsResponseInner(BaseModel):
     TopTraderLongShortRatioPositionsResponseInner
     """  # noqa: E501
 
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     long_short_ratio: Optional[StrictStr] = Field(
-        default=None, description="Long/short ratio.", alias="longShortRatio"
+        default=None,
+        description="Long/short ratio.",
+        alias="longShortRatio",
+        json_schema_extra={"examples": ["0.7869"]},
     )
     long_position: Optional[StrictStr] = Field(
-        default=None, description="64.42%", alias="longPosition"
+        default=None,
+        description="64.42%",
+        alias="longPosition",
+        json_schema_extra={"examples": ["0.6442"]},
     )
     short_position: Optional[StrictStr] = Field(
-        default=None, description="44.04%", alias="shortPosition"
+        default=None,
+        description="44.04%",
+        alias="shortPosition",
+        json_schema_extra={"examples": ["0.4404"]},
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="End time of the period, in milliseconds."
+        default=None,
+        description="End time of the period, in milliseconds.",
+        json_schema_extra={"examples": [1592870400000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

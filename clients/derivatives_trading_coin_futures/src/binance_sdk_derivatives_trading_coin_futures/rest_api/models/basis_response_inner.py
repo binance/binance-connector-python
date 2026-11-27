@@ -27,24 +27,47 @@ class BasisResponseInner(BaseModel):
     """  # noqa: E501
 
     index_price: Optional[StrictStr] = Field(
-        default=None, description="index price", alias="indexPrice"
+        default=None,
+        description="index price",
+        alias="indexPrice",
+        json_schema_extra={"examples": ["29269.93972727"]},
     )
     contract_type: Optional[StrictStr] = Field(
-        default=None, description="Contract type.", alias="contractType"
+        default=None,
+        description="Contract type.",
+        alias="contractType",
+        json_schema_extra={"examples": ["CURRENT_QUARTER"]},
     )
     basis_rate: Optional[StrictStr] = Field(
-        default=None, description="Basis rate.", alias="basisRate"
+        default=None,
+        description="Basis rate.",
+        alias="basisRate",
+        json_schema_extra={"examples": ["0.0024"]},
     )
     futures_price: Optional[StrictStr] = Field(
-        default=None, description="Futures price.", alias="futuresPrice"
+        default=None,
+        description="Futures price.",
+        alias="futuresPrice",
+        json_schema_extra={"examples": ["29341.3"]},
     )
     annualized_basis_rate: Optional[StrictStr] = Field(
-        default=None, description="Annualized basis rate.", alias="annualizedBasisRate"
+        default=None,
+        description="Annualized basis rate.",
+        alias="annualizedBasisRate",
+        json_schema_extra={"examples": ["0.0283"]},
     )
-    basis: Optional[StrictStr] = Field(default=None, description="Basis value.")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    basis: Optional[StrictStr] = Field(
+        default=None,
+        description="Basis value.",
+        json_schema_extra={"examples": ["71.36027273"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Start time of the period, in milliseconds."
+        default=None,
+        description="Start time of the period, in milliseconds.",
+        json_schema_extra={"examples": [1653381600000]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

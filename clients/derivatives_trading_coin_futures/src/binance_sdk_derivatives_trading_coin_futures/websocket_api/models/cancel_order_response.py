@@ -32,8 +32,14 @@ class CancelOrderResponse(BaseModel):
     CancelOrderResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["a8627ea5-8b9f-452f-90ae-4136f2b442e2"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[CancelOrderResponseResult] = None
     rate_limits: Optional[List[CancelOrderResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

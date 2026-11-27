@@ -27,23 +27,48 @@ class SymbolOrderBookTickerResponseInner(BaseModel):
     """  # noqa: E501
 
     last_update_id: Optional[StrictInt] = Field(
-        default=None, description="Last update ID.", alias="lastUpdateId"
+        default=None,
+        description="Last update ID.",
+        alias="lastUpdateId",
+        json_schema_extra={"examples": [1027024]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     bid_price: Optional[StrictStr] = Field(
-        default=None, description="Best bid price.", alias="bidPrice"
+        default=None,
+        description="Best bid price.",
+        alias="bidPrice",
+        json_schema_extra={"examples": ["9650.1"]},
     )
     bid_qty: Optional[StrictStr] = Field(
-        default=None, description="Best bid quantity.", alias="bidQty"
+        default=None,
+        description="Best bid quantity.",
+        alias="bidQty",
+        json_schema_extra={"examples": ["16"]},
     )
     ask_price: Optional[StrictStr] = Field(
-        default=None, description="Best ask price.", alias="askPrice"
+        default=None,
+        description="Best ask price.",
+        alias="askPrice",
+        json_schema_extra={"examples": ["9650.3"]},
     )
     ask_qty: Optional[StrictStr] = Field(
-        default=None, description="Best ask quantity.", alias="askQty"
+        default=None,
+        description="Best ask quantity.",
+        alias="askQty",
+        json_schema_extra={"examples": ["7"]},
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1591257300345]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "lastUpdateId",

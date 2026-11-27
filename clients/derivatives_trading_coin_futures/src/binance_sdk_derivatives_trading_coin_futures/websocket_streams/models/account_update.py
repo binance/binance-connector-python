@@ -29,9 +29,23 @@ class AccountUpdate(BaseModel):
     AccountUpdate
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    T: Optional[StrictInt] = Field(default=None, description="Transaction", alias="T")
-    i: Optional[StrictStr] = Field(default=None, description="Account Alias")
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1564745798939]},
+    )
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Transaction",
+        alias="T",
+        json_schema_extra={"examples": [1564745798938]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None,
+        description="Account Alias",
+        json_schema_extra={"examples": ["SfsR"]},
+    )
     a: Optional[AccountUpdateA] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "T", "i", "a"]

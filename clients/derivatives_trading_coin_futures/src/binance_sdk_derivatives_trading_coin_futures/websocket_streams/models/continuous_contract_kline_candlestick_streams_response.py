@@ -29,10 +29,25 @@ class ContinuousContractKlineCandlestickStreamsResponse(BaseModel):
     ContinuousContractKlineCandlestickStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="eventType")
-    E: Optional[StrictInt] = Field(default=None, description="eventTime", alias="E")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
-    ct: Optional[StrictStr] = Field(default=None, description="Contract type")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="eventType",
+        json_schema_extra={"examples": ["continuous_kline"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="eventTime",
+        alias="E",
+        json_schema_extra={"examples": [1591261542539]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    ct: Optional[StrictStr] = Field(
+        default=None,
+        description="Contract type",
+        json_schema_extra={"examples": ["NEXT_QUARTER"]},
+    )
     k: Optional[ContinuousContractKlineCandlestickStreamsResponseK] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "ps", "ct", "k"]

@@ -27,19 +27,31 @@ class CancelOrderResponseRateLimitsInner(BaseModel):
     """  # noqa: E501
 
     rate_limit_type: Optional[StrictStr] = Field(
-        default=None, description="Rate limit type.", alias="rateLimitType"
+        default=None,
+        description="Rate limit type.",
+        alias="rateLimitType",
+        json_schema_extra={"examples": ["REQUEST_WEIGHT"]},
     )
     interval: Optional[StrictStr] = Field(
-        default=None, description="Rate limit interval."
+        default=None,
+        description="Rate limit interval.",
+        json_schema_extra={"examples": ["MINUTE"]},
     )
     interval_num: Optional[StrictInt] = Field(
-        default=None, description="Rate limit interval multiplier.", alias="intervalNum"
+        default=None,
+        description="Rate limit interval multiplier.",
+        alias="intervalNum",
+        json_schema_extra={"examples": [1]},
     )
     limit: Optional[StrictInt] = Field(
-        default=None, description="Maximum allowed orders for this rule."
+        default=None,
+        description="Maximum allowed orders for this rule.",
+        json_schema_extra={"examples": [2400]},
     )
     count: Optional[StrictInt] = Field(
-        default=None, description="Total number of trades in the 24h window."
+        default=None,
+        description="Total number of trades in the 24h window.",
+        json_schema_extra={"examples": [6]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

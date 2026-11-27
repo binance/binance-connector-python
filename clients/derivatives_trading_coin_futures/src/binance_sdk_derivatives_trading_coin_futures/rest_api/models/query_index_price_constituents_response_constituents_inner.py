@@ -27,11 +27,25 @@ class QueryIndexPriceConstituentsResponseConstituentsInner(BaseModel):
     """  # noqa: E501
 
     exchange: Optional[StrictStr] = Field(
-        default=None, description="Exchange identifier."
+        default=None,
+        description="Exchange identifier.",
+        json_schema_extra={"examples": ["bitstamp"]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    price: Optional[StrictStr] = Field(default=None, description="Price")
-    weight: Optional[StrictStr] = Field(default=None, description="Weight")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["btcusd"]},
+    )
+    price: Optional[StrictStr] = Field(
+        default=None,
+        description="Price",
+        json_schema_extra={"examples": ["94057.03000000"]},
+    )
+    weight: Optional[StrictStr] = Field(
+        default=None,
+        description="Weight",
+        json_schema_extra={"examples": ["0.25000000"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["exchange", "symbol", "price", "weight"]
 

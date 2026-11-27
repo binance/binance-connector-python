@@ -30,6 +30,7 @@ class GetCurrentPositionModeResponse(BaseModel):
         default=None,
         description="Whether dual-side position mode is enabled.",
         alias="dualSidePosition",
+        json_schema_extra={"examples": [True]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["dualSidePosition"]

@@ -27,7 +27,14 @@ class StartUserDataStreamResponse(BaseModel):
     """  # noqa: E501
 
     listen_key: Optional[StrictStr] = Field(
-        default=None, description="Listen key.", alias="listenKey"
+        default=None,
+        description="Listen key.",
+        alias="listenKey",
+        json_schema_extra={
+            "examples": [
+                "pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1"
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["listenKey"]

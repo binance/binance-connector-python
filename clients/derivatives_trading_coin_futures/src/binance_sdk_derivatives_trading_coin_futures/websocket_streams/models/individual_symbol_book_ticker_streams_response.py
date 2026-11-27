@@ -26,20 +26,62 @@ class IndividualSymbolBookTickerStreamsResponse(BaseModel):
     IndividualSymbolBookTickerStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    u: Optional[StrictInt] = Field(default=None, description="Order book update Id")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    b: Optional[StrictStr] = Field(default=None, description="Best bid price")
-    B: Optional[StrictStr] = Field(default=None, description="Best bid qty", alias="B")
-    a: Optional[StrictStr] = Field(default=None, description="Best ask price")
-    A: Optional[StrictStr] = Field(default=None, description="Best ask qty", alias="A")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Transaction time", alias="T"
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["bookTicker"]},
     )
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
+    u: Optional[StrictInt] = Field(
+        default=None,
+        description="Order book update Id",
+        json_schema_extra={"examples": [17242169]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    b: Optional[StrictStr] = Field(
+        default=None,
+        description="Best bid price",
+        json_schema_extra={"examples": ["9548.1"]},
+    )
+    B: Optional[StrictStr] = Field(
+        default=None,
+        description="Best bid qty",
+        alias="B",
+        json_schema_extra={"examples": ["52"]},
+    )
+    a: Optional[StrictStr] = Field(
+        default=None,
+        description="Best ask price",
+        json_schema_extra={"examples": ["9548.5"]},
+    )
+    A: Optional[StrictStr] = Field(
+        default=None,
+        description="Best ask qty",
+        alias="A",
+        json_schema_extra={"examples": ["11"]},
+    )
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Transaction time",
+        alias="T",
+        json_schema_extra={"examples": [1591268628155]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591268628166]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [2]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -26,10 +26,25 @@ class IndexPriceStreamResponse(BaseModel):
     IndexPriceStreamResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    i: Optional[StrictStr] = Field(default=None, description="Pair")
-    p: Optional[StrictStr] = Field(default=None, description="Index Price")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["indexPriceUpdate"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591261236000]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    p: Optional[StrictStr] = Field(
+        default=None,
+        description="Index Price",
+        json_schema_extra={"examples": ["9636.57860000"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "i", "p"]
 

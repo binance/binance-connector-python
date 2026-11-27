@@ -26,54 +26,80 @@ class AccountInformationResponseAssetsInner(BaseModel):
     AccountInformationResponseAssetsInner
     """  # noqa: E501
 
-    asset: Optional[StrictStr] = Field(default=None, description="asset name")
+    asset: Optional[StrictStr] = Field(
+        default=None, description="asset name", json_schema_extra={"examples": ["BTC"]}
+    )
     wallet_balance: Optional[StrictStr] = Field(
-        default=None, description="total wallet balance", alias="walletBalance"
+        default=None,
+        description="total wallet balance",
+        alias="walletBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     unrealized_profit: Optional[StrictStr] = Field(
-        default=None, description="unrealized profit or loss", alias="unrealizedProfit"
+        default=None,
+        description="unrealized profit or loss",
+        alias="unrealizedProfit",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     margin_balance: Optional[StrictStr] = Field(
-        default=None, description="margin balance", alias="marginBalance"
+        default=None,
+        description="margin balance",
+        alias="marginBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     maint_margin: Optional[StrictStr] = Field(
-        default=None, description="maintenance margin", alias="maintMargin"
+        default=None,
+        description="maintenance margin",
+        alias="maintMargin",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     initial_margin: Optional[StrictStr] = Field(
         default=None,
         description="total intial margin required with the latest mark price",
         alias="initialMargin",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     position_initial_margin: Optional[StrictStr] = Field(
         default=None,
         description="positions margin required with the latest mark price",
         alias="positionInitialMargin",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     open_order_initial_margin: Optional[StrictStr] = Field(
         default=None,
         description="open orders intial margin required with the latest mark price",
         alias="openOrderInitialMargin",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     max_withdraw_amount: Optional[StrictStr] = Field(
         default=None,
         description="maximum amount for transfer out",
         alias="maxWithdrawAmount",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     cross_wallet_balance: Optional[StrictStr] = Field(
         default=None,
         description="wallet balance for crossed margin",
         alias="crossWalletBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     cross_un_pnl: Optional[StrictStr] = Field(
         default=None,
         description="total unrealized profit or loss of crossed positions",
         alias="crossUnPnl",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     available_balance: Optional[StrictStr] = Field(
-        default=None, description="available margin balance", alias="availableBalance"
+        default=None,
+        description="available margin balance",
+        alias="availableBalance",
+        json_schema_extra={"examples": ["0.00241969"]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [1625474304765]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

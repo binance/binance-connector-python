@@ -29,11 +29,23 @@ class OrderTradeUpdate(BaseModel):
     OrderTradeUpdate
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Transaction Time", alias="T"
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1591274595442]},
     )
-    i: Optional[StrictStr] = Field(default=None, description="Account Alias")
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Transaction Time",
+        alias="T",
+        json_schema_extra={"examples": [1591274595442]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None,
+        description="Account Alias",
+        json_schema_extra={"examples": ["SfsR"]},
+    )
     o: Optional[OrderTradeUpdateO] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "T", "i", "o"]

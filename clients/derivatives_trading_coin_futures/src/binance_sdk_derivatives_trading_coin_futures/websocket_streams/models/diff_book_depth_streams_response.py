@@ -27,29 +27,65 @@ class DiffBookDepthStreamsResponse(BaseModel):
     DiffBookDepthStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["depthUpdate"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591270260907]},
+    )
     T: Optional[StrictInt] = Field(
-        default=None, description="Transction time", alias="T"
+        default=None,
+        description="Transction time",
+        alias="T",
+        json_schema_extra={"examples": [1591270260891]},
     )
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     U: Optional[StrictInt] = Field(
-        default=None, description="First update ID in event", alias="U"
+        default=None,
+        description="First update ID in event",
+        alias="U",
+        json_schema_extra={"examples": [17285681]},
     )
-    u: Optional[StrictInt] = Field(default=None, description="Final update ID in event")
+    u: Optional[StrictInt] = Field(
+        default=None,
+        description="Final update ID in event",
+        json_schema_extra={"examples": [17285702]},
+    )
     pu: Optional[StrictInt] = Field(
         default=None,
         description="Final update Id in last stream(ie `u` in last stream)",
+        json_schema_extra={"examples": [17285675]},
     )
     b: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
-        Field(default=None, description="Bids to be updated")
+        Field(
+            default=None,
+            description="Bids to be updated",
+            json_schema_extra={"examples": [[["9517.6", "10"]]]},
+        )
     )
     a: Optional[List[Annotated[List[StrictStr], Field(min_length=2, max_length=2)]]] = (
-        Field(default=None, description="Asks to be updated")
+        Field(
+            default=None,
+            description="Asks to be updated",
+            json_schema_extra={"examples": [[["9518.5", "45"]]]},
+        )
     )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

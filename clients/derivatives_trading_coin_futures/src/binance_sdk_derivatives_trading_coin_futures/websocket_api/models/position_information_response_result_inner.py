@@ -26,51 +26,99 @@ class PositionInformationResponseResultInner(BaseModel):
     PositionInformationResponseResultInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
     position_amt: Optional[StrictStr] = Field(
-        default=None, description="position amount", alias="positionAmt"
+        default=None,
+        description="position amount",
+        alias="positionAmt",
+        json_schema_extra={"examples": ["0"]},
     )
     entry_price: Optional[StrictStr] = Field(
-        default=None, description="Position entry price.", alias="entryPrice"
+        default=None,
+        description="Position entry price.",
+        alias="entryPrice",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     mark_price: Optional[StrictStr] = Field(
-        default=None, description="mark price", alias="markPrice"
+        default=None,
+        description="mark price",
+        alias="markPrice",
+        json_schema_extra={"examples": ["62297.60417296"]},
     )
     un_realized_profit: Optional[StrictStr] = Field(
-        default=None, description="Unrealized profit.", alias="unRealizedProfit"
+        default=None,
+        description="Unrealized profit.",
+        alias="unRealizedProfit",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     liquidation_price: Optional[StrictStr] = Field(
-        default=None, description="Liquidation price.", alias="liquidationPrice"
+        default=None,
+        description="Liquidation price.",
+        alias="liquidationPrice",
+        json_schema_extra={"examples": ["0"]},
     )
-    leverage: Optional[StrictStr] = Field(default=None, description="Leverage value.")
+    leverage: Optional[StrictStr] = Field(
+        default=None,
+        description="Leverage value.",
+        json_schema_extra={"examples": ["7"]},
+    )
     max_qty: Optional[StrictStr] = Field(
-        default=None, description="maximum quantity of base asset", alias="maxQty"
+        default=None,
+        description="maximum quantity of base asset",
+        alias="maxQty",
+        json_schema_extra={"examples": ["100"]},
     )
     margin_type: Optional[StrictStr] = Field(
-        default=None, description="Margin type.", alias="marginType"
+        default=None,
+        description="Margin type.",
+        alias="marginType",
+        json_schema_extra={"examples": ["cross"]},
     )
     isolated_margin: Optional[StrictStr] = Field(
-        default=None, description="Isolated margin amount.", alias="isolatedMargin"
+        default=None,
+        description="Isolated margin amount.",
+        alias="isolatedMargin",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     is_auto_add_margin: Optional[StrictStr] = Field(
         default=None,
         description="Whether auto-add margin is enabled.",
         alias="isAutoAddMargin",
+        json_schema_extra={"examples": ["false"]},
     )
     position_side: Optional[StrictStr] = Field(
-        default=None, description="Position side", alias="positionSide"
+        default=None,
+        description="Position side",
+        alias="positionSide",
+        json_schema_extra={"examples": ["BOTH"]},
     )
     notional_value: Optional[StrictStr] = Field(
-        default=None, description="Notional value.", alias="notionalValue"
+        default=None,
+        description="Notional value.",
+        alias="notionalValue",
+        json_schema_extra={"examples": ["0"]},
     )
     isolated_wallet: Optional[StrictStr] = Field(
-        default=None, description="Isolated wallet balance.", alias="isolatedWallet"
+        default=None,
+        description="Isolated wallet balance.",
+        alias="isolatedWallet",
+        json_schema_extra={"examples": ["0"]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [1726731195634]},
     )
     break_even_price: Optional[StrictStr] = Field(
-        default=None, description="break-even price", alias="breakEvenPrice"
+        default=None,
+        description="break-even price",
+        alias="breakEvenPrice",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -29,9 +29,17 @@ class AccountConfigUpdate(BaseModel):
     AccountConfigUpdate
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1611646737479]},
+    )
     T: Optional[StrictInt] = Field(
-        default=None, description="Transaction Time", alias="T"
+        default=None,
+        description="Transaction Time",
+        alias="T",
+        json_schema_extra={"examples": [1611646737476]},
     )
     ac: Optional[AccountConfigUpdateAc] = None
     additional_properties: Dict[str, Any] = {}

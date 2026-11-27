@@ -33,27 +33,86 @@ class AccountInformationResponse(BaseModel):
     """  # noqa: E501
 
     assets: Optional[List[AccountInformationResponseAssetsInner]] = Field(
-        default=None, description="Supported assets."
+        default=None,
+        description="Supported assets.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "asset": "BTC",
+                        "walletBalance": "0.00241969",
+                        "unrealizedProfit": "0.00000000",
+                        "marginBalance": "0.00241969",
+                        "maintMargin": "0.00000000",
+                        "initialMargin": "0.00000000",
+                        "positionInitialMargin": "0.00000000",
+                        "openOrderInitialMargin": "0.00000000",
+                        "maxWithdrawAmount": "0.00241969",
+                        "crossWalletBalance": "0.00241969",
+                        "crossUnPnl": "0.00000000",
+                        "availableBalance": "0.00241969",
+                        "updateTime": 1625474304765,
+                    }
+                ]
+            ]
+        },
     )
     positions: Optional[List[AccountInformationResponsePositionsInner]] = Field(
-        default=None, description="Position list."
+        default=None,
+        description="Position list.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "symbol": "BTCUSD_201225",
+                        "positionAmt": "0",
+                        "initialMargin": "0",
+                        "maintMargin": "0",
+                        "unrealizedProfit": "0.00000000",
+                        "positionInitialMargin": "0",
+                        "openOrderInitialMargin": "0",
+                        "leverage": "125",
+                        "isolated": False,
+                        "positionSide": "BOTH",
+                        "entryPrice": "0.0",
+                        "breakEvenPrice": "0.0",
+                        "maxQty": "50",
+                        "updateTime": 0,
+                        "notionalValue": "0",
+                    }
+                ]
+            ]
+        },
     )
     can_deposit: Optional[StrictBool] = Field(
-        default=None, description="Whether deposits are enabled.", alias="canDeposit"
+        default=None,
+        description="Whether deposits are enabled.",
+        alias="canDeposit",
+        json_schema_extra={"examples": [True]},
     )
     can_trade: Optional[StrictBool] = Field(
-        default=None, description="Whether trading is enabled.", alias="canTrade"
+        default=None,
+        description="Whether trading is enabled.",
+        alias="canTrade",
+        json_schema_extra={"examples": [True]},
     )
     can_withdraw: Optional[StrictBool] = Field(
         default=None,
         description="Whether withdrawals are enabled.",
         alias="canWithdraw",
+        json_schema_extra={"examples": [True]},
     )
     fee_tier: Optional[StrictInt] = Field(
-        default=None, description="Fee tier level.", alias="feeTier"
+        default=None,
+        description="Fee tier level.",
+        alias="feeTier",
+        json_schema_extra={"examples": [2]},
     )
     update_time: Optional[StrictInt] = Field(
-        default=None, description="update time", alias="updateTime"
+        default=None,
+        description="update time",
+        alias="updateTime",
+        json_schema_extra={"examples": [0]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

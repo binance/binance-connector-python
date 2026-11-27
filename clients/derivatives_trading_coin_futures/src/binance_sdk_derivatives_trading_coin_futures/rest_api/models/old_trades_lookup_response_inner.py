@@ -26,15 +26,33 @@ class OldTradesLookupResponseInner(BaseModel):
     OldTradesLookupResponseInner
     """  # noqa: E501
 
-    id: Optional[StrictInt] = Field(default=None, description="positionId")
-    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
-    qty: Optional[StrictStr] = Field(default=None, description="Quantity.")
-    base_qty: Optional[StrictStr] = Field(
-        default=None, description="Base asset quantity.", alias="baseQty"
+    id: Optional[StrictInt] = Field(
+        default=None, description="positionId", json_schema_extra={"examples": [595103]}
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    price: Optional[StrictStr] = Field(
+        default=None,
+        description="Latest token price.",
+        json_schema_extra={"examples": ["9642.2"]},
+    )
+    qty: Optional[StrictStr] = Field(
+        default=None, description="Quantity.", json_schema_extra={"examples": ["1"]}
+    )
+    base_qty: Optional[StrictStr] = Field(
+        default=None,
+        description="Base asset quantity.",
+        alias="baseQty",
+        json_schema_extra={"examples": ["0.01037108"]},
+    )
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1499865549590]},
+    )
     is_buyer_maker: Optional[StrictBool] = Field(
-        default=None, description="Whether buyer is market maker.", alias="isBuyerMaker"
+        default=None,
+        description="Whether buyer is market maker.",
+        alias="isBuyerMaker",
+        json_schema_extra={"examples": [True]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

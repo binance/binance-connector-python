@@ -26,24 +26,40 @@ class ContractInfoStreamResponseBksInner(BaseModel):
     ContractInfoStreamResponseBksInner
     """  # noqa: E501
 
-    bs: Optional[StrictInt] = Field(default=None, description="Notional bracket")
+    bs: Optional[StrictInt] = Field(
+        default=None,
+        description="Notional bracket",
+        json_schema_extra={"examples": [1]},
+    )
     bnf: Optional[StrictInt] = Field(
-        default=None, description="Floor notional of this bracket"
+        default=None,
+        description="Floor notional of this bracket",
+        json_schema_extra={"examples": [0]},
     )
     bnc: Optional[StrictInt] = Field(
-        default=None, description="Cap notional of this bracket"
+        default=None,
+        description="Cap notional of this bracket",
+        json_schema_extra={"examples": [500000]},
     )
     mmr: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Maintenance ratio for this bracket"
+        default=None,
+        description="Maintenance ratio for this bracket",
+        json_schema_extra={"examples": [0.0065]},
     )
     cf: Optional[StrictInt] = Field(
-        default=None, description="Auxiliary number for quick calculation"
+        default=None,
+        description="Auxiliary number for quick calculation",
+        json_schema_extra={"examples": [75]},
     )
     mi: Optional[StrictInt] = Field(
-        default=None, description="Min leverage for this bracket"
+        default=None,
+        description="Min leverage for this bracket",
+        json_schema_extra={"examples": [51]},
     )
     ma: Optional[StrictInt] = Field(
-        default=None, description="Max leverage for this bracket"
+        default=None,
+        description="Max leverage for this bracket",
+        json_schema_extra={"examples": [75]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["bs", "bnf", "bnc", "mmr", "cf", "mi", "ma"]

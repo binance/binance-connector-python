@@ -17,6 +17,8 @@ from .account_update_ap_inner import AccountUpdateAPInner as AccountUpdateAPInne
 from .aggregate_trade_streams_response import (
     AggregateTradeStreamsResponse as AggregateTradeStreamsResponse,
 )
+from .algo_update import AlgoUpdate as AlgoUpdate
+from .algo_update_o import AlgoUpdateO as AlgoUpdateO
 from .all_book_tickers_stream_response import (
     AllBookTickersStreamResponse as AllBookTickersStreamResponse,
 )
@@ -37,6 +39,12 @@ from .all_market_tickers_streams_response import (
 )
 from .all_market_tickers_streams_response_inner import (
     AllMarketTickersStreamsResponseInner as AllMarketTickersStreamsResponseInner,
+)
+from .conditional_order_trigger_reject import (
+    ConditionalOrderTriggerReject as ConditionalOrderTriggerReject,
+)
+from .conditional_order_trigger_reject_or import (
+    ConditionalOrderTriggerRejectOr as ConditionalOrderTriggerRejectOr,
 )
 from .continuous_contract_kline_candlestick_streams_response import (
     ContinuousContractKlineCandlestickStreamsResponse as ContinuousContractKlineCandlestickStreamsResponse,

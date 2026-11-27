@@ -29,7 +29,11 @@ class PositionAdlQuantileEstimationResponseInner(BaseModel):
     PositionAdlQuantileEstimationResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
     adl_quantile: Optional[PositionAdlQuantileEstimationResponseInnerAdlQuantile] = (
         Field(default=None, alias="adlQuantile")
     )

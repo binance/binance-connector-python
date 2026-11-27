@@ -36,18 +36,82 @@ class ExchangeInformationResponse(BaseModel):
         default=None, description="Exchange filters.", alias="exchangeFilters"
     )
     rate_limits: Optional[List[ExchangeInformationResponseRateLimitsInner]] = Field(
-        default=None, description="Rate limit definitions.", alias="rateLimits"
+        default=None,
+        description="Rate limit definitions.",
+        alias="rateLimits",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "interval": "MINUTE",
+                        "intervalNum": 1,
+                        "limit": 2400,
+                        "rateLimitType": "REQUEST_WEIGHT",
+                    }
+                ]
+            ]
+        },
     )
     server_time: Optional[StrictInt] = Field(
         default=None,
         description='Ignore please. If you want to check current server time, please check via "GET /dapi/v1/time"',
         alias="serverTime",
+        json_schema_extra={"examples": [1565613908500]},
     )
     symbols: Optional[List[ExchangeInformationResponseSymbolsInner]] = Field(
-        default=None, description="Supported trading symbols."
+        default=None,
+        description="Supported trading symbols.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "filters": [
+                            {
+                                "filterType": "PRICE_FILTER",
+                                "maxPrice": "100000",
+                                "minPrice": "0.1",
+                                "tickSize": "0.1",
+                                "maxQty": "100000",
+                                "minQty": "1",
+                                "stepSize": "1",
+                                "limit": 200,
+                                "multiplierUp": "1.0500",
+                                "multiplierDown": "0.9500",
+                                "multiplierDecimal": "4",
+                            }
+                        ],
+                        "orderTypes": ["LIMIT"],
+                        "timeInForce": ["GTC"],
+                        "liquidationFee": "0.010000",
+                        "marketTakeBound": "0.30",
+                        "symbol": "BTCUSD_200925",
+                        "pair": "BTCUSD",
+                        "contractType": "CURRENT_QUARTER",
+                        "deliveryDate": 1601020800000,
+                        "onboardDate": 1590739200000,
+                        "contractStatus": "TRADING",
+                        "contractSize": 100,
+                        "quoteAsset": "USD",
+                        "baseAsset": "BTC",
+                        "marginAsset": "BTC",
+                        "pricePrecision": 1,
+                        "quantityPrecision": 0,
+                        "baseAssetPrecision": 8,
+                        "quotePrecision": 8,
+                        "equalQtyPrecision": 4,
+                        "triggerProtect": "0.0500",
+                        "maintMarginPercent": "2.5000",
+                        "requiredMarginPercent": "5.0000",
+                        "underlyingType": "COIN",
+                    }
+                ]
+            ]
+        },
     )
     timezone: Optional[StrictStr] = Field(
-        default=None, description="Timezone of market data."
+        default=None,
+        description="Timezone of market data.",
+        json_schema_extra={"examples": ["UTC"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

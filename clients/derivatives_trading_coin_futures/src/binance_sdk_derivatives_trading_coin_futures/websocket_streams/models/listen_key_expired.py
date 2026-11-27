@@ -26,8 +26,21 @@ class ListenKeyExpired(BaseModel):
     ListenKeyExpired
     """  # noqa: E501
 
-    E: Optional[StrictInt] = Field(default=None, description="Event Time", alias="E")
-    listen_key: Optional[StrictStr] = Field(default=None, alias="listenKey")
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event Time",
+        alias="E",
+        json_schema_extra={"examples": [1576653824250]},
+    )
+    listen_key: Optional[StrictStr] = Field(
+        default=None,
+        alias="listenKey",
+        json_schema_extra={
+            "examples": [
+                "WsCMN0a4KHUPTQuX6IUnqEZfB1inxmv1qR4kbf1LuEjur5VdbzqvyxqG9TSjVVxv"
+            ]
+        },
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["E", "listen_key"]
 

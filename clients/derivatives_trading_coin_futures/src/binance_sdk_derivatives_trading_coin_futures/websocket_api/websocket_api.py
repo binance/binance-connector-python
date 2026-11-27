@@ -27,8 +27,10 @@ from .api.user_data_streams_api import UserDataStreamsApi
 
 from .models import AccountInformationResponse
 from .models import FuturesAccountBalanceResponse
+from .models import CancelAlgoOrderResponse
 from .models import CancelOrderResponse
 from .models import ModifyOrderResponse
+from .models import NewAlgoOrderResponse
 from .models import NewOrderResponse
 from .models import PositionInformationResponse
 from .models import QueryOrderResponse
@@ -41,6 +43,26 @@ from .models import ModifyOrderSideEnum
 
 
 from .models import ModifyOrderPriceMatchEnum
+
+
+from .models import NewAlgoOrderAlgoTypeEnum
+
+from .models import NewAlgoOrderSideEnum
+from .models import NewAlgoOrderTypeEnum
+
+from .models import NewAlgoOrderPositionSideEnum
+from .models import NewAlgoOrderTimeInForceEnum
+
+
+from .models import NewAlgoOrderWorkingTypeEnum
+from .models import NewAlgoOrderPriceMatchEnum
+from .models import NewAlgoOrderClosePositionEnum
+from .models import NewAlgoOrderPriceProtectEnum
+from .models import NewAlgoOrderReduceOnlyEnum
+
+
+from .models import NewAlgoOrderNewOrderRespTypeEnum
+from .models import NewAlgoOrderSelfTradePreventionModeEnum
 
 
 from .models import NewOrderSideEnum
@@ -223,6 +245,43 @@ class DerivativesTradingCoinFuturesWebSocketAPI(WebSocketAPIBase):
 
         return await self._accountApi.futures_account_balance(id, recv_window)
 
+    async def cancel_algo_order(
+        self,
+        id: Optional[str] = None,
+        algo_id: Optional[int] = None,
+        client_algo_id: Optional[str] = None,
+        recv_window: Optional[int] = None,
+    ) -> WebsocketApiResponse[CancelAlgoOrderResponse]:
+        """
+                Cancel Algo Order (TRADE)
+
+                Cancel an active algo order.
+
+        Weight(IP): 1
+
+        Security Type: TRADE
+
+        Notes:
+        - Either `algoId` or `clientAlgoId` must be sent.
+
+                Args:
+                    id (Optional[str] = None): Id.
+                    algo_id (Optional[int] = None): Algo Id.
+                    client_algo_id (Optional[str] = None): Client Algo Id.
+                    recv_window (Optional[int] = None): Recv Window.
+
+                Returns:
+                    WebsocketApiResponse[CancelAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._tradeApi.cancel_algo_order(
+            id, algo_id, client_algo_id, recv_window
+        )
+
     async def cancel_order(
         self,
         symbol: Union[str, None],
@@ -283,7 +342,7 @@ class DerivativesTradingCoinFuturesWebSocketAPI(WebSocketAPIBase):
 
         Weight: 1 on 10s order rate limit(X-MBX-ORDER-COUNT-10S);
         1 on 1min order rate limit(X-MBX-ORDER-COUNT-1M);
-        1 on IP rate limit(x-mbx-used-weight-1m)
+        0 on IP rate limit(x-mbx-used-weight-1m)
 
         Security Type: TRADE
 
@@ -326,6 +385,166 @@ class DerivativesTradingCoinFuturesWebSocketAPI(WebSocketAPIBase):
             orig_client_order_id,
             price_match,
             modify_id,
+            recv_window,
+        )
+
+    async def new_algo_order(
+        self,
+        algo_type: Union[NewAlgoOrderAlgoTypeEnum, None],
+        symbol: Union[str, None],
+        side: Union[NewAlgoOrderSideEnum, None],
+        type: Union[NewAlgoOrderTypeEnum, None],
+        id: Optional[str] = None,
+        position_side: Optional[NewAlgoOrderPositionSideEnum] = None,
+        time_in_force: Optional[NewAlgoOrderTimeInForceEnum] = None,
+        quantity: Optional[float] = None,
+        price: Optional[float] = None,
+        trigger_price: Optional[float] = None,
+        working_type: Optional[NewAlgoOrderWorkingTypeEnum] = None,
+        price_match: Optional[NewAlgoOrderPriceMatchEnum] = None,
+        close_position: Optional[NewAlgoOrderClosePositionEnum] = None,
+        price_protect: Optional[NewAlgoOrderPriceProtectEnum] = None,
+        reduce_only: Optional[NewAlgoOrderReduceOnlyEnum] = None,
+        activate_price: Optional[float] = None,
+        callback_rate: Optional[float] = None,
+        client_algo_id: Optional[str] = None,
+        new_order_resp_type: Optional[NewAlgoOrderNewOrderRespTypeEnum] = None,
+        self_trade_prevention_mode: Optional[
+            NewAlgoOrderSelfTradePreventionModeEnum
+        ] = None,
+        recv_window: Optional[int] = None,
+    ) -> WebsocketApiResponse[NewAlgoOrderResponse]:
+        """
+                New Algo Order (TRADE)
+
+                Send in a new algo order.
+
+        Weight(IP): 0
+
+        Security Type: TRADE
+
+        Notes:
+        - Condition orders will be triggered when:
+
+        >
+
+        - If parameter`priceProtect`is sent as true:
+
+        - when price reaches the `triggerPrice` ，the difference rate between
+        "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the
+        "triggerProtect" of the symbol
+
+        - "triggerProtect" of a symbol can be got from `GET
+        /dapi/v1/exchangeInfo`
+
+        >
+
+        - `STOP`, `STOP_MARKET`:
+
+        - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >= `triggerPrice`
+
+        - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <=
+        `triggerPrice`
+
+        - `TAKE_PROFIT`, `TAKE_PROFIT_MARKET`:
+
+        - BUY: latest price ("MARK_PRICE" or "CONTRACT_PRICE") <= `triggerPrice`
+
+        - SELL: latest price ("MARK_PRICE" or "CONTRACT_PRICE") >=
+        `triggerPrice`
+
+        - `TRAILING_STOP_MARKET`:
+
+        - BUY: the lowest price after order placed <= `activatePrice`, and the
+        latest price >= the lowest price * (1 + `callbackRate`)
+
+        - SELL: the highest price after order placed >= `activatePrice`, and the
+        latest price <= the highest price * (1 - `callbackRate`)
+
+        >
+
+        - For `TRAILING_STOP_MARKET`, if you got such error code.
+
+        >   ``{"code": -2021, "msg": "Order would immediately trigger."}``
+
+        >   means that the parameters you send do not meet the following
+        requirements:
+
+        - BUY: `activatePrice` should be smaller than latest price.
+
+        - SELL: `activatePrice` should be larger than latest price.
+
+        >
+
+        - `STOP_MARKET`, `TAKE_PROFIT_MARKET` with `closePosition`=`true`:
+
+        - Follow the same rules for condition orders.
+
+        - If triggered，**close all** current long position( if `SELL`) or
+        current short position( if `BUY`).
+
+        - Cannot be used with `quantity` parameter
+
+        - Cannot be used with `reduceOnly` parameter
+
+        - In Hedge Mode,cannot be used with `BUY` orders in `LONG` position
+        side. and cannot be used with `SELL` orders in `SHORT` position side
+
+        - `selfTradePreventionMode` is only effective when `timeInForce` set to
+        `IOC` or `GTC`.
+
+                Args:
+                    algo_type (Union[NewAlgoOrderAlgoTypeEnum, None]): Only support `CONDITIONAL`
+                    symbol (Union[str, None]): Symbol.
+                    side (Union[NewAlgoOrderSideEnum, None]): Side.
+                    type (Union[NewAlgoOrderTypeEnum, None]): For `CONDITIONAL` algoType, `STOP_MARKET`/`TAKE_PROFIT_MARKET`/`STOP`/`TAKE_PROFIT`/`TRAILING_STOP_MARKET` as order type
+                    id (Optional[str] = None): Id.
+                    position_side (Optional[NewAlgoOrderPositionSideEnum] = None): Default BOTH for One-way Mode ; LONG or SHORT for Hedge Mode. It must be sent in Hedge Mode.
+                    time_in_force (Optional[NewAlgoOrderTimeInForceEnum] = None): `IOC` or `GTC` or `FOK` or `GTX`, default `GTC`
+                    quantity (Optional[float] = None): quantity measured by contract number, Cannot be sent with `closePosition`=`true`(Close-All)
+                    price (Optional[float] = None): Price.
+                    trigger_price (Optional[float] = None): Trigger Price.
+                    working_type (Optional[NewAlgoOrderWorkingTypeEnum] = None): triggerPrice triggered by: `MARK_PRICE`, `CONTRACT_PRICE`. Default `CONTRACT_PRICE`
+                    price_match (Optional[NewAlgoOrderPriceMatchEnum] = None): only available for LIMIT/STOP/TAKE_PROFIT order; Can't be passed together with price
+                    close_position (Optional[NewAlgoOrderClosePositionEnum] = None): Close-All，used with STOP_MARKET or TAKE_PROFIT_MARKET.
+                    price_protect (Optional[NewAlgoOrderPriceProtectEnum] = None): Used with STOP_MARKET or TAKE_PROFIT_MARKET order. when price reaches the triggerPrice ，the difference rate between "MARK_PRICE" and "CONTRACT_PRICE" cannot be larger than the Price Protection Threshold of the symbol.
+                    reduce_only (Optional[NewAlgoOrderReduceOnlyEnum] = None): Cannot be sent in Hedge Mode; cannot be sent with closePosition=true
+                    activate_price (Optional[float] = None): Used with TRAILING_STOP_MARKET orders, default as the latest price(supporting different workingType)
+                    callback_rate (Optional[float] = None): Used with TRAILING_STOP_MARKET orders
+                    client_algo_id (Optional[str] = None): A unique id among open orders. Automatically generated if not sent. Can only be string following the rule: `^[.A-Z:/a-z0-9_-]{1,36}$`
+                    new_order_resp_type (Optional[NewAlgoOrderNewOrderRespTypeEnum] = None): "ACK", "RESULT", default "ACK"
+                    self_trade_prevention_mode (Optional[NewAlgoOrderSelfTradePreventionModeEnum] = None): `EXPIRE_TAKER`: expire taker order when STP triggers/ `EXPIRE_MAKER`: expire maker order when STP triggers/ `EXPIRE_BOTH`: expire both orders when STP triggers; default `NONE`
+                    recv_window (Optional[int] = None): Recv Window.
+
+                Returns:
+                    WebsocketApiResponse[NewAlgoOrderResponse]
+
+                Raises:
+                    RequiredError: If a required parameter is missing.
+
+        """
+
+        return await self._tradeApi.new_algo_order(
+            algo_type,
+            symbol,
+            side,
+            type,
+            id,
+            position_side,
+            time_in_force,
+            quantity,
+            price,
+            trigger_price,
+            working_type,
+            price_match,
+            close_position,
+            price_protect,
+            reduce_only,
+            activate_price,
+            callback_rate,
+            client_algo_id,
+            new_order_resp_type,
+            self_trade_prevention_mode,
             recv_window,
         )
 

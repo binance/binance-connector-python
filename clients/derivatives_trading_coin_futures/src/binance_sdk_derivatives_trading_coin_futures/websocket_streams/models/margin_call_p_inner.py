@@ -26,17 +26,45 @@ class MarginCallPInner(BaseModel):
     MarginCallPInner
     """  # noqa: E501
 
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Position Side")
-    pa: Optional[StrictStr] = Field(default=None, description="Position Amount")
-    mt: Optional[StrictStr] = Field(default=None, description="Margin Type")
-    iw: Optional[StrictStr] = Field(
-        default=None, description="Isolated Wallet (if isolated position)"
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
     )
-    mp: Optional[StrictStr] = Field(default=None, description="Mark Price")
-    up: Optional[StrictStr] = Field(default=None, description="Unrealized PnL")
+    ps: Optional[StrictStr] = Field(
+        default=None,
+        description="Position Side",
+        json_schema_extra={"examples": ["LONG"]},
+    )
+    pa: Optional[StrictStr] = Field(
+        default=None,
+        description="Position Amount",
+        json_schema_extra={"examples": ["132"]},
+    )
+    mt: Optional[StrictStr] = Field(
+        default=None,
+        description="Margin Type",
+        json_schema_extra={"examples": ["CROSSED"]},
+    )
+    iw: Optional[StrictStr] = Field(
+        default=None,
+        description="Isolated Wallet (if isolated position)",
+        json_schema_extra={"examples": ["0"]},
+    )
+    mp: Optional[StrictStr] = Field(
+        default=None,
+        description="Mark Price",
+        json_schema_extra={"examples": ["9187.17127000"]},
+    )
+    up: Optional[StrictStr] = Field(
+        default=None,
+        description="Unrealized PnL",
+        json_schema_extra={"examples": ["-1.166074"]},
+    )
     mm: Optional[StrictStr] = Field(
-        default=None, description="Maintenance Margin Required"
+        default=None,
+        description="Maintenance Margin Required",
+        json_schema_extra={"examples": ["1.614445"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["s", "ps", "pa", "mt", "iw", "mp", "up", "mm"]

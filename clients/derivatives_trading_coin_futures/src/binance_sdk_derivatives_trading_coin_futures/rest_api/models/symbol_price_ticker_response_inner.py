@@ -26,10 +26,24 @@ class SymbolPriceTickerResponseInner(BaseModel):
     SymbolPriceTickerResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
-    price: Optional[StrictStr] = Field(default=None, description="Latest token price.")
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    price: Optional[StrictStr] = Field(
+        default=None,
+        description="Latest token price.",
+        json_schema_extra={"examples": ["9647.8"]},
+    )
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1591257246176]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["symbol", "ps", "price", "time"]
 

@@ -32,8 +32,14 @@ class KeepaliveUserDataStreamResponse(BaseModel):
     KeepaliveUserDataStreamResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["815d5fce-0880-4287-a567-80badf004c74"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[KeepaliveUserDataStreamResponseResult] = None
     rate_limits: Optional[List[CloseUserDataStreamResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

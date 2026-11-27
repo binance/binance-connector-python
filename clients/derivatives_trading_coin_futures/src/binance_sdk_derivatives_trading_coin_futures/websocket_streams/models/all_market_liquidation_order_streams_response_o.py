@@ -26,23 +26,64 @@ class AllMarketLiquidationOrderStreamsResponseO(BaseModel):
     Order Type
     """  # noqa: E501
 
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
-    S: Optional[StrictStr] = Field(default=None, description="Side", alias="S")
-    o: Optional[StrictStr] = Field(default=None, description="Order Type")
-    f: Optional[StrictStr] = Field(default=None, description="Time in Force")
-    q: Optional[StrictStr] = Field(default=None, description="Original Quantity")
-    p: Optional[StrictStr] = Field(default=None, description="Price")
-    ap: Optional[StrictStr] = Field(default=None, description="Average Price")
-    X: Optional[StrictStr] = Field(default=None, description="Order Status", alias="X")
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
+    S: Optional[StrictStr] = Field(
+        default=None,
+        description="Side",
+        alias="S",
+        json_schema_extra={"examples": ["SELL"]},
+    )
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="Order Type",
+        json_schema_extra={"examples": ["LIMIT"]},
+    )
+    f: Optional[StrictStr] = Field(
+        default=None,
+        description="Time in Force",
+        json_schema_extra={"examples": ["IOC"]},
+    )
+    q: Optional[StrictStr] = Field(
+        default=None,
+        description="Original Quantity",
+        json_schema_extra={"examples": ["1"]},
+    )
+    p: Optional[StrictStr] = Field(
+        default=None, description="Price", json_schema_extra={"examples": ["9425.5"]}
+    )
+    ap: Optional[StrictStr] = Field(
+        default=None,
+        description="Average Price",
+        json_schema_extra={"examples": ["9496.5"]},
+    )
+    X: Optional[StrictStr] = Field(
+        default=None,
+        description="Order Status",
+        alias="X",
+        json_schema_extra={"examples": ["FILLED"]},
+    )
     l: Optional[StrictStr] = Field(
-        default=None, description="Order Last Filled Quantity"
+        default=None,
+        description="Order Last Filled Quantity",
+        json_schema_extra={"examples": ["1"]},
     )
     z: Optional[StrictStr] = Field(
-        default=None, description="Order Filled Accumulated Quantity"
+        default=None,
+        description="Order Filled Accumulated Quantity",
+        json_schema_extra={"examples": ["1"]},
     )
     T: Optional[StrictInt] = Field(
-        default=None, description="Order Trade Time", alias="T"
+        default=None,
+        description="Order Trade Time",
+        alias="T",
+        json_schema_extra={"examples": [1591154240949]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

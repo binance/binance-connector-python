@@ -26,20 +26,58 @@ class AggregateTradeStreamsResponse(BaseModel):
     AggregateTradeStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    a: Optional[StrictInt] = Field(default=None, description="Aggregate trade ID")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    p: Optional[StrictStr] = Field(default=None, description="Price")
-    q: Optional[StrictStr] = Field(default=None, description="Quantity")
-    f: Optional[StrictInt] = Field(default=None, description="First trade ID")
-    l: Optional[StrictInt] = Field(default=None, description="Last trade ID")
-    T: Optional[StrictInt] = Field(default=None, description="Trade time", alias="T")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["aggTrade"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1591261134288]},
+    )
+    a: Optional[StrictInt] = Field(
+        default=None,
+        description="Aggregate trade ID",
+        json_schema_extra={"examples": [424951]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    p: Optional[StrictStr] = Field(
+        default=None, description="Price", json_schema_extra={"examples": ["9643.5"]}
+    )
+    q: Optional[StrictStr] = Field(
+        default=None, description="Quantity", json_schema_extra={"examples": ["2"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="First trade ID",
+        json_schema_extra={"examples": [606073]},
+    )
+    l: Optional[StrictInt] = Field(
+        default=None,
+        description="Last trade ID",
+        json_schema_extra={"examples": [606073]},
+    )
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Trade time",
+        alias="T",
+        json_schema_extra={"examples": [1591261134199]},
+    )
     m: Optional[StrictBool] = Field(
-        default=None, description="Is the buyer the market maker?"
+        default=None,
+        description="Is the buyer the market maker?",
+        json_schema_extra={"examples": [False]},
     )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

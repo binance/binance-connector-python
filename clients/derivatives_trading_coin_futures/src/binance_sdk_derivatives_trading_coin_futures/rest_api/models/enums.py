@@ -253,6 +253,75 @@ class ModifyOrderPriceMatchEnum(Enum):
     QUEUE_20 = "QUEUE_20"
 
 
+class NewAlgoOrderAlgoTypeEnum(Enum):
+    CONDITIONAL = "CONDITIONAL"
+
+
+class NewAlgoOrderSideEnum(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class NewAlgoOrderTypeEnum(Enum):
+    LIMIT = "LIMIT"
+    MARKET = "MARKET"
+    STOP = "STOP"
+    STOP_MARKET = "STOP_MARKET"
+    TAKE_PROFIT = "TAKE_PROFIT"
+    TAKE_PROFIT_MARKET = "TAKE_PROFIT_MARKET"
+    TRAILING_STOP_MARKET = "TRAILING_STOP_MARKET"
+
+
+class NewAlgoOrderTimeInForceEnum(Enum):
+    GTC = "GTC"
+    IOC = "IOC"
+    FOK = "FOK"
+    GTX = "GTX"
+
+
+class NewAlgoOrderWorkingTypeEnum(Enum):
+    MARK_PRICE = "MARK_PRICE"
+    CONTRACT_PRICE = "CONTRACT_PRICE"
+
+
+class NewAlgoOrderPriceMatchEnum(Enum):
+    OPPONENT = "OPPONENT"
+    OPPONENT_5 = "OPPONENT_5"
+    OPPONENT_10 = "OPPONENT_10"
+    OPPONENT_20 = "OPPONENT_20"
+    QUEUE = "QUEUE"
+    QUEUE_5 = "QUEUE_5"
+    QUEUE_10 = "QUEUE_10"
+    QUEUE_20 = "QUEUE_20"
+
+
+class NewAlgoOrderClosePositionEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
+class NewAlgoOrderPriceProtectEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
+class NewAlgoOrderReduceOnlyEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
+class NewAlgoOrderNewOrderRespTypeEnum(Enum):
+    ACK = "ACK"
+    RESULT = "RESULT"
+
+
+class NewAlgoOrderSelfTradePreventionModeEnum(Enum):
+    NONE = "NONE"
+    EXPIRE_TAKER = "EXPIRE_TAKER"
+    EXPIRE_BOTH = "EXPIRE_BOTH"
+    EXPIRE_MAKER = "EXPIRE_MAKER"
+
+
 class NewOrderSideEnum(Enum):
     BUY = "BUY"
     SELL = "SELL"

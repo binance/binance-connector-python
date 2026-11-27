@@ -26,27 +26,53 @@ class MarkPriceOfAllSymbolsOfAPairResponseInner(BaseModel):
     MarkPriceOfAllSymbolsOfAPairResponseInner
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="Event type")
-    E: Optional[StrictInt] = Field(default=None, description="Event time", alias="E")
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    p: Optional[StrictStr] = Field(default=None, description="Mark Price")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="Event type",
+        json_schema_extra={"examples": ["markPriceUpdate"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="Event time",
+        alias="E",
+        json_schema_extra={"examples": [1596095725000]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_201225"]},
+    )
+    p: Optional[StrictStr] = Field(
+        default=None,
+        description="Mark Price",
+        json_schema_extra={"examples": ["10934.62615417"]},
+    )
     P: Optional[StrictStr] = Field(
         default=None,
         description="Estimated Settle Price, only useful in the last hour before the settlement starts.",
         alias="P",
+        json_schema_extra={"examples": ["10962.17178236"]},
     )
-    i: Optional[StrictStr] = Field(default=None, description="Index Price")
+    i: Optional[StrictStr] = Field(
+        default=None,
+        description="Index Price",
+        json_schema_extra={"examples": ["10933.62615417"]},
+    )
     r: Optional[StrictStr] = Field(
         default=None,
         description='funding rate for perpetual symbol, "" will be shown for delivery symbol',
+        json_schema_extra={"examples": [""]},
     )
     T: Optional[StrictInt] = Field(
         default=None,
         description="next funding time for perpetual symbol, 0 will be shown for delivery symbol",
         alias="T",
+        json_schema_extra={"examples": [0]},
     )
     st: Optional[StrictInt] = Field(
-        default=None, description="(After CM migration) Symbol type: 1 = UM, 2 = CM"
+        default=None,
+        description="(After CM migration) Symbol type: 1 = UM, 2 = CM",
+        json_schema_extra={"examples": [1]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "s", "p", "P", "i", "r", "T", "st"]

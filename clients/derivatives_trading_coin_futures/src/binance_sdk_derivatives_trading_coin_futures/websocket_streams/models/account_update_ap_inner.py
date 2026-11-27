@@ -26,19 +26,49 @@ class AccountUpdateAPInner(BaseModel):
     AccountUpdateAPInner
     """  # noqa: E501
 
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    pa: Optional[StrictStr] = Field(default=None, description="Position Amount")
-    ep: Optional[StrictStr] = Field(default=None, description="Entry Price")
-    bep: Optional[StrictStr] = Field(default=None, description="Break-Even Price")
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200925"]},
+    )
+    pa: Optional[StrictStr] = Field(
+        default=None,
+        description="Position Amount",
+        json_schema_extra={"examples": ["0"]},
+    )
+    ep: Optional[StrictStr] = Field(
+        default=None, description="Entry Price", json_schema_extra={"examples": ["0.0"]}
+    )
+    bep: Optional[StrictStr] = Field(
+        default=None,
+        description="Break-Even Price",
+        json_schema_extra={"examples": ["0.0"]},
+    )
     cr: Optional[StrictStr] = Field(
-        default=None, description="(Pre-fee) Accumulated Realized"
+        default=None,
+        description="(Pre-fee) Accumulated Realized",
+        json_schema_extra={"examples": ["200"]},
     )
-    up: Optional[StrictStr] = Field(default=None, description="Unrealized PnL")
-    mt: Optional[StrictStr] = Field(default=None, description="Margin Type")
+    up: Optional[StrictStr] = Field(
+        default=None,
+        description="Unrealized PnL",
+        json_schema_extra={"examples": ["0"]},
+    )
+    mt: Optional[StrictStr] = Field(
+        default=None,
+        description="Margin Type",
+        json_schema_extra={"examples": ["isolated"]},
+    )
     iw: Optional[StrictStr] = Field(
-        default=None, description="Isolated Wallet (if isolated position)"
+        default=None,
+        description="Isolated Wallet (if isolated position)",
+        json_schema_extra={"examples": ["0.00000000"]},
     )
-    ps: Optional[StrictStr] = Field(default=None, description="Position Side")
+    ps: Optional[StrictStr] = Field(
+        default=None,
+        description="Position Side",
+        json_schema_extra={"examples": ["BOTH"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "s",

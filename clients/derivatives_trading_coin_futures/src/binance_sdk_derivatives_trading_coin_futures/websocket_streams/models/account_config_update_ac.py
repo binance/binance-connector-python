@@ -26,8 +26,14 @@ class AccountConfigUpdateAc(BaseModel):
     AccountConfigUpdateAc
     """  # noqa: E501
 
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    l: Optional[StrictInt] = Field(default=None, description="Leverage")
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
+    l: Optional[StrictInt] = Field(
+        default=None, description="Leverage", json_schema_extra={"examples": [25]}
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["s", "l"]
 

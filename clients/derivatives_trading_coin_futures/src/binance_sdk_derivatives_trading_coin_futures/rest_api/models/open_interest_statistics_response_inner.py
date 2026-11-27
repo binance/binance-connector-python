@@ -26,18 +26,31 @@ class OpenInterestStatisticsResponseInner(BaseModel):
     OpenInterestStatisticsResponseInner
     """  # noqa: E501
 
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     contract_type: Optional[StrictStr] = Field(
-        default=None, description="Contract type.", alias="contractType"
+        default=None,
+        description="Contract type.",
+        alias="contractType",
+        json_schema_extra={"examples": ["CURRENT_QUARTER"]},
     )
     sum_open_interest: Optional[StrictStr] = Field(
-        default=None, description="unit: cont", alias="sumOpenInterest"
+        default=None,
+        description="unit: cont",
+        alias="sumOpenInterest",
+        json_schema_extra={"examples": ["20403"]},
     )
     sum_open_interest_value: Optional[StrictStr] = Field(
-        default=None, description="unit: base asset", alias="sumOpenInterestValue"
+        default=None,
+        description="unit: base asset",
+        alias="sumOpenInterestValue",
+        json_schema_extra={"examples": ["176196512.23400000"]},
     )
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="End time of the period, in milliseconds."
+        default=None,
+        description="End time of the period, in milliseconds.",
+        json_schema_extra={"examples": [1591261042378]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

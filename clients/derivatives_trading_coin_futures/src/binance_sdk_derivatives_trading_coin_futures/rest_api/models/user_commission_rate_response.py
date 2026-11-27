@@ -26,12 +26,22 @@ class UserCommissionRateResponse(BaseModel):
     UserCommissionRateResponse
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
     maker_commission_rate: Optional[StrictStr] = Field(
-        default=None, description="0.015%", alias="makerCommissionRate"
+        default=None,
+        description="0.015%",
+        alias="makerCommissionRate",
+        json_schema_extra={"examples": ["0.00015"]},
     )
     taker_commission_rate: Optional[StrictStr] = Field(
-        default=None, description="Taker commission rate.", alias="takerCommissionRate"
+        default=None,
+        description="Taker commission rate.",
+        alias="takerCommissionRate",
+        json_schema_extra={"examples": ["0.00040"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

@@ -26,24 +26,33 @@ class GetFundingRateInfoResponseInner(BaseModel):
     GetFundingRateInfoResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
     adjusted_funding_rate_cap: Optional[StrictStr] = Field(
         default=None,
         description="Adjusted funding rate cap.",
         alias="adjustedFundingRateCap",
+        json_schema_extra={"examples": ["0.02500000"]},
     )
     adjusted_funding_rate_floor: Optional[StrictStr] = Field(
         default=None,
         description="Adjusted funding rate floor.",
         alias="adjustedFundingRateFloor",
+        json_schema_extra={"examples": ["-0.02500000"]},
     )
     funding_interval_hours: Optional[StrictInt] = Field(
         default=None,
         description="Funding interval in hours.",
         alias="fundingIntervalHours",
+        json_schema_extra={"examples": [8]},
     )
     disclaimer: Optional[StrictBool] = Field(
-        default=None, description="Disclaimer text."
+        default=None,
+        description="Disclaimer text.",
+        json_schema_extra={"examples": [False]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

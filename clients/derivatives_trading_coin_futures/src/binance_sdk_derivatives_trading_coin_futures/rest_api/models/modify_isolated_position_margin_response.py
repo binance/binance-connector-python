@@ -27,13 +27,21 @@ class ModifyIsolatedPositionMarginResponse(BaseModel):
     """  # noqa: E501
 
     amount: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Amount."
+        default=None, description="Amount.", json_schema_extra={"examples": [100]}
     )
     code: Optional[StrictInt] = Field(
-        default=None, description='API response code. "000000" indicates success.'
+        default=None,
+        description='API response code. "000000" indicates success.',
+        json_schema_extra={"examples": [200]},
     )
-    msg: Optional[StrictStr] = Field(default=None, description="Message details.")
-    type: Optional[StrictInt] = Field(default=None, description="Order type.")
+    msg: Optional[StrictStr] = Field(
+        default=None,
+        description="Message details.",
+        json_schema_extra={"examples": ["Successfully modify position margin."]},
+    )
+    type: Optional[StrictInt] = Field(
+        default=None, description="Order type.", json_schema_extra={"examples": [1]}
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["amount", "code", "msg", "type"]
 

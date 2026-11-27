@@ -29,10 +29,18 @@ class CloseUserDataStreamResponse(BaseModel):
     CloseUserDataStreamResponse
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(default=None, description="positionId")
-    status: Optional[StrictInt] = None
+    id: Optional[StrictStr] = Field(
+        default=None,
+        description="positionId",
+        json_schema_extra={"examples": ["819e1b1b-8c06-485b-a13e-131326c69599"]},
+    )
+    status: Optional[StrictInt] = Field(
+        default=None, json_schema_extra={"examples": [200]}
+    )
     result: Optional[Dict[str, Any]] = Field(
-        default=None, description="Indicates that combined is set to true."
+        default=None,
+        description="Indicates that combined is set to true.",
+        json_schema_extra={"examples": [{}]},
     )
     rate_limits: Optional[List[CloseUserDataStreamResponseRateLimitsInner]] = Field(
         default=None, alias="rateLimits"

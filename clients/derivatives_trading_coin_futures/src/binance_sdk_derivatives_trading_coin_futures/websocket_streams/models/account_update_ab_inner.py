@@ -26,11 +26,23 @@ class AccountUpdateABInner(BaseModel):
     AccountUpdateABInner
     """  # noqa: E501
 
-    a: Optional[StrictStr] = Field(default=None, description="Asset")
-    wb: Optional[StrictStr] = Field(default=None, description="Wallet Balance")
-    cw: Optional[StrictStr] = Field(default=None, description="Cross Wallet Balance")
+    a: Optional[StrictStr] = Field(
+        default=None, description="Asset", json_schema_extra={"examples": ["BTC"]}
+    )
+    wb: Optional[StrictStr] = Field(
+        default=None,
+        description="Wallet Balance",
+        json_schema_extra={"examples": ["122624.12345678"]},
+    )
+    cw: Optional[StrictStr] = Field(
+        default=None,
+        description="Cross Wallet Balance",
+        json_schema_extra={"examples": ["100.12345678"]},
+    )
     bc: Optional[StrictStr] = Field(
-        default=None, description="Balance Change except PnL and Commission"
+        default=None,
+        description="Balance Change except PnL and Commission",
+        json_schema_extra={"examples": ["50.12345678"]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["a", "wb", "cw", "bc"]

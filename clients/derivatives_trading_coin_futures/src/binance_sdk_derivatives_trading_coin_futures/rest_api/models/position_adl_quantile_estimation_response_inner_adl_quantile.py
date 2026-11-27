@@ -30,17 +30,25 @@ class PositionAdlQuantileEstimationResponseInnerAdlQuantile(BaseModel):
         default=None,
         description='adl quantile for "LONG" position in hedge mode',
         alias="LONG",
+        json_schema_extra={"examples": [3]},
     )
     short: Optional[StrictInt] = Field(
         default=None,
         description='adl qauntile for "SHORT" position in hedge mode',
         alias="SHORT",
+        json_schema_extra={"examples": [3]},
     )
     hedge: Optional[StrictInt] = Field(
-        default=None, description="Hedge mode ADL quantile.", alias="HEDGE"
+        default=None,
+        description="Hedge mode ADL quantile.",
+        alias="HEDGE",
+        json_schema_extra={"examples": [0]},
     )
     both: Optional[StrictInt] = Field(
-        default=None, description="One-way mode ADL quantile.", alias="BOTH"
+        default=None,
+        description="One-way mode ADL quantile.",
+        alias="BOTH",
+        json_schema_extra={"examples": [0]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["LONG", "SHORT", "HEDGE", "BOTH"]

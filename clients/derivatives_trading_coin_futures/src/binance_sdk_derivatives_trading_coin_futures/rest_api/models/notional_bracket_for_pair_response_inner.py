@@ -29,9 +29,26 @@ class NotionalBracketForPairResponseInner(BaseModel):
     NotionalBracketForPairResponseInner
     """  # noqa: E501
 
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     brackets: Optional[List[NotionalBracketForPairResponseInnerBracketsInner]] = Field(
-        default=None, description="Leverage bracket details."
+        default=None,
+        description="Leverage bracket details.",
+        json_schema_extra={
+            "examples": [
+                [
+                    {
+                        "bracket": 1,
+                        "initialLeverage": 125,
+                        "qtyCap": 50,
+                        "qtylFloor": 0,
+                        "maintMarginRatio": 0.004,
+                        "cum": 0,
+                    }
+                ]
+            ]
+        },
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["pair", "brackets"]

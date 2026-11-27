@@ -39,32 +39,42 @@ class ModifyMultipleOrdersBatchOrdersParameterInner(BaseModel):
         default=None,
         description="Sub-order ID, required when clientOrderId is not sent.",
         alias="orderId",
+        json_schema_extra={"examples": [20072994037]},
     )
     orig_client_order_id: Optional[StrictStr] = Field(
         default=None,
         description="Client order ID, required when orderId is not sent. Only support letters, numbers and underscores, and must be unique within 24 hours.",
         alias="origClientOrderId",
+        json_schema_extra={"examples": ["LJ9R4QZDihCaS8UAOOLpgW"]},
     )
-    symbol: StrictStr = Field(description="Trading symbol")
-    side: StrictStr = Field(description="Trading side")
+    symbol: StrictStr = Field(
+        description="Trading symbol", json_schema_extra={"examples": ["BTCUSD_PERP"]}
+    )
+    side: StrictStr = Field(
+        description="Trading side", json_schema_extra={"examples": ["BUY"]}
+    )
     quantity: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Order quantity, cannot be sent with closePosition=true. **After CM migration, this parameter becomes mandatory** (each batch element must send both `price` and `quantity`).",
+        json_schema_extra={"examples": [1]},
     )
     price: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None,
         description="Latest token price. **After CM migration, this parameter becomes mandatory** (each batch element must send both `price` and `quantity`).",
+        json_schema_extra={"examples": [30005]},
     )
     modify_id: Optional[StrictInt] = Field(
         default=None,
         description="User-defined modification identifier, returned as-is in the response. Optional; not validated for uniqueness.",
         alias="modifyId",
+        json_schema_extra={"examples": [1]},
     )
     recv_window: Optional[Annotated[int, Field(le=60000, strict=True)]] = Field(
-        default=None, alias="recvWindow"
+        default=None, alias="recvWindow", json_schema_extra={"examples": [5000]}
     )
     timestamp: StrictInt = Field(
-        description="Unix timestamp in milliseconds used to sign the request. The value must reflect the current client time and is validated by the server for signed endpoints."
+        description="Unix timestamp in milliseconds used to sign the request. The value must reflect the current client time and is validated by the server for signed endpoints.",
+        json_schema_extra={"examples": [1770736694138]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

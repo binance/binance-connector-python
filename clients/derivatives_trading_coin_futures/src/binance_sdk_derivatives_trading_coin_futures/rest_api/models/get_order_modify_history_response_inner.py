@@ -30,17 +30,36 @@ class GetOrderModifyHistoryResponseInner(BaseModel):
     """  # noqa: E501
 
     amendment_id: Optional[StrictInt] = Field(
-        default=None, description="Order modification ID", alias="amendmentId"
+        default=None,
+        description="Order modification ID",
+        alias="amendmentId",
+        json_schema_extra={"examples": [5363]},
     )
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    pair: Optional[StrictStr] = Field(default=None, description="Pair")
+    symbol: Optional[StrictStr] = Field(
+        default=None,
+        description="Trading symbol",
+        json_schema_extra={"examples": ["BTCUSD_PERP"]},
+    )
+    pair: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     order_id: Optional[StrictInt] = Field(
-        default=None, description="Sub-order ID", alias="orderId"
+        default=None,
+        description="Sub-order ID",
+        alias="orderId",
+        json_schema_extra={"examples": [20072994037]},
     )
     client_order_id: Optional[StrictStr] = Field(
-        default=None, description="Client order ID.", alias="clientOrderId"
+        default=None,
+        description="Client order ID.",
+        alias="clientOrderId",
+        json_schema_extra={"examples": ["LJ9R4QZDihCaS8UAOOLpgW"]},
     )
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1629184560899]},
+    )
     amendment: Optional[GetOrderModifyHistoryResponseInnerAmendment] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [

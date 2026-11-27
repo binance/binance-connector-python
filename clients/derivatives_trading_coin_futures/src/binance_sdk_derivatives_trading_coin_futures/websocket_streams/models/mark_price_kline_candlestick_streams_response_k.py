@@ -26,25 +26,90 @@ class MarkPriceKlineCandlestickStreamsResponseK(BaseModel):
     Kline payload
     """  # noqa: E501
 
-    t: Optional[StrictInt] = Field(default=None, description="Kline start time")
-    T: Optional[StrictInt] = Field(
-        default=None, description="Kline close time", alias="T"
+    t: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline start time",
+        json_schema_extra={"examples": [1591267380000]},
     )
-    s: Optional[StrictStr] = Field(default=None, description="Symbol")
-    i: Optional[StrictStr] = Field(default=None, description="Interval")
-    f: Optional[StrictInt] = Field(default=None, description="ignore")
-    L: Optional[StrictInt] = Field(default=None, description="ignore", alias="L")
-    o: Optional[StrictStr] = Field(default=None, description="Open price")
-    c: Optional[StrictStr] = Field(default=None, description="Close price")
-    h: Optional[StrictStr] = Field(default=None, description="High price")
-    l: Optional[StrictStr] = Field(default=None, description="Low price")
-    v: Optional[StrictStr] = Field(default=None, description="ignore")
-    n: Optional[StrictInt] = Field(default=None, description="Number of basic data")
-    x: Optional[StrictBool] = Field(default=None, description="Is this kline closed?")
-    q: Optional[StrictStr] = Field(default=None, description="ignore")
-    V: Optional[StrictStr] = Field(default=None, description="ignore", alias="V")
-    Q: Optional[StrictStr] = Field(default=None, description="ignore", alias="Q")
-    B: Optional[StrictStr] = Field(default=None, description="ignore", alias="B")
+    T: Optional[StrictInt] = Field(
+        default=None,
+        description="Kline close time",
+        alias="T",
+        json_schema_extra={"examples": [1591267439999]},
+    )
+    s: Optional[StrictStr] = Field(
+        default=None,
+        description="Symbol",
+        json_schema_extra={"examples": ["BTCUSD_200626"]},
+    )
+    i: Optional[StrictStr] = Field(
+        default=None, description="Interval", json_schema_extra={"examples": ["1m"]}
+    )
+    f: Optional[StrictInt] = Field(
+        default=None,
+        description="ignore",
+        json_schema_extra={"examples": [1591267380000]},
+    )
+    L: Optional[StrictInt] = Field(
+        default=None,
+        description="ignore",
+        alias="L",
+        json_schema_extra={"examples": [1591267398000]},
+    )
+    o: Optional[StrictStr] = Field(
+        default=None,
+        description="Open price",
+        json_schema_extra={"examples": ["9539.67161333"]},
+    )
+    c: Optional[StrictStr] = Field(
+        default=None,
+        description="Close price",
+        json_schema_extra={"examples": ["9540.82761333"]},
+    )
+    h: Optional[StrictStr] = Field(
+        default=None,
+        description="High price",
+        json_schema_extra={"examples": ["9540.82761333"]},
+    )
+    l: Optional[StrictStr] = Field(
+        default=None,
+        description="Low price",
+        json_schema_extra={"examples": ["9539.66961333"]},
+    )
+    v: Optional[StrictStr] = Field(
+        default=None, description="ignore", json_schema_extra={"examples": ["0"]}
+    )
+    n: Optional[StrictInt] = Field(
+        default=None,
+        description="Number of basic data",
+        json_schema_extra={"examples": [19]},
+    )
+    x: Optional[StrictBool] = Field(
+        default=None,
+        description="Is this kline closed?",
+        json_schema_extra={"examples": [False]},
+    )
+    q: Optional[StrictStr] = Field(
+        default=None, description="ignore", json_schema_extra={"examples": ["0"]}
+    )
+    V: Optional[StrictStr] = Field(
+        default=None,
+        description="ignore",
+        alias="V",
+        json_schema_extra={"examples": ["0"]},
+    )
+    Q: Optional[StrictStr] = Field(
+        default=None,
+        description="ignore",
+        alias="Q",
+        json_schema_extra={"examples": ["0"]},
+    )
+    B: Optional[StrictStr] = Field(
+        default=None,
+        description="ignore",
+        alias="B",
+        json_schema_extra={"examples": ["0"]},
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "t",

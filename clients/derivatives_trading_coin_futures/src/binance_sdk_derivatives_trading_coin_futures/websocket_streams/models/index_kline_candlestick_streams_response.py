@@ -29,9 +29,20 @@ class IndexKlineCandlestickStreamsResponse(BaseModel):
     IndexKlineCandlestickStreamsResponse
     """  # noqa: E501
 
-    e: Optional[StrictStr] = Field(default=None, description="eventType")
-    E: Optional[StrictInt] = Field(default=None, description="eventTime", alias="E")
-    ps: Optional[StrictStr] = Field(default=None, description="Pair")
+    e: Optional[StrictStr] = Field(
+        default=None,
+        description="eventType",
+        json_schema_extra={"examples": ["indexPrice_kline"]},
+    )
+    E: Optional[StrictInt] = Field(
+        default=None,
+        description="eventTime",
+        alias="E",
+        json_schema_extra={"examples": [1591267070033]},
+    )
+    ps: Optional[StrictStr] = Field(
+        default=None, description="Pair", json_schema_extra={"examples": ["BTCUSD"]}
+    )
     k: Optional[IndexKlineCandlestickStreamsResponseK] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["e", "E", "ps", "k"]

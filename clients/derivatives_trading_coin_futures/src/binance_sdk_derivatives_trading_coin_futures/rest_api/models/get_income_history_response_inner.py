@@ -26,19 +26,44 @@ class GetIncomeHistoryResponseInner(BaseModel):
     GetIncomeHistoryResponseInner
     """  # noqa: E501
 
-    symbol: Optional[StrictStr] = Field(default=None, description="Trading symbol")
-    income_type: Optional[StrictStr] = Field(
-        default=None, description="income type", alias="incomeType"
+    symbol: Optional[StrictStr] = Field(
+        default=None, description="Trading symbol", json_schema_extra={"examples": [""]}
     )
-    income: Optional[StrictStr] = Field(default=None, description="income amount")
-    asset: Optional[StrictStr] = Field(default=None, description="asset name")
-    info: Optional[StrictStr] = Field(default=None, description="extra information")
-    time: Optional[StrictInt] = Field(default=None, description="Time")
+    income_type: Optional[StrictStr] = Field(
+        default=None,
+        description="income type",
+        alias="incomeType",
+        json_schema_extra={"examples": ["TRANSFER"]},
+    )
+    income: Optional[StrictStr] = Field(
+        default=None,
+        description="income amount",
+        json_schema_extra={"examples": ["-0.37500000"]},
+    )
+    asset: Optional[StrictStr] = Field(
+        default=None, description="asset name", json_schema_extra={"examples": ["BTC"]}
+    )
+    info: Optional[StrictStr] = Field(
+        default=None,
+        description="extra information",
+        json_schema_extra={"examples": ["WITHDRAW"]},
+    )
+    time: Optional[StrictInt] = Field(
+        default=None,
+        description="Time",
+        json_schema_extra={"examples": [1570608000000]},
+    )
     tran_id: Optional[StrictStr] = Field(
-        default=None, description="transaction id", alias="tranId"
+        default=None,
+        description="transaction id",
+        alias="tranId",
+        json_schema_extra={"examples": ["9689322392"]},
     )
     trade_id: Optional[StrictStr] = Field(
-        default=None, description="Trade ID.", alias="tradeId"
+        default=None,
+        description="Trade ID.",
+        alias="tradeId",
+        json_schema_extra={"examples": [""]},
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
