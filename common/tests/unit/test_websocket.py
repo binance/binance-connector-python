@@ -2442,6 +2442,19 @@ class TestWebSocketStreamBase:
         mock_connection.websocket.send_str.assert_called_once()
 
     @pytest.mark.asyncio
+    async def test_subscribe_with_empty_stream_url(
+        self, websocket_stream, mock_connection, mock_registry
+    ):
+        mock_connection.url_path = None
+        websocket_stream.connections = [mock_connection]
+
+        await websocket_stream.subscribe(["test_stream"], stream_url="")
+
+        assert "test_stream" in mock_registry.stream_connections_map
+        assert mock_registry.stream_connections_map["test_stream"] == mock_connection
+        mock_connection.websocket.send_str.assert_called_once()
+
+    @pytest.mark.asyncio
     async def test_subscribe_with_stream_url_not_found(
         self, websocket_stream, mock_connection, mock_registry, caplog
     ):

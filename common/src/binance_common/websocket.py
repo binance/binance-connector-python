@@ -224,7 +224,7 @@ class WebSocketCommon:
             for connection in self.connections
             if not connection.reconnect
             and connection.accepts_requests
-            and (url_path is None or connection.url_path == url_path)
+            and (not url_path or connection.url_path == url_path)
         ]
 
     def _pick_request_connection(self) -> Optional[WebSocketConnection]:
