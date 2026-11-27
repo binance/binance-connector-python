@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0 - 2026-11-27
+
+### Added (2)
+
+#### REST API
+
+- `bstocks_corporate_action_records()` (`GET /sapi/v1/bstocks/corp-action/history`)
+- `corporate_action_records()` (`GET /sapi/v1/equity/corp-action/history`)
+
+### Removed (2)
+
+#### REST API
+
+- `bstocks_corporate_action_records()` (`GET /sapi/v1/bstocks/corp-action`)
+- `corporate_action_records()` (`GET /sapi/v1/equity/corp-action`)
+
 ## 1.11.0 - 2026-11-26
 
 ### Added (2)

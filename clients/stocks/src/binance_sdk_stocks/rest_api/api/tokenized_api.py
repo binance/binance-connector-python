@@ -49,10 +49,10 @@ class TokenizedApi:
     ) -> ApiResponse[BstocksCorporateActionRecordsResponse]:
         """
                 Bstocks Corporate Action Records (USER_DATA)
-                GET /sapi/v1/bstocks/corp-action
+                GET /sapi/v1/bstocks/corp-action/history
                 https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/rest-api/tokenized#bstocks-corporate-action-records
 
-                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/equity/corp-action`.
+                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/equity/corp-action/history`.
 
         Weight: 1
 
@@ -89,7 +89,7 @@ class TokenizedApi:
             self._session,
             self._configuration,
             method="GET",
-            path="/sapi/v1/bstocks/corp-action",
+            path="/sapi/v1/bstocks/corp-action/history",
             payload=payload,
             body=request_body,
             time_unit=self._configuration.time_unit,
@@ -107,10 +107,10 @@ class TokenizedApi:
     ) -> ApiResponse[CorporateActionRecordsResponse]:
         """
                 Corporate Action Records (USER_DATA)
-                GET /sapi/v1/equity/corp-action
+                GET /sapi/v1/equity/corp-action/history
                 https://developers.binance.com/en/docs/catalog/advanced-trading-stocks-trading/api/rest-api/tokenized#corporate-action-records
 
-                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/bstocks/corp-action`.
+                Query the asset balance changes caused by corporate actions (for example stock splits and cash dividends) on the caller's account. Cursor-style pagination — supply the `nextTime` and `nextId` from the previous page's response as `lastTime` and `lastId` to fetch the next page. Records are returned in descending order of modification time. This endpoint is equivalent to `/sapi/v1/bstocks/corp-action/history`.
 
         Weight: 1
 
@@ -147,7 +147,7 @@ class TokenizedApi:
             self._session,
             self._configuration,
             method="GET",
-            path="/sapi/v1/equity/corp-action",
+            path="/sapi/v1/equity/corp-action/history",
             payload=payload,
             body=request_body,
             time_unit=self._configuration.time_unit,

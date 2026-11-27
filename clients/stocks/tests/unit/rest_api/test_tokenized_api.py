@@ -97,7 +97,7 @@ class TestTokenizedApi:
 
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/bstocks/corp-action" in request_kwargs["url"]
+        assert "/sapi/v1/bstocks/corp-action/history" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
         assert normalized["limit"] == 20
 
@@ -163,7 +163,7 @@ class TestTokenizedApi:
 
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/bstocks/corp-action" in request_kwargs["url"]
+        assert "/sapi/v1/bstocks/corp-action/history" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
 
         self.mock_session.request.assert_called_once()
@@ -253,7 +253,7 @@ class TestTokenizedApi:
 
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/equity/corp-action" in request_kwargs["url"]
+        assert "/sapi/v1/equity/corp-action/history" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
         assert normalized["limit"] == 20
 
@@ -315,7 +315,7 @@ class TestTokenizedApi:
 
         assert "url" in request_kwargs
         assert "signature" in parse_qs(request_kwargs["params"])
-        assert "/sapi/v1/equity/corp-action" in request_kwargs["url"]
+        assert "/sapi/v1/equity/corp-action/history" in request_kwargs["url"]
         assert request_kwargs["method"] == "GET"
 
         self.mock_session.request.assert_called_once()
