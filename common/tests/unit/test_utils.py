@@ -1922,6 +1922,17 @@ class TestWsStreamsPlaceholder(unittest.TestCase):
         result = ws_streams_placeholder(stream, params)
         self.assertEqual(result, "btcusdt@depth")
 
+    def test_pair_is_lowercased_like_symbol(self):
+        stream = "<pair>_<contractType>@continuousKline_<interval>"
+        params = {"pair": "BTCUSDT", "contract_type": "perpetual", "interval": "1m"}
+        result = ws_streams_placeholder(stream, params)
+        self.assertEqual(result, "btcusdt_perpetual@continuousKline_1m")
+
+        stream = "<pair>@indexPrice<updateSpeed>"
+        params = {"pair": "BTCUSD", "update_speed": "1s"}
+        result = ws_streams_placeholder(stream, params)
+        self.assertEqual(result, "btcusd@indexPrice@1s")
+
     def test_enum_values_are_unwrapped(self):
         class IntervalEnum(Enum):
             INTERVAL_1m = "1m"
