@@ -896,7 +896,7 @@ def _ws_streams_placeholder(
                 lambda nf, v=normalized_variables: (
                     (
                         (str(v[nf]).lower() if lowercase_values else str(v[nf]))
-                        if nf in ("symbol", "windowsize")
+                        if nf in ("symbol", "pair", "windowsize")
                         else (
                             f"@{v[nf]}"
                             if nf == "updatespeed"
