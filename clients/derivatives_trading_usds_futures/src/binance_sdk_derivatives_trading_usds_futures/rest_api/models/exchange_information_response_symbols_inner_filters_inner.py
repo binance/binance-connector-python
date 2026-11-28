@@ -58,6 +58,9 @@ class ExchangeInformationResponseSymbolsInnerFiltersInner(BaseModel):
     multiplier_decimal: Optional[StrictStr] = Field(
         default=None, alias="multiplierDecimal"
     )
+    position_control_side: Optional[StrictStr] = Field(
+        default=None, description="Position Control Side.", alias="positionControlSide"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "filterType",
@@ -72,6 +75,7 @@ class ExchangeInformationResponseSymbolsInnerFiltersInner(BaseModel):
         "multiplierUp",
         "multiplierDown",
         "multiplierDecimal",
+        "positionControlSide",
     ]
 
     model_config = ConfigDict(
@@ -150,6 +154,7 @@ class ExchangeInformationResponseSymbolsInnerFiltersInner(BaseModel):
                 "multiplierUp": obj.get("multiplierUp"),
                 "multiplierDown": obj.get("multiplierDown"),
                 "multiplierDecimal": obj.get("multiplierDecimal"),
+                "positionControlSide": obj.get("positionControlSide"),
             }
         )
         # store additional fields in additional_properties
